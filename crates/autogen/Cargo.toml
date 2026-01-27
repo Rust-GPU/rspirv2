@@ -1,0 +1,8 @@
+[package]
+name = "autogen"
+version.workspace = true
+edition.workspace = true
+publish = false
+
+[dependencies]
+spirv-grammar-parser.workspace = true

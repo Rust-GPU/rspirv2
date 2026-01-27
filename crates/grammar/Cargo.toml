@@ -1,0 +1,7 @@
+[package]
+name = "spirv-grammar"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+spirv-grammar-parser.workspace = true
