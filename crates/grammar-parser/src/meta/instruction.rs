@@ -1,3 +1,5 @@
+#[cfg(feature = "serde")]
+use crate::meta::serde_helper::{operand_kind_from_str, printing_class_from_str};
 use crate::meta::{Capability, Extension, OperandKind};
 use std::borrow::Cow;
 
@@ -8,7 +10,10 @@ pub struct InstructionMeta<'a> {
     #[cfg_attr(feature = "serde", serde(borrow))]
     pub opname: Cow<'a, str>,
     /// The [`Class`] of this instruction, more informational than anything
-    #[cfg_attr(feature = "serde", serde(borrow))]
+    #[cfg_attr(
+        feature = "serde",
+        serde(default, deserialize_with = "printing_class_from_str")
+    )]
     pub class: Option<Cow<'a, InstructionPrintingClass<'a>>>,
     /// The u16 opcode for this instruction
     pub opcode: u16,
@@ -40,10 +45,10 @@ pub struct InstructionMeta<'a> {
 #[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub struct OperandMeta<'a> {
     /// The kind of operand, referencing the [`OperandKind`]s defined in [`Grammar`]
-    #[cfg_attr(feature = "serde", serde(borrow))]
+    #[cfg_attr(feature = "serde", serde(deserialize_with = "operand_kind_from_str"))]
     pub kind: Cow<'a, OperandKind<'a>>,
     /// Operand name
-    #[cfg_attr(feature = "serde", serde(borrow))]
+    #[cfg_attr(feature = "serde", serde(borrow, default))]
     pub name: Cow<'a, str>,
     /// The repetition [`Quantifier`]
     #[cfg_attr(feature = "serde", serde(default))]

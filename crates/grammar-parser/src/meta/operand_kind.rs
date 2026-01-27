@@ -1,5 +1,5 @@
 #[cfg(feature = "serde")]
-use crate::meta::serde_helper::num_or_hex;
+use crate::meta::serde_helper::{num_or_hex, operand_kinds_from_strs};
 use crate::meta::{Capability, Extension, OperandMeta};
 use std::borrow::Cow;
 
@@ -32,7 +32,7 @@ pub enum Category<'a> {
     /// A composite out of 2 or more [`Operand`]s
     Composite {
         /// describes the [`OperandKind`]s this [`OperandKind`] is made out of
-        #[cfg_attr(feature = "serde", serde(borrow))]
+        #[cfg_attr(feature = "serde", serde(deserialize_with = "operand_kinds_from_strs"))]
         bases: Cow<'a, [OperandKind<'a>]>,
     },
     /// The result id of another instruction
