@@ -17,6 +17,7 @@ autogen = { path = "crates/autogen" }
 spirv-grammar = { path = "crates/grammar" }
 spirv-grammar-parser = { path = "crates/grammar-parser" }
 
+anyhow = "1.0.100"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.149"
 smallvec = {version = "1.15.1", features = ["union", "const_new", "const_generics"]}

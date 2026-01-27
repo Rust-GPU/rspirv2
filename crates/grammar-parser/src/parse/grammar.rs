@@ -52,3 +52,16 @@ impl<'a> Deref for ExtInstSetGrammar<'a> {
         &self.grammar
     }
 }
+
+/// A kind of grammar, without any lifetimes, so it can be used as a marker. Use with [`CoreGrammar`] or
+/// [`ExtInstSetGrammar`] and a `'static` lifetime. When deserializing, use [`Self::Grammar`] to get the proper
+/// lifetime.
+pub trait GrammarKind {
+    type Grammar<'a>: Deref<Target = Grammar<'a>> + serde::Deserialize<'a>;
+}
+impl GrammarKind for CoreGrammar<'_> {
+    type Grammar<'a> = CoreGrammar<'a>;
+}
+impl GrammarKind for ExtInstSetGrammar<'_> {
+    type Grammar<'a> = ExtInstSetGrammar<'a>;
+}
