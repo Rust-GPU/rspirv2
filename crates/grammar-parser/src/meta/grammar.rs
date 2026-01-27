@@ -1,0 +1,67 @@
+#[cfg(feature = "serde")]
+use crate::meta::serde_helper::num_or_hex;
+use crate::meta::{InstructionMeta, InstructionPrintingClass, OperandKind};
+use std::borrow::Cow;
+use std::ops::Deref;
+
+/// A SPIR-V Grammar of any kind. There are only minor differences between the core SPIR-V specification and an
+/// extended instruction set, such as versioning.
+#[derive(Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize))]
+pub struct Grammar<'a> {
+    #[cfg_attr(feature = "serde", serde(borrow, default))]
+    pub copyright: Cow<'a, [Cow<'a, str>]>,
+    /// all [`Instructions`] defined by the grammar
+    ///
+    /// [`Instructions`]: [`InstructionMeta`]
+    #[cfg_attr(feature = "serde", serde(borrow, default))]
+    pub instructions: Cow<'a, [InstructionMeta<'a>]>,
+    /// all [`OperandKind`]s defined by the grammar
+    #[cfg_attr(feature = "serde", serde(borrow, default))]
+    pub operand_kinds: Cow<'a, [OperandKind<'a>]>,
+    #[cfg_attr(feature = "serde", serde(borrow, default))]
+    pub instruction_printing_class: Cow<'a, [InstructionPrintingClass<'a>]>,
+}
+
+#[derive(Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize))]
+pub struct CoreGrammar<'a> {
+    #[cfg_attr(feature = "serde", serde(borrow, flatten))]
+    pub grammar: Grammar<'a>,
+    /// The SPIR-V magic number
+    #[cfg_attr(feature = "serde", serde(deserialize_with = "num_or_hex"))]
+    pub magic_number: u32,
+    /// The major version, only used in the core spec
+    pub major_version: u8,
+    /// The major version, only used in the core spec
+    pub minor_version: u8,
+    /// The revision, used in both spec kinds
+    pub revision: u32,
+}
+
+impl<'a> Deref for CoreGrammar<'a> {
+    type Target = Grammar<'a>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.grammar
+    }
+}
+
+#[derive(Clone, Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize))]
+pub struct ExtInstSetGrammar<'a> {
+    #[cfg_attr(feature = "serde", serde(borrow, flatten))]
+    pub grammar: Grammar<'a>,
+    /// The version, only used in extended instruction sets
+    pub version: Option<u32>,
+    /// The revision, used in both spec kinds
+    pub revision: Option<u32>,
+}
+
+impl<'a> Deref for ExtInstSetGrammar<'a> {
+    type Target = Grammar<'a>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.grammar
+    }
+}

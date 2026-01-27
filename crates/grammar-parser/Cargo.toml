@@ -3,4 +3,9 @@ name = "spirv-grammar-parser"
 version.workspace = true
 edition.workspace = true
 
+[features]
+serde = ["dep:serde", "serde_json"]
+
 [dependencies]
+serde = { workspace = true, optional = true }
+serde_json = { workspace = true, optional = true }
