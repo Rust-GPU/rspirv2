@@ -113,7 +113,7 @@ impl GrammarWriter {
     fn codegen_mod_rs(&self) -> anyhow::Result<TokenStream> {
         let core_import = if self.requires_core_import {
             quote!(
-                use super::super::core::preamble;
+                pub use super::super::core::preamble;
             )
         } else {
             TokenStream::default()
@@ -123,12 +123,13 @@ impl GrammarWriter {
             .submodules
             .iter()
             .map(|s| format_ident!("{}", s))
-            .map(|s| (quote!(pub mod #s;), quote!(use super::#s::*;)))
+            .map(|s| (quote!(pub mod #s;), quote!(pub use super::#s::*;)))
             .unzip();
 
         Ok(quote! {
             #(#mods)*
-            pub(super) mod preamble {
+            pub mod preamble {
+                pub use crate::meta::*;
                 #core_import
                 #(#imports)*
             }
