@@ -86,7 +86,7 @@ pub struct InstructionPrintingClass<'a> {
 mod codegen {
     use super::*;
     use crate::codegen::{Emit, make_const_ident};
-    use proc_macro2::TokenStream;
+    use proc_macro2::{Ident, TokenStream};
     use quote::quote;
 
     impl Emit for Quantifier {
@@ -103,13 +103,20 @@ mod codegen {
         }
     }
 
+    impl InstructionMeta<'_> {
+        pub fn const_ident(&self) -> Ident {
+            make_const_ident("INSTRUCTION_", &self.opname)
+        }
+    }
+
     impl Emit for InstructionMeta<'_> {
         fn emit_ref(&self) -> TokenStream {
-            make_const_ident("INSTRUCTION_", &self.opname)
+            let ident = self.const_ident();
+            quote!(&#ident)
         }
 
         fn emit_def(&self) -> TokenStream {
-            let ident = self.emit_ref();
+            let ident = self.const_ident();
             let opname = self.opname.emit_ref();
             let class = self.class.emit_ref();
             let opcode = self.opcode.emit_ref();
@@ -157,13 +164,20 @@ mod codegen {
         }
     }
 
+    impl InstructionPrintingClass<'_> {
+        pub fn const_ident(&self) -> Ident {
+            make_const_ident("PRINTING_CLASS_", &self.tag)
+        }
+    }
+
     impl Emit for InstructionPrintingClass<'_> {
         fn emit_ref(&self) -> TokenStream {
-            make_const_ident("PRINTING_CLASS_", &self.tag)
+            let ident = self.const_ident();
+            quote!(&#ident)
         }
 
         fn emit_def(&self) -> TokenStream {
-            let ident = self.emit_ref();
+            let ident = self.const_ident();
             let tag = self.tag.emit_ref();
             let heading = self.heading.emit_ref();
             quote! {

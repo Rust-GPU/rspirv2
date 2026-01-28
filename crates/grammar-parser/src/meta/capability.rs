@@ -59,16 +59,23 @@ impl Debug for Extension<'_> {
 mod codegen {
     use super::*;
     use crate::codegen::{Emit, make_const_ident};
-    use proc_macro2::TokenStream;
+    use proc_macro2::{Ident, TokenStream};
     use quote::quote;
+
+    impl Capability<'_> {
+        pub fn const_ident(&self) -> Ident {
+            make_const_ident("CAPABILITY_", &self.0)
+        }
+    }
 
     impl Emit for Capability<'_> {
         fn emit_ref(&self) -> TokenStream {
-            make_const_ident("CAPABILITY_", &self.0)
+            let ident = self.const_ident();
+            quote!(&#ident)
         }
 
         fn emit_def(&self) -> TokenStream {
-            let ident = self.emit_ref();
+            let ident = self.const_ident();
             let inner = &self.0;
             quote! {
                 pub const #ident: Capability = Capability::new(#inner);
@@ -76,13 +83,20 @@ mod codegen {
         }
     }
 
+    impl Extension<'_> {
+        pub fn const_ident(&self) -> Ident {
+            make_const_ident("EXTENSION_", &self.0)
+        }
+    }
+
     impl Emit for Extension<'_> {
         fn emit_ref(&self) -> TokenStream {
-            make_const_ident("EXTENSION_", &self.0)
+            let ident = self.const_ident();
+            quote!(&#ident)
         }
 
         fn emit_def(&self) -> TokenStream {
-            let ident = self.emit_ref();
+            let ident = self.const_ident();
             let inner = &self.0;
             quote! {
                 pub const #ident: Extension = Extension::new(#inner);

@@ -1,17 +1,17 @@
 use convert_case::{Case, Casing};
-use proc_macro2::TokenStream;
-use quote::{ToTokens, format_ident, quote};
+use proc_macro2::{Ident, TokenStream};
+use quote::{format_ident, quote};
 use std::borrow::Cow;
 
 /// Central location to convert a name to a const ident
-pub fn make_const_ident(prefix: &str, name: &str) -> TokenStream {
+pub fn make_const_ident(prefix: &str, name: &str) -> Ident {
     // filter out the `@` in the `@exclude` printing class
     let name = name
         .chars()
         .filter(|c| c.is_ascii_alphanumeric())
         .collect::<String>();
     let name = name.to_case(Case::Constant);
-    format_ident!("{}{}", prefix, name).into_token_stream()
+    format_ident!("{}{}", prefix, name)
 }
 
 /// Trait for codegen emission for the various grammar types.

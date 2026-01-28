@@ -86,16 +86,23 @@ pub struct Enumerant<'a> {
 mod codegen {
     use super::*;
     use crate::codegen::{Emit, make_const_ident};
-    use proc_macro2::TokenStream;
+    use proc_macro2::{Ident, TokenStream};
     use quote::quote;
+
+    impl OperandKind<'_> {
+        pub fn const_ident(&self) -> Ident {
+            make_const_ident("OPERAND_KIND_", &self.name)
+        }
+    }
 
     impl Emit for OperandKind<'_> {
         fn emit_ref(&self) -> TokenStream {
-            make_const_ident("OPERAND_KIND_", &self.name)
+            let ident = self.const_ident();
+            quote!(&#ident)
         }
 
         fn emit_def(&self) -> TokenStream {
-            let ident = self.emit_ref();
+            let ident = self.const_ident();
             let name = self.name.emit_ref();
             let category = self.category.emit_ref();
             let doc = self.doc.emit_ref();
