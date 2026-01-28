@@ -81,3 +81,87 @@ pub struct Enumerant<'a> {
     #[cfg_attr(feature = "serde", serde(default))]
     pub provisional: bool,
 }
+
+#[cfg(feature = "codegen")]
+mod codegen {
+    use super::*;
+    use crate::codegen::{Emit, make_const_ident};
+    use proc_macro2::TokenStream;
+    use quote::quote;
+
+    impl Emit for OperandKind<'_> {
+        fn emit_ref(&self) -> TokenStream {
+            make_const_ident("OPERAND_KIND_", &self.name)
+        }
+
+        fn emit_def(&self) -> TokenStream {
+            let ident = self.emit_ref();
+            let name = self.name.emit_ref();
+            let category = self.category.emit_ref();
+            let doc = self.doc.emit_ref();
+            quote! {
+                pub const #ident: OperandKind = OperandKind {
+                    name: #name,
+                    category: #category,
+                    doc: #doc,
+                };
+            }
+        }
+    }
+
+    impl Emit for Category<'_> {
+        fn emit_ref(&self) -> TokenStream {
+            match self {
+                Category::BitEnum { enumerants } => {
+                    let enumerants = enumerants.emit_ref();
+                    quote!(Category::BitEnum { enumerants: #enumerants })
+                }
+                Category::Composite { bases } => {
+                    let bases = bases.emit_ref();
+                    quote!(Category::Composite { bases: #bases })
+                }
+                Category::Id => quote!(Category::Id),
+                Category::Literal => quote!(Category::Literal),
+                Category::ValueEnum { enumerants } => {
+                    let enumerants = enumerants.emit_ref();
+                    quote!(Category::ValueEnum { enumerants: #enumerants })
+                }
+            }
+        }
+
+        fn emit_def(&self) -> TokenStream {
+            TokenStream::new()
+        }
+    }
+
+    impl Emit for Enumerant<'_> {
+        fn emit_ref(&self) -> TokenStream {
+            let symbol = self.symbol.emit_ref();
+            let value = self.value.emit_ref();
+            let parameters = self.parameters.emit_ref();
+            let capabilities = self.capabilities.emit_ref();
+            let extensions = self.extensions.emit_ref();
+            let version = self.version.emit_ref();
+            let last_version = self.last_version.emit_ref();
+            let aliases = self.aliases.emit_ref();
+            let provisional = self.provisional.emit_ref();
+            quote! {
+                Enumerant {
+                    symbol: #symbol,
+                    value: #value,
+                    parameters: #parameters,
+                    capabilities: #capabilities,
+                    extensions: #extensions,
+                    version: #version,
+                    last_version: #last_version,
+                    aliases: #aliases,
+                    provisional: #provisional,
+                }
+            }
+        }
+
+        fn emit_def(&self) -> TokenStream {
+            TokenStream::new()
+        }
+    }
+}

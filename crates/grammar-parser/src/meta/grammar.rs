@@ -26,6 +26,7 @@ pub struct Grammar<'a> {
 #[derive(Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub struct CoreGrammar<'a> {
+    /// The Grammar
     #[cfg_attr(feature = "serde", serde(borrow, flatten))]
     pub grammar: Grammar<'a>,
     /// The SPIR-V magic number
@@ -50,6 +51,7 @@ impl<'a> Deref for CoreGrammar<'a> {
 #[derive(Clone, Debug)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub struct ExtInstSetGrammar<'a> {
+    /// The Grammar
     #[cfg_attr(feature = "serde", serde(borrow, flatten))]
     pub grammar: Grammar<'a>,
     /// The version, only used in extended instruction sets
@@ -63,5 +65,78 @@ impl<'a> Deref for ExtInstSetGrammar<'a> {
 
     fn deref(&self) -> &Self::Target {
         &self.grammar
+    }
+}
+
+#[cfg(feature = "codegen")]
+mod codegen {
+    use super::*;
+    use crate::codegen::Emit;
+    use proc_macro2::TokenStream;
+    use quote::{ToTokens, format_ident, quote};
+
+    impl Emit for Grammar<'_> {
+        fn emit_ref(&self) -> TokenStream {
+            let copyright = self.copyright.emit_ref();
+            let instructions = self.instructions.emit_ref();
+            let operand_kinds = self.operand_kinds.emit_ref();
+            let instruction_printing_class = self.instruction_printing_class.emit_ref();
+            quote! {
+                Grammar {
+                    copyright: #copyright,
+                    instructions: #instructions,
+                    operand_kinds: #operand_kinds,
+                    instruction_printing_class: #instruction_printing_class,
+                }
+            }
+        }
+
+        fn emit_def(&self) -> TokenStream {
+            TokenStream::new()
+        }
+    }
+
+    impl Emit for CoreGrammar<'_> {
+        fn emit_ref(&self) -> TokenStream {
+            format_ident!("GRAMMAR_CORE").into_token_stream()
+        }
+
+        fn emit_def(&self) -> TokenStream {
+            let ident = self.emit_ref();
+            let grammar = self.grammar.emit_ref();
+            let magic_number = self.magic_number.emit_ref();
+            let major_version = self.major_version.emit_ref();
+            let minor_version = self.minor_version.emit_ref();
+            let revision = self.revision.emit_ref();
+            quote! {
+                pub const #ident: CoreGrammar = CoreGrammar {
+                    grammar: #grammar,
+                    magic_number: #magic_number,
+                    major_version: #major_version,
+                    minor_version: #minor_version,
+                    revision: #revision,
+                }
+            }
+        }
+    }
+
+    impl Emit for ExtInstSetGrammar<'_> {
+        fn emit_ref(&self) -> TokenStream {
+            format_ident!("GRAMMAR_EXTINST").into_token_stream()
+        }
+
+        fn emit_def(&self) -> TokenStream {
+            let ident = self.emit_ref();
+            let grammar = self.grammar.emit_ref();
+            let version = self.version.emit_ref();
+            let revision = self.revision.emit_ref();
+            quote! {
+                pub const #ident: ExtInstSetGrammar = ExtInstSetGrammar {
+                    grammar: #grammar,
+                    version: #version,
+                    revision: #revision,
+                }
+            }
+        }
     }
 }

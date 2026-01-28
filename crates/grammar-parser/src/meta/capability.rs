@@ -54,3 +54,39 @@ impl Debug for Extension<'_> {
         Display::fmt(self, f)
     }
 }
+
+#[cfg(feature = "codegen")]
+mod codegen {
+    use super::*;
+    use crate::codegen::{Emit, make_const_ident};
+    use proc_macro2::TokenStream;
+    use quote::quote;
+
+    impl Emit for Capability<'_> {
+        fn emit_ref(&self) -> TokenStream {
+            make_const_ident("CAPABILITY_", &self.0)
+        }
+
+        fn emit_def(&self) -> TokenStream {
+            let ident = self.emit_ref();
+            let inner = &self.0;
+            quote! {
+                pub const #ident: Capability = Capability::new(#inner);
+            }
+        }
+    }
+
+    impl Emit for Extension<'_> {
+        fn emit_ref(&self) -> TokenStream {
+            make_const_ident("EXTENSION_", &self.0)
+        }
+
+        fn emit_def(&self) -> TokenStream {
+            let ident = self.emit_ref();
+            let inner = &self.0;
+            quote! {
+                pub const #ident: Extension = Extension::new(#inner);
+            }
+        }
+    }
+}

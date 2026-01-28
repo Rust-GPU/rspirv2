@@ -5,6 +5,6 @@ edition.workspace = true
 publish = false
 
 [dependencies]
-spirv-grammar-parser = { workspace = true, features = ["serde"] }
+spirv-grammar-parser = { workspace = true, features = ["serde", "codegen"] }
 serde_json.workspace = true
 anyhow.workspace = true
