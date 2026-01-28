@@ -5,6 +5,11 @@ use std::borrow::Cow;
 
 /// Central location to convert a name to a const ident
 pub fn make_const_ident(prefix: &str, name: &str) -> TokenStream {
+    // filter out the `@` in the `@exclude` printing class
+    let name = name
+        .chars()
+        .filter(|c| c.is_ascii_alphanumeric())
+        .collect::<String>();
     let name = name.to_case(Case::Constant);
     format_ident!("{}{}", prefix, name).into_token_stream()
 }
@@ -41,7 +46,7 @@ pub trait Emit {
 
 impl<T: Emit + ToOwned + ?Sized> Emit for Cow<'_, T> {
     fn emit_ref(&self) -> TokenStream {
-        let inner = self.as_ref().emit_def();
+        let inner = self.as_ref().emit_ref();
         quote!(Cow::Borrowed(#inner))
     }
 
@@ -52,7 +57,7 @@ impl<T: Emit + ToOwned + ?Sized> Emit for Cow<'_, T> {
 
 impl Emit for str {
     fn emit_ref(&self) -> TokenStream {
-        quote!(#self)
+        quote!("#self")
     }
 
     fn emit_def(&self) -> TokenStream {

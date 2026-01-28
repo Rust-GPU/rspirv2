@@ -26,7 +26,9 @@ impl<'a> WriteableGrammar<'a> for ExtInstSetGrammar<'a> {
 
 /// a use statement that imports symbols from other files
 pub fn use_super() -> TokenStream {
-    quote!(use super::preamble::*)
+    quote! {
+        use super::preamble::*;
+    }
 }
 
 pub struct GrammarWriter {
