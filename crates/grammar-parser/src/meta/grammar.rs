@@ -128,7 +128,7 @@ mod codegen {
                     major_version: #major_version,
                     minor_version: #minor_version,
                     revision: #revision,
-                }
+                };
             }
         }
     }
@@ -148,7 +148,7 @@ mod codegen {
                     grammar: #grammar,
                     version: #version,
                     revision: #revision,
-                }
+                };
             }
         }
     }

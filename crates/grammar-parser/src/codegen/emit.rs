@@ -57,7 +57,7 @@ impl<T: Emit + ToOwned + ?Sized> Emit for Cow<'_, T> {
 
 impl Emit for str {
     fn emit_ref(&self) -> TokenStream {
-        quote!("#self")
+        quote!(#self)
     }
 
     fn emit_def(&self) -> TokenStream {

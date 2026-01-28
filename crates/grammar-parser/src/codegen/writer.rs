@@ -1,7 +1,7 @@
 use crate::codegen::Emit;
 use crate::meta::{CoreGrammar, ExtInstSetGrammar, Grammar};
 use proc_macro2::TokenStream;
-use quote::quote;
+use quote::{format_ident, quote};
 use std::fs;
 use std::ops::Deref;
 use std::path::PathBuf;
@@ -119,23 +119,18 @@ impl GrammarWriter {
             TokenStream::default()
         };
 
-        let mods = self
+        let (mods, imports): (Vec<_>, Vec<_>) = self
             .submodules
             .iter()
-            .map(|s| quote!(pub mod #s;))
-            .collect::<Vec<_>>();
-
-        let imports = self
-            .submodules
-            .iter()
-            .map(|s| quote!(use super::#s::*;))
-            .collect::<Vec<_>>();
+            .map(|s| format_ident!("{}", s))
+            .map(|s| (quote!(pub mod #s;), quote!(use super::#s::*;)))
+            .unzip();
 
         Ok(quote! {
-            #(#mods),*
+            #(#mods)*
             pub(super) mod preamble {
                 #core_import
-                #(#imports),*
+                #(#imports)*
             }
         })
     }
@@ -145,7 +140,7 @@ impl GrammarWriter {
             .submodules
             .iter()
             .map(String::as_str)
-            .chain(std::iter::once("mod.rs"))
+            .chain(std::iter::once("mod"))
             .map(|s| self.submodule_file(s));
         let status = Command::new("rustfmt")
             .args(["--edition", "2024"])
