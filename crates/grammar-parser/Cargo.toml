@@ -4,11 +4,13 @@ version.workspace = true
 edition.workspace = true
 
 [features]
-serde = ["dep:serde"]
-codegen = ["quote", "proc-macro2", "convert_case"]
+serde = ["dep:serde", "serde_json"]
+codegen = ["quote", "proc-macro2", "convert_case", "anyhow"]
 
 [dependencies]
 serde = { workspace = true, optional = true }
+serde_json = { workspace = true, optional = true }
+anyhow = { workspace = true, optional = true }
 quote = { workspace = true, optional = true }
 proc-macro2 = { workspace = true, optional = true }
 convert_case = { workspace = true, optional = true }

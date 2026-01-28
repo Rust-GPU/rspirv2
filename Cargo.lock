@@ -110,10 +110,12 @@ dependencies = [
 name = "spirv-grammar-parser"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "convert_case",
  "proc-macro2",
  "quote",
  "serde",
+ "serde_json",
 ]
 
 [[package]]
