@@ -9,6 +9,7 @@ macro_rules! folder_path {
     };
 }
 
+#[allow(unused)]
 pub const PATH_GRAMMAR_FOLDER: &str = folder_path!();
 pub const PATH_GRAMMAR_CORE: GrammarFile<CoreGrammar> =
     GrammarFile::new_const(concat!(folder_path!(), "spirv.core.grammar.json"));
