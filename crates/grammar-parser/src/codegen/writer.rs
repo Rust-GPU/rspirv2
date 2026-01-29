@@ -58,10 +58,8 @@ impl GrammarWriter {
     ///
     /// The contents must contain the tokens that [`use_super`] returned.
     pub fn write_module(&mut self, submodule: &str, content: TokenStream) -> anyhow::Result<()> {
-        if !content.is_empty() {
-            fs::write(self.submodule_file(submodule), content.to_string())?;
-            self.submodules.push(submodule.to_string());
-        }
+        fs::write(self.submodule_file(submodule), content.to_string())?;
+        self.submodules.push(submodule.to_string());
         Ok(())
     }
 
@@ -71,8 +69,11 @@ impl GrammarWriter {
         submodule: &str,
         content: impl Iterator<Item = &'b T>,
     ) -> anyhow::Result<()> {
+        let content = content.map(|t| t.emit_def()).collect::<Vec<_>>();
+        if content.is_empty() {
+            return Ok(());
+        }
         let use_super = use_super();
-        let content = content.map(|t| t.emit_def());
         self.write_module(
             submodule,
             quote! {
