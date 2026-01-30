@@ -102,6 +102,10 @@ dependencies = [
 [[package]]
 name = "spirv-grammar"
 version = "0.1.0"
+dependencies = [
+ "serde",
+ "smallvec",
+]
 
 [[package]]
 name = "spirv-grammar-parser"
