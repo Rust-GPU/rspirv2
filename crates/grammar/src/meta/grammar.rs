@@ -1,67 +1,54 @@
-use crate::meta::serde_helper::num_or_hex;
 use crate::meta::{InstClass, InstMeta, OperandKind};
 use std::ops::Deref;
 
-/// See [`spirv_grammar::meta::Grammar`]
-#[derive(Clone, Debug, serde::Deserialize)]
-pub struct Grammar<'a> {
-    // ignore the copyright
-    // #[serde(borrow, default)]
-    // pub copyright: Vec<&'a str>,
-    #[serde(borrow, default, rename = "instructions")]
-    pub insts: Vec<InstMeta<'a>>,
-    #[serde(borrow, default)]
-    pub operand_kinds: Vec<OperandKind<'a>>,
-    #[serde(borrow, default, rename = "instruction_printing_class")]
-    pub inst_class: Vec<InstClass<'a>>,
+/// A SPIR-V Grammar of any kind. There are only minor differences between the core SPIR-V specification and an
+/// extended instruction set, such as versioning.
+#[derive(Copy, Clone, Debug)]
+pub struct Grammar {
+    pub copyright: &'static [&'static str],
+    /// all [`Instructions`] defined by the grammar
+    ///
+    /// [`Instructions`]: [`InstructionMeta`]
+    pub insts: &'static [InstMeta],
+    /// all [`OperandKind`]s defined by the grammar
+    pub operand_kinds: &'static [OperandKind],
+    pub inst_class: &'static [InstClass],
 }
 
-/// See [`spirv_grammar::meta::CoreGrammar`]
-#[derive(Clone, Debug, serde::Deserialize)]
-pub struct CoreGrammar<'a> {
-    #[serde(borrow, flatten)]
-    pub grammar: Grammar<'a>,
-    #[serde(deserialize_with = "num_or_hex")]
+#[derive(Copy, Clone, Debug)]
+pub struct CoreGrammar {
+    pub grammar: Grammar,
+    /// The SPIR-V magic number
     pub magic_number: u32,
+    /// The major version, only used in the core spec
     pub major_version: u8,
+    /// The major version, only used in the core spec
     pub minor_version: u8,
+    /// The revision, used in both spec kinds
     pub revision: u32,
 }
 
-impl<'a> Deref for CoreGrammar<'a> {
-    type Target = Grammar<'a>;
+impl Deref for CoreGrammar {
+    type Target = Grammar;
 
     fn deref(&self) -> &Self::Target {
         &self.grammar
     }
 }
 
-/// See [`spirv_grammar::meta::ExtInstSetGrammar`]
-#[derive(Clone, Debug, serde::Deserialize)]
-pub struct ExtInstSetGrammar<'a> {
-    #[serde(borrow, flatten)]
-    pub grammar: Grammar<'a>,
+#[derive(Copy, Clone, Debug)]
+pub struct ExtInstSetGrammar {
+    pub grammar: Grammar,
+    /// The version, only used in extended instruction sets
     pub version: Option<u32>,
+    /// The revision, used in both spec kinds
     pub revision: Option<u32>,
 }
 
-impl<'a> Deref for ExtInstSetGrammar<'a> {
-    type Target = Grammar<'a>;
+impl Deref for ExtInstSetGrammar {
+    type Target = Grammar;
 
     fn deref(&self) -> &Self::Target {
         &self.grammar
     }
-}
-
-/// A kind of grammar, without any lifetimes, so it can be used as a marker. Use with [`CoreGrammar`] or
-/// [`ExtInstSetGrammar`] and a `'static` lifetime. When deserializing, use [`Self::Grammar`] to get the proper
-/// lifetime.
-pub trait GrammarKind {
-    type Grammar<'a>: Deref<Target = Grammar<'a>> + serde::Deserialize<'a>;
-}
-impl GrammarKind for CoreGrammar<'_> {
-    type Grammar<'a> = CoreGrammar<'a>;
-}
-impl GrammarKind for ExtInstSetGrammar<'_> {
-    type Grammar<'a> = ExtInstSetGrammar<'a>;
 }

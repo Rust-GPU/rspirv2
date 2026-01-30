@@ -1,61 +1,60 @@
-use crate::meta::serde_helper::num_or_hex;
 use crate::meta::{Capability, Extension, OperandMeta};
-use smallvec::SmallVec;
-use std::borrow::Cow;
 
-/// See [`spirv_grammar::meta::OperandKind`]
-#[derive(Clone, Debug, serde::Deserialize)]
-pub struct OperandKind<'a> {
-    #[serde(borrow, rename = "kind")]
-    pub name: Cow<'a, str>,
-    #[serde(flatten)]
-    pub category: Category<'a>,
-    #[serde(borrow, default)]
-    pub doc: Cow<'a, str>,
+/// Specifies possible [`Operand`] values, see [`Category`] variants.
+#[derive(Copy, Clone, Debug)]
+pub struct OperandKind {
+    /// The name and primary key of the `OperandKind` (called `kind` in the JSON)
+    pub name: &'static str,
+    /// The category of this `OperandKind`
+    pub category: Category,
+    /// optional docs
+    pub doc: &'static str,
 }
 
-/// See [`spirv_grammar::meta::Category`]
-#[derive(Clone, Debug, serde::Deserialize)]
-#[serde(tag = "category")]
-pub enum Category<'a> {
+/// The category of an [`OperandKind`]
+#[derive(Copy, Clone, Debug)]
+pub enum Category {
+    /// A bitmask of various values
     BitEnum {
-        #[serde(borrow)]
-        enumerants: Vec<Enumerant<'a>>,
+        /// The possible values of the enum
+        enumerants: &'static [Enumerant],
     },
+    /// A composite out of 2 or more [`Operand`]s
     Composite {
-        /// The name of the [`OperandKind`]s out of which this [`OperandKind`] is composed out of,
-        /// references `Grammar.operand_kinds`
-        #[serde(borrow)]
-        bases: Vec<Cow<'a, str>>,
+        /// describes the [`OperandKind`]s this [`OperandKind`] is made out of
+        bases: &'static [OperandKind],
     },
+    /// The result id of another instruction
     Id,
+    /// An integer, float or string literal
     Literal,
+    /// A C-like enum
     ValueEnum {
-        #[serde(borrow)]
-        enumerants: Vec<Enumerant<'a>>,
+        /// The possible values of the enum
+        enumerants: &'static [Enumerant],
     },
 }
 
-/// See [`spirv_grammar::meta::Enumerant`]
-#[derive(Clone, Debug, serde::Deserialize)]
-#[serde(deny_unknown_fields)]
-pub struct Enumerant<'a> {
-    #[serde(borrow, rename = "enumerant")]
-    pub symbol: Cow<'a, str>,
-    #[serde(deserialize_with = "num_or_hex")]
+/// A description of possible values for [`Category::BitEnum`] and [`Category::ValueEnum`]
+#[derive(Copy, Clone, Debug)]
+pub struct Enumerant {
+    /// the name / symbol
+    pub symbol: &'static str,
+    /// the value of the enumerant
     pub value: u32,
-    #[serde(borrow, default)]
-    pub parameters: SmallVec<[OperandMeta<'a>; 1]>,
-    #[serde(borrow, default)]
-    pub capabilities: SmallVec<[Capability<'a>; 2]>,
-    #[serde(borrow, default)]
-    pub extensions: SmallVec<[Extension<'a>; 2]>,
-    #[serde(borrow, default)]
-    pub version: Option<Cow<'a, str>>,
-    #[serde(borrow, default, rename = "lastVersion")]
-    pub last_version: Option<Cow<'a, str>>,
-    #[serde(borrow, default)]
-    pub aliases: SmallVec<[Cow<'a, str>; 1]>,
-    #[serde(default)]
+    /// Parameters work like tagged enums in Rust and are used for e.g. `ExecutionMode` and `OpDecorate`.
+    /// Usually 0-sized, often 1 and sometimes a 3D vector.
+    pub parameters: &'static [OperandMeta],
+    /// required capabilities.
+    pub capabilities: &'static [Capability],
+    /// required extensions.
+    pub extensions: &'static [Extension],
+    /// The SPIR-V version this enumerant was introduced in
+    pub version: Option<&'static str>,
+    /// The last SPIR-V version this enumerant is valid in
+    pub last_version: Option<&'static str>,
+    /// Aliases for this enumerant
+    pub aliases: &'static [&'static str],
+    /// Whether this enumerant is provisional
     pub provisional: bool,
 }

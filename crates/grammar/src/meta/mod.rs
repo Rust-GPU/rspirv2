@@ -1,18 +1,14 @@
-//! Closely follows the struct definitions in [`spirv_grammar::meta`], but represents the SPIR-V JSON much more closely:
-//! * no `'static` lifetimes
-//!   * strings use a `'a` lifetime to borrow string from the JSON
-//!   * slices use [`Vec`] and [`SmallVec`]
-//! * structs are not `Copy`, only `Clone`
-//! * no self-references within the struct, e.g. [`InstMeta`]`.class` is a string, like in the JSON, instead of
-//!   referencing a [`InstClass`] directly
+//! Rust structs containing metadata information about SPIR-V instructions, directly deserialized from the SPIR-V
+//! grammar JSON.
 //!
-//! [`SmallVec`]: `smallvec::SmallVec`
+//! These structs are a derivative of:
+//! * [rspirv](https://github.com/gfx-rs/rspirv/blob/3e8814d838a49a98084ada2d1a8677e3281c6d33/autogen/src/structs.rs)
+//! * [spirt](https://github.com/Rust-GPU/spirt/blob/f6924328d604503445d470a6676ade916b6ba3dc/src/spv/spec.rs#L1104)
 
 mod capability;
 mod grammar;
 mod instruction;
 mod operand_kind;
-mod serde_helper;
 
 pub use capability::*;
 pub use grammar::*;

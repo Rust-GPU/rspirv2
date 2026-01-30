@@ -1,62 +1,54 @@
-use crate::meta::{Capability, Extension};
-use smallvec::SmallVec;
-use std::borrow::Cow;
+use crate::meta::{Capability, Extension, OperandKind};
 
-/// See [`spirv_grammar::meta::InstMeta`]
-#[derive(Clone, Debug, serde::Deserialize)]
-pub struct InstMeta<'a> {
-    #[serde(borrow)]
-    pub opname: Cow<'a, str>,
-    /// The name of the [`InstClass`], references `Grammar.instruction_printing_class`
-    #[serde(borrow)]
-    pub class: Option<Cow<'a, str>>,
+#[derive(Copy, Clone, Debug)]
+pub struct InstMeta {
+    /// The name of the instruction
+    pub opname: &'static str,
+    /// The [`Class`] of this instruction, more informational than anything
+    pub class: Option<&'static InstClass>,
+    /// The u16 opcode for this instruction
     pub opcode: u16,
-    #[serde(borrow, default)]
-    pub operands: SmallVec<[OperandMeta<'a>; 4]>,
-    #[serde(borrow, default)]
-    pub capabilities: SmallVec<[Capability<'a>; 2]>,
-    #[serde(borrow, default)]
-    pub extensions: SmallVec<[Extension<'a>; 1]>,
-    #[serde(borrow, default)]
-    pub version: Option<Cow<'a, str>>,
-    #[serde(borrow, default, rename = "lastVersion")]
-    pub last_version: Option<Cow<'a, str>>,
-    #[serde(borrow, default)]
-    pub aliases: SmallVec<[Cow<'a, str>; 1]>,
-    #[serde(default)]
+    /// The operands of this instruction
+    pub operands: &'static [OperandMeta],
+    /// required capabilities
+    pub capabilities: &'static [Capability],
+    /// required extensions
+    pub extensions: &'static [Extension],
+    /// The SPIR-V version this instruction was introduced in
+    pub version: Option<&'static str>,
+    /// The last SPIR-V version this instruction is valid in
+    pub last_version: Option<&'static str>,
+    /// Aliases for this instruction
+    pub aliases: &'static [&'static str],
+    /// Whether this instruction is provisional
     pub provisional: bool,
 }
 
-/// See [`spirv_grammar::meta::OperandMeta`]
-#[derive(Clone, Debug, serde::Deserialize)]
-pub struct OperandMeta<'a> {
-    /// The name of the [`OperandKind`], references `Grammar.operand_kinds`
-    #[serde(borrow)]
-    pub kind: Cow<'a, str>,
-    #[serde(borrow, default)]
-    pub name: Option<Cow<'a, str>>,
-    #[serde(default)]
+/// An operand of an instruction
+#[derive(Copy, Clone, Debug)]
+pub struct OperandMeta {
+    /// The kind of operand, referencing the [`OperandKind`]s defined in [`Grammar`]
+    pub kind: &'static OperandKind,
+    /// Operand name
+    pub name: &'static str,
+    /// The repetition [`Quantifier`]
     pub quantifier: Quantifier,
 }
 
 /// How many times to repeat something?
-#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, Ord, PartialOrd, serde::Deserialize)]
-#[serde(deny_unknown_fields)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Ord, PartialOrd)]
 pub enum Quantifier {
     #[default]
-    #[serde(rename = "")]
     One,
-    #[serde(rename = "?")]
     ZeroOrOne,
-    #[serde(rename = "*")]
     ZeroOrMore,
 }
 
-/// See [`spirv_grammar::meta::InstClass`]
-#[derive(Clone, Debug, serde::Deserialize)]
-pub struct InstClass<'a> {
-    #[serde(borrow)]
-    pub tag: Cow<'a, str>,
-    #[serde(borrow)]
-    pub heading: Option<Cow<'a, str>>,
+/// Informational metadata about the class of instruction
+#[derive(Copy, Clone, Debug)]
+pub struct InstClass {
+    /// the tag, or primary key
+    pub tag: &'static str,
+    /// a human name for the class
+    pub heading: Option<&'static str>,
 }
