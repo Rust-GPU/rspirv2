@@ -1,5 +1,6 @@
 use crate::parse::{Capability, Extension};
 use smallvec::SmallVec;
+use spirv_grammar::meta::Quantifier;
 use std::borrow::Cow;
 
 /// See [`spirv_grammar::meta::InstMeta`]
@@ -37,19 +38,6 @@ pub struct OperandMeta<'a> {
     pub name: Option<Cow<'a, str>>,
     #[serde(default)]
     pub quantifier: Quantifier,
-}
-
-/// How many times to repeat something?
-#[derive(Copy, Clone, Debug, Default, PartialEq, Eq, Ord, PartialOrd, serde::Deserialize)]
-#[serde(deny_unknown_fields)]
-pub enum Quantifier {
-    #[default]
-    #[serde(rename = "")]
-    One,
-    #[serde(rename = "?")]
-    ZeroOrOne,
-    #[serde(rename = "*")]
-    ZeroOrMore,
 }
 
 /// See [`spirv_grammar::meta::InstClass`]

@@ -2,3 +2,9 @@
 name = "spirv-grammar"
 version.workspace = true
 edition.workspace = true
+
+[features]
+serde = ["dep:serde"]
+
+[dependencies]
+serde = { workspace = true, optional = true }

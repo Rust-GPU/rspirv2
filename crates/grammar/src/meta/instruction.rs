@@ -37,10 +37,14 @@ pub struct OperandMeta {
 
 /// How many times to repeat something?
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Ord, PartialOrd)]
+#[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 pub enum Quantifier {
     #[default]
+    #[cfg_attr(feature = "serde", serde(rename = ""))]
     One,
+    #[cfg_attr(feature = "serde", serde(rename = "?"))]
     ZeroOrOne,
+    #[cfg_attr(feature = "serde", serde(rename = "*"))]
     ZeroOrMore,
 }
 
