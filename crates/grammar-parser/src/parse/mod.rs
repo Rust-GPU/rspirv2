@@ -3,8 +3,8 @@
 //!   * strings use a `'a` lifetime to borrow string from the JSON
 //!   * slices use [`Vec`] and [`SmallVec`]
 //! * structs are not `Copy`, only `Clone`
-//! * no self-references within the struct, e.g. [`InstructionMeta`]`.class` is a string, like in the JSON, instead of
-//!   referencing a [`InstructionPrintingClass`] directly
+//! * no self-references within the struct, e.g. [`InstMeta`]`.class` is a string, like in the JSON, instead of
+//!   referencing a [`InstClass`] directly
 //!
 //! [`SmallVec`]: `smallvec::SmallVec`
 

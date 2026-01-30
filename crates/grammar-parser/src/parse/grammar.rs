@@ -1,5 +1,5 @@
 use crate::parse::serde_helper::num_or_hex;
-use crate::parse::{InstructionMeta, InstructionPrintingClass, OperandKind};
+use crate::parse::{InstClass, InstMeta, OperandKind};
 use std::ops::Deref;
 
 /// See [`spirv_grammar::meta::Grammar`]
@@ -8,12 +8,12 @@ pub struct Grammar<'a> {
     // ignore the copyright
     // #[serde(borrow, default)]
     // pub copyright: Vec<&'a str>,
-    #[serde(borrow, default)]
-    pub instructions: Vec<InstructionMeta<'a>>,
+    #[serde(borrow, default, rename = "instructions")]
+    pub insts: Vec<InstMeta<'a>>,
     #[serde(borrow, default)]
     pub operand_kinds: Vec<OperandKind<'a>>,
-    #[serde(borrow, default)]
-    pub instruction_printing_class: Vec<InstructionPrintingClass<'a>>,
+    #[serde(borrow, default, rename = "instruction_printing_class")]
+    pub inst_class: Vec<InstClass<'a>>,
 }
 
 /// See [`spirv_grammar::meta::CoreGrammar`]

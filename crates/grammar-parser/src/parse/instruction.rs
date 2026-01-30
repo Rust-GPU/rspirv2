@@ -2,12 +2,12 @@ use crate::parse::{Capability, Extension};
 use smallvec::SmallVec;
 use std::borrow::Cow;
 
-/// See [`spirv_grammar::meta::InstructionMeta`]
+/// See [`spirv_grammar::meta::InstMeta`]
 #[derive(Clone, Debug, serde::Deserialize)]
-pub struct InstructionMeta<'a> {
+pub struct InstMeta<'a> {
     #[serde(borrow)]
     pub opname: Cow<'a, str>,
-    /// The name of the [`InstructionPrintingClass`], references `Grammar.instruction_printing_class`
+    /// The name of the [`InstClass`], references `Grammar.instruction_printing_class`
     #[serde(borrow)]
     pub class: Option<Cow<'a, str>>,
     pub opcode: u16,
@@ -52,9 +52,9 @@ pub enum Quantifier {
     ZeroOrMore,
 }
 
-/// See [`spirv_grammar::meta::InstructionPrintingClass`]
+/// See [`spirv_grammar::meta::InstClass`]
 #[derive(Clone, Debug, serde::Deserialize)]
-pub struct InstructionPrintingClass<'a> {
+pub struct InstClass<'a> {
     #[serde(borrow)]
     pub tag: Cow<'a, str>,
     #[serde(borrow)]

@@ -84,7 +84,7 @@ mod test {
             let grammar: ExtInstSetGrammar = data
                 .parse_grammar()
                 .map_err(|e| anyhow::anyhow!("{name}: {e}"))?;
-            println!("{}: {} instructions", name, grammar.instructions.len());
+            println!("{}: {} instructions", name, grammar.insts.len());
         }
         Ok(())
     }
