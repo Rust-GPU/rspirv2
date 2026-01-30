@@ -23,6 +23,8 @@ pub const PATH_GRAMMAR_DEBUG_PRINTF: GrammarFile<ExtInstSetGrammar> =
 #[cfg(test)]
 mod test {
     use super::*;
+    use std::borrow::Cow;
+    use std::fs;
     use std::path::Path;
 
     #[test]
@@ -47,5 +49,43 @@ mod test {
             "missing debug printf file: {}",
             PATH_GRAMMAR_DEBUG_PRINTF
         );
+    }
+
+    #[test]
+    pub fn parse_core_grammar() -> anyhow::Result<()> {
+        let json = PATH_GRAMMAR_CORE.read()?;
+        let core: CoreGrammar = json.parse_grammar()?;
+        println!("{core:?}");
+        Ok(())
+    }
+
+    #[test]
+    pub fn parse_all_extinst_grammars() -> anyhow::Result<()> {
+        let mut extinst: Vec<GrammarFile<ExtInstSetGrammar>> = fs::read_dir(PATH_GRAMMAR_FOLDER)
+            .expect("failed to read SPIR-V headers directory")
+            .filter_map(|entry| {
+                let path = entry.ok()?.path();
+                let name = path.file_name()?.to_str()?;
+                (name.starts_with("extinst.") && name.ends_with(".json")).then(|| {
+                    let path_str = path.into_os_string().into_string().ok()?;
+                    Some(GrammarFile::new(Cow::Owned(path_str)))
+                })?
+            })
+            .collect();
+        extinst.sort_by(|a, b| a.as_path().cmp(b.as_path()));
+
+        // equality on paths may fail on some platforms?
+        assert!(extinst.contains(&PATH_GRAMMAR_GLSL_STD_450));
+        assert!(extinst.contains(&PATH_GRAMMAR_DEBUG_PRINTF));
+
+        for path in &extinst {
+            let name = path.as_path().file_name().unwrap().to_str().unwrap();
+            let data = path.read()?;
+            let grammar: ExtInstSetGrammar = data
+                .parse_grammar()
+                .map_err(|e| anyhow::anyhow!("{name}: {e}"))?;
+            println!("{}: {} instructions", name, grammar.instructions.len());
+        }
+        Ok(())
     }
 }
