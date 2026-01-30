@@ -1,5 +1,5 @@
-use crate::codegen::Emit;
-use crate::parse::{CoreGrammar, ExtInstSetGrammar, Grammar};
+use crate::codegen::EmitRef;
+use crate::parse::{CoreGrammar, ExtInstSetGrammar, Grammar, InstClass, InstMeta, OperandKind};
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use std::fs;
@@ -8,19 +8,29 @@ use std::path::PathBuf;
 use std::process::Command;
 
 /// Common writing interface between [`CoreGrammar`] and [`ExtInstSetGrammar`]
-pub trait WriteableGrammar<'a>: Emit + Deref<Target = Grammar<'a>> {
+pub trait WriteableGrammar<'a>: EmitRef + Deref<Target = Grammar<'a>> {
     fn requires_core_import(&self) -> bool;
+
+    fn emit_def(&self) -> TokenStream;
 }
 
 impl<'a> WriteableGrammar<'a> for CoreGrammar<'a> {
     fn requires_core_import(&self) -> bool {
         false
     }
+
+    fn emit_def(&self) -> TokenStream {
+        self.emit_def()
+    }
 }
 
 impl<'a> WriteableGrammar<'a> for ExtInstSetGrammar<'a> {
     fn requires_core_import(&self) -> bool {
         true
+    }
+
+    fn emit_def(&self) -> TokenStream {
+        self.emit_def()
     }
 }
 
@@ -63,13 +73,8 @@ impl GrammarWriter {
         Ok(())
     }
 
-    /// Write the definitions ([`Emit::emit_def`]) of some emittable struct to a module
-    fn write_const_module<'b, T: Emit + 'b>(
-        &mut self,
-        submodule: &str,
-        content: impl Iterator<Item = &'b T>,
-    ) -> anyhow::Result<()> {
-        let content = content.map(|t| t.emit_def()).collect::<Vec<_>>();
+    /// Write the definitions ([`EmitRef::emit_def`]) of some emittable struct to a module
+    fn write_const_module(&mut self, submodule: &str, content: TokenStream) -> anyhow::Result<()> {
         if content.is_empty() {
             return Ok(());
         }
@@ -78,16 +83,29 @@ impl GrammarWriter {
             submodule,
             quote! {
                 #use_super
-                #(#content)*
+                #content
             },
         )
     }
 
     fn write_grammar<'a>(&mut self, grammar: &impl WriteableGrammar<'a>) -> anyhow::Result<()> {
-        self.write_const_module("grammar", std::iter::once(grammar))?;
-        self.write_const_module("operant_kinds", grammar.operand_kinds.iter())?;
-        self.write_const_module("instructions", grammar.insts.iter())?;
-        self.write_const_module("printing_classes", grammar.inst_class.iter())?;
+        self.write_const_module(
+            "inst_class",
+            grammar.inst_class.iter().map(InstClass::emit_def).collect(),
+        )?;
+        self.write_const_module(
+            "operant_kinds",
+            grammar
+                .operand_kinds
+                .iter()
+                .map(OperandKind::emit_def)
+                .collect(),
+        )?;
+        self.write_const_module(
+            "inst",
+            grammar.insts.iter().map(InstMeta::emit_def).collect(),
+        )?;
+        self.write_const_module("grammar", grammar.emit_def())?;
         Ok(())
     }
 

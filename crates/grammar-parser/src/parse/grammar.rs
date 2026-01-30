@@ -69,11 +69,11 @@ impl GrammarKind for ExtInstSetGrammar<'_> {
 #[cfg(feature = "codegen")]
 mod codegen {
     use super::*;
-    use crate::codegen::Emit;
+    use crate::codegen::EmitRef;
     use proc_macro2::TokenStream;
     use quote::{ToTokens, format_ident, quote};
 
-    impl Emit for Grammar<'_> {
+    impl EmitRef for Grammar<'_> {
         fn emit_ref(&self) -> TokenStream {
             let insts = self.insts.emit_ref();
             let operand_kinds = self.operand_kinds.emit_ref();
@@ -86,18 +86,16 @@ mod codegen {
                 }
             }
         }
-
-        fn emit_def(&self) -> TokenStream {
-            TokenStream::new()
-        }
     }
 
-    impl Emit for CoreGrammar<'_> {
+    impl EmitRef for CoreGrammar<'_> {
         fn emit_ref(&self) -> TokenStream {
             format_ident!("GRAMMAR_CORE").into_token_stream()
         }
+    }
 
-        fn emit_def(&self) -> TokenStream {
+    impl CoreGrammar<'_> {
+        pub fn emit_def(&self) -> TokenStream {
             let ident = self.emit_ref();
             let grammar = self.grammar.emit_ref();
             let magic_number = self.magic_number.emit_ref();
@@ -116,12 +114,14 @@ mod codegen {
         }
     }
 
-    impl Emit for ExtInstSetGrammar<'_> {
+    impl EmitRef for ExtInstSetGrammar<'_> {
         fn emit_ref(&self) -> TokenStream {
             format_ident!("GRAMMAR_EXTINST").into_token_stream()
         }
+    }
 
-        fn emit_def(&self) -> TokenStream {
+    impl ExtInstSetGrammar<'_> {
+        pub fn emit_def(&self) -> TokenStream {
             let ident = self.emit_ref();
             let grammar = self.grammar.emit_ref();
             let version = self.version.emit_ref();

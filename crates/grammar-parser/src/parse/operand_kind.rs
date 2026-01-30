@@ -63,17 +63,17 @@ pub struct Enumerant<'a> {
 #[cfg(feature = "codegen")]
 mod codegen {
     use super::*;
-    use crate::codegen::{Emit, make_const_ident};
-    use proc_macro2::TokenStream;
+    use crate::codegen::{EmitRef, make_const_ident, ref_ident};
+    use proc_macro2::{Ident, TokenStream};
     use quote::quote;
 
-    impl Emit for OperandKind<'_> {
-        fn emit_ref(&self) -> TokenStream {
-            make_const_ident("OPERAND_KIND_", &self.name)
+    impl OperandKind<'_> {
+        pub fn const_ident(name: &str) -> Ident {
+            make_const_ident("OPERAND_KIND_", name)
         }
 
-        fn emit_def(&self) -> TokenStream {
-            let ident = self.emit_ref();
+        pub fn emit_def(&self) -> TokenStream {
+            let ident = Self::const_ident(&self.name);
             let name = self.name.emit_ref();
             let category = self.category.emit_ref();
             let doc = self.doc.emit_ref();
@@ -87,7 +87,13 @@ mod codegen {
         }
     }
 
-    impl Emit for Category<'_> {
+    impl EmitRef for OperandKind<'_> {
+        fn emit_ref(&self) -> TokenStream {
+            ref_ident(Self::const_ident(&self.name))
+        }
+    }
+
+    impl EmitRef for Category<'_> {
         fn emit_ref(&self) -> TokenStream {
             match self {
                 Category::BitEnum { enumerants } => {
@@ -106,13 +112,9 @@ mod codegen {
                 }
             }
         }
-
-        fn emit_def(&self) -> TokenStream {
-            TokenStream::new()
-        }
     }
 
-    impl Emit for Enumerant<'_> {
+    impl EmitRef for Enumerant<'_> {
         fn emit_ref(&self) -> TokenStream {
             let symbol = self.symbol.emit_ref();
             let value = self.value.emit_ref();
@@ -136,10 +138,6 @@ mod codegen {
                     provisional: #provisional,
                 }
             }
-        }
-
-        fn emit_def(&self) -> TokenStream {
-            TokenStream::new()
         }
     }
 }

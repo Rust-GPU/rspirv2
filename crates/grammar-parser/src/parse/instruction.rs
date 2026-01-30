@@ -64,33 +64,26 @@ pub struct InstClass<'a> {
 #[cfg(feature = "codegen")]
 mod codegen {
     use super::*;
-    use crate::codegen::{Emit, make_const_ident};
-    use proc_macro2::TokenStream;
+    use crate::codegen::{EmitRef, make_const_ident, ref_ident};
+    use crate::parse::OperandKind;
+    use proc_macro2::{Ident, TokenStream};
     use quote::quote;
 
-    impl Emit for Quantifier {
-        fn emit_ref(&self) -> TokenStream {
-            match self {
-                Quantifier::One => quote!(Quantifier::One),
-                Quantifier::ZeroOrOne => quote!(Quantifier::ZeroOrOne),
-                Quantifier::ZeroOrMore => quote!(Quantifier::ZeroOrMore),
-            }
+    impl InstMeta<'_> {
+        pub fn const_ident(opname: &str) -> Ident {
+            make_const_ident("INSTRUCTION_", opname)
         }
 
-        fn emit_def(&self) -> TokenStream {
-            TokenStream::default()
-        }
-    }
-
-    impl Emit for InstMeta<'_> {
-        fn emit_ref(&self) -> TokenStream {
-            make_const_ident("INSTRUCTION_", &self.opname)
-        }
-
-        fn emit_def(&self) -> TokenStream {
-            let ident = self.emit_ref();
+        pub fn emit_def(&self) -> TokenStream {
+            let ident = Self::const_ident(&self.opname);
             let opname = self.opname.emit_ref();
-            let class = self.class.emit_ref();
+            let class = match &self.class {
+                None => quote!(None),
+                Some(class) => {
+                    let ident = InstClass::const_ident(class);
+                    quote!(Some(&#ident))
+                }
+            };
             let opcode = self.opcode.emit_ref();
             let operands = self.operands.emit_ref();
             let capabilities = self.capabilities.emit_ref();
@@ -117,32 +110,44 @@ mod codegen {
         }
     }
 
-    impl Emit for OperandMeta<'_> {
+    impl EmitRef for InstMeta<'_> {
         fn emit_ref(&self) -> TokenStream {
-            let kind = self.kind.emit_ref();
+            ref_ident(Self::const_ident(&self.opname))
+        }
+    }
+
+    impl EmitRef for OperandMeta<'_> {
+        fn emit_ref(&self) -> TokenStream {
+            let kind = OperandKind::const_ident(&self.kind);
             let name = self.name.emit_ref();
             let quantifier = self.quantifier.emit_ref();
             quote! {
                 OperandMeta {
-                    kind: #kind,
+                    kind: &#kind,
                     name: #name,
                     quantifier: #quantifier,
                 }
             }
         }
+    }
 
-        fn emit_def(&self) -> TokenStream {
-            TokenStream::new()
+    impl EmitRef for Quantifier {
+        fn emit_ref(&self) -> TokenStream {
+            match self {
+                Quantifier::One => quote!(Quantifier::One),
+                Quantifier::ZeroOrOne => quote!(Quantifier::ZeroOrOne),
+                Quantifier::ZeroOrMore => quote!(Quantifier::ZeroOrMore),
+            }
         }
     }
 
-    impl Emit for InstClass<'_> {
-        fn emit_ref(&self) -> TokenStream {
-            make_const_ident("PRINTING_CLASS_", &self.tag)
+    impl InstClass<'_> {
+        pub fn const_ident(tag: &str) -> Ident {
+            make_const_ident("PRINTING_CLASS_", &tag)
         }
 
-        fn emit_def(&self) -> TokenStream {
-            let ident = self.emit_ref();
+        pub fn emit_def(&self) -> TokenStream {
+            let ident = Self::const_ident(&self.tag);
             let tag = self.tag.emit_ref();
             let heading = self.heading.emit_ref();
             quote! {
@@ -151,6 +156,12 @@ mod codegen {
                     heading: #heading,
                 };
             }
+        }
+    }
+
+    impl EmitRef for InstClass<'_> {
+        fn emit_ref(&self) -> TokenStream {
+            ref_ident(Self::const_ident(&self.tag))
         }
     }
 }
