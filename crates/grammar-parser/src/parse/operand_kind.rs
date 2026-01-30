@@ -1,16 +1,17 @@
 use crate::parse::serde_helper::num_or_hex;
 use crate::parse::{Capability, Extension, OperandMeta};
 use smallvec::SmallVec;
+use std::borrow::Cow;
 
 /// See [`spirv_grammar::meta::OperandKind`]
 #[derive(Clone, Debug, serde::Deserialize)]
 pub struct OperandKind<'a> {
     #[serde(borrow, rename = "kind")]
-    pub name: &'a str,
+    pub name: Cow<'a, str>,
     #[serde(flatten)]
     pub category: Category<'a>,
     #[serde(borrow, default)]
-    pub doc: &'a str,
+    pub doc: Cow<'a, str>,
 }
 
 /// See [`spirv_grammar::meta::Category`]
@@ -25,7 +26,7 @@ pub enum Category<'a> {
         /// The name of the [`OperandKind`]s out of which this [`OperandKind`] is composed out of,
         /// references `Grammar.operand_kinds`
         #[serde(borrow)]
-        bases: Vec<&'a str>,
+        bases: Vec<Cow<'a, str>>,
     },
     Id,
     Literal,
@@ -39,22 +40,22 @@ pub enum Category<'a> {
 #[derive(Clone, Debug, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Enumerant<'a> {
-    #[serde(rename = "enumerant")]
-    pub symbol: &'a str,
+    #[serde(borrow, rename = "enumerant")]
+    pub symbol: Cow<'a, str>,
     #[serde(deserialize_with = "num_or_hex")]
     pub value: u32,
-    #[serde(default)]
+    #[serde(borrow, default)]
     pub parameters: SmallVec<[OperandMeta<'a>; 1]>,
-    #[serde(default)]
+    #[serde(borrow, default)]
     pub capabilities: SmallVec<[Capability<'a>; 2]>,
-    #[serde(default)]
+    #[serde(borrow, default)]
     pub extensions: SmallVec<[Extension<'a>; 2]>,
-    #[serde(default)]
-    pub version: Option<&'a str>,
-    #[serde(default, rename = "lastVersion")]
-    pub last_version: Option<&'a str>,
-    #[serde(default)]
-    pub aliases: SmallVec<[&'a str; 1]>,
+    #[serde(borrow, default)]
+    pub version: Option<Cow<'a, str>>,
+    #[serde(borrow, default, rename = "lastVersion")]
+    pub last_version: Option<Cow<'a, str>>,
+    #[serde(borrow, default)]
+    pub aliases: SmallVec<[Cow<'a, str>; 1]>,
     #[serde(default)]
     pub provisional: bool,
 }

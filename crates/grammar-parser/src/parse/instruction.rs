@@ -1,25 +1,28 @@
 use crate::parse::{Capability, Extension};
 use smallvec::SmallVec;
+use std::borrow::Cow;
 
 /// See [`spirv_grammar::meta::InstructionMeta`]
 #[derive(Clone, Debug, serde::Deserialize)]
 pub struct InstructionMeta<'a> {
-    pub opname: &'a str,
+    #[serde(borrow)]
+    pub opname: Cow<'a, str>,
     /// The name of the [`InstructionPrintingClass`], references `Grammar.instruction_printing_class`
-    pub class: Option<&'a str>,
+    #[serde(borrow)]
+    pub class: Option<Cow<'a, str>>,
     pub opcode: u16,
-    #[serde(default)]
+    #[serde(borrow, default)]
     pub operands: SmallVec<[OperandMeta<'a>; 4]>,
-    #[serde(default)]
+    #[serde(borrow, default)]
     pub capabilities: SmallVec<[Capability<'a>; 2]>,
-    #[serde(default)]
+    #[serde(borrow, default)]
     pub extensions: SmallVec<[Extension<'a>; 1]>,
-    #[serde(default)]
-    pub version: Option<&'a str>,
-    #[serde(default, rename = "lastVersion")]
-    pub last_version: Option<&'a str>,
-    #[serde(default)]
-    pub aliases: SmallVec<[&'a str; 1]>,
+    #[serde(borrow, default)]
+    pub version: Option<Cow<'a, str>>,
+    #[serde(borrow, default, rename = "lastVersion")]
+    pub last_version: Option<Cow<'a, str>>,
+    #[serde(borrow, default)]
+    pub aliases: SmallVec<[Cow<'a, str>; 1]>,
     #[serde(default)]
     pub provisional: bool,
 }
@@ -28,9 +31,10 @@ pub struct InstructionMeta<'a> {
 #[derive(Clone, Debug, serde::Deserialize)]
 pub struct OperandMeta<'a> {
     /// The name of the [`OperandKind`], references `Grammar.operand_kinds`
-    pub kind: &'a str,
+    #[serde(borrow)]
+    pub kind: Cow<'a, str>,
     #[serde(borrow, default)]
-    pub name: Option<&'a str>,
+    pub name: Option<Cow<'a, str>>,
     #[serde(default)]
     pub quantifier: Quantifier,
 }
@@ -52,7 +56,7 @@ pub enum Quantifier {
 #[derive(Clone, Debug, serde::Deserialize)]
 pub struct InstructionPrintingClass<'a> {
     #[serde(borrow)]
-    pub tag: &'a str,
+    pub tag: Cow<'a, str>,
     #[serde(borrow)]
-    pub heading: Option<&'a str>,
+    pub heading: Option<Cow<'a, str>>,
 }

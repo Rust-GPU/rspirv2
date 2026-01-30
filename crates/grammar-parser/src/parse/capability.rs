@@ -1,16 +1,17 @@
+use std::borrow::Cow;
 use std::fmt::{Debug, Display, Formatter};
 
 /// A SPIR-V Capability
 #[derive(Clone, Eq, PartialEq, serde::Deserialize)]
-pub struct Capability<'a>(#[serde(borrow)] &'a str);
+pub struct Capability<'a>(#[serde(borrow)] Cow<'a, str>);
 
 impl<'a> Capability<'a> {
-    pub const fn new(name: &'a str) -> Self {
+    pub const fn new(name: Cow<'a, str>) -> Self {
         Self(name)
     }
 
-    pub const fn name(&self) -> &'a str {
-        self.0
+    pub fn name(&self) -> &str {
+        &self.0
     }
 }
 
@@ -28,15 +29,15 @@ impl Debug for Capability<'_> {
 
 /// A SPIR-V Extension
 #[derive(Clone, Eq, PartialEq, serde::Deserialize)]
-pub struct Extension<'a>(#[serde(borrow)] &'a str);
+pub struct Extension<'a>(#[serde(borrow)] Cow<'a, str>);
 
 impl<'a> Extension<'a> {
-    pub const fn new(name: &'a str) -> Self {
+    pub const fn new(name: Cow<'a, str>) -> Self {
         Self(name)
     }
 
-    pub const fn name(&self) -> &'a str {
-        self.0
+    pub fn name(&self) -> &str {
+        &self.0
     }
 }
 
