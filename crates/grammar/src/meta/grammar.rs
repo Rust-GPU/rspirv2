@@ -5,14 +5,14 @@ use std::ops::Deref;
 /// extended instruction set, such as versioning.
 #[derive(Copy, Clone, Debug)]
 pub struct Grammar {
-    pub copyright: &'static [&'static str],
+    // pub copyright: &'static [&'static str],
     /// all [`Instructions`] defined by the grammar
     ///
     /// [`Instructions`]: [`InstructionMeta`]
-    pub insts: &'static [InstMeta],
+    pub insts: &'static [&'static InstMeta],
     /// all [`OperandKind`]s defined by the grammar
-    pub operand_kinds: &'static [OperandKind],
-    pub inst_class: &'static [InstClass],
+    pub operand_kinds: &'static [&'static OperandKind],
+    pub inst_class: &'static [&'static InstClass],
 }
 
 #[derive(Copy, Clone, Debug)]

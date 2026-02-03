@@ -30,7 +30,7 @@ pub struct OperandMeta {
     /// The kind of operand, referencing the [`OperandKind`]s defined in [`Grammar`]
     pub kind: &'static OperandKind,
     /// Operand name
-    pub name: &'static str,
+    pub name: Option<&'static str>,
     /// The repetition [`Quantifier`]
     pub quantifier: Quantifier,
 }
