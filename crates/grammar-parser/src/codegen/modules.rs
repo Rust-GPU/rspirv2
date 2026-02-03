@@ -1,7 +1,10 @@
 use crate::codegen::{EmitRef, GrammarWriter};
-use crate::parse::{CoreGrammar, ExtInstSetGrammar, Grammar, InstClass, InstMeta, OperandKind};
+use crate::parse::{
+    Category, CoreGrammar, ExtInstSetGrammar, Extension, Grammar, InstClass, InstMeta, OperandKind,
+};
 use proc_macro2::TokenStream;
 use quote::quote;
+use std::collections::HashSet;
 use std::ops::Deref;
 
 /// Common writing interface between [`CoreGrammar`] and [`ExtInstSetGrammar`]
@@ -35,6 +38,7 @@ pub fn write_grammar<'a>(
     mut writer: GrammarWriter,
     grammar: &impl WriteableGrammar<'a>,
 ) -> anyhow::Result<()> {
+    write_extensions(&mut writer, grammar)?;
     write_operand_kinds(&mut writer, grammar)?;
     write_inst_class(&mut writer, grammar)?;
     write_inst(&mut writer, grammar)?;
@@ -65,6 +69,33 @@ fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<(
     writer.write_const_module(
         "inst",
         grammar.insts.iter().map(InstMeta::emit_def).collect(),
+    )
+}
+
+fn write_extensions(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+    let mut extensions = grammar
+        .insts
+        .iter()
+        .flat_map(|i| i.extensions.iter())
+        .chain(grammar.operand_kinds.iter().flat_map(|o| {
+            match &o.category {
+                Category::BitEnum { enumerants } | Category::ValueEnum { enumerants } => enumerants,
+                _ => const { &Vec::new() },
+            }
+            .iter()
+            .flat_map(|e| e.extensions.iter())
+        }))
+        .collect::<HashSet<_>>()
+        .into_iter()
+        .collect::<Vec<_>>();
+    extensions.sort_by_key(|e| e.name());
+    writer.write_const_module(
+        "extensions",
+        extensions
+            .iter()
+            .copied()
+            .map(Extension::emit_def)
+            .collect(),
     )
 }
 

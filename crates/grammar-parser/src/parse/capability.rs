@@ -2,7 +2,7 @@ use std::borrow::Cow;
 use std::fmt::{Debug, Display, Formatter};
 
 /// A SPIR-V Capability
-#[derive(Clone, Eq, PartialEq, serde::Deserialize)]
+#[derive(Clone, Eq, PartialEq, Hash, serde::Deserialize)]
 pub struct Capability<'a>(#[serde(borrow)] Cow<'a, str>);
 
 impl<'a> Capability<'a> {
@@ -28,7 +28,7 @@ impl Debug for Capability<'_> {
 }
 
 /// A SPIR-V Extension
-#[derive(Clone, Eq, PartialEq, serde::Deserialize)]
+#[derive(Clone, Eq, PartialEq, Hash, serde::Deserialize)]
 pub struct Extension<'a>(#[serde(borrow)] Cow<'a, str>);
 
 impl<'a> Extension<'a> {
