@@ -3,7 +3,7 @@
 use crate::grammar_path::{
     PATH_GRAMMAR_CORE, PATH_GRAMMAR_DEBUG_PRINTF, PATH_GRAMMAR_GLSL_STD_450,
 };
-use spirv_grammar_parser::codegen::GrammarWriter;
+use spirv_grammar_parser::codegen::{GrammarWriter, write_grammar};
 use std::path::Path;
 
 mod grammar_path;
@@ -11,23 +11,17 @@ mod grammar_path;
 pub const PATH_GRAMMAR_CRATE_SRC: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/../grammar/src/");
 
 pub fn main() -> anyhow::Result<()> {
-    GrammarWriter::new(
+    write_grammar(
+        GrammarWriter::new(Path::new(PATH_GRAMMAR_CRATE_SRC).join("core"))?,
         &PATH_GRAMMAR_CORE.read()?.parse_grammar()?,
-        Path::new(PATH_GRAMMAR_CRATE_SRC).join("core"),
-    )?
-    .finish()?;
-
-    GrammarWriter::new(
+    )?;
+    write_grammar(
+        GrammarWriter::new(Path::new(PATH_GRAMMAR_CRATE_SRC).join("glsl_std_450"))?,
         &PATH_GRAMMAR_GLSL_STD_450.read()?.parse_grammar()?,
-        Path::new(PATH_GRAMMAR_CRATE_SRC).join("glsl_std_450"),
-    )?
-    .finish()?;
-
-    GrammarWriter::new(
+    )?;
+    write_grammar(
+        GrammarWriter::new(Path::new(PATH_GRAMMAR_CRATE_SRC).join("debug_printf"))?,
         &PATH_GRAMMAR_DEBUG_PRINTF.read()?.parse_grammar()?,
-        Path::new(PATH_GRAMMAR_CRATE_SRC).join("debug_printf"),
-    )?
-    .finish()?;
-
+    )?;
     Ok(())
 }

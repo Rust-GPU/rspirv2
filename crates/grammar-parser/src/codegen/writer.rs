@@ -1,38 +1,8 @@
-use crate::codegen::EmitRef;
-use crate::parse::{CoreGrammar, ExtInstSetGrammar, Grammar, InstClass, InstMeta, OperandKind};
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use std::fs;
-use std::ops::Deref;
 use std::path::PathBuf;
 use std::process::Command;
-
-/// Common writing interface between [`CoreGrammar`] and [`ExtInstSetGrammar`]
-pub trait WriteableGrammar<'a>: EmitRef + Deref<Target = Grammar<'a>> {
-    fn requires_core_import(&self) -> bool;
-
-    fn emit_def(&self) -> TokenStream;
-}
-
-impl<'a> WriteableGrammar<'a> for CoreGrammar<'a> {
-    fn requires_core_import(&self) -> bool {
-        false
-    }
-
-    fn emit_def(&self) -> TokenStream {
-        self.emit_def()
-    }
-}
-
-impl<'a> WriteableGrammar<'a> for ExtInstSetGrammar<'a> {
-    fn requires_core_import(&self) -> bool {
-        true
-    }
-
-    fn emit_def(&self) -> TokenStream {
-        self.emit_def()
-    }
-}
 
 /// a use statement that imports symbols from other files
 pub fn use_super() -> TokenStream {
@@ -44,19 +14,15 @@ pub fn use_super() -> TokenStream {
 pub struct GrammarWriter {
     folder: PathBuf,
     submodules: Vec<String>,
-    requires_core_import: bool,
 }
 
 impl GrammarWriter {
-    pub fn new<'a>(grammar: &impl WriteableGrammar<'a>, folder: PathBuf) -> anyhow::Result<Self> {
+    pub fn new<'a>(folder: PathBuf) -> anyhow::Result<Self> {
         fs::create_dir_all(&folder)?;
-        let mut this = Self {
+        Ok(Self {
             folder,
             submodules: Vec::new(),
-            requires_core_import: grammar.requires_core_import(),
-        };
-        this.write_grammar(grammar)?;
-        Ok(this)
+        })
     }
 
     /// Get the file path for a submodule name
@@ -74,7 +40,11 @@ impl GrammarWriter {
     }
 
     /// Write the definitions ([`EmitRef::emit_def`]) of some emittable struct to a module
-    fn write_const_module(&mut self, submodule: &str, content: TokenStream) -> anyhow::Result<()> {
+    pub fn write_const_module(
+        &mut self,
+        submodule: &str,
+        content: TokenStream,
+    ) -> anyhow::Result<()> {
         if content.is_empty() {
             return Ok(());
         }
@@ -88,46 +58,25 @@ impl GrammarWriter {
         )
     }
 
-    fn write_grammar<'a>(&mut self, grammar: &impl WriteableGrammar<'a>) -> anyhow::Result<()> {
-        self.write_const_module(
-            "inst_class",
-            grammar.inst_class.iter().map(InstClass::emit_def).collect(),
-        )?;
-        self.write_const_module(
-            "operant_kinds",
-            grammar
-                .operand_kinds
-                .iter()
-                .map(OperandKind::emit_def)
-                .collect(),
-        )?;
-        self.write_const_module(
-            "inst",
-            grammar.insts.iter().map(InstMeta::emit_def).collect(),
-        )?;
-        self.write_const_module("grammar", grammar.emit_def())?;
-        Ok(())
-    }
-
     /// Finish writing the grammar
-    pub fn finish(self) -> anyhow::Result<()> {
-        self.write_mod_rs()?;
+    pub fn finish(self, requires_core_import: bool) -> anyhow::Result<()> {
+        self.write_mod_rs(requires_core_import)?;
         self.format_submodules()?;
         Ok(())
     }
 
     /// always write mod.rs and don't add to `submodules`
-    fn write_mod_rs(&self) -> anyhow::Result<()> {
+    fn write_mod_rs(&self, requires_core_import: bool) -> anyhow::Result<()> {
         fs::write(
             self.submodule_file("mod"),
-            self.codegen_mod_rs()?.to_string(),
+            self.codegen_mod_rs(requires_core_import)?.to_string(),
         )?;
         Ok(())
     }
 
     /// see [`use_super`]
-    fn codegen_mod_rs(&self) -> anyhow::Result<TokenStream> {
-        let core_import = if self.requires_core_import {
+    fn codegen_mod_rs(&self, requires_core_import: bool) -> anyhow::Result<TokenStream> {
+        let core_import = if requires_core_import {
             quote!(
                 pub use super::super::core::preamble;
             )

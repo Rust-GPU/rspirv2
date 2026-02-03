@@ -3,7 +3,7 @@
 A strongly typed SPIR-V representation with a builder, disassembler and support for custom instruction sets. Build primarily for [rust-gpu](https://github.com/Rust-GPU/rust-gpu/). 
 
 ## Design
-* strongly typed: Each instruction is their own struct with pub fields for each operant (including return word and return type, where required), to ensure each are assigned the correct type of operant at compile time. (Sort of like [`rspirv::sr::Op`](https://github.com/gfx-rs/rspirv/blob/3e8814d838a49a98084ada2d1a8677e3281c6d33/rspirv/sr/autogen_ops.rs#L67) but you can't encode them into binary)
+* strongly typed: Each instruction is their own struct with pub fields for each operand (including return word and return type, where required), to ensure each are assigned the correct type of operant at compile time. (Sort of like [`rspirv::sr::Op`](https://github.com/gfx-rs/rspirv/blob/3e8814d838a49a98084ada2d1a8677e3281c6d33/rspirv/sr/autogen_ops.rs#L67) but you can't encode them into binary)
 * Bring your own builder: The `Builder` is entirely optional and only exists for convenience. Every instruction can be turned into a `Iterator<Type=u32>` and written to any buffer you want.
 * Instruction metadata: For each instruction, you can query the metadata about expected argument types, [like in rspirv](https://github.com/gfx-rs/rspirv/blob/3e8814d838a49a98084ada2d1a8677e3281c6d33/rspirv/grammar/autogen_table.rs#L80). This type querying system is dynamic and separate from the generated structs. Needed for disassembly and `asm!` type inference in rust-gpu.
 * Custom instruction sets: You can choose which instruction set extensions you operate on, whether it's `glsl_std_450`, `opencl_std_100` or a completely custom externally defined instruction set, e.g. for rust-gpu.
