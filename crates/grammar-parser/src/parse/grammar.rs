@@ -70,19 +70,47 @@ impl GrammarKind for ExtInstSetGrammar<'_> {
 mod codegen {
     use super::*;
     use crate::codegen::EmitRef;
-    use proc_macro2::TokenStream;
+    use proc_macro2::{Ident, TokenStream};
     use quote::{ToTokens, format_ident, quote};
+
+    impl Grammar<'_> {
+        pub fn all_insts_ident() -> Ident {
+            format_ident!("ALL_INSTS")
+        }
+
+        pub fn all_operand_kinds_ident() -> Ident {
+            format_ident!("ALL_OPERAND_KINDS")
+        }
+
+        pub fn all_inst_classes_ident() -> Ident {
+            format_ident!("ALL_INST_CLASSES")
+        }
+
+        pub fn emit_def(&self) -> TokenStream {
+            let all_insts_ident = Self::all_insts_ident();
+            let all_insts = self.insts.iter().map(|i| i.emit_ref());
+            let all_operand_kinds_ident = Self::all_operand_kinds_ident();
+            let all_operand_kinds = self.operand_kinds.iter().map(|i| i.emit_ref());
+            let all_inst_classes_ident = Self::all_inst_classes_ident();
+            let all_inst_classes = self.inst_class.iter().map(|i| i.emit_ref());
+            quote! {
+                const #all_insts_ident: &'static [&'static InstMeta] = &[#(#all_insts),*];
+                const #all_operand_kinds_ident: &'static [&'static OperandKind] = &[#(#all_operand_kinds),*];
+                const #all_inst_classes_ident: &'static [&'static InstClass] = &[#(#all_inst_classes),*];
+            }
+        }
+    }
 
     impl EmitRef for Grammar<'_> {
         fn emit_ref(&self) -> TokenStream {
-            let insts = self.insts.emit_ref();
-            let operand_kinds = self.operand_kinds.emit_ref();
-            let inst_class = self.inst_class.emit_ref();
+            let all_insts_ident = Self::all_insts_ident();
+            let all_operand_kinds_ident = Self::all_operand_kinds_ident();
+            let all_inst_classes_ident = Self::all_inst_classes_ident();
             quote! {
                 Grammar {
-                    insts: #insts,
-                    operand_kinds: #operand_kinds,
-                    inst_class: #inst_class,
+                    insts: #all_insts_ident,
+                    operand_kinds: #all_operand_kinds_ident,
+                    inst_class: #all_inst_classes_ident,
                 }
             }
         }

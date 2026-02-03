@@ -1,13 +1,14 @@
 use crate::codegen::{EmitRef, GrammarWriter};
 use crate::parse::{CoreGrammar, ExtInstSetGrammar, Grammar, InstClass, InstMeta, OperandKind};
 use proc_macro2::TokenStream;
+use quote::quote;
 use std::ops::Deref;
 
 /// Common writing interface between [`CoreGrammar`] and [`ExtInstSetGrammar`]
 pub trait WriteableGrammar<'a>: EmitRef + Deref<Target = Grammar<'a>> {
     fn requires_core_import(&self) -> bool;
 
-    fn emit_def(&self) -> TokenStream;
+    fn emit_grammar_def(&self) -> TokenStream;
 }
 
 impl<'a> WriteableGrammar<'a> for CoreGrammar<'a> {
@@ -15,7 +16,7 @@ impl<'a> WriteableGrammar<'a> for CoreGrammar<'a> {
         false
     }
 
-    fn emit_def(&self) -> TokenStream {
+    fn emit_grammar_def(&self) -> TokenStream {
         self.emit_def()
     }
 }
@@ -25,7 +26,7 @@ impl<'a> WriteableGrammar<'a> for ExtInstSetGrammar<'a> {
         true
     }
 
-    fn emit_def(&self) -> TokenStream {
+    fn emit_grammar_def(&self) -> TokenStream {
         self.emit_def()
     }
 }
@@ -37,7 +38,7 @@ pub fn write_grammar<'a>(
     write_operand_kinds(&mut writer, grammar)?;
     write_inst_class(&mut writer, grammar)?;
     write_inst(&mut writer, grammar)?;
-    writer.write_const_module("grammar", grammar.emit_def())?;
+    write_grammar_mod(&mut writer, grammar)?;
     writer.finish(grammar.requires_core_import())?;
     Ok(())
 }
@@ -65,4 +66,20 @@ fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<(
         "inst",
         grammar.insts.iter().map(InstMeta::emit_def).collect(),
     )
+}
+
+fn write_grammar_mod<'a>(
+    writer: &mut GrammarWriter,
+    grammar: &impl WriteableGrammar<'a>,
+) -> anyhow::Result<()> {
+    let grammar_def = grammar.emit_grammar_def();
+    let other_def = Grammar::emit_def(grammar);
+    writer.write_const_module(
+        "grammar",
+        quote! {
+            #grammar_def
+            #other_def
+        },
+    )?;
+    Ok(())
 }
