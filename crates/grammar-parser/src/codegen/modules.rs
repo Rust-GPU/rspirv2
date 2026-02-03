@@ -1,6 +1,7 @@
 use crate::codegen::{EmitRef, GrammarWriter};
 use crate::parse::{
-    Category, CoreGrammar, ExtInstSetGrammar, Extension, Grammar, InstClass, InstMeta, OperandKind,
+    Capability, Category, CoreGrammar, ExtInstSetGrammar, Extension, Grammar, InstClass, InstMeta,
+    OperandKind,
 };
 use proc_macro2::TokenStream;
 use quote::quote;
@@ -39,6 +40,7 @@ pub fn write_grammar<'a>(
     grammar: &impl WriteableGrammar<'a>,
 ) -> anyhow::Result<()> {
     write_extensions(&mut writer, grammar)?;
+    write_capabilities(&mut writer, grammar)?;
     write_operand_kinds(&mut writer, grammar)?;
     write_inst_class(&mut writer, grammar)?;
     write_inst(&mut writer, grammar)?;
@@ -97,6 +99,23 @@ fn write_extensions(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Re
             .map(Extension::emit_def)
             .collect(),
     )
+}
+
+fn write_capabilities(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+    let capability = grammar
+        .operand_kinds
+        .iter()
+        .find(|kind| kind.name == "Capability");
+    if let Some(capability) = capability
+        && let Category::ValueEnum { enumerants } = &capability.category
+    {
+        let content = enumerants
+            .iter()
+            .map(|e| Capability::new(e.symbol.clone()).emit_def())
+            .collect();
+        writer.write_const_module("capabilities", content)?;
+    }
+    Ok(())
 }
 
 fn write_grammar_mod<'a>(
