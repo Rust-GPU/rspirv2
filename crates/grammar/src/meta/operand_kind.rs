@@ -22,7 +22,7 @@ pub enum Category {
     /// A composite out of 2 or more [`Operand`]s
     Composite {
         /// describes the [`OperandKind`]s this [`OperandKind`] is made out of
-        bases: &'static [OperandKind],
+        bases: &'static [&'static OperandKind],
     },
     /// The result id of another instruction
     Id,

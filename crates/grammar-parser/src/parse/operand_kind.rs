@@ -101,8 +101,10 @@ mod codegen {
                     quote!(Category::BitEnum { enumerants: #enumerants })
                 }
                 Category::Composite { bases } => {
-                    let bases = bases.emit_ref();
-                    quote!(Category::Composite { bases: #bases })
+                    let bases = bases
+                        .iter()
+                        .map(|name| ref_ident(OperandKind::const_ident(name)));
+                    quote!(Category::Composite { bases: &[#(#bases),*] })
                 }
                 Category::Id => quote!(Category::Id),
                 Category::Literal => quote!(Category::Literal),

@@ -77,11 +77,14 @@ impl GrammarWriter {
     /// see [`use_super`]
     fn codegen_mod_rs(&self, requires_core_import: bool) -> anyhow::Result<TokenStream> {
         let core_import = if requires_core_import {
-            quote!(
-                pub use super::super::core::preamble;
-            )
+            // meta will be transitively imported via the above
+            quote! {
+                pub use super::super::core::preamble::*;
+            }
         } else {
-            TokenStream::default()
+            quote! {
+                pub use crate::meta::*;
+            }
         };
 
         let (mods, imports): (Vec<_>, Vec<_>) = self
@@ -94,7 +97,6 @@ impl GrammarWriter {
         Ok(quote! {
             #(#mods)*
             pub mod preamble {
-                pub use crate::meta::*;
                 #core_import
                 #(#imports)*
             }
