@@ -1,11 +1,11 @@
 use std::borrow::Cow;
 use std::fmt::{Debug, Display, Formatter};
 
-/// A SPIR-V Capability
+/// A SPIR-V Extension
 #[derive(Clone, Eq, PartialEq, Hash, serde::Deserialize)]
-pub struct Capability<'a>(#[serde(borrow)] Cow<'a, str>);
+pub struct Extension<'a>(#[serde(borrow)] Cow<'a, str>);
 
-impl<'a> Capability<'a> {
+impl<'a> Extension<'a> {
     pub const fn new(name: Cow<'a, str>) -> Self {
         Self(name)
     }
@@ -15,13 +15,13 @@ impl<'a> Capability<'a> {
     }
 }
 
-impl Display for Capability<'_> {
+impl Display for Extension<'_> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "Capability({})", self.0)
+        write!(f, "Extension({})", self.0)
     }
 }
 
-impl Debug for Capability<'_> {
+impl Debug for Extension<'_> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         Display::fmt(self, f)
     }
@@ -34,21 +34,21 @@ mod codegen {
     use proc_macro2::{Ident, TokenStream};
     use quote::{ToTokens, quote};
 
-    impl Capability<'_> {
+    impl Extension<'_> {
         pub fn const_ident(&self) -> Ident {
-            make_const_ident("CAPABILITY_", &self.0)
+            make_const_ident("EXTENSION_", &self.0)
         }
 
         pub fn emit_def(&self) -> TokenStream {
             let ident = self.const_ident();
             let inner = &self.0;
             quote! {
-                pub const #ident: Capability = Capability::new(#inner);
+                pub const #ident: Extension = Extension::new(#inner);
             }
         }
     }
 
-    impl EmitRef for Capability<'_> {
+    impl EmitRef for Extension<'_> {
         fn emit_ref(&self) -> TokenStream {
             self.const_ident().into_token_stream()
         }

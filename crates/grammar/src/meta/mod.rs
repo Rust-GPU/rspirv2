@@ -6,11 +6,13 @@
 //! * [spirt](https://github.com/Rust-GPU/spirt/blob/f6924328d604503445d470a6676ade916b6ba3dc/src/spv/spec.rs#L1104)
 
 mod capability;
+mod extension;
 mod grammar;
 mod instruction;
 mod operand_kind;
 
 pub use capability::*;
+pub use extension::*;
 pub use grammar::*;
 pub use instruction::*;
 pub use operand_kind::*;

@@ -9,6 +9,7 @@
 //! [`SmallVec`]: `smallvec::SmallVec`
 
 mod capability;
+mod extension;
 mod files;
 mod grammar;
 mod instruction;
@@ -16,6 +17,7 @@ mod operand_kind;
 mod serde_helper;
 
 pub use capability::*;
+pub use extension::*;
 pub use files::*;
 pub use grammar::*;
 pub use instruction::*;

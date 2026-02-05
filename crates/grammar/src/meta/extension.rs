@@ -1,10 +1,10 @@
 use std::fmt::{Debug, Display, Formatter};
 
-/// A SPIR-V Capability
+/// A SPIR-V Extension
 #[derive(Copy, Clone, Eq, PartialEq)]
-pub struct Capability(&'static str);
+pub struct Extension(&'static str);
 
-impl Capability {
+impl Extension {
     pub const fn new(name: &'static str) -> Self {
         Self(name)
     }
@@ -14,13 +14,13 @@ impl Capability {
     }
 }
 
-impl Display for Capability {
+impl Display for Extension {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        write!(f, "Capability({})", self.0)
+        write!(f, "Extension({})", self.0)
     }
 }
 
-impl Debug for Capability {
+impl Debug for Extension {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         Display::fmt(self, f)
     }
