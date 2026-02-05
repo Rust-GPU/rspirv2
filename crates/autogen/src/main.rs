@@ -18,6 +18,7 @@ pub fn main() -> anyhow::Result<()> {
         ModOptions {
             preamble: quote! {
                 pub use bitflags::bitflags;
+                pub use smallvec::SmallVec;
                 pub use crate::meta::*;
                 pub use crate::operand::*;
             },

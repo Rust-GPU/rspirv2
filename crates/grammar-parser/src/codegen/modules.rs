@@ -1,3 +1,4 @@
+use crate::codegen::instructions::write_inst;
 use crate::codegen::operands::write_operands;
 use crate::codegen::{EmitRef, GrammarWriter, ModOptions};
 use crate::parse::{
@@ -35,6 +36,7 @@ pub fn write_grammar<'a>(
     write_operands(&mut writer, grammar)?;
     write_inst_class(&mut writer, grammar)?;
     write_inst_meta(&mut writer, grammar)?;
+    write_inst(&mut writer, grammar)?;
     write_grammar_mod(&mut writer, grammar)?;
     writer.finish(mod_options)?;
     Ok(())
