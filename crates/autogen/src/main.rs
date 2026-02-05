@@ -19,6 +19,7 @@ pub fn main() -> anyhow::Result<()> {
             preamble: quote! {
                 pub use bitflags::bitflags;
                 pub use crate::meta::*;
+                pub use crate::operand::*;
             },
             mod_attr: quote! {
                 #![allow(unused_imports)]

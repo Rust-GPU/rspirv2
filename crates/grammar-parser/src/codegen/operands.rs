@@ -1,5 +1,5 @@
 use crate::codegen::GrammarWriter;
-use crate::parse::{Category, Enumerant, Grammar, OperandKind};
+use crate::parse::{Category, Enumerant, Grammar, OperandKind, Quantifier};
 use proc_macro2::TokenStream;
 use quote::quote;
 
@@ -14,7 +14,7 @@ pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::
             if c_like {
                 emit_c_like_enum(o, enumerants)
             } else {
-                quote!()
+                emit_rust_like_enum(o, enumerants)
             }
         }
     });
@@ -24,6 +24,46 @@ pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::
             #(#operands)*
         },
     )
+}
+
+fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> TokenStream {
+    let name = OperandKind::type_ident(&operand_kind.name);
+    let doc = make_doc(&operand_kind.doc);
+
+    let variants = enumerants.iter().map(|e| {
+        let enumerant_preamble = emit_enumerant_preamble(e);
+        let symbol = Enumerant::variant_ident(&e.symbol);
+        let params = if !e.parameters.is_empty() {
+            let params = e.parameters.iter().map(|p| {
+                let docs = p
+                    .name
+                    .as_ref()
+                    .map(|name| make_doc(name))
+                    .unwrap_or(quote!());
+                let ty = OperandKind::type_ident(&p.kind);
+                match p.quantifier {
+                    Quantifier::One => quote!(#docs #ty),
+                    Quantifier::ZeroOrOne => quote!(#docs Option<#ty>),
+                    Quantifier::ZeroOrMore => quote!(#docs Vec<#ty>),
+                }
+            });
+            quote!((#(#params),*))
+        } else {
+            quote!()
+        };
+        quote! {
+            #enumerant_preamble
+            #symbol #params
+        }
+    });
+
+    quote! {
+        #doc
+        #[derive(Clone, Debug, Eq, PartialEq, Hash)]
+        pub enum #name {
+            #(#variants),*
+        }
+    }
 }
 
 fn emit_c_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> TokenStream {
