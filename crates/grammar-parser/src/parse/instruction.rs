@@ -71,7 +71,7 @@ mod codegen {
 
     impl InstMeta<'_> {
         pub fn const_ident(opname: &str) -> Ident {
-            make_const_ident("INSTRUCTION_", opname)
+            make_const_ident("", opname)
         }
 
         pub fn emit_def(&self) -> TokenStream {

@@ -1,5 +1,5 @@
 use super::preamble::*;
-pub const INSTRUCTION_DEBUG_PRINTF: InstMeta = InstMeta {
+pub const DEBUG_PRINTF: InstMeta = InstMeta {
     opname: "DebugPrintf",
     class: None,
     opcode: 1u16,

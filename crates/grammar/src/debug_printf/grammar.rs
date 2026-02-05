@@ -8,6 +8,6 @@ pub const GRAMMAR_EXTINST: ExtInstSetGrammar = ExtInstSetGrammar {
     version: None,
     revision: Some(1u32),
 };
-const ALL_INSTS: &'static [&'static InstMeta] = &[&INSTRUCTION_DEBUG_PRINTF];
+const ALL_INSTS: &'static [&'static InstMeta] = &[&DEBUG_PRINTF];
 const ALL_OPERAND_KINDS: &'static [&'static OperandKind] = &[];
 const ALL_INST_CLASSES: &'static [&'static InstClass] = &[];

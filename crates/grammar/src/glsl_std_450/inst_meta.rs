@@ -1,5 +1,5 @@
 use super::preamble::*;
-pub const INSTRUCTION_ROUND: InstMeta = InstMeta {
+pub const ROUND: InstMeta = InstMeta {
     opname: "Round",
     class: None,
     opcode: 1u16,
@@ -15,7 +15,7 @@ pub const INSTRUCTION_ROUND: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_ROUND_EVEN: InstMeta = InstMeta {
+pub const ROUND_EVEN: InstMeta = InstMeta {
     opname: "RoundEven",
     class: None,
     opcode: 2u16,
@@ -31,7 +31,7 @@ pub const INSTRUCTION_ROUND_EVEN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_TRUNC: InstMeta = InstMeta {
+pub const TRUNC: InstMeta = InstMeta {
     opname: "Trunc",
     class: None,
     opcode: 3u16,
@@ -47,7 +47,7 @@ pub const INSTRUCTION_TRUNC: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_F_ABS: InstMeta = InstMeta {
+pub const F_ABS: InstMeta = InstMeta {
     opname: "FAbs",
     class: None,
     opcode: 4u16,
@@ -63,7 +63,7 @@ pub const INSTRUCTION_F_ABS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_S_ABS: InstMeta = InstMeta {
+pub const S_ABS: InstMeta = InstMeta {
     opname: "SAbs",
     class: None,
     opcode: 5u16,
@@ -79,7 +79,7 @@ pub const INSTRUCTION_S_ABS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_F_SIGN: InstMeta = InstMeta {
+pub const F_SIGN: InstMeta = InstMeta {
     opname: "FSign",
     class: None,
     opcode: 6u16,
@@ -95,7 +95,7 @@ pub const INSTRUCTION_F_SIGN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_S_SIGN: InstMeta = InstMeta {
+pub const S_SIGN: InstMeta = InstMeta {
     opname: "SSign",
     class: None,
     opcode: 7u16,
@@ -111,7 +111,7 @@ pub const INSTRUCTION_S_SIGN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_FLOOR: InstMeta = InstMeta {
+pub const FLOOR: InstMeta = InstMeta {
     opname: "Floor",
     class: None,
     opcode: 8u16,
@@ -127,7 +127,7 @@ pub const INSTRUCTION_FLOOR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_CEIL: InstMeta = InstMeta {
+pub const CEIL: InstMeta = InstMeta {
     opname: "Ceil",
     class: None,
     opcode: 9u16,
@@ -143,7 +143,7 @@ pub const INSTRUCTION_CEIL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_FRACT: InstMeta = InstMeta {
+pub const FRACT: InstMeta = InstMeta {
     opname: "Fract",
     class: None,
     opcode: 10u16,
@@ -159,7 +159,7 @@ pub const INSTRUCTION_FRACT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_RADIANS: InstMeta = InstMeta {
+pub const RADIANS: InstMeta = InstMeta {
     opname: "Radians",
     class: None,
     opcode: 11u16,
@@ -175,7 +175,7 @@ pub const INSTRUCTION_RADIANS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_DEGREES: InstMeta = InstMeta {
+pub const DEGREES: InstMeta = InstMeta {
     opname: "Degrees",
     class: None,
     opcode: 12u16,
@@ -191,7 +191,7 @@ pub const INSTRUCTION_DEGREES: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_SIN: InstMeta = InstMeta {
+pub const SIN: InstMeta = InstMeta {
     opname: "Sin",
     class: None,
     opcode: 13u16,
@@ -207,7 +207,7 @@ pub const INSTRUCTION_SIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_COS: InstMeta = InstMeta {
+pub const COS: InstMeta = InstMeta {
     opname: "Cos",
     class: None,
     opcode: 14u16,
@@ -223,7 +223,7 @@ pub const INSTRUCTION_COS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_TAN: InstMeta = InstMeta {
+pub const TAN: InstMeta = InstMeta {
     opname: "Tan",
     class: None,
     opcode: 15u16,
@@ -239,7 +239,7 @@ pub const INSTRUCTION_TAN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_ASIN: InstMeta = InstMeta {
+pub const ASIN: InstMeta = InstMeta {
     opname: "Asin",
     class: None,
     opcode: 16u16,
@@ -255,7 +255,7 @@ pub const INSTRUCTION_ASIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_ACOS: InstMeta = InstMeta {
+pub const ACOS: InstMeta = InstMeta {
     opname: "Acos",
     class: None,
     opcode: 17u16,
@@ -271,7 +271,7 @@ pub const INSTRUCTION_ACOS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_ATAN: InstMeta = InstMeta {
+pub const ATAN: InstMeta = InstMeta {
     opname: "Atan",
     class: None,
     opcode: 18u16,
@@ -287,7 +287,7 @@ pub const INSTRUCTION_ATAN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_SINH: InstMeta = InstMeta {
+pub const SINH: InstMeta = InstMeta {
     opname: "Sinh",
     class: None,
     opcode: 19u16,
@@ -303,7 +303,7 @@ pub const INSTRUCTION_SINH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_COSH: InstMeta = InstMeta {
+pub const COSH: InstMeta = InstMeta {
     opname: "Cosh",
     class: None,
     opcode: 20u16,
@@ -319,7 +319,7 @@ pub const INSTRUCTION_COSH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_TANH: InstMeta = InstMeta {
+pub const TANH: InstMeta = InstMeta {
     opname: "Tanh",
     class: None,
     opcode: 21u16,
@@ -335,7 +335,7 @@ pub const INSTRUCTION_TANH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_ASINH: InstMeta = InstMeta {
+pub const ASINH: InstMeta = InstMeta {
     opname: "Asinh",
     class: None,
     opcode: 22u16,
@@ -351,7 +351,7 @@ pub const INSTRUCTION_ASINH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_ACOSH: InstMeta = InstMeta {
+pub const ACOSH: InstMeta = InstMeta {
     opname: "Acosh",
     class: None,
     opcode: 23u16,
@@ -367,7 +367,7 @@ pub const INSTRUCTION_ACOSH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_ATANH: InstMeta = InstMeta {
+pub const ATANH: InstMeta = InstMeta {
     opname: "Atanh",
     class: None,
     opcode: 24u16,
@@ -383,7 +383,7 @@ pub const INSTRUCTION_ATANH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_ATAN_2: InstMeta = InstMeta {
+pub const ATAN_2: InstMeta = InstMeta {
     opname: "Atan2",
     class: None,
     opcode: 25u16,
@@ -406,7 +406,7 @@ pub const INSTRUCTION_ATAN_2: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_POW: InstMeta = InstMeta {
+pub const POW: InstMeta = InstMeta {
     opname: "Pow",
     class: None,
     opcode: 26u16,
@@ -429,7 +429,7 @@ pub const INSTRUCTION_POW: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_EXP: InstMeta = InstMeta {
+pub const EXP: InstMeta = InstMeta {
     opname: "Exp",
     class: None,
     opcode: 27u16,
@@ -445,7 +445,7 @@ pub const INSTRUCTION_EXP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_LOG: InstMeta = InstMeta {
+pub const LOG: InstMeta = InstMeta {
     opname: "Log",
     class: None,
     opcode: 28u16,
@@ -461,7 +461,7 @@ pub const INSTRUCTION_LOG: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_EXP_2: InstMeta = InstMeta {
+pub const EXP_2: InstMeta = InstMeta {
     opname: "Exp2",
     class: None,
     opcode: 29u16,
@@ -477,7 +477,7 @@ pub const INSTRUCTION_EXP_2: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_LOG_2: InstMeta = InstMeta {
+pub const LOG_2: InstMeta = InstMeta {
     opname: "Log2",
     class: None,
     opcode: 30u16,
@@ -493,7 +493,7 @@ pub const INSTRUCTION_LOG_2: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_SQRT: InstMeta = InstMeta {
+pub const SQRT: InstMeta = InstMeta {
     opname: "Sqrt",
     class: None,
     opcode: 31u16,
@@ -509,7 +509,7 @@ pub const INSTRUCTION_SQRT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_INVERSE_SQRT: InstMeta = InstMeta {
+pub const INVERSE_SQRT: InstMeta = InstMeta {
     opname: "InverseSqrt",
     class: None,
     opcode: 32u16,
@@ -525,7 +525,7 @@ pub const INSTRUCTION_INVERSE_SQRT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_DETERMINANT: InstMeta = InstMeta {
+pub const DETERMINANT: InstMeta = InstMeta {
     opname: "Determinant",
     class: None,
     opcode: 33u16,
@@ -541,7 +541,7 @@ pub const INSTRUCTION_DETERMINANT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_MATRIX_INVERSE: InstMeta = InstMeta {
+pub const MATRIX_INVERSE: InstMeta = InstMeta {
     opname: "MatrixInverse",
     class: None,
     opcode: 34u16,
@@ -557,7 +557,7 @@ pub const INSTRUCTION_MATRIX_INVERSE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_MODF: InstMeta = InstMeta {
+pub const MODF: InstMeta = InstMeta {
     opname: "Modf",
     class: None,
     opcode: 35u16,
@@ -580,7 +580,7 @@ pub const INSTRUCTION_MODF: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_MODF_STRUCT: InstMeta = InstMeta {
+pub const MODF_STRUCT: InstMeta = InstMeta {
     opname: "ModfStruct",
     class: None,
     opcode: 36u16,
@@ -596,7 +596,7 @@ pub const INSTRUCTION_MODF_STRUCT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_F_MIN: InstMeta = InstMeta {
+pub const F_MIN: InstMeta = InstMeta {
     opname: "FMin",
     class: None,
     opcode: 37u16,
@@ -619,7 +619,7 @@ pub const INSTRUCTION_F_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_U_MIN: InstMeta = InstMeta {
+pub const U_MIN: InstMeta = InstMeta {
     opname: "UMin",
     class: None,
     opcode: 38u16,
@@ -642,7 +642,7 @@ pub const INSTRUCTION_U_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_S_MIN: InstMeta = InstMeta {
+pub const S_MIN: InstMeta = InstMeta {
     opname: "SMin",
     class: None,
     opcode: 39u16,
@@ -665,7 +665,7 @@ pub const INSTRUCTION_S_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_F_MAX: InstMeta = InstMeta {
+pub const F_MAX: InstMeta = InstMeta {
     opname: "FMax",
     class: None,
     opcode: 40u16,
@@ -688,7 +688,7 @@ pub const INSTRUCTION_F_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_U_MAX: InstMeta = InstMeta {
+pub const U_MAX: InstMeta = InstMeta {
     opname: "UMax",
     class: None,
     opcode: 41u16,
@@ -711,7 +711,7 @@ pub const INSTRUCTION_U_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_S_MAX: InstMeta = InstMeta {
+pub const S_MAX: InstMeta = InstMeta {
     opname: "SMax",
     class: None,
     opcode: 42u16,
@@ -734,7 +734,7 @@ pub const INSTRUCTION_S_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_F_CLAMP: InstMeta = InstMeta {
+pub const F_CLAMP: InstMeta = InstMeta {
     opname: "FClamp",
     class: None,
     opcode: 43u16,
@@ -762,7 +762,7 @@ pub const INSTRUCTION_F_CLAMP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_U_CLAMP: InstMeta = InstMeta {
+pub const U_CLAMP: InstMeta = InstMeta {
     opname: "UClamp",
     class: None,
     opcode: 44u16,
@@ -790,7 +790,7 @@ pub const INSTRUCTION_U_CLAMP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_S_CLAMP: InstMeta = InstMeta {
+pub const S_CLAMP: InstMeta = InstMeta {
     opname: "SClamp",
     class: None,
     opcode: 45u16,
@@ -818,7 +818,7 @@ pub const INSTRUCTION_S_CLAMP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_F_MIX: InstMeta = InstMeta {
+pub const F_MIX: InstMeta = InstMeta {
     opname: "FMix",
     class: None,
     opcode: 46u16,
@@ -846,7 +846,7 @@ pub const INSTRUCTION_F_MIX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_I_MIX: InstMeta = InstMeta {
+pub const I_MIX: InstMeta = InstMeta {
     opname: "IMix",
     class: None,
     opcode: 47u16,
@@ -874,7 +874,7 @@ pub const INSTRUCTION_I_MIX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_STEP: InstMeta = InstMeta {
+pub const STEP: InstMeta = InstMeta {
     opname: "Step",
     class: None,
     opcode: 48u16,
@@ -897,7 +897,7 @@ pub const INSTRUCTION_STEP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_SMOOTH_STEP: InstMeta = InstMeta {
+pub const SMOOTH_STEP: InstMeta = InstMeta {
     opname: "SmoothStep",
     class: None,
     opcode: 49u16,
@@ -925,7 +925,7 @@ pub const INSTRUCTION_SMOOTH_STEP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_FMA: InstMeta = InstMeta {
+pub const FMA: InstMeta = InstMeta {
     opname: "Fma",
     class: None,
     opcode: 50u16,
@@ -953,7 +953,7 @@ pub const INSTRUCTION_FMA: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_FREXP: InstMeta = InstMeta {
+pub const FREXP: InstMeta = InstMeta {
     opname: "Frexp",
     class: None,
     opcode: 51u16,
@@ -976,7 +976,7 @@ pub const INSTRUCTION_FREXP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_FREXP_STRUCT: InstMeta = InstMeta {
+pub const FREXP_STRUCT: InstMeta = InstMeta {
     opname: "FrexpStruct",
     class: None,
     opcode: 52u16,
@@ -992,7 +992,7 @@ pub const INSTRUCTION_FREXP_STRUCT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_LDEXP: InstMeta = InstMeta {
+pub const LDEXP: InstMeta = InstMeta {
     opname: "Ldexp",
     class: None,
     opcode: 53u16,
@@ -1015,7 +1015,7 @@ pub const INSTRUCTION_LDEXP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_PACK_SNORM_4_X_8: InstMeta = InstMeta {
+pub const PACK_SNORM_4_X_8: InstMeta = InstMeta {
     opname: "PackSnorm4x8",
     class: None,
     opcode: 54u16,
@@ -1031,7 +1031,7 @@ pub const INSTRUCTION_PACK_SNORM_4_X_8: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_PACK_UNORM_4_X_8: InstMeta = InstMeta {
+pub const PACK_UNORM_4_X_8: InstMeta = InstMeta {
     opname: "PackUnorm4x8",
     class: None,
     opcode: 55u16,
@@ -1047,7 +1047,7 @@ pub const INSTRUCTION_PACK_UNORM_4_X_8: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_PACK_SNORM_2_X_16: InstMeta = InstMeta {
+pub const PACK_SNORM_2_X_16: InstMeta = InstMeta {
     opname: "PackSnorm2x16",
     class: None,
     opcode: 56u16,
@@ -1063,7 +1063,7 @@ pub const INSTRUCTION_PACK_SNORM_2_X_16: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_PACK_UNORM_2_X_16: InstMeta = InstMeta {
+pub const PACK_UNORM_2_X_16: InstMeta = InstMeta {
     opname: "PackUnorm2x16",
     class: None,
     opcode: 57u16,
@@ -1079,7 +1079,7 @@ pub const INSTRUCTION_PACK_UNORM_2_X_16: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_PACK_HALF_2_X_16: InstMeta = InstMeta {
+pub const PACK_HALF_2_X_16: InstMeta = InstMeta {
     opname: "PackHalf2x16",
     class: None,
     opcode: 58u16,
@@ -1095,7 +1095,7 @@ pub const INSTRUCTION_PACK_HALF_2_X_16: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_PACK_DOUBLE_2_X_32: InstMeta = InstMeta {
+pub const PACK_DOUBLE_2_X_32: InstMeta = InstMeta {
     opname: "PackDouble2x32",
     class: None,
     opcode: 59u16,
@@ -1111,7 +1111,7 @@ pub const INSTRUCTION_PACK_DOUBLE_2_X_32: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_UNPACK_SNORM_2_X_16: InstMeta = InstMeta {
+pub const UNPACK_SNORM_2_X_16: InstMeta = InstMeta {
     opname: "UnpackSnorm2x16",
     class: None,
     opcode: 60u16,
@@ -1127,7 +1127,7 @@ pub const INSTRUCTION_UNPACK_SNORM_2_X_16: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_UNPACK_UNORM_2_X_16: InstMeta = InstMeta {
+pub const UNPACK_UNORM_2_X_16: InstMeta = InstMeta {
     opname: "UnpackUnorm2x16",
     class: None,
     opcode: 61u16,
@@ -1143,7 +1143,7 @@ pub const INSTRUCTION_UNPACK_UNORM_2_X_16: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_UNPACK_HALF_2_X_16: InstMeta = InstMeta {
+pub const UNPACK_HALF_2_X_16: InstMeta = InstMeta {
     opname: "UnpackHalf2x16",
     class: None,
     opcode: 62u16,
@@ -1159,7 +1159,7 @@ pub const INSTRUCTION_UNPACK_HALF_2_X_16: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_UNPACK_SNORM_4_X_8: InstMeta = InstMeta {
+pub const UNPACK_SNORM_4_X_8: InstMeta = InstMeta {
     opname: "UnpackSnorm4x8",
     class: None,
     opcode: 63u16,
@@ -1175,7 +1175,7 @@ pub const INSTRUCTION_UNPACK_SNORM_4_X_8: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_UNPACK_UNORM_4_X_8: InstMeta = InstMeta {
+pub const UNPACK_UNORM_4_X_8: InstMeta = InstMeta {
     opname: "UnpackUnorm4x8",
     class: None,
     opcode: 64u16,
@@ -1191,7 +1191,7 @@ pub const INSTRUCTION_UNPACK_UNORM_4_X_8: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_UNPACK_DOUBLE_2_X_32: InstMeta = InstMeta {
+pub const UNPACK_DOUBLE_2_X_32: InstMeta = InstMeta {
     opname: "UnpackDouble2x32",
     class: None,
     opcode: 65u16,
@@ -1207,7 +1207,7 @@ pub const INSTRUCTION_UNPACK_DOUBLE_2_X_32: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_LENGTH: InstMeta = InstMeta {
+pub const LENGTH: InstMeta = InstMeta {
     opname: "Length",
     class: None,
     opcode: 66u16,
@@ -1223,7 +1223,7 @@ pub const INSTRUCTION_LENGTH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_DISTANCE: InstMeta = InstMeta {
+pub const DISTANCE: InstMeta = InstMeta {
     opname: "Distance",
     class: None,
     opcode: 67u16,
@@ -1246,7 +1246,7 @@ pub const INSTRUCTION_DISTANCE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_CROSS: InstMeta = InstMeta {
+pub const CROSS: InstMeta = InstMeta {
     opname: "Cross",
     class: None,
     opcode: 68u16,
@@ -1269,7 +1269,7 @@ pub const INSTRUCTION_CROSS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_NORMALIZE: InstMeta = InstMeta {
+pub const NORMALIZE: InstMeta = InstMeta {
     opname: "Normalize",
     class: None,
     opcode: 69u16,
@@ -1285,7 +1285,7 @@ pub const INSTRUCTION_NORMALIZE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_FACE_FORWARD: InstMeta = InstMeta {
+pub const FACE_FORWARD: InstMeta = InstMeta {
     opname: "FaceForward",
     class: None,
     opcode: 70u16,
@@ -1313,7 +1313,7 @@ pub const INSTRUCTION_FACE_FORWARD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_REFLECT: InstMeta = InstMeta {
+pub const REFLECT: InstMeta = InstMeta {
     opname: "Reflect",
     class: None,
     opcode: 71u16,
@@ -1336,7 +1336,7 @@ pub const INSTRUCTION_REFLECT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_REFRACT: InstMeta = InstMeta {
+pub const REFRACT: InstMeta = InstMeta {
     opname: "Refract",
     class: None,
     opcode: 72u16,
@@ -1364,7 +1364,7 @@ pub const INSTRUCTION_REFRACT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_FIND_I_LSB: InstMeta = InstMeta {
+pub const FIND_I_LSB: InstMeta = InstMeta {
     opname: "FindILsb",
     class: None,
     opcode: 73u16,
@@ -1380,7 +1380,7 @@ pub const INSTRUCTION_FIND_I_LSB: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_FIND_S_MSB: InstMeta = InstMeta {
+pub const FIND_S_MSB: InstMeta = InstMeta {
     opname: "FindSMsb",
     class: None,
     opcode: 74u16,
@@ -1396,7 +1396,7 @@ pub const INSTRUCTION_FIND_S_MSB: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_FIND_U_MSB: InstMeta = InstMeta {
+pub const FIND_U_MSB: InstMeta = InstMeta {
     opname: "FindUMsb",
     class: None,
     opcode: 75u16,
@@ -1412,7 +1412,7 @@ pub const INSTRUCTION_FIND_U_MSB: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_INTERPOLATE_AT_CENTROID: InstMeta = InstMeta {
+pub const INTERPOLATE_AT_CENTROID: InstMeta = InstMeta {
     opname: "InterpolateAtCentroid",
     class: None,
     opcode: 76u16,
@@ -1428,7 +1428,7 @@ pub const INSTRUCTION_INTERPOLATE_AT_CENTROID: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_INTERPOLATE_AT_SAMPLE: InstMeta = InstMeta {
+pub const INTERPOLATE_AT_SAMPLE: InstMeta = InstMeta {
     opname: "InterpolateAtSample",
     class: None,
     opcode: 77u16,
@@ -1451,7 +1451,7 @@ pub const INSTRUCTION_INTERPOLATE_AT_SAMPLE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_INTERPOLATE_AT_OFFSET: InstMeta = InstMeta {
+pub const INTERPOLATE_AT_OFFSET: InstMeta = InstMeta {
     opname: "InterpolateAtOffset",
     class: None,
     opcode: 78u16,
@@ -1474,7 +1474,7 @@ pub const INSTRUCTION_INTERPOLATE_AT_OFFSET: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_N_MIN: InstMeta = InstMeta {
+pub const N_MIN: InstMeta = InstMeta {
     opname: "NMin",
     class: None,
     opcode: 79u16,
@@ -1497,7 +1497,7 @@ pub const INSTRUCTION_N_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_N_MAX: InstMeta = InstMeta {
+pub const N_MAX: InstMeta = InstMeta {
     opname: "NMax",
     class: None,
     opcode: 80u16,
@@ -1520,7 +1520,7 @@ pub const INSTRUCTION_N_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_N_CLAMP: InstMeta = InstMeta {
+pub const N_CLAMP: InstMeta = InstMeta {
     opname: "NClamp",
     class: None,
     opcode: 81u16,

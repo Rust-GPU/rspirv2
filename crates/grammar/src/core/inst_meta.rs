@@ -1,5 +1,5 @@
 use super::preamble::*;
-pub const INSTRUCTION_OP_NOP: InstMeta = InstMeta {
+pub const OP_NOP: InstMeta = InstMeta {
     opname: "OpNop",
     class: Some(&PRINTING_CLASS_MISCELLANEOUS),
     opcode: 0u16,
@@ -11,7 +11,7 @@ pub const INSTRUCTION_OP_NOP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_UNDEF: InstMeta = InstMeta {
+pub const OP_UNDEF: InstMeta = InstMeta {
     opname: "OpUndef",
     class: Some(&PRINTING_CLASS_MISCELLANEOUS),
     opcode: 1u16,
@@ -34,7 +34,7 @@ pub const INSTRUCTION_OP_UNDEF: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SOURCE_CONTINUED: InstMeta = InstMeta {
+pub const OP_SOURCE_CONTINUED: InstMeta = InstMeta {
     opname: "OpSourceContinued",
     class: Some(&PRINTING_CLASS_DEBUG),
     opcode: 2u16,
@@ -50,7 +50,7 @@ pub const INSTRUCTION_OP_SOURCE_CONTINUED: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SOURCE: InstMeta = InstMeta {
+pub const OP_SOURCE: InstMeta = InstMeta {
     opname: "OpSource",
     class: Some(&PRINTING_CLASS_DEBUG),
     opcode: 3u16,
@@ -83,7 +83,7 @@ pub const INSTRUCTION_OP_SOURCE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SOURCE_EXTENSION: InstMeta = InstMeta {
+pub const OP_SOURCE_EXTENSION: InstMeta = InstMeta {
     opname: "OpSourceExtension",
     class: Some(&PRINTING_CLASS_DEBUG),
     opcode: 4u16,
@@ -99,7 +99,7 @@ pub const INSTRUCTION_OP_SOURCE_EXTENSION: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_NAME: InstMeta = InstMeta {
+pub const OP_NAME: InstMeta = InstMeta {
     opname: "OpName",
     class: Some(&PRINTING_CLASS_DEBUG),
     opcode: 5u16,
@@ -122,7 +122,7 @@ pub const INSTRUCTION_OP_NAME: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_MEMBER_NAME: InstMeta = InstMeta {
+pub const OP_MEMBER_NAME: InstMeta = InstMeta {
     opname: "OpMemberName",
     class: Some(&PRINTING_CLASS_DEBUG),
     opcode: 6u16,
@@ -150,7 +150,7 @@ pub const INSTRUCTION_OP_MEMBER_NAME: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_STRING: InstMeta = InstMeta {
+pub const OP_STRING: InstMeta = InstMeta {
     opname: "OpString",
     class: Some(&PRINTING_CLASS_DEBUG),
     opcode: 7u16,
@@ -173,7 +173,7 @@ pub const INSTRUCTION_OP_STRING: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_LINE: InstMeta = InstMeta {
+pub const OP_LINE: InstMeta = InstMeta {
     opname: "OpLine",
     class: Some(&PRINTING_CLASS_DEBUG),
     opcode: 8u16,
@@ -201,7 +201,7 @@ pub const INSTRUCTION_OP_LINE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_EXTENSION: InstMeta = InstMeta {
+pub const OP_EXTENSION: InstMeta = InstMeta {
     opname: "OpExtension",
     class: Some(&PRINTING_CLASS_EXTENSION),
     opcode: 10u16,
@@ -217,7 +217,7 @@ pub const INSTRUCTION_OP_EXTENSION: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_EXT_INST_IMPORT: InstMeta = InstMeta {
+pub const OP_EXT_INST_IMPORT: InstMeta = InstMeta {
     opname: "OpExtInstImport",
     class: Some(&PRINTING_CLASS_EXTENSION),
     opcode: 11u16,
@@ -240,7 +240,7 @@ pub const INSTRUCTION_OP_EXT_INST_IMPORT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_EXT_INST: InstMeta = InstMeta {
+pub const OP_EXT_INST: InstMeta = InstMeta {
     opname: "OpExtInst",
     class: Some(&PRINTING_CLASS_EXTENSION),
     opcode: 12u16,
@@ -278,7 +278,7 @@ pub const INSTRUCTION_OP_EXT_INST: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_MEMORY_MODEL: InstMeta = InstMeta {
+pub const OP_MEMORY_MODEL: InstMeta = InstMeta {
     opname: "OpMemoryModel",
     class: Some(&PRINTING_CLASS_MODE_SETTING),
     opcode: 14u16,
@@ -301,7 +301,7 @@ pub const INSTRUCTION_OP_MEMORY_MODEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ENTRY_POINT: InstMeta = InstMeta {
+pub const OP_ENTRY_POINT: InstMeta = InstMeta {
     opname: "OpEntryPoint",
     class: Some(&PRINTING_CLASS_MODE_SETTING),
     opcode: 15u16,
@@ -334,7 +334,7 @@ pub const INSTRUCTION_OP_ENTRY_POINT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_EXECUTION_MODE: InstMeta = InstMeta {
+pub const OP_EXECUTION_MODE: InstMeta = InstMeta {
     opname: "OpExecutionMode",
     class: Some(&PRINTING_CLASS_MODE_SETTING),
     opcode: 16u16,
@@ -357,7 +357,7 @@ pub const INSTRUCTION_OP_EXECUTION_MODE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CAPABILITY: InstMeta = InstMeta {
+pub const OP_CAPABILITY: InstMeta = InstMeta {
     opname: "OpCapability",
     class: Some(&PRINTING_CLASS_MODE_SETTING),
     opcode: 17u16,
@@ -373,7 +373,7 @@ pub const INSTRUCTION_OP_CAPABILITY: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_VOID: InstMeta = InstMeta {
+pub const OP_TYPE_VOID: InstMeta = InstMeta {
     opname: "OpTypeVoid",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 19u16,
@@ -389,7 +389,7 @@ pub const INSTRUCTION_OP_TYPE_VOID: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_BOOL: InstMeta = InstMeta {
+pub const OP_TYPE_BOOL: InstMeta = InstMeta {
     opname: "OpTypeBool",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 20u16,
@@ -405,7 +405,7 @@ pub const INSTRUCTION_OP_TYPE_BOOL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_INT: InstMeta = InstMeta {
+pub const OP_TYPE_INT: InstMeta = InstMeta {
     opname: "OpTypeInt",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 21u16,
@@ -433,7 +433,7 @@ pub const INSTRUCTION_OP_TYPE_INT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_FLOAT: InstMeta = InstMeta {
+pub const OP_TYPE_FLOAT: InstMeta = InstMeta {
     opname: "OpTypeFloat",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 22u16,
@@ -461,7 +461,7 @@ pub const INSTRUCTION_OP_TYPE_FLOAT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_VECTOR: InstMeta = InstMeta {
+pub const OP_TYPE_VECTOR: InstMeta = InstMeta {
     opname: "OpTypeVector",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 23u16,
@@ -489,7 +489,7 @@ pub const INSTRUCTION_OP_TYPE_VECTOR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_MATRIX: InstMeta = InstMeta {
+pub const OP_TYPE_MATRIX: InstMeta = InstMeta {
     opname: "OpTypeMatrix",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 24u16,
@@ -517,7 +517,7 @@ pub const INSTRUCTION_OP_TYPE_MATRIX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_IMAGE: InstMeta = InstMeta {
+pub const OP_TYPE_IMAGE: InstMeta = InstMeta {
     opname: "OpTypeImage",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 25u16,
@@ -575,7 +575,7 @@ pub const INSTRUCTION_OP_TYPE_IMAGE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_SAMPLER: InstMeta = InstMeta {
+pub const OP_TYPE_SAMPLER: InstMeta = InstMeta {
     opname: "OpTypeSampler",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 26u16,
@@ -591,7 +591,7 @@ pub const INSTRUCTION_OP_TYPE_SAMPLER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_SAMPLED_IMAGE: InstMeta = InstMeta {
+pub const OP_TYPE_SAMPLED_IMAGE: InstMeta = InstMeta {
     opname: "OpTypeSampledImage",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 27u16,
@@ -614,7 +614,7 @@ pub const INSTRUCTION_OP_TYPE_SAMPLED_IMAGE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_ARRAY: InstMeta = InstMeta {
+pub const OP_TYPE_ARRAY: InstMeta = InstMeta {
     opname: "OpTypeArray",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 28u16,
@@ -642,7 +642,7 @@ pub const INSTRUCTION_OP_TYPE_ARRAY: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_RUNTIME_ARRAY: InstMeta = InstMeta {
+pub const OP_TYPE_RUNTIME_ARRAY: InstMeta = InstMeta {
     opname: "OpTypeRuntimeArray",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 29u16,
@@ -665,7 +665,7 @@ pub const INSTRUCTION_OP_TYPE_RUNTIME_ARRAY: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_STRUCT: InstMeta = InstMeta {
+pub const OP_TYPE_STRUCT: InstMeta = InstMeta {
     opname: "OpTypeStruct",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 30u16,
@@ -688,7 +688,7 @@ pub const INSTRUCTION_OP_TYPE_STRUCT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_OPAQUE: InstMeta = InstMeta {
+pub const OP_TYPE_OPAQUE: InstMeta = InstMeta {
     opname: "OpTypeOpaque",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 31u16,
@@ -711,7 +711,7 @@ pub const INSTRUCTION_OP_TYPE_OPAQUE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_POINTER: InstMeta = InstMeta {
+pub const OP_TYPE_POINTER: InstMeta = InstMeta {
     opname: "OpTypePointer",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 32u16,
@@ -739,7 +739,7 @@ pub const INSTRUCTION_OP_TYPE_POINTER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_FUNCTION: InstMeta = InstMeta {
+pub const OP_TYPE_FUNCTION: InstMeta = InstMeta {
     opname: "OpTypeFunction",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 33u16,
@@ -767,7 +767,7 @@ pub const INSTRUCTION_OP_TYPE_FUNCTION: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_EVENT: InstMeta = InstMeta {
+pub const OP_TYPE_EVENT: InstMeta = InstMeta {
     opname: "OpTypeEvent",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 34u16,
@@ -783,7 +783,7 @@ pub const INSTRUCTION_OP_TYPE_EVENT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_DEVICE_EVENT: InstMeta = InstMeta {
+pub const OP_TYPE_DEVICE_EVENT: InstMeta = InstMeta {
     opname: "OpTypeDeviceEvent",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 35u16,
@@ -799,7 +799,7 @@ pub const INSTRUCTION_OP_TYPE_DEVICE_EVENT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_RESERVE_ID: InstMeta = InstMeta {
+pub const OP_TYPE_RESERVE_ID: InstMeta = InstMeta {
     opname: "OpTypeReserveId",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 36u16,
@@ -815,7 +815,7 @@ pub const INSTRUCTION_OP_TYPE_RESERVE_ID: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_QUEUE: InstMeta = InstMeta {
+pub const OP_TYPE_QUEUE: InstMeta = InstMeta {
     opname: "OpTypeQueue",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 37u16,
@@ -831,7 +831,7 @@ pub const INSTRUCTION_OP_TYPE_QUEUE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_PIPE: InstMeta = InstMeta {
+pub const OP_TYPE_PIPE: InstMeta = InstMeta {
     opname: "OpTypePipe",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 38u16,
@@ -854,7 +854,7 @@ pub const INSTRUCTION_OP_TYPE_PIPE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_FORWARD_POINTER: InstMeta = InstMeta {
+pub const OP_TYPE_FORWARD_POINTER: InstMeta = InstMeta {
     opname: "OpTypeForwardPointer",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 39u16,
@@ -880,7 +880,7 @@ pub const INSTRUCTION_OP_TYPE_FORWARD_POINTER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONSTANT_TRUE: InstMeta = InstMeta {
+pub const OP_CONSTANT_TRUE: InstMeta = InstMeta {
     opname: "OpConstantTrue",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 41u16,
@@ -903,7 +903,7 @@ pub const INSTRUCTION_OP_CONSTANT_TRUE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONSTANT_FALSE: InstMeta = InstMeta {
+pub const OP_CONSTANT_FALSE: InstMeta = InstMeta {
     opname: "OpConstantFalse",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 42u16,
@@ -926,7 +926,7 @@ pub const INSTRUCTION_OP_CONSTANT_FALSE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONSTANT: InstMeta = InstMeta {
+pub const OP_CONSTANT: InstMeta = InstMeta {
     opname: "OpConstant",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 43u16,
@@ -954,7 +954,7 @@ pub const INSTRUCTION_OP_CONSTANT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONSTANT_COMPOSITE: InstMeta = InstMeta {
+pub const OP_CONSTANT_COMPOSITE: InstMeta = InstMeta {
     opname: "OpConstantComposite",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 44u16,
@@ -982,7 +982,7 @@ pub const INSTRUCTION_OP_CONSTANT_COMPOSITE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONSTANT_SAMPLER: InstMeta = InstMeta {
+pub const OP_CONSTANT_SAMPLER: InstMeta = InstMeta {
     opname: "OpConstantSampler",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 45u16,
@@ -1020,7 +1020,7 @@ pub const INSTRUCTION_OP_CONSTANT_SAMPLER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONSTANT_NULL: InstMeta = InstMeta {
+pub const OP_CONSTANT_NULL: InstMeta = InstMeta {
     opname: "OpConstantNull",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 46u16,
@@ -1043,7 +1043,7 @@ pub const INSTRUCTION_OP_CONSTANT_NULL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SPEC_CONSTANT_TRUE: InstMeta = InstMeta {
+pub const OP_SPEC_CONSTANT_TRUE: InstMeta = InstMeta {
     opname: "OpSpecConstantTrue",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 48u16,
@@ -1066,7 +1066,7 @@ pub const INSTRUCTION_OP_SPEC_CONSTANT_TRUE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SPEC_CONSTANT_FALSE: InstMeta = InstMeta {
+pub const OP_SPEC_CONSTANT_FALSE: InstMeta = InstMeta {
     opname: "OpSpecConstantFalse",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 49u16,
@@ -1089,7 +1089,7 @@ pub const INSTRUCTION_OP_SPEC_CONSTANT_FALSE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SPEC_CONSTANT: InstMeta = InstMeta {
+pub const OP_SPEC_CONSTANT: InstMeta = InstMeta {
     opname: "OpSpecConstant",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 50u16,
@@ -1117,7 +1117,7 @@ pub const INSTRUCTION_OP_SPEC_CONSTANT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SPEC_CONSTANT_COMPOSITE: InstMeta = InstMeta {
+pub const OP_SPEC_CONSTANT_COMPOSITE: InstMeta = InstMeta {
     opname: "OpSpecConstantComposite",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 51u16,
@@ -1145,7 +1145,7 @@ pub const INSTRUCTION_OP_SPEC_CONSTANT_COMPOSITE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SPEC_CONSTANT_OP: InstMeta = InstMeta {
+pub const OP_SPEC_CONSTANT_OP: InstMeta = InstMeta {
     opname: "OpSpecConstantOp",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 52u16,
@@ -1173,7 +1173,7 @@ pub const INSTRUCTION_OP_SPEC_CONSTANT_OP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FUNCTION: InstMeta = InstMeta {
+pub const OP_FUNCTION: InstMeta = InstMeta {
     opname: "OpFunction",
     class: Some(&PRINTING_CLASS_FUNCTION),
     opcode: 54u16,
@@ -1206,7 +1206,7 @@ pub const INSTRUCTION_OP_FUNCTION: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FUNCTION_PARAMETER: InstMeta = InstMeta {
+pub const OP_FUNCTION_PARAMETER: InstMeta = InstMeta {
     opname: "OpFunctionParameter",
     class: Some(&PRINTING_CLASS_FUNCTION),
     opcode: 55u16,
@@ -1229,7 +1229,7 @@ pub const INSTRUCTION_OP_FUNCTION_PARAMETER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FUNCTION_END: InstMeta = InstMeta {
+pub const OP_FUNCTION_END: InstMeta = InstMeta {
     opname: "OpFunctionEnd",
     class: Some(&PRINTING_CLASS_FUNCTION),
     opcode: 56u16,
@@ -1241,7 +1241,7 @@ pub const INSTRUCTION_OP_FUNCTION_END: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FUNCTION_CALL: InstMeta = InstMeta {
+pub const OP_FUNCTION_CALL: InstMeta = InstMeta {
     opname: "OpFunctionCall",
     class: Some(&PRINTING_CLASS_FUNCTION),
     opcode: 57u16,
@@ -1274,7 +1274,7 @@ pub const INSTRUCTION_OP_FUNCTION_CALL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_VARIABLE: InstMeta = InstMeta {
+pub const OP_VARIABLE: InstMeta = InstMeta {
     opname: "OpVariable",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 59u16,
@@ -1307,7 +1307,7 @@ pub const INSTRUCTION_OP_VARIABLE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_TEXEL_POINTER: InstMeta = InstMeta {
+pub const OP_IMAGE_TEXEL_POINTER: InstMeta = InstMeta {
     opname: "OpImageTexelPointer",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 60u16,
@@ -1345,7 +1345,7 @@ pub const INSTRUCTION_OP_IMAGE_TEXEL_POINTER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_LOAD: InstMeta = InstMeta {
+pub const OP_LOAD: InstMeta = InstMeta {
     opname: "OpLoad",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 61u16,
@@ -1378,7 +1378,7 @@ pub const INSTRUCTION_OP_LOAD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_STORE: InstMeta = InstMeta {
+pub const OP_STORE: InstMeta = InstMeta {
     opname: "OpStore",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 62u16,
@@ -1406,7 +1406,7 @@ pub const INSTRUCTION_OP_STORE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COPY_MEMORY: InstMeta = InstMeta {
+pub const OP_COPY_MEMORY: InstMeta = InstMeta {
     opname: "OpCopyMemory",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 63u16,
@@ -1439,7 +1439,7 @@ pub const INSTRUCTION_OP_COPY_MEMORY: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COPY_MEMORY_SIZED: InstMeta = InstMeta {
+pub const OP_COPY_MEMORY_SIZED: InstMeta = InstMeta {
     opname: "OpCopyMemorySized",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 64u16,
@@ -1477,7 +1477,7 @@ pub const INSTRUCTION_OP_COPY_MEMORY_SIZED: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ACCESS_CHAIN: InstMeta = InstMeta {
+pub const OP_ACCESS_CHAIN: InstMeta = InstMeta {
     opname: "OpAccessChain",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 65u16,
@@ -1510,7 +1510,7 @@ pub const INSTRUCTION_OP_ACCESS_CHAIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IN_BOUNDS_ACCESS_CHAIN: InstMeta = InstMeta {
+pub const OP_IN_BOUNDS_ACCESS_CHAIN: InstMeta = InstMeta {
     opname: "OpInBoundsAccessChain",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 66u16,
@@ -1543,7 +1543,7 @@ pub const INSTRUCTION_OP_IN_BOUNDS_ACCESS_CHAIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_PTR_ACCESS_CHAIN: InstMeta = InstMeta {
+pub const OP_PTR_ACCESS_CHAIN: InstMeta = InstMeta {
     opname: "OpPtrAccessChain",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 67u16,
@@ -1586,7 +1586,7 @@ pub const INSTRUCTION_OP_PTR_ACCESS_CHAIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARRAY_LENGTH: InstMeta = InstMeta {
+pub const OP_ARRAY_LENGTH: InstMeta = InstMeta {
     opname: "OpArrayLength",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 68u16,
@@ -1619,7 +1619,7 @@ pub const INSTRUCTION_OP_ARRAY_LENGTH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GENERIC_PTR_MEM_SEMANTICS: InstMeta = InstMeta {
+pub const OP_GENERIC_PTR_MEM_SEMANTICS: InstMeta = InstMeta {
     opname: "OpGenericPtrMemSemantics",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 69u16,
@@ -1647,7 +1647,7 @@ pub const INSTRUCTION_OP_GENERIC_PTR_MEM_SEMANTICS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IN_BOUNDS_PTR_ACCESS_CHAIN: InstMeta = InstMeta {
+pub const OP_IN_BOUNDS_PTR_ACCESS_CHAIN: InstMeta = InstMeta {
     opname: "OpInBoundsPtrAccessChain",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 70u16,
@@ -1685,7 +1685,7 @@ pub const INSTRUCTION_OP_IN_BOUNDS_PTR_ACCESS_CHAIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_DECORATE: InstMeta = InstMeta {
+pub const OP_DECORATE: InstMeta = InstMeta {
     opname: "OpDecorate",
     class: Some(&PRINTING_CLASS_ANNOTATION),
     opcode: 71u16,
@@ -1708,7 +1708,7 @@ pub const INSTRUCTION_OP_DECORATE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_MEMBER_DECORATE: InstMeta = InstMeta {
+pub const OP_MEMBER_DECORATE: InstMeta = InstMeta {
     opname: "OpMemberDecorate",
     class: Some(&PRINTING_CLASS_ANNOTATION),
     opcode: 72u16,
@@ -1736,7 +1736,7 @@ pub const INSTRUCTION_OP_MEMBER_DECORATE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_DECORATION_GROUP: InstMeta = InstMeta {
+pub const OP_DECORATION_GROUP: InstMeta = InstMeta {
     opname: "OpDecorationGroup",
     class: Some(&PRINTING_CLASS_ANNOTATION),
     opcode: 73u16,
@@ -1752,7 +1752,7 @@ pub const INSTRUCTION_OP_DECORATION_GROUP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_DECORATE: InstMeta = InstMeta {
+pub const OP_GROUP_DECORATE: InstMeta = InstMeta {
     opname: "OpGroupDecorate",
     class: Some(&PRINTING_CLASS_ANNOTATION),
     opcode: 74u16,
@@ -1775,7 +1775,7 @@ pub const INSTRUCTION_OP_GROUP_DECORATE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_MEMBER_DECORATE: InstMeta = InstMeta {
+pub const OP_GROUP_MEMBER_DECORATE: InstMeta = InstMeta {
     opname: "OpGroupMemberDecorate",
     class: Some(&PRINTING_CLASS_ANNOTATION),
     opcode: 75u16,
@@ -1798,7 +1798,7 @@ pub const INSTRUCTION_OP_GROUP_MEMBER_DECORATE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_VECTOR_EXTRACT_DYNAMIC: InstMeta = InstMeta {
+pub const OP_VECTOR_EXTRACT_DYNAMIC: InstMeta = InstMeta {
     opname: "OpVectorExtractDynamic",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 77u16,
@@ -1831,7 +1831,7 @@ pub const INSTRUCTION_OP_VECTOR_EXTRACT_DYNAMIC: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_VECTOR_INSERT_DYNAMIC: InstMeta = InstMeta {
+pub const OP_VECTOR_INSERT_DYNAMIC: InstMeta = InstMeta {
     opname: "OpVectorInsertDynamic",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 78u16,
@@ -1869,7 +1869,7 @@ pub const INSTRUCTION_OP_VECTOR_INSERT_DYNAMIC: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_VECTOR_SHUFFLE: InstMeta = InstMeta {
+pub const OP_VECTOR_SHUFFLE: InstMeta = InstMeta {
     opname: "OpVectorShuffle",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 79u16,
@@ -1907,7 +1907,7 @@ pub const INSTRUCTION_OP_VECTOR_SHUFFLE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COMPOSITE_CONSTRUCT: InstMeta = InstMeta {
+pub const OP_COMPOSITE_CONSTRUCT: InstMeta = InstMeta {
     opname: "OpCompositeConstruct",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 80u16,
@@ -1935,7 +1935,7 @@ pub const INSTRUCTION_OP_COMPOSITE_CONSTRUCT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COMPOSITE_EXTRACT: InstMeta = InstMeta {
+pub const OP_COMPOSITE_EXTRACT: InstMeta = InstMeta {
     opname: "OpCompositeExtract",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 81u16,
@@ -1968,7 +1968,7 @@ pub const INSTRUCTION_OP_COMPOSITE_EXTRACT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COMPOSITE_INSERT: InstMeta = InstMeta {
+pub const OP_COMPOSITE_INSERT: InstMeta = InstMeta {
     opname: "OpCompositeInsert",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 82u16,
@@ -2006,7 +2006,7 @@ pub const INSTRUCTION_OP_COMPOSITE_INSERT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COPY_OBJECT: InstMeta = InstMeta {
+pub const OP_COPY_OBJECT: InstMeta = InstMeta {
     opname: "OpCopyObject",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 83u16,
@@ -2034,7 +2034,7 @@ pub const INSTRUCTION_OP_COPY_OBJECT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TRANSPOSE: InstMeta = InstMeta {
+pub const OP_TRANSPOSE: InstMeta = InstMeta {
     opname: "OpTranspose",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 84u16,
@@ -2062,7 +2062,7 @@ pub const INSTRUCTION_OP_TRANSPOSE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SAMPLED_IMAGE: InstMeta = InstMeta {
+pub const OP_SAMPLED_IMAGE: InstMeta = InstMeta {
     opname: "OpSampledImage",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 86u16,
@@ -2095,7 +2095,7 @@ pub const INSTRUCTION_OP_SAMPLED_IMAGE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SAMPLE_IMPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SAMPLE_IMPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSampleImplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 87u16,
@@ -2133,7 +2133,7 @@ pub const INSTRUCTION_OP_IMAGE_SAMPLE_IMPLICIT_LOD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SAMPLE_EXPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SAMPLE_EXPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSampleExplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 88u16,
@@ -2171,7 +2171,7 @@ pub const INSTRUCTION_OP_IMAGE_SAMPLE_EXPLICIT_LOD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SAMPLE_DREF_IMPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SAMPLE_DREF_IMPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSampleDrefImplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 89u16,
@@ -2214,7 +2214,7 @@ pub const INSTRUCTION_OP_IMAGE_SAMPLE_DREF_IMPLICIT_LOD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SAMPLE_DREF_EXPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SAMPLE_DREF_EXPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSampleDrefExplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 90u16,
@@ -2257,7 +2257,7 @@ pub const INSTRUCTION_OP_IMAGE_SAMPLE_DREF_EXPLICIT_LOD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SAMPLE_PROJ_IMPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SAMPLE_PROJ_IMPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSampleProjImplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 91u16,
@@ -2295,7 +2295,7 @@ pub const INSTRUCTION_OP_IMAGE_SAMPLE_PROJ_IMPLICIT_LOD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SAMPLE_PROJ_EXPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SAMPLE_PROJ_EXPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSampleProjExplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 92u16,
@@ -2333,7 +2333,7 @@ pub const INSTRUCTION_OP_IMAGE_SAMPLE_PROJ_EXPLICIT_LOD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SAMPLE_PROJ_DREF_IMPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SAMPLE_PROJ_DREF_IMPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSampleProjDrefImplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 93u16,
@@ -2376,7 +2376,7 @@ pub const INSTRUCTION_OP_IMAGE_SAMPLE_PROJ_DREF_IMPLICIT_LOD: InstMeta = InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SAMPLE_PROJ_DREF_EXPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SAMPLE_PROJ_DREF_EXPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSampleProjDrefExplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 94u16,
@@ -2419,7 +2419,7 @@ pub const INSTRUCTION_OP_IMAGE_SAMPLE_PROJ_DREF_EXPLICIT_LOD: InstMeta = InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_FETCH: InstMeta = InstMeta {
+pub const OP_IMAGE_FETCH: InstMeta = InstMeta {
     opname: "OpImageFetch",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 95u16,
@@ -2457,7 +2457,7 @@ pub const INSTRUCTION_OP_IMAGE_FETCH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_GATHER: InstMeta = InstMeta {
+pub const OP_IMAGE_GATHER: InstMeta = InstMeta {
     opname: "OpImageGather",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 96u16,
@@ -2500,7 +2500,7 @@ pub const INSTRUCTION_OP_IMAGE_GATHER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_DREF_GATHER: InstMeta = InstMeta {
+pub const OP_IMAGE_DREF_GATHER: InstMeta = InstMeta {
     opname: "OpImageDrefGather",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 97u16,
@@ -2543,7 +2543,7 @@ pub const INSTRUCTION_OP_IMAGE_DREF_GATHER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_READ: InstMeta = InstMeta {
+pub const OP_IMAGE_READ: InstMeta = InstMeta {
     opname: "OpImageRead",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 98u16,
@@ -2581,7 +2581,7 @@ pub const INSTRUCTION_OP_IMAGE_READ: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_WRITE: InstMeta = InstMeta {
+pub const OP_IMAGE_WRITE: InstMeta = InstMeta {
     opname: "OpImageWrite",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 99u16,
@@ -2614,7 +2614,7 @@ pub const INSTRUCTION_OP_IMAGE_WRITE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE: InstMeta = InstMeta {
+pub const OP_IMAGE: InstMeta = InstMeta {
     opname: "OpImage",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 100u16,
@@ -2642,7 +2642,7 @@ pub const INSTRUCTION_OP_IMAGE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_QUERY_FORMAT: InstMeta = InstMeta {
+pub const OP_IMAGE_QUERY_FORMAT: InstMeta = InstMeta {
     opname: "OpImageQueryFormat",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 101u16,
@@ -2670,7 +2670,7 @@ pub const INSTRUCTION_OP_IMAGE_QUERY_FORMAT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_QUERY_ORDER: InstMeta = InstMeta {
+pub const OP_IMAGE_QUERY_ORDER: InstMeta = InstMeta {
     opname: "OpImageQueryOrder",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 102u16,
@@ -2698,7 +2698,7 @@ pub const INSTRUCTION_OP_IMAGE_QUERY_ORDER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_QUERY_SIZE_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_QUERY_SIZE_LOD: InstMeta = InstMeta {
     opname: "OpImageQuerySizeLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 103u16,
@@ -2731,7 +2731,7 @@ pub const INSTRUCTION_OP_IMAGE_QUERY_SIZE_LOD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_QUERY_SIZE: InstMeta = InstMeta {
+pub const OP_IMAGE_QUERY_SIZE: InstMeta = InstMeta {
     opname: "OpImageQuerySize",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 104u16,
@@ -2759,7 +2759,7 @@ pub const INSTRUCTION_OP_IMAGE_QUERY_SIZE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_QUERY_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_QUERY_LOD: InstMeta = InstMeta {
     opname: "OpImageQueryLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 105u16,
@@ -2792,7 +2792,7 @@ pub const INSTRUCTION_OP_IMAGE_QUERY_LOD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_QUERY_LEVELS: InstMeta = InstMeta {
+pub const OP_IMAGE_QUERY_LEVELS: InstMeta = InstMeta {
     opname: "OpImageQueryLevels",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 106u16,
@@ -2820,7 +2820,7 @@ pub const INSTRUCTION_OP_IMAGE_QUERY_LEVELS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_QUERY_SAMPLES: InstMeta = InstMeta {
+pub const OP_IMAGE_QUERY_SAMPLES: InstMeta = InstMeta {
     opname: "OpImageQuerySamples",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 107u16,
@@ -2848,7 +2848,7 @@ pub const INSTRUCTION_OP_IMAGE_QUERY_SAMPLES: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_F_TO_U: InstMeta = InstMeta {
+pub const OP_CONVERT_F_TO_U: InstMeta = InstMeta {
     opname: "OpConvertFToU",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 109u16,
@@ -2876,7 +2876,7 @@ pub const INSTRUCTION_OP_CONVERT_F_TO_U: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_F_TO_S: InstMeta = InstMeta {
+pub const OP_CONVERT_F_TO_S: InstMeta = InstMeta {
     opname: "OpConvertFToS",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 110u16,
@@ -2904,7 +2904,7 @@ pub const INSTRUCTION_OP_CONVERT_F_TO_S: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_S_TO_F: InstMeta = InstMeta {
+pub const OP_CONVERT_S_TO_F: InstMeta = InstMeta {
     opname: "OpConvertSToF",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 111u16,
@@ -2932,7 +2932,7 @@ pub const INSTRUCTION_OP_CONVERT_S_TO_F: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_U_TO_F: InstMeta = InstMeta {
+pub const OP_CONVERT_U_TO_F: InstMeta = InstMeta {
     opname: "OpConvertUToF",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 112u16,
@@ -2960,7 +2960,7 @@ pub const INSTRUCTION_OP_CONVERT_U_TO_F: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_CONVERT: InstMeta = InstMeta {
+pub const OP_U_CONVERT: InstMeta = InstMeta {
     opname: "OpUConvert",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 113u16,
@@ -2988,7 +2988,7 @@ pub const INSTRUCTION_OP_U_CONVERT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_S_CONVERT: InstMeta = InstMeta {
+pub const OP_S_CONVERT: InstMeta = InstMeta {
     opname: "OpSConvert",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 114u16,
@@ -3016,7 +3016,7 @@ pub const INSTRUCTION_OP_S_CONVERT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_CONVERT: InstMeta = InstMeta {
+pub const OP_F_CONVERT: InstMeta = InstMeta {
     opname: "OpFConvert",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 115u16,
@@ -3044,7 +3044,7 @@ pub const INSTRUCTION_OP_F_CONVERT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_QUANTIZE_TO_F_16: InstMeta = InstMeta {
+pub const OP_QUANTIZE_TO_F_16: InstMeta = InstMeta {
     opname: "OpQuantizeToF16",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 116u16,
@@ -3072,7 +3072,7 @@ pub const INSTRUCTION_OP_QUANTIZE_TO_F_16: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_PTR_TO_U: InstMeta = InstMeta {
+pub const OP_CONVERT_PTR_TO_U: InstMeta = InstMeta {
     opname: "OpConvertPtrToU",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 117u16,
@@ -3103,7 +3103,7 @@ pub const INSTRUCTION_OP_CONVERT_PTR_TO_U: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SAT_CONVERT_S_TO_U: InstMeta = InstMeta {
+pub const OP_SAT_CONVERT_S_TO_U: InstMeta = InstMeta {
     opname: "OpSatConvertSToU",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 118u16,
@@ -3131,7 +3131,7 @@ pub const INSTRUCTION_OP_SAT_CONVERT_S_TO_U: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SAT_CONVERT_U_TO_S: InstMeta = InstMeta {
+pub const OP_SAT_CONVERT_U_TO_S: InstMeta = InstMeta {
     opname: "OpSatConvertUToS",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 119u16,
@@ -3159,7 +3159,7 @@ pub const INSTRUCTION_OP_SAT_CONVERT_U_TO_S: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_U_TO_PTR: InstMeta = InstMeta {
+pub const OP_CONVERT_U_TO_PTR: InstMeta = InstMeta {
     opname: "OpConvertUToPtr",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 120u16,
@@ -3190,7 +3190,7 @@ pub const INSTRUCTION_OP_CONVERT_U_TO_PTR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_PTR_CAST_TO_GENERIC: InstMeta = InstMeta {
+pub const OP_PTR_CAST_TO_GENERIC: InstMeta = InstMeta {
     opname: "OpPtrCastToGeneric",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 121u16,
@@ -3218,7 +3218,7 @@ pub const INSTRUCTION_OP_PTR_CAST_TO_GENERIC: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GENERIC_CAST_TO_PTR: InstMeta = InstMeta {
+pub const OP_GENERIC_CAST_TO_PTR: InstMeta = InstMeta {
     opname: "OpGenericCastToPtr",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 122u16,
@@ -3246,7 +3246,7 @@ pub const INSTRUCTION_OP_GENERIC_CAST_TO_PTR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GENERIC_CAST_TO_PTR_EXPLICIT: InstMeta = InstMeta {
+pub const OP_GENERIC_CAST_TO_PTR_EXPLICIT: InstMeta = InstMeta {
     opname: "OpGenericCastToPtrExplicit",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 123u16,
@@ -3279,7 +3279,7 @@ pub const INSTRUCTION_OP_GENERIC_CAST_TO_PTR_EXPLICIT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BITCAST: InstMeta = InstMeta {
+pub const OP_BITCAST: InstMeta = InstMeta {
     opname: "OpBitcast",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 124u16,
@@ -3307,7 +3307,7 @@ pub const INSTRUCTION_OP_BITCAST: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_S_NEGATE: InstMeta = InstMeta {
+pub const OP_S_NEGATE: InstMeta = InstMeta {
     opname: "OpSNegate",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 126u16,
@@ -3335,7 +3335,7 @@ pub const INSTRUCTION_OP_S_NEGATE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_NEGATE: InstMeta = InstMeta {
+pub const OP_F_NEGATE: InstMeta = InstMeta {
     opname: "OpFNegate",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 127u16,
@@ -3363,7 +3363,7 @@ pub const INSTRUCTION_OP_F_NEGATE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_I_ADD: InstMeta = InstMeta {
+pub const OP_I_ADD: InstMeta = InstMeta {
     opname: "OpIAdd",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 128u16,
@@ -3396,7 +3396,7 @@ pub const INSTRUCTION_OP_I_ADD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_ADD: InstMeta = InstMeta {
+pub const OP_F_ADD: InstMeta = InstMeta {
     opname: "OpFAdd",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 129u16,
@@ -3429,7 +3429,7 @@ pub const INSTRUCTION_OP_F_ADD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_I_SUB: InstMeta = InstMeta {
+pub const OP_I_SUB: InstMeta = InstMeta {
     opname: "OpISub",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 130u16,
@@ -3462,7 +3462,7 @@ pub const INSTRUCTION_OP_I_SUB: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_SUB: InstMeta = InstMeta {
+pub const OP_F_SUB: InstMeta = InstMeta {
     opname: "OpFSub",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 131u16,
@@ -3495,7 +3495,7 @@ pub const INSTRUCTION_OP_F_SUB: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_I_MUL: InstMeta = InstMeta {
+pub const OP_I_MUL: InstMeta = InstMeta {
     opname: "OpIMul",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 132u16,
@@ -3528,7 +3528,7 @@ pub const INSTRUCTION_OP_I_MUL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_MUL: InstMeta = InstMeta {
+pub const OP_F_MUL: InstMeta = InstMeta {
     opname: "OpFMul",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 133u16,
@@ -3561,7 +3561,7 @@ pub const INSTRUCTION_OP_F_MUL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_DIV: InstMeta = InstMeta {
+pub const OP_U_DIV: InstMeta = InstMeta {
     opname: "OpUDiv",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 134u16,
@@ -3594,7 +3594,7 @@ pub const INSTRUCTION_OP_U_DIV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_S_DIV: InstMeta = InstMeta {
+pub const OP_S_DIV: InstMeta = InstMeta {
     opname: "OpSDiv",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 135u16,
@@ -3627,7 +3627,7 @@ pub const INSTRUCTION_OP_S_DIV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_DIV: InstMeta = InstMeta {
+pub const OP_F_DIV: InstMeta = InstMeta {
     opname: "OpFDiv",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 136u16,
@@ -3660,7 +3660,7 @@ pub const INSTRUCTION_OP_F_DIV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_MOD: InstMeta = InstMeta {
+pub const OP_U_MOD: InstMeta = InstMeta {
     opname: "OpUMod",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 137u16,
@@ -3693,7 +3693,7 @@ pub const INSTRUCTION_OP_U_MOD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_S_REM: InstMeta = InstMeta {
+pub const OP_S_REM: InstMeta = InstMeta {
     opname: "OpSRem",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 138u16,
@@ -3726,7 +3726,7 @@ pub const INSTRUCTION_OP_S_REM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_S_MOD: InstMeta = InstMeta {
+pub const OP_S_MOD: InstMeta = InstMeta {
     opname: "OpSMod",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 139u16,
@@ -3759,7 +3759,7 @@ pub const INSTRUCTION_OP_S_MOD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_REM: InstMeta = InstMeta {
+pub const OP_F_REM: InstMeta = InstMeta {
     opname: "OpFRem",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 140u16,
@@ -3792,7 +3792,7 @@ pub const INSTRUCTION_OP_F_REM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_MOD: InstMeta = InstMeta {
+pub const OP_F_MOD: InstMeta = InstMeta {
     opname: "OpFMod",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 141u16,
@@ -3825,7 +3825,7 @@ pub const INSTRUCTION_OP_F_MOD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_VECTOR_TIMES_SCALAR: InstMeta = InstMeta {
+pub const OP_VECTOR_TIMES_SCALAR: InstMeta = InstMeta {
     opname: "OpVectorTimesScalar",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 142u16,
@@ -3858,7 +3858,7 @@ pub const INSTRUCTION_OP_VECTOR_TIMES_SCALAR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_MATRIX_TIMES_SCALAR: InstMeta = InstMeta {
+pub const OP_MATRIX_TIMES_SCALAR: InstMeta = InstMeta {
     opname: "OpMatrixTimesScalar",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 143u16,
@@ -3891,7 +3891,7 @@ pub const INSTRUCTION_OP_MATRIX_TIMES_SCALAR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_VECTOR_TIMES_MATRIX: InstMeta = InstMeta {
+pub const OP_VECTOR_TIMES_MATRIX: InstMeta = InstMeta {
     opname: "OpVectorTimesMatrix",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 144u16,
@@ -3924,7 +3924,7 @@ pub const INSTRUCTION_OP_VECTOR_TIMES_MATRIX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_MATRIX_TIMES_VECTOR: InstMeta = InstMeta {
+pub const OP_MATRIX_TIMES_VECTOR: InstMeta = InstMeta {
     opname: "OpMatrixTimesVector",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 145u16,
@@ -3957,7 +3957,7 @@ pub const INSTRUCTION_OP_MATRIX_TIMES_VECTOR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_MATRIX_TIMES_MATRIX: InstMeta = InstMeta {
+pub const OP_MATRIX_TIMES_MATRIX: InstMeta = InstMeta {
     opname: "OpMatrixTimesMatrix",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 146u16,
@@ -3990,7 +3990,7 @@ pub const INSTRUCTION_OP_MATRIX_TIMES_MATRIX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_OUTER_PRODUCT: InstMeta = InstMeta {
+pub const OP_OUTER_PRODUCT: InstMeta = InstMeta {
     opname: "OpOuterProduct",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 147u16,
@@ -4023,7 +4023,7 @@ pub const INSTRUCTION_OP_OUTER_PRODUCT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_DOT: InstMeta = InstMeta {
+pub const OP_DOT: InstMeta = InstMeta {
     opname: "OpDot",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 148u16,
@@ -4056,7 +4056,7 @@ pub const INSTRUCTION_OP_DOT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_I_ADD_CARRY: InstMeta = InstMeta {
+pub const OP_I_ADD_CARRY: InstMeta = InstMeta {
     opname: "OpIAddCarry",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 149u16,
@@ -4089,7 +4089,7 @@ pub const INSTRUCTION_OP_I_ADD_CARRY: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_I_SUB_BORROW: InstMeta = InstMeta {
+pub const OP_I_SUB_BORROW: InstMeta = InstMeta {
     opname: "OpISubBorrow",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 150u16,
@@ -4122,7 +4122,7 @@ pub const INSTRUCTION_OP_I_SUB_BORROW: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_MUL_EXTENDED: InstMeta = InstMeta {
+pub const OP_U_MUL_EXTENDED: InstMeta = InstMeta {
     opname: "OpUMulExtended",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 151u16,
@@ -4155,7 +4155,7 @@ pub const INSTRUCTION_OP_U_MUL_EXTENDED: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_S_MUL_EXTENDED: InstMeta = InstMeta {
+pub const OP_S_MUL_EXTENDED: InstMeta = InstMeta {
     opname: "OpSMulExtended",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 152u16,
@@ -4188,7 +4188,7 @@ pub const INSTRUCTION_OP_S_MUL_EXTENDED: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ANY: InstMeta = InstMeta {
+pub const OP_ANY: InstMeta = InstMeta {
     opname: "OpAny",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 154u16,
@@ -4216,7 +4216,7 @@ pub const INSTRUCTION_OP_ANY: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ALL: InstMeta = InstMeta {
+pub const OP_ALL: InstMeta = InstMeta {
     opname: "OpAll",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 155u16,
@@ -4244,7 +4244,7 @@ pub const INSTRUCTION_OP_ALL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IS_NAN: InstMeta = InstMeta {
+pub const OP_IS_NAN: InstMeta = InstMeta {
     opname: "OpIsNan",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 156u16,
@@ -4272,7 +4272,7 @@ pub const INSTRUCTION_OP_IS_NAN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IS_INF: InstMeta = InstMeta {
+pub const OP_IS_INF: InstMeta = InstMeta {
     opname: "OpIsInf",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 157u16,
@@ -4300,7 +4300,7 @@ pub const INSTRUCTION_OP_IS_INF: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IS_FINITE: InstMeta = InstMeta {
+pub const OP_IS_FINITE: InstMeta = InstMeta {
     opname: "OpIsFinite",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 158u16,
@@ -4328,7 +4328,7 @@ pub const INSTRUCTION_OP_IS_FINITE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IS_NORMAL: InstMeta = InstMeta {
+pub const OP_IS_NORMAL: InstMeta = InstMeta {
     opname: "OpIsNormal",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 159u16,
@@ -4356,7 +4356,7 @@ pub const INSTRUCTION_OP_IS_NORMAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SIGN_BIT_SET: InstMeta = InstMeta {
+pub const OP_SIGN_BIT_SET: InstMeta = InstMeta {
     opname: "OpSignBitSet",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 160u16,
@@ -4384,7 +4384,7 @@ pub const INSTRUCTION_OP_SIGN_BIT_SET: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_LESS_OR_GREATER: InstMeta = InstMeta {
+pub const OP_LESS_OR_GREATER: InstMeta = InstMeta {
     opname: "OpLessOrGreater",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 161u16,
@@ -4417,7 +4417,7 @@ pub const INSTRUCTION_OP_LESS_OR_GREATER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ORDERED: InstMeta = InstMeta {
+pub const OP_ORDERED: InstMeta = InstMeta {
     opname: "OpOrdered",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 162u16,
@@ -4450,7 +4450,7 @@ pub const INSTRUCTION_OP_ORDERED: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_UNORDERED: InstMeta = InstMeta {
+pub const OP_UNORDERED: InstMeta = InstMeta {
     opname: "OpUnordered",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 163u16,
@@ -4483,7 +4483,7 @@ pub const INSTRUCTION_OP_UNORDERED: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_LOGICAL_EQUAL: InstMeta = InstMeta {
+pub const OP_LOGICAL_EQUAL: InstMeta = InstMeta {
     opname: "OpLogicalEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 164u16,
@@ -4516,7 +4516,7 @@ pub const INSTRUCTION_OP_LOGICAL_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_LOGICAL_NOT_EQUAL: InstMeta = InstMeta {
+pub const OP_LOGICAL_NOT_EQUAL: InstMeta = InstMeta {
     opname: "OpLogicalNotEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 165u16,
@@ -4549,7 +4549,7 @@ pub const INSTRUCTION_OP_LOGICAL_NOT_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_LOGICAL_OR: InstMeta = InstMeta {
+pub const OP_LOGICAL_OR: InstMeta = InstMeta {
     opname: "OpLogicalOr",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 166u16,
@@ -4582,7 +4582,7 @@ pub const INSTRUCTION_OP_LOGICAL_OR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_LOGICAL_AND: InstMeta = InstMeta {
+pub const OP_LOGICAL_AND: InstMeta = InstMeta {
     opname: "OpLogicalAnd",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 167u16,
@@ -4615,7 +4615,7 @@ pub const INSTRUCTION_OP_LOGICAL_AND: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_LOGICAL_NOT: InstMeta = InstMeta {
+pub const OP_LOGICAL_NOT: InstMeta = InstMeta {
     opname: "OpLogicalNot",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 168u16,
@@ -4643,7 +4643,7 @@ pub const INSTRUCTION_OP_LOGICAL_NOT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SELECT: InstMeta = InstMeta {
+pub const OP_SELECT: InstMeta = InstMeta {
     opname: "OpSelect",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 169u16,
@@ -4681,7 +4681,7 @@ pub const INSTRUCTION_OP_SELECT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_I_EQUAL: InstMeta = InstMeta {
+pub const OP_I_EQUAL: InstMeta = InstMeta {
     opname: "OpIEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 170u16,
@@ -4714,7 +4714,7 @@ pub const INSTRUCTION_OP_I_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_I_NOT_EQUAL: InstMeta = InstMeta {
+pub const OP_I_NOT_EQUAL: InstMeta = InstMeta {
     opname: "OpINotEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 171u16,
@@ -4747,7 +4747,7 @@ pub const INSTRUCTION_OP_I_NOT_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_GREATER_THAN: InstMeta = InstMeta {
+pub const OP_U_GREATER_THAN: InstMeta = InstMeta {
     opname: "OpUGreaterThan",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 172u16,
@@ -4780,7 +4780,7 @@ pub const INSTRUCTION_OP_U_GREATER_THAN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_S_GREATER_THAN: InstMeta = InstMeta {
+pub const OP_S_GREATER_THAN: InstMeta = InstMeta {
     opname: "OpSGreaterThan",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 173u16,
@@ -4813,7 +4813,7 @@ pub const INSTRUCTION_OP_S_GREATER_THAN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_GREATER_THAN_EQUAL: InstMeta = InstMeta {
+pub const OP_U_GREATER_THAN_EQUAL: InstMeta = InstMeta {
     opname: "OpUGreaterThanEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 174u16,
@@ -4846,7 +4846,7 @@ pub const INSTRUCTION_OP_U_GREATER_THAN_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_S_GREATER_THAN_EQUAL: InstMeta = InstMeta {
+pub const OP_S_GREATER_THAN_EQUAL: InstMeta = InstMeta {
     opname: "OpSGreaterThanEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 175u16,
@@ -4879,7 +4879,7 @@ pub const INSTRUCTION_OP_S_GREATER_THAN_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_LESS_THAN: InstMeta = InstMeta {
+pub const OP_U_LESS_THAN: InstMeta = InstMeta {
     opname: "OpULessThan",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 176u16,
@@ -4912,7 +4912,7 @@ pub const INSTRUCTION_OP_U_LESS_THAN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_S_LESS_THAN: InstMeta = InstMeta {
+pub const OP_S_LESS_THAN: InstMeta = InstMeta {
     opname: "OpSLessThan",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 177u16,
@@ -4945,7 +4945,7 @@ pub const INSTRUCTION_OP_S_LESS_THAN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_LESS_THAN_EQUAL: InstMeta = InstMeta {
+pub const OP_U_LESS_THAN_EQUAL: InstMeta = InstMeta {
     opname: "OpULessThanEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 178u16,
@@ -4978,7 +4978,7 @@ pub const INSTRUCTION_OP_U_LESS_THAN_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_S_LESS_THAN_EQUAL: InstMeta = InstMeta {
+pub const OP_S_LESS_THAN_EQUAL: InstMeta = InstMeta {
     opname: "OpSLessThanEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 179u16,
@@ -5011,7 +5011,7 @@ pub const INSTRUCTION_OP_S_LESS_THAN_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_ORD_EQUAL: InstMeta = InstMeta {
+pub const OP_F_ORD_EQUAL: InstMeta = InstMeta {
     opname: "OpFOrdEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 180u16,
@@ -5044,7 +5044,7 @@ pub const INSTRUCTION_OP_F_ORD_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_UNORD_EQUAL: InstMeta = InstMeta {
+pub const OP_F_UNORD_EQUAL: InstMeta = InstMeta {
     opname: "OpFUnordEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 181u16,
@@ -5077,7 +5077,7 @@ pub const INSTRUCTION_OP_F_UNORD_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_ORD_NOT_EQUAL: InstMeta = InstMeta {
+pub const OP_F_ORD_NOT_EQUAL: InstMeta = InstMeta {
     opname: "OpFOrdNotEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 182u16,
@@ -5110,7 +5110,7 @@ pub const INSTRUCTION_OP_F_ORD_NOT_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_UNORD_NOT_EQUAL: InstMeta = InstMeta {
+pub const OP_F_UNORD_NOT_EQUAL: InstMeta = InstMeta {
     opname: "OpFUnordNotEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 183u16,
@@ -5143,7 +5143,7 @@ pub const INSTRUCTION_OP_F_UNORD_NOT_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_ORD_LESS_THAN: InstMeta = InstMeta {
+pub const OP_F_ORD_LESS_THAN: InstMeta = InstMeta {
     opname: "OpFOrdLessThan",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 184u16,
@@ -5176,7 +5176,7 @@ pub const INSTRUCTION_OP_F_ORD_LESS_THAN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_UNORD_LESS_THAN: InstMeta = InstMeta {
+pub const OP_F_UNORD_LESS_THAN: InstMeta = InstMeta {
     opname: "OpFUnordLessThan",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 185u16,
@@ -5209,7 +5209,7 @@ pub const INSTRUCTION_OP_F_UNORD_LESS_THAN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_ORD_GREATER_THAN: InstMeta = InstMeta {
+pub const OP_F_ORD_GREATER_THAN: InstMeta = InstMeta {
     opname: "OpFOrdGreaterThan",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 186u16,
@@ -5242,7 +5242,7 @@ pub const INSTRUCTION_OP_F_ORD_GREATER_THAN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_UNORD_GREATER_THAN: InstMeta = InstMeta {
+pub const OP_F_UNORD_GREATER_THAN: InstMeta = InstMeta {
     opname: "OpFUnordGreaterThan",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 187u16,
@@ -5275,7 +5275,7 @@ pub const INSTRUCTION_OP_F_UNORD_GREATER_THAN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_ORD_LESS_THAN_EQUAL: InstMeta = InstMeta {
+pub const OP_F_ORD_LESS_THAN_EQUAL: InstMeta = InstMeta {
     opname: "OpFOrdLessThanEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 188u16,
@@ -5308,7 +5308,7 @@ pub const INSTRUCTION_OP_F_ORD_LESS_THAN_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_UNORD_LESS_THAN_EQUAL: InstMeta = InstMeta {
+pub const OP_F_UNORD_LESS_THAN_EQUAL: InstMeta = InstMeta {
     opname: "OpFUnordLessThanEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 189u16,
@@ -5341,7 +5341,7 @@ pub const INSTRUCTION_OP_F_UNORD_LESS_THAN_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_ORD_GREATER_THAN_EQUAL: InstMeta = InstMeta {
+pub const OP_F_ORD_GREATER_THAN_EQUAL: InstMeta = InstMeta {
     opname: "OpFOrdGreaterThanEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 190u16,
@@ -5374,7 +5374,7 @@ pub const INSTRUCTION_OP_F_ORD_GREATER_THAN_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_F_UNORD_GREATER_THAN_EQUAL: InstMeta = InstMeta {
+pub const OP_F_UNORD_GREATER_THAN_EQUAL: InstMeta = InstMeta {
     opname: "OpFUnordGreaterThanEqual",
     class: Some(&PRINTING_CLASS_RELATIONAL_AND_LOGICAL),
     opcode: 191u16,
@@ -5407,7 +5407,7 @@ pub const INSTRUCTION_OP_F_UNORD_GREATER_THAN_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SHIFT_RIGHT_LOGICAL: InstMeta = InstMeta {
+pub const OP_SHIFT_RIGHT_LOGICAL: InstMeta = InstMeta {
     opname: "OpShiftRightLogical",
     class: Some(&PRINTING_CLASS_BIT),
     opcode: 194u16,
@@ -5440,7 +5440,7 @@ pub const INSTRUCTION_OP_SHIFT_RIGHT_LOGICAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SHIFT_RIGHT_ARITHMETIC: InstMeta = InstMeta {
+pub const OP_SHIFT_RIGHT_ARITHMETIC: InstMeta = InstMeta {
     opname: "OpShiftRightArithmetic",
     class: Some(&PRINTING_CLASS_BIT),
     opcode: 195u16,
@@ -5473,7 +5473,7 @@ pub const INSTRUCTION_OP_SHIFT_RIGHT_ARITHMETIC: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SHIFT_LEFT_LOGICAL: InstMeta = InstMeta {
+pub const OP_SHIFT_LEFT_LOGICAL: InstMeta = InstMeta {
     opname: "OpShiftLeftLogical",
     class: Some(&PRINTING_CLASS_BIT),
     opcode: 196u16,
@@ -5506,7 +5506,7 @@ pub const INSTRUCTION_OP_SHIFT_LEFT_LOGICAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BITWISE_OR: InstMeta = InstMeta {
+pub const OP_BITWISE_OR: InstMeta = InstMeta {
     opname: "OpBitwiseOr",
     class: Some(&PRINTING_CLASS_BIT),
     opcode: 197u16,
@@ -5539,7 +5539,7 @@ pub const INSTRUCTION_OP_BITWISE_OR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BITWISE_XOR: InstMeta = InstMeta {
+pub const OP_BITWISE_XOR: InstMeta = InstMeta {
     opname: "OpBitwiseXor",
     class: Some(&PRINTING_CLASS_BIT),
     opcode: 198u16,
@@ -5572,7 +5572,7 @@ pub const INSTRUCTION_OP_BITWISE_XOR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BITWISE_AND: InstMeta = InstMeta {
+pub const OP_BITWISE_AND: InstMeta = InstMeta {
     opname: "OpBitwiseAnd",
     class: Some(&PRINTING_CLASS_BIT),
     opcode: 199u16,
@@ -5605,7 +5605,7 @@ pub const INSTRUCTION_OP_BITWISE_AND: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_NOT: InstMeta = InstMeta {
+pub const OP_NOT: InstMeta = InstMeta {
     opname: "OpNot",
     class: Some(&PRINTING_CLASS_BIT),
     opcode: 200u16,
@@ -5633,7 +5633,7 @@ pub const INSTRUCTION_OP_NOT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BIT_FIELD_INSERT: InstMeta = InstMeta {
+pub const OP_BIT_FIELD_INSERT: InstMeta = InstMeta {
     opname: "OpBitFieldInsert",
     class: Some(&PRINTING_CLASS_BIT),
     opcode: 201u16,
@@ -5676,7 +5676,7 @@ pub const INSTRUCTION_OP_BIT_FIELD_INSERT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BIT_FIELD_S_EXTRACT: InstMeta = InstMeta {
+pub const OP_BIT_FIELD_S_EXTRACT: InstMeta = InstMeta {
     opname: "OpBitFieldSExtract",
     class: Some(&PRINTING_CLASS_BIT),
     opcode: 202u16,
@@ -5714,7 +5714,7 @@ pub const INSTRUCTION_OP_BIT_FIELD_S_EXTRACT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BIT_FIELD_U_EXTRACT: InstMeta = InstMeta {
+pub const OP_BIT_FIELD_U_EXTRACT: InstMeta = InstMeta {
     opname: "OpBitFieldUExtract",
     class: Some(&PRINTING_CLASS_BIT),
     opcode: 203u16,
@@ -5752,7 +5752,7 @@ pub const INSTRUCTION_OP_BIT_FIELD_U_EXTRACT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BIT_REVERSE: InstMeta = InstMeta {
+pub const OP_BIT_REVERSE: InstMeta = InstMeta {
     opname: "OpBitReverse",
     class: Some(&PRINTING_CLASS_BIT),
     opcode: 204u16,
@@ -5780,7 +5780,7 @@ pub const INSTRUCTION_OP_BIT_REVERSE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BIT_COUNT: InstMeta = InstMeta {
+pub const OP_BIT_COUNT: InstMeta = InstMeta {
     opname: "OpBitCount",
     class: Some(&PRINTING_CLASS_BIT),
     opcode: 205u16,
@@ -5808,7 +5808,7 @@ pub const INSTRUCTION_OP_BIT_COUNT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_D_PDX: InstMeta = InstMeta {
+pub const OP_D_PDX: InstMeta = InstMeta {
     opname: "OpDPdx",
     class: Some(&PRINTING_CLASS_DERIVATIVE),
     opcode: 207u16,
@@ -5836,7 +5836,7 @@ pub const INSTRUCTION_OP_D_PDX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_D_PDY: InstMeta = InstMeta {
+pub const OP_D_PDY: InstMeta = InstMeta {
     opname: "OpDPdy",
     class: Some(&PRINTING_CLASS_DERIVATIVE),
     opcode: 208u16,
@@ -5864,7 +5864,7 @@ pub const INSTRUCTION_OP_D_PDY: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FWIDTH: InstMeta = InstMeta {
+pub const OP_FWIDTH: InstMeta = InstMeta {
     opname: "OpFwidth",
     class: Some(&PRINTING_CLASS_DERIVATIVE),
     opcode: 209u16,
@@ -5892,7 +5892,7 @@ pub const INSTRUCTION_OP_FWIDTH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_D_PDX_FINE: InstMeta = InstMeta {
+pub const OP_D_PDX_FINE: InstMeta = InstMeta {
     opname: "OpDPdxFine",
     class: Some(&PRINTING_CLASS_DERIVATIVE),
     opcode: 210u16,
@@ -5920,7 +5920,7 @@ pub const INSTRUCTION_OP_D_PDX_FINE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_D_PDY_FINE: InstMeta = InstMeta {
+pub const OP_D_PDY_FINE: InstMeta = InstMeta {
     opname: "OpDPdyFine",
     class: Some(&PRINTING_CLASS_DERIVATIVE),
     opcode: 211u16,
@@ -5948,7 +5948,7 @@ pub const INSTRUCTION_OP_D_PDY_FINE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FWIDTH_FINE: InstMeta = InstMeta {
+pub const OP_FWIDTH_FINE: InstMeta = InstMeta {
     opname: "OpFwidthFine",
     class: Some(&PRINTING_CLASS_DERIVATIVE),
     opcode: 212u16,
@@ -5976,7 +5976,7 @@ pub const INSTRUCTION_OP_FWIDTH_FINE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_D_PDX_COARSE: InstMeta = InstMeta {
+pub const OP_D_PDX_COARSE: InstMeta = InstMeta {
     opname: "OpDPdxCoarse",
     class: Some(&PRINTING_CLASS_DERIVATIVE),
     opcode: 213u16,
@@ -6004,7 +6004,7 @@ pub const INSTRUCTION_OP_D_PDX_COARSE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_D_PDY_COARSE: InstMeta = InstMeta {
+pub const OP_D_PDY_COARSE: InstMeta = InstMeta {
     opname: "OpDPdyCoarse",
     class: Some(&PRINTING_CLASS_DERIVATIVE),
     opcode: 214u16,
@@ -6032,7 +6032,7 @@ pub const INSTRUCTION_OP_D_PDY_COARSE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FWIDTH_COARSE: InstMeta = InstMeta {
+pub const OP_FWIDTH_COARSE: InstMeta = InstMeta {
     opname: "OpFwidthCoarse",
     class: Some(&PRINTING_CLASS_DERIVATIVE),
     opcode: 215u16,
@@ -6060,7 +6060,7 @@ pub const INSTRUCTION_OP_FWIDTH_COARSE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_EMIT_VERTEX: InstMeta = InstMeta {
+pub const OP_EMIT_VERTEX: InstMeta = InstMeta {
     opname: "OpEmitVertex",
     class: Some(&PRINTING_CLASS_PRIMITIVE),
     opcode: 218u16,
@@ -6072,7 +6072,7 @@ pub const INSTRUCTION_OP_EMIT_VERTEX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_END_PRIMITIVE: InstMeta = InstMeta {
+pub const OP_END_PRIMITIVE: InstMeta = InstMeta {
     opname: "OpEndPrimitive",
     class: Some(&PRINTING_CLASS_PRIMITIVE),
     opcode: 219u16,
@@ -6084,7 +6084,7 @@ pub const INSTRUCTION_OP_END_PRIMITIVE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_EMIT_STREAM_VERTEX: InstMeta = InstMeta {
+pub const OP_EMIT_STREAM_VERTEX: InstMeta = InstMeta {
     opname: "OpEmitStreamVertex",
     class: Some(&PRINTING_CLASS_PRIMITIVE),
     opcode: 220u16,
@@ -6100,7 +6100,7 @@ pub const INSTRUCTION_OP_EMIT_STREAM_VERTEX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_END_STREAM_PRIMITIVE: InstMeta = InstMeta {
+pub const OP_END_STREAM_PRIMITIVE: InstMeta = InstMeta {
     opname: "OpEndStreamPrimitive",
     class: Some(&PRINTING_CLASS_PRIMITIVE),
     opcode: 221u16,
@@ -6116,7 +6116,7 @@ pub const INSTRUCTION_OP_END_STREAM_PRIMITIVE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONTROL_BARRIER: InstMeta = InstMeta {
+pub const OP_CONTROL_BARRIER: InstMeta = InstMeta {
     opname: "OpControlBarrier",
     class: Some(&PRINTING_CLASS_BARRIER),
     opcode: 224u16,
@@ -6144,7 +6144,7 @@ pub const INSTRUCTION_OP_CONTROL_BARRIER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_MEMORY_BARRIER: InstMeta = InstMeta {
+pub const OP_MEMORY_BARRIER: InstMeta = InstMeta {
     opname: "OpMemoryBarrier",
     class: Some(&PRINTING_CLASS_BARRIER),
     opcode: 225u16,
@@ -6167,7 +6167,7 @@ pub const INSTRUCTION_OP_MEMORY_BARRIER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_LOAD: InstMeta = InstMeta {
+pub const OP_ATOMIC_LOAD: InstMeta = InstMeta {
     opname: "OpAtomicLoad",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 227u16,
@@ -6205,7 +6205,7 @@ pub const INSTRUCTION_OP_ATOMIC_LOAD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_STORE: InstMeta = InstMeta {
+pub const OP_ATOMIC_STORE: InstMeta = InstMeta {
     opname: "OpAtomicStore",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 228u16,
@@ -6238,7 +6238,7 @@ pub const INSTRUCTION_OP_ATOMIC_STORE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_EXCHANGE: InstMeta = InstMeta {
+pub const OP_ATOMIC_EXCHANGE: InstMeta = InstMeta {
     opname: "OpAtomicExchange",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 229u16,
@@ -6281,7 +6281,7 @@ pub const INSTRUCTION_OP_ATOMIC_EXCHANGE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_COMPARE_EXCHANGE: InstMeta = InstMeta {
+pub const OP_ATOMIC_COMPARE_EXCHANGE: InstMeta = InstMeta {
     opname: "OpAtomicCompareExchange",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 230u16,
@@ -6334,7 +6334,7 @@ pub const INSTRUCTION_OP_ATOMIC_COMPARE_EXCHANGE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_COMPARE_EXCHANGE_WEAK: InstMeta = InstMeta {
+pub const OP_ATOMIC_COMPARE_EXCHANGE_WEAK: InstMeta = InstMeta {
     opname: "OpAtomicCompareExchangeWeak",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 231u16,
@@ -6387,7 +6387,7 @@ pub const INSTRUCTION_OP_ATOMIC_COMPARE_EXCHANGE_WEAK: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_I_INCREMENT: InstMeta = InstMeta {
+pub const OP_ATOMIC_I_INCREMENT: InstMeta = InstMeta {
     opname: "OpAtomicIIncrement",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 232u16,
@@ -6425,7 +6425,7 @@ pub const INSTRUCTION_OP_ATOMIC_I_INCREMENT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_I_DECREMENT: InstMeta = InstMeta {
+pub const OP_ATOMIC_I_DECREMENT: InstMeta = InstMeta {
     opname: "OpAtomicIDecrement",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 233u16,
@@ -6463,7 +6463,7 @@ pub const INSTRUCTION_OP_ATOMIC_I_DECREMENT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_I_ADD: InstMeta = InstMeta {
+pub const OP_ATOMIC_I_ADD: InstMeta = InstMeta {
     opname: "OpAtomicIAdd",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 234u16,
@@ -6506,7 +6506,7 @@ pub const INSTRUCTION_OP_ATOMIC_I_ADD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_I_SUB: InstMeta = InstMeta {
+pub const OP_ATOMIC_I_SUB: InstMeta = InstMeta {
     opname: "OpAtomicISub",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 235u16,
@@ -6549,7 +6549,7 @@ pub const INSTRUCTION_OP_ATOMIC_I_SUB: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_S_MIN: InstMeta = InstMeta {
+pub const OP_ATOMIC_S_MIN: InstMeta = InstMeta {
     opname: "OpAtomicSMin",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 236u16,
@@ -6592,7 +6592,7 @@ pub const INSTRUCTION_OP_ATOMIC_S_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_U_MIN: InstMeta = InstMeta {
+pub const OP_ATOMIC_U_MIN: InstMeta = InstMeta {
     opname: "OpAtomicUMin",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 237u16,
@@ -6635,7 +6635,7 @@ pub const INSTRUCTION_OP_ATOMIC_U_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_S_MAX: InstMeta = InstMeta {
+pub const OP_ATOMIC_S_MAX: InstMeta = InstMeta {
     opname: "OpAtomicSMax",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 238u16,
@@ -6678,7 +6678,7 @@ pub const INSTRUCTION_OP_ATOMIC_S_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_U_MAX: InstMeta = InstMeta {
+pub const OP_ATOMIC_U_MAX: InstMeta = InstMeta {
     opname: "OpAtomicUMax",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 239u16,
@@ -6721,7 +6721,7 @@ pub const INSTRUCTION_OP_ATOMIC_U_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_AND: InstMeta = InstMeta {
+pub const OP_ATOMIC_AND: InstMeta = InstMeta {
     opname: "OpAtomicAnd",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 240u16,
@@ -6764,7 +6764,7 @@ pub const INSTRUCTION_OP_ATOMIC_AND: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_OR: InstMeta = InstMeta {
+pub const OP_ATOMIC_OR: InstMeta = InstMeta {
     opname: "OpAtomicOr",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 241u16,
@@ -6807,7 +6807,7 @@ pub const INSTRUCTION_OP_ATOMIC_OR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_XOR: InstMeta = InstMeta {
+pub const OP_ATOMIC_XOR: InstMeta = InstMeta {
     opname: "OpAtomicXor",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 242u16,
@@ -6850,7 +6850,7 @@ pub const INSTRUCTION_OP_ATOMIC_XOR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_PHI: InstMeta = InstMeta {
+pub const OP_PHI: InstMeta = InstMeta {
     opname: "OpPhi",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
     opcode: 245u16,
@@ -6878,7 +6878,7 @@ pub const INSTRUCTION_OP_PHI: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_LOOP_MERGE: InstMeta = InstMeta {
+pub const OP_LOOP_MERGE: InstMeta = InstMeta {
     opname: "OpLoopMerge",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
     opcode: 246u16,
@@ -6906,7 +6906,7 @@ pub const INSTRUCTION_OP_LOOP_MERGE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SELECTION_MERGE: InstMeta = InstMeta {
+pub const OP_SELECTION_MERGE: InstMeta = InstMeta {
     opname: "OpSelectionMerge",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
     opcode: 247u16,
@@ -6929,7 +6929,7 @@ pub const INSTRUCTION_OP_SELECTION_MERGE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_LABEL: InstMeta = InstMeta {
+pub const OP_LABEL: InstMeta = InstMeta {
     opname: "OpLabel",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
     opcode: 248u16,
@@ -6945,7 +6945,7 @@ pub const INSTRUCTION_OP_LABEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BRANCH: InstMeta = InstMeta {
+pub const OP_BRANCH: InstMeta = InstMeta {
     opname: "OpBranch",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
     opcode: 249u16,
@@ -6961,7 +6961,7 @@ pub const INSTRUCTION_OP_BRANCH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BRANCH_CONDITIONAL: InstMeta = InstMeta {
+pub const OP_BRANCH_CONDITIONAL: InstMeta = InstMeta {
     opname: "OpBranchConditional",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
     opcode: 250u16,
@@ -6994,7 +6994,7 @@ pub const INSTRUCTION_OP_BRANCH_CONDITIONAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SWITCH: InstMeta = InstMeta {
+pub const OP_SWITCH: InstMeta = InstMeta {
     opname: "OpSwitch",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
     opcode: 251u16,
@@ -7022,7 +7022,7 @@ pub const INSTRUCTION_OP_SWITCH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_KILL: InstMeta = InstMeta {
+pub const OP_KILL: InstMeta = InstMeta {
     opname: "OpKill",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
     opcode: 252u16,
@@ -7034,7 +7034,7 @@ pub const INSTRUCTION_OP_KILL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RETURN: InstMeta = InstMeta {
+pub const OP_RETURN: InstMeta = InstMeta {
     opname: "OpReturn",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
     opcode: 253u16,
@@ -7046,7 +7046,7 @@ pub const INSTRUCTION_OP_RETURN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RETURN_VALUE: InstMeta = InstMeta {
+pub const OP_RETURN_VALUE: InstMeta = InstMeta {
     opname: "OpReturnValue",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
     opcode: 254u16,
@@ -7062,7 +7062,7 @@ pub const INSTRUCTION_OP_RETURN_VALUE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_UNREACHABLE: InstMeta = InstMeta {
+pub const OP_UNREACHABLE: InstMeta = InstMeta {
     opname: "OpUnreachable",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
     opcode: 255u16,
@@ -7074,7 +7074,7 @@ pub const INSTRUCTION_OP_UNREACHABLE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_LIFETIME_START: InstMeta = InstMeta {
+pub const OP_LIFETIME_START: InstMeta = InstMeta {
     opname: "OpLifetimeStart",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
     opcode: 256u16,
@@ -7097,7 +7097,7 @@ pub const INSTRUCTION_OP_LIFETIME_START: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_LIFETIME_STOP: InstMeta = InstMeta {
+pub const OP_LIFETIME_STOP: InstMeta = InstMeta {
     opname: "OpLifetimeStop",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
     opcode: 257u16,
@@ -7120,7 +7120,7 @@ pub const INSTRUCTION_OP_LIFETIME_STOP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_ASYNC_COPY: InstMeta = InstMeta {
+pub const OP_GROUP_ASYNC_COPY: InstMeta = InstMeta {
     opname: "OpGroupAsyncCopy",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 259u16,
@@ -7173,7 +7173,7 @@ pub const INSTRUCTION_OP_GROUP_ASYNC_COPY: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_WAIT_EVENTS: InstMeta = InstMeta {
+pub const OP_GROUP_WAIT_EVENTS: InstMeta = InstMeta {
     opname: "OpGroupWaitEvents",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 260u16,
@@ -7201,7 +7201,7 @@ pub const INSTRUCTION_OP_GROUP_WAIT_EVENTS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_ALL: InstMeta = InstMeta {
+pub const OP_GROUP_ALL: InstMeta = InstMeta {
     opname: "OpGroupAll",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 261u16,
@@ -7234,7 +7234,7 @@ pub const INSTRUCTION_OP_GROUP_ALL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_ANY: InstMeta = InstMeta {
+pub const OP_GROUP_ANY: InstMeta = InstMeta {
     opname: "OpGroupAny",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 262u16,
@@ -7267,7 +7267,7 @@ pub const INSTRUCTION_OP_GROUP_ANY: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_BROADCAST: InstMeta = InstMeta {
+pub const OP_GROUP_BROADCAST: InstMeta = InstMeta {
     opname: "OpGroupBroadcast",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 263u16,
@@ -7305,7 +7305,7 @@ pub const INSTRUCTION_OP_GROUP_BROADCAST: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_I_ADD: InstMeta = InstMeta {
+pub const OP_GROUP_I_ADD: InstMeta = InstMeta {
     opname: "OpGroupIAdd",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 264u16,
@@ -7343,7 +7343,7 @@ pub const INSTRUCTION_OP_GROUP_I_ADD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_F_ADD: InstMeta = InstMeta {
+pub const OP_GROUP_F_ADD: InstMeta = InstMeta {
     opname: "OpGroupFAdd",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 265u16,
@@ -7381,7 +7381,7 @@ pub const INSTRUCTION_OP_GROUP_F_ADD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_F_MIN: InstMeta = InstMeta {
+pub const OP_GROUP_F_MIN: InstMeta = InstMeta {
     opname: "OpGroupFMin",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 266u16,
@@ -7419,7 +7419,7 @@ pub const INSTRUCTION_OP_GROUP_F_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_U_MIN: InstMeta = InstMeta {
+pub const OP_GROUP_U_MIN: InstMeta = InstMeta {
     opname: "OpGroupUMin",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 267u16,
@@ -7457,7 +7457,7 @@ pub const INSTRUCTION_OP_GROUP_U_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_S_MIN: InstMeta = InstMeta {
+pub const OP_GROUP_S_MIN: InstMeta = InstMeta {
     opname: "OpGroupSMin",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 268u16,
@@ -7495,7 +7495,7 @@ pub const INSTRUCTION_OP_GROUP_S_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_F_MAX: InstMeta = InstMeta {
+pub const OP_GROUP_F_MAX: InstMeta = InstMeta {
     opname: "OpGroupFMax",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 269u16,
@@ -7533,7 +7533,7 @@ pub const INSTRUCTION_OP_GROUP_F_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_U_MAX: InstMeta = InstMeta {
+pub const OP_GROUP_U_MAX: InstMeta = InstMeta {
     opname: "OpGroupUMax",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 270u16,
@@ -7571,7 +7571,7 @@ pub const INSTRUCTION_OP_GROUP_U_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_S_MAX: InstMeta = InstMeta {
+pub const OP_GROUP_S_MAX: InstMeta = InstMeta {
     opname: "OpGroupSMax",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 271u16,
@@ -7609,7 +7609,7 @@ pub const INSTRUCTION_OP_GROUP_S_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_READ_PIPE: InstMeta = InstMeta {
+pub const OP_READ_PIPE: InstMeta = InstMeta {
     opname: "OpReadPipe",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 274u16,
@@ -7652,7 +7652,7 @@ pub const INSTRUCTION_OP_READ_PIPE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_WRITE_PIPE: InstMeta = InstMeta {
+pub const OP_WRITE_PIPE: InstMeta = InstMeta {
     opname: "OpWritePipe",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 275u16,
@@ -7695,7 +7695,7 @@ pub const INSTRUCTION_OP_WRITE_PIPE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RESERVED_READ_PIPE: InstMeta = InstMeta {
+pub const OP_RESERVED_READ_PIPE: InstMeta = InstMeta {
     opname: "OpReservedReadPipe",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 276u16,
@@ -7748,7 +7748,7 @@ pub const INSTRUCTION_OP_RESERVED_READ_PIPE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RESERVED_WRITE_PIPE: InstMeta = InstMeta {
+pub const OP_RESERVED_WRITE_PIPE: InstMeta = InstMeta {
     opname: "OpReservedWritePipe",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 277u16,
@@ -7801,7 +7801,7 @@ pub const INSTRUCTION_OP_RESERVED_WRITE_PIPE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RESERVE_READ_PIPE_PACKETS: InstMeta = InstMeta {
+pub const OP_RESERVE_READ_PIPE_PACKETS: InstMeta = InstMeta {
     opname: "OpReserveReadPipePackets",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 278u16,
@@ -7844,7 +7844,7 @@ pub const INSTRUCTION_OP_RESERVE_READ_PIPE_PACKETS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RESERVE_WRITE_PIPE_PACKETS: InstMeta = InstMeta {
+pub const OP_RESERVE_WRITE_PIPE_PACKETS: InstMeta = InstMeta {
     opname: "OpReserveWritePipePackets",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 279u16,
@@ -7887,7 +7887,7 @@ pub const INSTRUCTION_OP_RESERVE_WRITE_PIPE_PACKETS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COMMIT_READ_PIPE: InstMeta = InstMeta {
+pub const OP_COMMIT_READ_PIPE: InstMeta = InstMeta {
     opname: "OpCommitReadPipe",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 280u16,
@@ -7920,7 +7920,7 @@ pub const INSTRUCTION_OP_COMMIT_READ_PIPE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COMMIT_WRITE_PIPE: InstMeta = InstMeta {
+pub const OP_COMMIT_WRITE_PIPE: InstMeta = InstMeta {
     opname: "OpCommitWritePipe",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 281u16,
@@ -7953,7 +7953,7 @@ pub const INSTRUCTION_OP_COMMIT_WRITE_PIPE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IS_VALID_RESERVE_ID: InstMeta = InstMeta {
+pub const OP_IS_VALID_RESERVE_ID: InstMeta = InstMeta {
     opname: "OpIsValidReserveId",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 282u16,
@@ -7981,7 +7981,7 @@ pub const INSTRUCTION_OP_IS_VALID_RESERVE_ID: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GET_NUM_PIPE_PACKETS: InstMeta = InstMeta {
+pub const OP_GET_NUM_PIPE_PACKETS: InstMeta = InstMeta {
     opname: "OpGetNumPipePackets",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 283u16,
@@ -8019,7 +8019,7 @@ pub const INSTRUCTION_OP_GET_NUM_PIPE_PACKETS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GET_MAX_PIPE_PACKETS: InstMeta = InstMeta {
+pub const OP_GET_MAX_PIPE_PACKETS: InstMeta = InstMeta {
     opname: "OpGetMaxPipePackets",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 284u16,
@@ -8057,7 +8057,7 @@ pub const INSTRUCTION_OP_GET_MAX_PIPE_PACKETS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_RESERVE_READ_PIPE_PACKETS: InstMeta = InstMeta {
+pub const OP_GROUP_RESERVE_READ_PIPE_PACKETS: InstMeta = InstMeta {
     opname: "OpGroupReserveReadPipePackets",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 285u16,
@@ -8105,7 +8105,7 @@ pub const INSTRUCTION_OP_GROUP_RESERVE_READ_PIPE_PACKETS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_RESERVE_WRITE_PIPE_PACKETS: InstMeta = InstMeta {
+pub const OP_GROUP_RESERVE_WRITE_PIPE_PACKETS: InstMeta = InstMeta {
     opname: "OpGroupReserveWritePipePackets",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 286u16,
@@ -8153,7 +8153,7 @@ pub const INSTRUCTION_OP_GROUP_RESERVE_WRITE_PIPE_PACKETS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_COMMIT_READ_PIPE: InstMeta = InstMeta {
+pub const OP_GROUP_COMMIT_READ_PIPE: InstMeta = InstMeta {
     opname: "OpGroupCommitReadPipe",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 287u16,
@@ -8191,7 +8191,7 @@ pub const INSTRUCTION_OP_GROUP_COMMIT_READ_PIPE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_COMMIT_WRITE_PIPE: InstMeta = InstMeta {
+pub const OP_GROUP_COMMIT_WRITE_PIPE: InstMeta = InstMeta {
     opname: "OpGroupCommitWritePipe",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 288u16,
@@ -8229,7 +8229,7 @@ pub const INSTRUCTION_OP_GROUP_COMMIT_WRITE_PIPE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ENQUEUE_MARKER: InstMeta = InstMeta {
+pub const OP_ENQUEUE_MARKER: InstMeta = InstMeta {
     opname: "OpEnqueueMarker",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 291u16,
@@ -8272,7 +8272,7 @@ pub const INSTRUCTION_OP_ENQUEUE_MARKER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ENQUEUE_KERNEL: InstMeta = InstMeta {
+pub const OP_ENQUEUE_KERNEL: InstMeta = InstMeta {
     opname: "OpEnqueueKernel",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 292u16,
@@ -8350,7 +8350,7 @@ pub const INSTRUCTION_OP_ENQUEUE_KERNEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GET_KERNEL_N_DRANGE_SUB_GROUP_COUNT: InstMeta = InstMeta {
+pub const OP_GET_KERNEL_N_DRANGE_SUB_GROUP_COUNT: InstMeta = InstMeta {
     opname: "OpGetKernelNDrangeSubGroupCount",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 293u16,
@@ -8398,7 +8398,7 @@ pub const INSTRUCTION_OP_GET_KERNEL_N_DRANGE_SUB_GROUP_COUNT: InstMeta = InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GET_KERNEL_N_DRANGE_MAX_SUB_GROUP_SIZE: InstMeta = InstMeta {
+pub const OP_GET_KERNEL_N_DRANGE_MAX_SUB_GROUP_SIZE: InstMeta = InstMeta {
     opname: "OpGetKernelNDrangeMaxSubGroupSize",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 294u16,
@@ -8446,7 +8446,7 @@ pub const INSTRUCTION_OP_GET_KERNEL_N_DRANGE_MAX_SUB_GROUP_SIZE: InstMeta = Inst
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GET_KERNEL_WORK_GROUP_SIZE: InstMeta = InstMeta {
+pub const OP_GET_KERNEL_WORK_GROUP_SIZE: InstMeta = InstMeta {
     opname: "OpGetKernelWorkGroupSize",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 295u16,
@@ -8489,7 +8489,7 @@ pub const INSTRUCTION_OP_GET_KERNEL_WORK_GROUP_SIZE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GET_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE: InstMeta = InstMeta {
+pub const OP_GET_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE: InstMeta = InstMeta {
     opname: "OpGetKernelPreferredWorkGroupSizeMultiple",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 296u16,
@@ -8532,7 +8532,7 @@ pub const INSTRUCTION_OP_GET_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE: InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RETAIN_EVENT: InstMeta = InstMeta {
+pub const OP_RETAIN_EVENT: InstMeta = InstMeta {
     opname: "OpRetainEvent",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 297u16,
@@ -8548,7 +8548,7 @@ pub const INSTRUCTION_OP_RETAIN_EVENT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RELEASE_EVENT: InstMeta = InstMeta {
+pub const OP_RELEASE_EVENT: InstMeta = InstMeta {
     opname: "OpReleaseEvent",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 298u16,
@@ -8564,7 +8564,7 @@ pub const INSTRUCTION_OP_RELEASE_EVENT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CREATE_USER_EVENT: InstMeta = InstMeta {
+pub const OP_CREATE_USER_EVENT: InstMeta = InstMeta {
     opname: "OpCreateUserEvent",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 299u16,
@@ -8587,7 +8587,7 @@ pub const INSTRUCTION_OP_CREATE_USER_EVENT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IS_VALID_EVENT: InstMeta = InstMeta {
+pub const OP_IS_VALID_EVENT: InstMeta = InstMeta {
     opname: "OpIsValidEvent",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 300u16,
@@ -8615,7 +8615,7 @@ pub const INSTRUCTION_OP_IS_VALID_EVENT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SET_USER_EVENT_STATUS: InstMeta = InstMeta {
+pub const OP_SET_USER_EVENT_STATUS: InstMeta = InstMeta {
     opname: "OpSetUserEventStatus",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 301u16,
@@ -8638,7 +8638,7 @@ pub const INSTRUCTION_OP_SET_USER_EVENT_STATUS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CAPTURE_EVENT_PROFILING_INFO: InstMeta = InstMeta {
+pub const OP_CAPTURE_EVENT_PROFILING_INFO: InstMeta = InstMeta {
     opname: "OpCaptureEventProfilingInfo",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 302u16,
@@ -8666,7 +8666,7 @@ pub const INSTRUCTION_OP_CAPTURE_EVENT_PROFILING_INFO: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GET_DEFAULT_QUEUE: InstMeta = InstMeta {
+pub const OP_GET_DEFAULT_QUEUE: InstMeta = InstMeta {
     opname: "OpGetDefaultQueue",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 303u16,
@@ -8689,7 +8689,7 @@ pub const INSTRUCTION_OP_GET_DEFAULT_QUEUE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BUILD_ND_RANGE: InstMeta = InstMeta {
+pub const OP_BUILD_ND_RANGE: InstMeta = InstMeta {
     opname: "OpBuildNDRange",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 304u16,
@@ -8727,7 +8727,7 @@ pub const INSTRUCTION_OP_BUILD_ND_RANGE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_IMPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SPARSE_SAMPLE_IMPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSparseSampleImplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 305u16,
@@ -8765,7 +8765,7 @@ pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_IMPLICIT_LOD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_EXPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SPARSE_SAMPLE_EXPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSparseSampleExplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 306u16,
@@ -8803,7 +8803,7 @@ pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_EXPLICIT_LOD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_DREF_IMPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SPARSE_SAMPLE_DREF_IMPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSparseSampleDrefImplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 307u16,
@@ -8846,7 +8846,7 @@ pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_DREF_IMPLICIT_LOD: InstMeta = InstM
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_DREF_EXPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SPARSE_SAMPLE_DREF_EXPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSparseSampleDrefExplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 308u16,
@@ -8889,7 +8889,7 @@ pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_DREF_EXPLICIT_LOD: InstMeta = InstM
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_PROJ_IMPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SPARSE_SAMPLE_PROJ_IMPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSparseSampleProjImplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 309u16,
@@ -8927,7 +8927,7 @@ pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_PROJ_IMPLICIT_LOD: InstMeta = InstM
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_PROJ_EXPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SPARSE_SAMPLE_PROJ_EXPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSparseSampleProjExplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 310u16,
@@ -8965,7 +8965,7 @@ pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_PROJ_EXPLICIT_LOD: InstMeta = InstM
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_PROJ_DREF_IMPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SPARSE_SAMPLE_PROJ_DREF_IMPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSparseSampleProjDrefImplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 311u16,
@@ -9008,7 +9008,7 @@ pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_PROJ_DREF_IMPLICIT_LOD: InstMeta = 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_PROJ_DREF_EXPLICIT_LOD: InstMeta = InstMeta {
+pub const OP_IMAGE_SPARSE_SAMPLE_PROJ_DREF_EXPLICIT_LOD: InstMeta = InstMeta {
     opname: "OpImageSparseSampleProjDrefExplicitLod",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 312u16,
@@ -9051,7 +9051,7 @@ pub const INSTRUCTION_OP_IMAGE_SPARSE_SAMPLE_PROJ_DREF_EXPLICIT_LOD: InstMeta = 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SPARSE_FETCH: InstMeta = InstMeta {
+pub const OP_IMAGE_SPARSE_FETCH: InstMeta = InstMeta {
     opname: "OpImageSparseFetch",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 313u16,
@@ -9089,7 +9089,7 @@ pub const INSTRUCTION_OP_IMAGE_SPARSE_FETCH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SPARSE_GATHER: InstMeta = InstMeta {
+pub const OP_IMAGE_SPARSE_GATHER: InstMeta = InstMeta {
     opname: "OpImageSparseGather",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 314u16,
@@ -9132,7 +9132,7 @@ pub const INSTRUCTION_OP_IMAGE_SPARSE_GATHER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SPARSE_DREF_GATHER: InstMeta = InstMeta {
+pub const OP_IMAGE_SPARSE_DREF_GATHER: InstMeta = InstMeta {
     opname: "OpImageSparseDrefGather",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 315u16,
@@ -9175,7 +9175,7 @@ pub const INSTRUCTION_OP_IMAGE_SPARSE_DREF_GATHER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SPARSE_TEXELS_RESIDENT: InstMeta = InstMeta {
+pub const OP_IMAGE_SPARSE_TEXELS_RESIDENT: InstMeta = InstMeta {
     opname: "OpImageSparseTexelsResident",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 316u16,
@@ -9203,7 +9203,7 @@ pub const INSTRUCTION_OP_IMAGE_SPARSE_TEXELS_RESIDENT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_NO_LINE: InstMeta = InstMeta {
+pub const OP_NO_LINE: InstMeta = InstMeta {
     opname: "OpNoLine",
     class: Some(&PRINTING_CLASS_DEBUG),
     opcode: 317u16,
@@ -9215,7 +9215,7 @@ pub const INSTRUCTION_OP_NO_LINE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_FLAG_TEST_AND_SET: InstMeta = InstMeta {
+pub const OP_ATOMIC_FLAG_TEST_AND_SET: InstMeta = InstMeta {
     opname: "OpAtomicFlagTestAndSet",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 318u16,
@@ -9253,7 +9253,7 @@ pub const INSTRUCTION_OP_ATOMIC_FLAG_TEST_AND_SET: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_FLAG_CLEAR: InstMeta = InstMeta {
+pub const OP_ATOMIC_FLAG_CLEAR: InstMeta = InstMeta {
     opname: "OpAtomicFlagClear",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 319u16,
@@ -9281,7 +9281,7 @@ pub const INSTRUCTION_OP_ATOMIC_FLAG_CLEAR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SPARSE_READ: InstMeta = InstMeta {
+pub const OP_IMAGE_SPARSE_READ: InstMeta = InstMeta {
     opname: "OpImageSparseRead",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 320u16,
@@ -9319,7 +9319,7 @@ pub const INSTRUCTION_OP_IMAGE_SPARSE_READ: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SIZE_OF: InstMeta = InstMeta {
+pub const OP_SIZE_OF: InstMeta = InstMeta {
     opname: "OpSizeOf",
     class: Some(&PRINTING_CLASS_MISCELLANEOUS),
     opcode: 321u16,
@@ -9347,7 +9347,7 @@ pub const INSTRUCTION_OP_SIZE_OF: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_PIPE_STORAGE: InstMeta = InstMeta {
+pub const OP_TYPE_PIPE_STORAGE: InstMeta = InstMeta {
     opname: "OpTypePipeStorage",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 322u16,
@@ -9363,7 +9363,7 @@ pub const INSTRUCTION_OP_TYPE_PIPE_STORAGE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONSTANT_PIPE_STORAGE: InstMeta = InstMeta {
+pub const OP_CONSTANT_PIPE_STORAGE: InstMeta = InstMeta {
     opname: "OpConstantPipeStorage",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 323u16,
@@ -9401,7 +9401,7 @@ pub const INSTRUCTION_OP_CONSTANT_PIPE_STORAGE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CREATE_PIPE_FROM_PIPE_STORAGE: InstMeta = InstMeta {
+pub const OP_CREATE_PIPE_FROM_PIPE_STORAGE: InstMeta = InstMeta {
     opname: "OpCreatePipeFromPipeStorage",
     class: Some(&PRINTING_CLASS_PIPE),
     opcode: 324u16,
@@ -9429,7 +9429,7 @@ pub const INSTRUCTION_OP_CREATE_PIPE_FROM_PIPE_STORAGE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GET_KERNEL_LOCAL_SIZE_FOR_SUBGROUP_COUNT: InstMeta = InstMeta {
+pub const OP_GET_KERNEL_LOCAL_SIZE_FOR_SUBGROUP_COUNT: InstMeta = InstMeta {
     opname: "OpGetKernelLocalSizeForSubgroupCount",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 325u16,
@@ -9477,7 +9477,7 @@ pub const INSTRUCTION_OP_GET_KERNEL_LOCAL_SIZE_FOR_SUBGROUP_COUNT: InstMeta = In
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GET_KERNEL_MAX_NUM_SUBGROUPS: InstMeta = InstMeta {
+pub const OP_GET_KERNEL_MAX_NUM_SUBGROUPS: InstMeta = InstMeta {
     opname: "OpGetKernelMaxNumSubgroups",
     class: Some(&PRINTING_CLASS_DEVICE_SIDE_ENQUEUE),
     opcode: 326u16,
@@ -9520,7 +9520,7 @@ pub const INSTRUCTION_OP_GET_KERNEL_MAX_NUM_SUBGROUPS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_NAMED_BARRIER: InstMeta = InstMeta {
+pub const OP_TYPE_NAMED_BARRIER: InstMeta = InstMeta {
     opname: "OpTypeNamedBarrier",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 327u16,
@@ -9536,7 +9536,7 @@ pub const INSTRUCTION_OP_TYPE_NAMED_BARRIER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_NAMED_BARRIER_INITIALIZE: InstMeta = InstMeta {
+pub const OP_NAMED_BARRIER_INITIALIZE: InstMeta = InstMeta {
     opname: "OpNamedBarrierInitialize",
     class: Some(&PRINTING_CLASS_BARRIER),
     opcode: 328u16,
@@ -9564,7 +9564,7 @@ pub const INSTRUCTION_OP_NAMED_BARRIER_INITIALIZE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_MEMORY_NAMED_BARRIER: InstMeta = InstMeta {
+pub const OP_MEMORY_NAMED_BARRIER: InstMeta = InstMeta {
     opname: "OpMemoryNamedBarrier",
     class: Some(&PRINTING_CLASS_BARRIER),
     opcode: 329u16,
@@ -9592,7 +9592,7 @@ pub const INSTRUCTION_OP_MEMORY_NAMED_BARRIER: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_MODULE_PROCESSED: InstMeta = InstMeta {
+pub const OP_MODULE_PROCESSED: InstMeta = InstMeta {
     opname: "OpModuleProcessed",
     class: Some(&PRINTING_CLASS_DEBUG),
     opcode: 330u16,
@@ -9608,7 +9608,7 @@ pub const INSTRUCTION_OP_MODULE_PROCESSED: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_EXECUTION_MODE_ID: InstMeta = InstMeta {
+pub const OP_EXECUTION_MODE_ID: InstMeta = InstMeta {
     opname: "OpExecutionModeId",
     class: Some(&PRINTING_CLASS_MODE_SETTING),
     opcode: 331u16,
@@ -9631,7 +9631,7 @@ pub const INSTRUCTION_OP_EXECUTION_MODE_ID: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_DECORATE_ID: InstMeta = InstMeta {
+pub const OP_DECORATE_ID: InstMeta = InstMeta {
     opname: "OpDecorateId",
     class: Some(&PRINTING_CLASS_ANNOTATION),
     opcode: 332u16,
@@ -9654,7 +9654,7 @@ pub const INSTRUCTION_OP_DECORATE_ID: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_ELECT: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_ELECT: InstMeta = InstMeta {
     opname: "OpGroupNonUniformElect",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 333u16,
@@ -9682,7 +9682,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_ELECT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_ALL: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_ALL: InstMeta = InstMeta {
     opname: "OpGroupNonUniformAll",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 334u16,
@@ -9715,7 +9715,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_ALL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_ANY: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_ANY: InstMeta = InstMeta {
     opname: "OpGroupNonUniformAny",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 335u16,
@@ -9748,7 +9748,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_ANY: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_ALL_EQUAL: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_ALL_EQUAL: InstMeta = InstMeta {
     opname: "OpGroupNonUniformAllEqual",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 336u16,
@@ -9781,7 +9781,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_ALL_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BROADCAST: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_BROADCAST: InstMeta = InstMeta {
     opname: "OpGroupNonUniformBroadcast",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 337u16,
@@ -9819,7 +9819,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BROADCAST: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BROADCAST_FIRST: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_BROADCAST_FIRST: InstMeta = InstMeta {
     opname: "OpGroupNonUniformBroadcastFirst",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 338u16,
@@ -9852,7 +9852,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BROADCAST_FIRST: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BALLOT: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_BALLOT: InstMeta = InstMeta {
     opname: "OpGroupNonUniformBallot",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 339u16,
@@ -9885,7 +9885,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BALLOT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_INVERSE_BALLOT: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_INVERSE_BALLOT: InstMeta = InstMeta {
     opname: "OpGroupNonUniformInverseBallot",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 340u16,
@@ -9918,7 +9918,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_INVERSE_BALLOT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BALLOT_BIT_EXTRACT: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_BALLOT_BIT_EXTRACT: InstMeta = InstMeta {
     opname: "OpGroupNonUniformBallotBitExtract",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 341u16,
@@ -9956,7 +9956,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BALLOT_BIT_EXTRACT: InstMeta = InstMe
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BALLOT_BIT_COUNT: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_BALLOT_BIT_COUNT: InstMeta = InstMeta {
     opname: "OpGroupNonUniformBallotBitCount",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 342u16,
@@ -9994,7 +9994,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BALLOT_BIT_COUNT: InstMeta = InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BALLOT_FIND_LSB: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_BALLOT_FIND_LSB: InstMeta = InstMeta {
     opname: "OpGroupNonUniformBallotFindLSB",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 343u16,
@@ -10027,7 +10027,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BALLOT_FIND_LSB: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BALLOT_FIND_MSB: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_BALLOT_FIND_MSB: InstMeta = InstMeta {
     opname: "OpGroupNonUniformBallotFindMSB",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 344u16,
@@ -10060,7 +10060,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BALLOT_FIND_MSB: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_SHUFFLE: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_SHUFFLE: InstMeta = InstMeta {
     opname: "OpGroupNonUniformShuffle",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 345u16,
@@ -10098,7 +10098,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_SHUFFLE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_SHUFFLE_XOR: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_SHUFFLE_XOR: InstMeta = InstMeta {
     opname: "OpGroupNonUniformShuffleXor",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 346u16,
@@ -10136,7 +10136,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_SHUFFLE_XOR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_SHUFFLE_UP: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_SHUFFLE_UP: InstMeta = InstMeta {
     opname: "OpGroupNonUniformShuffleUp",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 347u16,
@@ -10174,7 +10174,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_SHUFFLE_UP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_SHUFFLE_DOWN: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_SHUFFLE_DOWN: InstMeta = InstMeta {
     opname: "OpGroupNonUniformShuffleDown",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 348u16,
@@ -10212,7 +10212,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_SHUFFLE_DOWN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_I_ADD: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_I_ADD: InstMeta = InstMeta {
     opname: "OpGroupNonUniformIAdd",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 349u16,
@@ -10259,7 +10259,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_I_ADD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_F_ADD: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_F_ADD: InstMeta = InstMeta {
     opname: "OpGroupNonUniformFAdd",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 350u16,
@@ -10306,7 +10306,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_F_ADD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_I_MUL: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_I_MUL: InstMeta = InstMeta {
     opname: "OpGroupNonUniformIMul",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 351u16,
@@ -10353,7 +10353,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_I_MUL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_F_MUL: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_F_MUL: InstMeta = InstMeta {
     opname: "OpGroupNonUniformFMul",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 352u16,
@@ -10400,7 +10400,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_F_MUL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_S_MIN: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_S_MIN: InstMeta = InstMeta {
     opname: "OpGroupNonUniformSMin",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 353u16,
@@ -10447,7 +10447,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_S_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_U_MIN: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_U_MIN: InstMeta = InstMeta {
     opname: "OpGroupNonUniformUMin",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 354u16,
@@ -10494,7 +10494,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_U_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_F_MIN: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_F_MIN: InstMeta = InstMeta {
     opname: "OpGroupNonUniformFMin",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 355u16,
@@ -10541,7 +10541,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_F_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_S_MAX: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_S_MAX: InstMeta = InstMeta {
     opname: "OpGroupNonUniformSMax",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 356u16,
@@ -10588,7 +10588,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_S_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_U_MAX: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_U_MAX: InstMeta = InstMeta {
     opname: "OpGroupNonUniformUMax",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 357u16,
@@ -10635,7 +10635,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_U_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_F_MAX: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_F_MAX: InstMeta = InstMeta {
     opname: "OpGroupNonUniformFMax",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 358u16,
@@ -10682,7 +10682,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_F_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BITWISE_AND: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_BITWISE_AND: InstMeta = InstMeta {
     opname: "OpGroupNonUniformBitwiseAnd",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 359u16,
@@ -10729,7 +10729,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BITWISE_AND: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BITWISE_OR: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_BITWISE_OR: InstMeta = InstMeta {
     opname: "OpGroupNonUniformBitwiseOr",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 360u16,
@@ -10776,7 +10776,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BITWISE_OR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BITWISE_XOR: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_BITWISE_XOR: InstMeta = InstMeta {
     opname: "OpGroupNonUniformBitwiseXor",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 361u16,
@@ -10823,7 +10823,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_BITWISE_XOR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_LOGICAL_AND: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_LOGICAL_AND: InstMeta = InstMeta {
     opname: "OpGroupNonUniformLogicalAnd",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 362u16,
@@ -10870,7 +10870,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_LOGICAL_AND: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_LOGICAL_OR: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_LOGICAL_OR: InstMeta = InstMeta {
     opname: "OpGroupNonUniformLogicalOr",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 363u16,
@@ -10917,7 +10917,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_LOGICAL_OR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_LOGICAL_XOR: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_LOGICAL_XOR: InstMeta = InstMeta {
     opname: "OpGroupNonUniformLogicalXor",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 364u16,
@@ -10964,7 +10964,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_LOGICAL_XOR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_QUAD_BROADCAST: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_QUAD_BROADCAST: InstMeta = InstMeta {
     opname: "OpGroupNonUniformQuadBroadcast",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 365u16,
@@ -11002,7 +11002,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_QUAD_BROADCAST: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_QUAD_SWAP: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_QUAD_SWAP: InstMeta = InstMeta {
     opname: "OpGroupNonUniformQuadSwap",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 366u16,
@@ -11040,7 +11040,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_QUAD_SWAP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COPY_LOGICAL: InstMeta = InstMeta {
+pub const OP_COPY_LOGICAL: InstMeta = InstMeta {
     opname: "OpCopyLogical",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 400u16,
@@ -11068,7 +11068,7 @@ pub const INSTRUCTION_OP_COPY_LOGICAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_PTR_EQUAL: InstMeta = InstMeta {
+pub const OP_PTR_EQUAL: InstMeta = InstMeta {
     opname: "OpPtrEqual",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 401u16,
@@ -11101,7 +11101,7 @@ pub const INSTRUCTION_OP_PTR_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_PTR_NOT_EQUAL: InstMeta = InstMeta {
+pub const OP_PTR_NOT_EQUAL: InstMeta = InstMeta {
     opname: "OpPtrNotEqual",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 402u16,
@@ -11134,7 +11134,7 @@ pub const INSTRUCTION_OP_PTR_NOT_EQUAL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_PTR_DIFF: InstMeta = InstMeta {
+pub const OP_PTR_DIFF: InstMeta = InstMeta {
     opname: "OpPtrDiff",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 403u16,
@@ -11171,7 +11171,7 @@ pub const INSTRUCTION_OP_PTR_DIFF: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COLOR_ATTACHMENT_READ_EXT: InstMeta = InstMeta {
+pub const OP_COLOR_ATTACHMENT_READ_EXT: InstMeta = InstMeta {
     opname: "OpColorAttachmentReadEXT",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 4160u16,
@@ -11204,7 +11204,7 @@ pub const INSTRUCTION_OP_COLOR_ATTACHMENT_READ_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_DEPTH_ATTACHMENT_READ_EXT: InstMeta = InstMeta {
+pub const OP_DEPTH_ATTACHMENT_READ_EXT: InstMeta = InstMeta {
     opname: "OpDepthAttachmentReadEXT",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 4161u16,
@@ -11232,7 +11232,7 @@ pub const INSTRUCTION_OP_DEPTH_ATTACHMENT_READ_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_STENCIL_ATTACHMENT_READ_EXT: InstMeta = InstMeta {
+pub const OP_STENCIL_ATTACHMENT_READ_EXT: InstMeta = InstMeta {
     opname: "OpStencilAttachmentReadEXT",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 4162u16,
@@ -11260,7 +11260,7 @@ pub const INSTRUCTION_OP_STENCIL_ATTACHMENT_READ_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_TENSOR_ARM: InstMeta = InstMeta {
+pub const OP_TYPE_TENSOR_ARM: InstMeta = InstMeta {
     opname: "OpTypeTensorARM",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 4163u16,
@@ -11293,7 +11293,7 @@ pub const INSTRUCTION_OP_TYPE_TENSOR_ARM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TENSOR_READ_ARM: InstMeta = InstMeta {
+pub const OP_TENSOR_READ_ARM: InstMeta = InstMeta {
     opname: "OpTensorReadARM",
     class: Some(&PRINTING_CLASS_TENSOR),
     opcode: 4164u16,
@@ -11331,7 +11331,7 @@ pub const INSTRUCTION_OP_TENSOR_READ_ARM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TENSOR_WRITE_ARM: InstMeta = InstMeta {
+pub const OP_TENSOR_WRITE_ARM: InstMeta = InstMeta {
     opname: "OpTensorWriteARM",
     class: Some(&PRINTING_CLASS_TENSOR),
     opcode: 4165u16,
@@ -11364,7 +11364,7 @@ pub const INSTRUCTION_OP_TENSOR_WRITE_ARM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TENSOR_QUERY_SIZE_ARM: InstMeta = InstMeta {
+pub const OP_TENSOR_QUERY_SIZE_ARM: InstMeta = InstMeta {
     opname: "OpTensorQuerySizeARM",
     class: Some(&PRINTING_CLASS_TENSOR),
     opcode: 4166u16,
@@ -11397,7 +11397,7 @@ pub const INSTRUCTION_OP_TENSOR_QUERY_SIZE_ARM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GRAPH_CONSTANT_ARM: InstMeta = InstMeta {
+pub const OP_GRAPH_CONSTANT_ARM: InstMeta = InstMeta {
     opname: "OpGraphConstantARM",
     class: Some(&PRINTING_CLASS_GRAPH),
     opcode: 4181u16,
@@ -11425,7 +11425,7 @@ pub const INSTRUCTION_OP_GRAPH_CONSTANT_ARM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GRAPH_ENTRY_POINT_ARM: InstMeta = InstMeta {
+pub const OP_GRAPH_ENTRY_POINT_ARM: InstMeta = InstMeta {
     opname: "OpGraphEntryPointARM",
     class: Some(&PRINTING_CLASS_GRAPH),
     opcode: 4182u16,
@@ -11453,7 +11453,7 @@ pub const INSTRUCTION_OP_GRAPH_ENTRY_POINT_ARM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GRAPH_ARM: InstMeta = InstMeta {
+pub const OP_GRAPH_ARM: InstMeta = InstMeta {
     opname: "OpGraphARM",
     class: Some(&PRINTING_CLASS_GRAPH),
     opcode: 4183u16,
@@ -11476,7 +11476,7 @@ pub const INSTRUCTION_OP_GRAPH_ARM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GRAPH_INPUT_ARM: InstMeta = InstMeta {
+pub const OP_GRAPH_INPUT_ARM: InstMeta = InstMeta {
     opname: "OpGraphInputARM",
     class: Some(&PRINTING_CLASS_GRAPH),
     opcode: 4184u16,
@@ -11509,7 +11509,7 @@ pub const INSTRUCTION_OP_GRAPH_INPUT_ARM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GRAPH_SET_OUTPUT_ARM: InstMeta = InstMeta {
+pub const OP_GRAPH_SET_OUTPUT_ARM: InstMeta = InstMeta {
     opname: "OpGraphSetOutputARM",
     class: Some(&PRINTING_CLASS_GRAPH),
     opcode: 4185u16,
@@ -11537,7 +11537,7 @@ pub const INSTRUCTION_OP_GRAPH_SET_OUTPUT_ARM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GRAPH_END_ARM: InstMeta = InstMeta {
+pub const OP_GRAPH_END_ARM: InstMeta = InstMeta {
     opname: "OpGraphEndARM",
     class: Some(&PRINTING_CLASS_GRAPH),
     opcode: 4186u16,
@@ -11549,7 +11549,7 @@ pub const INSTRUCTION_OP_GRAPH_END_ARM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_GRAPH_ARM: InstMeta = InstMeta {
+pub const OP_TYPE_GRAPH_ARM: InstMeta = InstMeta {
     opname: "OpTypeGraphARM",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 4190u16,
@@ -11577,7 +11577,7 @@ pub const INSTRUCTION_OP_TYPE_GRAPH_ARM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TERMINATE_INVOCATION: InstMeta = InstMeta {
+pub const OP_TERMINATE_INVOCATION: InstMeta = InstMeta {
     opname: "OpTerminateInvocation",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
     opcode: 4416u16,
@@ -11589,7 +11589,7 @@ pub const INSTRUCTION_OP_TERMINATE_INVOCATION: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_UNTYPED_POINTER_KHR: InstMeta = InstMeta {
+pub const OP_TYPE_UNTYPED_POINTER_KHR: InstMeta = InstMeta {
     opname: "OpTypeUntypedPointerKHR",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 4417u16,
@@ -11612,7 +11612,7 @@ pub const INSTRUCTION_OP_TYPE_UNTYPED_POINTER_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_UNTYPED_VARIABLE_KHR: InstMeta = InstMeta {
+pub const OP_UNTYPED_VARIABLE_KHR: InstMeta = InstMeta {
     opname: "OpUntypedVariableKHR",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 4418u16,
@@ -11650,7 +11650,7 @@ pub const INSTRUCTION_OP_UNTYPED_VARIABLE_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_UNTYPED_ACCESS_CHAIN_KHR: InstMeta = InstMeta {
+pub const OP_UNTYPED_ACCESS_CHAIN_KHR: InstMeta = InstMeta {
     opname: "OpUntypedAccessChainKHR",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 4419u16,
@@ -11688,7 +11688,7 @@ pub const INSTRUCTION_OP_UNTYPED_ACCESS_CHAIN_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_UNTYPED_IN_BOUNDS_ACCESS_CHAIN_KHR: InstMeta = InstMeta {
+pub const OP_UNTYPED_IN_BOUNDS_ACCESS_CHAIN_KHR: InstMeta = InstMeta {
     opname: "OpUntypedInBoundsAccessChainKHR",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 4420u16,
@@ -11726,7 +11726,7 @@ pub const INSTRUCTION_OP_UNTYPED_IN_BOUNDS_ACCESS_CHAIN_KHR: InstMeta = InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_BALLOT_KHR: InstMeta = InstMeta {
+pub const OP_SUBGROUP_BALLOT_KHR: InstMeta = InstMeta {
     opname: "OpSubgroupBallotKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 4421u16,
@@ -11754,7 +11754,7 @@ pub const INSTRUCTION_OP_SUBGROUP_BALLOT_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_FIRST_INVOCATION_KHR: InstMeta = InstMeta {
+pub const OP_SUBGROUP_FIRST_INVOCATION_KHR: InstMeta = InstMeta {
     opname: "OpSubgroupFirstInvocationKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 4422u16,
@@ -11782,7 +11782,7 @@ pub const INSTRUCTION_OP_SUBGROUP_FIRST_INVOCATION_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_UNTYPED_PTR_ACCESS_CHAIN_KHR: InstMeta = InstMeta {
+pub const OP_UNTYPED_PTR_ACCESS_CHAIN_KHR: InstMeta = InstMeta {
     opname: "OpUntypedPtrAccessChainKHR",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 4423u16,
@@ -11825,7 +11825,7 @@ pub const INSTRUCTION_OP_UNTYPED_PTR_ACCESS_CHAIN_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_UNTYPED_IN_BOUNDS_PTR_ACCESS_CHAIN_KHR: InstMeta = InstMeta {
+pub const OP_UNTYPED_IN_BOUNDS_PTR_ACCESS_CHAIN_KHR: InstMeta = InstMeta {
     opname: "OpUntypedInBoundsPtrAccessChainKHR",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 4424u16,
@@ -11868,7 +11868,7 @@ pub const INSTRUCTION_OP_UNTYPED_IN_BOUNDS_PTR_ACCESS_CHAIN_KHR: InstMeta = Inst
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_UNTYPED_ARRAY_LENGTH_KHR: InstMeta = InstMeta {
+pub const OP_UNTYPED_ARRAY_LENGTH_KHR: InstMeta = InstMeta {
     opname: "OpUntypedArrayLengthKHR",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 4425u16,
@@ -11906,7 +11906,7 @@ pub const INSTRUCTION_OP_UNTYPED_ARRAY_LENGTH_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_UNTYPED_PREFETCH_KHR: InstMeta = InstMeta {
+pub const OP_UNTYPED_PREFETCH_KHR: InstMeta = InstMeta {
     opname: "OpUntypedPrefetchKHR",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 4426u16,
@@ -11944,7 +11944,7 @@ pub const INSTRUCTION_OP_UNTYPED_PREFETCH_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FMA_KHR: InstMeta = InstMeta {
+pub const OP_FMA_KHR: InstMeta = InstMeta {
     opname: "OpFmaKHR",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 4427u16,
@@ -11982,7 +11982,7 @@ pub const INSTRUCTION_OP_FMA_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_ALL_KHR: InstMeta = InstMeta {
+pub const OP_SUBGROUP_ALL_KHR: InstMeta = InstMeta {
     opname: "OpSubgroupAllKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 4428u16,
@@ -12010,7 +12010,7 @@ pub const INSTRUCTION_OP_SUBGROUP_ALL_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_ANY_KHR: InstMeta = InstMeta {
+pub const OP_SUBGROUP_ANY_KHR: InstMeta = InstMeta {
     opname: "OpSubgroupAnyKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 4429u16,
@@ -12038,7 +12038,7 @@ pub const INSTRUCTION_OP_SUBGROUP_ANY_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_ALL_EQUAL_KHR: InstMeta = InstMeta {
+pub const OP_SUBGROUP_ALL_EQUAL_KHR: InstMeta = InstMeta {
     opname: "OpSubgroupAllEqualKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 4430u16,
@@ -12066,7 +12066,7 @@ pub const INSTRUCTION_OP_SUBGROUP_ALL_EQUAL_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_ROTATE_KHR: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_ROTATE_KHR: InstMeta = InstMeta {
     opname: "OpGroupNonUniformRotateKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 4431u16,
@@ -12109,7 +12109,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_ROTATE_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_READ_INVOCATION_KHR: InstMeta = InstMeta {
+pub const OP_SUBGROUP_READ_INVOCATION_KHR: InstMeta = InstMeta {
     opname: "OpSubgroupReadInvocationKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 4432u16,
@@ -12142,7 +12142,7 @@ pub const INSTRUCTION_OP_SUBGROUP_READ_INVOCATION_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_EXT_INST_WITH_FORWARD_REFS_KHR: InstMeta = InstMeta {
+pub const OP_EXT_INST_WITH_FORWARD_REFS_KHR: InstMeta = InstMeta {
     opname: "OpExtInstWithForwardRefsKHR",
     class: Some(&PRINTING_CLASS_EXTENSION),
     opcode: 4433u16,
@@ -12180,7 +12180,7 @@ pub const INSTRUCTION_OP_EXT_INST_WITH_FORWARD_REFS_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_UNTYPED_GROUP_ASYNC_COPY_KHR: InstMeta = InstMeta {
+pub const OP_UNTYPED_GROUP_ASYNC_COPY_KHR: InstMeta = InstMeta {
     opname: "OpUntypedGroupAsyncCopyKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 4434u16,
@@ -12248,7 +12248,7 @@ pub const INSTRUCTION_OP_UNTYPED_GROUP_ASYNC_COPY_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TRACE_RAY_KHR: InstMeta = InstMeta {
+pub const OP_TRACE_RAY_KHR: InstMeta = InstMeta {
     opname: "OpTraceRayKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 4445u16,
@@ -12316,7 +12316,7 @@ pub const INSTRUCTION_OP_TRACE_RAY_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_EXECUTE_CALLABLE_KHR: InstMeta = InstMeta {
+pub const OP_EXECUTE_CALLABLE_KHR: InstMeta = InstMeta {
     opname: "OpExecuteCallableKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 4446u16,
@@ -12339,7 +12339,7 @@ pub const INSTRUCTION_OP_EXECUTE_CALLABLE_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_U_TO_ACCELERATION_STRUCTURE_KHR: InstMeta = InstMeta {
+pub const OP_CONVERT_U_TO_ACCELERATION_STRUCTURE_KHR: InstMeta = InstMeta {
     opname: "OpConvertUToAccelerationStructureKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 4447u16,
@@ -12367,7 +12367,7 @@ pub const INSTRUCTION_OP_CONVERT_U_TO_ACCELERATION_STRUCTURE_KHR: InstMeta = Ins
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IGNORE_INTERSECTION_KHR: InstMeta = InstMeta {
+pub const OP_IGNORE_INTERSECTION_KHR: InstMeta = InstMeta {
     opname: "OpIgnoreIntersectionKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 4448u16,
@@ -12379,7 +12379,7 @@ pub const INSTRUCTION_OP_IGNORE_INTERSECTION_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TERMINATE_RAY_KHR: InstMeta = InstMeta {
+pub const OP_TERMINATE_RAY_KHR: InstMeta = InstMeta {
     opname: "OpTerminateRayKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 4449u16,
@@ -12391,7 +12391,7 @@ pub const INSTRUCTION_OP_TERMINATE_RAY_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_S_DOT: InstMeta = InstMeta {
+pub const OP_S_DOT: InstMeta = InstMeta {
     opname: "OpSDot",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 4450u16,
@@ -12429,7 +12429,7 @@ pub const INSTRUCTION_OP_S_DOT: InstMeta = InstMeta {
     aliases: &["OpSDotKHR"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_DOT: InstMeta = InstMeta {
+pub const OP_U_DOT: InstMeta = InstMeta {
     opname: "OpUDot",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 4451u16,
@@ -12467,7 +12467,7 @@ pub const INSTRUCTION_OP_U_DOT: InstMeta = InstMeta {
     aliases: &["OpUDotKHR"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SU_DOT: InstMeta = InstMeta {
+pub const OP_SU_DOT: InstMeta = InstMeta {
     opname: "OpSUDot",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 4452u16,
@@ -12505,7 +12505,7 @@ pub const INSTRUCTION_OP_SU_DOT: InstMeta = InstMeta {
     aliases: &["OpSUDotKHR"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_S_DOT_ACC_SAT: InstMeta = InstMeta {
+pub const OP_S_DOT_ACC_SAT: InstMeta = InstMeta {
     opname: "OpSDotAccSat",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 4453u16,
@@ -12548,7 +12548,7 @@ pub const INSTRUCTION_OP_S_DOT_ACC_SAT: InstMeta = InstMeta {
     aliases: &["OpSDotAccSatKHR"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_DOT_ACC_SAT: InstMeta = InstMeta {
+pub const OP_U_DOT_ACC_SAT: InstMeta = InstMeta {
     opname: "OpUDotAccSat",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 4454u16,
@@ -12591,7 +12591,7 @@ pub const INSTRUCTION_OP_U_DOT_ACC_SAT: InstMeta = InstMeta {
     aliases: &["OpUDotAccSatKHR"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SU_DOT_ACC_SAT: InstMeta = InstMeta {
+pub const OP_SU_DOT_ACC_SAT: InstMeta = InstMeta {
     opname: "OpSUDotAccSat",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 4455u16,
@@ -12634,7 +12634,7 @@ pub const INSTRUCTION_OP_SU_DOT_ACC_SAT: InstMeta = InstMeta {
     aliases: &["OpSUDotAccSatKHR"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_COOPERATIVE_MATRIX_KHR: InstMeta = InstMeta {
+pub const OP_TYPE_COOPERATIVE_MATRIX_KHR: InstMeta = InstMeta {
     opname: "OpTypeCooperativeMatrixKHR",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 4456u16,
@@ -12677,7 +12677,7 @@ pub const INSTRUCTION_OP_TYPE_COOPERATIVE_MATRIX_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_LOAD_KHR: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_MATRIX_LOAD_KHR: InstMeta = InstMeta {
     opname: "OpCooperativeMatrixLoadKHR",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 4457u16,
@@ -12720,7 +12720,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_LOAD_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_STORE_KHR: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_MATRIX_STORE_KHR: InstMeta = InstMeta {
     opname: "OpCooperativeMatrixStoreKHR",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 4458u16,
@@ -12758,7 +12758,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_STORE_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_MUL_ADD_KHR: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_MATRIX_MUL_ADD_KHR: InstMeta = InstMeta {
     opname: "OpCooperativeMatrixMulAddKHR",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 4459u16,
@@ -12801,7 +12801,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_MUL_ADD_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_LENGTH_KHR: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_MATRIX_LENGTH_KHR: InstMeta = InstMeta {
     opname: "OpCooperativeMatrixLengthKHR",
     class: Some(&PRINTING_CLASS_MISCELLANEOUS),
     opcode: 4460u16,
@@ -12829,7 +12829,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_LENGTH_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONSTANT_COMPOSITE_REPLICATE_EXT: InstMeta = InstMeta {
+pub const OP_CONSTANT_COMPOSITE_REPLICATE_EXT: InstMeta = InstMeta {
     opname: "OpConstantCompositeReplicateEXT",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 4461u16,
@@ -12857,7 +12857,7 @@ pub const INSTRUCTION_OP_CONSTANT_COMPOSITE_REPLICATE_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SPEC_CONSTANT_COMPOSITE_REPLICATE_EXT: InstMeta = InstMeta {
+pub const OP_SPEC_CONSTANT_COMPOSITE_REPLICATE_EXT: InstMeta = InstMeta {
     opname: "OpSpecConstantCompositeReplicateEXT",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 4462u16,
@@ -12885,7 +12885,7 @@ pub const INSTRUCTION_OP_SPEC_CONSTANT_COMPOSITE_REPLICATE_EXT: InstMeta = InstM
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COMPOSITE_CONSTRUCT_REPLICATE_EXT: InstMeta = InstMeta {
+pub const OP_COMPOSITE_CONSTRUCT_REPLICATE_EXT: InstMeta = InstMeta {
     opname: "OpCompositeConstructReplicateEXT",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 4463u16,
@@ -12913,7 +12913,7 @@ pub const INSTRUCTION_OP_COMPOSITE_CONSTRUCT_REPLICATE_EXT: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_RAY_QUERY_KHR: InstMeta = InstMeta {
+pub const OP_TYPE_RAY_QUERY_KHR: InstMeta = InstMeta {
     opname: "OpTypeRayQueryKHR",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 4472u16,
@@ -12929,7 +12929,7 @@ pub const INSTRUCTION_OP_TYPE_RAY_QUERY_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_INITIALIZE_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_INITIALIZE_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryInitializeKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 4473u16,
@@ -12982,7 +12982,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_INITIALIZE_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_TERMINATE_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_TERMINATE_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryTerminateKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 4474u16,
@@ -12998,7 +12998,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_TERMINATE_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GENERATE_INTERSECTION_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GENERATE_INTERSECTION_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryGenerateIntersectionKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 4475u16,
@@ -13021,7 +13021,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GENERATE_INTERSECTION_KHR: InstMeta = InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_CONFIRM_INTERSECTION_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_CONFIRM_INTERSECTION_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryConfirmIntersectionKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 4476u16,
@@ -13037,7 +13037,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_CONFIRM_INTERSECTION_KHR: InstMeta = InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_PROCEED_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_PROCEED_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryProceedKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 4477u16,
@@ -13065,7 +13065,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_PROCEED_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_TYPE_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_TYPE_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionTypeKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 4479u16,
@@ -13098,7 +13098,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_TYPE_KHR: InstMeta = InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SAMPLE_WEIGHTED_QCOM: InstMeta = InstMeta {
+pub const OP_IMAGE_SAMPLE_WEIGHTED_QCOM: InstMeta = InstMeta {
     opname: "OpImageSampleWeightedQCOM",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 4480u16,
@@ -13136,7 +13136,7 @@ pub const INSTRUCTION_OP_IMAGE_SAMPLE_WEIGHTED_QCOM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_BOX_FILTER_QCOM: InstMeta = InstMeta {
+pub const OP_IMAGE_BOX_FILTER_QCOM: InstMeta = InstMeta {
     opname: "OpImageBoxFilterQCOM",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 4481u16,
@@ -13174,7 +13174,7 @@ pub const INSTRUCTION_OP_IMAGE_BOX_FILTER_QCOM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_BLOCK_MATCH_SSDQCOM: InstMeta = InstMeta {
+pub const OP_IMAGE_BLOCK_MATCH_SSDQCOM: InstMeta = InstMeta {
     opname: "OpImageBlockMatchSSDQCOM",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 4482u16,
@@ -13222,7 +13222,7 @@ pub const INSTRUCTION_OP_IMAGE_BLOCK_MATCH_SSDQCOM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_BLOCK_MATCH_SADQCOM: InstMeta = InstMeta {
+pub const OP_IMAGE_BLOCK_MATCH_SADQCOM: InstMeta = InstMeta {
     opname: "OpImageBlockMatchSADQCOM",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 4483u16,
@@ -13270,7 +13270,7 @@ pub const INSTRUCTION_OP_IMAGE_BLOCK_MATCH_SADQCOM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BIT_CAST_ARRAY_QCOM: InstMeta = InstMeta {
+pub const OP_BIT_CAST_ARRAY_QCOM: InstMeta = InstMeta {
     opname: "OpBitCastArrayQCOM",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 4497u16,
@@ -13298,7 +13298,7 @@ pub const INSTRUCTION_OP_BIT_CAST_ARRAY_QCOM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_BLOCK_MATCH_WINDOW_SSDQCOM: InstMeta = InstMeta {
+pub const OP_IMAGE_BLOCK_MATCH_WINDOW_SSDQCOM: InstMeta = InstMeta {
     opname: "OpImageBlockMatchWindowSSDQCOM",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 4500u16,
@@ -13346,7 +13346,7 @@ pub const INSTRUCTION_OP_IMAGE_BLOCK_MATCH_WINDOW_SSDQCOM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_BLOCK_MATCH_WINDOW_SADQCOM: InstMeta = InstMeta {
+pub const OP_IMAGE_BLOCK_MATCH_WINDOW_SADQCOM: InstMeta = InstMeta {
     opname: "OpImageBlockMatchWindowSADQCOM",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 4501u16,
@@ -13394,7 +13394,7 @@ pub const INSTRUCTION_OP_IMAGE_BLOCK_MATCH_WINDOW_SADQCOM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_BLOCK_MATCH_GATHER_SSDQCOM: InstMeta = InstMeta {
+pub const OP_IMAGE_BLOCK_MATCH_GATHER_SSDQCOM: InstMeta = InstMeta {
     opname: "OpImageBlockMatchGatherSSDQCOM",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 4502u16,
@@ -13442,7 +13442,7 @@ pub const INSTRUCTION_OP_IMAGE_BLOCK_MATCH_GATHER_SSDQCOM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_BLOCK_MATCH_GATHER_SADQCOM: InstMeta = InstMeta {
+pub const OP_IMAGE_BLOCK_MATCH_GATHER_SADQCOM: InstMeta = InstMeta {
     opname: "OpImageBlockMatchGatherSADQCOM",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 4503u16,
@@ -13490,7 +13490,7 @@ pub const INSTRUCTION_OP_IMAGE_BLOCK_MATCH_GATHER_SADQCOM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COMPOSITE_CONSTRUCT_COOP_MAT_QCOM: InstMeta = InstMeta {
+pub const OP_COMPOSITE_CONSTRUCT_COOP_MAT_QCOM: InstMeta = InstMeta {
     opname: "OpCompositeConstructCoopMatQCOM",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 4540u16,
@@ -13518,7 +13518,7 @@ pub const INSTRUCTION_OP_COMPOSITE_CONSTRUCT_COOP_MAT_QCOM: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COMPOSITE_EXTRACT_COOP_MAT_QCOM: InstMeta = InstMeta {
+pub const OP_COMPOSITE_EXTRACT_COOP_MAT_QCOM: InstMeta = InstMeta {
     opname: "OpCompositeExtractCoopMatQCOM",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 4541u16,
@@ -13546,7 +13546,7 @@ pub const INSTRUCTION_OP_COMPOSITE_EXTRACT_COOP_MAT_QCOM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_EXTRACT_SUB_ARRAY_QCOM: InstMeta = InstMeta {
+pub const OP_EXTRACT_SUB_ARRAY_QCOM: InstMeta = InstMeta {
     opname: "OpExtractSubArrayQCOM",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 4542u16,
@@ -13579,7 +13579,7 @@ pub const INSTRUCTION_OP_EXTRACT_SUB_ARRAY_QCOM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_I_ADD_NON_UNIFORM_AMD: InstMeta = InstMeta {
+pub const OP_GROUP_I_ADD_NON_UNIFORM_AMD: InstMeta = InstMeta {
     opname: "OpGroupIAddNonUniformAMD",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5000u16,
@@ -13617,7 +13617,7 @@ pub const INSTRUCTION_OP_GROUP_I_ADD_NON_UNIFORM_AMD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_F_ADD_NON_UNIFORM_AMD: InstMeta = InstMeta {
+pub const OP_GROUP_F_ADD_NON_UNIFORM_AMD: InstMeta = InstMeta {
     opname: "OpGroupFAddNonUniformAMD",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5001u16,
@@ -13655,7 +13655,7 @@ pub const INSTRUCTION_OP_GROUP_F_ADD_NON_UNIFORM_AMD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_F_MIN_NON_UNIFORM_AMD: InstMeta = InstMeta {
+pub const OP_GROUP_F_MIN_NON_UNIFORM_AMD: InstMeta = InstMeta {
     opname: "OpGroupFMinNonUniformAMD",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5002u16,
@@ -13693,7 +13693,7 @@ pub const INSTRUCTION_OP_GROUP_F_MIN_NON_UNIFORM_AMD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_U_MIN_NON_UNIFORM_AMD: InstMeta = InstMeta {
+pub const OP_GROUP_U_MIN_NON_UNIFORM_AMD: InstMeta = InstMeta {
     opname: "OpGroupUMinNonUniformAMD",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5003u16,
@@ -13731,7 +13731,7 @@ pub const INSTRUCTION_OP_GROUP_U_MIN_NON_UNIFORM_AMD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_S_MIN_NON_UNIFORM_AMD: InstMeta = InstMeta {
+pub const OP_GROUP_S_MIN_NON_UNIFORM_AMD: InstMeta = InstMeta {
     opname: "OpGroupSMinNonUniformAMD",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5004u16,
@@ -13769,7 +13769,7 @@ pub const INSTRUCTION_OP_GROUP_S_MIN_NON_UNIFORM_AMD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_F_MAX_NON_UNIFORM_AMD: InstMeta = InstMeta {
+pub const OP_GROUP_F_MAX_NON_UNIFORM_AMD: InstMeta = InstMeta {
     opname: "OpGroupFMaxNonUniformAMD",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5005u16,
@@ -13807,7 +13807,7 @@ pub const INSTRUCTION_OP_GROUP_F_MAX_NON_UNIFORM_AMD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_U_MAX_NON_UNIFORM_AMD: InstMeta = InstMeta {
+pub const OP_GROUP_U_MAX_NON_UNIFORM_AMD: InstMeta = InstMeta {
     opname: "OpGroupUMaxNonUniformAMD",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5006u16,
@@ -13845,7 +13845,7 @@ pub const INSTRUCTION_OP_GROUP_U_MAX_NON_UNIFORM_AMD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_S_MAX_NON_UNIFORM_AMD: InstMeta = InstMeta {
+pub const OP_GROUP_S_MAX_NON_UNIFORM_AMD: InstMeta = InstMeta {
     opname: "OpGroupSMaxNonUniformAMD",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5007u16,
@@ -13883,7 +13883,7 @@ pub const INSTRUCTION_OP_GROUP_S_MAX_NON_UNIFORM_AMD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FRAGMENT_MASK_FETCH_AMD: InstMeta = InstMeta {
+pub const OP_FRAGMENT_MASK_FETCH_AMD: InstMeta = InstMeta {
     opname: "OpFragmentMaskFetchAMD",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5011u16,
@@ -13916,7 +13916,7 @@ pub const INSTRUCTION_OP_FRAGMENT_MASK_FETCH_AMD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FRAGMENT_FETCH_AMD: InstMeta = InstMeta {
+pub const OP_FRAGMENT_FETCH_AMD: InstMeta = InstMeta {
     opname: "OpFragmentFetchAMD",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5012u16,
@@ -13954,7 +13954,7 @@ pub const INSTRUCTION_OP_FRAGMENT_FETCH_AMD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_READ_CLOCK_KHR: InstMeta = InstMeta {
+pub const OP_READ_CLOCK_KHR: InstMeta = InstMeta {
     opname: "OpReadClockKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5056u16,
@@ -13982,7 +13982,7 @@ pub const INSTRUCTION_OP_READ_CLOCK_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ALLOCATE_NODE_PAYLOADS_AMDX: InstMeta = InstMeta {
+pub const OP_ALLOCATE_NODE_PAYLOADS_AMDX: InstMeta = InstMeta {
     opname: "OpAllocateNodePayloadsAMDX",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5074u16,
@@ -14020,7 +14020,7 @@ pub const INSTRUCTION_OP_ALLOCATE_NODE_PAYLOADS_AMDX: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_ENQUEUE_NODE_PAYLOADS_AMDX: InstMeta = InstMeta {
+pub const OP_ENQUEUE_NODE_PAYLOADS_AMDX: InstMeta = InstMeta {
     opname: "OpEnqueueNodePayloadsAMDX",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5075u16,
@@ -14036,7 +14036,7 @@ pub const INSTRUCTION_OP_ENQUEUE_NODE_PAYLOADS_AMDX: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_TYPE_NODE_PAYLOAD_ARRAY_AMDX: InstMeta = InstMeta {
+pub const OP_TYPE_NODE_PAYLOAD_ARRAY_AMDX: InstMeta = InstMeta {
     opname: "OpTypeNodePayloadArrayAMDX",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5076u16,
@@ -14059,7 +14059,7 @@ pub const INSTRUCTION_OP_TYPE_NODE_PAYLOAD_ARRAY_AMDX: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_FINISH_WRITING_NODE_PAYLOAD_AMDX: InstMeta = InstMeta {
+pub const OP_FINISH_WRITING_NODE_PAYLOAD_AMDX: InstMeta = InstMeta {
     opname: "OpFinishWritingNodePayloadAMDX",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5078u16,
@@ -14087,7 +14087,7 @@ pub const INSTRUCTION_OP_FINISH_WRITING_NODE_PAYLOAD_AMDX: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_NODE_PAYLOAD_ARRAY_LENGTH_AMDX: InstMeta = InstMeta {
+pub const OP_NODE_PAYLOAD_ARRAY_LENGTH_AMDX: InstMeta = InstMeta {
     opname: "OpNodePayloadArrayLengthAMDX",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5090u16,
@@ -14115,7 +14115,7 @@ pub const INSTRUCTION_OP_NODE_PAYLOAD_ARRAY_LENGTH_AMDX: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_IS_NODE_PAYLOAD_VALID_AMDX: InstMeta = InstMeta {
+pub const OP_IS_NODE_PAYLOAD_VALID_AMDX: InstMeta = InstMeta {
     opname: "OpIsNodePayloadValidAMDX",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5101u16,
@@ -14148,7 +14148,7 @@ pub const INSTRUCTION_OP_IS_NODE_PAYLOAD_VALID_AMDX: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_CONSTANT_STRING_AMDX: InstMeta = InstMeta {
+pub const OP_CONSTANT_STRING_AMDX: InstMeta = InstMeta {
     opname: "OpConstantStringAMDX",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5103u16,
@@ -14171,7 +14171,7 @@ pub const INSTRUCTION_OP_CONSTANT_STRING_AMDX: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_SPEC_CONSTANT_STRING_AMDX: InstMeta = InstMeta {
+pub const OP_SPEC_CONSTANT_STRING_AMDX: InstMeta = InstMeta {
     opname: "OpSpecConstantStringAMDX",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5104u16,
@@ -14194,7 +14194,7 @@ pub const INSTRUCTION_OP_SPEC_CONSTANT_STRING_AMDX: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_QUAD_ALL_KHR: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_QUAD_ALL_KHR: InstMeta = InstMeta {
     opname: "OpGroupNonUniformQuadAllKHR",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 5110u16,
@@ -14222,7 +14222,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_QUAD_ALL_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_QUAD_ANY_KHR: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_QUAD_ANY_KHR: InstMeta = InstMeta {
     opname: "OpGroupNonUniformQuadAnyKHR",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 5111u16,
@@ -14250,7 +14250,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_QUAD_ANY_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_BUFFER_EXT: InstMeta = InstMeta {
+pub const OP_TYPE_BUFFER_EXT: InstMeta = InstMeta {
     opname: "OpTypeBufferEXT",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 5115u16,
@@ -14273,7 +14273,7 @@ pub const INSTRUCTION_OP_TYPE_BUFFER_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BUFFER_POINTER_EXT: InstMeta = InstMeta {
+pub const OP_BUFFER_POINTER_EXT: InstMeta = InstMeta {
     opname: "OpBufferPointerEXT",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 5119u16,
@@ -14301,7 +14301,7 @@ pub const INSTRUCTION_OP_BUFFER_POINTER_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_UNTYPED_IMAGE_TEXEL_POINTER_EXT: InstMeta = InstMeta {
+pub const OP_UNTYPED_IMAGE_TEXEL_POINTER_EXT: InstMeta = InstMeta {
     opname: "OpUntypedImageTexelPointerEXT",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 5126u16,
@@ -14344,7 +14344,7 @@ pub const INSTRUCTION_OP_UNTYPED_IMAGE_TEXEL_POINTER_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_MEMBER_DECORATE_ID_EXT: InstMeta = InstMeta {
+pub const OP_MEMBER_DECORATE_ID_EXT: InstMeta = InstMeta {
     opname: "OpMemberDecorateIdEXT",
     class: Some(&PRINTING_CLASS_ANNOTATION),
     opcode: 5127u16,
@@ -14372,7 +14372,7 @@ pub const INSTRUCTION_OP_MEMBER_DECORATE_ID_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONSTANT_SIZE_OF_EXT: InstMeta = InstMeta {
+pub const OP_CONSTANT_SIZE_OF_EXT: InstMeta = InstMeta {
     opname: "OpConstantSizeOfEXT",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 5129u16,
@@ -14400,7 +14400,7 @@ pub const INSTRUCTION_OP_CONSTANT_SIZE_OF_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_HIT_MOTION_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_RECORD_HIT_MOTION_NV: InstMeta = InstMeta {
     opname: "OpHitObjectRecordHitMotionNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5249u16,
@@ -14486,7 +14486,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_HIT_MOTION_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_HIT_WITH_INDEX_MOTION_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_RECORD_HIT_WITH_INDEX_MOTION_NV: InstMeta = InstMeta {
     opname: "OpHitObjectRecordHitWithIndexMotionNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5250u16,
@@ -14567,7 +14567,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_HIT_WITH_INDEX_MOTION_NV: InstMeta = 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_MISS_MOTION_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_RECORD_MISS_MOTION_NV: InstMeta = InstMeta {
     opname: "OpHitObjectRecordMissMotionNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5251u16,
@@ -14618,7 +14618,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_MISS_MOTION_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_WORLD_TO_OBJECT_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_WORLD_TO_OBJECT_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetWorldToObjectNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5252u16,
@@ -14646,7 +14646,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_WORLD_TO_OBJECT_NV: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_OBJECT_TO_WORLD_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_OBJECT_TO_WORLD_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetObjectToWorldNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5253u16,
@@ -14674,7 +14674,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_OBJECT_TO_WORLD_NV: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_OBJECT_RAY_DIRECTION_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_OBJECT_RAY_DIRECTION_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetObjectRayDirectionNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5254u16,
@@ -14702,7 +14702,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_OBJECT_RAY_DIRECTION_NV: InstMeta = Inst
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_OBJECT_RAY_ORIGIN_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_OBJECT_RAY_ORIGIN_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetObjectRayOriginNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5255u16,
@@ -14730,7 +14730,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_OBJECT_RAY_ORIGIN_NV: InstMeta = InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_TRACE_RAY_MOTION_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_TRACE_RAY_MOTION_NV: InstMeta = InstMeta {
     opname: "OpHitObjectTraceRayMotionNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5256u16,
@@ -14811,7 +14811,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_TRACE_RAY_MOTION_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_SHADER_RECORD_BUFFER_HANDLE_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_SHADER_RECORD_BUFFER_HANDLE_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetShaderRecordBufferHandleNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5257u16,
@@ -14839,7 +14839,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_SHADER_RECORD_BUFFER_HANDLE_NV: InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_SHADER_BINDING_TABLE_RECORD_INDEX_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_SHADER_BINDING_TABLE_RECORD_INDEX_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetShaderBindingTableRecordIndexNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5258u16,
@@ -14867,7 +14867,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_SHADER_BINDING_TABLE_RECORD_INDEX_NV: In
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_EMPTY_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_RECORD_EMPTY_NV: InstMeta = InstMeta {
     opname: "OpHitObjectRecordEmptyNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5259u16,
@@ -14883,7 +14883,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_EMPTY_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_TRACE_RAY_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_TRACE_RAY_NV: InstMeta = InstMeta {
     opname: "OpHitObjectTraceRayNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5260u16,
@@ -14956,7 +14956,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_TRACE_RAY_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_HIT_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_RECORD_HIT_NV: InstMeta = InstMeta {
     opname: "OpHitObjectRecordHitNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5261u16,
@@ -15034,7 +15034,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_HIT_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_HIT_WITH_INDEX_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_RECORD_HIT_WITH_INDEX_NV: InstMeta = InstMeta {
     opname: "OpHitObjectRecordHitWithIndexNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5262u16,
@@ -15107,7 +15107,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_HIT_WITH_INDEX_NV: InstMeta = InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_MISS_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_RECORD_MISS_NV: InstMeta = InstMeta {
     opname: "OpHitObjectRecordMissNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5263u16,
@@ -15150,7 +15150,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_MISS_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_EXECUTE_SHADER_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_EXECUTE_SHADER_NV: InstMeta = InstMeta {
     opname: "OpHitObjectExecuteShaderNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5264u16,
@@ -15173,7 +15173,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_EXECUTE_SHADER_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_CURRENT_TIME_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_CURRENT_TIME_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetCurrentTimeNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5265u16,
@@ -15201,7 +15201,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_CURRENT_TIME_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_ATTRIBUTES_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_ATTRIBUTES_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetAttributesNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5266u16,
@@ -15224,7 +15224,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_ATTRIBUTES_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_HIT_KIND_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_HIT_KIND_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetHitKindNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5267u16,
@@ -15252,7 +15252,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_HIT_KIND_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_PRIMITIVE_INDEX_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_PRIMITIVE_INDEX_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetPrimitiveIndexNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5268u16,
@@ -15280,7 +15280,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_PRIMITIVE_INDEX_NV: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_GEOMETRY_INDEX_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_GEOMETRY_INDEX_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetGeometryIndexNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5269u16,
@@ -15308,7 +15308,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_GEOMETRY_INDEX_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_INSTANCE_ID_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_INSTANCE_ID_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetInstanceIdNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5270u16,
@@ -15336,7 +15336,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_INSTANCE_ID_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_INSTANCE_CUSTOM_INDEX_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_INSTANCE_CUSTOM_INDEX_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetInstanceCustomIndexNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5271u16,
@@ -15364,7 +15364,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_INSTANCE_CUSTOM_INDEX_NV: InstMeta = Ins
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_WORLD_RAY_DIRECTION_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_WORLD_RAY_DIRECTION_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetWorldRayDirectionNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5272u16,
@@ -15392,7 +15392,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_WORLD_RAY_DIRECTION_NV: InstMeta = InstM
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_WORLD_RAY_ORIGIN_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_WORLD_RAY_ORIGIN_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetWorldRayOriginNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5273u16,
@@ -15420,7 +15420,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_WORLD_RAY_ORIGIN_NV: InstMeta = InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_RAY_T_MAX_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_RAY_T_MAX_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetRayTMaxNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5274u16,
@@ -15448,7 +15448,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_RAY_T_MAX_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_RAY_T_MIN_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_RAY_T_MIN_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetRayTMinNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5275u16,
@@ -15476,7 +15476,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_RAY_T_MIN_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_IS_EMPTY_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_IS_EMPTY_NV: InstMeta = InstMeta {
     opname: "OpHitObjectIsEmptyNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5276u16,
@@ -15504,7 +15504,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_IS_EMPTY_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_IS_HIT_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_IS_HIT_NV: InstMeta = InstMeta {
     opname: "OpHitObjectIsHitNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5277u16,
@@ -15532,7 +15532,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_IS_HIT_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_IS_MISS_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_IS_MISS_NV: InstMeta = InstMeta {
     opname: "OpHitObjectIsMissNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5278u16,
@@ -15560,7 +15560,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_IS_MISS_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_REORDER_THREAD_WITH_HIT_OBJECT_NV: InstMeta = InstMeta {
+pub const OP_REORDER_THREAD_WITH_HIT_OBJECT_NV: InstMeta = InstMeta {
     opname: "OpReorderThreadWithHitObjectNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5279u16,
@@ -15588,7 +15588,7 @@ pub const INSTRUCTION_OP_REORDER_THREAD_WITH_HIT_OBJECT_NV: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_REORDER_THREAD_WITH_HINT_NV: InstMeta = InstMeta {
+pub const OP_REORDER_THREAD_WITH_HINT_NV: InstMeta = InstMeta {
     opname: "OpReorderThreadWithHintNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5280u16,
@@ -15611,7 +15611,7 @@ pub const INSTRUCTION_OP_REORDER_THREAD_WITH_HINT_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_HIT_OBJECT_NV: InstMeta = InstMeta {
+pub const OP_TYPE_HIT_OBJECT_NV: InstMeta = InstMeta {
     opname: "OpTypeHitObjectNV",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 5281u16,
@@ -15627,7 +15627,7 @@ pub const INSTRUCTION_OP_TYPE_HIT_OBJECT_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IMAGE_SAMPLE_FOOTPRINT_NV: InstMeta = InstMeta {
+pub const OP_IMAGE_SAMPLE_FOOTPRINT_NV: InstMeta = InstMeta {
     opname: "OpImageSampleFootprintNV",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 5283u16,
@@ -15675,7 +15675,7 @@ pub const INSTRUCTION_OP_IMAGE_SAMPLE_FOOTPRINT_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_VECTOR_ID_EXT: InstMeta = InstMeta {
+pub const OP_TYPE_VECTOR_ID_EXT: InstMeta = InstMeta {
     opname: "OpTypeVectorIdEXT",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 5288u16,
@@ -15703,7 +15703,7 @@ pub const INSTRUCTION_OP_TYPE_VECTOR_ID_EXT: InstMeta = InstMeta {
     aliases: &["OpTypeCooperativeVectorNV"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_VECTOR_MATRIX_MUL_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_VECTOR_MATRIX_MUL_NV: InstMeta = InstMeta {
     opname: "OpCooperativeVectorMatrixMulNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5289u16,
@@ -15781,7 +15781,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_VECTOR_MATRIX_MUL_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_VECTOR_OUTER_PRODUCT_ACCUMULATE_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_VECTOR_OUTER_PRODUCT_ACCUMULATE_NV: InstMeta = InstMeta {
     opname: "OpCooperativeVectorOuterProductAccumulateNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5290u16,
@@ -15829,7 +15829,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_VECTOR_OUTER_PRODUCT_ACCUMULATE_NV: InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_VECTOR_REDUCE_SUM_ACCUMULATE_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_VECTOR_REDUCE_SUM_ACCUMULATE_NV: InstMeta = InstMeta {
     opname: "OpCooperativeVectorReduceSumAccumulateNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5291u16,
@@ -15857,7 +15857,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_VECTOR_REDUCE_SUM_ACCUMULATE_NV: InstMeta =
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_VECTOR_MATRIX_MUL_ADD_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_VECTOR_MATRIX_MUL_ADD_NV: InstMeta = InstMeta {
     opname: "OpCooperativeVectorMatrixMulAddNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5292u16,
@@ -15950,7 +15950,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_VECTOR_MATRIX_MUL_ADD_NV: InstMeta = InstMe
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_CONVERT_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_MATRIX_CONVERT_NV: InstMeta = InstMeta {
     opname: "OpCooperativeMatrixConvertNV",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 5293u16,
@@ -15978,7 +15978,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_CONVERT_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_EMIT_MESH_TASKS_EXT: InstMeta = InstMeta {
+pub const OP_EMIT_MESH_TASKS_EXT: InstMeta = InstMeta {
     opname: "OpEmitMeshTasksEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5294u16,
@@ -16011,7 +16011,7 @@ pub const INSTRUCTION_OP_EMIT_MESH_TASKS_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SET_MESH_OUTPUTS_EXT: InstMeta = InstMeta {
+pub const OP_SET_MESH_OUTPUTS_EXT: InstMeta = InstMeta {
     opname: "OpSetMeshOutputsEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5295u16,
@@ -16034,7 +16034,7 @@ pub const INSTRUCTION_OP_SET_MESH_OUTPUTS_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_PARTITION_EXT: InstMeta = InstMeta {
+pub const OP_GROUP_NON_UNIFORM_PARTITION_EXT: InstMeta = InstMeta {
     opname: "OpGroupNonUniformPartitionEXT",
     class: Some(&PRINTING_CLASS_NON_UNIFORM),
     opcode: 5296u16,
@@ -16062,7 +16062,7 @@ pub const INSTRUCTION_OP_GROUP_NON_UNIFORM_PARTITION_EXT: InstMeta = InstMeta {
     aliases: &["OpGroupNonUniformPartitionNV"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_WRITE_PACKED_PRIMITIVE_INDICES_4_X_8_NV: InstMeta = InstMeta {
+pub const OP_WRITE_PACKED_PRIMITIVE_INDICES_4_X_8_NV: InstMeta = InstMeta {
     opname: "OpWritePackedPrimitiveIndices4x8NV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5299u16,
@@ -16085,7 +16085,7 @@ pub const INSTRUCTION_OP_WRITE_PACKED_PRIMITIVE_INDICES_4_X_8_NV: InstMeta = Ins
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FETCH_MICRO_TRIANGLE_VERTEX_POSITION_NV: InstMeta = InstMeta {
+pub const OP_FETCH_MICRO_TRIANGLE_VERTEX_POSITION_NV: InstMeta = InstMeta {
     opname: "OpFetchMicroTriangleVertexPositionNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5300u16,
@@ -16133,7 +16133,7 @@ pub const INSTRUCTION_OP_FETCH_MICRO_TRIANGLE_VERTEX_POSITION_NV: InstMeta = Ins
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FETCH_MICRO_TRIANGLE_VERTEX_BARYCENTRIC_NV: InstMeta = InstMeta {
+pub const OP_FETCH_MICRO_TRIANGLE_VERTEX_BARYCENTRIC_NV: InstMeta = InstMeta {
     opname: "OpFetchMicroTriangleVertexBarycentricNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5301u16,
@@ -16181,7 +16181,7 @@ pub const INSTRUCTION_OP_FETCH_MICRO_TRIANGLE_VERTEX_BARYCENTRIC_NV: InstMeta = 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_VECTOR_LOAD_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_VECTOR_LOAD_NV: InstMeta = InstMeta {
     opname: "OpCooperativeVectorLoadNV",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 5302u16,
@@ -16219,7 +16219,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_VECTOR_LOAD_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_VECTOR_STORE_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_VECTOR_STORE_NV: InstMeta = InstMeta {
     opname: "OpCooperativeVectorStoreNV",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 5303u16,
@@ -16252,7 +16252,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_VECTOR_STORE_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_FROM_QUERY_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_RECORD_FROM_QUERY_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectRecordFromQueryEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5304u16,
@@ -16285,7 +16285,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_FROM_QUERY_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_MISS_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_RECORD_MISS_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectRecordMissEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5305u16,
@@ -16333,7 +16333,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_MISS_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_MISS_MOTION_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_RECORD_MISS_MOTION_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectRecordMissMotionEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5306u16,
@@ -16389,36 +16389,35 @@ pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_MISS_MOTION_EXT: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_INTERSECTION_TRIANGLE_VERTEX_POSITIONS_EXT: InstMeta =
-    InstMeta {
-        opname: "OpHitObjectGetIntersectionTriangleVertexPositionsEXT",
-        class: Some(&PRINTING_CLASS_RESERVED),
-        opcode: 5307u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Hit Object"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::ShaderInvocationReorderEXT],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_RAY_FLAGS_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_INTERSECTION_TRIANGLE_VERTEX_POSITIONS_EXT: InstMeta = InstMeta {
+    opname: "OpHitObjectGetIntersectionTriangleVertexPositionsEXT",
+    class: Some(&PRINTING_CLASS_RESERVED),
+    opcode: 5307u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Hit Object"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::ShaderInvocationReorderEXT],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_HIT_OBJECT_GET_RAY_FLAGS_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetRayFlagsEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5308u16,
@@ -16446,31 +16445,30 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_RAY_FLAGS_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_SET_SHADER_BINDING_TABLE_RECORD_INDEX_EXT: InstMeta =
-    InstMeta {
-        opname: "OpHitObjectSetShaderBindingTableRecordIndexEXT",
-        class: Some(&PRINTING_CLASS_RESERVED),
-        opcode: 5309u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Hit Object"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("SBT Record Index"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::ShaderInvocationReorderEXT],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_HIT_OBJECT_REORDER_EXECUTE_SHADER_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_SET_SHADER_BINDING_TABLE_RECORD_INDEX_EXT: InstMeta = InstMeta {
+    opname: "OpHitObjectSetShaderBindingTableRecordIndexEXT",
+    class: Some(&PRINTING_CLASS_RESERVED),
+    opcode: 5309u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Hit Object"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("SBT Record Index"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::ShaderInvocationReorderEXT],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_HIT_OBJECT_REORDER_EXECUTE_SHADER_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectReorderExecuteShaderEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5310u16,
@@ -16503,7 +16501,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_REORDER_EXECUTE_SHADER_EXT: InstMeta = InstM
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_TRACE_REORDER_EXECUTE_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_TRACE_REORDER_EXECUTE_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectTraceReorderExecuteEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5311u16,
@@ -16586,7 +16584,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_TRACE_REORDER_EXECUTE_EXT: InstMeta = InstMe
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_TRACE_MOTION_REORDER_EXECUTE_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_TRACE_MOTION_REORDER_EXECUTE_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectTraceMotionReorderExecuteEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5312u16,
@@ -16677,7 +16675,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_TRACE_MOTION_REORDER_EXECUTE_EXT: InstMeta =
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_HIT_OBJECT_EXT: InstMeta = InstMeta {
+pub const OP_TYPE_HIT_OBJECT_EXT: InstMeta = InstMeta {
     opname: "OpTypeHitObjectEXT",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 5313u16,
@@ -16693,7 +16691,7 @@ pub const INSTRUCTION_OP_TYPE_HIT_OBJECT_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_REORDER_THREAD_WITH_HINT_EXT: InstMeta = InstMeta {
+pub const OP_REORDER_THREAD_WITH_HINT_EXT: InstMeta = InstMeta {
     opname: "OpReorderThreadWithHintEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5314u16,
@@ -16716,7 +16714,7 @@ pub const INSTRUCTION_OP_REORDER_THREAD_WITH_HINT_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_REORDER_THREAD_WITH_HIT_OBJECT_EXT: InstMeta = InstMeta {
+pub const OP_REORDER_THREAD_WITH_HIT_OBJECT_EXT: InstMeta = InstMeta {
     opname: "OpReorderThreadWithHitObjectEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5315u16,
@@ -16744,7 +16742,7 @@ pub const INSTRUCTION_OP_REORDER_THREAD_WITH_HIT_OBJECT_EXT: InstMeta = InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_TRACE_RAY_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_TRACE_RAY_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectTraceRayEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5316u16,
@@ -16817,7 +16815,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_TRACE_RAY_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_TRACE_RAY_MOTION_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_TRACE_RAY_MOTION_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectTraceRayMotionEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5317u16,
@@ -16898,7 +16896,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_TRACE_RAY_MOTION_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_EMPTY_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_RECORD_EMPTY_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectRecordEmptyEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5318u16,
@@ -16914,7 +16912,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_RECORD_EMPTY_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_EXECUTE_SHADER_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_EXECUTE_SHADER_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectExecuteShaderEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5319u16,
@@ -16937,7 +16935,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_EXECUTE_SHADER_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_CURRENT_TIME_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_CURRENT_TIME_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetCurrentTimeEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5320u16,
@@ -16968,7 +16966,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_CURRENT_TIME_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_ATTRIBUTES_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_ATTRIBUTES_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetAttributesEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5321u16,
@@ -16991,7 +16989,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_ATTRIBUTES_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_HIT_KIND_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_HIT_KIND_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetHitKindEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5322u16,
@@ -17019,7 +17017,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_HIT_KIND_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_PRIMITIVE_INDEX_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_PRIMITIVE_INDEX_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetPrimitiveIndexEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5323u16,
@@ -17047,7 +17045,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_PRIMITIVE_INDEX_EXT: InstMeta = InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_GEOMETRY_INDEX_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_GEOMETRY_INDEX_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetGeometryIndexEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5324u16,
@@ -17075,7 +17073,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_GEOMETRY_INDEX_EXT: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_INSTANCE_ID_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_INSTANCE_ID_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetInstanceIdEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5325u16,
@@ -17103,7 +17101,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_INSTANCE_ID_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_INSTANCE_CUSTOM_INDEX_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_INSTANCE_CUSTOM_INDEX_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetInstanceCustomIndexEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5326u16,
@@ -17131,7 +17129,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_INSTANCE_CUSTOM_INDEX_EXT: InstMeta = In
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_OBJECT_RAY_ORIGIN_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_OBJECT_RAY_ORIGIN_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetObjectRayOriginEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5327u16,
@@ -17159,7 +17157,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_OBJECT_RAY_ORIGIN_EXT: InstMeta = InstMe
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_OBJECT_RAY_DIRECTION_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_OBJECT_RAY_DIRECTION_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetObjectRayDirectionEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5328u16,
@@ -17187,7 +17185,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_OBJECT_RAY_DIRECTION_EXT: InstMeta = Ins
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_WORLD_RAY_DIRECTION_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_WORLD_RAY_DIRECTION_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetWorldRayDirectionEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5329u16,
@@ -17215,7 +17213,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_WORLD_RAY_DIRECTION_EXT: InstMeta = Inst
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_WORLD_RAY_ORIGIN_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_WORLD_RAY_ORIGIN_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetWorldRayOriginEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5330u16,
@@ -17243,7 +17241,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_WORLD_RAY_ORIGIN_EXT: InstMeta = InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_OBJECT_TO_WORLD_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_OBJECT_TO_WORLD_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetObjectToWorldEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5331u16,
@@ -17271,7 +17269,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_OBJECT_TO_WORLD_EXT: InstMeta = InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_WORLD_TO_OBJECT_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_WORLD_TO_OBJECT_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetWorldToObjectEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5332u16,
@@ -17299,7 +17297,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_WORLD_TO_OBJECT_EXT: InstMeta = InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_RAY_T_MAX_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_RAY_T_MAX_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetRayTMaxEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5333u16,
@@ -17327,7 +17325,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_RAY_T_MAX_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_REPORT_INTERSECTION_KHR: InstMeta = InstMeta {
+pub const OP_REPORT_INTERSECTION_KHR: InstMeta = InstMeta {
     opname: "OpReportIntersectionKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5334u16,
@@ -17360,7 +17358,7 @@ pub const INSTRUCTION_OP_REPORT_INTERSECTION_KHR: InstMeta = InstMeta {
     aliases: &["OpReportIntersectionNV"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IGNORE_INTERSECTION_NV: InstMeta = InstMeta {
+pub const OP_IGNORE_INTERSECTION_NV: InstMeta = InstMeta {
     opname: "OpIgnoreIntersectionNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5335u16,
@@ -17372,7 +17370,7 @@ pub const INSTRUCTION_OP_IGNORE_INTERSECTION_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TERMINATE_RAY_NV: InstMeta = InstMeta {
+pub const OP_TERMINATE_RAY_NV: InstMeta = InstMeta {
     opname: "OpTerminateRayNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5336u16,
@@ -17384,7 +17382,7 @@ pub const INSTRUCTION_OP_TERMINATE_RAY_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TRACE_NV: InstMeta = InstMeta {
+pub const OP_TRACE_NV: InstMeta = InstMeta {
     opname: "OpTraceNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5337u16,
@@ -17452,7 +17450,7 @@ pub const INSTRUCTION_OP_TRACE_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TRACE_MOTION_NV: InstMeta = InstMeta {
+pub const OP_TRACE_MOTION_NV: InstMeta = InstMeta {
     opname: "OpTraceMotionNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5338u16,
@@ -17525,7 +17523,7 @@ pub const INSTRUCTION_OP_TRACE_MOTION_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TRACE_RAY_MOTION_NV: InstMeta = InstMeta {
+pub const OP_TRACE_RAY_MOTION_NV: InstMeta = InstMeta {
     opname: "OpTraceRayMotionNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5339u16,
@@ -17598,41 +17596,40 @@ pub const INSTRUCTION_OP_TRACE_RAY_MOTION_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_TRIANGLE_VERTEX_POSITIONS_KHR: InstMeta =
-    InstMeta {
-        opname: "OpRayQueryGetIntersectionTriangleVertexPositionsKHR",
-        class: Some(&PRINTING_CLASS_RESERVED),
-        opcode: 5340u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("RayQuery"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Intersection"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::RayQueryPositionFetchKHR],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_TYPE_ACCELERATION_STRUCTURE_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_TRIANGLE_VERTEX_POSITIONS_KHR: InstMeta = InstMeta {
+    opname: "OpRayQueryGetIntersectionTriangleVertexPositionsKHR",
+    class: Some(&PRINTING_CLASS_RESERVED),
+    opcode: 5340u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("RayQuery"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Intersection"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::RayQueryPositionFetchKHR],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_TYPE_ACCELERATION_STRUCTURE_KHR: InstMeta = InstMeta {
     opname: "OpTypeAccelerationStructureKHR",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 5341u16,
@@ -17658,7 +17655,7 @@ pub const INSTRUCTION_OP_TYPE_ACCELERATION_STRUCTURE_KHR: InstMeta = InstMeta {
     aliases: &["OpTypeAccelerationStructureNV"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_EXECUTE_CALLABLE_NV: InstMeta = InstMeta {
+pub const OP_EXECUTE_CALLABLE_NV: InstMeta = InstMeta {
     opname: "OpExecuteCallableNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5344u16,
@@ -17681,7 +17678,7 @@ pub const INSTRUCTION_OP_EXECUTE_CALLABLE_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_CLUSTER_ID_NV: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_CLUSTER_ID_NV: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionClusterIdNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5345u16,
@@ -17714,7 +17711,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_CLUSTER_ID_NV: InstMeta = In
     aliases: &["OpRayQueryGetClusterIdNV"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_CLUSTER_ID_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_CLUSTER_ID_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetClusterIdNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5346u16,
@@ -17742,7 +17739,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_CLUSTER_ID_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_RAY_T_MIN_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_RAY_T_MIN_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetRayTMinEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5347u16,
@@ -17770,36 +17767,35 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_RAY_T_MIN_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_SHADER_BINDING_TABLE_RECORD_INDEX_EXT: InstMeta =
-    InstMeta {
-        opname: "OpHitObjectGetShaderBindingTableRecordIndexEXT",
-        class: Some(&PRINTING_CLASS_RESERVED),
-        opcode: 5348u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Hit Object"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::ShaderInvocationReorderEXT],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_SHADER_RECORD_BUFFER_HANDLE_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_SHADER_BINDING_TABLE_RECORD_INDEX_EXT: InstMeta = InstMeta {
+    opname: "OpHitObjectGetShaderBindingTableRecordIndexEXT",
+    class: Some(&PRINTING_CLASS_RESERVED),
+    opcode: 5348u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Hit Object"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::ShaderInvocationReorderEXT],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_HIT_OBJECT_GET_SHADER_RECORD_BUFFER_HANDLE_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectGetShaderRecordBufferHandleEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5349u16,
@@ -17827,7 +17823,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_SHADER_RECORD_BUFFER_HANDLE_EXT: InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_IS_EMPTY_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_IS_EMPTY_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectIsEmptyEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5350u16,
@@ -17855,7 +17851,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_IS_EMPTY_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_IS_HIT_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_IS_HIT_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectIsHitEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5351u16,
@@ -17883,7 +17879,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_IS_HIT_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_IS_MISS_EXT: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_IS_MISS_EXT: InstMeta = InstMeta {
     opname: "OpHitObjectIsMissEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5352u16,
@@ -17911,7 +17907,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_IS_MISS_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_COOPERATIVE_MATRIX_NV: InstMeta = InstMeta {
+pub const OP_TYPE_COOPERATIVE_MATRIX_NV: InstMeta = InstMeta {
     opname: "OpTypeCooperativeMatrixNV",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 5358u16,
@@ -17949,7 +17945,7 @@ pub const INSTRUCTION_OP_TYPE_COOPERATIVE_MATRIX_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_LOAD_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_MATRIX_LOAD_NV: InstMeta = InstMeta {
     opname: "OpCooperativeMatrixLoadNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5359u16,
@@ -17992,7 +17988,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_LOAD_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_STORE_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_MATRIX_STORE_NV: InstMeta = InstMeta {
     opname: "OpCooperativeMatrixStoreNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5360u16,
@@ -18030,7 +18026,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_STORE_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_MUL_ADD_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_MATRIX_MUL_ADD_NV: InstMeta = InstMeta {
     opname: "OpCooperativeMatrixMulAddNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5361u16,
@@ -18068,7 +18064,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_MUL_ADD_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_LENGTH_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_MATRIX_LENGTH_NV: InstMeta = InstMeta {
     opname: "OpCooperativeMatrixLengthNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5362u16,
@@ -18096,7 +18092,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_LENGTH_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BEGIN_INVOCATION_INTERLOCK_EXT: InstMeta = InstMeta {
+pub const OP_BEGIN_INVOCATION_INTERLOCK_EXT: InstMeta = InstMeta {
     opname: "OpBeginInvocationInterlockEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5364u16,
@@ -18112,7 +18108,7 @@ pub const INSTRUCTION_OP_BEGIN_INVOCATION_INTERLOCK_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_END_INVOCATION_INTERLOCK_EXT: InstMeta = InstMeta {
+pub const OP_END_INVOCATION_INTERLOCK_EXT: InstMeta = InstMeta {
     opname: "OpEndInvocationInterlockEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5365u16,
@@ -18128,7 +18124,7 @@ pub const INSTRUCTION_OP_END_INVOCATION_INTERLOCK_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_REDUCE_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_MATRIX_REDUCE_NV: InstMeta = InstMeta {
     opname: "OpCooperativeMatrixReduceNV",
     class: Some(&PRINTING_CLASS_ARITHMETIC),
     opcode: 5366u16,
@@ -18166,7 +18162,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_REDUCE_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_LOAD_TENSOR_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_MATRIX_LOAD_TENSOR_NV: InstMeta = InstMeta {
     opname: "OpCooperativeMatrixLoadTensorNV",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 5367u16,
@@ -18214,7 +18210,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_LOAD_TENSOR_NV: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_STORE_TENSOR_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_MATRIX_STORE_TENSOR_NV: InstMeta = InstMeta {
     opname: "OpCooperativeMatrixStoreTensorNV",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 5368u16,
@@ -18252,7 +18248,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_STORE_TENSOR_NV: InstMeta = InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_PER_ELEMENT_OP_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_MATRIX_PER_ELEMENT_OP_NV: InstMeta = InstMeta {
     opname: "OpCooperativeMatrixPerElementOpNV",
     class: Some(&PRINTING_CLASS_FUNCTION),
     opcode: 5369u16,
@@ -18290,7 +18286,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_PER_ELEMENT_OP_NV: InstMeta = InstMe
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_TENSOR_LAYOUT_NV: InstMeta = InstMeta {
+pub const OP_TYPE_TENSOR_LAYOUT_NV: InstMeta = InstMeta {
     opname: "OpTypeTensorLayoutNV",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 5370u16,
@@ -18318,7 +18314,7 @@ pub const INSTRUCTION_OP_TYPE_TENSOR_LAYOUT_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_TENSOR_VIEW_NV: InstMeta = InstMeta {
+pub const OP_TYPE_TENSOR_VIEW_NV: InstMeta = InstMeta {
     opname: "OpTypeTensorViewNV",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 5371u16,
@@ -18351,7 +18347,7 @@ pub const INSTRUCTION_OP_TYPE_TENSOR_VIEW_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CREATE_TENSOR_LAYOUT_NV: InstMeta = InstMeta {
+pub const OP_CREATE_TENSOR_LAYOUT_NV: InstMeta = InstMeta {
     opname: "OpCreateTensorLayoutNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5372u16,
@@ -18374,7 +18370,7 @@ pub const INSTRUCTION_OP_CREATE_TENSOR_LAYOUT_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TENSOR_LAYOUT_SET_DIMENSION_NV: InstMeta = InstMeta {
+pub const OP_TENSOR_LAYOUT_SET_DIMENSION_NV: InstMeta = InstMeta {
     opname: "OpTensorLayoutSetDimensionNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5373u16,
@@ -18407,7 +18403,7 @@ pub const INSTRUCTION_OP_TENSOR_LAYOUT_SET_DIMENSION_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TENSOR_LAYOUT_SET_STRIDE_NV: InstMeta = InstMeta {
+pub const OP_TENSOR_LAYOUT_SET_STRIDE_NV: InstMeta = InstMeta {
     opname: "OpTensorLayoutSetStrideNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5374u16,
@@ -18440,7 +18436,7 @@ pub const INSTRUCTION_OP_TENSOR_LAYOUT_SET_STRIDE_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TENSOR_LAYOUT_SLICE_NV: InstMeta = InstMeta {
+pub const OP_TENSOR_LAYOUT_SLICE_NV: InstMeta = InstMeta {
     opname: "OpTensorLayoutSliceNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5375u16,
@@ -18473,7 +18469,7 @@ pub const INSTRUCTION_OP_TENSOR_LAYOUT_SLICE_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TENSOR_LAYOUT_SET_CLAMP_VALUE_NV: InstMeta = InstMeta {
+pub const OP_TENSOR_LAYOUT_SET_CLAMP_VALUE_NV: InstMeta = InstMeta {
     opname: "OpTensorLayoutSetClampValueNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5376u16,
@@ -18506,7 +18502,7 @@ pub const INSTRUCTION_OP_TENSOR_LAYOUT_SET_CLAMP_VALUE_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CREATE_TENSOR_VIEW_NV: InstMeta = InstMeta {
+pub const OP_CREATE_TENSOR_VIEW_NV: InstMeta = InstMeta {
     opname: "OpCreateTensorViewNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5377u16,
@@ -18529,7 +18525,7 @@ pub const INSTRUCTION_OP_CREATE_TENSOR_VIEW_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TENSOR_VIEW_SET_DIMENSION_NV: InstMeta = InstMeta {
+pub const OP_TENSOR_VIEW_SET_DIMENSION_NV: InstMeta = InstMeta {
     opname: "OpTensorViewSetDimensionNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5378u16,
@@ -18562,7 +18558,7 @@ pub const INSTRUCTION_OP_TENSOR_VIEW_SET_DIMENSION_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TENSOR_VIEW_SET_STRIDE_NV: InstMeta = InstMeta {
+pub const OP_TENSOR_VIEW_SET_STRIDE_NV: InstMeta = InstMeta {
     opname: "OpTensorViewSetStrideNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5379u16,
@@ -18595,7 +18591,7 @@ pub const INSTRUCTION_OP_TENSOR_VIEW_SET_STRIDE_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_DEMOTE_TO_HELPER_INVOCATION: InstMeta = InstMeta {
+pub const OP_DEMOTE_TO_HELPER_INVOCATION: InstMeta = InstMeta {
     opname: "OpDemoteToHelperInvocation",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
     opcode: 5380u16,
@@ -18607,7 +18603,7 @@ pub const INSTRUCTION_OP_DEMOTE_TO_HELPER_INVOCATION: InstMeta = InstMeta {
     aliases: &["OpDemoteToHelperInvocationEXT"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_IS_HELPER_INVOCATION_EXT: InstMeta = InstMeta {
+pub const OP_IS_HELPER_INVOCATION_EXT: InstMeta = InstMeta {
     opname: "OpIsHelperInvocationEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5381u16,
@@ -18630,7 +18626,7 @@ pub const INSTRUCTION_OP_IS_HELPER_INVOCATION_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TENSOR_VIEW_SET_CLIP_NV: InstMeta = InstMeta {
+pub const OP_TENSOR_VIEW_SET_CLIP_NV: InstMeta = InstMeta {
     opname: "OpTensorViewSetClipNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5382u16,
@@ -18678,7 +18674,7 @@ pub const INSTRUCTION_OP_TENSOR_VIEW_SET_CLIP_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TENSOR_LAYOUT_SET_BLOCK_SIZE_NV: InstMeta = InstMeta {
+pub const OP_TENSOR_LAYOUT_SET_BLOCK_SIZE_NV: InstMeta = InstMeta {
     opname: "OpTensorLayoutSetBlockSizeNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5384u16,
@@ -18711,7 +18707,7 @@ pub const INSTRUCTION_OP_TENSOR_LAYOUT_SET_BLOCK_SIZE_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_TRANSPOSE_NV: InstMeta = InstMeta {
+pub const OP_COOPERATIVE_MATRIX_TRANSPOSE_NV: InstMeta = InstMeta {
     opname: "OpCooperativeMatrixTransposeNV",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 5390u16,
@@ -18739,7 +18735,7 @@ pub const INSTRUCTION_OP_COOPERATIVE_MATRIX_TRANSPOSE_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_U_TO_IMAGE_NV: InstMeta = InstMeta {
+pub const OP_CONVERT_U_TO_IMAGE_NV: InstMeta = InstMeta {
     opname: "OpConvertUToImageNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5391u16,
@@ -18767,7 +18763,7 @@ pub const INSTRUCTION_OP_CONVERT_U_TO_IMAGE_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_U_TO_SAMPLER_NV: InstMeta = InstMeta {
+pub const OP_CONVERT_U_TO_SAMPLER_NV: InstMeta = InstMeta {
     opname: "OpConvertUToSamplerNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5392u16,
@@ -18795,7 +18791,7 @@ pub const INSTRUCTION_OP_CONVERT_U_TO_SAMPLER_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_IMAGE_TO_UNV: InstMeta = InstMeta {
+pub const OP_CONVERT_IMAGE_TO_UNV: InstMeta = InstMeta {
     opname: "OpConvertImageToUNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5393u16,
@@ -18823,7 +18819,7 @@ pub const INSTRUCTION_OP_CONVERT_IMAGE_TO_UNV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_SAMPLER_TO_UNV: InstMeta = InstMeta {
+pub const OP_CONVERT_SAMPLER_TO_UNV: InstMeta = InstMeta {
     opname: "OpConvertSamplerToUNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5394u16,
@@ -18851,7 +18847,7 @@ pub const INSTRUCTION_OP_CONVERT_SAMPLER_TO_UNV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_U_TO_SAMPLED_IMAGE_NV: InstMeta = InstMeta {
+pub const OP_CONVERT_U_TO_SAMPLED_IMAGE_NV: InstMeta = InstMeta {
     opname: "OpConvertUToSampledImageNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5395u16,
@@ -18879,7 +18875,7 @@ pub const INSTRUCTION_OP_CONVERT_U_TO_SAMPLED_IMAGE_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_SAMPLED_IMAGE_TO_UNV: InstMeta = InstMeta {
+pub const OP_CONVERT_SAMPLED_IMAGE_TO_UNV: InstMeta = InstMeta {
     opname: "OpConvertSampledImageToUNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5396u16,
@@ -18907,7 +18903,7 @@ pub const INSTRUCTION_OP_CONVERT_SAMPLED_IMAGE_TO_UNV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SAMPLER_IMAGE_ADDRESSING_MODE_NV: InstMeta = InstMeta {
+pub const OP_SAMPLER_IMAGE_ADDRESSING_MODE_NV: InstMeta = InstMeta {
     opname: "OpSamplerImageAddressingModeNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5397u16,
@@ -18923,7 +18919,7 @@ pub const INSTRUCTION_OP_SAMPLER_IMAGE_ADDRESSING_MODE_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAW_ACCESS_CHAIN_NV: InstMeta = InstMeta {
+pub const OP_RAW_ACCESS_CHAIN_NV: InstMeta = InstMeta {
     opname: "OpRawAccessChainNV",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 5398u16,
@@ -18971,7 +18967,7 @@ pub const INSTRUCTION_OP_RAW_ACCESS_CHAIN_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_SPHERE_POSITION_NV: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_SPHERE_POSITION_NV: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionSpherePositionNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5427u16,
@@ -19004,7 +19000,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_SPHERE_POSITION_NV: InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_SPHERE_RADIUS_NV: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_SPHERE_RADIUS_NV: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionSphereRadiusNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5428u16,
@@ -19037,7 +19033,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_SPHERE_RADIUS_NV: InstMeta =
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_LSS_POSITIONS_NV: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_LSS_POSITIONS_NV: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionLSSPositionsNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5429u16,
@@ -19070,7 +19066,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_LSS_POSITIONS_NV: InstMeta =
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_LSS_RADII_NV: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_LSS_RADII_NV: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionLSSRadiiNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5430u16,
@@ -19103,7 +19099,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_LSS_RADII_NV: InstMeta = Ins
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_LSS_HIT_VALUE_NV: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_LSS_HIT_VALUE_NV: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionLSSHitValueNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5431u16,
@@ -19136,7 +19132,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_LSS_HIT_VALUE_NV: InstMeta =
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_SPHERE_POSITION_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_SPHERE_POSITION_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetSpherePositionNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5432u16,
@@ -19164,7 +19160,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_SPHERE_POSITION_NV: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_SPHERE_RADIUS_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_SPHERE_RADIUS_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetSphereRadiusNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5433u16,
@@ -19192,7 +19188,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_SPHERE_RADIUS_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_LSS_POSITIONS_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_LSS_POSITIONS_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetLSSPositionsNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5434u16,
@@ -19220,7 +19216,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_LSS_POSITIONS_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_GET_LSS_RADII_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_GET_LSS_RADII_NV: InstMeta = InstMeta {
     opname: "OpHitObjectGetLSSRadiiNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5435u16,
@@ -19248,7 +19244,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_GET_LSS_RADII_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_IS_SPHERE_HIT_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_IS_SPHERE_HIT_NV: InstMeta = InstMeta {
     opname: "OpHitObjectIsSphereHitNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5436u16,
@@ -19276,7 +19272,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_IS_SPHERE_HIT_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_HIT_OBJECT_IS_LSS_HIT_NV: InstMeta = InstMeta {
+pub const OP_HIT_OBJECT_IS_LSS_HIT_NV: InstMeta = InstMeta {
     opname: "OpHitObjectIsLSSHitNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5437u16,
@@ -19304,7 +19300,7 @@ pub const INSTRUCTION_OP_HIT_OBJECT_IS_LSS_HIT_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_IS_SPHERE_HIT_NV: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_IS_SPHERE_HIT_NV: InstMeta = InstMeta {
     opname: "OpRayQueryIsSphereHitNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5438u16,
@@ -19337,7 +19333,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_IS_SPHERE_HIT_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_IS_LSS_HIT_NV: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_IS_LSS_HIT_NV: InstMeta = InstMeta {
     opname: "OpRayQueryIsLSSHitNV",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5439u16,
@@ -19370,7 +19366,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_IS_LSS_HIT_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_SHUFFLE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_SHUFFLE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupShuffleINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5571u16,
@@ -19403,7 +19399,7 @@ pub const INSTRUCTION_OP_SUBGROUP_SHUFFLE_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_SHUFFLE_DOWN_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_SHUFFLE_DOWN_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupShuffleDownINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5572u16,
@@ -19441,7 +19437,7 @@ pub const INSTRUCTION_OP_SUBGROUP_SHUFFLE_DOWN_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_SHUFFLE_UP_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_SHUFFLE_UP_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupShuffleUpINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5573u16,
@@ -19479,7 +19475,7 @@ pub const INSTRUCTION_OP_SUBGROUP_SHUFFLE_UP_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_SHUFFLE_XOR_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_SHUFFLE_XOR_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupShuffleXorINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5574u16,
@@ -19512,7 +19508,7 @@ pub const INSTRUCTION_OP_SUBGROUP_SHUFFLE_XOR_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_BLOCK_READ_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_BLOCK_READ_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupBlockReadINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5575u16,
@@ -19540,7 +19536,7 @@ pub const INSTRUCTION_OP_SUBGROUP_BLOCK_READ_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_BLOCK_WRITE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_BLOCK_WRITE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupBlockWriteINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5576u16,
@@ -19563,7 +19559,7 @@ pub const INSTRUCTION_OP_SUBGROUP_BLOCK_WRITE_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_IMAGE_BLOCK_READ_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_IMAGE_BLOCK_READ_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupImageBlockReadINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5577u16,
@@ -19596,7 +19592,7 @@ pub const INSTRUCTION_OP_SUBGROUP_IMAGE_BLOCK_READ_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_IMAGE_BLOCK_WRITE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_IMAGE_BLOCK_WRITE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupImageBlockWriteINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5578u16,
@@ -19624,7 +19620,7 @@ pub const INSTRUCTION_OP_SUBGROUP_IMAGE_BLOCK_WRITE_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_IMAGE_MEDIA_BLOCK_READ_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_IMAGE_MEDIA_BLOCK_READ_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupImageMediaBlockReadINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5580u16,
@@ -19667,7 +19663,7 @@ pub const INSTRUCTION_OP_SUBGROUP_IMAGE_MEDIA_BLOCK_READ_INTEL: InstMeta = InstM
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_IMAGE_MEDIA_BLOCK_WRITE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_IMAGE_MEDIA_BLOCK_WRITE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupImageMediaBlockWriteINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 5581u16,
@@ -19705,7 +19701,7 @@ pub const INSTRUCTION_OP_SUBGROUP_IMAGE_MEDIA_BLOCK_WRITE_INTEL: InstMeta = Inst
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_COUNT_LEADING_ZEROS_INTEL: InstMeta = InstMeta {
+pub const OP_U_COUNT_LEADING_ZEROS_INTEL: InstMeta = InstMeta {
     opname: "OpUCountLeadingZerosINTEL",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5585u16,
@@ -19733,7 +19729,7 @@ pub const INSTRUCTION_OP_U_COUNT_LEADING_ZEROS_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_COUNT_TRAILING_ZEROS_INTEL: InstMeta = InstMeta {
+pub const OP_U_COUNT_TRAILING_ZEROS_INTEL: InstMeta = InstMeta {
     opname: "OpUCountTrailingZerosINTEL",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5586u16,
@@ -19761,7 +19757,7 @@ pub const INSTRUCTION_OP_U_COUNT_TRAILING_ZEROS_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ABS_I_SUB_INTEL: InstMeta = InstMeta {
+pub const OP_ABS_I_SUB_INTEL: InstMeta = InstMeta {
     opname: "OpAbsISubINTEL",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5587u16,
@@ -19794,7 +19790,7 @@ pub const INSTRUCTION_OP_ABS_I_SUB_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ABS_U_SUB_INTEL: InstMeta = InstMeta {
+pub const OP_ABS_U_SUB_INTEL: InstMeta = InstMeta {
     opname: "OpAbsUSubINTEL",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5588u16,
@@ -19827,7 +19823,7 @@ pub const INSTRUCTION_OP_ABS_U_SUB_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_I_ADD_SAT_INTEL: InstMeta = InstMeta {
+pub const OP_I_ADD_SAT_INTEL: InstMeta = InstMeta {
     opname: "OpIAddSatINTEL",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5589u16,
@@ -19860,7 +19856,7 @@ pub const INSTRUCTION_OP_I_ADD_SAT_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_ADD_SAT_INTEL: InstMeta = InstMeta {
+pub const OP_U_ADD_SAT_INTEL: InstMeta = InstMeta {
     opname: "OpUAddSatINTEL",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5590u16,
@@ -19893,7 +19889,7 @@ pub const INSTRUCTION_OP_U_ADD_SAT_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_I_AVERAGE_INTEL: InstMeta = InstMeta {
+pub const OP_I_AVERAGE_INTEL: InstMeta = InstMeta {
     opname: "OpIAverageINTEL",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5591u16,
@@ -19926,7 +19922,7 @@ pub const INSTRUCTION_OP_I_AVERAGE_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_AVERAGE_INTEL: InstMeta = InstMeta {
+pub const OP_U_AVERAGE_INTEL: InstMeta = InstMeta {
     opname: "OpUAverageINTEL",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5592u16,
@@ -19959,7 +19955,7 @@ pub const INSTRUCTION_OP_U_AVERAGE_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_I_AVERAGE_ROUNDED_INTEL: InstMeta = InstMeta {
+pub const OP_I_AVERAGE_ROUNDED_INTEL: InstMeta = InstMeta {
     opname: "OpIAverageRoundedINTEL",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5593u16,
@@ -19992,7 +19988,7 @@ pub const INSTRUCTION_OP_I_AVERAGE_ROUNDED_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_AVERAGE_ROUNDED_INTEL: InstMeta = InstMeta {
+pub const OP_U_AVERAGE_ROUNDED_INTEL: InstMeta = InstMeta {
     opname: "OpUAverageRoundedINTEL",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5594u16,
@@ -20025,7 +20021,7 @@ pub const INSTRUCTION_OP_U_AVERAGE_ROUNDED_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_I_SUB_SAT_INTEL: InstMeta = InstMeta {
+pub const OP_I_SUB_SAT_INTEL: InstMeta = InstMeta {
     opname: "OpISubSatINTEL",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5595u16,
@@ -20058,7 +20054,7 @@ pub const INSTRUCTION_OP_I_SUB_SAT_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_SUB_SAT_INTEL: InstMeta = InstMeta {
+pub const OP_U_SUB_SAT_INTEL: InstMeta = InstMeta {
     opname: "OpUSubSatINTEL",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5596u16,
@@ -20091,7 +20087,7 @@ pub const INSTRUCTION_OP_U_SUB_SAT_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_I_MUL_32_X_16_INTEL: InstMeta = InstMeta {
+pub const OP_I_MUL_32_X_16_INTEL: InstMeta = InstMeta {
     opname: "OpIMul32x16INTEL",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5597u16,
@@ -20124,7 +20120,7 @@ pub const INSTRUCTION_OP_I_MUL_32_X_16_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_U_MUL_32_X_16_INTEL: InstMeta = InstMeta {
+pub const OP_U_MUL_32_X_16_INTEL: InstMeta = InstMeta {
     opname: "OpUMul32x16INTEL",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5598u16,
@@ -20157,7 +20153,7 @@ pub const INSTRUCTION_OP_U_MUL_32_X_16_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONSTANT_FUNCTION_POINTER_INTEL: InstMeta = InstMeta {
+pub const OP_CONSTANT_FUNCTION_POINTER_INTEL: InstMeta = InstMeta {
     opname: "OpConstantFunctionPointerINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5600u16,
@@ -20185,7 +20181,7 @@ pub const INSTRUCTION_OP_CONSTANT_FUNCTION_POINTER_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FUNCTION_POINTER_CALL_INTEL: InstMeta = InstMeta {
+pub const OP_FUNCTION_POINTER_CALL_INTEL: InstMeta = InstMeta {
     opname: "OpFunctionPointerCallINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5601u16,
@@ -20213,7 +20209,7 @@ pub const INSTRUCTION_OP_FUNCTION_POINTER_CALL_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ASM_TARGET_INTEL: InstMeta = InstMeta {
+pub const OP_ASM_TARGET_INTEL: InstMeta = InstMeta {
     opname: "OpAsmTargetINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5609u16,
@@ -20236,7 +20232,7 @@ pub const INSTRUCTION_OP_ASM_TARGET_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ASM_INTEL: InstMeta = InstMeta {
+pub const OP_ASM_INTEL: InstMeta = InstMeta {
     opname: "OpAsmINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5610u16,
@@ -20279,7 +20275,7 @@ pub const INSTRUCTION_OP_ASM_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ASM_CALL_INTEL: InstMeta = InstMeta {
+pub const OP_ASM_CALL_INTEL: InstMeta = InstMeta {
     opname: "OpAsmCallINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5611u16,
@@ -20312,7 +20308,7 @@ pub const INSTRUCTION_OP_ASM_CALL_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_F_MIN_EXT: InstMeta = InstMeta {
+pub const OP_ATOMIC_F_MIN_EXT: InstMeta = InstMeta {
     opname: "OpAtomicFMinEXT",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 5614u16,
@@ -20360,7 +20356,7 @@ pub const INSTRUCTION_OP_ATOMIC_F_MIN_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_F_MAX_EXT: InstMeta = InstMeta {
+pub const OP_ATOMIC_F_MAX_EXT: InstMeta = InstMeta {
     opname: "OpAtomicFMaxEXT",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 5615u16,
@@ -20408,7 +20404,7 @@ pub const INSTRUCTION_OP_ATOMIC_F_MAX_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ASSUME_TRUE_KHR: InstMeta = InstMeta {
+pub const OP_ASSUME_TRUE_KHR: InstMeta = InstMeta {
     opname: "OpAssumeTrueKHR",
     class: Some(&PRINTING_CLASS_MISCELLANEOUS),
     opcode: 5630u16,
@@ -20424,7 +20420,7 @@ pub const INSTRUCTION_OP_ASSUME_TRUE_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_EXPECT_KHR: InstMeta = InstMeta {
+pub const OP_EXPECT_KHR: InstMeta = InstMeta {
     opname: "OpExpectKHR",
     class: Some(&PRINTING_CLASS_MISCELLANEOUS),
     opcode: 5631u16,
@@ -20457,7 +20453,7 @@ pub const INSTRUCTION_OP_EXPECT_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_DECORATE_STRING: InstMeta = InstMeta {
+pub const OP_DECORATE_STRING: InstMeta = InstMeta {
     opname: "OpDecorateString",
     class: Some(&PRINTING_CLASS_ANNOTATION),
     opcode: 5632u16,
@@ -20483,7 +20479,7 @@ pub const INSTRUCTION_OP_DECORATE_STRING: InstMeta = InstMeta {
     aliases: &["OpDecorateStringGOOGLE"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_MEMBER_DECORATE_STRING: InstMeta = InstMeta {
+pub const OP_MEMBER_DECORATE_STRING: InstMeta = InstMeta {
     opname: "OpMemberDecorateString",
     class: Some(&PRINTING_CLASS_ANNOTATION),
     opcode: 5633u16,
@@ -20514,7 +20510,7 @@ pub const INSTRUCTION_OP_MEMBER_DECORATE_STRING: InstMeta = InstMeta {
     aliases: &["OpMemberDecorateStringGOOGLE"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_VME_IMAGE_INTEL: InstMeta = InstMeta {
+pub const OP_VME_IMAGE_INTEL: InstMeta = InstMeta {
     opname: "OpVmeImageINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5699u16,
@@ -20547,7 +20543,7 @@ pub const INSTRUCTION_OP_VME_IMAGE_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_VME_IMAGE_INTEL: InstMeta = InstMeta {
+pub const OP_TYPE_VME_IMAGE_INTEL: InstMeta = InstMeta {
     opname: "OpTypeVmeImageINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5700u16,
@@ -20570,7 +20566,7 @@ pub const INSTRUCTION_OP_TYPE_VME_IMAGE_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_AVC_IME_PAYLOAD_INTEL: InstMeta = InstMeta {
+pub const OP_TYPE_AVC_IME_PAYLOAD_INTEL: InstMeta = InstMeta {
     opname: "OpTypeAvcImePayloadINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5701u16,
@@ -20586,7 +20582,7 @@ pub const INSTRUCTION_OP_TYPE_AVC_IME_PAYLOAD_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_AVC_REF_PAYLOAD_INTEL: InstMeta = InstMeta {
+pub const OP_TYPE_AVC_REF_PAYLOAD_INTEL: InstMeta = InstMeta {
     opname: "OpTypeAvcRefPayloadINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5702u16,
@@ -20602,7 +20598,7 @@ pub const INSTRUCTION_OP_TYPE_AVC_REF_PAYLOAD_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_AVC_SIC_PAYLOAD_INTEL: InstMeta = InstMeta {
+pub const OP_TYPE_AVC_SIC_PAYLOAD_INTEL: InstMeta = InstMeta {
     opname: "OpTypeAvcSicPayloadINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5703u16,
@@ -20618,7 +20614,7 @@ pub const INSTRUCTION_OP_TYPE_AVC_SIC_PAYLOAD_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_AVC_MCE_PAYLOAD_INTEL: InstMeta = InstMeta {
+pub const OP_TYPE_AVC_MCE_PAYLOAD_INTEL: InstMeta = InstMeta {
     opname: "OpTypeAvcMcePayloadINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5704u16,
@@ -20634,7 +20630,7 @@ pub const INSTRUCTION_OP_TYPE_AVC_MCE_PAYLOAD_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_AVC_MCE_RESULT_INTEL: InstMeta = InstMeta {
+pub const OP_TYPE_AVC_MCE_RESULT_INTEL: InstMeta = InstMeta {
     opname: "OpTypeAvcMceResultINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5705u16,
@@ -20650,7 +20646,7 @@ pub const INSTRUCTION_OP_TYPE_AVC_MCE_RESULT_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_AVC_IME_RESULT_INTEL: InstMeta = InstMeta {
+pub const OP_TYPE_AVC_IME_RESULT_INTEL: InstMeta = InstMeta {
     opname: "OpTypeAvcImeResultINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5706u16,
@@ -20666,24 +20662,23 @@ pub const INSTRUCTION_OP_TYPE_AVC_IME_RESULT_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_AVC_IME_RESULT_SINGLE_REFERENCE_STREAMOUT_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpTypeAvcImeResultSingleReferenceStreamoutINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5707u16,
-        operands: &[OperandMeta {
-            kind: &OPERAND_KIND_ID_RESULT,
-            name: None,
-            quantifier: Quantifier::One,
-        }],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_TYPE_AVC_IME_RESULT_DUAL_REFERENCE_STREAMOUT_INTEL: InstMeta = InstMeta {
+pub const OP_TYPE_AVC_IME_RESULT_SINGLE_REFERENCE_STREAMOUT_INTEL: InstMeta = InstMeta {
+    opname: "OpTypeAvcImeResultSingleReferenceStreamoutINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5707u16,
+    operands: &[OperandMeta {
+        kind: &OPERAND_KIND_ID_RESULT,
+        name: None,
+        quantifier: Quantifier::One,
+    }],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_TYPE_AVC_IME_RESULT_DUAL_REFERENCE_STREAMOUT_INTEL: InstMeta = InstMeta {
     opname: "OpTypeAvcImeResultDualReferenceStreamoutINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5708u16,
@@ -20699,7 +20694,7 @@ pub const INSTRUCTION_OP_TYPE_AVC_IME_RESULT_DUAL_REFERENCE_STREAMOUT_INTEL: Ins
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_AVC_IME_SINGLE_REFERENCE_STREAMIN_INTEL: InstMeta = InstMeta {
+pub const OP_TYPE_AVC_IME_SINGLE_REFERENCE_STREAMIN_INTEL: InstMeta = InstMeta {
     opname: "OpTypeAvcImeSingleReferenceStreaminINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5709u16,
@@ -20715,7 +20710,7 @@ pub const INSTRUCTION_OP_TYPE_AVC_IME_SINGLE_REFERENCE_STREAMIN_INTEL: InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_AVC_IME_DUAL_REFERENCE_STREAMIN_INTEL: InstMeta = InstMeta {
+pub const OP_TYPE_AVC_IME_DUAL_REFERENCE_STREAMIN_INTEL: InstMeta = InstMeta {
     opname: "OpTypeAvcImeDualReferenceStreaminINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5710u16,
@@ -20731,7 +20726,7 @@ pub const INSTRUCTION_OP_TYPE_AVC_IME_DUAL_REFERENCE_STREAMIN_INTEL: InstMeta = 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_AVC_REF_RESULT_INTEL: InstMeta = InstMeta {
+pub const OP_TYPE_AVC_REF_RESULT_INTEL: InstMeta = InstMeta {
     opname: "OpTypeAvcRefResultINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5711u16,
@@ -20747,7 +20742,7 @@ pub const INSTRUCTION_OP_TYPE_AVC_REF_RESULT_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_AVC_SIC_RESULT_INTEL: InstMeta = InstMeta {
+pub const OP_TYPE_AVC_SIC_RESULT_INTEL: InstMeta = InstMeta {
     opname: "OpTypeAvcSicResultINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5712u16,
@@ -20763,79 +20758,11 @@ pub const INSTRUCTION_OP_TYPE_AVC_SIC_RESULT_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_BASE_MULTI_REFERENCE_PENALTY_INTEL:
-    InstMeta = InstMeta {
-    opname: "OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL",
-    class: Some(&PRINTING_CLASS_EXCLUDE),
-    opcode: 5713u16,
-    operands: &[
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_RESULT_TYPE,
-            name: None,
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_RESULT,
-            name: None,
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_REF,
-            name: Some("Slice Type"),
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_REF,
-            name: Some("Qp"),
-            quantifier: Quantifier::One,
-        },
-    ],
-    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-    extensions: &[],
-    version: Some("None"),
-    last_version: None,
-    aliases: &[],
-    provisional: false,
-};
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_SET_INTER_BASE_MULTI_REFERENCE_PENALTY_INTEL: InstMeta =
+pub const OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_BASE_MULTI_REFERENCE_PENALTY_INTEL: InstMeta =
     InstMeta {
-        opname: "OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL",
+        opname: "OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL",
         class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5714u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Reference Base Penalty"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_SHAPE_PENALTY_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5715u16,
+        opcode: 5713u16,
         operands: &[
             OperandMeta {
                 kind: &OPERAND_KIND_ID_RESULT_TYPE,
@@ -20865,7 +20792,73 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_SHAPE_PENALTY_INTEL:
         aliases: &[],
         provisional: false,
     };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_SET_INTER_SHAPE_PENALTY_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_SET_INTER_BASE_MULTI_REFERENCE_PENALTY_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5714u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Reference Base Penalty"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_SHAPE_PENALTY_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5715u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Slice Type"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Qp"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_MCE_SET_INTER_SHAPE_PENALTY_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceSetInterShapePenaltyINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5716u16,
@@ -20898,41 +20891,40 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_SET_INTER_SHAPE_PENALTY_INTEL: InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_DIRECTION_PENALTY_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5717u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Slice Type"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Qp"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_SET_INTER_DIRECTION_PENALTY_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_DIRECTION_PENALTY_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5717u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Slice Type"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Qp"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_MCE_SET_INTER_DIRECTION_PENALTY_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceSetInterDirectionPenaltyINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5718u16,
@@ -20965,48 +20957,10 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_SET_INTER_DIRECTION_PENALTY_INTEL: Ins
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTRA_LUMA_SHAPE_PENALTY_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5719u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Slice Type"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Qp"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[
-            Capability::SubgroupAvcMotionEstimationINTEL,
-            Capability::SubgroupAvcMotionEstimationIntraINTEL,
-        ],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_MOTION_VECTOR_COST_TABLE_INTEL:
-    InstMeta = InstMeta {
-    opname: "OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL",
+pub const OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTRA_LUMA_SHAPE_PENALTY_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
-    opcode: 5720u16,
+    opcode: 5719u16,
     operands: &[
         OperandMeta {
             kind: &OPERAND_KIND_ID_RESULT_TYPE,
@@ -21029,134 +20983,21 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_MOTION_VECTOR_COST_T
             quantifier: Quantifier::One,
         },
     ],
-    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    capabilities: &[
+        Capability::SubgroupAvcMotionEstimationINTEL,
+        Capability::SubgroupAvcMotionEstimationIntraINTEL,
+    ],
     extensions: &[],
     version: Some("None"),
     last_version: None,
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_HIGH_PENALTY_COST_TABLE_INTEL: InstMeta =
+pub const OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_MOTION_VECTOR_COST_TABLE_INTEL: InstMeta =
     InstMeta {
-        opname: "OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL",
+        opname: "OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL",
         class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5721u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_MEDIUM_PENALTY_COST_TABLE_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5722u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_LOW_PENALTY_COST_TABLE_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5723u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_SET_MOTION_VECTOR_COST_FUNCTION_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5724u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Packed Cost Center Delta"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Packed Cost Table"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Cost Precision"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTRA_LUMA_MODE_PENALTY_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5725u16,
+        opcode: 5720u16,
         operands: &[
             OperandMeta {
                 kind: &OPERAND_KIND_ID_RESULT_TYPE,
@@ -21179,48 +21020,165 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTRA_LUMA_MODE_PENALTY_IN
                 quantifier: Quantifier::One,
             },
         ],
-        capabilities: &[
-            Capability::SubgroupAvcMotionEstimationINTEL,
-            Capability::SubgroupAvcMotionEstimationIntraINTEL,
-        ],
+        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
         extensions: &[],
         version: Some("None"),
         last_version: None,
         aliases: &[],
         provisional: false,
     };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_NON_DC_LUMA_INTRA_PENALTY_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5726u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[
-            Capability::SubgroupAvcMotionEstimationINTEL,
-            Capability::SubgroupAvcMotionEstimationIntraINTEL,
-        ],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTRA_CHROMA_MODE_BASE_PENALTY_INTEL:
-    InstMeta = InstMeta {
-    opname: "OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL",
+pub const OP_SUBGROUP_AVC_MCE_GET_DEFAULT_HIGH_PENALTY_COST_TABLE_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
-    opcode: 5727u16,
+    opcode: 5721u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_MCE_GET_DEFAULT_MEDIUM_PENALTY_COST_TABLE_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5722u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_MCE_GET_DEFAULT_LOW_PENALTY_COST_TABLE_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5723u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_MCE_SET_MOTION_VECTOR_COST_FUNCTION_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5724u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Packed Cost Center Delta"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Packed Cost Table"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Cost Precision"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTRA_LUMA_MODE_PENALTY_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5725u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Slice Type"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Qp"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[
+        Capability::SubgroupAvcMotionEstimationINTEL,
+        Capability::SubgroupAvcMotionEstimationIntraINTEL,
+    ],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_MCE_GET_DEFAULT_NON_DC_LUMA_INTRA_PENALTY_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5726u16,
     operands: &[
         OperandMeta {
             kind: &OPERAND_KIND_ID_RESULT_TYPE,
@@ -21235,7 +21193,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTRA_CHROMA_MODE_BASE_PEN
     ],
     capabilities: &[
         Capability::SubgroupAvcMotionEstimationINTEL,
-        Capability::SubgroupAvcMotionEstimationChromaINTEL,
+        Capability::SubgroupAvcMotionEstimationIntraINTEL,
     ],
     extensions: &[],
     version: Some("None"),
@@ -21243,7 +21201,34 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTRA_CHROMA_MODE_BASE_PEN
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_SET_AC_ONLY_HAAR_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTRA_CHROMA_MODE_BASE_PENALTY_INTEL: InstMeta =
+    InstMeta {
+        opname: "OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL",
+        class: Some(&PRINTING_CLASS_EXCLUDE),
+        opcode: 5727u16,
+        operands: &[
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_RESULT_TYPE,
+                name: None,
+                quantifier: Quantifier::One,
+            },
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_RESULT,
+                name: None,
+                quantifier: Quantifier::One,
+            },
+        ],
+        capabilities: &[
+            Capability::SubgroupAvcMotionEstimationINTEL,
+            Capability::SubgroupAvcMotionEstimationChromaINTEL,
+        ],
+        extensions: &[],
+        version: Some("None"),
+        last_version: None,
+        aliases: &[],
+        provisional: false,
+    };
+pub const OP_SUBGROUP_AVC_MCE_SET_AC_ONLY_HAAR_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceSetAcOnlyHaarINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5728u16,
@@ -21271,11 +21256,44 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_SET_AC_ONLY_HAAR_INTEL: InstMeta = Ins
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_SET_SOURCE_INTERLACED_FIELD_POLARITY_INTEL: InstMeta =
+pub const OP_SUBGROUP_AVC_MCE_SET_SOURCE_INTERLACED_FIELD_POLARITY_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5729u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Source Field Polarity"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_MCE_SET_SINGLE_REFERENCE_INTERLACED_FIELD_POLARITY_INTEL: InstMeta =
     InstMeta {
-        opname: "OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL",
+        opname: "OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL",
         class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5729u16,
+        opcode: 5730u16,
         operands: &[
             OperandMeta {
                 kind: &OPERAND_KIND_ID_RESULT_TYPE,
@@ -21289,7 +21307,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_SET_SOURCE_INTERLACED_FIELD_POLARITY_I
             },
             OperandMeta {
                 kind: &OPERAND_KIND_ID_REF,
-                name: Some("Source Field Polarity"),
+                name: Some("Reference Field Polarity"),
                 quantifier: Quantifier::One,
             },
             OperandMeta {
@@ -21305,80 +21323,46 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_SET_SOURCE_INTERLACED_FIELD_POLARITY_I
         aliases: &[],
         provisional: false,
     };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_SET_SINGLE_REFERENCE_INTERLACED_FIELD_POLARITY_INTEL:
-    InstMeta = InstMeta {
-    opname: "OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL",
-    class: Some(&PRINTING_CLASS_EXCLUDE),
-    opcode: 5730u16,
-    operands: &[
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_RESULT_TYPE,
-            name: None,
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_RESULT,
-            name: None,
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_REF,
-            name: Some("Reference Field Polarity"),
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_REF,
-            name: Some("Payload"),
-            quantifier: Quantifier::One,
-        },
-    ],
-    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-    extensions: &[],
-    version: Some("None"),
-    last_version: None,
-    aliases: &[],
-    provisional: false,
-};
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_SET_DUAL_REFERENCE_INTERLACED_FIELD_POLARITIES_INTEL:
-    InstMeta = InstMeta {
-    opname: "OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL",
-    class: Some(&PRINTING_CLASS_EXCLUDE),
-    opcode: 5731u16,
-    operands: &[
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_RESULT_TYPE,
-            name: None,
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_RESULT,
-            name: None,
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_REF,
-            name: Some("Forward Reference Field Polarity"),
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_REF,
-            name: Some("Backward Reference Field Polarity"),
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_REF,
-            name: Some("Payload"),
-            quantifier: Quantifier::One,
-        },
-    ],
-    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-    extensions: &[],
-    version: Some("None"),
-    last_version: None,
-    aliases: &[],
-    provisional: false,
-};
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_CONVERT_TO_IME_PAYLOAD_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_SET_DUAL_REFERENCE_INTERLACED_FIELD_POLARITIES_INTEL: InstMeta =
+    InstMeta {
+        opname: "OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL",
+        class: Some(&PRINTING_CLASS_EXCLUDE),
+        opcode: 5731u16,
+        operands: &[
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_RESULT_TYPE,
+                name: None,
+                quantifier: Quantifier::One,
+            },
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_RESULT,
+                name: None,
+                quantifier: Quantifier::One,
+            },
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_REF,
+                name: Some("Forward Reference Field Polarity"),
+                quantifier: Quantifier::One,
+            },
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_REF,
+                name: Some("Backward Reference Field Polarity"),
+                quantifier: Quantifier::One,
+            },
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_REF,
+                name: Some("Payload"),
+                quantifier: Quantifier::One,
+            },
+        ],
+        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+        extensions: &[],
+        version: Some("None"),
+        last_version: None,
+        aliases: &[],
+        provisional: false,
+    };
+pub const OP_SUBGROUP_AVC_MCE_CONVERT_TO_IME_PAYLOAD_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceConvertToImePayloadINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5732u16,
@@ -21406,7 +21390,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_CONVERT_TO_IME_PAYLOAD_INTEL: InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_CONVERT_TO_IME_RESULT_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_CONVERT_TO_IME_RESULT_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceConvertToImeResultINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5733u16,
@@ -21434,7 +21418,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_CONVERT_TO_IME_RESULT_INTEL: InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_CONVERT_TO_REF_PAYLOAD_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_CONVERT_TO_REF_PAYLOAD_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceConvertToRefPayloadINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5734u16,
@@ -21462,7 +21446,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_CONVERT_TO_REF_PAYLOAD_INTEL: InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_CONVERT_TO_REF_RESULT_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_CONVERT_TO_REF_RESULT_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceConvertToRefResultINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5735u16,
@@ -21490,7 +21474,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_CONVERT_TO_REF_RESULT_INTEL: InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_CONVERT_TO_SIC_PAYLOAD_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_CONVERT_TO_SIC_PAYLOAD_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceConvertToSicPayloadINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5736u16,
@@ -21518,7 +21502,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_CONVERT_TO_SIC_PAYLOAD_INTEL: InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_CONVERT_TO_SIC_RESULT_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_CONVERT_TO_SIC_RESULT_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceConvertToSicResultINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5737u16,
@@ -21546,7 +21530,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_CONVERT_TO_SIC_RESULT_INTEL: InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_MOTION_VECTORS_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_GET_MOTION_VECTORS_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceGetMotionVectorsINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5738u16,
@@ -21574,7 +21558,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_MOTION_VECTORS_INTEL: InstMeta = I
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_INTER_DISTORTIONS_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_GET_INTER_DISTORTIONS_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceGetInterDistortionsINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5739u16,
@@ -21602,7 +21586,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_INTER_DISTORTIONS_INTEL: InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_BEST_INTER_DISTORTIONS_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_GET_BEST_INTER_DISTORTIONS_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceGetBestInterDistortionsINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5740u16,
@@ -21630,7 +21614,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_BEST_INTER_DISTORTIONS_INTEL: Inst
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_INTER_MAJOR_SHAPE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_GET_INTER_MAJOR_SHAPE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceGetInterMajorShapeINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5741u16,
@@ -21658,7 +21642,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_INTER_MAJOR_SHAPE_INTEL: InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_INTER_MINOR_SHAPE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_GET_INTER_MINOR_SHAPE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceGetInterMinorShapeINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5742u16,
@@ -21686,7 +21670,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_INTER_MINOR_SHAPE_INTEL: InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_INTER_DIRECTIONS_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_GET_INTER_DIRECTIONS_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceGetInterDirectionsINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5743u16,
@@ -21714,36 +21698,35 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_INTER_DIRECTIONS_INTEL: InstMeta =
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_INTER_MOTION_VECTOR_COUNT_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcMceGetInterMotionVectorCountINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5744u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_INTER_REFERENCE_IDS_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_GET_INTER_MOTION_VECTOR_COUNT_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcMceGetInterMotionVectorCountINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5744u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_MCE_GET_INTER_REFERENCE_IDS_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcMceGetInterReferenceIdsINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5745u16,
@@ -21771,46 +21754,46 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_INTER_REFERENCE_IDS_INTEL: InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_MCE_GET_INTER_REFERENCE_INTERLACED_FIELD_POLARITIES_INTEL:
-    InstMeta = InstMeta {
-    opname: "OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL",
-    class: Some(&PRINTING_CLASS_EXCLUDE),
-    opcode: 5746u16,
-    operands: &[
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_RESULT_TYPE,
-            name: None,
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_RESULT,
-            name: None,
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_REF,
-            name: Some("Packed Reference Ids"),
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_REF,
-            name: Some("Packed Reference Parameter Field Polarities"),
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_REF,
-            name: Some("Payload"),
-            quantifier: Quantifier::One,
-        },
-    ],
-    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-    extensions: &[],
-    version: Some("None"),
-    last_version: None,
-    aliases: &[],
-    provisional: false,
-};
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_INITIALIZE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_MCE_GET_INTER_REFERENCE_INTERLACED_FIELD_POLARITIES_INTEL: InstMeta =
+    InstMeta {
+        opname: "OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL",
+        class: Some(&PRINTING_CLASS_EXCLUDE),
+        opcode: 5746u16,
+        operands: &[
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_RESULT_TYPE,
+                name: None,
+                quantifier: Quantifier::One,
+            },
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_RESULT,
+                name: None,
+                quantifier: Quantifier::One,
+            },
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_REF,
+                name: Some("Packed Reference Ids"),
+                quantifier: Quantifier::One,
+            },
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_REF,
+                name: Some("Packed Reference Parameter Field Polarities"),
+                quantifier: Quantifier::One,
+            },
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_REF,
+                name: Some("Payload"),
+                quantifier: Quantifier::One,
+            },
+        ],
+        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+        extensions: &[],
+        version: Some("None"),
+        last_version: None,
+        aliases: &[],
+        provisional: false,
+    };
+pub const OP_SUBGROUP_AVC_IME_INITIALIZE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcImeInitializeINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5747u16,
@@ -21848,7 +21831,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_INITIALIZE_INTEL: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_SET_SINGLE_REFERENCE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_IME_SET_SINGLE_REFERENCE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcImeSetSingleReferenceINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5748u16,
@@ -21886,7 +21869,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_SET_SINGLE_REFERENCE_INTEL: InstMeta =
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_SET_DUAL_REFERENCE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_IME_SET_DUAL_REFERENCE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcImeSetDualReferenceINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5749u16,
@@ -21929,7 +21912,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_SET_DUAL_REFERENCE_INTEL: InstMeta = I
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_REF_WINDOW_SIZE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_IME_REF_WINDOW_SIZE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcImeRefWindowSizeINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5750u16,
@@ -21962,7 +21945,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_REF_WINDOW_SIZE_INTEL: InstMeta = Inst
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_ADJUST_REF_OFFSET_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_IME_ADJUST_REF_OFFSET_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcImeAdjustRefOffsetINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5751u16,
@@ -22005,7 +21988,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_ADJUST_REF_OFFSET_INTEL: InstMeta = In
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_CONVERT_TO_MCE_PAYLOAD_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_IME_CONVERT_TO_MCE_PAYLOAD_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcImeConvertToMcePayloadINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5752u16,
@@ -22033,7 +22016,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_CONVERT_TO_MCE_PAYLOAD_INTEL: InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_SET_MAX_MOTION_VECTOR_COUNT_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_IME_SET_MAX_MOTION_VECTOR_COUNT_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcImeSetMaxMotionVectorCountINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5753u16,
@@ -22066,70 +22049,68 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_SET_MAX_MOTION_VECTOR_COUNT_INTEL: Ins
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_SET_UNIDIRECTIONAL_MIX_DISABLE_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5754u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_SET_EARLY_SEARCH_TERMINATION_THRESHOLD_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5755u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Threshold"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_SET_WEIGHTED_SAD_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_IME_SET_UNIDIRECTIONAL_MIX_DISABLE_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5754u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_IME_SET_EARLY_SEARCH_TERMINATION_THRESHOLD_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5755u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Threshold"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_IME_SET_WEIGHTED_SAD_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcImeSetWeightedSadINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5756u16,
@@ -22162,46 +22143,45 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_SET_WEIGHTED_SAD_INTEL: InstMeta = Ins
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5757u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Src Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Ref Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5757u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Src Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Ref Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcImeEvaluateWithDualReferenceINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5758u16,
@@ -22244,187 +22224,10 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_INTEL: In
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_STREAMIN_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5759u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Src Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Ref Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Streamin Components"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_STREAMIN_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5760u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Src Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Fwd Ref Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Bwd Ref Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Streamin Components"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_STREAMOUT_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5761u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Src Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Ref Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_STREAMOUT_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5762u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Src Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Fwd Ref Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Bwd Ref Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_STREAMINOUT_INTEL:
-    InstMeta = InstMeta {
-    opname: "OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL",
+pub const OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_STREAMIN_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
-    opcode: 5763u16,
+    opcode: 5759u16,
     operands: &[
         OperandMeta {
             kind: &OPERAND_KIND_ID_RESULT_TYPE,
@@ -22464,11 +22267,140 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_STREAMI
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_STREAMINOUT_INTEL: InstMeta =
+pub const OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_STREAMIN_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5760u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Src Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Fwd Ref Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Bwd Ref Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Streamin Components"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_STREAMOUT_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5761u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Src Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Ref Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_STREAMOUT_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5762u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Src Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Fwd Ref Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Bwd Ref Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_STREAMINOUT_INTEL: InstMeta =
     InstMeta {
-        opname: "OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL",
+        opname: "OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL",
         class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5764u16,
+        opcode: 5763u16,
         operands: &[
             OperandMeta {
                 kind: &OPERAND_KIND_ID_RESULT_TYPE,
@@ -22487,12 +22419,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_STREAMINO
             },
             OperandMeta {
                 kind: &OPERAND_KIND_ID_REF,
-                name: Some("Fwd Ref Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Bwd Ref Image"),
+                name: Some("Ref Image"),
                 quantifier: Quantifier::One,
             },
             OperandMeta {
@@ -22513,7 +22440,55 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_STREAMINO
         aliases: &[],
         provisional: false,
     };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_CONVERT_TO_MCE_RESULT_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_STREAMINOUT_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5764u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Src Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Fwd Ref Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Bwd Ref Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Streamin Components"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_IME_CONVERT_TO_MCE_RESULT_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcImeConvertToMceResultINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5765u16,
@@ -22541,36 +22516,35 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_CONVERT_TO_MCE_RESULT_INTEL: InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_SINGLE_REFERENCE_STREAMIN_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcImeGetSingleReferenceStreaminINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5766u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_DUAL_REFERENCE_STREAMIN_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_IME_GET_SINGLE_REFERENCE_STREAMIN_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeGetSingleReferenceStreaminINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5766u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_IME_GET_DUAL_REFERENCE_STREAMIN_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcImeGetDualReferenceStreaminINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5767u16,
@@ -22598,11 +22572,208 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_DUAL_REFERENCE_STREAMIN_INTEL: Ins
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_STRIP_SINGLE_REFERENCE_STREAMOUT_INTEL: InstMeta =
+pub const OP_SUBGROUP_AVC_IME_STRIP_SINGLE_REFERENCE_STREAMOUT_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5768u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_IME_STRIP_DUAL_REFERENCE_STREAMOUT_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeStripDualReferenceStreamoutINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5769u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_IME_GET_STREAMOUT_SINGLE_REFERENCE_MAJOR_SHAPE_MOTION_VECTORS_INTEL:
+    InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5770u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Major Shape"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_IME_GET_STREAMOUT_SINGLE_REFERENCE_MAJOR_SHAPE_DISTORTIONS_INTEL:
+    InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5771u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Major Shape"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_IME_GET_STREAMOUT_SINGLE_REFERENCE_MAJOR_SHAPE_REFERENCE_IDS_INTEL:
+    InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5772u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Major Shape"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_IME_GET_STREAMOUT_DUAL_REFERENCE_MAJOR_SHAPE_MOTION_VECTORS_INTEL:
+    InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5773u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Major Shape"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Direction"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_IME_GET_STREAMOUT_DUAL_REFERENCE_MAJOR_SHAPE_DISTORTIONS_INTEL: InstMeta =
     InstMeta {
-        opname: "OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL",
+        opname: "OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL",
         class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5768u16,
+        opcode: 5774u16,
         operands: &[
             OperandMeta {
                 kind: &OPERAND_KIND_ID_RESULT_TYPE,
@@ -22619,33 +22790,14 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_STRIP_SINGLE_REFERENCE_STREAMOUT_INTEL
                 name: Some("Payload"),
                 quantifier: Quantifier::One,
             },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_STRIP_DUAL_REFERENCE_STREAMOUT_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcImeStripDualReferenceStreamoutINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5769u16,
-        operands: &[
             OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
+                kind: &OPERAND_KIND_ID_REF,
+                name: Some("Major Shape"),
                 quantifier: Quantifier::One,
             },
             OperandMeta {
                 kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
+                name: Some("Direction"),
                 quantifier: Quantifier::One,
             },
         ],
@@ -22656,13 +22808,46 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_STRIP_DUAL_REFERENCE_STREAMOUT_INTEL: 
         aliases: &[],
         provisional: false,
     };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_STREAMOUT_SINGLE_REFERENCE_MAJOR_SHAPE_MOTION_VECTORS_INTEL : InstMeta = InstMeta { opname : "OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL" , class : Some (& PRINTING_CLASS_EXCLUDE) , opcode : 5770u16 , operands : & [OperandMeta { kind : & OPERAND_KIND_ID_RESULT_TYPE , name : None , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_RESULT , name : None , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Payload") , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Major Shape") , quantifier : Quantifier :: One , }] , capabilities : & [Capability :: SubgroupAvcMotionEstimationINTEL] , extensions : & [] , version : Some ("None") , last_version : None , aliases : & [] , provisional : false , } ;
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_STREAMOUT_SINGLE_REFERENCE_MAJOR_SHAPE_DISTORTIONS_INTEL : InstMeta = InstMeta { opname : "OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL" , class : Some (& PRINTING_CLASS_EXCLUDE) , opcode : 5771u16 , operands : & [OperandMeta { kind : & OPERAND_KIND_ID_RESULT_TYPE , name : None , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_RESULT , name : None , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Payload") , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Major Shape") , quantifier : Quantifier :: One , }] , capabilities : & [Capability :: SubgroupAvcMotionEstimationINTEL] , extensions : & [] , version : Some ("None") , last_version : None , aliases : & [] , provisional : false , } ;
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_STREAMOUT_SINGLE_REFERENCE_MAJOR_SHAPE_REFERENCE_IDS_INTEL : InstMeta = InstMeta { opname : "OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL" , class : Some (& PRINTING_CLASS_EXCLUDE) , opcode : 5772u16 , operands : & [OperandMeta { kind : & OPERAND_KIND_ID_RESULT_TYPE , name : None , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_RESULT , name : None , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Payload") , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Major Shape") , quantifier : Quantifier :: One , }] , capabilities : & [Capability :: SubgroupAvcMotionEstimationINTEL] , extensions : & [] , version : Some ("None") , last_version : None , aliases : & [] , provisional : false , } ;
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_STREAMOUT_DUAL_REFERENCE_MAJOR_SHAPE_MOTION_VECTORS_INTEL : InstMeta = InstMeta { opname : "OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL" , class : Some (& PRINTING_CLASS_EXCLUDE) , opcode : 5773u16 , operands : & [OperandMeta { kind : & OPERAND_KIND_ID_RESULT_TYPE , name : None , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_RESULT , name : None , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Payload") , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Major Shape") , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Direction") , quantifier : Quantifier :: One , }] , capabilities : & [Capability :: SubgroupAvcMotionEstimationINTEL] , extensions : & [] , version : Some ("None") , last_version : None , aliases : & [] , provisional : false , } ;
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_STREAMOUT_DUAL_REFERENCE_MAJOR_SHAPE_DISTORTIONS_INTEL : InstMeta = InstMeta { opname : "OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL" , class : Some (& PRINTING_CLASS_EXCLUDE) , opcode : 5774u16 , operands : & [OperandMeta { kind : & OPERAND_KIND_ID_RESULT_TYPE , name : None , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_RESULT , name : None , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Payload") , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Major Shape") , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Direction") , quantifier : Quantifier :: One , }] , capabilities : & [Capability :: SubgroupAvcMotionEstimationINTEL] , extensions : & [] , version : Some ("None") , last_version : None , aliases : & [] , provisional : false , } ;
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_STREAMOUT_DUAL_REFERENCE_MAJOR_SHAPE_REFERENCE_IDS_INTEL : InstMeta = InstMeta { opname : "OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL" , class : Some (& PRINTING_CLASS_EXCLUDE) , opcode : 5775u16 , operands : & [OperandMeta { kind : & OPERAND_KIND_ID_RESULT_TYPE , name : None , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_RESULT , name : None , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Payload") , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Major Shape") , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Direction") , quantifier : Quantifier :: One , }] , capabilities : & [Capability :: SubgroupAvcMotionEstimationINTEL] , extensions : & [] , version : Some ("None") , last_version : None , aliases : & [] , provisional : false , } ;
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_BORDER_REACHED_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_IME_GET_STREAMOUT_DUAL_REFERENCE_MAJOR_SHAPE_REFERENCE_IDS_INTEL:
+    InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5775u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Major Shape"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Direction"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_IME_GET_BORDER_REACHED_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcImeGetBorderReachedINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5776u16,
@@ -22695,40 +22880,10 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_BORDER_REACHED_INTEL: InstMeta = I
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_TRUNCATED_SEARCH_INDICATION_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5777u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_UNIDIRECTIONAL_EARLY_SEARCH_TERMINATION_INTEL:
-    InstMeta = InstMeta {
-    opname: "OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL",
+pub const OP_SUBGROUP_AVC_IME_GET_TRUNCATED_SEARCH_INDICATION_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
-    opcode: 5778u16,
+    opcode: 5777u16,
     operands: &[
         OperandMeta {
             kind: &OPERAND_KIND_ID_RESULT_TYPE,
@@ -22753,40 +22908,11 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_UNIDIRECTIONAL_EARLY_SEARCH_TERMIN
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_WEIGHTING_PATTERN_MINIMUM_MOTION_VECTOR_INTEL:
-    InstMeta = InstMeta {
-    opname: "OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL",
-    class: Some(&PRINTING_CLASS_EXCLUDE),
-    opcode: 5779u16,
-    operands: &[
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_RESULT_TYPE,
-            name: None,
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_RESULT,
-            name: None,
-            quantifier: Quantifier::One,
-        },
-        OperandMeta {
-            kind: &OPERAND_KIND_ID_REF,
-            name: Some("Payload"),
-            quantifier: Quantifier::One,
-        },
-    ],
-    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-    extensions: &[],
-    version: Some("None"),
-    last_version: None,
-    aliases: &[],
-    provisional: false,
-};
-pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_WEIGHTING_PATTERN_MINIMUM_DISTORTION_INTEL: InstMeta =
+pub const OP_SUBGROUP_AVC_IME_GET_UNIDIRECTIONAL_EARLY_SEARCH_TERMINATION_INTEL: InstMeta =
     InstMeta {
-        opname: "OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL",
+        opname: "OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL",
         class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5780u16,
+        opcode: 5778u16,
         operands: &[
             OperandMeta {
                 kind: &OPERAND_KIND_ID_RESULT_TYPE,
@@ -22811,7 +22937,64 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_IME_GET_WEIGHTING_PATTERN_MINIMUM_DISTORTI
         aliases: &[],
         provisional: false,
     };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_FME_INITIALIZE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_IME_GET_WEIGHTING_PATTERN_MINIMUM_MOTION_VECTOR_INTEL: InstMeta =
+    InstMeta {
+        opname: "OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL",
+        class: Some(&PRINTING_CLASS_EXCLUDE),
+        opcode: 5779u16,
+        operands: &[
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_RESULT_TYPE,
+                name: None,
+                quantifier: Quantifier::One,
+            },
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_RESULT,
+                name: None,
+                quantifier: Quantifier::One,
+            },
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_REF,
+                name: Some("Payload"),
+                quantifier: Quantifier::One,
+            },
+        ],
+        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+        extensions: &[],
+        version: Some("None"),
+        last_version: None,
+        aliases: &[],
+        provisional: false,
+    };
+pub const OP_SUBGROUP_AVC_IME_GET_WEIGHTING_PATTERN_MINIMUM_DISTORTION_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5780u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_FME_INITIALIZE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcFmeInitializeINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5781u16,
@@ -22869,7 +23052,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_FME_INITIALIZE_INTEL: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_BME_INITIALIZE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_BME_INITIALIZE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcBmeInitializeINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5782u16,
@@ -22932,7 +23115,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_BME_INITIALIZE_INTEL: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_REF_CONVERT_TO_MCE_PAYLOAD_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_REF_CONVERT_TO_MCE_PAYLOAD_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcRefConvertToMcePayloadINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5783u16,
@@ -22960,36 +23143,35 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_REF_CONVERT_TO_MCE_PAYLOAD_INTEL: InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_REF_SET_BIDIRECTIONAL_MIX_DISABLE_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcRefSetBidirectionalMixDisableINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5784u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_REF_SET_BILINEAR_FILTER_ENABLE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_REF_SET_BIDIRECTIONAL_MIX_DISABLE_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcRefSetBidirectionalMixDisableINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5784u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_REF_SET_BILINEAR_FILTER_ENABLE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcRefSetBilinearFilterEnableINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5785u16,
@@ -23017,46 +23199,45 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_REF_SET_BILINEAR_FILTER_ENABLE_INTEL: Inst
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_REF_EVALUATE_WITH_SINGLE_REFERENCE_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5786u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Src Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Ref Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_REF_EVALUATE_WITH_DUAL_REFERENCE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_REF_EVALUATE_WITH_SINGLE_REFERENCE_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5786u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Src Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Ref Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_REF_EVALUATE_WITH_DUAL_REFERENCE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcRefEvaluateWithDualReferenceINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5787u16,
@@ -23099,90 +23280,88 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_REF_EVALUATE_WITH_DUAL_REFERENCE_INTEL: In
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_REF_EVALUATE_WITH_MULTI_REFERENCE_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5788u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Src Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Packed Reference Ids"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_REF_EVALUATE_WITH_MULTI_REFERENCE_INTERLACED_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5789u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Src Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Packed Reference Ids"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Packed Reference Field Polarities"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_REF_CONVERT_TO_MCE_RESULT_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_REF_EVALUATE_WITH_MULTI_REFERENCE_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5788u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Src Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Packed Reference Ids"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_REF_EVALUATE_WITH_MULTI_REFERENCE_INTERLACED_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5789u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Src Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Packed Reference Ids"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Packed Reference Field Polarities"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_REF_CONVERT_TO_MCE_RESULT_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcRefConvertToMceResultINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5790u16,
@@ -23210,7 +23389,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_REF_CONVERT_TO_MCE_RESULT_INTEL: InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_INITIALIZE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_INITIALIZE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicInitializeINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5791u16,
@@ -23238,7 +23417,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_INITIALIZE_INTEL: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_CONFIGURE_SKC_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_CONFIGURE_SKC_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicConfigureSkcINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5792u16,
@@ -23291,7 +23470,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_CONFIGURE_SKC_INTEL: InstMeta = InstMe
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_CONFIGURE_IPE_LUMA_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_CONFIGURE_IPE_LUMA_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicConfigureIpeLumaINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5793u16,
@@ -23357,7 +23536,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_CONFIGURE_IPE_LUMA_INTEL: InstMeta = I
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_CONFIGURE_IPE_LUMA_CHROMA_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_CONFIGURE_IPE_LUMA_CHROMA_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicConfigureIpeLumaChromaINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5794u16,
@@ -23438,7 +23617,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_CONFIGURE_IPE_LUMA_CHROMA_INTEL: InstM
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_GET_MOTION_VECTOR_MASK_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_GET_MOTION_VECTOR_MASK_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicGetMotionVectorMaskINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5795u16,
@@ -23471,7 +23650,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_GET_MOTION_VECTOR_MASK_INTEL: InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_CONVERT_TO_MCE_PAYLOAD_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_CONVERT_TO_MCE_PAYLOAD_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicConvertToMcePayloadINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5796u16,
@@ -23499,7 +23678,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_CONVERT_TO_MCE_PAYLOAD_INTEL: InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_SET_INTRA_LUMA_SHAPE_PENALTY_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_SET_INTRA_LUMA_SHAPE_PENALTY_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5797u16,
@@ -23532,91 +23711,89 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_SET_INTRA_LUMA_SHAPE_PENALTY_INTEL: In
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_SET_INTRA_LUMA_MODE_COST_FUNCTION_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5798u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Luma Mode Penalty"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Luma Packed Neighbor Modes"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Luma Packed Non Dc Penalty"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[
-            Capability::SubgroupAvcMotionEstimationINTEL,
-            Capability::SubgroupAvcMotionEstimationIntraINTEL,
-        ],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_SET_INTRA_CHROMA_MODE_COST_FUNCTION_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5799u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Chroma Mode Base Penalty"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[
-            Capability::SubgroupAvcMotionEstimationINTEL,
-            Capability::SubgroupAvcMotionEstimationChromaINTEL,
-        ],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_SET_BILINEAR_FILTER_ENABLE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_SET_INTRA_LUMA_MODE_COST_FUNCTION_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5798u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Luma Mode Penalty"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Luma Packed Neighbor Modes"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Luma Packed Non Dc Penalty"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[
+        Capability::SubgroupAvcMotionEstimationINTEL,
+        Capability::SubgroupAvcMotionEstimationIntraINTEL,
+    ],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_SIC_SET_INTRA_CHROMA_MODE_COST_FUNCTION_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5799u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Chroma Mode Base Penalty"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[
+        Capability::SubgroupAvcMotionEstimationINTEL,
+        Capability::SubgroupAvcMotionEstimationChromaINTEL,
+    ],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_SIC_SET_BILINEAR_FILTER_ENABLE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicSetBilinearFilterEnableINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5800u16,
@@ -23644,41 +23821,40 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_SET_BILINEAR_FILTER_ENABLE_INTEL: Inst
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_SET_SKC_FORWARD_TRANSFORM_ENABLE_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5801u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Packed Sad Coefficients"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_SET_BLOCK_BASED_RAW_SKIP_SAD_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_SET_SKC_FORWARD_TRANSFORM_ENABLE_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5801u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Packed Sad Coefficients"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_SIC_SET_BLOCK_BASED_RAW_SKIP_SAD_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5802u16,
@@ -23711,7 +23887,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_SET_BLOCK_BASED_RAW_SKIP_SAD_INTEL: In
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_EVALUATE_IPE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_EVALUATE_IPE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicEvaluateIpeINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5803u16,
@@ -23747,46 +23923,45 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_EVALUATE_IPE_INTEL: InstMeta = InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_SINGLE_REFERENCE_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5804u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Src Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Ref Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_DUAL_REFERENCE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_SINGLE_REFERENCE_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5804u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Src Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Ref Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_DUAL_REFERENCE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicEvaluateWithDualReferenceINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5805u16,
@@ -23829,90 +24004,88 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_DUAL_REFERENCE_INTEL: In
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_MULTI_REFERENCE_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5806u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Src Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Packed Reference Ids"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_MULTI_REFERENCE_INTERLACED_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5807u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Src Image"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Packed Reference Ids"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Packed Reference Field Polarities"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_CONVERT_TO_MCE_RESULT_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_MULTI_REFERENCE_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5806u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Src Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Packed Reference Ids"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_MULTI_REFERENCE_INTERLACED_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5807u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Src Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Packed Reference Ids"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Packed Reference Field Polarities"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_SIC_CONVERT_TO_MCE_RESULT_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicConvertToMceResultINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5808u16,
@@ -23940,7 +24113,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_CONVERT_TO_MCE_RESULT_INTEL: InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_GET_IPE_LUMA_SHAPE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_GET_IPE_LUMA_SHAPE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicGetIpeLumaShapeINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5809u16,
@@ -23971,7 +24144,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_GET_IPE_LUMA_SHAPE_INTEL: InstMeta = I
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_GET_BEST_IPE_LUMA_DISTORTION_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_GET_BEST_IPE_LUMA_DISTORTION_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5810u16,
@@ -24002,36 +24175,35 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_GET_BEST_IPE_LUMA_DISTORTION_INTEL: In
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_GET_BEST_IPE_CHROMA_DISTORTION_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5811u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_GET_PACKED_IPE_LUMA_MODES_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_GET_BEST_IPE_CHROMA_DISTORTION_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5811u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::SubgroupAvcMotionEstimationINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_SIC_GET_PACKED_IPE_LUMA_MODES_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicGetPackedIpeLumaModesINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5812u16,
@@ -24062,7 +24234,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_GET_PACKED_IPE_LUMA_MODES_INTEL: InstM
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_GET_IPE_CHROMA_MODE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_GET_IPE_CHROMA_MODE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicGetIpeChromaModeINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5813u16,
@@ -24093,71 +24265,69 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_GET_IPE_CHROMA_MODE_INTEL: InstMeta = 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_GET_PACKED_SKC_LUMA_COUNT_THRESHOLD_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5814u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[
-            Capability::SubgroupAvcMotionEstimationINTEL,
-            Capability::SubgroupAvcMotionEstimationIntraINTEL,
-        ],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_GET_PACKED_SKC_LUMA_SUM_THRESHOLD_INTEL: InstMeta =
-    InstMeta {
-        opname: "OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL",
-        class: Some(&PRINTING_CLASS_EXCLUDE),
-        opcode: 5815u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Payload"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[
-            Capability::SubgroupAvcMotionEstimationINTEL,
-            Capability::SubgroupAvcMotionEstimationIntraINTEL,
-        ],
-        extensions: &[],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_GET_INTER_RAW_SADS_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_AVC_SIC_GET_PACKED_SKC_LUMA_COUNT_THRESHOLD_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5814u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[
+        Capability::SubgroupAvcMotionEstimationINTEL,
+        Capability::SubgroupAvcMotionEstimationIntraINTEL,
+    ],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_SIC_GET_PACKED_SKC_LUMA_SUM_THRESHOLD_INTEL: InstMeta = InstMeta {
+    opname: "OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL",
+    class: Some(&PRINTING_CLASS_EXCLUDE),
+    opcode: 5815u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Payload"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[
+        Capability::SubgroupAvcMotionEstimationINTEL,
+        Capability::SubgroupAvcMotionEstimationIntraINTEL,
+    ],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SUBGROUP_AVC_SIC_GET_INTER_RAW_SADS_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupAvcSicGetInterRawSadsINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5816u16,
@@ -24185,7 +24355,7 @@ pub const INSTRUCTION_OP_SUBGROUP_AVC_SIC_GET_INTER_RAW_SADS_INTEL: InstMeta = I
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_VARIABLE_LENGTH_ARRAY_INTEL: InstMeta = InstMeta {
+pub const OP_VARIABLE_LENGTH_ARRAY_INTEL: InstMeta = InstMeta {
     opname: "OpVariableLengthArrayINTEL",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 5818u16,
@@ -24213,7 +24383,7 @@ pub const INSTRUCTION_OP_VARIABLE_LENGTH_ARRAY_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SAVE_MEMORY_INTEL: InstMeta = InstMeta {
+pub const OP_SAVE_MEMORY_INTEL: InstMeta = InstMeta {
     opname: "OpSaveMemoryINTEL",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 5819u16,
@@ -24236,7 +24406,7 @@ pub const INSTRUCTION_OP_SAVE_MEMORY_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RESTORE_MEMORY_INTEL: InstMeta = InstMeta {
+pub const OP_RESTORE_MEMORY_INTEL: InstMeta = InstMeta {
     opname: "OpRestoreMemoryINTEL",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 5820u16,
@@ -24252,7 +24422,7 @@ pub const INSTRUCTION_OP_RESTORE_MEMORY_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_SIN_COS_PI_ALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_SIN_COS_PI_ALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatSinCosPiALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5840u16,
@@ -24305,7 +24475,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_SIN_COS_PI_ALTERA: InstMeta = InstMeta 
     aliases: &["OpArbitraryFloatSinCosPiINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_CAST_ALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_CAST_ALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatCastALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5841u16,
@@ -24358,7 +24528,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_CAST_ALTERA: InstMeta = InstMeta {
     aliases: &["OpArbitraryFloatCastINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_CAST_FROM_INT_ALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_CAST_FROM_INT_ALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatCastFromIntALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5842u16,
@@ -24411,7 +24581,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_CAST_FROM_INT_ALTERA: InstMeta = InstMe
     aliases: &["OpArbitraryFloatCastFromIntINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_CAST_TO_INT_ALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_CAST_TO_INT_ALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatCastToIntALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5843u16,
@@ -24464,7 +24634,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_CAST_TO_INT_ALTERA: InstMeta = InstMeta
     aliases: &["OpArbitraryFloatCastToIntINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_ADD_ALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_ADD_ALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatAddALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5846u16,
@@ -24527,7 +24697,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_ADD_ALTERA: InstMeta = InstMeta {
     aliases: &["OpArbitraryFloatAddINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_SUB_ALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_SUB_ALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatSubALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5847u16,
@@ -24590,7 +24760,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_SUB_ALTERA: InstMeta = InstMeta {
     aliases: &["OpArbitraryFloatSubINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_MUL_ALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_MUL_ALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatMulALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5848u16,
@@ -24653,7 +24823,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_MUL_ALTERA: InstMeta = InstMeta {
     aliases: &["OpArbitraryFloatMulINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_DIV_ALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_DIV_ALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatDivALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5849u16,
@@ -24716,7 +24886,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_DIV_ALTERA: InstMeta = InstMeta {
     aliases: &["OpArbitraryFloatDivINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_GTALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_GTALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatGTALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5850u16,
@@ -24759,7 +24929,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_GTALTERA: InstMeta = InstMeta {
     aliases: &["OpArbitraryFloatGTINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_GEALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_GEALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatGEALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5851u16,
@@ -24802,7 +24972,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_GEALTERA: InstMeta = InstMeta {
     aliases: &["OpArbitraryFloatGEINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_LTALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_LTALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatLTALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5852u16,
@@ -24845,7 +25015,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_LTALTERA: InstMeta = InstMeta {
     aliases: &["OpArbitraryFloatLTINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_LEALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_LEALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatLEALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5853u16,
@@ -24888,7 +25058,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_LEALTERA: InstMeta = InstMeta {
     aliases: &["OpArbitraryFloatLEINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_EQALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_EQALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatEQALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5854u16,
@@ -24931,7 +25101,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_EQALTERA: InstMeta = InstMeta {
     aliases: &["OpArbitraryFloatEQINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_RECIP_ALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_RECIP_ALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatRecipALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5855u16,
@@ -24984,7 +25154,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_RECIP_ALTERA: InstMeta = InstMeta {
     aliases: &["OpArbitraryFloatRecipINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_R_SQRT_ALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_R_SQRT_ALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatRSqrtALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5856u16,
@@ -25037,7 +25207,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_R_SQRT_ALTERA: InstMeta = InstMeta {
     aliases: &["OpArbitraryFloatRSqrtINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_CBRT_ALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_CBRT_ALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatCbrtALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5857u16,
@@ -25090,7 +25260,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_CBRT_ALTERA: InstMeta = InstMeta {
     aliases: &["OpArbitraryFloatCbrtINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_HYPOT_ALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_HYPOT_ALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatHypotALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5858u16,
@@ -25153,7 +25323,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_HYPOT_ALTERA: InstMeta = InstMeta {
     aliases: &["OpArbitraryFloatHypotINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_SQRT_ALTERA: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_SQRT_ALTERA: InstMeta = InstMeta {
     opname: "OpArbitraryFloatSqrtALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5859u16,
@@ -25206,7 +25376,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_SQRT_ALTERA: InstMeta = InstMeta {
     aliases: &["OpArbitraryFloatSqrtINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_LOG_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_LOG_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatLogINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5860u16,
@@ -25259,7 +25429,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_LOG_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_LOG_2_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_LOG_2_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatLog2INTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5861u16,
@@ -25312,7 +25482,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_LOG_2_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_LOG_10_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_LOG_10_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatLog10INTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5862u16,
@@ -25365,7 +25535,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_LOG_10_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_LOG_1_P_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_LOG_1_P_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatLog1pINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5863u16,
@@ -25418,7 +25588,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_LOG_1_P_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_EXP_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_EXP_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatExpINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5864u16,
@@ -25471,7 +25641,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_EXP_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_EXP_2_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_EXP_2_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatExp2INTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5865u16,
@@ -25524,7 +25694,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_EXP_2_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_EXP_10_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_EXP_10_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatExp10INTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5866u16,
@@ -25577,7 +25747,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_EXP_10_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_EXPM_1_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_EXPM_1_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatExpm1INTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5867u16,
@@ -25630,7 +25800,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_EXPM_1_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_SIN_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_SIN_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatSinINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5868u16,
@@ -25683,7 +25853,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_SIN_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_COS_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_COS_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatCosINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5869u16,
@@ -25736,7 +25906,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_COS_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_SIN_COS_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_SIN_COS_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatSinCosINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5870u16,
@@ -25789,7 +25959,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_SIN_COS_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_SIN_PI_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_SIN_PI_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatSinPiINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5871u16,
@@ -25842,7 +26012,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_SIN_PI_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_COS_PI_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_COS_PI_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatCosPiINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5872u16,
@@ -25895,7 +26065,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_COS_PI_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_A_SIN_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_A_SIN_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatASinINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5873u16,
@@ -25948,7 +26118,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_A_SIN_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_A_SIN_PI_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_A_SIN_PI_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatASinPiINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5874u16,
@@ -26001,7 +26171,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_A_SIN_PI_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_A_COS_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_A_COS_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatACosINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5875u16,
@@ -26054,7 +26224,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_A_COS_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_A_COS_PI_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_A_COS_PI_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatACosPiINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5876u16,
@@ -26107,7 +26277,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_A_COS_PI_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_A_TAN_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_A_TAN_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatATanINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5877u16,
@@ -26160,7 +26330,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_A_TAN_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_A_TAN_PI_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_A_TAN_PI_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatATanPiINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5878u16,
@@ -26213,7 +26383,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_A_TAN_PI_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_A_TAN_2_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_A_TAN_2_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatATan2INTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5879u16,
@@ -26276,7 +26446,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_A_TAN_2_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_POW_INTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_POW_INTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatPowINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5880u16,
@@ -26339,7 +26509,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_POW_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_POW_RINTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_POW_RINTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatPowRINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5881u16,
@@ -26402,7 +26572,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_POW_RINTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARBITRARY_FLOAT_POW_NINTEL: InstMeta = InstMeta {
+pub const OP_ARBITRARY_FLOAT_POW_NINTEL: InstMeta = InstMeta {
     opname: "OpArbitraryFloatPowNINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5882u16,
@@ -26465,7 +26635,7 @@ pub const INSTRUCTION_OP_ARBITRARY_FLOAT_POW_NINTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_LOOP_CONTROL_INTEL: InstMeta = InstMeta {
+pub const OP_LOOP_CONTROL_INTEL: InstMeta = InstMeta {
     opname: "OpLoopControlINTEL",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 5887u16,
@@ -26481,7 +26651,7 @@ pub const INSTRUCTION_OP_LOOP_CONTROL_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ALIAS_DOMAIN_DECL_INTEL: InstMeta = InstMeta {
+pub const OP_ALIAS_DOMAIN_DECL_INTEL: InstMeta = InstMeta {
     opname: "OpAliasDomainDeclINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5911u16,
@@ -26504,7 +26674,7 @@ pub const INSTRUCTION_OP_ALIAS_DOMAIN_DECL_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ALIAS_SCOPE_DECL_INTEL: InstMeta = InstMeta {
+pub const OP_ALIAS_SCOPE_DECL_INTEL: InstMeta = InstMeta {
     opname: "OpAliasScopeDeclINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5912u16,
@@ -26532,7 +26702,7 @@ pub const INSTRUCTION_OP_ALIAS_SCOPE_DECL_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ALIAS_SCOPE_LIST_DECL_INTEL: InstMeta = InstMeta {
+pub const OP_ALIAS_SCOPE_LIST_DECL_INTEL: InstMeta = InstMeta {
     opname: "OpAliasScopeListDeclINTEL",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5913u16,
@@ -26555,7 +26725,7 @@ pub const INSTRUCTION_OP_ALIAS_SCOPE_LIST_DECL_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FIXED_SQRT_ALTERA: InstMeta = InstMeta {
+pub const OP_FIXED_SQRT_ALTERA: InstMeta = InstMeta {
     opname: "OpFixedSqrtALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5923u16,
@@ -26608,7 +26778,7 @@ pub const INSTRUCTION_OP_FIXED_SQRT_ALTERA: InstMeta = InstMeta {
     aliases: &["OpFixedSqrtINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FIXED_RECIP_ALTERA: InstMeta = InstMeta {
+pub const OP_FIXED_RECIP_ALTERA: InstMeta = InstMeta {
     opname: "OpFixedRecipALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5924u16,
@@ -26661,7 +26831,7 @@ pub const INSTRUCTION_OP_FIXED_RECIP_ALTERA: InstMeta = InstMeta {
     aliases: &["OpFixedRecipINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FIXED_RSQRT_ALTERA: InstMeta = InstMeta {
+pub const OP_FIXED_RSQRT_ALTERA: InstMeta = InstMeta {
     opname: "OpFixedRsqrtALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5925u16,
@@ -26714,7 +26884,7 @@ pub const INSTRUCTION_OP_FIXED_RSQRT_ALTERA: InstMeta = InstMeta {
     aliases: &["OpFixedRsqrtINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FIXED_SIN_ALTERA: InstMeta = InstMeta {
+pub const OP_FIXED_SIN_ALTERA: InstMeta = InstMeta {
     opname: "OpFixedSinALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5926u16,
@@ -26767,7 +26937,7 @@ pub const INSTRUCTION_OP_FIXED_SIN_ALTERA: InstMeta = InstMeta {
     aliases: &["OpFixedSinINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FIXED_COS_ALTERA: InstMeta = InstMeta {
+pub const OP_FIXED_COS_ALTERA: InstMeta = InstMeta {
     opname: "OpFixedCosALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5927u16,
@@ -26820,7 +26990,7 @@ pub const INSTRUCTION_OP_FIXED_COS_ALTERA: InstMeta = InstMeta {
     aliases: &["OpFixedCosINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FIXED_SIN_COS_ALTERA: InstMeta = InstMeta {
+pub const OP_FIXED_SIN_COS_ALTERA: InstMeta = InstMeta {
     opname: "OpFixedSinCosALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5928u16,
@@ -26873,7 +27043,7 @@ pub const INSTRUCTION_OP_FIXED_SIN_COS_ALTERA: InstMeta = InstMeta {
     aliases: &["OpFixedSinCosINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FIXED_SIN_PI_ALTERA: InstMeta = InstMeta {
+pub const OP_FIXED_SIN_PI_ALTERA: InstMeta = InstMeta {
     opname: "OpFixedSinPiALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5929u16,
@@ -26926,7 +27096,7 @@ pub const INSTRUCTION_OP_FIXED_SIN_PI_ALTERA: InstMeta = InstMeta {
     aliases: &["OpFixedSinPiINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FIXED_COS_PI_ALTERA: InstMeta = InstMeta {
+pub const OP_FIXED_COS_PI_ALTERA: InstMeta = InstMeta {
     opname: "OpFixedCosPiALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5930u16,
@@ -26979,7 +27149,7 @@ pub const INSTRUCTION_OP_FIXED_COS_PI_ALTERA: InstMeta = InstMeta {
     aliases: &["OpFixedCosPiINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FIXED_SIN_COS_PI_ALTERA: InstMeta = InstMeta {
+pub const OP_FIXED_SIN_COS_PI_ALTERA: InstMeta = InstMeta {
     opname: "OpFixedSinCosPiALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5931u16,
@@ -27032,7 +27202,7 @@ pub const INSTRUCTION_OP_FIXED_SIN_COS_PI_ALTERA: InstMeta = InstMeta {
     aliases: &["OpFixedSinCosPiINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FIXED_LOG_ALTERA: InstMeta = InstMeta {
+pub const OP_FIXED_LOG_ALTERA: InstMeta = InstMeta {
     opname: "OpFixedLogALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5932u16,
@@ -27085,7 +27255,7 @@ pub const INSTRUCTION_OP_FIXED_LOG_ALTERA: InstMeta = InstMeta {
     aliases: &["OpFixedLogINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FIXED_EXP_ALTERA: InstMeta = InstMeta {
+pub const OP_FIXED_EXP_ALTERA: InstMeta = InstMeta {
     opname: "OpFixedExpALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5933u16,
@@ -27138,7 +27308,7 @@ pub const INSTRUCTION_OP_FIXED_EXP_ALTERA: InstMeta = InstMeta {
     aliases: &["OpFixedExpINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_PTR_CAST_TO_CROSS_WORKGROUP_ALTERA: InstMeta = InstMeta {
+pub const OP_PTR_CAST_TO_CROSS_WORKGROUP_ALTERA: InstMeta = InstMeta {
     opname: "OpPtrCastToCrossWorkgroupALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5934u16,
@@ -27166,7 +27336,7 @@ pub const INSTRUCTION_OP_PTR_CAST_TO_CROSS_WORKGROUP_ALTERA: InstMeta = InstMeta
     aliases: &["OpPtrCastToCrossWorkgroupINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CROSS_WORKGROUP_CAST_TO_PTR_ALTERA: InstMeta = InstMeta {
+pub const OP_CROSS_WORKGROUP_CAST_TO_PTR_ALTERA: InstMeta = InstMeta {
     opname: "OpCrossWorkgroupCastToPtrALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5938u16,
@@ -27194,7 +27364,7 @@ pub const INSTRUCTION_OP_CROSS_WORKGROUP_CAST_TO_PTR_ALTERA: InstMeta = InstMeta
     aliases: &["OpCrossWorkgroupCastToPtrINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_READ_PIPE_BLOCKING_ALTERA: InstMeta = InstMeta {
+pub const OP_READ_PIPE_BLOCKING_ALTERA: InstMeta = InstMeta {
     opname: "OpReadPipeBlockingALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5946u16,
@@ -27227,7 +27397,7 @@ pub const INSTRUCTION_OP_READ_PIPE_BLOCKING_ALTERA: InstMeta = InstMeta {
     aliases: &["OpReadPipeBlockingINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_WRITE_PIPE_BLOCKING_ALTERA: InstMeta = InstMeta {
+pub const OP_WRITE_PIPE_BLOCKING_ALTERA: InstMeta = InstMeta {
     opname: "OpWritePipeBlockingALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5947u16,
@@ -27260,7 +27430,7 @@ pub const INSTRUCTION_OP_WRITE_PIPE_BLOCKING_ALTERA: InstMeta = InstMeta {
     aliases: &["OpWritePipeBlockingINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_FPGA_REG_ALTERA: InstMeta = InstMeta {
+pub const OP_FPGA_REG_ALTERA: InstMeta = InstMeta {
     opname: "OpFPGARegALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 5949u16,
@@ -27288,7 +27458,7 @@ pub const INSTRUCTION_OP_FPGA_REG_ALTERA: InstMeta = InstMeta {
     aliases: &["OpFPGARegINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_RAY_T_MIN_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_RAY_T_MIN_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryGetRayTMinKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 6016u16,
@@ -27316,7 +27486,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_RAY_T_MIN_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_RAY_FLAGS_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_RAY_FLAGS_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryGetRayFlagsKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 6017u16,
@@ -27344,7 +27514,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_RAY_FLAGS_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_TKHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_TKHR: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionTKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 6018u16,
@@ -27377,41 +27547,40 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_TKHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_INSTANCE_CUSTOM_INDEX_KHR: InstMeta =
-    InstMeta {
-        opname: "OpRayQueryGetIntersectionInstanceCustomIndexKHR",
-        class: Some(&PRINTING_CLASS_RESERVED),
-        opcode: 6019u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("RayQuery"),
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("Intersection"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::RayQueryKHR],
-        extensions: &[EXTENSION_SPV_KHR_RAY_QUERY],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_INSTANCE_ID_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_INSTANCE_CUSTOM_INDEX_KHR: InstMeta = InstMeta {
+    opname: "OpRayQueryGetIntersectionInstanceCustomIndexKHR",
+    class: Some(&PRINTING_CLASS_RESERVED),
+    opcode: 6019u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("RayQuery"),
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Intersection"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::RayQueryKHR],
+    extensions: &[EXTENSION_SPV_KHR_RAY_QUERY],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_RAY_QUERY_GET_INTERSECTION_INSTANCE_ID_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionInstanceIdKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 6020u16,
@@ -27444,8 +27613,41 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_INSTANCE_ID_KHR: InstMeta = 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_INSTANCE_SHADER_BINDING_TABLE_RECORD_OFFSET_KHR : InstMeta = InstMeta { opname : "OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR" , class : Some (& PRINTING_CLASS_RESERVED) , opcode : 6021u16 , operands : & [OperandMeta { kind : & OPERAND_KIND_ID_RESULT_TYPE , name : None , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_RESULT , name : None , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("RayQuery") , quantifier : Quantifier :: One , } , OperandMeta { kind : & OPERAND_KIND_ID_REF , name : Some ("Intersection") , quantifier : Quantifier :: One , }] , capabilities : & [Capability :: RayQueryKHR] , extensions : & [EXTENSION_SPV_KHR_RAY_QUERY] , version : Some ("None") , last_version : None , aliases : & [] , provisional : false , } ;
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_GEOMETRY_INDEX_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_INSTANCE_SHADER_BINDING_TABLE_RECORD_OFFSET_KHR: InstMeta =
+    InstMeta {
+        opname: "OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR",
+        class: Some(&PRINTING_CLASS_RESERVED),
+        opcode: 6021u16,
+        operands: &[
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_RESULT_TYPE,
+                name: None,
+                quantifier: Quantifier::One,
+            },
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_RESULT,
+                name: None,
+                quantifier: Quantifier::One,
+            },
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_REF,
+                name: Some("RayQuery"),
+                quantifier: Quantifier::One,
+            },
+            OperandMeta {
+                kind: &OPERAND_KIND_ID_REF,
+                name: Some("Intersection"),
+                quantifier: Quantifier::One,
+            },
+        ],
+        capabilities: &[Capability::RayQueryKHR],
+        extensions: &[EXTENSION_SPV_KHR_RAY_QUERY],
+        version: Some("None"),
+        last_version: None,
+        aliases: &[],
+        provisional: false,
+    };
+pub const OP_RAY_QUERY_GET_INTERSECTION_GEOMETRY_INDEX_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionGeometryIndexKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 6022u16,
@@ -27478,7 +27680,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_GEOMETRY_INDEX_KHR: InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_PRIMITIVE_INDEX_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_PRIMITIVE_INDEX_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionPrimitiveIndexKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 6023u16,
@@ -27511,7 +27713,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_PRIMITIVE_INDEX_KHR: InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_BARYCENTRICS_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_BARYCENTRICS_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionBarycentricsKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 6024u16,
@@ -27544,7 +27746,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_BARYCENTRICS_KHR: InstMeta =
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_FRONT_FACE_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_FRONT_FACE_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionFrontFaceKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 6025u16,
@@ -27577,36 +27779,35 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_FRONT_FACE_KHR: InstMeta = I
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_CANDIDATE_AABB_OPAQUE_KHR: InstMeta =
-    InstMeta {
-        opname: "OpRayQueryGetIntersectionCandidateAABBOpaqueKHR",
-        class: Some(&PRINTING_CLASS_RESERVED),
-        opcode: 6026u16,
-        operands: &[
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT_TYPE,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_RESULT,
-                name: None,
-                quantifier: Quantifier::One,
-            },
-            OperandMeta {
-                kind: &OPERAND_KIND_ID_REF,
-                name: Some("RayQuery"),
-                quantifier: Quantifier::One,
-            },
-        ],
-        capabilities: &[Capability::RayQueryKHR],
-        extensions: &[EXTENSION_SPV_KHR_RAY_QUERY],
-        version: Some("None"),
-        last_version: None,
-        aliases: &[],
-        provisional: false,
-    };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_OBJECT_RAY_DIRECTION_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_CANDIDATE_AABB_OPAQUE_KHR: InstMeta = InstMeta {
+    opname: "OpRayQueryGetIntersectionCandidateAABBOpaqueKHR",
+    class: Some(&PRINTING_CLASS_RESERVED),
+    opcode: 6026u16,
+    operands: &[
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("RayQuery"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[Capability::RayQueryKHR],
+    extensions: &[EXTENSION_SPV_KHR_RAY_QUERY],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_RAY_QUERY_GET_INTERSECTION_OBJECT_RAY_DIRECTION_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionObjectRayDirectionKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 6027u16,
@@ -27639,7 +27840,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_OBJECT_RAY_DIRECTION_KHR: In
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_OBJECT_RAY_ORIGIN_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_OBJECT_RAY_ORIGIN_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionObjectRayOriginKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 6028u16,
@@ -27672,7 +27873,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_OBJECT_RAY_ORIGIN_KHR: InstM
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_WORLD_RAY_DIRECTION_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_WORLD_RAY_DIRECTION_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryGetWorldRayDirectionKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 6029u16,
@@ -27700,7 +27901,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_WORLD_RAY_DIRECTION_KHR: InstMeta = InstM
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_WORLD_RAY_ORIGIN_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_WORLD_RAY_ORIGIN_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryGetWorldRayOriginKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 6030u16,
@@ -27728,7 +27929,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_WORLD_RAY_ORIGIN_KHR: InstMeta = InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_OBJECT_TO_WORLD_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_OBJECT_TO_WORLD_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionObjectToWorldKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 6031u16,
@@ -27761,7 +27962,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_OBJECT_TO_WORLD_KHR: InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_WORLD_TO_OBJECT_KHR: InstMeta = InstMeta {
+pub const OP_RAY_QUERY_GET_INTERSECTION_WORLD_TO_OBJECT_KHR: InstMeta = InstMeta {
     opname: "OpRayQueryGetIntersectionWorldToObjectKHR",
     class: Some(&PRINTING_CLASS_RESERVED),
     opcode: 6032u16,
@@ -27794,7 +27995,7 @@ pub const INSTRUCTION_OP_RAY_QUERY_GET_INTERSECTION_WORLD_TO_OBJECT_KHR: InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ATOMIC_F_ADD_EXT: InstMeta = InstMeta {
+pub const OP_ATOMIC_F_ADD_EXT: InstMeta = InstMeta {
     opname: "OpAtomicFAddEXT",
     class: Some(&PRINTING_CLASS_ATOMIC),
     opcode: 6035u16,
@@ -27842,7 +28043,7 @@ pub const INSTRUCTION_OP_ATOMIC_F_ADD_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_BUFFER_SURFACE_INTEL: InstMeta = InstMeta {
+pub const OP_TYPE_BUFFER_SURFACE_INTEL: InstMeta = InstMeta {
     opname: "OpTypeBufferSurfaceINTEL",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 6086u16,
@@ -27865,7 +28066,7 @@ pub const INSTRUCTION_OP_TYPE_BUFFER_SURFACE_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_STRUCT_CONTINUED_INTEL: InstMeta = InstMeta {
+pub const OP_TYPE_STRUCT_CONTINUED_INTEL: InstMeta = InstMeta {
     opname: "OpTypeStructContinuedINTEL",
     class: Some(&PRINTING_CLASS_TYPE_DECLARATION),
     opcode: 6090u16,
@@ -27881,7 +28082,7 @@ pub const INSTRUCTION_OP_TYPE_STRUCT_CONTINUED_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONSTANT_COMPOSITE_CONTINUED_INTEL: InstMeta = InstMeta {
+pub const OP_CONSTANT_COMPOSITE_CONTINUED_INTEL: InstMeta = InstMeta {
     opname: "OpConstantCompositeContinuedINTEL",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 6091u16,
@@ -27897,7 +28098,7 @@ pub const INSTRUCTION_OP_CONSTANT_COMPOSITE_CONTINUED_INTEL: InstMeta = InstMeta
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SPEC_CONSTANT_COMPOSITE_CONTINUED_INTEL: InstMeta = InstMeta {
+pub const OP_SPEC_CONSTANT_COMPOSITE_CONTINUED_INTEL: InstMeta = InstMeta {
     opname: "OpSpecConstantCompositeContinuedINTEL",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 6092u16,
@@ -27913,7 +28114,7 @@ pub const INSTRUCTION_OP_SPEC_CONSTANT_COMPOSITE_CONTINUED_INTEL: InstMeta = Ins
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_COMPOSITE_CONSTRUCT_CONTINUED_INTEL: InstMeta = InstMeta {
+pub const OP_COMPOSITE_CONSTRUCT_CONTINUED_INTEL: InstMeta = InstMeta {
     opname: "OpCompositeConstructContinuedINTEL",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 6096u16,
@@ -27941,7 +28142,7 @@ pub const INSTRUCTION_OP_COMPOSITE_CONSTRUCT_CONTINUED_INTEL: InstMeta = InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_F_TO_BF_16_INTEL: InstMeta = InstMeta {
+pub const OP_CONVERT_F_TO_BF_16_INTEL: InstMeta = InstMeta {
     opname: "OpConvertFToBF16INTEL",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 6116u16,
@@ -27969,7 +28170,7 @@ pub const INSTRUCTION_OP_CONVERT_F_TO_BF_16_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_BF_16_TO_FINTEL: InstMeta = InstMeta {
+pub const OP_CONVERT_BF_16_TO_FINTEL: InstMeta = InstMeta {
     opname: "OpConvertBF16ToFINTEL",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 6117u16,
@@ -27997,7 +28198,7 @@ pub const INSTRUCTION_OP_CONVERT_BF_16_TO_FINTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONTROL_BARRIER_ARRIVE_INTEL: InstMeta = InstMeta {
+pub const OP_CONTROL_BARRIER_ARRIVE_INTEL: InstMeta = InstMeta {
     opname: "OpControlBarrierArriveINTEL",
     class: Some(&PRINTING_CLASS_BARRIER),
     opcode: 6142u16,
@@ -28025,7 +28226,7 @@ pub const INSTRUCTION_OP_CONTROL_BARRIER_ARRIVE_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONTROL_BARRIER_WAIT_INTEL: InstMeta = InstMeta {
+pub const OP_CONTROL_BARRIER_WAIT_INTEL: InstMeta = InstMeta {
     opname: "OpControlBarrierWaitINTEL",
     class: Some(&PRINTING_CLASS_BARRIER),
     opcode: 6143u16,
@@ -28053,7 +28254,7 @@ pub const INSTRUCTION_OP_CONTROL_BARRIER_WAIT_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ARITHMETIC_FENCE_EXT: InstMeta = InstMeta {
+pub const OP_ARITHMETIC_FENCE_EXT: InstMeta = InstMeta {
     opname: "OpArithmeticFenceEXT",
     class: Some(&PRINTING_CLASS_MISCELLANEOUS),
     opcode: 6145u16,
@@ -28081,7 +28282,7 @@ pub const INSTRUCTION_OP_ARITHMETIC_FENCE_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TASK_SEQUENCE_CREATE_ALTERA: InstMeta = InstMeta {
+pub const OP_TASK_SEQUENCE_CREATE_ALTERA: InstMeta = InstMeta {
     opname: "OpTaskSequenceCreateALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 6163u16,
@@ -28129,7 +28330,7 @@ pub const INSTRUCTION_OP_TASK_SEQUENCE_CREATE_ALTERA: InstMeta = InstMeta {
     aliases: &["OpTaskSequenceCreateINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TASK_SEQUENCE_ASYNC_ALTERA: InstMeta = InstMeta {
+pub const OP_TASK_SEQUENCE_ASYNC_ALTERA: InstMeta = InstMeta {
     opname: "OpTaskSequenceAsyncALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 6164u16,
@@ -28152,7 +28353,7 @@ pub const INSTRUCTION_OP_TASK_SEQUENCE_ASYNC_ALTERA: InstMeta = InstMeta {
     aliases: &["OpTaskSequenceAsyncINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TASK_SEQUENCE_GET_ALTERA: InstMeta = InstMeta {
+pub const OP_TASK_SEQUENCE_GET_ALTERA: InstMeta = InstMeta {
     opname: "OpTaskSequenceGetALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 6165u16,
@@ -28180,7 +28381,7 @@ pub const INSTRUCTION_OP_TASK_SEQUENCE_GET_ALTERA: InstMeta = InstMeta {
     aliases: &["OpTaskSequenceGetINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TASK_SEQUENCE_RELEASE_ALTERA: InstMeta = InstMeta {
+pub const OP_TASK_SEQUENCE_RELEASE_ALTERA: InstMeta = InstMeta {
     opname: "OpTaskSequenceReleaseALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 6166u16,
@@ -28196,7 +28397,7 @@ pub const INSTRUCTION_OP_TASK_SEQUENCE_RELEASE_ALTERA: InstMeta = InstMeta {
     aliases: &["OpTaskSequenceReleaseINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_TYPE_TASK_SEQUENCE_ALTERA: InstMeta = InstMeta {
+pub const OP_TYPE_TASK_SEQUENCE_ALTERA: InstMeta = InstMeta {
     opname: "OpTypeTaskSequenceALTERA",
     class: Some(&PRINTING_CLASS_EXCLUDE),
     opcode: 6199u16,
@@ -28212,7 +28413,7 @@ pub const INSTRUCTION_OP_TYPE_TASK_SEQUENCE_ALTERA: InstMeta = InstMeta {
     aliases: &["OpTypeTaskSequenceINTEL"],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_BLOCK_PREFETCH_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_BLOCK_PREFETCH_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupBlockPrefetchINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 6221u16,
@@ -28240,7 +28441,7 @@ pub const INSTRUCTION_OP_SUBGROUP_BLOCK_PREFETCH_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_2_D_BLOCK_LOAD_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_2_D_BLOCK_LOAD_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroup2DBlockLoadINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 6231u16,
@@ -28303,7 +28504,7 @@ pub const INSTRUCTION_OP_SUBGROUP_2_D_BLOCK_LOAD_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_2_D_BLOCK_LOAD_TRANSFORM_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_2_D_BLOCK_LOAD_TRANSFORM_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroup2DBlockLoadTransformINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 6232u16,
@@ -28366,7 +28567,7 @@ pub const INSTRUCTION_OP_SUBGROUP_2_D_BLOCK_LOAD_TRANSFORM_INTEL: InstMeta = Ins
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_2_D_BLOCK_LOAD_TRANSPOSE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_2_D_BLOCK_LOAD_TRANSPOSE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroup2DBlockLoadTransposeINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 6233u16,
@@ -28429,7 +28630,7 @@ pub const INSTRUCTION_OP_SUBGROUP_2_D_BLOCK_LOAD_TRANSPOSE_INTEL: InstMeta = Ins
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_2_D_BLOCK_PREFETCH_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_2_D_BLOCK_PREFETCH_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroup2DBlockPrefetchINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 6234u16,
@@ -28487,7 +28688,7 @@ pub const INSTRUCTION_OP_SUBGROUP_2_D_BLOCK_PREFETCH_INTEL: InstMeta = InstMeta 
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_2_D_BLOCK_STORE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_2_D_BLOCK_STORE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroup2DBlockStoreINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 6235u16,
@@ -28550,7 +28751,7 @@ pub const INSTRUCTION_OP_SUBGROUP_2_D_BLOCK_STORE_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_SUBGROUP_MATRIX_MULTIPLY_ACCUMULATE_INTEL: InstMeta = InstMeta {
+pub const OP_SUBGROUP_MATRIX_MULTIPLY_ACCUMULATE_INTEL: InstMeta = InstMeta {
     opname: "OpSubgroupMatrixMultiplyAccumulateINTEL",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 6237u16,
@@ -28598,7 +28799,7 @@ pub const INSTRUCTION_OP_SUBGROUP_MATRIX_MULTIPLY_ACCUMULATE_INTEL: InstMeta = I
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_BITWISE_FUNCTION_INTEL: InstMeta = InstMeta {
+pub const OP_BITWISE_FUNCTION_INTEL: InstMeta = InstMeta {
     opname: "OpBitwiseFunctionINTEL",
     class: Some(&PRINTING_CLASS_BIT),
     opcode: 6242u16,
@@ -28641,7 +28842,7 @@ pub const INSTRUCTION_OP_BITWISE_FUNCTION_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_UNTYPED_VARIABLE_LENGTH_ARRAY_INTEL: InstMeta = InstMeta {
+pub const OP_UNTYPED_VARIABLE_LENGTH_ARRAY_INTEL: InstMeta = InstMeta {
     opname: "OpUntypedVariableLengthArrayINTEL",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 6244u16,
@@ -28674,7 +28875,7 @@ pub const INSTRUCTION_OP_UNTYPED_VARIABLE_LENGTH_ARRAY_INTEL: InstMeta = InstMet
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONDITIONAL_EXTENSION_INTEL: InstMeta = InstMeta {
+pub const OP_CONDITIONAL_EXTENSION_INTEL: InstMeta = InstMeta {
     opname: "OpConditionalExtensionINTEL",
     class: Some(&PRINTING_CLASS_EXTENSION),
     opcode: 6248u16,
@@ -28697,7 +28898,7 @@ pub const INSTRUCTION_OP_CONDITIONAL_EXTENSION_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_CONDITIONAL_ENTRY_POINT_INTEL: InstMeta = InstMeta {
+pub const OP_CONDITIONAL_ENTRY_POINT_INTEL: InstMeta = InstMeta {
     opname: "OpConditionalEntryPointINTEL",
     class: Some(&PRINTING_CLASS_MODE_SETTING),
     opcode: 6249u16,
@@ -28735,7 +28936,7 @@ pub const INSTRUCTION_OP_CONDITIONAL_ENTRY_POINT_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_CONDITIONAL_CAPABILITY_INTEL: InstMeta = InstMeta {
+pub const OP_CONDITIONAL_CAPABILITY_INTEL: InstMeta = InstMeta {
     opname: "OpConditionalCapabilityINTEL",
     class: Some(&PRINTING_CLASS_MODE_SETTING),
     opcode: 6250u16,
@@ -28758,7 +28959,7 @@ pub const INSTRUCTION_OP_CONDITIONAL_CAPABILITY_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_SPEC_CONSTANT_TARGET_INTEL: InstMeta = InstMeta {
+pub const OP_SPEC_CONSTANT_TARGET_INTEL: InstMeta = InstMeta {
     opname: "OpSpecConstantTargetINTEL",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 6251u16,
@@ -28791,7 +28992,7 @@ pub const INSTRUCTION_OP_SPEC_CONSTANT_TARGET_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_SPEC_CONSTANT_ARCHITECTURE_INTEL: InstMeta = InstMeta {
+pub const OP_SPEC_CONSTANT_ARCHITECTURE_INTEL: InstMeta = InstMeta {
     opname: "OpSpecConstantArchitectureINTEL",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 6252u16,
@@ -28834,7 +29035,7 @@ pub const INSTRUCTION_OP_SPEC_CONSTANT_ARCHITECTURE_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_SPEC_CONSTANT_CAPABILITIES_INTEL: InstMeta = InstMeta {
+pub const OP_SPEC_CONSTANT_CAPABILITIES_INTEL: InstMeta = InstMeta {
     opname: "OpSpecConstantCapabilitiesINTEL",
     class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
     opcode: 6253u16,
@@ -28862,7 +29063,7 @@ pub const INSTRUCTION_OP_SPEC_CONSTANT_CAPABILITIES_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_CONDITIONAL_COPY_OBJECT_INTEL: InstMeta = InstMeta {
+pub const OP_CONDITIONAL_COPY_OBJECT_INTEL: InstMeta = InstMeta {
     opname: "OpConditionalCopyObjectINTEL",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 6254u16,
@@ -28890,7 +29091,7 @@ pub const INSTRUCTION_OP_CONDITIONAL_COPY_OBJECT_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_GROUP_I_MUL_KHR: InstMeta = InstMeta {
+pub const OP_GROUP_I_MUL_KHR: InstMeta = InstMeta {
     opname: "OpGroupIMulKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 6401u16,
@@ -28928,7 +29129,7 @@ pub const INSTRUCTION_OP_GROUP_I_MUL_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_F_MUL_KHR: InstMeta = InstMeta {
+pub const OP_GROUP_F_MUL_KHR: InstMeta = InstMeta {
     opname: "OpGroupFMulKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 6402u16,
@@ -28966,7 +29167,7 @@ pub const INSTRUCTION_OP_GROUP_F_MUL_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_BITWISE_AND_KHR: InstMeta = InstMeta {
+pub const OP_GROUP_BITWISE_AND_KHR: InstMeta = InstMeta {
     opname: "OpGroupBitwiseAndKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 6403u16,
@@ -29004,7 +29205,7 @@ pub const INSTRUCTION_OP_GROUP_BITWISE_AND_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_BITWISE_OR_KHR: InstMeta = InstMeta {
+pub const OP_GROUP_BITWISE_OR_KHR: InstMeta = InstMeta {
     opname: "OpGroupBitwiseOrKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 6404u16,
@@ -29042,7 +29243,7 @@ pub const INSTRUCTION_OP_GROUP_BITWISE_OR_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_BITWISE_XOR_KHR: InstMeta = InstMeta {
+pub const OP_GROUP_BITWISE_XOR_KHR: InstMeta = InstMeta {
     opname: "OpGroupBitwiseXorKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 6405u16,
@@ -29080,7 +29281,7 @@ pub const INSTRUCTION_OP_GROUP_BITWISE_XOR_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_LOGICAL_AND_KHR: InstMeta = InstMeta {
+pub const OP_GROUP_LOGICAL_AND_KHR: InstMeta = InstMeta {
     opname: "OpGroupLogicalAndKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 6406u16,
@@ -29118,7 +29319,7 @@ pub const INSTRUCTION_OP_GROUP_LOGICAL_AND_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_LOGICAL_OR_KHR: InstMeta = InstMeta {
+pub const OP_GROUP_LOGICAL_OR_KHR: InstMeta = InstMeta {
     opname: "OpGroupLogicalOrKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 6407u16,
@@ -29156,7 +29357,7 @@ pub const INSTRUCTION_OP_GROUP_LOGICAL_OR_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_GROUP_LOGICAL_XOR_KHR: InstMeta = InstMeta {
+pub const OP_GROUP_LOGICAL_XOR_KHR: InstMeta = InstMeta {
     opname: "OpGroupLogicalXorKHR",
     class: Some(&PRINTING_CLASS_GROUP),
     opcode: 6408u16,
@@ -29194,7 +29395,7 @@ pub const INSTRUCTION_OP_GROUP_LOGICAL_XOR_KHR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_ROUND_F_TO_TF_32_INTEL: InstMeta = InstMeta {
+pub const OP_ROUND_F_TO_TF_32_INTEL: InstMeta = InstMeta {
     opname: "OpRoundFToTF32INTEL",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 6426u16,
@@ -29222,7 +29423,7 @@ pub const INSTRUCTION_OP_ROUND_F_TO_TF_32_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_MASKED_GATHER_INTEL: InstMeta = InstMeta {
+pub const OP_MASKED_GATHER_INTEL: InstMeta = InstMeta {
     opname: "OpMaskedGatherINTEL",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 6428u16,
@@ -29265,7 +29466,7 @@ pub const INSTRUCTION_OP_MASKED_GATHER_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_MASKED_SCATTER_INTEL: InstMeta = InstMeta {
+pub const OP_MASKED_SCATTER_INTEL: InstMeta = InstMeta {
     opname: "OpMaskedScatterINTEL",
     class: Some(&PRINTING_CLASS_MEMORY),
     opcode: 6429u16,
@@ -29298,7 +29499,7 @@ pub const INSTRUCTION_OP_MASKED_SCATTER_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const INSTRUCTION_OP_CONVERT_HANDLE_TO_IMAGE_INTEL: InstMeta = InstMeta {
+pub const OP_CONVERT_HANDLE_TO_IMAGE_INTEL: InstMeta = InstMeta {
     opname: "OpConvertHandleToImageINTEL",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 6529u16,
@@ -29326,7 +29527,7 @@ pub const INSTRUCTION_OP_CONVERT_HANDLE_TO_IMAGE_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_CONVERT_HANDLE_TO_SAMPLER_INTEL: InstMeta = InstMeta {
+pub const OP_CONVERT_HANDLE_TO_SAMPLER_INTEL: InstMeta = InstMeta {
     opname: "OpConvertHandleToSamplerINTEL",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 6530u16,
@@ -29354,7 +29555,7 @@ pub const INSTRUCTION_OP_CONVERT_HANDLE_TO_SAMPLER_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
-pub const INSTRUCTION_OP_CONVERT_HANDLE_TO_SAMPLED_IMAGE_INTEL: InstMeta = InstMeta {
+pub const OP_CONVERT_HANDLE_TO_SAMPLED_IMAGE_INTEL: InstMeta = InstMeta {
     opname: "OpConvertHandleToSampledImageINTEL",
     class: Some(&PRINTING_CLASS_IMAGE),
     opcode: 6531u16,
