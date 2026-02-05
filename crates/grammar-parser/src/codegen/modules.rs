@@ -34,7 +34,7 @@ pub fn write_grammar<'a>(
     write_operand_kinds(&mut writer, grammar)?;
     write_operands(&mut writer, grammar)?;
     write_inst_class(&mut writer, grammar)?;
-    write_inst(&mut writer, grammar)?;
+    write_inst_meta(&mut writer, grammar)?;
     write_grammar_mod(&mut writer, grammar)?;
     writer.finish(mod_options)?;
     Ok(())
@@ -58,9 +58,9 @@ fn write_inst_class(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Re
     )
 }
 
-fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+fn write_inst_meta(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
     writer.write_const_module(
-        "inst",
+        "inst_meta",
         grammar.insts.iter().map(InstMeta::emit_def).collect(),
     )
 }
