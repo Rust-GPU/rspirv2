@@ -2,13 +2,14 @@ use crate::codegen::GrammarWriter;
 use crate::parse::{Category, Enumerant, Grammar, OperandKind, Quantifier};
 use proc_macro2::TokenStream;
 use quote::quote;
+use std::borrow::Cow;
 
 pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
     let operands = grammar.operand_kinds.iter().map(|o| match &o.category {
         // `RefId` and Literals are imported
         Category::Id | Category::Literal => quote!(),
         Category::BitEnum { enumerants } => emit_bitflags_enum(o, enumerants),
-        Category::Composite { .. } => quote!(),
+        Category::Composite { bases } => emit_composite(o, bases),
         Category::ValueEnum { enumerants } => {
             let c_like = enumerants.iter().all(|e| e.parameters.is_empty());
             if c_like {
@@ -130,6 +131,17 @@ fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> T
                 #(#variants)*
             }
         }
+    }
+}
+
+fn emit_composite(operand_kind: &OperandKind, bases: &[Cow<str>]) -> TokenStream {
+    let name = OperandKind::type_ident(&operand_kind.name);
+    let doc = make_doc(&operand_kind.doc);
+    let member_tys = bases.iter().map(|name| OperandKind::type_ident(name));
+    quote! {
+        #doc
+        #[derive(Clone, Debug, Eq, PartialEq, Hash)]
+        pub struct #name(#(#member_tys),*);
     }
 }
 

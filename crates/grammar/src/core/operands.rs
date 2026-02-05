@@ -1273,4 +1273,10 @@ pub enum ComponentType {
     FloatE4M3NV = 1000491002u32,
     FloatE5M2NV = 1000491003u32,
 }
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct PairLiteralIntegerIdRef(LiteralInteger, IdRef);
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct PairIdRefLiteralInteger(IdRef, LiteralInteger);
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct PairIdRefIdRef(IdRef, IdRef);
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct TensorOperands : u32 { const NoneARM = 0u32 ; const NontemporalARM = 1u32 ; const OutOfBoundsValueARM = 2u32 ; const MakeElementAvailableARM = 4u32 ; const MakeElementVisibleARM = 8u32 ; const NonPrivateElementARM = 16u32 ; } }
