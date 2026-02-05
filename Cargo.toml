@@ -24,3 +24,4 @@ smallvec = {version = "1.15.1", features = ["union", "const_new", "const_generic
 quote = "1.0.44"
 proc-macro2 = "1.0.106"
 convert_case = "0.10.0"
+bitflags = "2.10.0"

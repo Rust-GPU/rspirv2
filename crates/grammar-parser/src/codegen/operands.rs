@@ -7,7 +7,7 @@ pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::
     let operands = grammar.operand_kinds.iter().map(|o| match &o.category {
         // `RefId` and Literals are imported
         Category::Id | Category::Literal => quote!(),
-        Category::BitEnum { .. } => quote!(),
+        Category::BitEnum { enumerants } => emit_bitflags_enum(o, enumerants),
         Category::Composite { .. } => quote!(),
         Category::ValueEnum { enumerants } => {
             let c_like = enumerants.iter().all(|e| e.parameters.is_empty());
@@ -65,6 +65,31 @@ fn emit_enumerant_preamble(e: &Enumerant) -> TokenStream {
         #docs_since
         #docs_deprecation
         #deprecation
+    }
+}
+
+fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> TokenStream {
+    let name = OperandKind::type_ident(&operand_kind.name);
+    let doc = make_doc(&operand_kind.doc);
+
+    let variants = enumerants.iter().map(|e| {
+        let enumerant_preamble = emit_enumerant_preamble(e);
+        let symbol = Enumerant::variant_ident(&e.symbol);
+        let value = e.value;
+        quote! {
+            #enumerant_preamble
+            const #symbol = #value;
+        }
+    });
+
+    quote! {
+        bitflags! {
+            #doc
+            #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
+            pub struct #name: u32 {
+                #(#variants)*
+            }
+        }
     }
 }
 

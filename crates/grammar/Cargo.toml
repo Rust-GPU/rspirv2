@@ -2,3 +2,6 @@
 name = "spirv-grammar"
 version.workspace = true
 edition.workspace = true
+
+[dependencies]
+bitflags.workspace = true

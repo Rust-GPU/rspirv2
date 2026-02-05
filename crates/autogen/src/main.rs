@@ -17,6 +17,7 @@ pub fn main() -> anyhow::Result<()> {
         &PATH_GRAMMAR_CORE.read()?.parse_grammar()?,
         ModOptions {
             preamble: quote! {
+                pub use bitflags::bitflags;
                 pub use crate::meta::*;
             },
             mod_attr: quote! {
