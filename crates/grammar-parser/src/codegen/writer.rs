@@ -11,6 +11,12 @@ pub fn use_super() -> TokenStream {
     }
 }
 
+#[derive(Clone, Debug, Default)]
+pub struct ModOptions {
+    pub mod_attr: TokenStream,
+    pub preamble: TokenStream,
+}
+
 pub struct GrammarWriter {
     folder: PathBuf,
     submodules: Vec<String>,
@@ -59,45 +65,38 @@ impl GrammarWriter {
     }
 
     /// Finish writing the grammar
-    pub fn finish(self, requires_core_import: bool) -> anyhow::Result<()> {
-        self.write_mod_rs(requires_core_import)?;
+    pub fn finish(self, mod_options: ModOptions) -> anyhow::Result<()> {
+        self.write_mod_rs(mod_options)?;
         self.format_submodules()?;
         Ok(())
     }
 
     /// always write mod.rs and don't add to `submodules`
-    fn write_mod_rs(&self, requires_core_import: bool) -> anyhow::Result<()> {
+    fn write_mod_rs(&self, mod_options: ModOptions) -> anyhow::Result<()> {
         fs::write(
             self.submodule_file("mod"),
-            self.codegen_mod_rs(requires_core_import)?.to_string(),
+            self.codegen_mod_rs(mod_options)?.to_string(),
         )?;
         Ok(())
     }
 
     /// see [`use_super`]
-    fn codegen_mod_rs(&self, requires_core_import: bool) -> anyhow::Result<TokenStream> {
-        let core_import = if requires_core_import {
-            // meta will be transitively imported via the above
-            quote! {
-                pub use super::super::core::preamble::*;
-            }
-        } else {
-            quote! {
-                pub use crate::meta::*;
-            }
-        };
-
+    fn codegen_mod_rs(&self, mod_options: ModOptions) -> anyhow::Result<TokenStream> {
         let (mods, imports): (Vec<_>, Vec<_>) = self
             .submodules
             .iter()
             .map(|s| format_ident!("{}", s))
             .map(|s| (quote!(pub mod #s;), quote!(pub use super::#s::*;)))
             .unzip();
-
+        let ModOptions {
+            mod_attr: lints_extra,
+            preamble: preamble_extra,
+        } = mod_options;
         Ok(quote! {
+            #lints_extra
             #(#mods)*
             pub mod preamble {
-                #core_import
+                #preamble_extra
                 #(#imports)*
             }
         })

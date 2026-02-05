@@ -1,4 +1,4 @@
-use crate::codegen::{EmitRef, GrammarWriter};
+use crate::codegen::{EmitRef, GrammarWriter, ModOptions};
 use crate::parse::{
     Capability, Category, CoreGrammar, ExtInstSetGrammar, Extension, Grammar, InstClass, InstMeta,
     OperandKind,
@@ -10,26 +10,16 @@ use std::ops::Deref;
 
 /// Common writing interface between [`CoreGrammar`] and [`ExtInstSetGrammar`]
 pub trait WriteableGrammar<'a>: EmitRef + Deref<Target = Grammar<'a>> {
-    fn requires_core_import(&self) -> bool;
-
     fn emit_grammar_def(&self) -> TokenStream;
 }
 
 impl<'a> WriteableGrammar<'a> for CoreGrammar<'a> {
-    fn requires_core_import(&self) -> bool {
-        false
-    }
-
     fn emit_grammar_def(&self) -> TokenStream {
         self.emit_def()
     }
 }
 
 impl<'a> WriteableGrammar<'a> for ExtInstSetGrammar<'a> {
-    fn requires_core_import(&self) -> bool {
-        true
-    }
-
     fn emit_grammar_def(&self) -> TokenStream {
         self.emit_def()
     }
@@ -38,6 +28,7 @@ impl<'a> WriteableGrammar<'a> for ExtInstSetGrammar<'a> {
 pub fn write_grammar<'a>(
     mut writer: GrammarWriter,
     grammar: &impl WriteableGrammar<'a>,
+    mod_options: ModOptions,
 ) -> anyhow::Result<()> {
     write_extensions(&mut writer, grammar)?;
     write_capabilities(&mut writer, grammar)?;
@@ -45,7 +36,7 @@ pub fn write_grammar<'a>(
     write_inst_class(&mut writer, grammar)?;
     write_inst(&mut writer, grammar)?;
     write_grammar_mod(&mut writer, grammar)?;
-    writer.finish(grammar.requires_core_import())?;
+    writer.finish(mod_options)?;
     Ok(())
 }
 
