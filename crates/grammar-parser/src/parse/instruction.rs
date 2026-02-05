@@ -3,7 +3,7 @@ use smallvec::SmallVec;
 use std::borrow::Cow;
 
 /// See [`spirv_grammar::meta::InstMeta`]
-#[derive(Clone, Debug, serde::Deserialize)]
+#[derive(Clone, Debug, Default, serde::Deserialize)]
 pub struct InstMeta<'a> {
     #[serde(borrow)]
     pub opname: Cow<'a, str>,
@@ -28,7 +28,7 @@ pub struct InstMeta<'a> {
 }
 
 /// See [`spirv_grammar::meta::OperandMeta`]
-#[derive(Clone, Debug, serde::Deserialize)]
+#[derive(Clone, Debug, Default, serde::Deserialize)]
 pub struct OperandMeta<'a> {
     /// The name of the [`OperandKind`], references `Grammar.operand_kinds`
     #[serde(borrow)]

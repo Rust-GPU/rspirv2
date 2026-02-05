@@ -3,7 +3,7 @@ use crate::parse::{InstClass, InstMeta, OperandKind};
 use std::ops::Deref;
 
 /// See [`spirv_grammar::meta::Grammar`]
-#[derive(Clone, Debug, serde::Deserialize)]
+#[derive(Clone, Debug, Default, serde::Deserialize)]
 pub struct Grammar<'a> {
     // ignore the copyright
     // #[serde(borrow, default)]

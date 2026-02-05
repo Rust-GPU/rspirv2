@@ -37,7 +37,7 @@ pub enum Category<'a> {
 }
 
 /// See [`spirv_grammar::meta::Enumerant`]
-#[derive(Clone, Debug, serde::Deserialize)]
+#[derive(Clone, Debug, Default, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Enumerant<'a> {
     #[serde(borrow, rename = "enumerant")]
