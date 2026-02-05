@@ -31,8 +31,9 @@ impl Debug for Capability<'_> {
 mod codegen {
     use super::*;
     use crate::codegen::{EmitRef, make_const_ident};
+    use crate::parse::Enumerant;
     use proc_macro2::{Ident, TokenStream};
-    use quote::{ToTokens, quote};
+    use quote::quote;
 
     impl Capability<'_> {
         pub fn const_ident(&self) -> Ident {
@@ -50,7 +51,8 @@ mod codegen {
 
     impl EmitRef for Capability<'_> {
         fn emit_ref(&self) -> TokenStream {
-            self.const_ident().into_token_stream()
+            let variant = Enumerant::variant_ident(&self.0);
+            quote!(Capability::#variant)
         }
     }
 }

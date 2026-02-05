@@ -1,7 +1,7 @@
+use crate::codegen::operands::write_operands;
 use crate::codegen::{EmitRef, GrammarWriter, ModOptions};
 use crate::parse::{
-    Capability, Category, CoreGrammar, ExtInstSetGrammar, Extension, Grammar, InstClass, InstMeta,
-    OperandKind,
+    Category, CoreGrammar, ExtInstSetGrammar, Extension, Grammar, InstClass, InstMeta, OperandKind,
 };
 use proc_macro2::TokenStream;
 use quote::quote;
@@ -31,8 +31,8 @@ pub fn write_grammar<'a>(
     mod_options: ModOptions,
 ) -> anyhow::Result<()> {
     write_extensions(&mut writer, grammar)?;
-    write_capabilities(&mut writer, grammar)?;
     write_operand_kinds(&mut writer, grammar)?;
+    write_operands(&mut writer, grammar)?;
     write_inst_class(&mut writer, grammar)?;
     write_inst(&mut writer, grammar)?;
     write_grammar_mod(&mut writer, grammar)?;
@@ -90,23 +90,6 @@ fn write_extensions(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Re
             .map(Extension::emit_def)
             .collect(),
     )
-}
-
-fn write_capabilities(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
-    let capability = grammar
-        .operand_kinds
-        .iter()
-        .find(|kind| kind.name == "Capability");
-    if let Some(capability) = capability
-        && let Category::ValueEnum { enumerants } = &capability.category
-    {
-        let content = enumerants
-            .iter()
-            .map(|e| Capability::new(e.symbol.clone()).emit_def())
-            .collect();
-        writer.write_const_module("capabilities", content)?;
-    }
-    Ok(())
 }
 
 fn write_grammar_mod<'a>(

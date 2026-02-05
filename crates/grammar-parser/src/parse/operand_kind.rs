@@ -65,11 +65,15 @@ mod codegen {
     use super::*;
     use crate::codegen::{EmitRef, make_const_ident, ref_ident};
     use proc_macro2::{Ident, TokenStream};
-    use quote::quote;
+    use quote::{format_ident, quote};
 
     impl OperandKind<'_> {
         pub fn const_ident(name: &str) -> Ident {
             make_const_ident("OPERAND_KIND_", name)
+        }
+
+        pub fn type_ident(name: &str) -> Ident {
+            format_ident!("{}", name)
         }
 
         pub fn emit_def(&self) -> TokenStream {
@@ -112,6 +116,33 @@ mod codegen {
                     let enumerants = enumerants.emit_ref();
                     quote!(Category::ValueEnum { enumerants: #enumerants })
                 }
+            }
+        }
+    }
+
+    impl Enumerant<'_> {
+        pub fn variant_ident(symbol: &str) -> Ident {
+            let mut chars = symbol.chars().peekable();
+            if let Some(first_char) = chars.next() {
+                if first_char.is_ascii_digit() {
+                    // manual overwrites
+                    if symbol == "2x2" {
+                        // CooperativeMatrixReduce has a variant called `2x2`
+                        format_ident!("TwoByTwo")
+                    } else if chars.peek() == Some(&'d') || chars.peek() == Some(&'D') {
+                        // 1D, 2D, 3D...
+                        format_ident!("Dim{}", symbol)
+                    } else {
+                        // best effort
+                        format_ident!("Sym{}", symbol)
+                    }
+                } else {
+                    // regular symbol
+                    format_ident!("{}", symbol)
+                }
+            } else {
+                // empty string
+                panic!("enumerant symbol must not be an empty string")
             }
         }
     }
