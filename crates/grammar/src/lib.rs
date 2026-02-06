@@ -1,5 +1,6 @@
 #![doc = include_str!("../README.md")]
 
+pub mod binary;
 pub mod meta;
 pub mod operand;
 

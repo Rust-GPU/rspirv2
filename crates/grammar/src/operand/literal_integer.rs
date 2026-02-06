@@ -1,7 +1,9 @@
-use crate::operand::Word;
+use crate::binary::{DecodeError, InstructionReader, InstructionWriter};
+use crate::meta::OperandKind;
+use crate::operand::{Operand, Word};
 
 macro_rules! def_literal_integer {
-    ($name:ident; $docs:literal) => {
+    ($name:ident; $kind:expr; $docs:literal) => {
         #[doc = $docs]
         #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
         pub struct $name(pub Word);
@@ -23,21 +25,40 @@ macro_rules! def_literal_integer {
                 self.0.0
             }
         }
+
+        impl Operand for $name {
+            const KIND: OperandKind = $kind;
+
+            fn encode(&self, writer: &mut impl InstructionWriter) {
+                writer.push(self.0)
+            }
+
+            fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+                Ok(Self(reader.pull()?))
+            }
+        }
     };
 }
 
-def_literal_integer!(LiteralInteger; r#"
-An integer literal as defined by SPIR-V spec: a 32bit integer.
+def_literal_integer!(
+    LiteralInteger;
+    crate::core::operand_kinds::OPERAND_KIND_LITERAL_INTEGER;
+    r#"An integer literal as defined by SPIR-V spec: a 32bit integer.
 
 Technically, the spec doesn't actually say that it's a 32bit integer. But every use of `LiteralInteger` defines the
 integer as an "unsigned 32bit integer", so most tooling has resorted to defining it as that. Also see
 [this Khronos issue](https://github.com/KhronosGroup/SPIRV-Headers/issues/38).
-"#);
+"#
+);
 
-def_literal_integer!(LiteralExtInstInteger; r#"
-The Instruction ID from an extended instruction set, backed by a 32bit integer.
-"#);
+def_literal_integer!(
+    LiteralExtInstInteger;
+    crate::core::operand_kinds::OPERAND_KIND_LITERAL_EXT_INST_INTEGER;
+    "The Instruction ID from an extended instruction set, backed by a 32bit integer."
+);
 
-def_literal_integer!(LiteralSpecConstantOpInteger; r#"
-The Instruction ID for an `OpSpecConstantOp`, backed by a 32bit integer.
-"#);
+def_literal_integer!(
+    LiteralSpecConstantOpInteger;
+    crate::core::operand_kinds::OPERAND_KIND_LITERAL_SPEC_CONSTANT_OP_INTEGER;
+    "The Instruction ID for an `OpSpecConstantOp`, backed by a 32bit integer."
+);
