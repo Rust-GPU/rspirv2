@@ -1,15 +1,182 @@
 use super::preamble::*;
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct ImageOperands : u32 { const None = 0u32 ; const Bias = 1u32 ; const Lod = 2u32 ; const Grad = 4u32 ; const ConstOffset = 8u32 ; const Offset = 16u32 ; const ConstOffsets = 32u32 ; const Sample = 64u32 ; const MinLod = 128u32 ; # [doc = "Since SPIR-V 1.5"] const MakeTexelAvailable = 256u32 ; # [doc = "Since SPIR-V 1.5"] const MakeTexelVisible = 512u32 ; # [doc = "Since SPIR-V 1.5"] const NonPrivateTexel = 1024u32 ; # [doc = "Since SPIR-V 1.5"] const VolatileTexel = 2048u32 ; # [doc = "Since SPIR-V 1.4"] const SignExtend = 4096u32 ; # [doc = "Since SPIR-V 1.4"] const ZeroExtend = 8192u32 ; # [doc = "Since SPIR-V 1.6"] const Nontemporal = 16384u32 ; const Offsets = 65536u32 ; } }
+impl Operand for ImageOperands {
+    const KIND: OperandKind = OPERAND_KIND_IMAGE_OPERANDS;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(
+            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<ImageOperands>(
+                stringify!(ImageOperands),
+                bits,
+            ))?,
+        )
+    }
+}
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct FPFastMathMode : u32 { const None = 0u32 ; const NotNaN = 1u32 ; const NotInf = 2u32 ; const NSZ = 4u32 ; const AllowRecip = 8u32 ; const Fast = 16u32 ; const AllowContract = 65536u32 ; const AllowReassoc = 131072u32 ; const AllowTransform = 262144u32 ; } }
+impl Operand for FPFastMathMode {
+    const KIND: OperandKind = OPERAND_KIND_FP_FAST_MATH_MODE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(
+            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FPFastMathMode>(
+                stringify!(FPFastMathMode),
+                bits,
+            ))?,
+        )
+    }
+}
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct SelectionControl : u32 { const None = 0u32 ; const Flatten = 1u32 ; const DontFlatten = 2u32 ; } }
+impl Operand for SelectionControl {
+    const KIND: OperandKind = OPERAND_KIND_SELECTION_CONTROL;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(
+            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<SelectionControl>(
+                stringify!(SelectionControl),
+                bits,
+            ))?,
+        )
+    }
+}
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct LoopControl : u32 { const None = 0u32 ; const Unroll = 1u32 ; const DontUnroll = 2u32 ; # [doc = "Since SPIR-V 1.1"] const DependencyInfinite = 4u32 ; # [doc = "Since SPIR-V 1.1"] const DependencyLength = 8u32 ; # [doc = "Since SPIR-V 1.4"] const MinIterations = 16u32 ; # [doc = "Since SPIR-V 1.4"] const MaxIterations = 32u32 ; # [doc = "Since SPIR-V 1.4"] const IterationMultiple = 64u32 ; # [doc = "Since SPIR-V 1.4"] const PeelCount = 128u32 ; # [doc = "Since SPIR-V 1.4"] const PartialCount = 256u32 ; const InitiationIntervalALTERA = 65536u32 ; const MaxConcurrencyALTERA = 131072u32 ; const DependencyArrayALTERA = 262144u32 ; const PipelineEnableALTERA = 524288u32 ; const LoopCoalesceALTERA = 1048576u32 ; const MaxInterleavingALTERA = 2097152u32 ; const SpeculatedIterationsALTERA = 4194304u32 ; const NoFusionALTERA = 8388608u32 ; const LoopCountALTERA = 16777216u32 ; const MaxReinvocationDelayALTERA = 33554432u32 ; } }
+impl Operand for LoopControl {
+    const KIND: OperandKind = OPERAND_KIND_LOOP_CONTROL;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(
+            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<LoopControl>(
+                stringify!(LoopControl),
+                bits,
+            ))?,
+        )
+    }
+}
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct FunctionControl : u32 { const None = 0u32 ; const Inline = 1u32 ; const DontInline = 2u32 ; const Pure = 4u32 ; const Const = 8u32 ; const OptNoneEXT = 65536u32 ; } }
+impl Operand for FunctionControl {
+    const KIND: OperandKind = OPERAND_KIND_FUNCTION_CONTROL;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(
+            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FunctionControl>(
+                stringify!(FunctionControl),
+                bits,
+            ))?,
+        )
+    }
+}
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MemorySemantics : u32 { const Relaxed = 0u32 ; const Acquire = 2u32 ; const Release = 4u32 ; const AcquireRelease = 8u32 ; const SequentiallyConsistent = 16u32 ; const UniformMemory = 64u32 ; const SubgroupMemory = 128u32 ; const WorkgroupMemory = 256u32 ; const CrossWorkgroupMemory = 512u32 ; const AtomicCounterMemory = 1024u32 ; const ImageMemory = 2048u32 ; # [doc = "Since SPIR-V 1.5"] const OutputMemory = 4096u32 ; # [doc = "Since SPIR-V 1.5"] const MakeAvailable = 8192u32 ; # [doc = "Since SPIR-V 1.5"] const MakeVisible = 16384u32 ; # [doc = "Since SPIR-V 1.5"] const Volatile = 32768u32 ; } }
+impl Operand for MemorySemantics {
+    const KIND: OperandKind = OPERAND_KIND_MEMORY_SEMANTICS;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(
+            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<MemorySemantics>(
+                stringify!(MemorySemantics),
+                bits,
+            ))?,
+        )
+    }
+}
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MemoryAccess : u32 { const None = 0u32 ; const Volatile = 1u32 ; const Aligned = 2u32 ; const Nontemporal = 4u32 ; # [doc = "Since SPIR-V 1.5"] const MakePointerAvailable = 8u32 ; # [doc = "Since SPIR-V 1.5"] const MakePointerVisible = 16u32 ; # [doc = "Since SPIR-V 1.5"] const NonPrivatePointer = 32u32 ; const AliasScopeINTELMask = 65536u32 ; const NoAliasINTELMask = 131072u32 ; } }
+impl Operand for MemoryAccess {
+    const KIND: OperandKind = OPERAND_KIND_MEMORY_ACCESS;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(
+            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<MemoryAccess>(
+                stringify!(MemoryAccess),
+                bits,
+            ))?,
+        )
+    }
+}
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct KernelProfilingInfo : u32 { const None = 0u32 ; const CmdExecTime = 1u32 ; } }
+impl Operand for KernelProfilingInfo {
+    const KIND: OperandKind = OPERAND_KIND_KERNEL_PROFILING_INFO;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(
+            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<KernelProfilingInfo>(
+                stringify!(KernelProfilingInfo),
+                bits,
+            ))?,
+        )
+    }
+}
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct RayFlags : u32 { const NoneKHR = 0u32 ; const OpaqueKHR = 1u32 ; const NoOpaqueKHR = 2u32 ; const TerminateOnFirstHitKHR = 4u32 ; const SkipClosestHitShaderKHR = 8u32 ; const CullBackFacingTrianglesKHR = 16u32 ; const CullFrontFacingTrianglesKHR = 32u32 ; const CullOpaqueKHR = 64u32 ; const CullNoOpaqueKHR = 128u32 ; const SkipTrianglesKHR = 256u32 ; const SkipAABBsKHR = 512u32 ; const ForceOpacityMicromap2StateEXT = 1024u32 ; } }
+impl Operand for RayFlags {
+    const KIND: OperandKind = OPERAND_KIND_RAY_FLAGS;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(
+            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<RayFlags>(
+                stringify!(RayFlags),
+                bits,
+            ))?,
+        )
+    }
+}
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct FragmentShadingRate : u32 { const Vertical2Pixels = 1u32 ; const Vertical4Pixels = 2u32 ; const Horizontal2Pixels = 4u32 ; const Horizontal4Pixels = 8u32 ; } }
+impl Operand for FragmentShadingRate {
+    const KIND: OperandKind = OPERAND_KIND_FRAGMENT_SHADING_RATE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(
+            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FragmentShadingRate>(
+                stringify!(FragmentShadingRate),
+                bits,
+            ))?,
+        )
+    }
+}
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct RawAccessChainOperands : u32 { const None = 0u32 ; const RobustnessPerComponentNV = 1u32 ; const RobustnessPerElementNV = 2u32 ; } }
+impl Operand for RawAccessChainOperands {
+    const KIND: OperandKind = OPERAND_KIND_RAW_ACCESS_CHAIN_OPERANDS;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(
+            Self::from_bits(bits).ok_or(
+                DecodeError::invalid_bitflags::<RawAccessChainOperands>(
+                    stringify!(RawAccessChainOperands),
+                    bits,
+                ),
+            )?,
+        )
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum SourceLanguage {
@@ -1184,6 +1351,21 @@ pub enum PackedVectorFormat {
     PackedVectorFormat4x8Bit = 0u32,
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct CooperativeMatrixOperands : u32 { const NoneKHR = 0u32 ; const MatrixASignedComponentsKHR = 1u32 ; const MatrixBSignedComponentsKHR = 2u32 ; const MatrixCSignedComponentsKHR = 4u32 ; const MatrixResultSignedComponentsKHR = 8u32 ; const SaturatingAccumulationKHR = 16u32 ; } }
+impl Operand for CooperativeMatrixOperands {
+    const KIND: OperandKind = OPERAND_KIND_COOPERATIVE_MATRIX_OPERANDS;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(Self::from_bits(bits).ok_or(
+            DecodeError::invalid_bitflags::<CooperativeMatrixOperands>(
+                stringify!(CooperativeMatrixOperands),
+                bits,
+            ),
+        )?)
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum CooperativeMatrixLayout {
@@ -1200,6 +1382,21 @@ pub enum CooperativeMatrixUse {
     MatrixAccumulatorKHR = 2u32,
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct CooperativeMatrixReduce : u32 { const Row = 1u32 ; const Column = 2u32 ; const TwoByTwo = 4u32 ; } }
+impl Operand for CooperativeMatrixReduce {
+    const KIND: OperandKind = OPERAND_KIND_COOPERATIVE_MATRIX_REDUCE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(Self::from_bits(bits).ok_or(
+            DecodeError::invalid_bitflags::<CooperativeMatrixReduce>(
+                stringify!(CooperativeMatrixReduce),
+                bits,
+            ),
+        )?)
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum TensorClampMode {
@@ -1210,6 +1407,21 @@ pub enum TensorClampMode {
     RepeatMirrored = 4u32,
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct TensorAddressingOperands : u32 { const None = 0u32 ; const TensorView = 1u32 ; const DecodeFunc = 2u32 ; } }
+impl Operand for TensorAddressingOperands {
+    const KIND: OperandKind = OPERAND_KIND_TENSOR_ADDRESSING_OPERANDS;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(Self::from_bits(bits).ok_or(
+            DecodeError::invalid_bitflags::<TensorAddressingOperands>(
+                stringify!(TensorAddressingOperands),
+                bits,
+            ),
+        )?)
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum InitializationModeQualifier {
@@ -1239,6 +1451,20 @@ pub enum NamedMaximumNumberOfRegisters {
     AutoINTEL = 0u32,
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MatrixMultiplyAccumulateOperands : u32 { const None = 0u32 ; const MatrixASignedComponentsINTEL = 1u32 ; const MatrixBSignedComponentsINTEL = 2u32 ; const MatrixCBFloat16INTEL = 4u32 ; const MatrixResultBFloat16INTEL = 8u32 ; const MatrixAPackedInt8INTEL = 16u32 ; const MatrixBPackedInt8INTEL = 32u32 ; const MatrixAPackedInt4INTEL = 64u32 ; const MatrixBPackedInt4INTEL = 128u32 ; const MatrixATF32INTEL = 256u32 ; const MatrixBTF32INTEL = 512u32 ; const MatrixAPackedFloat16INTEL = 1024u32 ; const MatrixBPackedFloat16INTEL = 2048u32 ; const MatrixAPackedBFloat16INTEL = 4096u32 ; const MatrixBPackedBFloat16INTEL = 8192u32 ; } }
+impl Operand for MatrixMultiplyAccumulateOperands {
+    const KIND: OperandKind = OPERAND_KIND_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<
+            MatrixMultiplyAccumulateOperands,
+        >(
+            stringify!(MatrixMultiplyAccumulateOperands), bits
+        ))?)
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum FPEncoding {
@@ -1319,3 +1545,18 @@ impl Operand for PairIdRefIdRef {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct TensorOperands : u32 { const NoneARM = 0u32 ; const NontemporalARM = 1u32 ; const OutOfBoundsValueARM = 2u32 ; const MakeElementAvailableARM = 4u32 ; const MakeElementVisibleARM = 8u32 ; const NonPrivateElementARM = 16u32 ; } }
+impl Operand for TensorOperands {
+    const KIND: OperandKind = OPERAND_KIND_TENSOR_OPERANDS;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(self.bits()));
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let bits = reader.pull()?.0;
+        Ok(
+            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<TensorOperands>(
+                stringify!(TensorOperands),
+                bits,
+            ))?,
+        )
+    }
+}

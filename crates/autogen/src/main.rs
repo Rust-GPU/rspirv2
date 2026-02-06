@@ -17,11 +17,11 @@ pub fn main() -> anyhow::Result<()> {
         &PATH_GRAMMAR_CORE.read()?.parse_grammar()?,
         ModOptions {
             preamble: quote! {
-                pub use bitflags::bitflags;
-                pub use smallvec::SmallVec;
+                pub use crate::binary::*;
                 pub use crate::meta::*;
                 pub use crate::operand::*;
-                pub use crate::binary::*;
+                pub use bitflags::bitflags;
+                pub use smallvec::SmallVec;
             },
             mod_attr: quote! {
                 #![allow(unused_imports)]

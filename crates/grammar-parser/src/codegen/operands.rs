@@ -111,6 +111,7 @@ fn emit_enumerant_preamble(e: &Enumerant) -> TokenStream {
 
 fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> TokenStream {
     let name = OperandKind::type_ident(&operand_kind.name);
+    let kind = OperandKind::const_ident(&operand_kind.name);
     let doc = make_doc(&operand_kind.doc);
 
     let variants = enumerants.iter().map(|e| {
@@ -129,6 +130,19 @@ fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> T
             #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
             pub struct #name: u32 {
                 #(#variants)*
+            }
+        }
+
+        impl Operand for #name {
+            const KIND: OperandKind = #kind;
+
+            fn encode(&self, writer: &mut impl InstructionWriter) {
+                writer.push(Word(self.bits()));
+            }
+
+            fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+                let bits = reader.pull()?.0;
+                Ok(Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<#name>(stringify!(#name), bits))?)
             }
         }
     }

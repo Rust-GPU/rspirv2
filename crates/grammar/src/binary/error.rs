@@ -1,3 +1,4 @@
+use bitflags::Flags;
 use std::fmt::{Debug, Display, Formatter};
 use std::string::FromUtf8Error;
 
@@ -23,6 +24,11 @@ pub enum DecodeError {
         module_remaining: usize,
     },
     Utf8Error(FromUtf8Error),
+    InvalidBitflags {
+        name: &'static str,
+        unknown: u32,
+        bits: u32,
+    },
 }
 
 impl Display for DecodeError {
@@ -64,6 +70,14 @@ impl Display for DecodeError {
                 {module_remaining} words remaining"
             ),
             DecodeError::Utf8Error(inner) => write!(f, "UTF-8 error: {inner}"),
+            DecodeError::InvalidBitflags {
+                name,
+                unknown,
+                bits,
+            } => write!(
+                f,
+                "Bitflag {name} encountered unknown bits `{unknown:x}` in pattern `{bits:x}`"
+            ),
         }
     }
 }
@@ -77,5 +91,15 @@ impl Debug for DecodeError {
 impl From<FromUtf8Error> for DecodeError {
     fn from(value: FromUtf8Error) -> Self {
         Self::Utf8Error(value)
+    }
+}
+
+impl DecodeError {
+    pub fn invalid_bitflags<T: Flags<Bits = u32>>(name: &'static str, bits: u32) -> Self {
+        Self::InvalidBitflags {
+            name,
+            unknown: bits & T::all().bits(),
+            bits,
+        }
     }
 }
