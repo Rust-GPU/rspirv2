@@ -136,12 +136,32 @@ fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> T
 
 fn emit_composite(operand_kind: &OperandKind, bases: &[Cow<str>]) -> TokenStream {
     let name = OperandKind::type_ident(&operand_kind.name);
+    let kind = OperandKind::const_ident(&operand_kind.name);
     let doc = make_doc(&operand_kind.doc);
+
     let member_tys = bases.iter().map(|name| OperandKind::type_ident(name));
+    let encode = (0..bases.len()).map(|i| {
+        let i = proc_macro2::Literal::usize_unsuffixed(i);
+        quote!(Operand::encode(&self.#i, &mut *writer))
+    });
+    let decode = (0..bases.len()).map(|_| quote!(Operand::decode(&mut *reader)?));
+
     quote! {
         #doc
         #[derive(Clone, Debug, Eq, PartialEq, Hash)]
         pub struct #name(#(#member_tys),*);
+
+        impl Operand for #name {
+            const KIND: OperandKind = #kind;
+
+            fn encode(&self, writer: &mut impl InstructionWriter) {
+                #(#encode);*
+            }
+
+            fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+                Ok(Self(#(#decode),*))
+            }
+        }
     }
 }
 

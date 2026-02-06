@@ -1275,8 +1275,47 @@ pub enum ComponentType {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PairLiteralIntegerIdRef(LiteralInteger, IdRef);
+impl Operand for PairLiteralIntegerIdRef {
+    const KIND: OperandKind = OPERAND_KIND_PAIR_LITERAL_INTEGER_ID_REF;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        Operand::encode(&self.0, &mut *writer);
+        Operand::encode(&self.1, &mut *writer)
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        Ok(Self(
+            Operand::decode(&mut *reader)?,
+            Operand::decode(&mut *reader)?,
+        ))
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PairIdRefLiteralInteger(IdRef, LiteralInteger);
+impl Operand for PairIdRefLiteralInteger {
+    const KIND: OperandKind = OPERAND_KIND_PAIR_ID_REF_LITERAL_INTEGER;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        Operand::encode(&self.0, &mut *writer);
+        Operand::encode(&self.1, &mut *writer)
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        Ok(Self(
+            Operand::decode(&mut *reader)?,
+            Operand::decode(&mut *reader)?,
+        ))
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PairIdRefIdRef(IdRef, IdRef);
+impl Operand for PairIdRefIdRef {
+    const KIND: OperandKind = OPERAND_KIND_PAIR_ID_REF_ID_REF;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        Operand::encode(&self.0, &mut *writer);
+        Operand::encode(&self.1, &mut *writer)
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        Ok(Self(
+            Operand::decode(&mut *reader)?,
+            Operand::decode(&mut *reader)?,
+        ))
+    }
+}
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct TensorOperands : u32 { const NoneARM = 0u32 ; const NontemporalARM = 1u32 ; const OutOfBoundsValueARM = 2u32 ; const MakeElementAvailableARM = 4u32 ; const MakeElementVisibleARM = 8u32 ; const NonPrivateElementARM = 16u32 ; } }

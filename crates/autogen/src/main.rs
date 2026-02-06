@@ -21,6 +21,7 @@ pub fn main() -> anyhow::Result<()> {
                 pub use smallvec::SmallVec;
                 pub use crate::meta::*;
                 pub use crate::operand::*;
+                pub use crate::binary::*;
             },
             mod_attr: quote! {
                 #![allow(unused_imports)]

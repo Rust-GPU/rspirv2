@@ -15,6 +15,7 @@ pub mod preamble {
     pub use super::inst_meta::*;
     pub use super::operand_kinds::*;
     pub use super::operands::*;
+    pub use crate::binary::*;
     pub use crate::meta::*;
     pub use crate::operand::*;
     pub use bitflags::bitflags;
