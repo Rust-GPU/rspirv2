@@ -31,12 +31,7 @@ impl<'a> ModuleReader<'a> {
             },
         )?;
         self.offset += inst_offset;
-        Ok(Some(InstructionReader {
-            opcode,
-            params,
-            params_offset: 0,
-            inst_offset,
-        }))
+        Ok(Some(InstructionReader::new(opcode, params, inst_offset)))
     }
 }
 
@@ -52,6 +47,15 @@ pub struct InstructionReader<'a> {
 }
 
 impl<'a> InstructionReader<'a> {
+    pub fn new(opcode: u16, params: &'a [Word], inst_offset: usize) -> Self {
+        Self {
+            opcode,
+            params,
+            params_offset: 0,
+            inst_offset,
+        }
+    }
+
     pub fn opcode(&self) -> u16 {
         self.opcode
     }
