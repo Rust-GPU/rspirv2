@@ -1,6 +1,6 @@
 use crate::binary::{DecodeError, InstructionReader, InstructionWriter};
 use crate::meta::OperandKind;
-use crate::operand::{Operand, Word};
+use crate::operand::{Operand, OperandEncoding, Word};
 use smallvec::SmallVec;
 
 /// A `LiteralContextDependentNumber`, or `LiteralConst` for short since it's only used by `OpConstant` (and
@@ -84,6 +84,10 @@ impl_float!(f64);
 impl Operand for LiteralConst {
     const KIND: OperandKind =
         crate::core::operand_kinds::OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER;
+}
+
+impl OperandEncoding for LiteralConst {
+    const FIXED_LEN: Option<usize> = None;
 
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.extend(self.0.iter().copied())

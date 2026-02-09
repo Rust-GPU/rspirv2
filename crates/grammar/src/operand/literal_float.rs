@@ -1,6 +1,6 @@
 use crate::binary::{DecodeError, InstructionReader, InstructionWriter};
 use crate::meta::OperandKind;
-use crate::operand::{Operand, Word};
+use crate::operand::{Operand, OperandEncoding, Word};
 
 /// A float literal as defined by SPIR-V spec: simply an `f32`. It's represented as a `u32` to ensure the bit pattern
 /// isn't changing.
@@ -32,6 +32,10 @@ impl LiteralFloat {
 
 impl Operand for LiteralFloat {
     const KIND: OperandKind = crate::core::operand_kinds::OPERAND_KIND_LITERAL_FLOAT;
+}
+
+impl OperandEncoding for LiteralFloat {
+    const FIXED_LEN: Option<usize> = Some(1);
 
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(self.0)

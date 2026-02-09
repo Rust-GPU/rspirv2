@@ -79,7 +79,7 @@ fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> 
             quote! {
                 Self::#symbol (#(#param_symbols),*) => {
                     writer.push(Word(#value));
-                    #(Operand::encode(#param_symbols, &mut *writer));*
+                    #(OperandEncoding::encode(#param_symbols, &mut *writer));*
                 }
             }
         } else {
@@ -90,7 +90,7 @@ fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> 
     let decode = symbols.iter().map(|(e, symbol, params)| {
         let value = e.value;
         if !params.is_empty() {
-            let members = (0..params.len()).map(|_| quote!(Operand::decode(&mut *reader)?));
+            let members = (0..params.len()).map(|_| quote!(OperandEncoding::decode(&mut *reader)?));
             quote!(#value => Self::#symbol (#(#members),*))
         } else {
             quote!(#value => Self::#symbol)
@@ -106,6 +106,10 @@ fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> 
 
         impl Operand for #name {
             const KIND: OperandKind = #kind;
+        }
+
+        impl OperandEncoding for #name {
+            const FIXED_LEN: Option<usize> = None;
 
             fn encode(&self, writer: &mut impl InstructionWriter) {
                 match self {
@@ -159,6 +163,10 @@ fn emit_c_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> Tok
 
         impl Operand for #name {
             const KIND: OperandKind = #kind;
+        }
+
+        impl OperandEncoding for #name {
+            const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl InstructionWriter) {
                 writer.push(Word(*self as u32))
@@ -222,6 +230,10 @@ fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> T
 
         impl Operand for #name {
             const KIND: OperandKind = #kind;
+        }
+
+        impl OperandEncoding for #name {
+            const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl InstructionWriter) {
                 writer.push(Word(self.bits()));
@@ -240,12 +252,18 @@ fn emit_composite(operand_kind: &OperandKind, bases: &[Cow<str>]) -> TokenStream
     let kind = OperandKind::const_ident(&operand_kind.name);
     let doc = make_doc(&operand_kind.doc);
 
-    let member_tys = bases.iter().map(|name| OperandKind::type_ident(name));
+    let member_tys = bases
+        .iter()
+        .map(|name| OperandKind::type_ident(name))
+        .collect::<Vec<_>>();
+    let len = member_tys
+        .iter()
+        .map(|ty| quote!(<#ty as OperandEncoding>::FIXED_LEN));
     let encode = (0..bases.len()).map(|i| {
         let i = proc_macro2::Literal::usize_unsuffixed(i);
-        quote!(Operand::encode(&self.#i, &mut *writer))
+        quote!(OperandEncoding::encode(&self.#i, &mut *writer))
     });
-    let decode = (0..bases.len()).map(|_| quote!(Operand::decode(&mut *reader)?));
+    let decode = (0..bases.len()).map(|_| quote!(OperandEncoding::decode(&mut *reader)?));
 
     quote! {
         #doc
@@ -254,6 +272,10 @@ fn emit_composite(operand_kind: &OperandKind, bases: &[Cow<str>]) -> TokenStream
 
         impl Operand for #name {
             const KIND: OperandKind = #kind;
+        }
+
+        impl OperandEncoding for #name {
+            const FIXED_LEN: Option<usize> = FixedLenComposer::new()#(.append(#len))*.finish();
 
             fn encode(&self, writer: &mut impl InstructionWriter) {
                 #(#encode);*

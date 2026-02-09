@@ -48,7 +48,6 @@ pub struct InstructionReader<'a> {
     params: &'a [Word],
     /// advancing offset pointing into params
     params_offset: usize,
-    /// Informational, only for error reporting
     inst_offset: usize,
 }
 
@@ -57,6 +56,10 @@ impl<'a> InstructionReader<'a> {
         self.opcode
     }
 
+    /// Peek at the next [`Word`] in the [`InstructionReader`] without advancing the [`Self::params_offset`].
+    ///
+    /// Calling this again will yield the same value, advance the [`Self::params_offset`] by [`Self::pull`]ing the
+    /// [`Word`].
     pub fn peek(&self) -> Result<Word, DecodeError> {
         Ok(*self.params.get(self.params_offset).ok_or(
             DecodeError::InstructionDecodePulledTooManyWords {
@@ -66,10 +69,33 @@ impl<'a> InstructionReader<'a> {
         )?)
     }
 
+    /// Pull a single [`Word`] from the [`InstructionReader`], advancing the [`Self::params_offset`].
+    ///
+    /// Calling this again will yield the next [`Word`].
     pub fn pull(&mut self) -> Result<Word, DecodeError> {
         let result = self.peek();
         self.params_offset += 1;
         result
+    }
+
+    /// Offset of the instruction, purely informational, for error reporting
+    pub fn inst_offset(&self) -> usize {
+        self.params_offset
+    }
+
+    /// len of the params
+    pub fn len(&self) -> usize {
+        self.params.len()
+    }
+
+    /// current offset of the params, in [`Word`]s
+    pub fn params_offset(&self) -> usize {
+        self.params_offset
+    }
+
+    /// amount of remaining param [`Word`]s
+    pub fn remaining(&self) -> usize {
+        self.params.len() - self.params_offset
     }
 }
 

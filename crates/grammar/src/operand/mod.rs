@@ -26,11 +26,31 @@ impl Word {
     }
 }
 
-/// A SPIR-V operand
-pub trait Operand: Sized {
+/// A SPIR-V operand. The associated const [`Self::KIND`] links to it's [`OperandKind`].
+///
+/// Requires [`OperandEncoding`], see that for encoding and decoding SPIR-V.
+pub trait Operand: OperandEncoding {
     const KIND: OperandKind;
+}
 
-    /// Encode this `Operand` to a sequence of [`Word`]s
+/// Something that can be decoded from or encoded to SPIR-V, not necessarily a full [`Operand`].
+///
+/// Both [`Option`] and [`Vec`] implement `OperandEncoding` but not [`Operand`]. This allows for an easier
+/// representation of [`OperandMeta`]s with [`Quantifier`] of [`Quantifier::ZeroOrOne`] (`Option`) and
+/// [`Quantifier::ZeroOrMore`] (`Vec`).
+///
+/// [`OperandMeta`]: `crate::meta::OperandMeta`
+/// [`Quantifier`]: `crate::meta::Quantifier`
+pub trait OperandEncoding: Sized {
+    /// The fixed length of the Operand, or `None` if it's variable length.
+    ///
+    /// If `Some`:
+    /// * [`Self::encode`] must [`InstructionWriter::push`] (or [`InstructionWriter::extend`]) exactly this many
+    ///   [`Word`]s
+    /// * [`Self::decode`] must [`InstructionReader::pull`] (or [`Iterator::next`]) exactly this many [`Word`]s
+    const FIXED_LEN: Option<usize>;
+
+    /// Encode this `Operand` to a sequence of [`Word`]s.
     fn encode(&self, writer: &mut impl InstructionWriter);
 
     /// Parse the `Operand` from the supplied [`Iterator`] of [`Word`]s, advancing it in the process.
@@ -42,5 +62,94 @@ pub trait Operand: Sized {
     /// See [`LiteralInteger`] for details.
     fn decode_last(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
         Self::decode(reader)
+    }
+}
+
+impl<T: OperandEncoding> OperandEncoding for Option<T> {
+    const FIXED_LEN: Option<usize> = None;
+
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        match self {
+            None => (),
+            Some(e) => e.encode(writer),
+        }
+    }
+
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        if let Ok(_) = reader.peek() {
+            Ok(Some(T::decode(reader)?))
+        } else {
+            Ok(None)
+        }
+    }
+
+    fn decode_last(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        if let Ok(_) = reader.peek() {
+            Ok(Some(T::decode_last(reader)?))
+        } else {
+            Ok(None)
+        }
+    }
+}
+
+impl<T: OperandEncoding> OperandEncoding for Vec<T> {
+    const FIXED_LEN: Option<usize> = None;
+
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        for x in self {
+            x.encode(&mut *writer)
+        }
+    }
+
+    /// The current SPIR-V spec only uses [`Quantifier::ZeroOrMore`] when the "element" Operand has a fixed length
+    /// encoding. So we can assume that our element `T` has a [`Self::FIXED_LEN`] of `Some`, but we'd like to support
+    /// custom instruction sets that may make use of many variable sized operands as best we can.
+    ///
+    /// Possible paths to have a variable sized element (aka. `Self::FIXED_LEN = None`):
+    /// * `ZeroOrMore` `LiteralString`: works
+    /// * `ZeroOrMore` `LiteralConst`: fails since `LiteralConst` must be the last operand to decode correctly,
+    ///   this is a limitation of our impl, see `LiteralConst` docs. Also why we don't implement [`Self::decode_last`]
+    ///   or call it on our element.
+    /// * `ZeroOrMore` `ZeroOrMore` T: fails, but unrepresentable in the spec, only by using it manually.
+    ///
+    /// [`Quantifier`]: `crate::meta::Quantifier`
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let mut vec = if let Some(fixed_len) = T::FIXED_LEN {
+            let remaining = reader.remaining();
+            if remaining % fixed_len != 0 {
+                return Err(DecodeError::InstructionWithMismatchedVariableOperants {
+                    inst_offset: reader.inst_offset(),
+                    op_len: reader.remaining(),
+                    expected_multiple: fixed_len,
+                });
+            }
+            Vec::with_capacity(remaining / fixed_len)
+        } else {
+            Vec::new()
+        };
+        while let Ok(_) = reader.peek() {
+            vec.push(T::decode(reader)?);
+        }
+        Ok(vec)
+    }
+}
+
+/// Compose the [`OperandEncoding::FIXED_LEN`] from multiple maybe fixed len Operands
+pub struct FixedLenComposer(Option<usize>);
+
+impl FixedLenComposer {
+    pub const fn new() -> Self {
+        Self(Some(0))
+    }
+
+    pub const fn append(self, len: Option<usize>) -> Self {
+        match (self.0, len) {
+            (Some(a), Some(b)) => Self(Some(a + b)),
+            (_, _) => Self(None),
+        }
+    }
+
+    pub const fn finish(self) -> Option<usize> {
+        self.0
     }
 }

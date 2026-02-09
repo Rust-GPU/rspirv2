@@ -2,6 +2,9 @@ use super::preamble::*;
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct ImageOperands : u32 { const None = 0u32 ; const Bias = 1u32 ; const Lod = 2u32 ; const Grad = 4u32 ; const ConstOffset = 8u32 ; const Offset = 16u32 ; const ConstOffsets = 32u32 ; const Sample = 64u32 ; const MinLod = 128u32 ; # [doc = "Since SPIR-V 1.5"] const MakeTexelAvailable = 256u32 ; # [doc = "Since SPIR-V 1.5"] const MakeTexelVisible = 512u32 ; # [doc = "Since SPIR-V 1.5"] const NonPrivateTexel = 1024u32 ; # [doc = "Since SPIR-V 1.5"] const VolatileTexel = 2048u32 ; # [doc = "Since SPIR-V 1.4"] const SignExtend = 4096u32 ; # [doc = "Since SPIR-V 1.4"] const ZeroExtend = 8192u32 ; # [doc = "Since SPIR-V 1.6"] const Nontemporal = 16384u32 ; const Offsets = 65536u32 ; } }
 impl Operand for ImageOperands {
     const KIND: OperandKind = OPERAND_KIND_IMAGE_OPERANDS;
+}
+impl OperandEncoding for ImageOperands {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }
@@ -18,6 +21,9 @@ impl Operand for ImageOperands {
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct FPFastMathMode : u32 { const None = 0u32 ; const NotNaN = 1u32 ; const NotInf = 2u32 ; const NSZ = 4u32 ; const AllowRecip = 8u32 ; const Fast = 16u32 ; const AllowContract = 65536u32 ; const AllowReassoc = 131072u32 ; const AllowTransform = 262144u32 ; } }
 impl Operand for FPFastMathMode {
     const KIND: OperandKind = OPERAND_KIND_FP_FAST_MATH_MODE;
+}
+impl OperandEncoding for FPFastMathMode {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }
@@ -34,6 +40,9 @@ impl Operand for FPFastMathMode {
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct SelectionControl : u32 { const None = 0u32 ; const Flatten = 1u32 ; const DontFlatten = 2u32 ; } }
 impl Operand for SelectionControl {
     const KIND: OperandKind = OPERAND_KIND_SELECTION_CONTROL;
+}
+impl OperandEncoding for SelectionControl {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }
@@ -50,6 +59,9 @@ impl Operand for SelectionControl {
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct LoopControl : u32 { const None = 0u32 ; const Unroll = 1u32 ; const DontUnroll = 2u32 ; # [doc = "Since SPIR-V 1.1"] const DependencyInfinite = 4u32 ; # [doc = "Since SPIR-V 1.1"] const DependencyLength = 8u32 ; # [doc = "Since SPIR-V 1.4"] const MinIterations = 16u32 ; # [doc = "Since SPIR-V 1.4"] const MaxIterations = 32u32 ; # [doc = "Since SPIR-V 1.4"] const IterationMultiple = 64u32 ; # [doc = "Since SPIR-V 1.4"] const PeelCount = 128u32 ; # [doc = "Since SPIR-V 1.4"] const PartialCount = 256u32 ; const InitiationIntervalALTERA = 65536u32 ; const MaxConcurrencyALTERA = 131072u32 ; const DependencyArrayALTERA = 262144u32 ; const PipelineEnableALTERA = 524288u32 ; const LoopCoalesceALTERA = 1048576u32 ; const MaxInterleavingALTERA = 2097152u32 ; const SpeculatedIterationsALTERA = 4194304u32 ; const NoFusionALTERA = 8388608u32 ; const LoopCountALTERA = 16777216u32 ; const MaxReinvocationDelayALTERA = 33554432u32 ; } }
 impl Operand for LoopControl {
     const KIND: OperandKind = OPERAND_KIND_LOOP_CONTROL;
+}
+impl OperandEncoding for LoopControl {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }
@@ -66,6 +78,9 @@ impl Operand for LoopControl {
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct FunctionControl : u32 { const None = 0u32 ; const Inline = 1u32 ; const DontInline = 2u32 ; const Pure = 4u32 ; const Const = 8u32 ; const OptNoneEXT = 65536u32 ; } }
 impl Operand for FunctionControl {
     const KIND: OperandKind = OPERAND_KIND_FUNCTION_CONTROL;
+}
+impl OperandEncoding for FunctionControl {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }
@@ -82,6 +97,9 @@ impl Operand for FunctionControl {
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MemorySemantics : u32 { const Relaxed = 0u32 ; const Acquire = 2u32 ; const Release = 4u32 ; const AcquireRelease = 8u32 ; const SequentiallyConsistent = 16u32 ; const UniformMemory = 64u32 ; const SubgroupMemory = 128u32 ; const WorkgroupMemory = 256u32 ; const CrossWorkgroupMemory = 512u32 ; const AtomicCounterMemory = 1024u32 ; const ImageMemory = 2048u32 ; # [doc = "Since SPIR-V 1.5"] const OutputMemory = 4096u32 ; # [doc = "Since SPIR-V 1.5"] const MakeAvailable = 8192u32 ; # [doc = "Since SPIR-V 1.5"] const MakeVisible = 16384u32 ; # [doc = "Since SPIR-V 1.5"] const Volatile = 32768u32 ; } }
 impl Operand for MemorySemantics {
     const KIND: OperandKind = OPERAND_KIND_MEMORY_SEMANTICS;
+}
+impl OperandEncoding for MemorySemantics {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }
@@ -98,6 +116,9 @@ impl Operand for MemorySemantics {
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MemoryAccess : u32 { const None = 0u32 ; const Volatile = 1u32 ; const Aligned = 2u32 ; const Nontemporal = 4u32 ; # [doc = "Since SPIR-V 1.5"] const MakePointerAvailable = 8u32 ; # [doc = "Since SPIR-V 1.5"] const MakePointerVisible = 16u32 ; # [doc = "Since SPIR-V 1.5"] const NonPrivatePointer = 32u32 ; const AliasScopeINTELMask = 65536u32 ; const NoAliasINTELMask = 131072u32 ; } }
 impl Operand for MemoryAccess {
     const KIND: OperandKind = OPERAND_KIND_MEMORY_ACCESS;
+}
+impl OperandEncoding for MemoryAccess {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }
@@ -114,6 +135,9 @@ impl Operand for MemoryAccess {
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct KernelProfilingInfo : u32 { const None = 0u32 ; const CmdExecTime = 1u32 ; } }
 impl Operand for KernelProfilingInfo {
     const KIND: OperandKind = OPERAND_KIND_KERNEL_PROFILING_INFO;
+}
+impl OperandEncoding for KernelProfilingInfo {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }
@@ -130,6 +154,9 @@ impl Operand for KernelProfilingInfo {
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct RayFlags : u32 { const NoneKHR = 0u32 ; const OpaqueKHR = 1u32 ; const NoOpaqueKHR = 2u32 ; const TerminateOnFirstHitKHR = 4u32 ; const SkipClosestHitShaderKHR = 8u32 ; const CullBackFacingTrianglesKHR = 16u32 ; const CullFrontFacingTrianglesKHR = 32u32 ; const CullOpaqueKHR = 64u32 ; const CullNoOpaqueKHR = 128u32 ; const SkipTrianglesKHR = 256u32 ; const SkipAABBsKHR = 512u32 ; const ForceOpacityMicromap2StateEXT = 1024u32 ; } }
 impl Operand for RayFlags {
     const KIND: OperandKind = OPERAND_KIND_RAY_FLAGS;
+}
+impl OperandEncoding for RayFlags {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }
@@ -146,6 +173,9 @@ impl Operand for RayFlags {
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct FragmentShadingRate : u32 { const Vertical2Pixels = 1u32 ; const Vertical4Pixels = 2u32 ; const Horizontal2Pixels = 4u32 ; const Horizontal4Pixels = 8u32 ; } }
 impl Operand for FragmentShadingRate {
     const KIND: OperandKind = OPERAND_KIND_FRAGMENT_SHADING_RATE;
+}
+impl OperandEncoding for FragmentShadingRate {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }
@@ -162,6 +192,9 @@ impl Operand for FragmentShadingRate {
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct RawAccessChainOperands : u32 { const None = 0u32 ; const RobustnessPerComponentNV = 1u32 ; const RobustnessPerElementNV = 2u32 ; } }
 impl Operand for RawAccessChainOperands {
     const KIND: OperandKind = OPERAND_KIND_RAW_ACCESS_CHAIN_OPERANDS;
+}
+impl OperandEncoding for RawAccessChainOperands {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }
@@ -197,6 +230,9 @@ pub enum SourceLanguage {
 }
 impl Operand for SourceLanguage {
     const KIND: OperandKind = OPERAND_KIND_SOURCE_LANGUAGE;
+}
+impl OperandEncoding for SourceLanguage {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -249,6 +285,9 @@ pub enum ExecutionModel {
 }
 impl Operand for ExecutionModel {
     const KIND: OperandKind = OPERAND_KIND_EXECUTION_MODEL;
+}
+impl OperandEncoding for ExecutionModel {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -292,6 +331,9 @@ pub enum AddressingModel {
 }
 impl Operand for AddressingModel {
     const KIND: OperandKind = OPERAND_KIND_ADDRESSING_MODEL;
+}
+impl OperandEncoding for AddressingModel {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -322,6 +364,9 @@ pub enum MemoryModel {
 }
 impl Operand for MemoryModel {
     const KIND: OperandKind = OPERAND_KIND_MEMORY_MODEL;
+}
+impl OperandEncoding for MemoryModel {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -492,11 +537,14 @@ pub enum ExecutionMode {
 }
 impl Operand for ExecutionMode {
     const KIND: OperandKind = OPERAND_KIND_EXECUTION_MODE;
+}
+impl OperandEncoding for ExecutionMode {
+    const FIXED_LEN: Option<usize> = None;
     fn encode(&self, writer: &mut impl InstructionWriter) {
         match self {
             Self::Invocations(p0) => {
                 writer.push(Word(0u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::SpacingEqual => writer.push(Word(1u32)),
             Self::SpacingFractionalEven => writer.push(Word(2u32)),
@@ -515,15 +563,15 @@ impl Operand for ExecutionMode {
             Self::DepthUnchanged => writer.push(Word(16u32)),
             Self::LocalSize(p0, p1, p2) => {
                 writer.push(Word(17u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer);
-                Operand::encode(p2, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer);
+                OperandEncoding::encode(p2, &mut *writer)
             }
             Self::LocalSizeHint(p0, p1, p2) => {
                 writer.push(Word(18u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer);
-                Operand::encode(p2, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer);
+                OperandEncoding::encode(p2, &mut *writer)
             }
             Self::InputPoints => writer.push(Word(19u32)),
             Self::InputLines => writer.push(Word(20u32)),
@@ -534,41 +582,41 @@ impl Operand for ExecutionMode {
             Self::Isolines => writer.push(Word(25u32)),
             Self::OutputVertices(p0) => {
                 writer.push(Word(26u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::OutputPoints => writer.push(Word(27u32)),
             Self::OutputLineStrip => writer.push(Word(28u32)),
             Self::OutputTriangleStrip => writer.push(Word(29u32)),
             Self::VecTypeHint(p0) => {
                 writer.push(Word(30u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::ContractionOff => writer.push(Word(31u32)),
             Self::Initializer => writer.push(Word(33u32)),
             Self::Finalizer => writer.push(Word(34u32)),
             Self::SubgroupSize(p0) => {
                 writer.push(Word(35u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::SubgroupsPerWorkgroup(p0) => {
                 writer.push(Word(36u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::SubgroupsPerWorkgroupId(p0) => {
                 writer.push(Word(37u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::LocalSizeId(p0, p1, p2) => {
                 writer.push(Word(38u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer);
-                Operand::encode(p2, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer);
+                OperandEncoding::encode(p2, &mut *writer)
             }
             Self::LocalSizeHintId(p0, p1, p2) => {
                 writer.push(Word(39u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer);
-                Operand::encode(p2, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer);
+                OperandEncoding::encode(p2, &mut *writer)
             }
             Self::NonCoherentColorAttachmentReadEXT => writer.push(Word(4169u32)),
             Self::NonCoherentDepthAttachmentReadEXT => writer.push(Word(4170u32)),
@@ -577,57 +625,57 @@ impl Operand for ExecutionMode {
             Self::PostDepthCoverage => writer.push(Word(4446u32)),
             Self::DenormPreserve(p0) => {
                 writer.push(Word(4459u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::DenormFlushToZero(p0) => {
                 writer.push(Word(4460u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::SignedZeroInfNanPreserve(p0) => {
                 writer.push(Word(4461u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::RoundingModeRTE(p0) => {
                 writer.push(Word(4462u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::RoundingModeRTZ(p0) => {
                 writer.push(Word(4463u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::NonCoherentTileAttachmentReadQCOM => writer.push(Word(4489u32)),
             Self::TileShadingRateQCOM(p0, p1, p2) => {
                 writer.push(Word(4490u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer);
-                Operand::encode(p2, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer);
+                OperandEncoding::encode(p2, &mut *writer)
             }
             Self::EarlyAndLateFragmentTestsAMD => writer.push(Word(5017u32)),
             Self::StencilRefReplacingEXT => writer.push(Word(5027u32)),
             Self::CoalescingAMDX => writer.push(Word(5069u32)),
             Self::IsApiEntryAMDX(p0) => {
                 writer.push(Word(5070u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaxNodeRecursionAMDX(p0) => {
                 writer.push(Word(5071u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::StaticNumWorkgroupsAMDX(p0, p1, p2) => {
                 writer.push(Word(5072u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer);
-                Operand::encode(p2, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer);
+                OperandEncoding::encode(p2, &mut *writer)
             }
             Self::ShaderIndexAMDX(p0) => {
                 writer.push(Word(5073u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaxNumWorkgroupsAMDX(p0, p1, p2) => {
                 writer.push(Word(5077u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer);
-                Operand::encode(p2, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer);
+                OperandEncoding::encode(p2, &mut *writer)
             }
             Self::StencilRefUnchangedFrontAMD => writer.push(Word(5079u32)),
             Self::StencilRefGreaterFrontAMD => writer.push(Word(5080u32)),
@@ -639,13 +687,13 @@ impl Operand for ExecutionMode {
             Self::RequireFullQuadsKHR => writer.push(Word(5089u32)),
             Self::SharesInputWithAMDX(p0, p1) => {
                 writer.push(Word(5102u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer)
             }
             Self::OutputLinesEXT => writer.push(Word(5269u32)),
             Self::OutputPrimitivesEXT(p0) => {
                 writer.push(Word(5270u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::DerivativeGroupQuadsKHR => writer.push(Word(5289u32)),
             Self::DerivativeGroupLinearKHR => writer.push(Word(5290u32)),
@@ -659,79 +707,79 @@ impl Operand for ExecutionMode {
             Self::Shader64BitIndexingEXT => writer.push(Word(5427u32)),
             Self::SharedLocalMemorySizeINTEL(p0) => {
                 writer.push(Word(5618u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::RoundingModeRTPINTEL(p0) => {
                 writer.push(Word(5620u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::RoundingModeRTNINTEL(p0) => {
                 writer.push(Word(5621u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::FloatingPointModeALTINTEL(p0) => {
                 writer.push(Word(5622u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::FloatingPointModeIEEEINTEL(p0) => {
                 writer.push(Word(5623u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaxWorkgroupSizeINTEL(p0, p1, p2) => {
                 writer.push(Word(5893u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer);
-                Operand::encode(p2, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer);
+                OperandEncoding::encode(p2, &mut *writer)
             }
             Self::MaxWorkDimINTEL(p0) => {
                 writer.push(Word(5894u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::NoGlobalOffsetINTEL => writer.push(Word(5895u32)),
             Self::NumSIMDWorkitemsINTEL(p0) => {
                 writer.push(Word(5896u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::SchedulerTargetFmaxMhzINTEL(p0) => {
                 writer.push(Word(5903u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaximallyReconvergesKHR => writer.push(Word(6023u32)),
             Self::FPFastMathDefault(p0, p1) => {
                 writer.push(Word(6028u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer)
             }
             Self::StreamingInterfaceINTEL(p0) => {
                 writer.push(Word(6154u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::RegisterMapInterfaceINTEL(p0) => {
                 writer.push(Word(6160u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::NamedBarrierCountINTEL(p0) => {
                 writer.push(Word(6417u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaximumRegistersINTEL(p0) => {
                 writer.push(Word(6461u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaximumRegistersIdINTEL(p0) => {
                 writer.push(Word(6462u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::NamedMaximumRegistersINTEL(p0) => {
                 writer.push(Word(6463u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
         }
     }
     fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
-            0u32 => Self::Invocations(Operand::decode(&mut *reader)?),
+            0u32 => Self::Invocations(OperandEncoding::decode(&mut *reader)?),
             1u32 => Self::SpacingEqual,
             2u32 => Self::SpacingFractionalEven,
             3u32 => Self::SpacingFractionalOdd,
@@ -748,14 +796,14 @@ impl Operand for ExecutionMode {
             15u32 => Self::DepthLess,
             16u32 => Self::DepthUnchanged,
             17u32 => Self::LocalSize(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
             18u32 => Self::LocalSizeHint(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
             19u32 => Self::InputPoints,
             20u32 => Self::InputLines,
@@ -764,58 +812,58 @@ impl Operand for ExecutionMode {
             23u32 => Self::InputTrianglesAdjacency,
             24u32 => Self::Quads,
             25u32 => Self::Isolines,
-            26u32 => Self::OutputVertices(Operand::decode(&mut *reader)?),
+            26u32 => Self::OutputVertices(OperandEncoding::decode(&mut *reader)?),
             27u32 => Self::OutputPoints,
             28u32 => Self::OutputLineStrip,
             29u32 => Self::OutputTriangleStrip,
-            30u32 => Self::VecTypeHint(Operand::decode(&mut *reader)?),
+            30u32 => Self::VecTypeHint(OperandEncoding::decode(&mut *reader)?),
             31u32 => Self::ContractionOff,
             33u32 => Self::Initializer,
             34u32 => Self::Finalizer,
-            35u32 => Self::SubgroupSize(Operand::decode(&mut *reader)?),
-            36u32 => Self::SubgroupsPerWorkgroup(Operand::decode(&mut *reader)?),
-            37u32 => Self::SubgroupsPerWorkgroupId(Operand::decode(&mut *reader)?),
+            35u32 => Self::SubgroupSize(OperandEncoding::decode(&mut *reader)?),
+            36u32 => Self::SubgroupsPerWorkgroup(OperandEncoding::decode(&mut *reader)?),
+            37u32 => Self::SubgroupsPerWorkgroupId(OperandEncoding::decode(&mut *reader)?),
             38u32 => Self::LocalSizeId(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
             39u32 => Self::LocalSizeHintId(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
             4169u32 => Self::NonCoherentColorAttachmentReadEXT,
             4170u32 => Self::NonCoherentDepthAttachmentReadEXT,
             4171u32 => Self::NonCoherentStencilAttachmentReadEXT,
             4421u32 => Self::SubgroupUniformControlFlowKHR,
             4446u32 => Self::PostDepthCoverage,
-            4459u32 => Self::DenormPreserve(Operand::decode(&mut *reader)?),
-            4460u32 => Self::DenormFlushToZero(Operand::decode(&mut *reader)?),
-            4461u32 => Self::SignedZeroInfNanPreserve(Operand::decode(&mut *reader)?),
-            4462u32 => Self::RoundingModeRTE(Operand::decode(&mut *reader)?),
-            4463u32 => Self::RoundingModeRTZ(Operand::decode(&mut *reader)?),
+            4459u32 => Self::DenormPreserve(OperandEncoding::decode(&mut *reader)?),
+            4460u32 => Self::DenormFlushToZero(OperandEncoding::decode(&mut *reader)?),
+            4461u32 => Self::SignedZeroInfNanPreserve(OperandEncoding::decode(&mut *reader)?),
+            4462u32 => Self::RoundingModeRTE(OperandEncoding::decode(&mut *reader)?),
+            4463u32 => Self::RoundingModeRTZ(OperandEncoding::decode(&mut *reader)?),
             4489u32 => Self::NonCoherentTileAttachmentReadQCOM,
             4490u32 => Self::TileShadingRateQCOM(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
             5017u32 => Self::EarlyAndLateFragmentTestsAMD,
             5027u32 => Self::StencilRefReplacingEXT,
             5069u32 => Self::CoalescingAMDX,
-            5070u32 => Self::IsApiEntryAMDX(Operand::decode(&mut *reader)?),
-            5071u32 => Self::MaxNodeRecursionAMDX(Operand::decode(&mut *reader)?),
+            5070u32 => Self::IsApiEntryAMDX(OperandEncoding::decode(&mut *reader)?),
+            5071u32 => Self::MaxNodeRecursionAMDX(OperandEncoding::decode(&mut *reader)?),
             5072u32 => Self::StaticNumWorkgroupsAMDX(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
-            5073u32 => Self::ShaderIndexAMDX(Operand::decode(&mut *reader)?),
+            5073u32 => Self::ShaderIndexAMDX(OperandEncoding::decode(&mut *reader)?),
             5077u32 => Self::MaxNumWorkgroupsAMDX(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
             5079u32 => Self::StencilRefUnchangedFrontAMD,
             5080u32 => Self::StencilRefGreaterFrontAMD,
@@ -826,11 +874,11 @@ impl Operand for ExecutionMode {
             5088u32 => Self::QuadDerivativesKHR,
             5089u32 => Self::RequireFullQuadsKHR,
             5102u32 => Self::SharesInputWithAMDX(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
             5269u32 => Self::OutputLinesEXT,
-            5270u32 => Self::OutputPrimitivesEXT(Operand::decode(&mut *reader)?),
+            5270u32 => Self::OutputPrimitivesEXT(OperandEncoding::decode(&mut *reader)?),
             5289u32 => Self::DerivativeGroupQuadsKHR,
             5290u32 => Self::DerivativeGroupLinearKHR,
             5298u32 => Self::OutputTrianglesEXT,
@@ -841,31 +889,31 @@ impl Operand for ExecutionMode {
             5370u32 => Self::ShadingRateInterlockOrderedEXT,
             5371u32 => Self::ShadingRateInterlockUnorderedEXT,
             5427u32 => Self::Shader64BitIndexingEXT,
-            5618u32 => Self::SharedLocalMemorySizeINTEL(Operand::decode(&mut *reader)?),
-            5620u32 => Self::RoundingModeRTPINTEL(Operand::decode(&mut *reader)?),
-            5621u32 => Self::RoundingModeRTNINTEL(Operand::decode(&mut *reader)?),
-            5622u32 => Self::FloatingPointModeALTINTEL(Operand::decode(&mut *reader)?),
-            5623u32 => Self::FloatingPointModeIEEEINTEL(Operand::decode(&mut *reader)?),
+            5618u32 => Self::SharedLocalMemorySizeINTEL(OperandEncoding::decode(&mut *reader)?),
+            5620u32 => Self::RoundingModeRTPINTEL(OperandEncoding::decode(&mut *reader)?),
+            5621u32 => Self::RoundingModeRTNINTEL(OperandEncoding::decode(&mut *reader)?),
+            5622u32 => Self::FloatingPointModeALTINTEL(OperandEncoding::decode(&mut *reader)?),
+            5623u32 => Self::FloatingPointModeIEEEINTEL(OperandEncoding::decode(&mut *reader)?),
             5893u32 => Self::MaxWorkgroupSizeINTEL(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
-            5894u32 => Self::MaxWorkDimINTEL(Operand::decode(&mut *reader)?),
+            5894u32 => Self::MaxWorkDimINTEL(OperandEncoding::decode(&mut *reader)?),
             5895u32 => Self::NoGlobalOffsetINTEL,
-            5896u32 => Self::NumSIMDWorkitemsINTEL(Operand::decode(&mut *reader)?),
-            5903u32 => Self::SchedulerTargetFmaxMhzINTEL(Operand::decode(&mut *reader)?),
+            5896u32 => Self::NumSIMDWorkitemsINTEL(OperandEncoding::decode(&mut *reader)?),
+            5903u32 => Self::SchedulerTargetFmaxMhzINTEL(OperandEncoding::decode(&mut *reader)?),
             6023u32 => Self::MaximallyReconvergesKHR,
             6028u32 => Self::FPFastMathDefault(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
-            6154u32 => Self::StreamingInterfaceINTEL(Operand::decode(&mut *reader)?),
-            6160u32 => Self::RegisterMapInterfaceINTEL(Operand::decode(&mut *reader)?),
-            6417u32 => Self::NamedBarrierCountINTEL(Operand::decode(&mut *reader)?),
-            6461u32 => Self::MaximumRegistersINTEL(Operand::decode(&mut *reader)?),
-            6462u32 => Self::MaximumRegistersIdINTEL(Operand::decode(&mut *reader)?),
-            6463u32 => Self::NamedMaximumRegistersINTEL(Operand::decode(&mut *reader)?),
+            6154u32 => Self::StreamingInterfaceINTEL(OperandEncoding::decode(&mut *reader)?),
+            6160u32 => Self::RegisterMapInterfaceINTEL(OperandEncoding::decode(&mut *reader)?),
+            6417u32 => Self::NamedBarrierCountINTEL(OperandEncoding::decode(&mut *reader)?),
+            6461u32 => Self::MaximumRegistersINTEL(OperandEncoding::decode(&mut *reader)?),
+            6462u32 => Self::MaximumRegistersIdINTEL(OperandEncoding::decode(&mut *reader)?),
+            6463u32 => Self::NamedMaximumRegistersINTEL(OperandEncoding::decode(&mut *reader)?),
             _ => {
                 return Err(DecodeError::UnknownEnumVariant {
                     name: stringify!(ExecutionMode),
@@ -913,6 +961,9 @@ pub enum StorageClass {
 }
 impl Operand for StorageClass {
     const KIND: OperandKind = OPERAND_KIND_STORAGE_CLASS;
+}
+impl OperandEncoding for StorageClass {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -971,6 +1022,9 @@ pub enum Dim {
 }
 impl Operand for Dim {
     const KIND: OperandKind = OPERAND_KIND_DIM;
+}
+impl OperandEncoding for Dim {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -1005,6 +1059,9 @@ pub enum SamplerAddressingMode {
 }
 impl Operand for SamplerAddressingMode {
     const KIND: OperandKind = OPERAND_KIND_SAMPLER_ADDRESSING_MODE;
+}
+impl OperandEncoding for SamplerAddressingMode {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -1033,6 +1090,9 @@ pub enum SamplerFilterMode {
 }
 impl Operand for SamplerFilterMode {
     const KIND: OperandKind = OPERAND_KIND_SAMPLER_FILTER_MODE;
+}
+impl OperandEncoding for SamplerFilterMode {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -1098,6 +1158,9 @@ pub enum ImageFormat {
 }
 impl Operand for ImageFormat {
     const KIND: OperandKind = OPERAND_KIND_IMAGE_FORMAT;
+}
+impl OperandEncoding for ImageFormat {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -1181,6 +1244,9 @@ pub enum ImageChannelOrder {
 }
 impl Operand for ImageChannelOrder {
     const KIND: OperandKind = OPERAND_KIND_IMAGE_CHANNEL_ORDER;
+}
+impl OperandEncoding for ImageChannelOrder {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -1248,6 +1314,9 @@ pub enum ImageChannelDataType {
 }
 impl Operand for ImageChannelDataType {
     const KIND: OperandKind = OPERAND_KIND_IMAGE_CHANNEL_DATA_TYPE;
+}
+impl OperandEncoding for ImageChannelDataType {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -1299,6 +1368,9 @@ pub enum FPRoundingMode {
 }
 impl Operand for FPRoundingMode {
     const KIND: OperandKind = OPERAND_KIND_FP_ROUNDING_MODE;
+}
+impl OperandEncoding for FPRoundingMode {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -1326,6 +1398,9 @@ pub enum FPDenormMode {
 }
 impl Operand for FPDenormMode {
     const KIND: OperandKind = OPERAND_KIND_FP_DENORM_MODE;
+}
+impl OperandEncoding for FPDenormMode {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -1357,6 +1432,9 @@ pub enum QuantizationModes {
 }
 impl Operand for QuantizationModes {
     const KIND: OperandKind = OPERAND_KIND_QUANTIZATION_MODES;
+}
+impl OperandEncoding for QuantizationModes {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -1388,6 +1466,9 @@ pub enum FPOperationMode {
 }
 impl Operand for FPOperationMode {
     const KIND: OperandKind = OPERAND_KIND_FP_OPERATION_MODE;
+}
+impl OperandEncoding for FPOperationMode {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -1415,6 +1496,9 @@ pub enum OverflowModes {
 }
 impl Operand for OverflowModes {
     const KIND: OperandKind = OPERAND_KIND_OVERFLOW_MODES;
+}
+impl OperandEncoding for OverflowModes {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -1443,6 +1527,9 @@ pub enum LinkageType {
 }
 impl Operand for LinkageType {
     const KIND: OperandKind = OPERAND_KIND_LINKAGE_TYPE;
+}
+impl OperandEncoding for LinkageType {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -1470,6 +1557,9 @@ pub enum AccessQualifier {
 }
 impl Operand for AccessQualifier {
     const KIND: OperandKind = OPERAND_KIND_ACCESS_QUALIFIER;
+}
+impl OperandEncoding for AccessQualifier {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -1498,6 +1588,9 @@ pub enum HostAccessQualifier {
 }
 impl Operand for HostAccessQualifier {
     const KIND: OperandKind = OPERAND_KIND_HOST_ACCESS_QUALIFIER;
+}
+impl OperandEncoding for HostAccessQualifier {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -1532,6 +1625,9 @@ pub enum FunctionParameterAttribute {
 }
 impl Operand for FunctionParameterAttribute {
     const KIND: OperandKind = OPERAND_KIND_FUNCTION_PARAMETER_ATTRIBUTE;
+}
+impl OperandEncoding for FunctionParameterAttribute {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -1754,12 +1850,15 @@ pub enum Decoration {
 }
 impl Operand for Decoration {
     const KIND: OperandKind = OPERAND_KIND_DECORATION;
+}
+impl OperandEncoding for Decoration {
+    const FIXED_LEN: Option<usize> = None;
     fn encode(&self, writer: &mut impl InstructionWriter) {
         match self {
             Self::RelaxedPrecision => writer.push(Word(0u32)),
             Self::SpecId(p0) => {
                 writer.push(Word(1u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::Block => writer.push(Word(2u32)),
             Self::BufferBlock => writer.push(Word(3u32)),
@@ -1767,18 +1866,18 @@ impl Operand for Decoration {
             Self::ColMajor => writer.push(Word(5u32)),
             Self::ArrayStride(p0) => {
                 writer.push(Word(6u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MatrixStride(p0) => {
                 writer.push(Word(7u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::GLSLShared => writer.push(Word(8u32)),
             Self::GLSLPacked => writer.push(Word(9u32)),
             Self::CPacked => writer.push(Word(10u32)),
             Self::BuiltIn(p0) => {
                 writer.push(Word(11u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::NoPerspective => writer.push(Word(13u32)),
             Self::Flat => writer.push(Word(14u32)),
@@ -1796,82 +1895,82 @@ impl Operand for Decoration {
             Self::Uniform => writer.push(Word(26u32)),
             Self::UniformId(p0) => {
                 writer.push(Word(27u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::SaturatedConversion => writer.push(Word(28u32)),
             Self::Stream(p0) => {
                 writer.push(Word(29u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::Location(p0) => {
                 writer.push(Word(30u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::Component(p0) => {
                 writer.push(Word(31u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::Index(p0) => {
                 writer.push(Word(32u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::Binding(p0) => {
                 writer.push(Word(33u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::DescriptorSet(p0) => {
                 writer.push(Word(34u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::Offset(p0) => {
                 writer.push(Word(35u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::XfbBuffer(p0) => {
                 writer.push(Word(36u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::XfbStride(p0) => {
                 writer.push(Word(37u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::FuncParamAttr(p0) => {
                 writer.push(Word(38u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::FPRoundingMode(p0) => {
                 writer.push(Word(39u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::FPFastMathMode(p0) => {
                 writer.push(Word(40u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::LinkageAttributes(p0, p1) => {
                 writer.push(Word(41u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer)
             }
             Self::NoContraction => writer.push(Word(42u32)),
             Self::InputAttachmentIndex(p0) => {
                 writer.push(Word(43u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::Alignment(p0) => {
                 writer.push(Word(44u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaxByteOffset(p0) => {
                 writer.push(Word(45u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::AlignmentId(p0) => {
                 writer.push(Word(46u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaxByteOffsetId(p0) => {
                 writer.push(Word(47u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::SaturatedToLargestFloat8NormalConversionEXT => writer.push(Word(4216u32)),
             Self::NoSignedWrap => writer.push(Word(4469u32)),
@@ -1882,41 +1981,41 @@ impl Operand for Decoration {
             Self::ExplicitInterpAMD => writer.push(Word(4999u32)),
             Self::NodeSharesPayloadLimitsWithAMDX(p0) => {
                 writer.push(Word(5019u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::NodeMaxPayloadsAMDX(p0) => {
                 writer.push(Word(5020u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::TrackFinishWritingAMDX => writer.push(Word(5078u32)),
             Self::PayloadNodeNameAMDX(p0) => {
                 writer.push(Word(5091u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::PayloadNodeBaseIndexAMDX(p0) => {
                 writer.push(Word(5098u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::PayloadNodeSparseArrayAMDX => writer.push(Word(5099u32)),
             Self::PayloadNodeArraySizeAMDX(p0) => {
                 writer.push(Word(5100u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::PayloadDispatchIndirectAMDX => writer.push(Word(5105u32)),
             Self::ArrayStrideIdEXT(p0) => {
                 writer.push(Word(5124u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::OffsetIdEXT(p0) => {
                 writer.push(Word(5125u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::OverrideCoverageNV => writer.push(Word(5248u32)),
             Self::PassthroughNV => writer.push(Word(5250u32)),
             Self::ViewportRelativeNV => writer.push(Word(5252u32)),
             Self::SecondaryViewportRelativeNV(p0) => {
                 writer.push(Word(5256u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::PerPrimitiveEXT => writer.push(Word(5271u32)),
             Self::PerViewNV => writer.push(Word(5272u32)),
@@ -1927,13 +2026,13 @@ impl Operand for Decoration {
             Self::AliasedPointer => writer.push(Word(5356u32)),
             Self::MemberOffsetNV(p0) => {
                 writer.push(Word(5358u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::HitObjectShaderRecordBufferNV => writer.push(Word(5386u32)),
             Self::HitObjectShaderRecordBufferEXT => writer.push(Word(5389u32)),
             Self::BankNV(p0) => {
                 writer.push(Word(5397u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::BindlessSamplerNV => writer.push(Word(5398u32)),
             Self::BindlessImageNV => writer.push(Word(5399u32)),
@@ -1941,142 +2040,142 @@ impl Operand for Decoration {
             Self::BoundImageNV => writer.push(Word(5401u32)),
             Self::SIMTCallINTEL(p0) => {
                 writer.push(Word(5599u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::ReferencedIndirectlyINTEL => writer.push(Word(5602u32)),
             Self::ClobberINTEL(p0) => {
                 writer.push(Word(5607u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::SideEffectsINTEL => writer.push(Word(5608u32)),
             Self::VectorComputeVariableINTEL => writer.push(Word(5624u32)),
             Self::FuncParamIOKindINTEL(p0) => {
                 writer.push(Word(5625u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::VectorComputeFunctionINTEL => writer.push(Word(5626u32)),
             Self::StackCallINTEL => writer.push(Word(5627u32)),
             Self::GlobalVariableOffsetINTEL(p0) => {
                 writer.push(Word(5628u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::CounterBuffer(p0) => {
                 writer.push(Word(5634u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::UserSemantic(p0) => {
                 writer.push(Word(5635u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::UserTypeGOOGLE(p0) => {
                 writer.push(Word(5636u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::FunctionRoundingModeINTEL(p0, p1) => {
                 writer.push(Word(5822u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer)
             }
             Self::FunctionDenormModeINTEL(p0, p1) => {
                 writer.push(Word(5823u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer)
             }
             Self::RegisterALTERA => writer.push(Word(5825u32)),
             Self::MemoryALTERA(p0) => {
                 writer.push(Word(5826u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::NumbanksALTERA(p0) => {
                 writer.push(Word(5827u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::BankwidthALTERA(p0) => {
                 writer.push(Word(5828u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaxPrivateCopiesALTERA(p0) => {
                 writer.push(Word(5829u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::SinglepumpALTERA => writer.push(Word(5830u32)),
             Self::DoublepumpALTERA => writer.push(Word(5831u32)),
             Self::MaxReplicatesALTERA(p0) => {
                 writer.push(Word(5832u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::SimpleDualPortALTERA => writer.push(Word(5833u32)),
             Self::MergeALTERA(p0, p1) => {
                 writer.push(Word(5834u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer)
             }
             Self::BankBitsALTERA(p0) => {
                 writer.push(Word(5835u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::ForcePow2DepthALTERA(p0) => {
                 writer.push(Word(5836u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::StridesizeALTERA(p0) => {
                 writer.push(Word(5883u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::WordsizeALTERA(p0) => {
                 writer.push(Word(5884u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::TrueDualPortALTERA => writer.push(Word(5885u32)),
             Self::BurstCoalesceALTERA => writer.push(Word(5899u32)),
             Self::CacheSizeALTERA(p0) => {
                 writer.push(Word(5900u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::DontStaticallyCoalesceALTERA => writer.push(Word(5901u32)),
             Self::PrefetchALTERA(p0) => {
                 writer.push(Word(5902u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::StallEnableALTERA => writer.push(Word(5905u32)),
             Self::FuseLoopsInFunctionALTERA => writer.push(Word(5907u32)),
             Self::MathOpDSPModeALTERA(p0, p1) => {
                 writer.push(Word(5909u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer)
             }
             Self::AliasScopeINTEL(p0) => {
                 writer.push(Word(5914u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::NoAliasINTEL(p0) => {
                 writer.push(Word(5915u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::InitiationIntervalALTERA(p0) => {
                 writer.push(Word(5917u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaxConcurrencyALTERA(p0) => {
                 writer.push(Word(5918u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::PipelineEnableALTERA(p0) => {
                 writer.push(Word(5919u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::BufferLocationALTERA(p0) => {
                 writer.push(Word(5921u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::IOPipeStorageALTERA(p0) => {
                 writer.push(Word(5944u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::FunctionFloatingPointModeINTEL(p0, p1) => {
                 writer.push(Word(6080u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer)
             }
             Self::SingleElementVectorINTEL => writer.push(Word(6085u32)),
             Self::VectorComputeCallableFunctionINTEL => writer.push(Word(6087u32)),
@@ -2084,71 +2183,71 @@ impl Operand for Decoration {
             Self::StallFreeALTERA => writer.push(Word(6151u32)),
             Self::FPMaxErrorDecorationINTEL(p0) => {
                 writer.push(Word(6170u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::LatencyControlLabelALTERA(p0) => {
                 writer.push(Word(6172u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::LatencyControlConstraintALTERA(p0, p1, p2) => {
                 writer.push(Word(6173u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer);
-                Operand::encode(p2, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer);
+                OperandEncoding::encode(p2, &mut *writer)
             }
             Self::ConduitKernelArgumentALTERA => writer.push(Word(6175u32)),
             Self::RegisterMapKernelArgumentALTERA => writer.push(Word(6176u32)),
             Self::MMHostInterfaceAddressWidthALTERA(p0) => {
                 writer.push(Word(6177u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MMHostInterfaceDataWidthALTERA(p0) => {
                 writer.push(Word(6178u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MMHostInterfaceLatencyALTERA(p0) => {
                 writer.push(Word(6179u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MMHostInterfaceReadWriteModeALTERA(p0) => {
                 writer.push(Word(6180u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MMHostInterfaceMaxBurstALTERA(p0) => {
                 writer.push(Word(6181u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MMHostInterfaceWaitRequestALTERA(p0) => {
                 writer.push(Word(6182u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::StableKernelArgumentALTERA => writer.push(Word(6183u32)),
             Self::HostAccessINTEL(p0, p1) => {
                 writer.push(Word(6188u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer)
             }
             Self::InitModeALTERA(p0) => {
                 writer.push(Word(6190u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::ImplementInRegisterMapALTERA(p0) => {
                 writer.push(Word(6191u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::ConditionalINTEL(p0) => {
                 writer.push(Word(6247u32));
-                Operand::encode(p0, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer)
             }
             Self::CacheControlLoadINTEL(p0, p1) => {
                 writer.push(Word(6442u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer)
             }
             Self::CacheControlStoreINTEL(p0, p1) => {
                 writer.push(Word(6443u32));
-                Operand::encode(p0, &mut *writer);
-                Operand::encode(p1, &mut *writer)
+                OperandEncoding::encode(p0, &mut *writer);
+                OperandEncoding::encode(p1, &mut *writer)
             }
         }
     }
@@ -2156,17 +2255,17 @@ impl Operand for Decoration {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RelaxedPrecision,
-            1u32 => Self::SpecId(Operand::decode(&mut *reader)?),
+            1u32 => Self::SpecId(OperandEncoding::decode(&mut *reader)?),
             2u32 => Self::Block,
             3u32 => Self::BufferBlock,
             4u32 => Self::RowMajor,
             5u32 => Self::ColMajor,
-            6u32 => Self::ArrayStride(Operand::decode(&mut *reader)?),
-            7u32 => Self::MatrixStride(Operand::decode(&mut *reader)?),
+            6u32 => Self::ArrayStride(OperandEncoding::decode(&mut *reader)?),
+            7u32 => Self::MatrixStride(OperandEncoding::decode(&mut *reader)?),
             8u32 => Self::GLSLShared,
             9u32 => Self::GLSLPacked,
             10u32 => Self::CPacked,
-            11u32 => Self::BuiltIn(Operand::decode(&mut *reader)?),
+            11u32 => Self::BuiltIn(OperandEncoding::decode(&mut *reader)?),
             13u32 => Self::NoPerspective,
             14u32 => Self::Flat,
             15u32 => Self::Patch,
@@ -2181,30 +2280,30 @@ impl Operand for Decoration {
             24u32 => Self::NonWritable,
             25u32 => Self::NonReadable,
             26u32 => Self::Uniform,
-            27u32 => Self::UniformId(Operand::decode(&mut *reader)?),
+            27u32 => Self::UniformId(OperandEncoding::decode(&mut *reader)?),
             28u32 => Self::SaturatedConversion,
-            29u32 => Self::Stream(Operand::decode(&mut *reader)?),
-            30u32 => Self::Location(Operand::decode(&mut *reader)?),
-            31u32 => Self::Component(Operand::decode(&mut *reader)?),
-            32u32 => Self::Index(Operand::decode(&mut *reader)?),
-            33u32 => Self::Binding(Operand::decode(&mut *reader)?),
-            34u32 => Self::DescriptorSet(Operand::decode(&mut *reader)?),
-            35u32 => Self::Offset(Operand::decode(&mut *reader)?),
-            36u32 => Self::XfbBuffer(Operand::decode(&mut *reader)?),
-            37u32 => Self::XfbStride(Operand::decode(&mut *reader)?),
-            38u32 => Self::FuncParamAttr(Operand::decode(&mut *reader)?),
-            39u32 => Self::FPRoundingMode(Operand::decode(&mut *reader)?),
-            40u32 => Self::FPFastMathMode(Operand::decode(&mut *reader)?),
+            29u32 => Self::Stream(OperandEncoding::decode(&mut *reader)?),
+            30u32 => Self::Location(OperandEncoding::decode(&mut *reader)?),
+            31u32 => Self::Component(OperandEncoding::decode(&mut *reader)?),
+            32u32 => Self::Index(OperandEncoding::decode(&mut *reader)?),
+            33u32 => Self::Binding(OperandEncoding::decode(&mut *reader)?),
+            34u32 => Self::DescriptorSet(OperandEncoding::decode(&mut *reader)?),
+            35u32 => Self::Offset(OperandEncoding::decode(&mut *reader)?),
+            36u32 => Self::XfbBuffer(OperandEncoding::decode(&mut *reader)?),
+            37u32 => Self::XfbStride(OperandEncoding::decode(&mut *reader)?),
+            38u32 => Self::FuncParamAttr(OperandEncoding::decode(&mut *reader)?),
+            39u32 => Self::FPRoundingMode(OperandEncoding::decode(&mut *reader)?),
+            40u32 => Self::FPFastMathMode(OperandEncoding::decode(&mut *reader)?),
             41u32 => Self::LinkageAttributes(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
             42u32 => Self::NoContraction,
-            43u32 => Self::InputAttachmentIndex(Operand::decode(&mut *reader)?),
-            44u32 => Self::Alignment(Operand::decode(&mut *reader)?),
-            45u32 => Self::MaxByteOffset(Operand::decode(&mut *reader)?),
-            46u32 => Self::AlignmentId(Operand::decode(&mut *reader)?),
-            47u32 => Self::MaxByteOffsetId(Operand::decode(&mut *reader)?),
+            43u32 => Self::InputAttachmentIndex(OperandEncoding::decode(&mut *reader)?),
+            44u32 => Self::Alignment(OperandEncoding::decode(&mut *reader)?),
+            45u32 => Self::MaxByteOffset(OperandEncoding::decode(&mut *reader)?),
+            46u32 => Self::AlignmentId(OperandEncoding::decode(&mut *reader)?),
+            47u32 => Self::MaxByteOffsetId(OperandEncoding::decode(&mut *reader)?),
             4216u32 => Self::SaturatedToLargestFloat8NormalConversionEXT,
             4469u32 => Self::NoSignedWrap,
             4470u32 => Self::NoUnsignedWrap,
@@ -2212,20 +2311,22 @@ impl Operand for Decoration {
             4488u32 => Self::BlockMatchTextureQCOM,
             4499u32 => Self::BlockMatchSamplerQCOM,
             4999u32 => Self::ExplicitInterpAMD,
-            5019u32 => Self::NodeSharesPayloadLimitsWithAMDX(Operand::decode(&mut *reader)?),
-            5020u32 => Self::NodeMaxPayloadsAMDX(Operand::decode(&mut *reader)?),
+            5019u32 => {
+                Self::NodeSharesPayloadLimitsWithAMDX(OperandEncoding::decode(&mut *reader)?)
+            }
+            5020u32 => Self::NodeMaxPayloadsAMDX(OperandEncoding::decode(&mut *reader)?),
             5078u32 => Self::TrackFinishWritingAMDX,
-            5091u32 => Self::PayloadNodeNameAMDX(Operand::decode(&mut *reader)?),
-            5098u32 => Self::PayloadNodeBaseIndexAMDX(Operand::decode(&mut *reader)?),
+            5091u32 => Self::PayloadNodeNameAMDX(OperandEncoding::decode(&mut *reader)?),
+            5098u32 => Self::PayloadNodeBaseIndexAMDX(OperandEncoding::decode(&mut *reader)?),
             5099u32 => Self::PayloadNodeSparseArrayAMDX,
-            5100u32 => Self::PayloadNodeArraySizeAMDX(Operand::decode(&mut *reader)?),
+            5100u32 => Self::PayloadNodeArraySizeAMDX(OperandEncoding::decode(&mut *reader)?),
             5105u32 => Self::PayloadDispatchIndirectAMDX,
-            5124u32 => Self::ArrayStrideIdEXT(Operand::decode(&mut *reader)?),
-            5125u32 => Self::OffsetIdEXT(Operand::decode(&mut *reader)?),
+            5124u32 => Self::ArrayStrideIdEXT(OperandEncoding::decode(&mut *reader)?),
+            5125u32 => Self::OffsetIdEXT(OperandEncoding::decode(&mut *reader)?),
             5248u32 => Self::OverrideCoverageNV,
             5250u32 => Self::PassthroughNV,
             5252u32 => Self::ViewportRelativeNV,
-            5256u32 => Self::SecondaryViewportRelativeNV(Operand::decode(&mut *reader)?),
+            5256u32 => Self::SecondaryViewportRelativeNV(OperandEncoding::decode(&mut *reader)?),
             5271u32 => Self::PerPrimitiveEXT,
             5272u32 => Self::PerViewNV,
             5273u32 => Self::PerTaskNV,
@@ -2233,107 +2334,113 @@ impl Operand for Decoration {
             5300u32 => Self::NonUniform,
             5355u32 => Self::RestrictPointer,
             5356u32 => Self::AliasedPointer,
-            5358u32 => Self::MemberOffsetNV(Operand::decode(&mut *reader)?),
+            5358u32 => Self::MemberOffsetNV(OperandEncoding::decode(&mut *reader)?),
             5386u32 => Self::HitObjectShaderRecordBufferNV,
             5389u32 => Self::HitObjectShaderRecordBufferEXT,
-            5397u32 => Self::BankNV(Operand::decode(&mut *reader)?),
+            5397u32 => Self::BankNV(OperandEncoding::decode(&mut *reader)?),
             5398u32 => Self::BindlessSamplerNV,
             5399u32 => Self::BindlessImageNV,
             5400u32 => Self::BoundSamplerNV,
             5401u32 => Self::BoundImageNV,
-            5599u32 => Self::SIMTCallINTEL(Operand::decode(&mut *reader)?),
+            5599u32 => Self::SIMTCallINTEL(OperandEncoding::decode(&mut *reader)?),
             5602u32 => Self::ReferencedIndirectlyINTEL,
-            5607u32 => Self::ClobberINTEL(Operand::decode(&mut *reader)?),
+            5607u32 => Self::ClobberINTEL(OperandEncoding::decode(&mut *reader)?),
             5608u32 => Self::SideEffectsINTEL,
             5624u32 => Self::VectorComputeVariableINTEL,
-            5625u32 => Self::FuncParamIOKindINTEL(Operand::decode(&mut *reader)?),
+            5625u32 => Self::FuncParamIOKindINTEL(OperandEncoding::decode(&mut *reader)?),
             5626u32 => Self::VectorComputeFunctionINTEL,
             5627u32 => Self::StackCallINTEL,
-            5628u32 => Self::GlobalVariableOffsetINTEL(Operand::decode(&mut *reader)?),
-            5634u32 => Self::CounterBuffer(Operand::decode(&mut *reader)?),
-            5635u32 => Self::UserSemantic(Operand::decode(&mut *reader)?),
-            5636u32 => Self::UserTypeGOOGLE(Operand::decode(&mut *reader)?),
+            5628u32 => Self::GlobalVariableOffsetINTEL(OperandEncoding::decode(&mut *reader)?),
+            5634u32 => Self::CounterBuffer(OperandEncoding::decode(&mut *reader)?),
+            5635u32 => Self::UserSemantic(OperandEncoding::decode(&mut *reader)?),
+            5636u32 => Self::UserTypeGOOGLE(OperandEncoding::decode(&mut *reader)?),
             5822u32 => Self::FunctionRoundingModeINTEL(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
             5823u32 => Self::FunctionDenormModeINTEL(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
             5825u32 => Self::RegisterALTERA,
-            5826u32 => Self::MemoryALTERA(Operand::decode(&mut *reader)?),
-            5827u32 => Self::NumbanksALTERA(Operand::decode(&mut *reader)?),
-            5828u32 => Self::BankwidthALTERA(Operand::decode(&mut *reader)?),
-            5829u32 => Self::MaxPrivateCopiesALTERA(Operand::decode(&mut *reader)?),
+            5826u32 => Self::MemoryALTERA(OperandEncoding::decode(&mut *reader)?),
+            5827u32 => Self::NumbanksALTERA(OperandEncoding::decode(&mut *reader)?),
+            5828u32 => Self::BankwidthALTERA(OperandEncoding::decode(&mut *reader)?),
+            5829u32 => Self::MaxPrivateCopiesALTERA(OperandEncoding::decode(&mut *reader)?),
             5830u32 => Self::SinglepumpALTERA,
             5831u32 => Self::DoublepumpALTERA,
-            5832u32 => Self::MaxReplicatesALTERA(Operand::decode(&mut *reader)?),
+            5832u32 => Self::MaxReplicatesALTERA(OperandEncoding::decode(&mut *reader)?),
             5833u32 => Self::SimpleDualPortALTERA,
             5834u32 => Self::MergeALTERA(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
-            5835u32 => Self::BankBitsALTERA(Operand::decode(&mut *reader)?),
-            5836u32 => Self::ForcePow2DepthALTERA(Operand::decode(&mut *reader)?),
-            5883u32 => Self::StridesizeALTERA(Operand::decode(&mut *reader)?),
-            5884u32 => Self::WordsizeALTERA(Operand::decode(&mut *reader)?),
+            5835u32 => Self::BankBitsALTERA(OperandEncoding::decode(&mut *reader)?),
+            5836u32 => Self::ForcePow2DepthALTERA(OperandEncoding::decode(&mut *reader)?),
+            5883u32 => Self::StridesizeALTERA(OperandEncoding::decode(&mut *reader)?),
+            5884u32 => Self::WordsizeALTERA(OperandEncoding::decode(&mut *reader)?),
             5885u32 => Self::TrueDualPortALTERA,
             5899u32 => Self::BurstCoalesceALTERA,
-            5900u32 => Self::CacheSizeALTERA(Operand::decode(&mut *reader)?),
+            5900u32 => Self::CacheSizeALTERA(OperandEncoding::decode(&mut *reader)?),
             5901u32 => Self::DontStaticallyCoalesceALTERA,
-            5902u32 => Self::PrefetchALTERA(Operand::decode(&mut *reader)?),
+            5902u32 => Self::PrefetchALTERA(OperandEncoding::decode(&mut *reader)?),
             5905u32 => Self::StallEnableALTERA,
             5907u32 => Self::FuseLoopsInFunctionALTERA,
             5909u32 => Self::MathOpDSPModeALTERA(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
-            5914u32 => Self::AliasScopeINTEL(Operand::decode(&mut *reader)?),
-            5915u32 => Self::NoAliasINTEL(Operand::decode(&mut *reader)?),
-            5917u32 => Self::InitiationIntervalALTERA(Operand::decode(&mut *reader)?),
-            5918u32 => Self::MaxConcurrencyALTERA(Operand::decode(&mut *reader)?),
-            5919u32 => Self::PipelineEnableALTERA(Operand::decode(&mut *reader)?),
-            5921u32 => Self::BufferLocationALTERA(Operand::decode(&mut *reader)?),
-            5944u32 => Self::IOPipeStorageALTERA(Operand::decode(&mut *reader)?),
+            5914u32 => Self::AliasScopeINTEL(OperandEncoding::decode(&mut *reader)?),
+            5915u32 => Self::NoAliasINTEL(OperandEncoding::decode(&mut *reader)?),
+            5917u32 => Self::InitiationIntervalALTERA(OperandEncoding::decode(&mut *reader)?),
+            5918u32 => Self::MaxConcurrencyALTERA(OperandEncoding::decode(&mut *reader)?),
+            5919u32 => Self::PipelineEnableALTERA(OperandEncoding::decode(&mut *reader)?),
+            5921u32 => Self::BufferLocationALTERA(OperandEncoding::decode(&mut *reader)?),
+            5944u32 => Self::IOPipeStorageALTERA(OperandEncoding::decode(&mut *reader)?),
             6080u32 => Self::FunctionFloatingPointModeINTEL(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
             6085u32 => Self::SingleElementVectorINTEL,
             6087u32 => Self::VectorComputeCallableFunctionINTEL,
             6140u32 => Self::MediaBlockIOINTEL,
             6151u32 => Self::StallFreeALTERA,
-            6170u32 => Self::FPMaxErrorDecorationINTEL(Operand::decode(&mut *reader)?),
-            6172u32 => Self::LatencyControlLabelALTERA(Operand::decode(&mut *reader)?),
+            6170u32 => Self::FPMaxErrorDecorationINTEL(OperandEncoding::decode(&mut *reader)?),
+            6172u32 => Self::LatencyControlLabelALTERA(OperandEncoding::decode(&mut *reader)?),
             6173u32 => Self::LatencyControlConstraintALTERA(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
             6175u32 => Self::ConduitKernelArgumentALTERA,
             6176u32 => Self::RegisterMapKernelArgumentALTERA,
-            6177u32 => Self::MMHostInterfaceAddressWidthALTERA(Operand::decode(&mut *reader)?),
-            6178u32 => Self::MMHostInterfaceDataWidthALTERA(Operand::decode(&mut *reader)?),
-            6179u32 => Self::MMHostInterfaceLatencyALTERA(Operand::decode(&mut *reader)?),
-            6180u32 => Self::MMHostInterfaceReadWriteModeALTERA(Operand::decode(&mut *reader)?),
-            6181u32 => Self::MMHostInterfaceMaxBurstALTERA(Operand::decode(&mut *reader)?),
-            6182u32 => Self::MMHostInterfaceWaitRequestALTERA(Operand::decode(&mut *reader)?),
+            6177u32 => {
+                Self::MMHostInterfaceAddressWidthALTERA(OperandEncoding::decode(&mut *reader)?)
+            }
+            6178u32 => Self::MMHostInterfaceDataWidthALTERA(OperandEncoding::decode(&mut *reader)?),
+            6179u32 => Self::MMHostInterfaceLatencyALTERA(OperandEncoding::decode(&mut *reader)?),
+            6180u32 => {
+                Self::MMHostInterfaceReadWriteModeALTERA(OperandEncoding::decode(&mut *reader)?)
+            }
+            6181u32 => Self::MMHostInterfaceMaxBurstALTERA(OperandEncoding::decode(&mut *reader)?),
+            6182u32 => {
+                Self::MMHostInterfaceWaitRequestALTERA(OperandEncoding::decode(&mut *reader)?)
+            }
             6183u32 => Self::StableKernelArgumentALTERA,
             6188u32 => Self::HostAccessINTEL(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
-            6190u32 => Self::InitModeALTERA(Operand::decode(&mut *reader)?),
-            6191u32 => Self::ImplementInRegisterMapALTERA(Operand::decode(&mut *reader)?),
-            6247u32 => Self::ConditionalINTEL(Operand::decode(&mut *reader)?),
+            6190u32 => Self::InitModeALTERA(OperandEncoding::decode(&mut *reader)?),
+            6191u32 => Self::ImplementInRegisterMapALTERA(OperandEncoding::decode(&mut *reader)?),
+            6247u32 => Self::ConditionalINTEL(OperandEncoding::decode(&mut *reader)?),
             6442u32 => Self::CacheControlLoadINTEL(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
             6443u32 => Self::CacheControlStoreINTEL(
-                Operand::decode(&mut *reader)?,
-                Operand::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
+                OperandEncoding::decode(&mut *reader)?,
             ),
             _ => {
                 return Err(DecodeError::UnknownEnumVariant {
@@ -2488,6 +2595,9 @@ pub enum BuiltIn {
 }
 impl Operand for BuiltIn {
     const KIND: OperandKind = OPERAND_KIND_BUILT_IN;
+}
+impl OperandEncoding for BuiltIn {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -2645,6 +2755,9 @@ pub enum Scope {
 }
 impl Operand for Scope {
     const KIND: OperandKind = OPERAND_KIND_SCOPE;
+}
+impl OperandEncoding for Scope {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -2681,6 +2794,9 @@ pub enum GroupOperation {
 }
 impl Operand for GroupOperation {
     const KIND: OperandKind = OPERAND_KIND_GROUP_OPERATION;
+}
+impl OperandEncoding for GroupOperation {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -2712,6 +2828,9 @@ pub enum KernelEnqueueFlags {
 }
 impl Operand for KernelEnqueueFlags {
     const KIND: OperandKind = OPERAND_KIND_KERNEL_ENQUEUE_FLAGS;
+}
+impl OperandEncoding for KernelEnqueueFlags {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3067,6 +3186,9 @@ pub enum Capability {
 }
 impl Operand for Capability {
     const KIND: OperandKind = OPERAND_KIND_CAPABILITY;
+}
+impl OperandEncoding for Capability {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3370,6 +3492,9 @@ pub enum RayQueryIntersection {
 }
 impl Operand for RayQueryIntersection {
     const KIND: OperandKind = OPERAND_KIND_RAY_QUERY_INTERSECTION;
+}
+impl OperandEncoding for RayQueryIntersection {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3396,6 +3521,9 @@ pub enum RayQueryCommittedIntersectionType {
 }
 impl Operand for RayQueryCommittedIntersectionType {
     const KIND: OperandKind = OPERAND_KIND_RAY_QUERY_COMMITTED_INTERSECTION_TYPE;
+}
+impl OperandEncoding for RayQueryCommittedIntersectionType {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3422,6 +3550,9 @@ pub enum RayQueryCandidateIntersectionType {
 }
 impl Operand for RayQueryCandidateIntersectionType {
     const KIND: OperandKind = OPERAND_KIND_RAY_QUERY_CANDIDATE_INTERSECTION_TYPE;
+}
+impl OperandEncoding for RayQueryCandidateIntersectionType {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3447,6 +3578,9 @@ pub enum PackedVectorFormat {
 }
 impl Operand for PackedVectorFormat {
     const KIND: OperandKind = OPERAND_KIND_PACKED_VECTOR_FORMAT;
+}
+impl OperandEncoding for PackedVectorFormat {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3466,6 +3600,9 @@ impl Operand for PackedVectorFormat {
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct CooperativeMatrixOperands : u32 { const NoneKHR = 0u32 ; const MatrixASignedComponentsKHR = 1u32 ; const MatrixBSignedComponentsKHR = 2u32 ; const MatrixCSignedComponentsKHR = 4u32 ; const MatrixResultSignedComponentsKHR = 8u32 ; const SaturatingAccumulationKHR = 16u32 ; } }
 impl Operand for CooperativeMatrixOperands {
     const KIND: OperandKind = OPERAND_KIND_COOPERATIVE_MATRIX_OPERANDS;
+}
+impl OperandEncoding for CooperativeMatrixOperands {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }
@@ -3489,6 +3626,9 @@ pub enum CooperativeMatrixLayout {
 }
 impl Operand for CooperativeMatrixLayout {
     const KIND: OperandKind = OPERAND_KIND_COOPERATIVE_MATRIX_LAYOUT;
+}
+impl OperandEncoding for CooperativeMatrixLayout {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3517,6 +3657,9 @@ pub enum CooperativeMatrixUse {
 }
 impl Operand for CooperativeMatrixUse {
     const KIND: OperandKind = OPERAND_KIND_COOPERATIVE_MATRIX_USE;
+}
+impl OperandEncoding for CooperativeMatrixUse {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3538,6 +3681,9 @@ impl Operand for CooperativeMatrixUse {
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct CooperativeMatrixReduce : u32 { const Row = 1u32 ; const Column = 2u32 ; const TwoByTwo = 4u32 ; } }
 impl Operand for CooperativeMatrixReduce {
     const KIND: OperandKind = OPERAND_KIND_COOPERATIVE_MATRIX_REDUCE;
+}
+impl OperandEncoding for CooperativeMatrixReduce {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }
@@ -3562,6 +3708,9 @@ pub enum TensorClampMode {
 }
 impl Operand for TensorClampMode {
     const KIND: OperandKind = OPERAND_KIND_TENSOR_CLAMP_MODE;
+}
+impl OperandEncoding for TensorClampMode {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3585,6 +3734,9 @@ impl Operand for TensorClampMode {
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct TensorAddressingOperands : u32 { const None = 0u32 ; const TensorView = 1u32 ; const DecodeFunc = 2u32 ; } }
 impl Operand for TensorAddressingOperands {
     const KIND: OperandKind = OPERAND_KIND_TENSOR_ADDRESSING_OPERANDS;
+}
+impl OperandEncoding for TensorAddressingOperands {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }
@@ -3606,6 +3758,9 @@ pub enum InitializationModeQualifier {
 }
 impl Operand for InitializationModeQualifier {
     const KIND: OperandKind = OPERAND_KIND_INITIALIZATION_MODE_QUALIFIER;
+}
+impl OperandEncoding for InitializationModeQualifier {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3634,6 +3789,9 @@ pub enum LoadCacheControl {
 }
 impl Operand for LoadCacheControl {
     const KIND: OperandKind = OPERAND_KIND_LOAD_CACHE_CONTROL;
+}
+impl OperandEncoding for LoadCacheControl {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3664,6 +3822,9 @@ pub enum StoreCacheControl {
 }
 impl Operand for StoreCacheControl {
     const KIND: OperandKind = OPERAND_KIND_STORE_CACHE_CONTROL;
+}
+impl OperandEncoding for StoreCacheControl {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3690,6 +3851,9 @@ pub enum NamedMaximumNumberOfRegisters {
 }
 impl Operand for NamedMaximumNumberOfRegisters {
     const KIND: OperandKind = OPERAND_KIND_NAMED_MAXIMUM_NUMBER_OF_REGISTERS;
+}
+impl OperandEncoding for NamedMaximumNumberOfRegisters {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3709,6 +3873,9 @@ impl Operand for NamedMaximumNumberOfRegisters {
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MatrixMultiplyAccumulateOperands : u32 { const None = 0u32 ; const MatrixASignedComponentsINTEL = 1u32 ; const MatrixBSignedComponentsINTEL = 2u32 ; const MatrixCBFloat16INTEL = 4u32 ; const MatrixResultBFloat16INTEL = 8u32 ; const MatrixAPackedInt8INTEL = 16u32 ; const MatrixBPackedInt8INTEL = 32u32 ; const MatrixAPackedInt4INTEL = 64u32 ; const MatrixBPackedInt4INTEL = 128u32 ; const MatrixATF32INTEL = 256u32 ; const MatrixBTF32INTEL = 512u32 ; const MatrixAPackedFloat16INTEL = 1024u32 ; const MatrixBPackedFloat16INTEL = 2048u32 ; const MatrixAPackedBFloat16INTEL = 4096u32 ; const MatrixBPackedBFloat16INTEL = 8192u32 ; } }
 impl Operand for MatrixMultiplyAccumulateOperands {
     const KIND: OperandKind = OPERAND_KIND_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS;
+}
+impl OperandEncoding for MatrixMultiplyAccumulateOperands {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }
@@ -3730,6 +3897,9 @@ pub enum FPEncoding {
 }
 impl Operand for FPEncoding {
     const KIND: OperandKind = OPERAND_KIND_FP_ENCODING;
+}
+impl OperandEncoding for FPEncoding {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3758,6 +3928,9 @@ pub enum CooperativeVectorMatrixLayout {
 }
 impl Operand for CooperativeVectorMatrixLayout {
     const KIND: OperandKind = OPERAND_KIND_COOPERATIVE_VECTOR_MATRIX_LAYOUT;
+}
+impl OperandEncoding for CooperativeVectorMatrixLayout {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3798,6 +3971,9 @@ pub enum ComponentType {
 }
 impl Operand for ComponentType {
     const KIND: OperandKind = OPERAND_KIND_COMPONENT_TYPE;
+}
+impl OperandEncoding for ComponentType {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(*self as u32))
     }
@@ -3832,14 +4008,20 @@ impl Operand for ComponentType {
 pub struct PairLiteralIntegerIdRef(LiteralInteger, IdRef);
 impl Operand for PairLiteralIntegerIdRef {
     const KIND: OperandKind = OPERAND_KIND_PAIR_LITERAL_INTEGER_ID_REF;
+}
+impl OperandEncoding for PairLiteralIntegerIdRef {
+    const FIXED_LEN: Option<usize> = FixedLenComposer::new()
+        .append(<LiteralInteger as OperandEncoding>::FIXED_LEN)
+        .append(<IdRef as OperandEncoding>::FIXED_LEN)
+        .finish();
     fn encode(&self, writer: &mut impl InstructionWriter) {
-        Operand::encode(&self.0, &mut *writer);
-        Operand::encode(&self.1, &mut *writer)
+        OperandEncoding::encode(&self.0, &mut *writer);
+        OperandEncoding::encode(&self.1, &mut *writer)
     }
     fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(
-            Operand::decode(&mut *reader)?,
-            Operand::decode(&mut *reader)?,
+            OperandEncoding::decode(&mut *reader)?,
+            OperandEncoding::decode(&mut *reader)?,
         ))
     }
 }
@@ -3847,14 +4029,20 @@ impl Operand for PairLiteralIntegerIdRef {
 pub struct PairIdRefLiteralInteger(IdRef, LiteralInteger);
 impl Operand for PairIdRefLiteralInteger {
     const KIND: OperandKind = OPERAND_KIND_PAIR_ID_REF_LITERAL_INTEGER;
+}
+impl OperandEncoding for PairIdRefLiteralInteger {
+    const FIXED_LEN: Option<usize> = FixedLenComposer::new()
+        .append(<IdRef as OperandEncoding>::FIXED_LEN)
+        .append(<LiteralInteger as OperandEncoding>::FIXED_LEN)
+        .finish();
     fn encode(&self, writer: &mut impl InstructionWriter) {
-        Operand::encode(&self.0, &mut *writer);
-        Operand::encode(&self.1, &mut *writer)
+        OperandEncoding::encode(&self.0, &mut *writer);
+        OperandEncoding::encode(&self.1, &mut *writer)
     }
     fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(
-            Operand::decode(&mut *reader)?,
-            Operand::decode(&mut *reader)?,
+            OperandEncoding::decode(&mut *reader)?,
+            OperandEncoding::decode(&mut *reader)?,
         ))
     }
 }
@@ -3862,20 +4050,29 @@ impl Operand for PairIdRefLiteralInteger {
 pub struct PairIdRefIdRef(IdRef, IdRef);
 impl Operand for PairIdRefIdRef {
     const KIND: OperandKind = OPERAND_KIND_PAIR_ID_REF_ID_REF;
+}
+impl OperandEncoding for PairIdRefIdRef {
+    const FIXED_LEN: Option<usize> = FixedLenComposer::new()
+        .append(<IdRef as OperandEncoding>::FIXED_LEN)
+        .append(<IdRef as OperandEncoding>::FIXED_LEN)
+        .finish();
     fn encode(&self, writer: &mut impl InstructionWriter) {
-        Operand::encode(&self.0, &mut *writer);
-        Operand::encode(&self.1, &mut *writer)
+        OperandEncoding::encode(&self.0, &mut *writer);
+        OperandEncoding::encode(&self.1, &mut *writer)
     }
     fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(
-            Operand::decode(&mut *reader)?,
-            Operand::decode(&mut *reader)?,
+            OperandEncoding::decode(&mut *reader)?,
+            OperandEncoding::decode(&mut *reader)?,
         ))
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct TensorOperands : u32 { const NoneARM = 0u32 ; const NontemporalARM = 1u32 ; const OutOfBoundsValueARM = 2u32 ; const MakeElementAvailableARM = 4u32 ; const MakeElementVisibleARM = 8u32 ; const NonPrivateElementARM = 16u32 ; } }
 impl Operand for TensorOperands {
     const KIND: OperandKind = OPERAND_KIND_TENSOR_OPERANDS;
+}
+impl OperandEncoding for TensorOperands {
+    const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.push(Word(self.bits()));
     }

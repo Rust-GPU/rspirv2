@@ -1,6 +1,6 @@
 use crate::binary::{DecodeError, InstructionReader, InstructionWriter};
 use crate::meta::OperandKind;
-use crate::operand::{Operand, Word};
+use crate::operand::{Operand, OperandEncoding, Word};
 use std::ops::{Deref, DerefMut};
 
 /// A SPIR-V String literal. Defined as a sequence of UTF-8, so we can just use an ordinary [`String`].
@@ -37,6 +37,10 @@ impl DerefMut for LiteralString {
 
 impl Operand for LiteralString {
     const KIND: OperandKind = crate::core::operand_kinds::OPERAND_KIND_LITERAL_STRING;
+}
+
+impl OperandEncoding for LiteralString {
+    const FIXED_LEN: Option<usize> = None;
 
     fn encode(&self, writer: &mut impl InstructionWriter) {
         let bytes = self.0.as_bytes();

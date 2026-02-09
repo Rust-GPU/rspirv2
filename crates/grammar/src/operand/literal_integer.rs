@@ -1,6 +1,6 @@
 use crate::binary::{DecodeError, InstructionReader, InstructionWriter};
 use crate::meta::OperandKind;
-use crate::operand::{Operand, Word};
+use crate::operand::{Operand, OperandEncoding, Word};
 
 macro_rules! def_literal_integer {
     ($name:ident; $kind:expr; $docs:literal) => {
@@ -28,6 +28,10 @@ macro_rules! def_literal_integer {
 
         impl Operand for $name {
             const KIND: OperandKind = $kind;
+        }
+
+        impl OperandEncoding for $name {
+            const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl InstructionWriter) {
                 writer.push(self.0)
