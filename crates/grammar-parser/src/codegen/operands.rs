@@ -69,16 +69,24 @@ fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> 
 
 fn emit_c_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> TokenStream {
     let name = OperandKind::type_ident(&operand_kind.name);
+    let kind = OperandKind::const_ident(&operand_kind.name);
     let doc = make_doc(&operand_kind.doc);
 
-    let variants = enumerants.iter().map(|e| {
+    let symbols = enumerants
+        .iter()
+        .map(|e| (e, Enumerant::variant_ident(&e.symbol)))
+        .collect::<Vec<_>>();
+    let variants = symbols.iter().map(|(e, symbol)| {
         let enumerant_preamble = emit_enumerant_preamble(e);
-        let symbol = Enumerant::variant_ident(&e.symbol);
         let value = e.value;
         quote! {
             #enumerant_preamble
             #symbol = #value
         }
+    });
+    let decode = symbols.iter().map(|(e, symbol)| {
+        let value = e.value;
+        quote!(#value => Self::#symbol)
     });
 
     quote! {
@@ -87,6 +95,25 @@ fn emit_c_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> Tok
         #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
         pub enum #name {
             #(#variants),*
+        }
+
+        impl Operand for #name {
+            const KIND: OperandKind = #kind;
+
+            fn encode(&self, writer: &mut impl InstructionWriter) {
+                writer.push(Word(*self as u32))
+            }
+
+            fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+                let variant = reader.pull()?.0;
+                Ok(match variant {
+                    #(#decode,)*
+                    _ => return Err(DecodeError::UnknownEnumVariant {
+                        name: stringify!(#name),
+                        variant,
+                    })
+                })
+            }
         }
     }
 }

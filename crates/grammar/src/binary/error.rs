@@ -29,6 +29,10 @@ pub enum DecodeError {
         unknown: u32,
         bits: u32,
     },
+    UnknownEnumVariant {
+        name: &'static str,
+        variant: u32,
+    },
 }
 
 impl Display for DecodeError {
@@ -78,6 +82,9 @@ impl Display for DecodeError {
                 f,
                 "Bitflag {name} encountered unknown bits `{unknown:x}` in pattern `{bits:x}`"
             ),
+            DecodeError::UnknownEnumVariant { name, variant } => {
+                write!(f, "Enum {name} encountered unknown variant `{variant}`")
+            }
         }
     }
 }

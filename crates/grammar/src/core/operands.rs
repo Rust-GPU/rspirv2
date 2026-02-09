@@ -195,6 +195,37 @@ pub enum SourceLanguage {
     Zig = 12u32,
     Rust = 13u32,
 }
+impl Operand for SourceLanguage {
+    const KIND: OperandKind = OPERAND_KIND_SOURCE_LANGUAGE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Unknown,
+            1u32 => Self::ESSL,
+            2u32 => Self::GLSL,
+            3u32 => Self::OpenCL_C,
+            4u32 => Self::OpenCL_CPP,
+            5u32 => Self::HLSL,
+            6u32 => Self::CPP_for_OpenCL,
+            7u32 => Self::SYCL,
+            8u32 => Self::HERO_C,
+            9u32 => Self::NZSL,
+            10u32 => Self::WGSL,
+            11u32 => Self::Slang,
+            12u32 => Self::Zig,
+            13u32 => Self::Rust,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(SourceLanguage),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum ExecutionModel {
@@ -216,6 +247,40 @@ pub enum ExecutionModel {
     TaskEXT = 5364u32,
     MeshEXT = 5365u32,
 }
+impl Operand for ExecutionModel {
+    const KIND: OperandKind = OPERAND_KIND_EXECUTION_MODEL;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Vertex,
+            1u32 => Self::TessellationControl,
+            2u32 => Self::TessellationEvaluation,
+            3u32 => Self::Geometry,
+            4u32 => Self::Fragment,
+            5u32 => Self::GLCompute,
+            6u32 => Self::Kernel,
+            5267u32 => Self::TaskNV,
+            5268u32 => Self::MeshNV,
+            5313u32 => Self::RayGenerationKHR,
+            5314u32 => Self::IntersectionKHR,
+            5315u32 => Self::AnyHitKHR,
+            5316u32 => Self::ClosestHitKHR,
+            5317u32 => Self::MissKHR,
+            5318u32 => Self::CallableKHR,
+            5364u32 => Self::TaskEXT,
+            5365u32 => Self::MeshEXT,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(ExecutionModel),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum AddressingModel {
@@ -225,6 +290,27 @@ pub enum AddressingModel {
     #[doc = "Since SPIR-V 1.5"]
     PhysicalStorageBuffer64 = 5348u32,
 }
+impl Operand for AddressingModel {
+    const KIND: OperandKind = OPERAND_KIND_ADDRESSING_MODEL;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Logical,
+            1u32 => Self::Physical32,
+            2u32 => Self::Physical64,
+            5348u32 => Self::PhysicalStorageBuffer64,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(AddressingModel),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum MemoryModel {
@@ -233,6 +319,27 @@ pub enum MemoryModel {
     OpenCL = 2u32,
     #[doc = "Since SPIR-V 1.5"]
     Vulkan = 3u32,
+}
+impl Operand for MemoryModel {
+    const KIND: OperandKind = OPERAND_KIND_MEMORY_MODEL;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Simple,
+            1u32 => Self::GLSL450,
+            2u32 => Self::OpenCL,
+            3u32 => Self::Vulkan,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(MemoryModel),
+                    variant,
+                });
+            }
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub enum ExecutionMode {
@@ -419,6 +526,52 @@ pub enum StorageClass {
     DeviceOnlyALTERA = 5936u32,
     HostOnlyALTERA = 5937u32,
 }
+impl Operand for StorageClass {
+    const KIND: OperandKind = OPERAND_KIND_STORAGE_CLASS;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::UniformConstant,
+            1u32 => Self::Input,
+            2u32 => Self::Uniform,
+            3u32 => Self::Output,
+            4u32 => Self::Workgroup,
+            5u32 => Self::CrossWorkgroup,
+            6u32 => Self::Private,
+            7u32 => Self::Function,
+            8u32 => Self::Generic,
+            9u32 => Self::PushConstant,
+            10u32 => Self::AtomicCounter,
+            11u32 => Self::Image,
+            12u32 => Self::StorageBuffer,
+            4172u32 => Self::TileImageEXT,
+            4491u32 => Self::TileAttachmentQCOM,
+            5068u32 => Self::NodePayloadAMDX,
+            5328u32 => Self::CallableDataKHR,
+            5329u32 => Self::IncomingCallableDataKHR,
+            5338u32 => Self::RayPayloadKHR,
+            5339u32 => Self::HitAttributeKHR,
+            5342u32 => Self::IncomingRayPayloadKHR,
+            5343u32 => Self::ShaderRecordBufferKHR,
+            5349u32 => Self::PhysicalStorageBuffer,
+            5385u32 => Self::HitObjectAttributeNV,
+            5402u32 => Self::TaskPayloadWorkgroupEXT,
+            5411u32 => Self::HitObjectAttributeEXT,
+            5605u32 => Self::CodeSectionINTEL,
+            5936u32 => Self::DeviceOnlyALTERA,
+            5937u32 => Self::HostOnlyALTERA,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(StorageClass),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Dim {
@@ -431,6 +584,31 @@ pub enum Dim {
     SubpassData = 6u32,
     TileImageDataEXT = 4173u32,
 }
+impl Operand for Dim {
+    const KIND: OperandKind = OPERAND_KIND_DIM;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Dim1D,
+            1u32 => Self::Dim2D,
+            2u32 => Self::Dim3D,
+            3u32 => Self::Cube,
+            4u32 => Self::Rect,
+            5u32 => Self::Buffer,
+            6u32 => Self::SubpassData,
+            4173u32 => Self::TileImageDataEXT,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(Dim),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum SamplerAddressingMode {
@@ -440,11 +618,52 @@ pub enum SamplerAddressingMode {
     Repeat = 3u32,
     RepeatMirrored = 4u32,
 }
+impl Operand for SamplerAddressingMode {
+    const KIND: OperandKind = OPERAND_KIND_SAMPLER_ADDRESSING_MODE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::None,
+            1u32 => Self::ClampToEdge,
+            2u32 => Self::Clamp,
+            3u32 => Self::Repeat,
+            4u32 => Self::RepeatMirrored,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(SamplerAddressingMode),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum SamplerFilterMode {
     Nearest = 0u32,
     Linear = 1u32,
+}
+impl Operand for SamplerFilterMode {
+    const KIND: OperandKind = OPERAND_KIND_SAMPLER_FILTER_MODE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Nearest,
+            1u32 => Self::Linear,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(SamplerFilterMode),
+                    variant,
+                });
+            }
+        })
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -492,6 +711,65 @@ pub enum ImageFormat {
     R64ui = 40u32,
     R64i = 41u32,
 }
+impl Operand for ImageFormat {
+    const KIND: OperandKind = OPERAND_KIND_IMAGE_FORMAT;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Unknown,
+            1u32 => Self::Rgba32f,
+            2u32 => Self::Rgba16f,
+            3u32 => Self::R32f,
+            4u32 => Self::Rgba8,
+            5u32 => Self::Rgba8Snorm,
+            6u32 => Self::Rg32f,
+            7u32 => Self::Rg16f,
+            8u32 => Self::R11fG11fB10f,
+            9u32 => Self::R16f,
+            10u32 => Self::Rgba16,
+            11u32 => Self::Rgb10A2,
+            12u32 => Self::Rg16,
+            13u32 => Self::Rg8,
+            14u32 => Self::R16,
+            15u32 => Self::R8,
+            16u32 => Self::Rgba16Snorm,
+            17u32 => Self::Rg16Snorm,
+            18u32 => Self::Rg8Snorm,
+            19u32 => Self::R16Snorm,
+            20u32 => Self::R8Snorm,
+            21u32 => Self::Rgba32i,
+            22u32 => Self::Rgba16i,
+            23u32 => Self::Rgba8i,
+            24u32 => Self::R32i,
+            25u32 => Self::Rg32i,
+            26u32 => Self::Rg16i,
+            27u32 => Self::Rg8i,
+            28u32 => Self::R16i,
+            29u32 => Self::R8i,
+            30u32 => Self::Rgba32ui,
+            31u32 => Self::Rgba16ui,
+            32u32 => Self::Rgba8ui,
+            33u32 => Self::R32ui,
+            34u32 => Self::Rgb10a2ui,
+            35u32 => Self::Rg32ui,
+            36u32 => Self::Rg16ui,
+            37u32 => Self::Rg8ui,
+            38u32 => Self::R16ui,
+            39u32 => Self::R8ui,
+            40u32 => Self::R64ui,
+            41u32 => Self::R64i,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(ImageFormat),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum ImageChannelOrder {
@@ -515,6 +793,43 @@ pub enum ImageChannelOrder {
     sRGBA = 17u32,
     sBGRA = 18u32,
     ABGR = 19u32,
+}
+impl Operand for ImageChannelOrder {
+    const KIND: OperandKind = OPERAND_KIND_IMAGE_CHANNEL_ORDER;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::R,
+            1u32 => Self::A,
+            2u32 => Self::RG,
+            3u32 => Self::RA,
+            4u32 => Self::RGB,
+            5u32 => Self::RGBA,
+            6u32 => Self::BGRA,
+            7u32 => Self::ARGB,
+            8u32 => Self::Intensity,
+            9u32 => Self::Luminance,
+            10u32 => Self::Rx,
+            11u32 => Self::RGx,
+            12u32 => Self::RGBx,
+            13u32 => Self::Depth,
+            14u32 => Self::DepthStencil,
+            15u32 => Self::sRGB,
+            16u32 => Self::sRGBx,
+            17u32 => Self::sRGBA,
+            18u32 => Self::sBGRA,
+            19u32 => Self::ABGR,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(ImageChannelOrder),
+                    variant,
+                });
+            }
+        })
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -546,6 +861,49 @@ pub enum ImageChannelDataType {
     UnormInt12X4EXT = 25u32,
     UnormInt14X2EXT = 26u32,
 }
+impl Operand for ImageChannelDataType {
+    const KIND: OperandKind = OPERAND_KIND_IMAGE_CHANNEL_DATA_TYPE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::SnormInt8,
+            1u32 => Self::SnormInt16,
+            2u32 => Self::UnormInt8,
+            3u32 => Self::UnormInt16,
+            4u32 => Self::UnormShort565,
+            5u32 => Self::UnormShort555,
+            6u32 => Self::UnormInt101010,
+            7u32 => Self::SignedInt8,
+            8u32 => Self::SignedInt16,
+            9u32 => Self::SignedInt32,
+            10u32 => Self::UnsignedInt8,
+            11u32 => Self::UnsignedInt16,
+            12u32 => Self::UnsignedInt32,
+            13u32 => Self::HalfFloat,
+            14u32 => Self::Float,
+            15u32 => Self::UnormInt24,
+            16u32 => Self::UnormInt101010_2,
+            17u32 => Self::UnormInt10X6EXT,
+            19u32 => Self::UnsignedIntRaw10EXT,
+            20u32 => Self::UnsignedIntRaw12EXT,
+            21u32 => Self::UnormInt2_101010EXT,
+            22u32 => Self::UnsignedInt10X6EXT,
+            23u32 => Self::UnsignedInt12X4EXT,
+            24u32 => Self::UnsignedInt14X2EXT,
+            25u32 => Self::UnormInt12X4EXT,
+            26u32 => Self::UnormInt14X2EXT,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(ImageChannelDataType),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum FPRoundingMode {
@@ -554,11 +912,51 @@ pub enum FPRoundingMode {
     RTP = 2u32,
     RTN = 3u32,
 }
+impl Operand for FPRoundingMode {
+    const KIND: OperandKind = OPERAND_KIND_FP_ROUNDING_MODE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::RTE,
+            1u32 => Self::RTZ,
+            2u32 => Self::RTP,
+            3u32 => Self::RTN,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(FPRoundingMode),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum FPDenormMode {
     Preserve = 0u32,
     FlushToZero = 1u32,
+}
+impl Operand for FPDenormMode {
+    const KIND: OperandKind = OPERAND_KIND_FP_DENORM_MODE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Preserve,
+            1u32 => Self::FlushToZero,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(FPDenormMode),
+                    variant,
+                });
+            }
+        })
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -572,11 +970,55 @@ pub enum QuantizationModes {
     RND_CONV = 6u32,
     RND_CONV_ODD = 7u32,
 }
+impl Operand for QuantizationModes {
+    const KIND: OperandKind = OPERAND_KIND_QUANTIZATION_MODES;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::TRN,
+            1u32 => Self::TRN_ZERO,
+            2u32 => Self::RND,
+            3u32 => Self::RND_ZERO,
+            4u32 => Self::RND_INF,
+            5u32 => Self::RND_MIN_INF,
+            6u32 => Self::RND_CONV,
+            7u32 => Self::RND_CONV_ODD,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(QuantizationModes),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum FPOperationMode {
     IEEE = 0u32,
     ALT = 1u32,
+}
+impl Operand for FPOperationMode {
+    const KIND: OperandKind = OPERAND_KIND_FP_OPERATION_MODE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::IEEE,
+            1u32 => Self::ALT,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(FPOperationMode),
+                    variant,
+                });
+            }
+        })
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -586,12 +1028,53 @@ pub enum OverflowModes {
     SAT_ZERO = 2u32,
     SAT_SYM = 3u32,
 }
+impl Operand for OverflowModes {
+    const KIND: OperandKind = OPERAND_KIND_OVERFLOW_MODES;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::WRAP,
+            1u32 => Self::SAT,
+            2u32 => Self::SAT_ZERO,
+            3u32 => Self::SAT_SYM,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(OverflowModes),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum LinkageType {
     Export = 0u32,
     Import = 1u32,
     LinkOnceODR = 2u32,
+}
+impl Operand for LinkageType {
+    const KIND: OperandKind = OPERAND_KIND_LINKAGE_TYPE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Export,
+            1u32 => Self::Import,
+            2u32 => Self::LinkOnceODR,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(LinkageType),
+                    variant,
+                });
+            }
+        })
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -600,6 +1083,26 @@ pub enum AccessQualifier {
     WriteOnly = 1u32,
     ReadWrite = 2u32,
 }
+impl Operand for AccessQualifier {
+    const KIND: OperandKind = OPERAND_KIND_ACCESS_QUALIFIER;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::ReadOnly,
+            1u32 => Self::WriteOnly,
+            2u32 => Self::ReadWrite,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(AccessQualifier),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum HostAccessQualifier {
@@ -607,6 +1110,27 @@ pub enum HostAccessQualifier {
     ReadINTEL = 1u32,
     WriteINTEL = 2u32,
     ReadWriteINTEL = 3u32,
+}
+impl Operand for HostAccessQualifier {
+    const KIND: OperandKind = OPERAND_KIND_HOST_ACCESS_QUALIFIER;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::NoneINTEL,
+            1u32 => Self::ReadINTEL,
+            2u32 => Self::WriteINTEL,
+            3u32 => Self::ReadWriteINTEL,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(HostAccessQualifier),
+                    variant,
+                });
+            }
+        })
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -620,6 +1144,32 @@ pub enum FunctionParameterAttribute {
     NoWrite = 6u32,
     NoReadWrite = 7u32,
     RuntimeAlignedALTERA = 5940u32,
+}
+impl Operand for FunctionParameterAttribute {
+    const KIND: OperandKind = OPERAND_KIND_FUNCTION_PARAMETER_ATTRIBUTE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Zext,
+            1u32 => Self::Sext,
+            2u32 => Self::ByVal,
+            3u32 => Self::Sret,
+            4u32 => Self::NoAlias,
+            5u32 => Self::NoCapture,
+            6u32 => Self::NoWrite,
+            7u32 => Self::NoReadWrite,
+            5940u32 => Self::RuntimeAlignedALTERA,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(FunctionParameterAttribute),
+                    variant,
+                });
+            }
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub enum Decoration {
@@ -959,6 +1509,151 @@ pub enum BuiltIn {
     ClusterIDNV = 5436u32,
     CullMaskKHR = 6021u32,
 }
+impl Operand for BuiltIn {
+    const KIND: OperandKind = OPERAND_KIND_BUILT_IN;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Position,
+            1u32 => Self::PointSize,
+            3u32 => Self::ClipDistance,
+            4u32 => Self::CullDistance,
+            5u32 => Self::VertexId,
+            6u32 => Self::InstanceId,
+            7u32 => Self::PrimitiveId,
+            8u32 => Self::InvocationId,
+            9u32 => Self::Layer,
+            10u32 => Self::ViewportIndex,
+            11u32 => Self::TessLevelOuter,
+            12u32 => Self::TessLevelInner,
+            13u32 => Self::TessCoord,
+            14u32 => Self::PatchVertices,
+            15u32 => Self::FragCoord,
+            16u32 => Self::PointCoord,
+            17u32 => Self::FrontFacing,
+            18u32 => Self::SampleId,
+            19u32 => Self::SamplePosition,
+            20u32 => Self::SampleMask,
+            22u32 => Self::FragDepth,
+            23u32 => Self::HelperInvocation,
+            24u32 => Self::NumWorkgroups,
+            25u32 => Self::WorkgroupSize,
+            26u32 => Self::WorkgroupId,
+            27u32 => Self::LocalInvocationId,
+            28u32 => Self::GlobalInvocationId,
+            29u32 => Self::LocalInvocationIndex,
+            30u32 => Self::WorkDim,
+            31u32 => Self::GlobalSize,
+            32u32 => Self::EnqueuedWorkgroupSize,
+            33u32 => Self::GlobalOffset,
+            34u32 => Self::GlobalLinearId,
+            36u32 => Self::SubgroupSize,
+            37u32 => Self::SubgroupMaxSize,
+            38u32 => Self::NumSubgroups,
+            39u32 => Self::NumEnqueuedSubgroups,
+            40u32 => Self::SubgroupId,
+            41u32 => Self::SubgroupLocalInvocationId,
+            42u32 => Self::VertexIndex,
+            43u32 => Self::InstanceIndex,
+            4160u32 => Self::CoreIDARM,
+            4161u32 => Self::CoreCountARM,
+            4162u32 => Self::CoreMaxIDARM,
+            4163u32 => Self::WarpIDARM,
+            4164u32 => Self::WarpMaxIDARM,
+            4416u32 => Self::SubgroupEqMask,
+            4417u32 => Self::SubgroupGeMask,
+            4418u32 => Self::SubgroupGtMask,
+            4419u32 => Self::SubgroupLeMask,
+            4420u32 => Self::SubgroupLtMask,
+            4424u32 => Self::BaseVertex,
+            4425u32 => Self::BaseInstance,
+            4426u32 => Self::DrawIndex,
+            4432u32 => Self::PrimitiveShadingRateKHR,
+            4438u32 => Self::DeviceIndex,
+            4440u32 => Self::ViewIndex,
+            4444u32 => Self::ShadingRateKHR,
+            4492u32 => Self::TileOffsetQCOM,
+            4493u32 => Self::TileDimensionQCOM,
+            4494u32 => Self::TileApronSizeQCOM,
+            4992u32 => Self::BaryCoordNoPerspAMD,
+            4993u32 => Self::BaryCoordNoPerspCentroidAMD,
+            4994u32 => Self::BaryCoordNoPerspSampleAMD,
+            4995u32 => Self::BaryCoordSmoothAMD,
+            4996u32 => Self::BaryCoordSmoothCentroidAMD,
+            4997u32 => Self::BaryCoordSmoothSampleAMD,
+            4998u32 => Self::BaryCoordPullModelAMD,
+            5014u32 => Self::FragStencilRefEXT,
+            5021u32 => Self::RemainingRecursionLevelsAMDX,
+            5073u32 => Self::ShaderIndexAMDX,
+            5122u32 => Self::SamplerHeapEXT,
+            5123u32 => Self::ResourceHeapEXT,
+            5253u32 => Self::ViewportMaskNV,
+            5257u32 => Self::SecondaryPositionNV,
+            5258u32 => Self::SecondaryViewportMaskNV,
+            5261u32 => Self::PositionPerViewNV,
+            5262u32 => Self::ViewportMaskPerViewNV,
+            5264u32 => Self::FullyCoveredEXT,
+            5274u32 => Self::TaskCountNV,
+            5275u32 => Self::PrimitiveCountNV,
+            5276u32 => Self::PrimitiveIndicesNV,
+            5277u32 => Self::ClipDistancePerViewNV,
+            5278u32 => Self::CullDistancePerViewNV,
+            5279u32 => Self::LayerPerViewNV,
+            5280u32 => Self::MeshViewCountNV,
+            5281u32 => Self::MeshViewIndicesNV,
+            5286u32 => Self::BaryCoordKHR,
+            5287u32 => Self::BaryCoordNoPerspKHR,
+            5292u32 => Self::FragSizeEXT,
+            5293u32 => Self::FragInvocationCountEXT,
+            5294u32 => Self::PrimitivePointIndicesEXT,
+            5295u32 => Self::PrimitiveLineIndicesEXT,
+            5296u32 => Self::PrimitiveTriangleIndicesEXT,
+            5299u32 => Self::CullPrimitiveEXT,
+            5319u32 => Self::LaunchIdKHR,
+            5320u32 => Self::LaunchSizeKHR,
+            5321u32 => Self::WorldRayOriginKHR,
+            5322u32 => Self::WorldRayDirectionKHR,
+            5323u32 => Self::ObjectRayOriginKHR,
+            5324u32 => Self::ObjectRayDirectionKHR,
+            5325u32 => Self::RayTminKHR,
+            5326u32 => Self::RayTmaxKHR,
+            5327u32 => Self::InstanceCustomIndexKHR,
+            5330u32 => Self::ObjectToWorldKHR,
+            5331u32 => Self::WorldToObjectKHR,
+            5332u32 => Self::HitTNV,
+            5333u32 => Self::HitKindKHR,
+            5334u32 => Self::CurrentRayTimeNV,
+            5335u32 => Self::HitTriangleVertexPositionsKHR,
+            5337u32 => Self::HitMicroTriangleVertexPositionsNV,
+            5344u32 => Self::HitMicroTriangleVertexBarycentricsNV,
+            5351u32 => Self::IncomingRayFlagsKHR,
+            5352u32 => Self::RayGeometryIndexKHR,
+            5359u32 => Self::HitIsSphereNV,
+            5360u32 => Self::HitIsLSSNV,
+            5361u32 => Self::HitSpherePositionNV,
+            5374u32 => Self::WarpsPerSMNV,
+            5375u32 => Self::SMCountNV,
+            5376u32 => Self::WarpIDNV,
+            5377u32 => Self::SMIDNV,
+            5396u32 => Self::HitLSSPositionsNV,
+            5405u32 => Self::HitKindFrontFacingMicroTriangleNV,
+            5406u32 => Self::HitKindBackFacingMicroTriangleNV,
+            5420u32 => Self::HitSphereRadiusNV,
+            5421u32 => Self::HitLSSRadiiNV,
+            5436u32 => Self::ClusterIDNV,
+            6021u32 => Self::CullMaskKHR,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(BuiltIn),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Scope {
@@ -970,6 +1665,30 @@ pub enum Scope {
     #[doc = "Since SPIR-V 1.5"]
     QueueFamily = 5u32,
     ShaderCallKHR = 6u32,
+}
+impl Operand for Scope {
+    const KIND: OperandKind = OPERAND_KIND_SCOPE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::CrossDevice,
+            1u32 => Self::Device,
+            2u32 => Self::Workgroup,
+            3u32 => Self::Subgroup,
+            4u32 => Self::Invocation,
+            5u32 => Self::QueueFamily,
+            6u32 => Self::ShaderCallKHR,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(Scope),
+                    variant,
+                });
+            }
+        })
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -983,12 +1702,56 @@ pub enum GroupOperation {
     PartitionedInclusiveScanEXT = 7u32,
     PartitionedExclusiveScanEXT = 8u32,
 }
+impl Operand for GroupOperation {
+    const KIND: OperandKind = OPERAND_KIND_GROUP_OPERATION;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Reduce,
+            1u32 => Self::InclusiveScan,
+            2u32 => Self::ExclusiveScan,
+            3u32 => Self::ClusteredReduce,
+            6u32 => Self::PartitionedReduceEXT,
+            7u32 => Self::PartitionedInclusiveScanEXT,
+            8u32 => Self::PartitionedExclusiveScanEXT,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(GroupOperation),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum KernelEnqueueFlags {
     NoWait = 0u32,
     WaitKernel = 1u32,
     WaitWorkGroup = 2u32,
+}
+impl Operand for KernelEnqueueFlags {
+    const KIND: OperandKind = OPERAND_KIND_KERNEL_ENQUEUE_FLAGS;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::NoWait,
+            1u32 => Self::WaitKernel,
+            2u32 => Self::WaitWorkGroup,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(KernelEnqueueFlags),
+                    variant,
+                });
+            }
+        })
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -1325,11 +2088,327 @@ pub enum Capability {
     RegisterLimitsINTEL = 6460u32,
     BindlessImagesINTEL = 6528u32,
 }
+impl Operand for Capability {
+    const KIND: OperandKind = OPERAND_KIND_CAPABILITY;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Matrix,
+            1u32 => Self::Shader,
+            2u32 => Self::Geometry,
+            3u32 => Self::Tessellation,
+            4u32 => Self::Addresses,
+            5u32 => Self::Linkage,
+            6u32 => Self::Kernel,
+            7u32 => Self::Vector16,
+            8u32 => Self::Float16Buffer,
+            9u32 => Self::Float16,
+            10u32 => Self::Float64,
+            11u32 => Self::Int64,
+            12u32 => Self::Int64Atomics,
+            13u32 => Self::ImageBasic,
+            14u32 => Self::ImageReadWrite,
+            15u32 => Self::ImageMipmap,
+            17u32 => Self::Pipes,
+            18u32 => Self::Groups,
+            19u32 => Self::DeviceEnqueue,
+            20u32 => Self::LiteralSampler,
+            21u32 => Self::AtomicStorage,
+            22u32 => Self::Int16,
+            23u32 => Self::TessellationPointSize,
+            24u32 => Self::GeometryPointSize,
+            25u32 => Self::ImageGatherExtended,
+            27u32 => Self::StorageImageMultisample,
+            28u32 => Self::UniformBufferArrayDynamicIndexing,
+            29u32 => Self::SampledImageArrayDynamicIndexing,
+            30u32 => Self::StorageBufferArrayDynamicIndexing,
+            31u32 => Self::StorageImageArrayDynamicIndexing,
+            32u32 => Self::ClipDistance,
+            33u32 => Self::CullDistance,
+            34u32 => Self::ImageCubeArray,
+            35u32 => Self::SampleRateShading,
+            36u32 => Self::ImageRect,
+            37u32 => Self::SampledRect,
+            38u32 => Self::GenericPointer,
+            39u32 => Self::Int8,
+            40u32 => Self::InputAttachment,
+            41u32 => Self::SparseResidency,
+            42u32 => Self::MinLod,
+            43u32 => Self::Sampled1D,
+            44u32 => Self::Image1D,
+            45u32 => Self::SampledCubeArray,
+            46u32 => Self::SampledBuffer,
+            47u32 => Self::ImageBuffer,
+            48u32 => Self::ImageMSArray,
+            49u32 => Self::StorageImageExtendedFormats,
+            50u32 => Self::ImageQuery,
+            51u32 => Self::DerivativeControl,
+            52u32 => Self::InterpolationFunction,
+            53u32 => Self::TransformFeedback,
+            54u32 => Self::GeometryStreams,
+            55u32 => Self::StorageImageReadWithoutFormat,
+            56u32 => Self::StorageImageWriteWithoutFormat,
+            57u32 => Self::MultiViewport,
+            58u32 => Self::SubgroupDispatch,
+            59u32 => Self::NamedBarrier,
+            60u32 => Self::PipeStorage,
+            61u32 => Self::GroupNonUniform,
+            62u32 => Self::GroupNonUniformVote,
+            63u32 => Self::GroupNonUniformArithmetic,
+            64u32 => Self::GroupNonUniformBallot,
+            65u32 => Self::GroupNonUniformShuffle,
+            66u32 => Self::GroupNonUniformShuffleRelative,
+            67u32 => Self::GroupNonUniformClustered,
+            68u32 => Self::GroupNonUniformQuad,
+            69u32 => Self::ShaderLayer,
+            70u32 => Self::ShaderViewportIndex,
+            71u32 => Self::UniformDecoration,
+            4165u32 => Self::CoreBuiltinsARM,
+            4166u32 => Self::TileImageColorReadAccessEXT,
+            4167u32 => Self::TileImageDepthReadAccessEXT,
+            4168u32 => Self::TileImageStencilReadAccessEXT,
+            4174u32 => Self::TensorsARM,
+            4175u32 => Self::StorageTensorArrayDynamicIndexingARM,
+            4176u32 => Self::StorageTensorArrayNonUniformIndexingARM,
+            4191u32 => Self::GraphARM,
+            4201u32 => Self::CooperativeMatrixLayoutsARM,
+            4212u32 => Self::Float8EXT,
+            4213u32 => Self::Float8CooperativeMatrixEXT,
+            4422u32 => Self::FragmentShadingRateKHR,
+            4423u32 => Self::SubgroupBallotKHR,
+            4427u32 => Self::DrawParameters,
+            4428u32 => Self::WorkgroupMemoryExplicitLayoutKHR,
+            4429u32 => Self::WorkgroupMemoryExplicitLayout8BitAccessKHR,
+            4430u32 => Self::WorkgroupMemoryExplicitLayout16BitAccessKHR,
+            4431u32 => Self::SubgroupVoteKHR,
+            4433u32 => Self::StorageBuffer16BitAccess,
+            4434u32 => Self::UniformAndStorageBuffer16BitAccess,
+            4435u32 => Self::StoragePushConstant16,
+            4436u32 => Self::StorageInputOutput16,
+            4437u32 => Self::DeviceGroup,
+            4439u32 => Self::MultiView,
+            4441u32 => Self::VariablePointersStorageBuffer,
+            4442u32 => Self::VariablePointers,
+            4445u32 => Self::AtomicStorageOps,
+            4447u32 => Self::SampleMaskPostDepthCoverage,
+            4448u32 => Self::StorageBuffer8BitAccess,
+            4449u32 => Self::UniformAndStorageBuffer8BitAccess,
+            4450u32 => Self::StoragePushConstant8,
+            4464u32 => Self::DenormPreserve,
+            4465u32 => Self::DenormFlushToZero,
+            4466u32 => Self::SignedZeroInfNanPreserve,
+            4467u32 => Self::RoundingModeRTE,
+            4468u32 => Self::RoundingModeRTZ,
+            4471u32 => Self::RayQueryProvisionalKHR,
+            4472u32 => Self::RayQueryKHR,
+            4473u32 => Self::UntypedPointersKHR,
+            4478u32 => Self::RayTraversalPrimitiveCullingKHR,
+            4479u32 => Self::RayTracingKHR,
+            4484u32 => Self::TextureSampleWeightedQCOM,
+            4485u32 => Self::TextureBoxFilterQCOM,
+            4486u32 => Self::TextureBlockMatchQCOM,
+            4495u32 => Self::TileShadingQCOM,
+            4496u32 => Self::CooperativeMatrixConversionQCOM,
+            4498u32 => Self::TextureBlockMatch2QCOM,
+            5008u32 => Self::Float16ImageAMD,
+            5009u32 => Self::ImageGatherBiasLodAMD,
+            5010u32 => Self::FragmentMaskAMD,
+            5013u32 => Self::StencilExportEXT,
+            5015u32 => Self::ImageReadWriteLodAMD,
+            5016u32 => Self::Int64ImageEXT,
+            5055u32 => Self::ShaderClockKHR,
+            5067u32 => Self::ShaderEnqueueAMDX,
+            5087u32 => Self::QuadControlKHR,
+            5112u32 => Self::Int4TypeINTEL,
+            5114u32 => Self::Int4CooperativeMatrixINTEL,
+            5116u32 => Self::BFloat16TypeKHR,
+            5117u32 => Self::BFloat16DotProductKHR,
+            5118u32 => Self::BFloat16CooperativeMatrixKHR,
+            5128u32 => Self::DescriptorHeapEXT,
+            5249u32 => Self::SampleMaskOverrideCoverageNV,
+            5251u32 => Self::GeometryShaderPassthroughNV,
+            5254u32 => Self::ShaderViewportIndexLayerEXT,
+            5255u32 => Self::ShaderViewportMaskNV,
+            5259u32 => Self::ShaderStereoViewNV,
+            5260u32 => Self::PerViewAttributesNV,
+            5265u32 => Self::FragmentFullyCoveredEXT,
+            5266u32 => Self::MeshShadingNV,
+            5282u32 => Self::ImageFootprintNV,
+            5283u32 => Self::MeshShadingEXT,
+            5284u32 => Self::FragmentBarycentricKHR,
+            5288u32 => Self::ComputeDerivativeGroupQuadsKHR,
+            5291u32 => Self::FragmentDensityEXT,
+            5297u32 => Self::GroupNonUniformPartitionedEXT,
+            5301u32 => Self::ShaderNonUniform,
+            5302u32 => Self::RuntimeDescriptorArray,
+            5303u32 => Self::InputAttachmentArrayDynamicIndexing,
+            5304u32 => Self::UniformTexelBufferArrayDynamicIndexing,
+            5305u32 => Self::StorageTexelBufferArrayDynamicIndexing,
+            5306u32 => Self::UniformBufferArrayNonUniformIndexing,
+            5307u32 => Self::SampledImageArrayNonUniformIndexing,
+            5308u32 => Self::StorageBufferArrayNonUniformIndexing,
+            5309u32 => Self::StorageImageArrayNonUniformIndexing,
+            5310u32 => Self::InputAttachmentArrayNonUniformIndexing,
+            5311u32 => Self::UniformTexelBufferArrayNonUniformIndexing,
+            5312u32 => Self::StorageTexelBufferArrayNonUniformIndexing,
+            5336u32 => Self::RayTracingPositionFetchKHR,
+            5340u32 => Self::RayTracingNV,
+            5341u32 => Self::RayTracingMotionBlurNV,
+            5345u32 => Self::VulkanMemoryModel,
+            5346u32 => Self::VulkanMemoryModelDeviceScope,
+            5347u32 => Self::PhysicalStorageBufferAddresses,
+            5350u32 => Self::ComputeDerivativeGroupLinearKHR,
+            5353u32 => Self::RayTracingProvisionalKHR,
+            5357u32 => Self::CooperativeMatrixNV,
+            5363u32 => Self::FragmentShaderSampleInterlockEXT,
+            5372u32 => Self::FragmentShaderShadingRateInterlockEXT,
+            5373u32 => Self::ShaderSMBuiltinsNV,
+            5378u32 => Self::FragmentShaderPixelInterlockEXT,
+            5379u32 => Self::DemoteToHelperInvocation,
+            5380u32 => Self::DisplacementMicromapNV,
+            5381u32 => Self::RayTracingOpacityMicromapEXT,
+            5383u32 => Self::ShaderInvocationReorderNV,
+            5388u32 => Self::ShaderInvocationReorderEXT,
+            5390u32 => Self::BindlessTextureNV,
+            5391u32 => Self::RayQueryPositionFetchKHR,
+            5394u32 => Self::CooperativeVectorNV,
+            5404u32 => Self::AtomicFloat16VectorNV,
+            5409u32 => Self::RayTracingDisplacementMicromapNV,
+            5414u32 => Self::RawAccessChainsNV,
+            5418u32 => Self::RayTracingSpheresGeometryNV,
+            5419u32 => Self::RayTracingLinearSweptSpheresGeometryNV,
+            5423u32 => Self::PushConstantBanksNV,
+            5425u32 => Self::LongVectorEXT,
+            5426u32 => Self::Shader64BitIndexingEXT,
+            5430u32 => Self::CooperativeMatrixReductionsNV,
+            5431u32 => Self::CooperativeMatrixConversionsNV,
+            5432u32 => Self::CooperativeMatrixPerElementOperationsNV,
+            5433u32 => Self::CooperativeMatrixTensorAddressingNV,
+            5434u32 => Self::CooperativeMatrixBlockLoadsNV,
+            5435u32 => Self::CooperativeVectorTrainingNV,
+            5437u32 => Self::RayTracingClusterAccelerationStructureNV,
+            5439u32 => Self::TensorAddressingNV,
+            5568u32 => Self::SubgroupShuffleINTEL,
+            5569u32 => Self::SubgroupBufferBlockIOINTEL,
+            5570u32 => Self::SubgroupImageBlockIOINTEL,
+            5579u32 => Self::SubgroupImageMediaBlockIOINTEL,
+            5582u32 => Self::RoundToInfinityINTEL,
+            5583u32 => Self::FloatingPointModeINTEL,
+            5584u32 => Self::IntegerFunctions2INTEL,
+            5603u32 => Self::FunctionPointersINTEL,
+            5604u32 => Self::IndirectReferencesINTEL,
+            5606u32 => Self::AsmINTEL,
+            5612u32 => Self::AtomicFloat32MinMaxEXT,
+            5613u32 => Self::AtomicFloat64MinMaxEXT,
+            5616u32 => Self::AtomicFloat16MinMaxEXT,
+            5617u32 => Self::VectorComputeINTEL,
+            5619u32 => Self::VectorAnyINTEL,
+            5629u32 => Self::ExpectAssumeKHR,
+            5696u32 => Self::SubgroupAvcMotionEstimationINTEL,
+            5697u32 => Self::SubgroupAvcMotionEstimationIntraINTEL,
+            5698u32 => Self::SubgroupAvcMotionEstimationChromaINTEL,
+            5817u32 => Self::VariableLengthArrayINTEL,
+            5821u32 => Self::FunctionFloatControlINTEL,
+            5824u32 => Self::FPGAMemoryAttributesALTERA,
+            5837u32 => Self::FPFastMathModeINTEL,
+            5844u32 => Self::ArbitraryPrecisionIntegersALTERA,
+            5845u32 => Self::ArbitraryPrecisionFloatingPointALTERA,
+            5886u32 => Self::UnstructuredLoopControlsINTEL,
+            5888u32 => Self::FPGALoopControlsALTERA,
+            5892u32 => Self::KernelAttributesINTEL,
+            5897u32 => Self::FPGAKernelAttributesINTEL,
+            5898u32 => Self::FPGAMemoryAccessesALTERA,
+            5904u32 => Self::FPGAClusterAttributesALTERA,
+            5906u32 => Self::LoopFuseALTERA,
+            5908u32 => Self::FPGADSPControlALTERA,
+            5910u32 => Self::MemoryAccessAliasingINTEL,
+            5916u32 => Self::FPGAInvocationPipeliningAttributesALTERA,
+            5920u32 => Self::FPGABufferLocationALTERA,
+            5922u32 => Self::ArbitraryPrecisionFixedPointALTERA,
+            5935u32 => Self::USMStorageClassesALTERA,
+            5939u32 => Self::RuntimeAlignedAttributeALTERA,
+            5943u32 => Self::IOPipesALTERA,
+            5945u32 => Self::BlockingPipesALTERA,
+            5948u32 => Self::FPGARegALTERA,
+            6016u32 => Self::DotProductInputAll,
+            6017u32 => Self::DotProductInput4x8Bit,
+            6018u32 => Self::DotProductInput4x8BitPacked,
+            6019u32 => Self::DotProduct,
+            6020u32 => Self::RayCullMaskKHR,
+            6022u32 => Self::CooperativeMatrixKHR,
+            6024u32 => Self::ReplicatedCompositesEXT,
+            6025u32 => Self::BitInstructions,
+            6026u32 => Self::GroupNonUniformRotateKHR,
+            6029u32 => Self::FloatControls2,
+            6030u32 => Self::FMAKHR,
+            6033u32 => Self::AtomicFloat32AddEXT,
+            6034u32 => Self::AtomicFloat64AddEXT,
+            6089u32 => Self::LongCompositesINTEL,
+            6094u32 => Self::OptNoneEXT,
+            6095u32 => Self::AtomicFloat16AddEXT,
+            6114u32 => Self::DebugInfoModuleINTEL,
+            6115u32 => Self::BFloat16ConversionINTEL,
+            6141u32 => Self::SplitBarrierINTEL,
+            6144u32 => Self::ArithmeticFenceEXT,
+            6150u32 => Self::FPGAClusterAttributesV2ALTERA,
+            6161u32 => Self::FPGAKernelAttributesv2INTEL,
+            6162u32 => Self::TaskSequenceALTERA,
+            6169u32 => Self::FPMaxErrorINTEL,
+            6171u32 => Self::FPGALatencyControlALTERA,
+            6174u32 => Self::FPGAArgumentInterfacesALTERA,
+            6187u32 => Self::GlobalVariableHostAccessINTEL,
+            6189u32 => Self::GlobalVariableFPGADecorationsALTERA,
+            6220u32 => Self::SubgroupBufferPrefetchINTEL,
+            6228u32 => Self::Subgroup2DBlockIOINTEL,
+            6229u32 => Self::Subgroup2DBlockTransformINTEL,
+            6230u32 => Self::Subgroup2DBlockTransposeINTEL,
+            6236u32 => Self::SubgroupMatrixMultiplyAccumulateINTEL,
+            6241u32 => Self::TernaryBitwiseFunctionINTEL,
+            6243u32 => Self::UntypedVariableLengthArrayINTEL,
+            6245u32 => Self::SpecConditionalINTEL,
+            6246u32 => Self::FunctionVariantsINTEL,
+            6400u32 => Self::GroupUniformArithmeticKHR,
+            6425u32 => Self::TensorFloat32RoundingINTEL,
+            6427u32 => Self::MaskedGatherScatterINTEL,
+            6441u32 => Self::CacheControlsINTEL,
+            6460u32 => Self::RegisterLimitsINTEL,
+            6528u32 => Self::BindlessImagesINTEL,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(Capability),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum RayQueryIntersection {
     RayQueryCandidateIntersectionKHR = 0u32,
     RayQueryCommittedIntersectionKHR = 1u32,
+}
+impl Operand for RayQueryIntersection {
+    const KIND: OperandKind = OPERAND_KIND_RAY_QUERY_INTERSECTION;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::RayQueryCandidateIntersectionKHR,
+            1u32 => Self::RayQueryCommittedIntersectionKHR,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(RayQueryIntersection),
+                    variant,
+                });
+            }
+        })
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -1338,17 +2417,74 @@ pub enum RayQueryCommittedIntersectionType {
     RayQueryCommittedIntersectionTriangleKHR = 1u32,
     RayQueryCommittedIntersectionGeneratedKHR = 2u32,
 }
+impl Operand for RayQueryCommittedIntersectionType {
+    const KIND: OperandKind = OPERAND_KIND_RAY_QUERY_COMMITTED_INTERSECTION_TYPE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::RayQueryCommittedIntersectionNoneKHR,
+            1u32 => Self::RayQueryCommittedIntersectionTriangleKHR,
+            2u32 => Self::RayQueryCommittedIntersectionGeneratedKHR,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(RayQueryCommittedIntersectionType),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum RayQueryCandidateIntersectionType {
     RayQueryCandidateIntersectionTriangleKHR = 0u32,
     RayQueryCandidateIntersectionAABBKHR = 1u32,
 }
+impl Operand for RayQueryCandidateIntersectionType {
+    const KIND: OperandKind = OPERAND_KIND_RAY_QUERY_CANDIDATE_INTERSECTION_TYPE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::RayQueryCandidateIntersectionTriangleKHR,
+            1u32 => Self::RayQueryCandidateIntersectionAABBKHR,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(RayQueryCandidateIntersectionType),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum PackedVectorFormat {
     #[doc = "Since SPIR-V 1.6"]
     PackedVectorFormat4x8Bit = 0u32,
+}
+impl Operand for PackedVectorFormat {
+    const KIND: OperandKind = OPERAND_KIND_PACKED_VECTOR_FORMAT;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::PackedVectorFormat4x8Bit,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(PackedVectorFormat),
+                    variant,
+                });
+            }
+        })
+    }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct CooperativeMatrixOperands : u32 { const NoneKHR = 0u32 ; const MatrixASignedComponentsKHR = 1u32 ; const MatrixBSignedComponentsKHR = 2u32 ; const MatrixCSignedComponentsKHR = 4u32 ; const MatrixResultSignedComponentsKHR = 8u32 ; const SaturatingAccumulationKHR = 16u32 ; } }
 impl Operand for CooperativeMatrixOperands {
@@ -1374,12 +2510,53 @@ pub enum CooperativeMatrixLayout {
     RowBlockedInterleavedARM = 4202u32,
     ColumnBlockedInterleavedARM = 4203u32,
 }
+impl Operand for CooperativeMatrixLayout {
+    const KIND: OperandKind = OPERAND_KIND_COOPERATIVE_MATRIX_LAYOUT;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::RowMajorKHR,
+            1u32 => Self::ColumnMajorKHR,
+            4202u32 => Self::RowBlockedInterleavedARM,
+            4203u32 => Self::ColumnBlockedInterleavedARM,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(CooperativeMatrixLayout),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum CooperativeMatrixUse {
     MatrixAKHR = 0u32,
     MatrixBKHR = 1u32,
     MatrixAccumulatorKHR = 2u32,
+}
+impl Operand for CooperativeMatrixUse {
+    const KIND: OperandKind = OPERAND_KIND_COOPERATIVE_MATRIX_USE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::MatrixAKHR,
+            1u32 => Self::MatrixBKHR,
+            2u32 => Self::MatrixAccumulatorKHR,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(CooperativeMatrixUse),
+                    variant,
+                });
+            }
+        })
+    }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct CooperativeMatrixReduce : u32 { const Row = 1u32 ; const Column = 2u32 ; const TwoByTwo = 4u32 ; } }
 impl Operand for CooperativeMatrixReduce {
@@ -1406,6 +2583,28 @@ pub enum TensorClampMode {
     Repeat = 3u32,
     RepeatMirrored = 4u32,
 }
+impl Operand for TensorClampMode {
+    const KIND: OperandKind = OPERAND_KIND_TENSOR_CLAMP_MODE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Undefined,
+            1u32 => Self::Constant,
+            2u32 => Self::ClampToEdge,
+            3u32 => Self::Repeat,
+            4u32 => Self::RepeatMirrored,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(TensorClampMode),
+                    variant,
+                });
+            }
+        })
+    }
+}
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct TensorAddressingOperands : u32 { const None = 0u32 ; const TensorView = 1u32 ; const DecodeFunc = 2u32 ; } }
 impl Operand for TensorAddressingOperands {
     const KIND: OperandKind = OPERAND_KIND_TENSOR_ADDRESSING_OPERANDS;
@@ -1428,6 +2627,25 @@ pub enum InitializationModeQualifier {
     InitOnDeviceReprogramALTERA = 0u32,
     InitOnDeviceResetALTERA = 1u32,
 }
+impl Operand for InitializationModeQualifier {
+    const KIND: OperandKind = OPERAND_KIND_INITIALIZATION_MODE_QUALIFIER;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::InitOnDeviceReprogramALTERA,
+            1u32 => Self::InitOnDeviceResetALTERA,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(InitializationModeQualifier),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum LoadCacheControl {
@@ -1437,6 +2655,28 @@ pub enum LoadCacheControl {
     InvalidateAfterReadINTEL = 3u32,
     ConstCachedINTEL = 4u32,
 }
+impl Operand for LoadCacheControl {
+    const KIND: OperandKind = OPERAND_KIND_LOAD_CACHE_CONTROL;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::UncachedINTEL,
+            1u32 => Self::CachedINTEL,
+            2u32 => Self::StreamingINTEL,
+            3u32 => Self::InvalidateAfterReadINTEL,
+            4u32 => Self::ConstCachedINTEL,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(LoadCacheControl),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum StoreCacheControl {
@@ -1445,10 +2685,49 @@ pub enum StoreCacheControl {
     WriteBackINTEL = 2u32,
     StreamingINTEL = 3u32,
 }
+impl Operand for StoreCacheControl {
+    const KIND: OperandKind = OPERAND_KIND_STORE_CACHE_CONTROL;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::UncachedINTEL,
+            1u32 => Self::WriteThroughINTEL,
+            2u32 => Self::WriteBackINTEL,
+            3u32 => Self::StreamingINTEL,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(StoreCacheControl),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum NamedMaximumNumberOfRegisters {
     AutoINTEL = 0u32,
+}
+impl Operand for NamedMaximumNumberOfRegisters {
+    const KIND: OperandKind = OPERAND_KIND_NAMED_MAXIMUM_NUMBER_OF_REGISTERS;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::AutoINTEL,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(NamedMaximumNumberOfRegisters),
+                    variant,
+                });
+            }
+        })
+    }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MatrixMultiplyAccumulateOperands : u32 { const None = 0u32 ; const MatrixASignedComponentsINTEL = 1u32 ; const MatrixBSignedComponentsINTEL = 2u32 ; const MatrixCBFloat16INTEL = 4u32 ; const MatrixResultBFloat16INTEL = 8u32 ; const MatrixAPackedInt8INTEL = 16u32 ; const MatrixBPackedInt8INTEL = 32u32 ; const MatrixAPackedInt4INTEL = 64u32 ; const MatrixBPackedInt4INTEL = 128u32 ; const MatrixATF32INTEL = 256u32 ; const MatrixBTF32INTEL = 512u32 ; const MatrixAPackedFloat16INTEL = 1024u32 ; const MatrixBPackedFloat16INTEL = 2048u32 ; const MatrixAPackedBFloat16INTEL = 4096u32 ; const MatrixBPackedBFloat16INTEL = 8192u32 ; } }
 impl Operand for MatrixMultiplyAccumulateOperands {
@@ -1472,6 +2751,26 @@ pub enum FPEncoding {
     Float8E4M3EXT = 4214u32,
     Float8E5M2EXT = 4215u32,
 }
+impl Operand for FPEncoding {
+    const KIND: OperandKind = OPERAND_KIND_FP_ENCODING;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::BFloat16KHR,
+            4214u32 => Self::Float8E4M3EXT,
+            4215u32 => Self::Float8E5M2EXT,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(FPEncoding),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum CooperativeVectorMatrixLayout {
@@ -1479,6 +2778,27 @@ pub enum CooperativeVectorMatrixLayout {
     ColumnMajorNV = 1u32,
     InferencingOptimalNV = 2u32,
     TrainingOptimalNV = 3u32,
+}
+impl Operand for CooperativeVectorMatrixLayout {
+    const KIND: OperandKind = OPERAND_KIND_COOPERATIVE_VECTOR_MATRIX_LAYOUT;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::RowMajorNV,
+            1u32 => Self::ColumnMajorNV,
+            2u32 => Self::InferencingOptimalNV,
+            3u32 => Self::TrainingOptimalNV,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(CooperativeVectorMatrixLayout),
+                    variant,
+                });
+            }
+        })
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -1498,6 +2818,38 @@ pub enum ComponentType {
     UnsignedInt8PackedNV = 1000491001u32,
     FloatE4M3NV = 1000491002u32,
     FloatE5M2NV = 1000491003u32,
+}
+impl Operand for ComponentType {
+    const KIND: OperandKind = OPERAND_KIND_COMPONENT_TYPE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        writer.push(Word(*self as u32))
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Float16NV,
+            1u32 => Self::Float32NV,
+            2u32 => Self::Float64NV,
+            3u32 => Self::SignedInt8NV,
+            4u32 => Self::SignedInt16NV,
+            5u32 => Self::SignedInt32NV,
+            6u32 => Self::SignedInt64NV,
+            7u32 => Self::UnsignedInt8NV,
+            8u32 => Self::UnsignedInt16NV,
+            9u32 => Self::UnsignedInt32NV,
+            10u32 => Self::UnsignedInt64NV,
+            1000491000u32 => Self::SignedInt8PackedNV,
+            1000491001u32 => Self::UnsignedInt8PackedNV,
+            1000491002u32 => Self::FloatE4M3NV,
+            1000491003u32 => Self::FloatE5M2NV,
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(ComponentType),
+                    variant,
+                });
+            }
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PairLiteralIntegerIdRef(LiteralInteger, IdRef);
