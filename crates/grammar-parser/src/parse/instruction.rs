@@ -12,7 +12,7 @@ pub struct InstMeta<'a> {
     pub class: Option<Cow<'a, str>>,
     pub opcode: u16,
     #[serde(borrow, default)]
-    pub operands: SmallVec<[OperandMeta<'a>; 4]>,
+    pub operands: SmallVec<[OperandSpecMeta<'a>; 4]>,
     #[serde(borrow, default)]
     pub capabilities: SmallVec<[Capability<'a>; 2]>,
     #[serde(borrow, default)]
@@ -27,9 +27,9 @@ pub struct InstMeta<'a> {
     pub provisional: bool,
 }
 
-/// See [`spirv_grammar::meta::OperandMeta`]
+/// See [`spirv_grammar::meta::OperandSpecMeta`]
 #[derive(Clone, Debug, Default, serde::Deserialize)]
-pub struct OperandMeta<'a> {
+pub struct OperandSpecMeta<'a> {
     /// The name of the [`OperandKind`], references `Grammar.operand_kinds`
     #[serde(borrow)]
     pub kind: Cow<'a, str>,
@@ -127,7 +127,7 @@ mod codegen {
 
     #[derive(Clone, Debug)]
     pub struct Operand<'a, 'b> {
-        pub meta: &'a OperandMeta<'b>,
+        pub meta: &'a OperandSpecMeta<'b>,
         pub name: Ident,
         pub ty: Ident,
     }
@@ -135,12 +135,12 @@ mod codegen {
     impl<'a> InstMeta<'a> {
         /// Computes a `Vec` of [`Operand`]s with valid member names.
         ///
-        /// See [`OperandMeta::member_name_proposal`] for member naming details.
+        /// See [`OperandSpecMeta::member_name_proposal`] for member naming details.
         pub fn compute_operands(&self) -> Vec<Operand<'_, 'a>> {
             let mut proposed_names = self
                 .operands
                 .iter()
-                .map(OperandMeta::member_name_proposal)
+                .map(OperandSpecMeta::member_name_proposal)
                 .collect::<Vec<_>>();
 
             // check for duplicate operand names
@@ -182,7 +182,7 @@ mod codegen {
         }
     }
 
-    impl OperandMeta<'_> {
+    impl OperandSpecMeta<'_> {
         /// *Proposes* a member name, the actual member name may differ! Use [`InstMeta::compute_operands`] to compute
         /// actual operand / member names.
         ///
@@ -210,13 +210,13 @@ mod codegen {
         }
     }
 
-    impl EmitRef for OperandMeta<'_> {
+    impl EmitRef for OperandSpecMeta<'_> {
         fn emit_ref(&self) -> TokenStream {
             let kind = OperandKind::const_ident(&self.kind);
             let name = self.name.emit_ref();
             let quantifier = self.quantifier.emit_ref();
             quote! {
-                OperandMeta {
+                OperandSpecMeta {
                     kind: &#kind,
                     name: #name,
                     quantifier: #quantifier,
@@ -261,7 +261,7 @@ mod codegen {
 
     #[cfg(test)]
     mod tests {
-        use crate::parse::{InstMeta, OperandMeta, Quantifier};
+        use crate::parse::{InstMeta, OperandSpecMeta, Quantifier};
         use smallvec::SmallVec;
         use std::borrow::Cow;
 
@@ -269,7 +269,7 @@ mod codegen {
         fn test_inst_operand_naming() {
             let test = |names: &[Option<&str>], expected: &[&str]| {
                 let inst = InstMeta {
-                    operands: SmallVec::from_iter(names.iter().map(|name| OperandMeta {
+                    operands: SmallVec::from_iter(names.iter().map(|name| OperandSpecMeta {
                         name: name.map(Cow::from),
                         kind: Cow::Borrowed("testkind"),
                         quantifier: Quantifier::One,

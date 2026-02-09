@@ -1,5 +1,5 @@
 use crate::parse::serde_helper::num_or_hex;
-use crate::parse::{Capability, Extension, OperandMeta};
+use crate::parse::{Capability, Extension, OperandSpecMeta};
 use smallvec::SmallVec;
 use std::borrow::Cow;
 
@@ -45,7 +45,7 @@ pub struct Enumerant<'a> {
     #[serde(deserialize_with = "num_or_hex")]
     pub value: u32,
     #[serde(borrow, default)]
-    pub parameters: SmallVec<[OperandMeta<'a>; 1]>,
+    pub parameters: SmallVec<[OperandSpecMeta<'a>; 1]>,
     #[serde(borrow, default)]
     pub capabilities: SmallVec<[Capability<'a>; 2]>,
     #[serde(borrow, default)]

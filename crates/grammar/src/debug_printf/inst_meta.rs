@@ -4,12 +4,12 @@ pub const DEBUG_PRINTF: InstMeta = InstMeta {
     class: None,
     opcode: 1u16,
     operands: &[
-        OperandMeta {
+        OperandSpecMeta {
             kind: &OPERAND_KIND_ID_REF,
             name: Some("Format"),
             quantifier: Quantifier::One,
         },
-        OperandMeta {
+        OperandSpecMeta {
             kind: &OPERAND_KIND_ID_REF,
             name: None,
             quantifier: Quantifier::ZeroOrMore,

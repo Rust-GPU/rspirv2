@@ -9,7 +9,7 @@ pub struct InstMeta {
     /// The u16 opcode for this instruction
     pub opcode: u16,
     /// The operands of this instruction
-    pub operands: &'static [OperandMeta],
+    pub operands: &'static [OperandSpecMeta],
     /// required capabilities
     pub capabilities: &'static [Capability],
     /// required extensions
@@ -24,9 +24,9 @@ pub struct InstMeta {
     pub provisional: bool,
 }
 
-/// An operand of an instruction
+/// An [`OperandKind`] of an instruction with a repetition [`Quantifier`]
 #[derive(Copy, Clone, Debug)]
-pub struct OperandMeta {
+pub struct OperandSpecMeta {
     /// The kind of operand, referencing the [`OperandKind`]s defined in [`Grammar`]
     pub kind: &'static OperandKind,
     /// Operand name

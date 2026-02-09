@@ -36,10 +36,10 @@ pub trait Operand: OperandEncoding {
 /// Something that can be decoded from or encoded to SPIR-V, not necessarily a full [`Operand`].
 ///
 /// Both [`Option`] and [`Vec`] implement `OperandEncoding` but not [`Operand`]. This allows for an easier
-/// representation of [`OperandMeta`]s with [`Quantifier`] of [`Quantifier::ZeroOrOne`] (`Option`) and
+/// representation of [`OperandSpecMeta`]s with [`Quantifier`] of [`Quantifier::ZeroOrOne`] (`Option`) and
 /// [`Quantifier::ZeroOrMore`] (`Vec`).
 ///
-/// [`OperandMeta`]: `crate::meta::OperandMeta`
+/// [`OperandSpecMeta`]: `crate::meta::OperandSpecMeta`
 /// [`Quantifier`]: `crate::meta::Quantifier`
 pub trait OperandEncoding: Sized {
     /// The fixed length of the Operand, or `None` if it's variable length.

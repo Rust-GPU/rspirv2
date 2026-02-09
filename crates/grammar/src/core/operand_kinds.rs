@@ -17,7 +17,7 @@ pub const OPERAND_KIND_IMAGE_OPERANDS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "Bias",
                 value: 1u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: None,
                     quantifier: Quantifier::One,
@@ -32,7 +32,7 @@ pub const OPERAND_KIND_IMAGE_OPERANDS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "Lod",
                 value: 2u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: None,
                     quantifier: Quantifier::One,
@@ -48,12 +48,12 @@ pub const OPERAND_KIND_IMAGE_OPERANDS: OperandKind = OperandKind {
                 symbol: "Grad",
                 value: 4u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: None,
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: None,
                         quantifier: Quantifier::One,
@@ -69,7 +69,7 @@ pub const OPERAND_KIND_IMAGE_OPERANDS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "ConstOffset",
                 value: 8u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: None,
                     quantifier: Quantifier::One,
@@ -84,7 +84,7 @@ pub const OPERAND_KIND_IMAGE_OPERANDS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "Offset",
                 value: 16u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: None,
                     quantifier: Quantifier::One,
@@ -99,7 +99,7 @@ pub const OPERAND_KIND_IMAGE_OPERANDS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "ConstOffsets",
                 value: 32u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: None,
                     quantifier: Quantifier::One,
@@ -114,7 +114,7 @@ pub const OPERAND_KIND_IMAGE_OPERANDS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "Sample",
                 value: 64u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: None,
                     quantifier: Quantifier::One,
@@ -129,7 +129,7 @@ pub const OPERAND_KIND_IMAGE_OPERANDS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MinLod",
                 value: 128u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: None,
                     quantifier: Quantifier::One,
@@ -144,7 +144,7 @@ pub const OPERAND_KIND_IMAGE_OPERANDS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MakeTexelAvailable",
                 value: 256u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_SCOPE,
                     name: None,
                     quantifier: Quantifier::One,
@@ -159,7 +159,7 @@ pub const OPERAND_KIND_IMAGE_OPERANDS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MakeTexelVisible",
                 value: 512u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_SCOPE,
                     name: None,
                     quantifier: Quantifier::One,
@@ -229,7 +229,7 @@ pub const OPERAND_KIND_IMAGE_OPERANDS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "Offsets",
                 value: 65536u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: None,
                     quantifier: Quantifier::One,
@@ -444,7 +444,7 @@ pub const OPERAND_KIND_LOOP_CONTROL: OperandKind = OperandKind {
             Enumerant {
                 symbol: "DependencyLength",
                 value: 8u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -459,7 +459,7 @@ pub const OPERAND_KIND_LOOP_CONTROL: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MinIterations",
                 value: 16u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -474,7 +474,7 @@ pub const OPERAND_KIND_LOOP_CONTROL: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MaxIterations",
                 value: 32u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -489,7 +489,7 @@ pub const OPERAND_KIND_LOOP_CONTROL: OperandKind = OperandKind {
             Enumerant {
                 symbol: "IterationMultiple",
                 value: 64u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -504,7 +504,7 @@ pub const OPERAND_KIND_LOOP_CONTROL: OperandKind = OperandKind {
             Enumerant {
                 symbol: "PeelCount",
                 value: 128u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -519,7 +519,7 @@ pub const OPERAND_KIND_LOOP_CONTROL: OperandKind = OperandKind {
             Enumerant {
                 symbol: "PartialCount",
                 value: 256u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -534,7 +534,7 @@ pub const OPERAND_KIND_LOOP_CONTROL: OperandKind = OperandKind {
             Enumerant {
                 symbol: "InitiationIntervalALTERA",
                 value: 65536u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -549,7 +549,7 @@ pub const OPERAND_KIND_LOOP_CONTROL: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MaxConcurrencyALTERA",
                 value: 131072u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -564,7 +564,7 @@ pub const OPERAND_KIND_LOOP_CONTROL: OperandKind = OperandKind {
             Enumerant {
                 symbol: "DependencyArrayALTERA",
                 value: 262144u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -579,7 +579,7 @@ pub const OPERAND_KIND_LOOP_CONTROL: OperandKind = OperandKind {
             Enumerant {
                 symbol: "PipelineEnableALTERA",
                 value: 524288u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -594,7 +594,7 @@ pub const OPERAND_KIND_LOOP_CONTROL: OperandKind = OperandKind {
             Enumerant {
                 symbol: "LoopCoalesceALTERA",
                 value: 1048576u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -609,7 +609,7 @@ pub const OPERAND_KIND_LOOP_CONTROL: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MaxInterleavingALTERA",
                 value: 2097152u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -624,7 +624,7 @@ pub const OPERAND_KIND_LOOP_CONTROL: OperandKind = OperandKind {
             Enumerant {
                 symbol: "SpeculatedIterationsALTERA",
                 value: 4194304u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -650,7 +650,7 @@ pub const OPERAND_KIND_LOOP_CONTROL: OperandKind = OperandKind {
             Enumerant {
                 symbol: "LoopCountALTERA",
                 value: 16777216u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -665,7 +665,7 @@ pub const OPERAND_KIND_LOOP_CONTROL: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MaxReinvocationDelayALTERA",
                 value: 33554432u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -957,7 +957,7 @@ pub const OPERAND_KIND_MEMORY_ACCESS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "Aligned",
                 value: 2u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: None,
                     quantifier: Quantifier::One,
@@ -983,7 +983,7 @@ pub const OPERAND_KIND_MEMORY_ACCESS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MakePointerAvailable",
                 value: 8u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_SCOPE,
                     name: None,
                     quantifier: Quantifier::One,
@@ -998,7 +998,7 @@ pub const OPERAND_KIND_MEMORY_ACCESS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MakePointerVisible",
                 value: 16u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_SCOPE,
                     name: None,
                     quantifier: Quantifier::One,
@@ -1024,7 +1024,7 @@ pub const OPERAND_KIND_MEMORY_ACCESS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "AliasScopeINTELMask",
                 value: 65536u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: None,
                     quantifier: Quantifier::One,
@@ -1039,7 +1039,7 @@ pub const OPERAND_KIND_MEMORY_ACCESS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "NoAliasINTELMask",
                 value: 131072u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: None,
                     quantifier: Quantifier::One,
@@ -1789,7 +1789,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "Invocations",
                 value: 0u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Number of <<Invocation,invocations>>"),
                     quantifier: Quantifier::One,
@@ -1970,17 +1970,17 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
                 symbol: "LocalSize",
                 value: 17u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("x size"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("y size"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("z size"),
                         quantifier: Quantifier::One,
@@ -1997,17 +1997,17 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
                 symbol: "LocalSizeHint",
                 value: 18u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("x size"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("y size"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("z size"),
                         quantifier: Quantifier::One,
@@ -2100,7 +2100,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "OutputVertices",
                 value: 26u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Vertex count"),
                     quantifier: Quantifier::One,
@@ -2157,7 +2157,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "VecTypeHint",
                 value: 30u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Vector type"),
                     quantifier: Quantifier::One,
@@ -2205,7 +2205,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "SubgroupSize",
                 value: 35u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Subgroup Size"),
                     quantifier: Quantifier::One,
@@ -2220,7 +2220,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "SubgroupsPerWorkgroup",
                 value: 36u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Subgroups Per Workgroup"),
                     quantifier: Quantifier::One,
@@ -2235,7 +2235,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "SubgroupsPerWorkgroupId",
                 value: 37u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Subgroups Per Workgroup"),
                     quantifier: Quantifier::One,
@@ -2251,17 +2251,17 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
                 symbol: "LocalSizeId",
                 value: 38u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("x size"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("y size"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("z size"),
                         quantifier: Quantifier::One,
@@ -2278,17 +2278,17 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
                 symbol: "LocalSizeHintId",
                 value: 39u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("x size hint"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("y size hint"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("z size hint"),
                         quantifier: Quantifier::One,
@@ -2359,7 +2359,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "DenormPreserve",
                 value: 4459u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Target Width"),
                     quantifier: Quantifier::One,
@@ -2374,7 +2374,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "DenormFlushToZero",
                 value: 4460u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Target Width"),
                     quantifier: Quantifier::One,
@@ -2389,7 +2389,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "SignedZeroInfNanPreserve",
                 value: 4461u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Target Width"),
                     quantifier: Quantifier::One,
@@ -2404,7 +2404,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "RoundingModeRTE",
                 value: 4462u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Target Width"),
                     quantifier: Quantifier::One,
@@ -2419,7 +2419,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "RoundingModeRTZ",
                 value: 4463u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Target Width"),
                     quantifier: Quantifier::One,
@@ -2446,17 +2446,17 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
                 symbol: "TileShadingRateQCOM",
                 value: 4490u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("x rate"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("y rate"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("z rate"),
                         quantifier: Quantifier::One,
@@ -2505,7 +2505,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "IsApiEntryAMDX",
                 value: 5070u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Is Entry"),
                     quantifier: Quantifier::One,
@@ -2520,7 +2520,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MaxNodeRecursionAMDX",
                 value: 5071u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Number of recursions"),
                     quantifier: Quantifier::One,
@@ -2536,17 +2536,17 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
                 symbol: "StaticNumWorkgroupsAMDX",
                 value: 5072u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("x size"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("y size"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("z size"),
                         quantifier: Quantifier::One,
@@ -2562,7 +2562,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "ShaderIndexAMDX",
                 value: 5073u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Shader Index"),
                     quantifier: Quantifier::One,
@@ -2578,17 +2578,17 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
                 symbol: "MaxNumWorkgroupsAMDX",
                 value: 5077u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("x size"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("y size"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("z size"),
                         quantifier: Quantifier::One,
@@ -2711,12 +2711,12 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
                 symbol: "SharesInputWithAMDX",
                 value: 5102u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("Node Name"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("Shader Index"),
                         quantifier: Quantifier::One,
@@ -2743,7 +2743,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "OutputPrimitivesEXT",
                 value: 5270u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Primitive count"),
                     quantifier: Quantifier::One,
@@ -2874,7 +2874,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "SharedLocalMemorySizeINTEL",
                 value: 5618u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Size"),
                     quantifier: Quantifier::One,
@@ -2889,7 +2889,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "RoundingModeRTPINTEL",
                 value: 5620u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Target Width"),
                     quantifier: Quantifier::One,
@@ -2904,7 +2904,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "RoundingModeRTNINTEL",
                 value: 5621u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Target Width"),
                     quantifier: Quantifier::One,
@@ -2919,7 +2919,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "FloatingPointModeALTINTEL",
                 value: 5622u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Target Width"),
                     quantifier: Quantifier::One,
@@ -2934,7 +2934,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "FloatingPointModeIEEEINTEL",
                 value: 5623u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Target Width"),
                     quantifier: Quantifier::One,
@@ -2950,17 +2950,17 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
                 symbol: "MaxWorkgroupSizeINTEL",
                 value: 5893u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("max_x_size"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("max_y_size"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("max_z_size"),
                         quantifier: Quantifier::One,
@@ -2976,7 +2976,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MaxWorkDimINTEL",
                 value: 5894u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("max_dimensions"),
                     quantifier: Quantifier::One,
@@ -3002,7 +3002,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "NumSIMDWorkitemsINTEL",
                 value: 5896u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("vector_width"),
                     quantifier: Quantifier::One,
@@ -3017,7 +3017,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "SchedulerTargetFmaxMhzINTEL",
                 value: 5903u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("target_fmax"),
                     quantifier: Quantifier::One,
@@ -3044,12 +3044,12 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
                 symbol: "FPFastMathDefault",
                 value: 6028u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("Target Type"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_ID_REF,
                         name: Some("Fast-Math Mode"),
                         quantifier: Quantifier::One,
@@ -3065,7 +3065,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "StreamingInterfaceINTEL",
                 value: 6154u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("StallFreeReturn"),
                     quantifier: Quantifier::One,
@@ -3080,7 +3080,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "RegisterMapInterfaceINTEL",
                 value: 6160u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("WaitForDoneWrite"),
                     quantifier: Quantifier::One,
@@ -3095,7 +3095,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "NamedBarrierCountINTEL",
                 value: 6417u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Barrier Count"),
                     quantifier: Quantifier::One,
@@ -3110,7 +3110,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MaximumRegistersINTEL",
                 value: 6461u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Number of Registers"),
                     quantifier: Quantifier::One,
@@ -3125,7 +3125,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MaximumRegistersIdINTEL",
                 value: 6462u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Number of Registers"),
                     quantifier: Quantifier::One,
@@ -3140,7 +3140,7 @@ pub const OPERAND_KIND_EXECUTION_MODE: OperandKind = OperandKind {
             Enumerant {
                 symbol: "NamedMaximumRegistersINTEL",
                 value: 6463u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_NAMED_MAXIMUM_NUMBER_OF_REGISTERS,
                     name: Some("Named Maximum Number of Registers"),
                     quantifier: Quantifier::One,
@@ -5189,7 +5189,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "SpecId",
                 value: 1u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Specialization Constant ID"),
                     quantifier: Quantifier::One,
@@ -5248,7 +5248,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "ArrayStride",
                 value: 6u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Array Stride"),
                     quantifier: Quantifier::One,
@@ -5263,7 +5263,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MatrixStride",
                 value: 7u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Matrix Stride"),
                     quantifier: Quantifier::One,
@@ -5311,7 +5311,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "BuiltIn",
                 value: 11u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_BUILT_IN,
                     name: None,
                     quantifier: Quantifier::One,
@@ -5480,7 +5480,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "UniformId",
                 value: 27u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_SCOPE,
                     name: Some("Execution"),
                     quantifier: Quantifier::One,
@@ -5506,7 +5506,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "Stream",
                 value: 29u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Stream Number"),
                     quantifier: Quantifier::One,
@@ -5521,7 +5521,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "Location",
                 value: 30u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Location"),
                     quantifier: Quantifier::One,
@@ -5536,7 +5536,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "Component",
                 value: 31u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Component"),
                     quantifier: Quantifier::One,
@@ -5551,7 +5551,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "Index",
                 value: 32u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Index"),
                     quantifier: Quantifier::One,
@@ -5566,7 +5566,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "Binding",
                 value: 33u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Binding Point"),
                     quantifier: Quantifier::One,
@@ -5581,7 +5581,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "DescriptorSet",
                 value: 34u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Descriptor Set"),
                     quantifier: Quantifier::One,
@@ -5596,7 +5596,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "Offset",
                 value: 35u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Byte Offset"),
                     quantifier: Quantifier::One,
@@ -5611,7 +5611,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "XfbBuffer",
                 value: 36u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("XFB Buffer Number"),
                     quantifier: Quantifier::One,
@@ -5626,7 +5626,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "XfbStride",
                 value: 37u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("XFB Stride"),
                     quantifier: Quantifier::One,
@@ -5641,7 +5641,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "FuncParamAttr",
                 value: 38u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_FUNCTION_PARAMETER_ATTRIBUTE,
                     name: Some("Function Parameter Attribute"),
                     quantifier: Quantifier::One,
@@ -5656,7 +5656,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "FPRoundingMode",
                 value: 39u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_FP_ROUNDING_MODE,
                     name: Some("Floating-Point Rounding Mode"),
                     quantifier: Quantifier::One,
@@ -5671,7 +5671,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "FPFastMathMode",
                 value: 40u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_FP_FAST_MATH_MODE,
                     name: Some("Fast-Math Mode"),
                     quantifier: Quantifier::One,
@@ -5687,12 +5687,12 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
                 symbol: "LinkageAttributes",
                 value: 41u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_STRING,
                         name: Some("Name"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LINKAGE_TYPE,
                         name: Some("Linkage Type"),
                         quantifier: Quantifier::One,
@@ -5719,7 +5719,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "InputAttachmentIndex",
                 value: 43u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Attachment Index"),
                     quantifier: Quantifier::One,
@@ -5734,7 +5734,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "Alignment",
                 value: 44u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Alignment"),
                     quantifier: Quantifier::One,
@@ -5749,7 +5749,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MaxByteOffset",
                 value: 45u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Max Byte Offset"),
                     quantifier: Quantifier::One,
@@ -5764,7 +5764,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "AlignmentId",
                 value: 46u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Alignment"),
                     quantifier: Quantifier::One,
@@ -5779,7 +5779,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MaxByteOffsetId",
                 value: 47u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Max Byte Offset"),
                     quantifier: Quantifier::One,
@@ -5871,7 +5871,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "NodeSharesPayloadLimitsWithAMDX",
                 value: 5019u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Payload Type"),
                     quantifier: Quantifier::One,
@@ -5886,7 +5886,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "NodeMaxPayloadsAMDX",
                 value: 5020u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Max number of payloads"),
                     quantifier: Quantifier::One,
@@ -5912,7 +5912,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "PayloadNodeNameAMDX",
                 value: 5091u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Node Name"),
                     quantifier: Quantifier::One,
@@ -5927,7 +5927,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "PayloadNodeBaseIndexAMDX",
                 value: 5098u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Base Index"),
                     quantifier: Quantifier::One,
@@ -5953,7 +5953,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "PayloadNodeArraySizeAMDX",
                 value: 5100u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Array Size"),
                     quantifier: Quantifier::One,
@@ -5979,7 +5979,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "ArrayStrideIdEXT",
                 value: 5124u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Array Stride"),
                     quantifier: Quantifier::One,
@@ -5994,7 +5994,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "OffsetIdEXT",
                 value: 5125u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Byte Offset"),
                     quantifier: Quantifier::One,
@@ -6042,7 +6042,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "SecondaryViewportRelativeNV",
                 value: 5256u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Offset"),
                     quantifier: Quantifier::One,
@@ -6143,7 +6143,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MemberOffsetNV",
                 value: 5358u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("memberOffset"),
                     quantifier: Quantifier::One,
@@ -6180,7 +6180,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "BankNV",
                 value: 5397u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Bank"),
                     quantifier: Quantifier::One,
@@ -6239,7 +6239,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "SIMTCallINTEL",
                 value: 5599u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("N"),
                     quantifier: Quantifier::One,
@@ -6265,7 +6265,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "ClobberINTEL",
                 value: 5607u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_STRING,
                     name: Some("Register"),
                     quantifier: Quantifier::One,
@@ -6302,7 +6302,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "FuncParamIOKindINTEL",
                 value: 5625u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Kind"),
                     quantifier: Quantifier::One,
@@ -6339,7 +6339,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "GlobalVariableOffsetINTEL",
                 value: 5628u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Offset"),
                     quantifier: Quantifier::One,
@@ -6354,7 +6354,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "CounterBuffer",
                 value: 5634u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Counter Buffer"),
                     quantifier: Quantifier::One,
@@ -6369,7 +6369,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "UserSemantic",
                 value: 5635u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_STRING,
                     name: Some("Semantic"),
                     quantifier: Quantifier::One,
@@ -6384,7 +6384,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "UserTypeGOOGLE",
                 value: 5636u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_STRING,
                     name: Some("User Type"),
                     quantifier: Quantifier::One,
@@ -6400,12 +6400,12 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
                 symbol: "FunctionRoundingModeINTEL",
                 value: 5822u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("Target Width"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_FP_ROUNDING_MODE,
                         name: Some("FP Rounding Mode"),
                         quantifier: Quantifier::One,
@@ -6422,12 +6422,12 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
                 symbol: "FunctionDenormModeINTEL",
                 value: 5823u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("Target Width"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_FP_DENORM_MODE,
                         name: Some("FP Denorm Mode"),
                         quantifier: Quantifier::One,
@@ -6454,7 +6454,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MemoryALTERA",
                 value: 5826u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_STRING,
                     name: Some("Memory Type"),
                     quantifier: Quantifier::One,
@@ -6469,7 +6469,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "NumbanksALTERA",
                 value: 5827u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Banks"),
                     quantifier: Quantifier::One,
@@ -6484,7 +6484,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "BankwidthALTERA",
                 value: 5828u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Bank Width"),
                     quantifier: Quantifier::One,
@@ -6499,7 +6499,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MaxPrivateCopiesALTERA",
                 value: 5829u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Maximum Copies"),
                     quantifier: Quantifier::One,
@@ -6536,7 +6536,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MaxReplicatesALTERA",
                 value: 5832u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Maximum Replicates"),
                     quantifier: Quantifier::One,
@@ -6563,12 +6563,12 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
                 symbol: "MergeALTERA",
                 value: 5834u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_STRING,
                         name: Some("Merge Key"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_STRING,
                         name: Some("Merge Type"),
                         quantifier: Quantifier::One,
@@ -6584,7 +6584,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "BankBitsALTERA",
                 value: 5835u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Bank Bits"),
                     quantifier: Quantifier::ZeroOrMore,
@@ -6599,7 +6599,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "ForcePow2DepthALTERA",
                 value: 5836u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Force Key"),
                     quantifier: Quantifier::One,
@@ -6614,7 +6614,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "StridesizeALTERA",
                 value: 5883u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Stride Size"),
                     quantifier: Quantifier::One,
@@ -6629,7 +6629,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "WordsizeALTERA",
                 value: 5884u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Word Size"),
                     quantifier: Quantifier::One,
@@ -6666,7 +6666,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "CacheSizeALTERA",
                 value: 5900u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Cache Size in bytes"),
                     quantifier: Quantifier::One,
@@ -6692,7 +6692,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "PrefetchALTERA",
                 value: 5902u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Prefetcher Size in bytes"),
                     quantifier: Quantifier::One,
@@ -6730,12 +6730,12 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
                 symbol: "MathOpDSPModeALTERA",
                 value: 5909u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("Mode"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("Propagate"),
                         quantifier: Quantifier::One,
@@ -6751,7 +6751,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "AliasScopeINTEL",
                 value: 5914u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Aliasing Scopes List"),
                     quantifier: Quantifier::One,
@@ -6766,7 +6766,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "NoAliasINTEL",
                 value: 5915u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Aliasing Scopes List"),
                     quantifier: Quantifier::One,
@@ -6781,7 +6781,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "InitiationIntervalALTERA",
                 value: 5917u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Cycles"),
                     quantifier: Quantifier::One,
@@ -6796,7 +6796,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MaxConcurrencyALTERA",
                 value: 5918u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Invocations"),
                     quantifier: Quantifier::One,
@@ -6811,7 +6811,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "PipelineEnableALTERA",
                 value: 5919u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Enable"),
                     quantifier: Quantifier::One,
@@ -6826,7 +6826,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "BufferLocationALTERA",
                 value: 5921u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Buffer Location ID"),
                     quantifier: Quantifier::One,
@@ -6841,7 +6841,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "IOPipeStorageALTERA",
                 value: 5944u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("IO Pipe ID"),
                     quantifier: Quantifier::One,
@@ -6857,12 +6857,12 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
                 symbol: "FunctionFloatingPointModeINTEL",
                 value: 6080u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("Target Width"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_FP_OPERATION_MODE,
                         name: Some("FP Operation Mode"),
                         quantifier: Quantifier::One,
@@ -6922,7 +6922,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "FPMaxErrorDecorationINTEL",
                 value: 6170u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_FLOAT,
                     name: Some("Max Error"),
                     quantifier: Quantifier::One,
@@ -6937,7 +6937,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "LatencyControlLabelALTERA",
                 value: 6172u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Latency Label"),
                     quantifier: Quantifier::One,
@@ -6953,17 +6953,17 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
                 symbol: "LatencyControlConstraintALTERA",
                 value: 6173u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("Relative To"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("Control Type"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("Relative Cycle"),
                         quantifier: Quantifier::One,
@@ -7001,7 +7001,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MMHostInterfaceAddressWidthALTERA",
                 value: 6177u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("AddressWidth"),
                     quantifier: Quantifier::One,
@@ -7016,7 +7016,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MMHostInterfaceDataWidthALTERA",
                 value: 6178u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("DataWidth"),
                     quantifier: Quantifier::One,
@@ -7031,7 +7031,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MMHostInterfaceLatencyALTERA",
                 value: 6179u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Latency"),
                     quantifier: Quantifier::One,
@@ -7046,7 +7046,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MMHostInterfaceReadWriteModeALTERA",
                 value: 6180u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ACCESS_QUALIFIER,
                     name: Some("ReadWriteMode"),
                     quantifier: Quantifier::One,
@@ -7061,7 +7061,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MMHostInterfaceMaxBurstALTERA",
                 value: 6181u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("MaxBurstCount"),
                     quantifier: Quantifier::One,
@@ -7076,7 +7076,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MMHostInterfaceWaitRequestALTERA",
                 value: 6182u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Waitrequest"),
                     quantifier: Quantifier::One,
@@ -7103,12 +7103,12 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
                 symbol: "HostAccessINTEL",
                 value: 6188u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_HOST_ACCESS_QUALIFIER,
                         name: Some("Access"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_STRING,
                         name: Some("Name"),
                         quantifier: Quantifier::One,
@@ -7124,7 +7124,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "InitModeALTERA",
                 value: 6190u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_INITIALIZATION_MODE_QUALIFIER,
                     name: Some("Trigger"),
                     quantifier: Quantifier::One,
@@ -7139,7 +7139,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "ImplementInRegisterMapALTERA",
                 value: 6191u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_LITERAL_INTEGER,
                     name: Some("Value"),
                     quantifier: Quantifier::One,
@@ -7154,7 +7154,7 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
             Enumerant {
                 symbol: "ConditionalINTEL",
                 value: 6247u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: Some("Condition"),
                     quantifier: Quantifier::One,
@@ -7170,12 +7170,12 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
                 symbol: "CacheControlLoadINTEL",
                 value: 6442u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("Cache Level"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LOAD_CACHE_CONTROL,
                         name: Some("Cache Control"),
                         quantifier: Quantifier::One,
@@ -7192,12 +7192,12 @@ pub const OPERAND_KIND_DECORATION: OperandKind = OperandKind {
                 symbol: "CacheControlStoreINTEL",
                 value: 6443u32,
                 parameters: &[
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_LITERAL_INTEGER,
                         name: Some("Cache Level"),
                         quantifier: Quantifier::One,
                     },
-                    OperandMeta {
+                    OperandSpecMeta {
                         kind: &OPERAND_KIND_STORE_CACHE_CONTROL,
                         name: Some("Cache Control"),
                         quantifier: Quantifier::One,
@@ -12503,7 +12503,7 @@ pub const OPERAND_KIND_TENSOR_ADDRESSING_OPERANDS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "TensorView",
                 value: 1u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: None,
                     quantifier: Quantifier::One,
@@ -12518,7 +12518,7 @@ pub const OPERAND_KIND_TENSOR_ADDRESSING_OPERANDS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "DecodeFunc",
                 value: 2u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: None,
                     quantifier: Quantifier::One,
@@ -13240,7 +13240,7 @@ pub const OPERAND_KIND_TENSOR_OPERANDS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "OutOfBoundsValueARM",
                 value: 2u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: None,
                     quantifier: Quantifier::One,
@@ -13255,7 +13255,7 @@ pub const OPERAND_KIND_TENSOR_OPERANDS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MakeElementAvailableARM",
                 value: 4u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: None,
                     quantifier: Quantifier::One,
@@ -13270,7 +13270,7 @@ pub const OPERAND_KIND_TENSOR_OPERANDS: OperandKind = OperandKind {
             Enumerant {
                 symbol: "MakeElementVisibleARM",
                 value: 8u32,
-                parameters: &[OperandMeta {
+                parameters: &[OperandSpecMeta {
                     kind: &OPERAND_KIND_ID_REF,
                     name: None,
                     quantifier: Quantifier::One,

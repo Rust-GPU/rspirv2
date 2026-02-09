@@ -1,4 +1,4 @@
-use crate::meta::{Capability, Extension, OperandMeta};
+use crate::meta::{Capability, Extension, OperandSpecMeta};
 
 /// Specifies possible [`Operand`] values, see [`Category`] variants.
 #[derive(Copy, Clone, Debug)]
@@ -44,7 +44,7 @@ pub struct Enumerant {
     pub value: u32,
     /// Parameters work like tagged enums in Rust and are used for e.g. `ExecutionMode` and `OpDecorate`.
     /// Usually 0-sized, often 1 and sometimes a 3D vector.
-    pub parameters: &'static [OperandMeta],
+    pub parameters: &'static [OperandSpecMeta],
     /// required capabilities.
     pub capabilities: &'static [Capability],
     /// required extensions.
