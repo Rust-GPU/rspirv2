@@ -89,6 +89,10 @@ impl Operand for LiteralConst {
 impl OperandEncoding for LiteralConst {
     const FIXED_LEN: Option<usize> = None;
 
+    fn word_len(&self) -> usize {
+        self.0.len()
+    }
+
     fn encode(&self, writer: &mut impl InstructionWriter) {
         writer.extend(self.0.iter().copied())
     }

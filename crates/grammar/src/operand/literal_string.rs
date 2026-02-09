@@ -42,8 +42,13 @@ impl Operand for LiteralString {
 impl OperandEncoding for LiteralString {
     const FIXED_LEN: Option<usize> = None;
 
+    #[inline]
+    fn word_len(&self) -> usize {
+        (self.0.len() + 1).div_ceil(4)
+    }
+
     fn encode(&self, writer: &mut impl InstructionWriter) {
-        let words = (self.0.len() + 1).div_ceil(4);
+        let words = self.word_len();
         let load = |i, o| *self.as_bytes().get(i * 4 + o).unwrap_or(&0);
         writer.extend((0..words).map(|i| {
             Word(u32::from_ne_bytes([

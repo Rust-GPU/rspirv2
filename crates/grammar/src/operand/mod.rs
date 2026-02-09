@@ -4,7 +4,7 @@ mod literal_float;
 mod literal_integer;
 mod literal_string;
 
-use crate::binary::{DecodeError, InstructionReader, InstructionWriter};
+use crate::binary::{DecodeError, InstructionReader, InstructionWriter, WordCounter};
 use crate::meta::{OperandKind, Quantifier};
 pub use id::*;
 pub use literal_const::*;
@@ -57,7 +57,6 @@ impl<T: Operand> OperandSpec for T {
 /// [`Quantifier::ZeroOrMore`] (`Vec`).
 ///
 /// [`OperandSpecMeta`]: `crate::meta::OperandSpecMeta`
-/// [`Quantifier`]: `crate::meta::Quantifier`
 pub trait OperandEncoding: Sized {
     /// The fixed length of the Operand, or `None` if it's variable length.
     ///
@@ -66,6 +65,35 @@ pub trait OperandEncoding: Sized {
     ///   [`Word`]s
     /// * [`Self::decode`] must [`InstructionReader::pull`] (or [`Iterator::next`]) exactly this many [`Word`]s
     const FIXED_LEN: Option<usize>;
+
+    /// The length of the operand in [`Word`]s.
+    ///
+    /// By default, returns [`Self::FIXED_LEN`] if it is `Some`, or computes it by [`Self::encode`]ing with
+    /// [`WordCounter`]. If encoding your type could be expensive, we recommend overwriting this implementation,
+    /// although LLVM should be able to optimize most encoders into a simple expression.
+    ///
+    /// Several debug assertions to check whether the length is correct are masked behind `cfg!(debug_assertions)`.
+    fn word_len(&self) -> usize {
+        fn computed_word_len(op: &impl OperandEncoding) -> usize {
+            let mut counter = WordCounter::default();
+            op.encode(&mut counter);
+            counter.0
+        }
+
+        if let Some(fixed) = Self::FIXED_LEN {
+            if cfg!(debug_assertions) {
+                let computed = computed_word_len(self);
+                assert_eq!(
+                    fixed, computed,
+                    "Operand claims a fixed size of {} mismatches computed size {}",
+                    fixed, computed
+                );
+            }
+            fixed
+        } else {
+            computed_word_len(self)
+        }
+    }
 
     /// Encode this `Operand` to a sequence of [`Word`]s.
     fn encode(&self, writer: &mut impl InstructionWriter);
@@ -84,6 +112,13 @@ pub trait OperandEncoding: Sized {
 
 impl<T: OperandEncoding> OperandEncoding for Option<T> {
     const FIXED_LEN: Option<usize> = None;
+
+    fn word_len(&self) -> usize {
+        match self {
+            None => 0,
+            Some(e) => e.word_len(),
+        }
+    }
 
     fn encode(&self, writer: &mut impl InstructionWriter) {
         match self {
@@ -116,6 +151,10 @@ impl<T: Operand> OperandSpec for Option<T> {
 
 impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     const FIXED_LEN: Option<usize> = None;
+
+    fn word_len(&self) -> usize {
+        self.iter().map(|e| e.word_len()).sum()
+    }
 
     fn encode(&self, writer: &mut impl InstructionWriter) {
         for x in self {
@@ -164,6 +203,10 @@ impl<T: Operand> OperandSpec for Vec<T> {
 /// copy of Vec impl above
 impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T; N]> {
     const FIXED_LEN: Option<usize> = None;
+
+    fn word_len(&self) -> usize {
+        self.iter().map(|e| e.word_len()).sum()
+    }
 
     fn encode(&self, writer: &mut impl InstructionWriter) {
         for x in self {
