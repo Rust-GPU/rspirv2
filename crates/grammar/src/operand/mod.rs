@@ -5,12 +5,13 @@ mod literal_integer;
 mod literal_string;
 
 use crate::binary::{DecodeError, InstructionReader, InstructionWriter};
-use crate::meta::OperandKind;
+use crate::meta::{OperandKind, Quantifier};
 pub use id::*;
 pub use literal_const::*;
 pub use literal_float::*;
 pub use literal_integer::*;
 pub use literal_string::*;
+use smallvec::SmallVec;
 
 /// A 32bit SPIR-V Word
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -31,6 +32,22 @@ impl Word {
 /// Requires [`OperandEncoding`], see that for encoding and decoding SPIR-V.
 pub trait Operand: OperandEncoding {
     const KIND: OperandKind;
+}
+
+/// A `OperandSpec` is an [`Operand`] with a [`Quantifier`] to describe the repetition of the [`Operand`].
+///
+/// Any [`Operand`] implicitly implements this with [`Quantifier::One`], wrapping an Operand in [`Option`] will get a
+/// [`Quantifier::ZeroOrOne`] and wrapping it in a [`Vec`] or [`SmallVec`] will have a [`Quantifier::ZeroOrMore`].
+pub trait OperandSpec: OperandEncoding {
+    /// The [`Operand`]
+    type Operand: Operand;
+    /// The [`Quantifier`] or repetition factor of the [`Self::Operand`]
+    const QUANTIFIER: Quantifier;
+}
+
+impl<T: Operand> OperandSpec for T {
+    type Operand = Self;
+    const QUANTIFIER: Quantifier = Quantifier::One;
 }
 
 /// Something that can be decoded from or encoded to SPIR-V, not necessarily a full [`Operand`].
@@ -92,6 +109,11 @@ impl<T: OperandEncoding> OperandEncoding for Option<T> {
     }
 }
 
+impl<T: Operand> OperandSpec for Option<T> {
+    type Operand = T;
+    const QUANTIFIER: Quantifier = Quantifier::ZeroOrOne;
+}
+
 impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     const FIXED_LEN: Option<usize> = None;
 
@@ -132,6 +154,47 @@ impl<T: OperandEncoding> OperandEncoding for Vec<T> {
         }
         Ok(vec)
     }
+}
+
+impl<T: Operand> OperandSpec for Vec<T> {
+    type Operand = T;
+    const QUANTIFIER: Quantifier = Quantifier::ZeroOrMore;
+}
+
+/// copy of Vec impl above
+impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T; N]> {
+    const FIXED_LEN: Option<usize> = None;
+
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        for x in self {
+            x.encode(&mut *writer)
+        }
+    }
+
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let mut vec = if let Some(fixed_len) = T::FIXED_LEN {
+            let remaining = reader.remaining();
+            if remaining % fixed_len != 0 {
+                return Err(DecodeError::InstructionWithMismatchedVariableOperants {
+                    inst_offset: reader.inst_offset(),
+                    op_len: reader.remaining(),
+                    expected_multiple: fixed_len,
+                });
+            }
+            SmallVec::with_capacity(remaining / fixed_len)
+        } else {
+            SmallVec::new()
+        };
+        while let Ok(_) = reader.peek() {
+            vec.push(T::decode(reader)?);
+        }
+        Ok(vec)
+    }
+}
+
+impl<T: Operand, const N: usize> OperandSpec for SmallVec<[T; N]> {
+    type Operand = T;
+    const QUANTIFIER: Quantifier = Quantifier::ZeroOrMore;
 }
 
 /// Compose the [`OperandEncoding::FIXED_LEN`] from multiple maybe fixed len Operands
