@@ -1,5 +1,6 @@
 #![allow(unused_imports)]
 #![allow(non_camel_case_types)]
+#![allow(deprecated)]
 pub mod extensions;
 pub mod grammar;
 pub mod inst;

@@ -26,6 +26,7 @@ pub fn main() -> anyhow::Result<()> {
             mod_attr: quote! {
                 #![allow(unused_imports)]
                 #![allow(non_camel_case_types)]
+                #![allow(deprecated)]
             },
             ..Default::default()
         },

@@ -490,6 +490,391 @@ pub enum ExecutionMode {
         #[doc = "Named Maximum Number of Registers"] NamedMaximumNumberOfRegisters,
     ),
 }
+impl Operand for ExecutionMode {
+    const KIND: OperandKind = OPERAND_KIND_EXECUTION_MODE;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        match self {
+            Self::Invocations(p0) => {
+                writer.push(Word(0u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::SpacingEqual => writer.push(Word(1u32)),
+            Self::SpacingFractionalEven => writer.push(Word(2u32)),
+            Self::SpacingFractionalOdd => writer.push(Word(3u32)),
+            Self::VertexOrderCw => writer.push(Word(4u32)),
+            Self::VertexOrderCcw => writer.push(Word(5u32)),
+            Self::PixelCenterInteger => writer.push(Word(6u32)),
+            Self::OriginUpperLeft => writer.push(Word(7u32)),
+            Self::OriginLowerLeft => writer.push(Word(8u32)),
+            Self::EarlyFragmentTests => writer.push(Word(9u32)),
+            Self::PointMode => writer.push(Word(10u32)),
+            Self::Xfb => writer.push(Word(11u32)),
+            Self::DepthReplacing => writer.push(Word(12u32)),
+            Self::DepthGreater => writer.push(Word(14u32)),
+            Self::DepthLess => writer.push(Word(15u32)),
+            Self::DepthUnchanged => writer.push(Word(16u32)),
+            Self::LocalSize(p0, p1, p2) => {
+                writer.push(Word(17u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer);
+                Operand::encode(p2, &mut *writer)
+            }
+            Self::LocalSizeHint(p0, p1, p2) => {
+                writer.push(Word(18u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer);
+                Operand::encode(p2, &mut *writer)
+            }
+            Self::InputPoints => writer.push(Word(19u32)),
+            Self::InputLines => writer.push(Word(20u32)),
+            Self::InputLinesAdjacency => writer.push(Word(21u32)),
+            Self::Triangles => writer.push(Word(22u32)),
+            Self::InputTrianglesAdjacency => writer.push(Word(23u32)),
+            Self::Quads => writer.push(Word(24u32)),
+            Self::Isolines => writer.push(Word(25u32)),
+            Self::OutputVertices(p0) => {
+                writer.push(Word(26u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::OutputPoints => writer.push(Word(27u32)),
+            Self::OutputLineStrip => writer.push(Word(28u32)),
+            Self::OutputTriangleStrip => writer.push(Word(29u32)),
+            Self::VecTypeHint(p0) => {
+                writer.push(Word(30u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::ContractionOff => writer.push(Word(31u32)),
+            Self::Initializer => writer.push(Word(33u32)),
+            Self::Finalizer => writer.push(Word(34u32)),
+            Self::SubgroupSize(p0) => {
+                writer.push(Word(35u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::SubgroupsPerWorkgroup(p0) => {
+                writer.push(Word(36u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::SubgroupsPerWorkgroupId(p0) => {
+                writer.push(Word(37u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::LocalSizeId(p0, p1, p2) => {
+                writer.push(Word(38u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer);
+                Operand::encode(p2, &mut *writer)
+            }
+            Self::LocalSizeHintId(p0, p1, p2) => {
+                writer.push(Word(39u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer);
+                Operand::encode(p2, &mut *writer)
+            }
+            Self::NonCoherentColorAttachmentReadEXT => writer.push(Word(4169u32)),
+            Self::NonCoherentDepthAttachmentReadEXT => writer.push(Word(4170u32)),
+            Self::NonCoherentStencilAttachmentReadEXT => writer.push(Word(4171u32)),
+            Self::SubgroupUniformControlFlowKHR => writer.push(Word(4421u32)),
+            Self::PostDepthCoverage => writer.push(Word(4446u32)),
+            Self::DenormPreserve(p0) => {
+                writer.push(Word(4459u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::DenormFlushToZero(p0) => {
+                writer.push(Word(4460u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::SignedZeroInfNanPreserve(p0) => {
+                writer.push(Word(4461u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::RoundingModeRTE(p0) => {
+                writer.push(Word(4462u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::RoundingModeRTZ(p0) => {
+                writer.push(Word(4463u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::NonCoherentTileAttachmentReadQCOM => writer.push(Word(4489u32)),
+            Self::TileShadingRateQCOM(p0, p1, p2) => {
+                writer.push(Word(4490u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer);
+                Operand::encode(p2, &mut *writer)
+            }
+            Self::EarlyAndLateFragmentTestsAMD => writer.push(Word(5017u32)),
+            Self::StencilRefReplacingEXT => writer.push(Word(5027u32)),
+            Self::CoalescingAMDX => writer.push(Word(5069u32)),
+            Self::IsApiEntryAMDX(p0) => {
+                writer.push(Word(5070u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MaxNodeRecursionAMDX(p0) => {
+                writer.push(Word(5071u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::StaticNumWorkgroupsAMDX(p0, p1, p2) => {
+                writer.push(Word(5072u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer);
+                Operand::encode(p2, &mut *writer)
+            }
+            Self::ShaderIndexAMDX(p0) => {
+                writer.push(Word(5073u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MaxNumWorkgroupsAMDX(p0, p1, p2) => {
+                writer.push(Word(5077u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer);
+                Operand::encode(p2, &mut *writer)
+            }
+            Self::StencilRefUnchangedFrontAMD => writer.push(Word(5079u32)),
+            Self::StencilRefGreaterFrontAMD => writer.push(Word(5080u32)),
+            Self::StencilRefLessFrontAMD => writer.push(Word(5081u32)),
+            Self::StencilRefUnchangedBackAMD => writer.push(Word(5082u32)),
+            Self::StencilRefGreaterBackAMD => writer.push(Word(5083u32)),
+            Self::StencilRefLessBackAMD => writer.push(Word(5084u32)),
+            Self::QuadDerivativesKHR => writer.push(Word(5088u32)),
+            Self::RequireFullQuadsKHR => writer.push(Word(5089u32)),
+            Self::SharesInputWithAMDX(p0, p1) => {
+                writer.push(Word(5102u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer)
+            }
+            Self::OutputLinesEXT => writer.push(Word(5269u32)),
+            Self::OutputPrimitivesEXT(p0) => {
+                writer.push(Word(5270u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::DerivativeGroupQuadsKHR => writer.push(Word(5289u32)),
+            Self::DerivativeGroupLinearKHR => writer.push(Word(5290u32)),
+            Self::OutputTrianglesEXT => writer.push(Word(5298u32)),
+            Self::PixelInterlockOrderedEXT => writer.push(Word(5366u32)),
+            Self::PixelInterlockUnorderedEXT => writer.push(Word(5367u32)),
+            Self::SampleInterlockOrderedEXT => writer.push(Word(5368u32)),
+            Self::SampleInterlockUnorderedEXT => writer.push(Word(5369u32)),
+            Self::ShadingRateInterlockOrderedEXT => writer.push(Word(5370u32)),
+            Self::ShadingRateInterlockUnorderedEXT => writer.push(Word(5371u32)),
+            Self::Shader64BitIndexingEXT => writer.push(Word(5427u32)),
+            Self::SharedLocalMemorySizeINTEL(p0) => {
+                writer.push(Word(5618u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::RoundingModeRTPINTEL(p0) => {
+                writer.push(Word(5620u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::RoundingModeRTNINTEL(p0) => {
+                writer.push(Word(5621u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::FloatingPointModeALTINTEL(p0) => {
+                writer.push(Word(5622u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::FloatingPointModeIEEEINTEL(p0) => {
+                writer.push(Word(5623u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MaxWorkgroupSizeINTEL(p0, p1, p2) => {
+                writer.push(Word(5893u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer);
+                Operand::encode(p2, &mut *writer)
+            }
+            Self::MaxWorkDimINTEL(p0) => {
+                writer.push(Word(5894u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::NoGlobalOffsetINTEL => writer.push(Word(5895u32)),
+            Self::NumSIMDWorkitemsINTEL(p0) => {
+                writer.push(Word(5896u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::SchedulerTargetFmaxMhzINTEL(p0) => {
+                writer.push(Word(5903u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MaximallyReconvergesKHR => writer.push(Word(6023u32)),
+            Self::FPFastMathDefault(p0, p1) => {
+                writer.push(Word(6028u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer)
+            }
+            Self::StreamingInterfaceINTEL(p0) => {
+                writer.push(Word(6154u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::RegisterMapInterfaceINTEL(p0) => {
+                writer.push(Word(6160u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::NamedBarrierCountINTEL(p0) => {
+                writer.push(Word(6417u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MaximumRegistersINTEL(p0) => {
+                writer.push(Word(6461u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MaximumRegistersIdINTEL(p0) => {
+                writer.push(Word(6462u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::NamedMaximumRegistersINTEL(p0) => {
+                writer.push(Word(6463u32));
+                Operand::encode(p0, &mut *writer)
+            }
+        }
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Invocations(Operand::decode(&mut *reader)?),
+            1u32 => Self::SpacingEqual,
+            2u32 => Self::SpacingFractionalEven,
+            3u32 => Self::SpacingFractionalOdd,
+            4u32 => Self::VertexOrderCw,
+            5u32 => Self::VertexOrderCcw,
+            6u32 => Self::PixelCenterInteger,
+            7u32 => Self::OriginUpperLeft,
+            8u32 => Self::OriginLowerLeft,
+            9u32 => Self::EarlyFragmentTests,
+            10u32 => Self::PointMode,
+            11u32 => Self::Xfb,
+            12u32 => Self::DepthReplacing,
+            14u32 => Self::DepthGreater,
+            15u32 => Self::DepthLess,
+            16u32 => Self::DepthUnchanged,
+            17u32 => Self::LocalSize(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            18u32 => Self::LocalSizeHint(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            19u32 => Self::InputPoints,
+            20u32 => Self::InputLines,
+            21u32 => Self::InputLinesAdjacency,
+            22u32 => Self::Triangles,
+            23u32 => Self::InputTrianglesAdjacency,
+            24u32 => Self::Quads,
+            25u32 => Self::Isolines,
+            26u32 => Self::OutputVertices(Operand::decode(&mut *reader)?),
+            27u32 => Self::OutputPoints,
+            28u32 => Self::OutputLineStrip,
+            29u32 => Self::OutputTriangleStrip,
+            30u32 => Self::VecTypeHint(Operand::decode(&mut *reader)?),
+            31u32 => Self::ContractionOff,
+            33u32 => Self::Initializer,
+            34u32 => Self::Finalizer,
+            35u32 => Self::SubgroupSize(Operand::decode(&mut *reader)?),
+            36u32 => Self::SubgroupsPerWorkgroup(Operand::decode(&mut *reader)?),
+            37u32 => Self::SubgroupsPerWorkgroupId(Operand::decode(&mut *reader)?),
+            38u32 => Self::LocalSizeId(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            39u32 => Self::LocalSizeHintId(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            4169u32 => Self::NonCoherentColorAttachmentReadEXT,
+            4170u32 => Self::NonCoherentDepthAttachmentReadEXT,
+            4171u32 => Self::NonCoherentStencilAttachmentReadEXT,
+            4421u32 => Self::SubgroupUniformControlFlowKHR,
+            4446u32 => Self::PostDepthCoverage,
+            4459u32 => Self::DenormPreserve(Operand::decode(&mut *reader)?),
+            4460u32 => Self::DenormFlushToZero(Operand::decode(&mut *reader)?),
+            4461u32 => Self::SignedZeroInfNanPreserve(Operand::decode(&mut *reader)?),
+            4462u32 => Self::RoundingModeRTE(Operand::decode(&mut *reader)?),
+            4463u32 => Self::RoundingModeRTZ(Operand::decode(&mut *reader)?),
+            4489u32 => Self::NonCoherentTileAttachmentReadQCOM,
+            4490u32 => Self::TileShadingRateQCOM(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            5017u32 => Self::EarlyAndLateFragmentTestsAMD,
+            5027u32 => Self::StencilRefReplacingEXT,
+            5069u32 => Self::CoalescingAMDX,
+            5070u32 => Self::IsApiEntryAMDX(Operand::decode(&mut *reader)?),
+            5071u32 => Self::MaxNodeRecursionAMDX(Operand::decode(&mut *reader)?),
+            5072u32 => Self::StaticNumWorkgroupsAMDX(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            5073u32 => Self::ShaderIndexAMDX(Operand::decode(&mut *reader)?),
+            5077u32 => Self::MaxNumWorkgroupsAMDX(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            5079u32 => Self::StencilRefUnchangedFrontAMD,
+            5080u32 => Self::StencilRefGreaterFrontAMD,
+            5081u32 => Self::StencilRefLessFrontAMD,
+            5082u32 => Self::StencilRefUnchangedBackAMD,
+            5083u32 => Self::StencilRefGreaterBackAMD,
+            5084u32 => Self::StencilRefLessBackAMD,
+            5088u32 => Self::QuadDerivativesKHR,
+            5089u32 => Self::RequireFullQuadsKHR,
+            5102u32 => Self::SharesInputWithAMDX(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            5269u32 => Self::OutputLinesEXT,
+            5270u32 => Self::OutputPrimitivesEXT(Operand::decode(&mut *reader)?),
+            5289u32 => Self::DerivativeGroupQuadsKHR,
+            5290u32 => Self::DerivativeGroupLinearKHR,
+            5298u32 => Self::OutputTrianglesEXT,
+            5366u32 => Self::PixelInterlockOrderedEXT,
+            5367u32 => Self::PixelInterlockUnorderedEXT,
+            5368u32 => Self::SampleInterlockOrderedEXT,
+            5369u32 => Self::SampleInterlockUnorderedEXT,
+            5370u32 => Self::ShadingRateInterlockOrderedEXT,
+            5371u32 => Self::ShadingRateInterlockUnorderedEXT,
+            5427u32 => Self::Shader64BitIndexingEXT,
+            5618u32 => Self::SharedLocalMemorySizeINTEL(Operand::decode(&mut *reader)?),
+            5620u32 => Self::RoundingModeRTPINTEL(Operand::decode(&mut *reader)?),
+            5621u32 => Self::RoundingModeRTNINTEL(Operand::decode(&mut *reader)?),
+            5622u32 => Self::FloatingPointModeALTINTEL(Operand::decode(&mut *reader)?),
+            5623u32 => Self::FloatingPointModeIEEEINTEL(Operand::decode(&mut *reader)?),
+            5893u32 => Self::MaxWorkgroupSizeINTEL(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            5894u32 => Self::MaxWorkDimINTEL(Operand::decode(&mut *reader)?),
+            5895u32 => Self::NoGlobalOffsetINTEL,
+            5896u32 => Self::NumSIMDWorkitemsINTEL(Operand::decode(&mut *reader)?),
+            5903u32 => Self::SchedulerTargetFmaxMhzINTEL(Operand::decode(&mut *reader)?),
+            6023u32 => Self::MaximallyReconvergesKHR,
+            6028u32 => Self::FPFastMathDefault(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            6154u32 => Self::StreamingInterfaceINTEL(Operand::decode(&mut *reader)?),
+            6160u32 => Self::RegisterMapInterfaceINTEL(Operand::decode(&mut *reader)?),
+            6417u32 => Self::NamedBarrierCountINTEL(Operand::decode(&mut *reader)?),
+            6461u32 => Self::MaximumRegistersINTEL(Operand::decode(&mut *reader)?),
+            6462u32 => Self::MaximumRegistersIdINTEL(Operand::decode(&mut *reader)?),
+            6463u32 => Self::NamedMaximumRegistersINTEL(Operand::decode(&mut *reader)?),
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(ExecutionMode),
+                    variant,
+                });
+            }
+        })
+    }
+}
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum StorageClass {
@@ -1366,6 +1751,598 @@ pub enum Decoration {
         #[doc = "Cache Level"] LiteralInteger,
         #[doc = "Cache Control"] StoreCacheControl,
     ),
+}
+impl Operand for Decoration {
+    const KIND: OperandKind = OPERAND_KIND_DECORATION;
+    fn encode(&self, writer: &mut impl InstructionWriter) {
+        match self {
+            Self::RelaxedPrecision => writer.push(Word(0u32)),
+            Self::SpecId(p0) => {
+                writer.push(Word(1u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::Block => writer.push(Word(2u32)),
+            Self::BufferBlock => writer.push(Word(3u32)),
+            Self::RowMajor => writer.push(Word(4u32)),
+            Self::ColMajor => writer.push(Word(5u32)),
+            Self::ArrayStride(p0) => {
+                writer.push(Word(6u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MatrixStride(p0) => {
+                writer.push(Word(7u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::GLSLShared => writer.push(Word(8u32)),
+            Self::GLSLPacked => writer.push(Word(9u32)),
+            Self::CPacked => writer.push(Word(10u32)),
+            Self::BuiltIn(p0) => {
+                writer.push(Word(11u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::NoPerspective => writer.push(Word(13u32)),
+            Self::Flat => writer.push(Word(14u32)),
+            Self::Patch => writer.push(Word(15u32)),
+            Self::Centroid => writer.push(Word(16u32)),
+            Self::Sample => writer.push(Word(17u32)),
+            Self::Invariant => writer.push(Word(18u32)),
+            Self::Restrict => writer.push(Word(19u32)),
+            Self::Aliased => writer.push(Word(20u32)),
+            Self::Volatile => writer.push(Word(21u32)),
+            Self::Constant => writer.push(Word(22u32)),
+            Self::Coherent => writer.push(Word(23u32)),
+            Self::NonWritable => writer.push(Word(24u32)),
+            Self::NonReadable => writer.push(Word(25u32)),
+            Self::Uniform => writer.push(Word(26u32)),
+            Self::UniformId(p0) => {
+                writer.push(Word(27u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::SaturatedConversion => writer.push(Word(28u32)),
+            Self::Stream(p0) => {
+                writer.push(Word(29u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::Location(p0) => {
+                writer.push(Word(30u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::Component(p0) => {
+                writer.push(Word(31u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::Index(p0) => {
+                writer.push(Word(32u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::Binding(p0) => {
+                writer.push(Word(33u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::DescriptorSet(p0) => {
+                writer.push(Word(34u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::Offset(p0) => {
+                writer.push(Word(35u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::XfbBuffer(p0) => {
+                writer.push(Word(36u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::XfbStride(p0) => {
+                writer.push(Word(37u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::FuncParamAttr(p0) => {
+                writer.push(Word(38u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::FPRoundingMode(p0) => {
+                writer.push(Word(39u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::FPFastMathMode(p0) => {
+                writer.push(Word(40u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::LinkageAttributes(p0, p1) => {
+                writer.push(Word(41u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer)
+            }
+            Self::NoContraction => writer.push(Word(42u32)),
+            Self::InputAttachmentIndex(p0) => {
+                writer.push(Word(43u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::Alignment(p0) => {
+                writer.push(Word(44u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MaxByteOffset(p0) => {
+                writer.push(Word(45u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::AlignmentId(p0) => {
+                writer.push(Word(46u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MaxByteOffsetId(p0) => {
+                writer.push(Word(47u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::SaturatedToLargestFloat8NormalConversionEXT => writer.push(Word(4216u32)),
+            Self::NoSignedWrap => writer.push(Word(4469u32)),
+            Self::NoUnsignedWrap => writer.push(Word(4470u32)),
+            Self::WeightTextureQCOM => writer.push(Word(4487u32)),
+            Self::BlockMatchTextureQCOM => writer.push(Word(4488u32)),
+            Self::BlockMatchSamplerQCOM => writer.push(Word(4499u32)),
+            Self::ExplicitInterpAMD => writer.push(Word(4999u32)),
+            Self::NodeSharesPayloadLimitsWithAMDX(p0) => {
+                writer.push(Word(5019u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::NodeMaxPayloadsAMDX(p0) => {
+                writer.push(Word(5020u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::TrackFinishWritingAMDX => writer.push(Word(5078u32)),
+            Self::PayloadNodeNameAMDX(p0) => {
+                writer.push(Word(5091u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::PayloadNodeBaseIndexAMDX(p0) => {
+                writer.push(Word(5098u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::PayloadNodeSparseArrayAMDX => writer.push(Word(5099u32)),
+            Self::PayloadNodeArraySizeAMDX(p0) => {
+                writer.push(Word(5100u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::PayloadDispatchIndirectAMDX => writer.push(Word(5105u32)),
+            Self::ArrayStrideIdEXT(p0) => {
+                writer.push(Word(5124u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::OffsetIdEXT(p0) => {
+                writer.push(Word(5125u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::OverrideCoverageNV => writer.push(Word(5248u32)),
+            Self::PassthroughNV => writer.push(Word(5250u32)),
+            Self::ViewportRelativeNV => writer.push(Word(5252u32)),
+            Self::SecondaryViewportRelativeNV(p0) => {
+                writer.push(Word(5256u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::PerPrimitiveEXT => writer.push(Word(5271u32)),
+            Self::PerViewNV => writer.push(Word(5272u32)),
+            Self::PerTaskNV => writer.push(Word(5273u32)),
+            Self::PerVertexKHR => writer.push(Word(5285u32)),
+            Self::NonUniform => writer.push(Word(5300u32)),
+            Self::RestrictPointer => writer.push(Word(5355u32)),
+            Self::AliasedPointer => writer.push(Word(5356u32)),
+            Self::MemberOffsetNV(p0) => {
+                writer.push(Word(5358u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::HitObjectShaderRecordBufferNV => writer.push(Word(5386u32)),
+            Self::HitObjectShaderRecordBufferEXT => writer.push(Word(5389u32)),
+            Self::BankNV(p0) => {
+                writer.push(Word(5397u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::BindlessSamplerNV => writer.push(Word(5398u32)),
+            Self::BindlessImageNV => writer.push(Word(5399u32)),
+            Self::BoundSamplerNV => writer.push(Word(5400u32)),
+            Self::BoundImageNV => writer.push(Word(5401u32)),
+            Self::SIMTCallINTEL(p0) => {
+                writer.push(Word(5599u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::ReferencedIndirectlyINTEL => writer.push(Word(5602u32)),
+            Self::ClobberINTEL(p0) => {
+                writer.push(Word(5607u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::SideEffectsINTEL => writer.push(Word(5608u32)),
+            Self::VectorComputeVariableINTEL => writer.push(Word(5624u32)),
+            Self::FuncParamIOKindINTEL(p0) => {
+                writer.push(Word(5625u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::VectorComputeFunctionINTEL => writer.push(Word(5626u32)),
+            Self::StackCallINTEL => writer.push(Word(5627u32)),
+            Self::GlobalVariableOffsetINTEL(p0) => {
+                writer.push(Word(5628u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::CounterBuffer(p0) => {
+                writer.push(Word(5634u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::UserSemantic(p0) => {
+                writer.push(Word(5635u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::UserTypeGOOGLE(p0) => {
+                writer.push(Word(5636u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::FunctionRoundingModeINTEL(p0, p1) => {
+                writer.push(Word(5822u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer)
+            }
+            Self::FunctionDenormModeINTEL(p0, p1) => {
+                writer.push(Word(5823u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer)
+            }
+            Self::RegisterALTERA => writer.push(Word(5825u32)),
+            Self::MemoryALTERA(p0) => {
+                writer.push(Word(5826u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::NumbanksALTERA(p0) => {
+                writer.push(Word(5827u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::BankwidthALTERA(p0) => {
+                writer.push(Word(5828u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MaxPrivateCopiesALTERA(p0) => {
+                writer.push(Word(5829u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::SinglepumpALTERA => writer.push(Word(5830u32)),
+            Self::DoublepumpALTERA => writer.push(Word(5831u32)),
+            Self::MaxReplicatesALTERA(p0) => {
+                writer.push(Word(5832u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::SimpleDualPortALTERA => writer.push(Word(5833u32)),
+            Self::MergeALTERA(p0, p1) => {
+                writer.push(Word(5834u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer)
+            }
+            Self::BankBitsALTERA(p0) => {
+                writer.push(Word(5835u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::ForcePow2DepthALTERA(p0) => {
+                writer.push(Word(5836u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::StridesizeALTERA(p0) => {
+                writer.push(Word(5883u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::WordsizeALTERA(p0) => {
+                writer.push(Word(5884u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::TrueDualPortALTERA => writer.push(Word(5885u32)),
+            Self::BurstCoalesceALTERA => writer.push(Word(5899u32)),
+            Self::CacheSizeALTERA(p0) => {
+                writer.push(Word(5900u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::DontStaticallyCoalesceALTERA => writer.push(Word(5901u32)),
+            Self::PrefetchALTERA(p0) => {
+                writer.push(Word(5902u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::StallEnableALTERA => writer.push(Word(5905u32)),
+            Self::FuseLoopsInFunctionALTERA => writer.push(Word(5907u32)),
+            Self::MathOpDSPModeALTERA(p0, p1) => {
+                writer.push(Word(5909u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer)
+            }
+            Self::AliasScopeINTEL(p0) => {
+                writer.push(Word(5914u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::NoAliasINTEL(p0) => {
+                writer.push(Word(5915u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::InitiationIntervalALTERA(p0) => {
+                writer.push(Word(5917u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MaxConcurrencyALTERA(p0) => {
+                writer.push(Word(5918u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::PipelineEnableALTERA(p0) => {
+                writer.push(Word(5919u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::BufferLocationALTERA(p0) => {
+                writer.push(Word(5921u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::IOPipeStorageALTERA(p0) => {
+                writer.push(Word(5944u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::FunctionFloatingPointModeINTEL(p0, p1) => {
+                writer.push(Word(6080u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer)
+            }
+            Self::SingleElementVectorINTEL => writer.push(Word(6085u32)),
+            Self::VectorComputeCallableFunctionINTEL => writer.push(Word(6087u32)),
+            Self::MediaBlockIOINTEL => writer.push(Word(6140u32)),
+            Self::StallFreeALTERA => writer.push(Word(6151u32)),
+            Self::FPMaxErrorDecorationINTEL(p0) => {
+                writer.push(Word(6170u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::LatencyControlLabelALTERA(p0) => {
+                writer.push(Word(6172u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::LatencyControlConstraintALTERA(p0, p1, p2) => {
+                writer.push(Word(6173u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer);
+                Operand::encode(p2, &mut *writer)
+            }
+            Self::ConduitKernelArgumentALTERA => writer.push(Word(6175u32)),
+            Self::RegisterMapKernelArgumentALTERA => writer.push(Word(6176u32)),
+            Self::MMHostInterfaceAddressWidthALTERA(p0) => {
+                writer.push(Word(6177u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MMHostInterfaceDataWidthALTERA(p0) => {
+                writer.push(Word(6178u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MMHostInterfaceLatencyALTERA(p0) => {
+                writer.push(Word(6179u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MMHostInterfaceReadWriteModeALTERA(p0) => {
+                writer.push(Word(6180u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MMHostInterfaceMaxBurstALTERA(p0) => {
+                writer.push(Word(6181u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::MMHostInterfaceWaitRequestALTERA(p0) => {
+                writer.push(Word(6182u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::StableKernelArgumentALTERA => writer.push(Word(6183u32)),
+            Self::HostAccessINTEL(p0, p1) => {
+                writer.push(Word(6188u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer)
+            }
+            Self::InitModeALTERA(p0) => {
+                writer.push(Word(6190u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::ImplementInRegisterMapALTERA(p0) => {
+                writer.push(Word(6191u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::ConditionalINTEL(p0) => {
+                writer.push(Word(6247u32));
+                Operand::encode(p0, &mut *writer)
+            }
+            Self::CacheControlLoadINTEL(p0, p1) => {
+                writer.push(Word(6442u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer)
+            }
+            Self::CacheControlStoreINTEL(p0, p1) => {
+                writer.push(Word(6443u32));
+                Operand::encode(p0, &mut *writer);
+                Operand::encode(p1, &mut *writer)
+            }
+        }
+    }
+    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::RelaxedPrecision,
+            1u32 => Self::SpecId(Operand::decode(&mut *reader)?),
+            2u32 => Self::Block,
+            3u32 => Self::BufferBlock,
+            4u32 => Self::RowMajor,
+            5u32 => Self::ColMajor,
+            6u32 => Self::ArrayStride(Operand::decode(&mut *reader)?),
+            7u32 => Self::MatrixStride(Operand::decode(&mut *reader)?),
+            8u32 => Self::GLSLShared,
+            9u32 => Self::GLSLPacked,
+            10u32 => Self::CPacked,
+            11u32 => Self::BuiltIn(Operand::decode(&mut *reader)?),
+            13u32 => Self::NoPerspective,
+            14u32 => Self::Flat,
+            15u32 => Self::Patch,
+            16u32 => Self::Centroid,
+            17u32 => Self::Sample,
+            18u32 => Self::Invariant,
+            19u32 => Self::Restrict,
+            20u32 => Self::Aliased,
+            21u32 => Self::Volatile,
+            22u32 => Self::Constant,
+            23u32 => Self::Coherent,
+            24u32 => Self::NonWritable,
+            25u32 => Self::NonReadable,
+            26u32 => Self::Uniform,
+            27u32 => Self::UniformId(Operand::decode(&mut *reader)?),
+            28u32 => Self::SaturatedConversion,
+            29u32 => Self::Stream(Operand::decode(&mut *reader)?),
+            30u32 => Self::Location(Operand::decode(&mut *reader)?),
+            31u32 => Self::Component(Operand::decode(&mut *reader)?),
+            32u32 => Self::Index(Operand::decode(&mut *reader)?),
+            33u32 => Self::Binding(Operand::decode(&mut *reader)?),
+            34u32 => Self::DescriptorSet(Operand::decode(&mut *reader)?),
+            35u32 => Self::Offset(Operand::decode(&mut *reader)?),
+            36u32 => Self::XfbBuffer(Operand::decode(&mut *reader)?),
+            37u32 => Self::XfbStride(Operand::decode(&mut *reader)?),
+            38u32 => Self::FuncParamAttr(Operand::decode(&mut *reader)?),
+            39u32 => Self::FPRoundingMode(Operand::decode(&mut *reader)?),
+            40u32 => Self::FPFastMathMode(Operand::decode(&mut *reader)?),
+            41u32 => Self::LinkageAttributes(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            42u32 => Self::NoContraction,
+            43u32 => Self::InputAttachmentIndex(Operand::decode(&mut *reader)?),
+            44u32 => Self::Alignment(Operand::decode(&mut *reader)?),
+            45u32 => Self::MaxByteOffset(Operand::decode(&mut *reader)?),
+            46u32 => Self::AlignmentId(Operand::decode(&mut *reader)?),
+            47u32 => Self::MaxByteOffsetId(Operand::decode(&mut *reader)?),
+            4216u32 => Self::SaturatedToLargestFloat8NormalConversionEXT,
+            4469u32 => Self::NoSignedWrap,
+            4470u32 => Self::NoUnsignedWrap,
+            4487u32 => Self::WeightTextureQCOM,
+            4488u32 => Self::BlockMatchTextureQCOM,
+            4499u32 => Self::BlockMatchSamplerQCOM,
+            4999u32 => Self::ExplicitInterpAMD,
+            5019u32 => Self::NodeSharesPayloadLimitsWithAMDX(Operand::decode(&mut *reader)?),
+            5020u32 => Self::NodeMaxPayloadsAMDX(Operand::decode(&mut *reader)?),
+            5078u32 => Self::TrackFinishWritingAMDX,
+            5091u32 => Self::PayloadNodeNameAMDX(Operand::decode(&mut *reader)?),
+            5098u32 => Self::PayloadNodeBaseIndexAMDX(Operand::decode(&mut *reader)?),
+            5099u32 => Self::PayloadNodeSparseArrayAMDX,
+            5100u32 => Self::PayloadNodeArraySizeAMDX(Operand::decode(&mut *reader)?),
+            5105u32 => Self::PayloadDispatchIndirectAMDX,
+            5124u32 => Self::ArrayStrideIdEXT(Operand::decode(&mut *reader)?),
+            5125u32 => Self::OffsetIdEXT(Operand::decode(&mut *reader)?),
+            5248u32 => Self::OverrideCoverageNV,
+            5250u32 => Self::PassthroughNV,
+            5252u32 => Self::ViewportRelativeNV,
+            5256u32 => Self::SecondaryViewportRelativeNV(Operand::decode(&mut *reader)?),
+            5271u32 => Self::PerPrimitiveEXT,
+            5272u32 => Self::PerViewNV,
+            5273u32 => Self::PerTaskNV,
+            5285u32 => Self::PerVertexKHR,
+            5300u32 => Self::NonUniform,
+            5355u32 => Self::RestrictPointer,
+            5356u32 => Self::AliasedPointer,
+            5358u32 => Self::MemberOffsetNV(Operand::decode(&mut *reader)?),
+            5386u32 => Self::HitObjectShaderRecordBufferNV,
+            5389u32 => Self::HitObjectShaderRecordBufferEXT,
+            5397u32 => Self::BankNV(Operand::decode(&mut *reader)?),
+            5398u32 => Self::BindlessSamplerNV,
+            5399u32 => Self::BindlessImageNV,
+            5400u32 => Self::BoundSamplerNV,
+            5401u32 => Self::BoundImageNV,
+            5599u32 => Self::SIMTCallINTEL(Operand::decode(&mut *reader)?),
+            5602u32 => Self::ReferencedIndirectlyINTEL,
+            5607u32 => Self::ClobberINTEL(Operand::decode(&mut *reader)?),
+            5608u32 => Self::SideEffectsINTEL,
+            5624u32 => Self::VectorComputeVariableINTEL,
+            5625u32 => Self::FuncParamIOKindINTEL(Operand::decode(&mut *reader)?),
+            5626u32 => Self::VectorComputeFunctionINTEL,
+            5627u32 => Self::StackCallINTEL,
+            5628u32 => Self::GlobalVariableOffsetINTEL(Operand::decode(&mut *reader)?),
+            5634u32 => Self::CounterBuffer(Operand::decode(&mut *reader)?),
+            5635u32 => Self::UserSemantic(Operand::decode(&mut *reader)?),
+            5636u32 => Self::UserTypeGOOGLE(Operand::decode(&mut *reader)?),
+            5822u32 => Self::FunctionRoundingModeINTEL(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            5823u32 => Self::FunctionDenormModeINTEL(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            5825u32 => Self::RegisterALTERA,
+            5826u32 => Self::MemoryALTERA(Operand::decode(&mut *reader)?),
+            5827u32 => Self::NumbanksALTERA(Operand::decode(&mut *reader)?),
+            5828u32 => Self::BankwidthALTERA(Operand::decode(&mut *reader)?),
+            5829u32 => Self::MaxPrivateCopiesALTERA(Operand::decode(&mut *reader)?),
+            5830u32 => Self::SinglepumpALTERA,
+            5831u32 => Self::DoublepumpALTERA,
+            5832u32 => Self::MaxReplicatesALTERA(Operand::decode(&mut *reader)?),
+            5833u32 => Self::SimpleDualPortALTERA,
+            5834u32 => Self::MergeALTERA(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            5835u32 => Self::BankBitsALTERA(Operand::decode(&mut *reader)?),
+            5836u32 => Self::ForcePow2DepthALTERA(Operand::decode(&mut *reader)?),
+            5883u32 => Self::StridesizeALTERA(Operand::decode(&mut *reader)?),
+            5884u32 => Self::WordsizeALTERA(Operand::decode(&mut *reader)?),
+            5885u32 => Self::TrueDualPortALTERA,
+            5899u32 => Self::BurstCoalesceALTERA,
+            5900u32 => Self::CacheSizeALTERA(Operand::decode(&mut *reader)?),
+            5901u32 => Self::DontStaticallyCoalesceALTERA,
+            5902u32 => Self::PrefetchALTERA(Operand::decode(&mut *reader)?),
+            5905u32 => Self::StallEnableALTERA,
+            5907u32 => Self::FuseLoopsInFunctionALTERA,
+            5909u32 => Self::MathOpDSPModeALTERA(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            5914u32 => Self::AliasScopeINTEL(Operand::decode(&mut *reader)?),
+            5915u32 => Self::NoAliasINTEL(Operand::decode(&mut *reader)?),
+            5917u32 => Self::InitiationIntervalALTERA(Operand::decode(&mut *reader)?),
+            5918u32 => Self::MaxConcurrencyALTERA(Operand::decode(&mut *reader)?),
+            5919u32 => Self::PipelineEnableALTERA(Operand::decode(&mut *reader)?),
+            5921u32 => Self::BufferLocationALTERA(Operand::decode(&mut *reader)?),
+            5944u32 => Self::IOPipeStorageALTERA(Operand::decode(&mut *reader)?),
+            6080u32 => Self::FunctionFloatingPointModeINTEL(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            6085u32 => Self::SingleElementVectorINTEL,
+            6087u32 => Self::VectorComputeCallableFunctionINTEL,
+            6140u32 => Self::MediaBlockIOINTEL,
+            6151u32 => Self::StallFreeALTERA,
+            6170u32 => Self::FPMaxErrorDecorationINTEL(Operand::decode(&mut *reader)?),
+            6172u32 => Self::LatencyControlLabelALTERA(Operand::decode(&mut *reader)?),
+            6173u32 => Self::LatencyControlConstraintALTERA(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            6175u32 => Self::ConduitKernelArgumentALTERA,
+            6176u32 => Self::RegisterMapKernelArgumentALTERA,
+            6177u32 => Self::MMHostInterfaceAddressWidthALTERA(Operand::decode(&mut *reader)?),
+            6178u32 => Self::MMHostInterfaceDataWidthALTERA(Operand::decode(&mut *reader)?),
+            6179u32 => Self::MMHostInterfaceLatencyALTERA(Operand::decode(&mut *reader)?),
+            6180u32 => Self::MMHostInterfaceReadWriteModeALTERA(Operand::decode(&mut *reader)?),
+            6181u32 => Self::MMHostInterfaceMaxBurstALTERA(Operand::decode(&mut *reader)?),
+            6182u32 => Self::MMHostInterfaceWaitRequestALTERA(Operand::decode(&mut *reader)?),
+            6183u32 => Self::StableKernelArgumentALTERA,
+            6188u32 => Self::HostAccessINTEL(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            6190u32 => Self::InitModeALTERA(Operand::decode(&mut *reader)?),
+            6191u32 => Self::ImplementInRegisterMapALTERA(Operand::decode(&mut *reader)?),
+            6247u32 => Self::ConditionalINTEL(Operand::decode(&mut *reader)?),
+            6442u32 => Self::CacheControlLoadINTEL(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            6443u32 => Self::CacheControlStoreINTEL(
+                Operand::decode(&mut *reader)?,
+                Operand::decode(&mut *reader)?,
+            ),
+            _ => {
+                return Err(DecodeError::UnknownEnumVariant {
+                    name: stringify!(Decoration),
+                    variant,
+                });
+            }
+        })
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]

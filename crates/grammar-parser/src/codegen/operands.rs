@@ -1,7 +1,7 @@
 use crate::codegen::GrammarWriter;
 use crate::parse::{Category, Enumerant, Grammar, OperandKind, Quantifier};
 use proc_macro2::TokenStream;
-use quote::quote;
+use quote::{format_ident, quote};
 use std::borrow::Cow;
 
 pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
@@ -29,32 +29,71 @@ pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::
 
 fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> TokenStream {
     let name = OperandKind::type_ident(&operand_kind.name);
+    let kind = OperandKind::const_ident(&operand_kind.name);
     let doc = make_doc(&operand_kind.doc);
 
-    let variants = enumerants.iter().map(|e| {
+    let symbols = enumerants
+        .iter()
+        .map(|e| {
+            let symbol = Enumerant::variant_ident(&e.symbol);
+            let params = e
+                .parameters
+                .iter()
+                .map(|p| (p, OperandKind::type_ident(&p.kind)))
+                .collect::<Vec<_>>();
+            (e, symbol, params)
+        })
+        .collect::<Vec<_>>();
+
+    let variants = symbols.iter().map(|(e, symbol, params)| {
         let enumerant_preamble = emit_enumerant_preamble(e);
-        let symbol = Enumerant::variant_ident(&e.symbol);
-        let params = if !e.parameters.is_empty() {
-            let params = e.parameters.iter().map(|p| {
+        let members = if !e.parameters.is_empty() {
+            let members = params.iter().map(|(p, ty)| {
                 let docs = p
                     .name
                     .as_ref()
                     .map(|name| make_doc(name))
                     .unwrap_or(quote!());
-                let ty = OperandKind::type_ident(&p.kind);
                 match p.quantifier {
                     Quantifier::One => quote!(#docs #ty),
                     Quantifier::ZeroOrOne => quote!(#docs Option<#ty>),
                     Quantifier::ZeroOrMore => quote!(#docs Vec<#ty>),
                 }
             });
-            quote!((#(#params),*))
+            quote!((#(#members),*))
         } else {
             quote!()
         };
         quote! {
             #enumerant_preamble
-            #symbol #params
+            #symbol #members
+        }
+    });
+
+    let encode = symbols.iter().map(|(e, symbol, params)| {
+        let value = e.value;
+        let param_symbols = (0..params.len())
+            .map(|i| format_ident!("p{}", i))
+            .collect::<Vec<_>>();
+        if !param_symbols.is_empty() {
+            quote! {
+                Self::#symbol (#(#param_symbols),*) => {
+                    writer.push(Word(#value));
+                    #(Operand::encode(#param_symbols, &mut *writer));*
+                }
+            }
+        } else {
+            quote!(Self::#symbol => writer.push(Word(#value)))
+        }
+    });
+
+    let decode = symbols.iter().map(|(e, symbol, params)| {
+        let value = e.value;
+        if !params.is_empty() {
+            let members = (0..params.len()).map(|_| quote!(Operand::decode(&mut *reader)?));
+            quote!(#value => Self::#symbol (#(#members),*))
+        } else {
+            quote!(#value => Self::#symbol)
         }
     });
 
@@ -63,6 +102,27 @@ fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> 
         #[derive(Clone, Debug, Eq, PartialEq, Hash)]
         pub enum #name {
             #(#variants),*
+        }
+
+        impl Operand for #name {
+            const KIND: OperandKind = #kind;
+
+            fn encode(&self, writer: &mut impl InstructionWriter) {
+                match self {
+                    #(#encode),*
+                }
+            }
+
+            fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+                let variant = reader.pull()?.0;
+                Ok(match variant {
+                    #(#decode,)*
+                    _ => return Err(DecodeError::UnknownEnumVariant {
+                        name: stringify!(#name),
+                        variant,
+                    })
+                })
+            }
         }
     }
 }
