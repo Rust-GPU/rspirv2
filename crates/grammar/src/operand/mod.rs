@@ -18,6 +18,15 @@ use smallvec::SmallVec;
 pub struct Word(pub u32);
 
 impl Word {
+    pub fn new_op(op: u16, len: usize) -> Result<Self, EncodeError> {
+        let len = u16::try_from(len).map_err(|_e| EncodeError::OpTooLong)?;
+        Ok(Self(op as u32 | ((len as u32) << 16)))
+    }
+
+    pub fn to_op(&self) -> (u16, usize) {
+        (self.0 as u16, (self.0 >> 16) as u16 as usize)
+    }
+
     pub fn to_u32(self) -> u32 {
         self.0
     }

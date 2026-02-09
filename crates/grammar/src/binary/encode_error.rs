@@ -7,12 +7,14 @@ pub enum EncodeError {
     ///
     /// [`InstructionWriter`]: `crate::binary::InstructionWriter`
     WriterError(String),
+    OpTooLong,
 }
 
 impl Display for EncodeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             EncodeError::WriterError(err) => write!(f, "{}", err),
+            EncodeError::OpTooLong => write!(f, "Op too long, u16 overflow"),
         }
     }
 }

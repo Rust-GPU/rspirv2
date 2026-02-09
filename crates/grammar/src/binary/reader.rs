@@ -1,4 +1,5 @@
 use crate::binary::DecodeError;
+use crate::meta::InstMeta;
 use crate::operand::Word;
 
 /// Reader for an entire module
@@ -12,7 +13,7 @@ impl<'a> ModuleReader<'a> {
         Self { data, offset: 0 }
     }
 
-    pub fn next(&mut self) -> Result<Option<InstructionReader<'_>>, DecodeError> {
+    pub fn next(&mut self) -> Result<Option<InstructionReader<'a>>, DecodeError> {
         let inst_offset = self.offset;
         let first = match self.data.get(inst_offset) {
             None => {
@@ -23,14 +24,15 @@ impl<'a> ModuleReader<'a> {
         };
         let opcode = first as u16;
         let op_len = (first >> 16) as usize;
-        let params = self.data.get(inst_offset..(inst_offset + op_len)).ok_or(
-            DecodeError::InstructionTooLong {
+        let params = self
+            .data
+            .get((inst_offset + 1)..(inst_offset + 1 + op_len))
+            .ok_or(DecodeError::InstructionTooLong {
                 inst_offset,
                 op_len,
                 module_remaining: self.data.len(),
-            },
-        )?;
-        self.offset += inst_offset;
+            })?;
+        self.offset += op_len + 1;
         Ok(Some(InstructionReader::new(opcode, params, inst_offset)))
     }
 }
@@ -58,6 +60,18 @@ impl<'a> InstructionReader<'a> {
 
     pub fn opcode(&self) -> u16 {
         self.opcode
+    }
+
+    pub fn check_opcode(&self, meta: &InstMeta) -> Result<(), DecodeError> {
+        if self.opcode != meta.opcode {
+            Err(DecodeError::WrongOpCode {
+                name: meta.opname,
+                expected: meta.opcode,
+                actual: self.opcode,
+            })
+        } else {
+            Ok(())
+        }
     }
 
     /// Peek at the next [`Word`] in the [`InstructionReader`] without advancing the [`Self::params_offset`].

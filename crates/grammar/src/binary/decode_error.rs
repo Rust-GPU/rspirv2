@@ -5,6 +5,11 @@ use std::string::FromUtf8Error;
 
 #[derive(Clone, PartialEq)]
 pub enum DecodeError {
+    WrongOpCode {
+        name: &'static str,
+        expected: u16,
+        actual: u16,
+    },
     LiteralIntegerNotLastOperand,
     /// This error must be cheap to crate, it will be discarded when iterating an `InstructionReader`.
     InstructionDecodePulledTooManyWords {
@@ -39,6 +44,14 @@ pub enum DecodeError {
 impl Display for DecodeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
+            DecodeError::WrongOpCode {
+                name,
+                expected,
+                actual,
+            } => write!(
+                f,
+                "Op {name} with opcode {expected} got InstructionReader with differing opcode {actual}"
+            ),
             DecodeError::LiteralIntegerNotLastOperand => write!(
                 f,
                 "Implementation Limitation: The `LiteralConst` must be the last operand of an Instruction for parsing \
