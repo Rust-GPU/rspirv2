@@ -1,4 +1,4 @@
-use crate::binary::{DecodeError, InstructionReader, InstructionWriter};
+use crate::binary::{DecodeError, EncodeError, InstructionReader, InstructionWriter};
 use crate::meta::OperandKind;
 use crate::operand::{Operand, OperandEncoding, Word};
 
@@ -37,7 +37,7 @@ impl Operand for LiteralFloat {
 impl OperandEncoding for LiteralFloat {
     const FIXED_LEN: Option<usize> = Some(1);
 
-    fn encode(&self, writer: &mut impl InstructionWriter) {
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.push(self.0)
     }
 

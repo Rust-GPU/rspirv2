@@ -1,4 +1,5 @@
 use bitflags::Flags;
+use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 use std::string::FromUtf8Error;
 
@@ -94,6 +95,8 @@ impl Debug for DecodeError {
         Display::fmt(self, f)
     }
 }
+
+impl Error for DecodeError {}
 
 impl From<FromUtf8Error> for DecodeError {
     fn from(value: FromUtf8Error) -> Self {

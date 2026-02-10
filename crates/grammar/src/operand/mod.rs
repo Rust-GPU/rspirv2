@@ -4,7 +4,7 @@ mod literal_float;
 mod literal_integer;
 mod literal_string;
 
-use crate::binary::{DecodeError, InstructionReader, InstructionWriter, WordCounter};
+use crate::binary::{DecodeError, EncodeError, InstructionReader, InstructionWriter, WordCounter};
 use crate::meta::{OperandKind, Quantifier};
 pub use id::*;
 pub use literal_const::*;
@@ -76,7 +76,8 @@ pub trait OperandEncoding: Sized {
     fn word_len(&self) -> usize {
         fn computed_word_len(op: &impl OperandEncoding) -> usize {
             let mut counter = WordCounter::default();
-            op.encode(&mut counter);
+            // `WordCounter` never fails
+            let _ = op.encode(&mut counter);
             counter.0
         }
 
@@ -96,7 +97,7 @@ pub trait OperandEncoding: Sized {
     }
 
     /// Encode this `Operand` to a sequence of [`Word`]s.
-    fn encode(&self, writer: &mut impl InstructionWriter);
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError>;
 
     /// Parse the `Operand` from the supplied [`Iterator`] of [`Word`]s, advancing it in the process.
     fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError>;
@@ -120,9 +121,9 @@ impl<T: OperandEncoding> OperandEncoding for Option<T> {
         }
     }
 
-    fn encode(&self, writer: &mut impl InstructionWriter) {
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         match self {
-            None => (),
+            None => Ok(()),
             Some(e) => e.encode(writer),
         }
     }
@@ -156,10 +157,11 @@ impl<T: OperandEncoding> OperandEncoding for Vec<T> {
         self.iter().map(|e| e.word_len()).sum()
     }
 
-    fn encode(&self, writer: &mut impl InstructionWriter) {
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         for x in self {
-            x.encode(&mut *writer)
+            x.encode(&mut *writer)?;
         }
+        Ok(())
     }
 
     /// The current SPIR-V spec only uses [`Quantifier::ZeroOrMore`] when the "element" Operand has a fixed length
@@ -208,10 +210,11 @@ impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T; N]> {
         self.iter().map(|e| e.word_len()).sum()
     }
 
-    fn encode(&self, writer: &mut impl InstructionWriter) {
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         for x in self {
-            x.encode(&mut *writer)
+            x.encode(&mut *writer)?;
         }
+        Ok(())
     }
 
     fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {

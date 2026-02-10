@@ -78,12 +78,12 @@ fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> 
         if !param_symbols.is_empty() {
             quote! {
                 Self::#symbol (#(#param_symbols),*) => {
-                    writer.push(Word(#value));
-                    #(OperandEncoding::encode(#param_symbols, &mut *writer));*
+                    writer.push(Word(#value))?;
+                    #(OperandEncoding::encode(#param_symbols, &mut *writer)?);*
                 }
             }
         } else {
-            quote!(Self::#symbol => writer.push(Word(#value)))
+            quote!(Self::#symbol => writer.push(Word(#value))?)
         }
     });
 
@@ -111,10 +111,11 @@ fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> 
         impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = None;
 
-            fn encode(&self, writer: &mut impl InstructionWriter) {
+            fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
                 match self {
                     #(#encode),*
                 }
+                Ok(())
             }
 
             fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
@@ -168,7 +169,7 @@ fn emit_c_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> Tok
         impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = Some(1);
 
-            fn encode(&self, writer: &mut impl InstructionWriter) {
+            fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
                 writer.push(Word(*self as u32))
             }
 
@@ -235,8 +236,8 @@ fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> T
         impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = Some(1);
 
-            fn encode(&self, writer: &mut impl InstructionWriter) {
-                writer.push(Word(self.bits()));
+            fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+                writer.push(Word(self.bits()))
             }
 
             fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
@@ -261,7 +262,7 @@ fn emit_composite(operand_kind: &OperandKind, bases: &[Cow<str>]) -> TokenStream
         .map(|ty| quote!(<#ty as OperandEncoding>::FIXED_LEN));
     let encode = (0..bases.len()).map(|i| {
         let i = proc_macro2::Literal::usize_unsuffixed(i);
-        quote!(OperandEncoding::encode(&self.#i, &mut *writer))
+        quote!(OperandEncoding::encode(&self.#i, &mut *writer)?)
     });
     let decode = (0..bases.len()).map(|_| quote!(OperandEncoding::decode(&mut *reader)?));
 
@@ -277,8 +278,9 @@ fn emit_composite(operand_kind: &OperandKind, bases: &[Cow<str>]) -> TokenStream
         impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = FixedLenComposer::new()#(.append(#len))*.finish();
 
-            fn encode(&self, writer: &mut impl InstructionWriter) {
-                #(#encode);*
+            fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+                #(#encode;)*
+                Ok(())
             }
 
             fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {

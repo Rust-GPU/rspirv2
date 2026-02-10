@@ -1,4 +1,4 @@
-use crate::binary::{DecodeError, InstructionReader, InstructionWriter};
+use crate::binary::{DecodeError, EncodeError, InstructionReader, InstructionWriter};
 use crate::meta::OperandKind;
 use crate::operand::{Operand, OperandEncoding, Word};
 
@@ -33,7 +33,7 @@ macro_rules! def_literal_integer {
         impl OperandEncoding for $name {
             const FIXED_LEN: Option<usize> = Some(1);
 
-            fn encode(&self, writer: &mut impl InstructionWriter) {
+            fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
                 writer.push(self.0)
             }
 

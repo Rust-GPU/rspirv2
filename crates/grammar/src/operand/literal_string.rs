@@ -1,4 +1,4 @@
-use crate::binary::{DecodeError, InstructionReader, InstructionWriter};
+use crate::binary::{DecodeError, EncodeError, InstructionReader, InstructionWriter};
 use crate::meta::OperandKind;
 use crate::operand::{Operand, OperandEncoding, Word};
 use std::ops::{Deref, DerefMut};
@@ -47,7 +47,7 @@ impl OperandEncoding for LiteralString {
         (self.0.len() + 1).div_ceil(4)
     }
 
-    fn encode(&self, writer: &mut impl InstructionWriter) {
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let words = self.word_len();
         let load = |i, o| *self.as_bytes().get(i * 4 + o).unwrap_or(&0);
         writer.extend((0..words).map(|i| {
