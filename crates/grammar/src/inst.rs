@@ -1,7 +1,5 @@
 use crate::binary::{DecodeError, EncodeError, InstructionReader, InstructionWriter};
-use crate::core::inst::OpConstant;
 use crate::meta::InstMeta;
-use crate::operand::{OperandEncoding, Word};
 use std::fmt::Debug;
 
 pub trait Inst: Sized + Debug + Eq {
@@ -12,34 +10,12 @@ pub trait Inst: Sized + Debug + Eq {
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError>;
 }
 
-impl Inst for OpConstant {
-    const META: &InstMeta = &crate::core::inst_meta::OP_CONSTANT;
-
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
-        let len =
-            self.id_result_type.word_len() + self.id_result.word_len() + self.value.word_len();
-        writer.push(Word::new_op(Self::META.opcode, len)?)?;
-        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
-        OperandEncoding::encode(&self.id_result, &mut *writer)?;
-        OperandEncoding::encode(&self.value, &mut *writer)?;
-        Ok(())
-    }
-
-    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
-        reader.check_opcode(Self::META)?;
-        Ok(Self {
-            id_result_type: OperandEncoding::decode(&mut *reader)?,
-            id_result: OperandEncoding::decode(&mut *reader)?,
-            value: OperandEncoding::decode_last(&mut *reader)?,
-        })
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::binary::ModuleReader;
-    use crate::operand::{IdResult, IdResultType, LiteralConst};
+    use crate::core::inst::OpConstant;
+    use crate::operand::{IdResult, IdResultType, LiteralConst, Word};
     use anyhow::Context;
 
     fn roundtrip<T: Inst>(inst: T) {

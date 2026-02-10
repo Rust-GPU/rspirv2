@@ -3,178 +3,826 @@ use super::preamble::*;
 pub struct Round {
     pub x: IdRef,
 }
+impl Inst for Round {
+    const META: &InstMeta = &ROUND;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct RoundEven {
     pub x: IdRef,
+}
+impl Inst for RoundEven {
+    const META: &InstMeta = &ROUND_EVEN;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Trunc {
     pub x: IdRef,
 }
+impl Inst for Trunc {
+    const META: &InstMeta = &TRUNC;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FAbs {
     pub x: IdRef,
+}
+impl Inst for FAbs {
+    const META: &InstMeta = &F_ABS;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct SAbs {
     pub x: IdRef,
 }
+impl Inst for SAbs {
+    const META: &InstMeta = &S_ABS;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FSign {
     pub x: IdRef,
+}
+impl Inst for FSign {
+    const META: &InstMeta = &F_SIGN;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct SSign {
     pub x: IdRef,
 }
+impl Inst for SSign {
+    const META: &InstMeta = &S_SIGN;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Floor {
     pub x: IdRef,
+}
+impl Inst for Floor {
+    const META: &InstMeta = &FLOOR;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Ceil {
     pub x: IdRef,
 }
+impl Inst for Ceil {
+    const META: &InstMeta = &CEIL;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Fract {
     pub x: IdRef,
+}
+impl Inst for Fract {
+    const META: &InstMeta = &FRACT;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Radians {
     pub degrees: IdRef,
 }
+impl Inst for Radians {
+    const META: &InstMeta = &RADIANS;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.degrees);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.degrees, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            degrees: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Degrees {
     pub radians: IdRef,
+}
+impl Inst for Degrees {
+    const META: &InstMeta = &DEGREES;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.radians);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.radians, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            radians: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Sin {
     pub x: IdRef,
 }
+impl Inst for Sin {
+    const META: &InstMeta = &SIN;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Cos {
     pub x: IdRef,
+}
+impl Inst for Cos {
+    const META: &InstMeta = &COS;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Tan {
     pub x: IdRef,
 }
+impl Inst for Tan {
+    const META: &InstMeta = &TAN;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Asin {
     pub x: IdRef,
+}
+impl Inst for Asin {
+    const META: &InstMeta = &ASIN;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Acos {
     pub x: IdRef,
 }
+impl Inst for Acos {
+    const META: &InstMeta = &ACOS;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Atan {
     pub y_over_x: IdRef,
+}
+impl Inst for Atan {
+    const META: &InstMeta = &ATAN;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.y_over_x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.y_over_x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            y_over_x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Sinh {
     pub x: IdRef,
 }
+impl Inst for Sinh {
+    const META: &InstMeta = &SINH;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Cosh {
     pub x: IdRef,
+}
+impl Inst for Cosh {
+    const META: &InstMeta = &COSH;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Tanh {
     pub x: IdRef,
 }
+impl Inst for Tanh {
+    const META: &InstMeta = &TANH;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Asinh {
     pub x: IdRef,
+}
+impl Inst for Asinh {
+    const META: &InstMeta = &ASINH;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Acosh {
     pub x: IdRef,
 }
+impl Inst for Acosh {
+    const META: &InstMeta = &ACOSH;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Atanh {
     pub x: IdRef,
+}
+impl Inst for Atanh {
+    const META: &InstMeta = &ATANH;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Atan2 {
     pub y: IdRef,
     pub x: IdRef,
 }
+impl Inst for Atan2 {
+    const META: &InstMeta = &ATAN_2;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.y) + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.y, &mut *writer)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            y: OperandEncoding::decode(&mut *reader)?,
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Pow {
     pub x: IdRef,
     pub y: IdRef,
 }
+impl Inst for Pow {
+    const META: &InstMeta = &POW;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.y, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            y: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Exp {
     pub x: IdRef,
+}
+impl Inst for Exp {
+    const META: &InstMeta = &EXP;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Log {
     pub x: IdRef,
 }
+impl Inst for Log {
+    const META: &InstMeta = &LOG;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Exp2 {
     pub x: IdRef,
+}
+impl Inst for Exp2 {
+    const META: &InstMeta = &EXP_2;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Log2 {
     pub x: IdRef,
 }
+impl Inst for Log2 {
+    const META: &InstMeta = &LOG_2;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Sqrt {
     pub x: IdRef,
+}
+impl Inst for Sqrt {
+    const META: &InstMeta = &SQRT;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct InverseSqrt {
     pub x: IdRef,
 }
+impl Inst for InverseSqrt {
+    const META: &InstMeta = &INVERSE_SQRT;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Determinant {
     pub x: IdRef,
 }
+impl Inst for Determinant {
+    const META: &InstMeta = &DETERMINANT;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct MatrixInverse {
     pub x: IdRef,
+}
+impl Inst for MatrixInverse {
+    const META: &InstMeta = &MATRIX_INVERSE;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Modf {
     pub x: IdRef,
     pub i: IdRef,
 }
+impl Inst for Modf {
+    const META: &InstMeta = &MODF;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.i);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.i, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            i: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct ModfStruct {
     pub x: IdRef,
+}
+impl Inst for ModfStruct {
+    const META: &InstMeta = &MODF_STRUCT;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FMin {
     pub x: IdRef,
     pub y: IdRef,
 }
+impl Inst for FMin {
+    const META: &InstMeta = &F_MIN;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.y, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            y: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct UMin {
     pub x: IdRef,
     pub y: IdRef,
+}
+impl Inst for UMin {
+    const META: &InstMeta = &U_MIN;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.y, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            y: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct SMin {
     pub x: IdRef,
     pub y: IdRef,
 }
+impl Inst for SMin {
+    const META: &InstMeta = &S_MIN;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.y, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            y: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FMax {
     pub x: IdRef,
     pub y: IdRef,
+}
+impl Inst for FMax {
+    const META: &InstMeta = &F_MAX;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.y, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            y: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct UMax {
     pub x: IdRef,
     pub y: IdRef,
 }
+impl Inst for UMax {
+    const META: &InstMeta = &U_MAX;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.y, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            y: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct SMax {
     pub x: IdRef,
     pub y: IdRef,
+}
+impl Inst for SMax {
+    const META: &InstMeta = &S_MAX;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.y, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            y: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FClamp {
@@ -182,11 +830,55 @@ pub struct FClamp {
     pub min_val: IdRef,
     pub max_val: IdRef,
 }
+impl Inst for FClamp {
+    const META: &InstMeta = &F_CLAMP;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0
+            + OperandEncoding::word_len(&self.x)
+            + OperandEncoding::word_len(&self.min_val)
+            + OperandEncoding::word_len(&self.max_val);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.min_val, &mut *writer)?;
+        OperandEncoding::encode(&self.max_val, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            min_val: OperandEncoding::decode(&mut *reader)?,
+            max_val: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct UClamp {
     pub x: IdRef,
     pub min_val: IdRef,
     pub max_val: IdRef,
+}
+impl Inst for UClamp {
+    const META: &InstMeta = &U_CLAMP;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0
+            + OperandEncoding::word_len(&self.x)
+            + OperandEncoding::word_len(&self.min_val)
+            + OperandEncoding::word_len(&self.max_val);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.min_val, &mut *writer)?;
+        OperandEncoding::encode(&self.max_val, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            min_val: OperandEncoding::decode(&mut *reader)?,
+            max_val: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct SClamp {
@@ -194,11 +886,55 @@ pub struct SClamp {
     pub min_val: IdRef,
     pub max_val: IdRef,
 }
+impl Inst for SClamp {
+    const META: &InstMeta = &S_CLAMP;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0
+            + OperandEncoding::word_len(&self.x)
+            + OperandEncoding::word_len(&self.min_val)
+            + OperandEncoding::word_len(&self.max_val);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.min_val, &mut *writer)?;
+        OperandEncoding::encode(&self.max_val, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            min_val: OperandEncoding::decode(&mut *reader)?,
+            max_val: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FMix {
     pub x: IdRef,
     pub y: IdRef,
     pub a: IdRef,
+}
+impl Inst for FMix {
+    const META: &InstMeta = &F_MIX;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0
+            + OperandEncoding::word_len(&self.x)
+            + OperandEncoding::word_len(&self.y)
+            + OperandEncoding::word_len(&self.a);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.y, &mut *writer)?;
+        OperandEncoding::encode(&self.a, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            y: OperandEncoding::decode(&mut *reader)?,
+            a: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct IMix {
@@ -206,10 +942,49 @@ pub struct IMix {
     pub y: IdRef,
     pub a: IdRef,
 }
+impl Inst for IMix {
+    const META: &InstMeta = &I_MIX;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0
+            + OperandEncoding::word_len(&self.x)
+            + OperandEncoding::word_len(&self.y)
+            + OperandEncoding::word_len(&self.a);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.y, &mut *writer)?;
+        OperandEncoding::encode(&self.a, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            y: OperandEncoding::decode(&mut *reader)?,
+            a: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Step {
     pub edge: IdRef,
     pub x: IdRef,
+}
+impl Inst for Step {
+    const META: &InstMeta = &STEP;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.edge) + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.edge, &mut *writer)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            edge: OperandEncoding::decode(&mut *reader)?,
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct SmoothStep {
@@ -217,91 +992,428 @@ pub struct SmoothStep {
     pub edge_1: IdRef,
     pub x: IdRef,
 }
+impl Inst for SmoothStep {
+    const META: &InstMeta = &SMOOTH_STEP;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0
+            + OperandEncoding::word_len(&self.edge_0)
+            + OperandEncoding::word_len(&self.edge_1)
+            + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.edge_0, &mut *writer)?;
+        OperandEncoding::encode(&self.edge_1, &mut *writer)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            edge_0: OperandEncoding::decode(&mut *reader)?,
+            edge_1: OperandEncoding::decode(&mut *reader)?,
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Fma {
     pub a: IdRef,
     pub b: IdRef,
     pub c: IdRef,
 }
+impl Inst for Fma {
+    const META: &InstMeta = &FMA;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0
+            + OperandEncoding::word_len(&self.a)
+            + OperandEncoding::word_len(&self.b)
+            + OperandEncoding::word_len(&self.c);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.a, &mut *writer)?;
+        OperandEncoding::encode(&self.b, &mut *writer)?;
+        OperandEncoding::encode(&self.c, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            a: OperandEncoding::decode(&mut *reader)?,
+            b: OperandEncoding::decode(&mut *reader)?,
+            c: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Frexp {
     pub x: IdRef,
     pub exp: IdRef,
 }
+impl Inst for Frexp {
+    const META: &InstMeta = &FREXP;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.exp);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.exp, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            exp: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FrexpStruct {
     pub x: IdRef,
+}
+impl Inst for FrexpStruct {
+    const META: &InstMeta = &FREXP_STRUCT;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Ldexp {
     pub x: IdRef,
     pub exp: IdRef,
 }
+impl Inst for Ldexp {
+    const META: &InstMeta = &LDEXP;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.exp);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.exp, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            exp: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PackSnorm4x8 {
     pub v: IdRef,
+}
+impl Inst for PackSnorm4x8 {
+    const META: &InstMeta = &PACK_SNORM_4_X_8;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.v);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.v, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            v: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PackUnorm4x8 {
     pub v: IdRef,
 }
+impl Inst for PackUnorm4x8 {
+    const META: &InstMeta = &PACK_UNORM_4_X_8;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.v);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.v, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            v: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PackSnorm2x16 {
     pub v: IdRef,
+}
+impl Inst for PackSnorm2x16 {
+    const META: &InstMeta = &PACK_SNORM_2_X_16;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.v);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.v, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            v: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PackUnorm2x16 {
     pub v: IdRef,
 }
+impl Inst for PackUnorm2x16 {
+    const META: &InstMeta = &PACK_UNORM_2_X_16;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.v);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.v, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            v: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PackHalf2x16 {
     pub v: IdRef,
+}
+impl Inst for PackHalf2x16 {
+    const META: &InstMeta = &PACK_HALF_2_X_16;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.v);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.v, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            v: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PackDouble2x32 {
     pub v: IdRef,
 }
+impl Inst for PackDouble2x32 {
+    const META: &InstMeta = &PACK_DOUBLE_2_X_32;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.v);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.v, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            v: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct UnpackSnorm2x16 {
     pub p: IdRef,
+}
+impl Inst for UnpackSnorm2x16 {
+    const META: &InstMeta = &UNPACK_SNORM_2_X_16;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.p);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.p, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            p: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct UnpackUnorm2x16 {
     pub p: IdRef,
 }
+impl Inst for UnpackUnorm2x16 {
+    const META: &InstMeta = &UNPACK_UNORM_2_X_16;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.p);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.p, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            p: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct UnpackHalf2x16 {
     pub v: IdRef,
+}
+impl Inst for UnpackHalf2x16 {
+    const META: &InstMeta = &UNPACK_HALF_2_X_16;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.v);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.v, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            v: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct UnpackSnorm4x8 {
     pub p: IdRef,
 }
+impl Inst for UnpackSnorm4x8 {
+    const META: &InstMeta = &UNPACK_SNORM_4_X_8;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.p);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.p, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            p: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct UnpackUnorm4x8 {
     pub p: IdRef,
+}
+impl Inst for UnpackUnorm4x8 {
+    const META: &InstMeta = &UNPACK_UNORM_4_X_8;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.p);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.p, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            p: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct UnpackDouble2x32 {
     pub v: IdRef,
 }
+impl Inst for UnpackDouble2x32 {
+    const META: &InstMeta = &UNPACK_DOUBLE_2_X_32;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.v);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.v, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            v: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Length {
     pub x: IdRef,
+}
+impl Inst for Length {
+    const META: &InstMeta = &LENGTH;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Distance {
     pub p_0: IdRef,
     pub p_1: IdRef,
 }
+impl Inst for Distance {
+    const META: &InstMeta = &DISTANCE;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.p_0) + OperandEncoding::word_len(&self.p_1);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.p_0, &mut *writer)?;
+        OperandEncoding::encode(&self.p_1, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            p_0: OperandEncoding::decode(&mut *reader)?,
+            p_1: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Cross {
     pub x: IdRef,
     pub y: IdRef,
 }
+impl Inst for Cross {
+    const META: &InstMeta = &CROSS;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.y, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            y: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Normalize {
     pub x: IdRef,
+}
+impl Inst for Normalize {
+    const META: &InstMeta = &NORMALIZE;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FaceForward {
@@ -309,10 +1421,49 @@ pub struct FaceForward {
     pub i: IdRef,
     pub nref: IdRef,
 }
+impl Inst for FaceForward {
+    const META: &InstMeta = &FACE_FORWARD;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0
+            + OperandEncoding::word_len(&self.n)
+            + OperandEncoding::word_len(&self.i)
+            + OperandEncoding::word_len(&self.nref);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.n, &mut *writer)?;
+        OperandEncoding::encode(&self.i, &mut *writer)?;
+        OperandEncoding::encode(&self.nref, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            n: OperandEncoding::decode(&mut *reader)?,
+            i: OperandEncoding::decode(&mut *reader)?,
+            nref: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Reflect {
     pub i: IdRef,
     pub n: IdRef,
+}
+impl Inst for Reflect {
+    const META: &InstMeta = &REFLECT;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.i) + OperandEncoding::word_len(&self.n);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.i, &mut *writer)?;
+        OperandEncoding::encode(&self.n, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            i: OperandEncoding::decode(&mut *reader)?,
+            n: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Refract {
@@ -320,45 +1471,221 @@ pub struct Refract {
     pub n: IdRef,
     pub eta: IdRef,
 }
+impl Inst for Refract {
+    const META: &InstMeta = &REFRACT;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0
+            + OperandEncoding::word_len(&self.i)
+            + OperandEncoding::word_len(&self.n)
+            + OperandEncoding::word_len(&self.eta);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.i, &mut *writer)?;
+        OperandEncoding::encode(&self.n, &mut *writer)?;
+        OperandEncoding::encode(&self.eta, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            i: OperandEncoding::decode(&mut *reader)?,
+            n: OperandEncoding::decode(&mut *reader)?,
+            eta: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FindILsb {
     pub value: IdRef,
+}
+impl Inst for FindILsb {
+    const META: &InstMeta = &FIND_I_LSB;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.value);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.value, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            value: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FindSMsb {
     pub value: IdRef,
 }
+impl Inst for FindSMsb {
+    const META: &InstMeta = &FIND_S_MSB;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.value);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.value, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            value: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FindUMsb {
     pub value: IdRef,
 }
+impl Inst for FindUMsb {
+    const META: &InstMeta = &FIND_U_MSB;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.value);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.value, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            value: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct InterpolateAtCentroid {
     pub interpolant: IdRef,
+}
+impl Inst for InterpolateAtCentroid {
+    const META: &InstMeta = &INTERPOLATE_AT_CENTROID;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.interpolant);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.interpolant, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            interpolant: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct InterpolateAtSample {
     pub interpolant: IdRef,
     pub sample: IdRef,
 }
+impl Inst for InterpolateAtSample {
+    const META: &InstMeta = &INTERPOLATE_AT_SAMPLE;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0
+            + OperandEncoding::word_len(&self.interpolant)
+            + OperandEncoding::word_len(&self.sample);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.interpolant, &mut *writer)?;
+        OperandEncoding::encode(&self.sample, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            interpolant: OperandEncoding::decode(&mut *reader)?,
+            sample: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct InterpolateAtOffset {
     pub interpolant: IdRef,
     pub offset: IdRef,
+}
+impl Inst for InterpolateAtOffset {
+    const META: &InstMeta = &INTERPOLATE_AT_OFFSET;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0
+            + OperandEncoding::word_len(&self.interpolant)
+            + OperandEncoding::word_len(&self.offset);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.interpolant, &mut *writer)?;
+        OperandEncoding::encode(&self.offset, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            interpolant: OperandEncoding::decode(&mut *reader)?,
+            offset: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct NMin {
     pub x: IdRef,
     pub y: IdRef,
 }
+impl Inst for NMin {
+    const META: &InstMeta = &N_MIN;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.y, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            y: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct NMax {
     pub x: IdRef,
     pub y: IdRef,
+}
+impl Inst for NMax {
+    const META: &InstMeta = &N_MAX;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.y, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            y: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct NClamp {
     pub x: IdRef,
     pub min_val: IdRef,
     pub max_val: IdRef,
+}
+impl Inst for NClamp {
+    const META: &InstMeta = &N_CLAMP;
+    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+        let len = 0
+            + OperandEncoding::word_len(&self.x)
+            + OperandEncoding::word_len(&self.min_val)
+            + OperandEncoding::word_len(&self.max_val);
+        writer.push(Word::new_op(Self::META.opcode, len)?)?;
+        OperandEncoding::encode(&self.x, &mut *writer)?;
+        OperandEncoding::encode(&self.min_val, &mut *writer)?;
+        OperandEncoding::encode(&self.max_val, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
+        reader.check_opcode(Self::META)?;
+        Ok(Self {
+            x: OperandEncoding::decode(&mut *reader)?,
+            min_val: OperandEncoding::decode(&mut *reader)?,
+            max_val: OperandEncoding::decode_last(&mut *reader)?,
+        })
+    }
 }

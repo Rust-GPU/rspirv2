@@ -18,6 +18,7 @@ pub fn main() -> anyhow::Result<()> {
         ModOptions {
             preamble: quote! {
                 pub use crate::binary::*;
+                pub use crate::inst::*;
                 pub use crate::meta::*;
                 pub use crate::operand::*;
                 pub use bitflags::bitflags;
