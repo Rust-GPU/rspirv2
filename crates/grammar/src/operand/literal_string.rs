@@ -36,7 +36,7 @@ impl DerefMut for LiteralString {
 }
 
 impl Operand for LiteralString {
-    const KIND: OperandKind = crate::core::operand_kinds::OPERAND_KIND_LITERAL_STRING;
+    const KIND: &OperandKind = &crate::core::operand_kinds::OPERAND_KIND_LITERAL_STRING;
 }
 
 impl OperandEncoding for LiteralString {
@@ -73,35 +73,35 @@ impl OperandEncoding for LiteralString {
 mod tests {
     use super::*;
 
-    fn roundtrip(str: &str, expected_spirv: &[u32]) {
+    fn roundtrip(str: &str, expected_spirv: &[u32]) -> anyhow::Result<()> {
         let mut spirv = Vec::<Word>::new();
-        LiteralString(str.to_string()).encode(&mut spirv);
-        let read =
-            LiteralString::decode(&mut InstructionReader::new(0, spirv.as_slice(), 0)).unwrap();
+        LiteralString(str.to_string()).encode(&mut spirv)?;
+        let read = LiteralString::decode(&mut InstructionReader::new(0, spirv.as_slice(), 0))?;
         assert_eq!(str, read.as_str());
         assert_eq!(
             spirv.into_iter().map(|w| w.0).collect::<Vec<_>>(),
             expected_spirv
         );
+        Ok(())
     }
 
     #[test]
-    fn test_empty_str() {
-        roundtrip("", &[0]);
+    fn test_empty_str() -> anyhow::Result<()> {
+        roundtrip("", &[0])
     }
 
     #[test]
-    fn test_str() {
-        roundtrip("abc", &[u32::from_ne_bytes([b'a', b'b', b'c', 0])]);
-        roundtrip("123", &[u32::from_ne_bytes([b'1', b'2', b'3', 0])]);
-        roundtrip("abcd", &[u32::from_ne_bytes([b'a', b'b', b'c', b'd']), 0]);
+    fn test_str() -> anyhow::Result<()> {
+        roundtrip("abc", &[u32::from_ne_bytes([b'a', b'b', b'c', 0])])?;
+        roundtrip("123", &[u32::from_ne_bytes([b'1', b'2', b'3', 0])])?;
+        roundtrip("abcd", &[u32::from_ne_bytes([b'a', b'b', b'c', b'd']), 0])?;
         roundtrip(
             "abcdefg",
             &[
                 u32::from_ne_bytes([b'a', b'b', b'c', b'd']),
                 u32::from_ne_bytes([b'e', b'f', b'g', 0]),
             ],
-        );
+        )?;
         roundtrip(
             "abcdefgh",
             &[
@@ -109,6 +109,7 @@ mod tests {
                 u32::from_ne_bytes([b'e', b'f', b'g', b'h']),
                 0,
             ],
-        );
+        )?;
+        Ok(())
     }
 }

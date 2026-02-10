@@ -12,7 +12,7 @@ use crate::operand::{Operand, OperandEncoding, Word};
 pub struct IdResult(pub Word);
 
 impl Operand for IdResult {
-    const KIND: OperandKind = crate::core::operand_kinds::OPERAND_KIND_ID_RESULT;
+    const KIND: &OperandKind = &crate::core::operand_kinds::OPERAND_KIND_ID_RESULT;
 }
 
 impl OperandEncoding for IdResult {
@@ -47,7 +47,7 @@ macro_rules! id_ref {
         }
 
         impl Operand for $name {
-            const KIND: OperandKind = $kind;
+            const KIND: &OperandKind = &$kind;
         }
 
         impl OperandEncoding for $name {

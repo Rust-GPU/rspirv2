@@ -117,6 +117,7 @@ dependencies = [
 name = "spirv-grammar"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "bitflags",
  "smallvec",
 ]

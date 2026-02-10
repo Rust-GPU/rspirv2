@@ -31,7 +31,7 @@ impl LiteralFloat {
 }
 
 impl Operand for LiteralFloat {
-    const KIND: OperandKind = crate::core::operand_kinds::OPERAND_KIND_LITERAL_FLOAT;
+    const KIND: &OperandKind = &crate::core::operand_kinds::OPERAND_KIND_LITERAL_FLOAT;
 }
 
 impl OperandEncoding for LiteralFloat {

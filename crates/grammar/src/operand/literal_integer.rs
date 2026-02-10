@@ -27,7 +27,7 @@ macro_rules! def_literal_integer {
         }
 
         impl Operand for $name {
-            const KIND: OperandKind = $kind;
+            const KIND: &OperandKind = &$kind;
         }
 
         impl OperandEncoding for $name {

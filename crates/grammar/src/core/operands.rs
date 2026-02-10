@@ -1,7 +1,7 @@
 use super::preamble::*;
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct ImageOperands : u32 { const None = 0u32 ; const Bias = 1u32 ; const Lod = 2u32 ; const Grad = 4u32 ; const ConstOffset = 8u32 ; const Offset = 16u32 ; const ConstOffsets = 32u32 ; const Sample = 64u32 ; const MinLod = 128u32 ; # [doc = "Since SPIR-V 1.5"] const MakeTexelAvailable = 256u32 ; # [doc = "Since SPIR-V 1.5"] const MakeTexelVisible = 512u32 ; # [doc = "Since SPIR-V 1.5"] const NonPrivateTexel = 1024u32 ; # [doc = "Since SPIR-V 1.5"] const VolatileTexel = 2048u32 ; # [doc = "Since SPIR-V 1.4"] const SignExtend = 4096u32 ; # [doc = "Since SPIR-V 1.4"] const ZeroExtend = 8192u32 ; # [doc = "Since SPIR-V 1.6"] const Nontemporal = 16384u32 ; const Offsets = 65536u32 ; } }
 impl Operand for ImageOperands {
-    const KIND: OperandKind = OPERAND_KIND_IMAGE_OPERANDS;
+    const KIND: &OperandKind = &OPERAND_KIND_IMAGE_OPERANDS;
 }
 impl OperandEncoding for ImageOperands {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -20,7 +20,7 @@ impl OperandEncoding for ImageOperands {
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct FPFastMathMode : u32 { const None = 0u32 ; const NotNaN = 1u32 ; const NotInf = 2u32 ; const NSZ = 4u32 ; const AllowRecip = 8u32 ; const Fast = 16u32 ; const AllowContract = 65536u32 ; const AllowReassoc = 131072u32 ; const AllowTransform = 262144u32 ; } }
 impl Operand for FPFastMathMode {
-    const KIND: OperandKind = OPERAND_KIND_FP_FAST_MATH_MODE;
+    const KIND: &OperandKind = &OPERAND_KIND_FP_FAST_MATH_MODE;
 }
 impl OperandEncoding for FPFastMathMode {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -39,7 +39,7 @@ impl OperandEncoding for FPFastMathMode {
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct SelectionControl : u32 { const None = 0u32 ; const Flatten = 1u32 ; const DontFlatten = 2u32 ; } }
 impl Operand for SelectionControl {
-    const KIND: OperandKind = OPERAND_KIND_SELECTION_CONTROL;
+    const KIND: &OperandKind = &OPERAND_KIND_SELECTION_CONTROL;
 }
 impl OperandEncoding for SelectionControl {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -58,7 +58,7 @@ impl OperandEncoding for SelectionControl {
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct LoopControl : u32 { const None = 0u32 ; const Unroll = 1u32 ; const DontUnroll = 2u32 ; # [doc = "Since SPIR-V 1.1"] const DependencyInfinite = 4u32 ; # [doc = "Since SPIR-V 1.1"] const DependencyLength = 8u32 ; # [doc = "Since SPIR-V 1.4"] const MinIterations = 16u32 ; # [doc = "Since SPIR-V 1.4"] const MaxIterations = 32u32 ; # [doc = "Since SPIR-V 1.4"] const IterationMultiple = 64u32 ; # [doc = "Since SPIR-V 1.4"] const PeelCount = 128u32 ; # [doc = "Since SPIR-V 1.4"] const PartialCount = 256u32 ; const InitiationIntervalALTERA = 65536u32 ; const MaxConcurrencyALTERA = 131072u32 ; const DependencyArrayALTERA = 262144u32 ; const PipelineEnableALTERA = 524288u32 ; const LoopCoalesceALTERA = 1048576u32 ; const MaxInterleavingALTERA = 2097152u32 ; const SpeculatedIterationsALTERA = 4194304u32 ; const NoFusionALTERA = 8388608u32 ; const LoopCountALTERA = 16777216u32 ; const MaxReinvocationDelayALTERA = 33554432u32 ; } }
 impl Operand for LoopControl {
-    const KIND: OperandKind = OPERAND_KIND_LOOP_CONTROL;
+    const KIND: &OperandKind = &OPERAND_KIND_LOOP_CONTROL;
 }
 impl OperandEncoding for LoopControl {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -77,7 +77,7 @@ impl OperandEncoding for LoopControl {
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct FunctionControl : u32 { const None = 0u32 ; const Inline = 1u32 ; const DontInline = 2u32 ; const Pure = 4u32 ; const Const = 8u32 ; const OptNoneEXT = 65536u32 ; } }
 impl Operand for FunctionControl {
-    const KIND: OperandKind = OPERAND_KIND_FUNCTION_CONTROL;
+    const KIND: &OperandKind = &OPERAND_KIND_FUNCTION_CONTROL;
 }
 impl OperandEncoding for FunctionControl {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -96,7 +96,7 @@ impl OperandEncoding for FunctionControl {
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MemorySemantics : u32 { const Relaxed = 0u32 ; const Acquire = 2u32 ; const Release = 4u32 ; const AcquireRelease = 8u32 ; const SequentiallyConsistent = 16u32 ; const UniformMemory = 64u32 ; const SubgroupMemory = 128u32 ; const WorkgroupMemory = 256u32 ; const CrossWorkgroupMemory = 512u32 ; const AtomicCounterMemory = 1024u32 ; const ImageMemory = 2048u32 ; # [doc = "Since SPIR-V 1.5"] const OutputMemory = 4096u32 ; # [doc = "Since SPIR-V 1.5"] const MakeAvailable = 8192u32 ; # [doc = "Since SPIR-V 1.5"] const MakeVisible = 16384u32 ; # [doc = "Since SPIR-V 1.5"] const Volatile = 32768u32 ; } }
 impl Operand for MemorySemantics {
-    const KIND: OperandKind = OPERAND_KIND_MEMORY_SEMANTICS;
+    const KIND: &OperandKind = &OPERAND_KIND_MEMORY_SEMANTICS;
 }
 impl OperandEncoding for MemorySemantics {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -115,7 +115,7 @@ impl OperandEncoding for MemorySemantics {
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MemoryAccess : u32 { const None = 0u32 ; const Volatile = 1u32 ; const Aligned = 2u32 ; const Nontemporal = 4u32 ; # [doc = "Since SPIR-V 1.5"] const MakePointerAvailable = 8u32 ; # [doc = "Since SPIR-V 1.5"] const MakePointerVisible = 16u32 ; # [doc = "Since SPIR-V 1.5"] const NonPrivatePointer = 32u32 ; const AliasScopeINTELMask = 65536u32 ; const NoAliasINTELMask = 131072u32 ; } }
 impl Operand for MemoryAccess {
-    const KIND: OperandKind = OPERAND_KIND_MEMORY_ACCESS;
+    const KIND: &OperandKind = &OPERAND_KIND_MEMORY_ACCESS;
 }
 impl OperandEncoding for MemoryAccess {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -134,7 +134,7 @@ impl OperandEncoding for MemoryAccess {
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct KernelProfilingInfo : u32 { const None = 0u32 ; const CmdExecTime = 1u32 ; } }
 impl Operand for KernelProfilingInfo {
-    const KIND: OperandKind = OPERAND_KIND_KERNEL_PROFILING_INFO;
+    const KIND: &OperandKind = &OPERAND_KIND_KERNEL_PROFILING_INFO;
 }
 impl OperandEncoding for KernelProfilingInfo {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -153,7 +153,7 @@ impl OperandEncoding for KernelProfilingInfo {
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct RayFlags : u32 { const NoneKHR = 0u32 ; const OpaqueKHR = 1u32 ; const NoOpaqueKHR = 2u32 ; const TerminateOnFirstHitKHR = 4u32 ; const SkipClosestHitShaderKHR = 8u32 ; const CullBackFacingTrianglesKHR = 16u32 ; const CullFrontFacingTrianglesKHR = 32u32 ; const CullOpaqueKHR = 64u32 ; const CullNoOpaqueKHR = 128u32 ; const SkipTrianglesKHR = 256u32 ; const SkipAABBsKHR = 512u32 ; const ForceOpacityMicromap2StateEXT = 1024u32 ; } }
 impl Operand for RayFlags {
-    const KIND: OperandKind = OPERAND_KIND_RAY_FLAGS;
+    const KIND: &OperandKind = &OPERAND_KIND_RAY_FLAGS;
 }
 impl OperandEncoding for RayFlags {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -172,7 +172,7 @@ impl OperandEncoding for RayFlags {
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct FragmentShadingRate : u32 { const Vertical2Pixels = 1u32 ; const Vertical4Pixels = 2u32 ; const Horizontal2Pixels = 4u32 ; const Horizontal4Pixels = 8u32 ; } }
 impl Operand for FragmentShadingRate {
-    const KIND: OperandKind = OPERAND_KIND_FRAGMENT_SHADING_RATE;
+    const KIND: &OperandKind = &OPERAND_KIND_FRAGMENT_SHADING_RATE;
 }
 impl OperandEncoding for FragmentShadingRate {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -191,7 +191,7 @@ impl OperandEncoding for FragmentShadingRate {
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct RawAccessChainOperands : u32 { const None = 0u32 ; const RobustnessPerComponentNV = 1u32 ; const RobustnessPerElementNV = 2u32 ; } }
 impl Operand for RawAccessChainOperands {
-    const KIND: OperandKind = OPERAND_KIND_RAW_ACCESS_CHAIN_OPERANDS;
+    const KIND: &OperandKind = &OPERAND_KIND_RAW_ACCESS_CHAIN_OPERANDS;
 }
 impl OperandEncoding for RawAccessChainOperands {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -229,7 +229,7 @@ pub enum SourceLanguage {
     Rust = 13u32,
 }
 impl Operand for SourceLanguage {
-    const KIND: OperandKind = OPERAND_KIND_SOURCE_LANGUAGE;
+    const KIND: &OperandKind = &OPERAND_KIND_SOURCE_LANGUAGE;
 }
 impl OperandEncoding for SourceLanguage {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -284,7 +284,7 @@ pub enum ExecutionModel {
     MeshEXT = 5365u32,
 }
 impl Operand for ExecutionModel {
-    const KIND: OperandKind = OPERAND_KIND_EXECUTION_MODEL;
+    const KIND: &OperandKind = &OPERAND_KIND_EXECUTION_MODEL;
 }
 impl OperandEncoding for ExecutionModel {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -330,7 +330,7 @@ pub enum AddressingModel {
     PhysicalStorageBuffer64 = 5348u32,
 }
 impl Operand for AddressingModel {
-    const KIND: OperandKind = OPERAND_KIND_ADDRESSING_MODEL;
+    const KIND: &OperandKind = &OPERAND_KIND_ADDRESSING_MODEL;
 }
 impl OperandEncoding for AddressingModel {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -363,7 +363,7 @@ pub enum MemoryModel {
     Vulkan = 3u32,
 }
 impl Operand for MemoryModel {
-    const KIND: OperandKind = OPERAND_KIND_MEMORY_MODEL;
+    const KIND: &OperandKind = &OPERAND_KIND_MEMORY_MODEL;
 }
 impl OperandEncoding for MemoryModel {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -536,7 +536,7 @@ pub enum ExecutionMode {
     ),
 }
 impl Operand for ExecutionMode {
-    const KIND: OperandKind = OPERAND_KIND_EXECUTION_MODE;
+    const KIND: &OperandKind = &OPERAND_KIND_EXECUTION_MODE;
 }
 impl OperandEncoding for ExecutionMode {
     const FIXED_LEN: Option<usize> = None;
@@ -961,7 +961,7 @@ pub enum StorageClass {
     HostOnlyALTERA = 5937u32,
 }
 impl Operand for StorageClass {
-    const KIND: OperandKind = OPERAND_KIND_STORAGE_CLASS;
+    const KIND: &OperandKind = &OPERAND_KIND_STORAGE_CLASS;
 }
 impl OperandEncoding for StorageClass {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1022,7 +1022,7 @@ pub enum Dim {
     TileImageDataEXT = 4173u32,
 }
 impl Operand for Dim {
-    const KIND: OperandKind = OPERAND_KIND_DIM;
+    const KIND: &OperandKind = &OPERAND_KIND_DIM;
 }
 impl OperandEncoding for Dim {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1059,7 +1059,7 @@ pub enum SamplerAddressingMode {
     RepeatMirrored = 4u32,
 }
 impl Operand for SamplerAddressingMode {
-    const KIND: OperandKind = OPERAND_KIND_SAMPLER_ADDRESSING_MODE;
+    const KIND: &OperandKind = &OPERAND_KIND_SAMPLER_ADDRESSING_MODE;
 }
 impl OperandEncoding for SamplerAddressingMode {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1090,7 +1090,7 @@ pub enum SamplerFilterMode {
     Linear = 1u32,
 }
 impl Operand for SamplerFilterMode {
-    const KIND: OperandKind = OPERAND_KIND_SAMPLER_FILTER_MODE;
+    const KIND: &OperandKind = &OPERAND_KIND_SAMPLER_FILTER_MODE;
 }
 impl OperandEncoding for SamplerFilterMode {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1158,7 +1158,7 @@ pub enum ImageFormat {
     R64i = 41u32,
 }
 impl Operand for ImageFormat {
-    const KIND: OperandKind = OPERAND_KIND_IMAGE_FORMAT;
+    const KIND: &OperandKind = &OPERAND_KIND_IMAGE_FORMAT;
 }
 impl OperandEncoding for ImageFormat {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1244,7 +1244,7 @@ pub enum ImageChannelOrder {
     ABGR = 19u32,
 }
 impl Operand for ImageChannelOrder {
-    const KIND: OperandKind = OPERAND_KIND_IMAGE_CHANNEL_ORDER;
+    const KIND: &OperandKind = &OPERAND_KIND_IMAGE_CHANNEL_ORDER;
 }
 impl OperandEncoding for ImageChannelOrder {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1314,7 +1314,7 @@ pub enum ImageChannelDataType {
     UnormInt14X2EXT = 26u32,
 }
 impl Operand for ImageChannelDataType {
-    const KIND: OperandKind = OPERAND_KIND_IMAGE_CHANNEL_DATA_TYPE;
+    const KIND: &OperandKind = &OPERAND_KIND_IMAGE_CHANNEL_DATA_TYPE;
 }
 impl OperandEncoding for ImageChannelDataType {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1368,7 +1368,7 @@ pub enum FPRoundingMode {
     RTN = 3u32,
 }
 impl Operand for FPRoundingMode {
-    const KIND: OperandKind = OPERAND_KIND_FP_ROUNDING_MODE;
+    const KIND: &OperandKind = &OPERAND_KIND_FP_ROUNDING_MODE;
 }
 impl OperandEncoding for FPRoundingMode {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1398,7 +1398,7 @@ pub enum FPDenormMode {
     FlushToZero = 1u32,
 }
 impl Operand for FPDenormMode {
-    const KIND: OperandKind = OPERAND_KIND_FP_DENORM_MODE;
+    const KIND: &OperandKind = &OPERAND_KIND_FP_DENORM_MODE;
 }
 impl OperandEncoding for FPDenormMode {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1432,7 +1432,7 @@ pub enum QuantizationModes {
     RND_CONV_ODD = 7u32,
 }
 impl Operand for QuantizationModes {
-    const KIND: OperandKind = OPERAND_KIND_QUANTIZATION_MODES;
+    const KIND: &OperandKind = &OPERAND_KIND_QUANTIZATION_MODES;
 }
 impl OperandEncoding for QuantizationModes {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1466,7 +1466,7 @@ pub enum FPOperationMode {
     ALT = 1u32,
 }
 impl Operand for FPOperationMode {
-    const KIND: OperandKind = OPERAND_KIND_FP_OPERATION_MODE;
+    const KIND: &OperandKind = &OPERAND_KIND_FP_OPERATION_MODE;
 }
 impl OperandEncoding for FPOperationMode {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1496,7 +1496,7 @@ pub enum OverflowModes {
     SAT_SYM = 3u32,
 }
 impl Operand for OverflowModes {
-    const KIND: OperandKind = OPERAND_KIND_OVERFLOW_MODES;
+    const KIND: &OperandKind = &OPERAND_KIND_OVERFLOW_MODES;
 }
 impl OperandEncoding for OverflowModes {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1527,7 +1527,7 @@ pub enum LinkageType {
     LinkOnceODR = 2u32,
 }
 impl Operand for LinkageType {
-    const KIND: OperandKind = OPERAND_KIND_LINKAGE_TYPE;
+    const KIND: &OperandKind = &OPERAND_KIND_LINKAGE_TYPE;
 }
 impl OperandEncoding for LinkageType {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1557,7 +1557,7 @@ pub enum AccessQualifier {
     ReadWrite = 2u32,
 }
 impl Operand for AccessQualifier {
-    const KIND: OperandKind = OPERAND_KIND_ACCESS_QUALIFIER;
+    const KIND: &OperandKind = &OPERAND_KIND_ACCESS_QUALIFIER;
 }
 impl OperandEncoding for AccessQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1588,7 +1588,7 @@ pub enum HostAccessQualifier {
     ReadWriteINTEL = 3u32,
 }
 impl Operand for HostAccessQualifier {
-    const KIND: OperandKind = OPERAND_KIND_HOST_ACCESS_QUALIFIER;
+    const KIND: &OperandKind = &OPERAND_KIND_HOST_ACCESS_QUALIFIER;
 }
 impl OperandEncoding for HostAccessQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1625,7 +1625,7 @@ pub enum FunctionParameterAttribute {
     RuntimeAlignedALTERA = 5940u32,
 }
 impl Operand for FunctionParameterAttribute {
-    const KIND: OperandKind = OPERAND_KIND_FUNCTION_PARAMETER_ATTRIBUTE;
+    const KIND: &OperandKind = &OPERAND_KIND_FUNCTION_PARAMETER_ATTRIBUTE;
 }
 impl OperandEncoding for FunctionParameterAttribute {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1850,7 +1850,7 @@ pub enum Decoration {
     ),
 }
 impl Operand for Decoration {
-    const KIND: OperandKind = OPERAND_KIND_DECORATION;
+    const KIND: &OperandKind = &OPERAND_KIND_DECORATION;
 }
 impl OperandEncoding for Decoration {
     const FIXED_LEN: Option<usize> = None;
@@ -2596,7 +2596,7 @@ pub enum BuiltIn {
     CullMaskKHR = 6021u32,
 }
 impl Operand for BuiltIn {
-    const KIND: OperandKind = OPERAND_KIND_BUILT_IN;
+    const KIND: &OperandKind = &OPERAND_KIND_BUILT_IN;
 }
 impl OperandEncoding for BuiltIn {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -2756,7 +2756,7 @@ pub enum Scope {
     ShaderCallKHR = 6u32,
 }
 impl Operand for Scope {
-    const KIND: OperandKind = OPERAND_KIND_SCOPE;
+    const KIND: &OperandKind = &OPERAND_KIND_SCOPE;
 }
 impl OperandEncoding for Scope {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -2795,7 +2795,7 @@ pub enum GroupOperation {
     PartitionedExclusiveScanEXT = 8u32,
 }
 impl Operand for GroupOperation {
-    const KIND: OperandKind = OPERAND_KIND_GROUP_OPERATION;
+    const KIND: &OperandKind = &OPERAND_KIND_GROUP_OPERATION;
 }
 impl OperandEncoding for GroupOperation {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -2829,7 +2829,7 @@ pub enum KernelEnqueueFlags {
     WaitWorkGroup = 2u32,
 }
 impl Operand for KernelEnqueueFlags {
-    const KIND: OperandKind = OPERAND_KIND_KERNEL_ENQUEUE_FLAGS;
+    const KIND: &OperandKind = &OPERAND_KIND_KERNEL_ENQUEUE_FLAGS;
 }
 impl OperandEncoding for KernelEnqueueFlags {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3187,7 +3187,7 @@ pub enum Capability {
     BindlessImagesINTEL = 6528u32,
 }
 impl Operand for Capability {
-    const KIND: OperandKind = OPERAND_KIND_CAPABILITY;
+    const KIND: &OperandKind = &OPERAND_KIND_CAPABILITY;
 }
 impl OperandEncoding for Capability {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3493,7 +3493,7 @@ pub enum RayQueryIntersection {
     RayQueryCommittedIntersectionKHR = 1u32,
 }
 impl Operand for RayQueryIntersection {
-    const KIND: OperandKind = OPERAND_KIND_RAY_QUERY_INTERSECTION;
+    const KIND: &OperandKind = &OPERAND_KIND_RAY_QUERY_INTERSECTION;
 }
 impl OperandEncoding for RayQueryIntersection {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3522,7 +3522,7 @@ pub enum RayQueryCommittedIntersectionType {
     RayQueryCommittedIntersectionGeneratedKHR = 2u32,
 }
 impl Operand for RayQueryCommittedIntersectionType {
-    const KIND: OperandKind = OPERAND_KIND_RAY_QUERY_COMMITTED_INTERSECTION_TYPE;
+    const KIND: &OperandKind = &OPERAND_KIND_RAY_QUERY_COMMITTED_INTERSECTION_TYPE;
 }
 impl OperandEncoding for RayQueryCommittedIntersectionType {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3551,7 +3551,7 @@ pub enum RayQueryCandidateIntersectionType {
     RayQueryCandidateIntersectionAABBKHR = 1u32,
 }
 impl Operand for RayQueryCandidateIntersectionType {
-    const KIND: OperandKind = OPERAND_KIND_RAY_QUERY_CANDIDATE_INTERSECTION_TYPE;
+    const KIND: &OperandKind = &OPERAND_KIND_RAY_QUERY_CANDIDATE_INTERSECTION_TYPE;
 }
 impl OperandEncoding for RayQueryCandidateIntersectionType {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3579,7 +3579,7 @@ pub enum PackedVectorFormat {
     PackedVectorFormat4x8Bit = 0u32,
 }
 impl Operand for PackedVectorFormat {
-    const KIND: OperandKind = OPERAND_KIND_PACKED_VECTOR_FORMAT;
+    const KIND: &OperandKind = &OPERAND_KIND_PACKED_VECTOR_FORMAT;
 }
 impl OperandEncoding for PackedVectorFormat {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3601,7 +3601,7 @@ impl OperandEncoding for PackedVectorFormat {
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct CooperativeMatrixOperands : u32 { const NoneKHR = 0u32 ; const MatrixASignedComponentsKHR = 1u32 ; const MatrixBSignedComponentsKHR = 2u32 ; const MatrixCSignedComponentsKHR = 4u32 ; const MatrixResultSignedComponentsKHR = 8u32 ; const SaturatingAccumulationKHR = 16u32 ; } }
 impl Operand for CooperativeMatrixOperands {
-    const KIND: OperandKind = OPERAND_KIND_COOPERATIVE_MATRIX_OPERANDS;
+    const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_OPERANDS;
 }
 impl OperandEncoding for CooperativeMatrixOperands {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3627,7 +3627,7 @@ pub enum CooperativeMatrixLayout {
     ColumnBlockedInterleavedARM = 4203u32,
 }
 impl Operand for CooperativeMatrixLayout {
-    const KIND: OperandKind = OPERAND_KIND_COOPERATIVE_MATRIX_LAYOUT;
+    const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_LAYOUT;
 }
 impl OperandEncoding for CooperativeMatrixLayout {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3658,7 +3658,7 @@ pub enum CooperativeMatrixUse {
     MatrixAccumulatorKHR = 2u32,
 }
 impl Operand for CooperativeMatrixUse {
-    const KIND: OperandKind = OPERAND_KIND_COOPERATIVE_MATRIX_USE;
+    const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_USE;
 }
 impl OperandEncoding for CooperativeMatrixUse {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3682,7 +3682,7 @@ impl OperandEncoding for CooperativeMatrixUse {
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct CooperativeMatrixReduce : u32 { const Row = 1u32 ; const Column = 2u32 ; const TwoByTwo = 4u32 ; } }
 impl Operand for CooperativeMatrixReduce {
-    const KIND: OperandKind = OPERAND_KIND_COOPERATIVE_MATRIX_REDUCE;
+    const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_REDUCE;
 }
 impl OperandEncoding for CooperativeMatrixReduce {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3709,7 +3709,7 @@ pub enum TensorClampMode {
     RepeatMirrored = 4u32,
 }
 impl Operand for TensorClampMode {
-    const KIND: OperandKind = OPERAND_KIND_TENSOR_CLAMP_MODE;
+    const KIND: &OperandKind = &OPERAND_KIND_TENSOR_CLAMP_MODE;
 }
 impl OperandEncoding for TensorClampMode {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3735,7 +3735,7 @@ impl OperandEncoding for TensorClampMode {
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct TensorAddressingOperands : u32 { const None = 0u32 ; const TensorView = 1u32 ; const DecodeFunc = 2u32 ; } }
 impl Operand for TensorAddressingOperands {
-    const KIND: OperandKind = OPERAND_KIND_TENSOR_ADDRESSING_OPERANDS;
+    const KIND: &OperandKind = &OPERAND_KIND_TENSOR_ADDRESSING_OPERANDS;
 }
 impl OperandEncoding for TensorAddressingOperands {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3759,7 +3759,7 @@ pub enum InitializationModeQualifier {
     InitOnDeviceResetALTERA = 1u32,
 }
 impl Operand for InitializationModeQualifier {
-    const KIND: OperandKind = OPERAND_KIND_INITIALIZATION_MODE_QUALIFIER;
+    const KIND: &OperandKind = &OPERAND_KIND_INITIALIZATION_MODE_QUALIFIER;
 }
 impl OperandEncoding for InitializationModeQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3790,7 +3790,7 @@ pub enum LoadCacheControl {
     ConstCachedINTEL = 4u32,
 }
 impl Operand for LoadCacheControl {
-    const KIND: OperandKind = OPERAND_KIND_LOAD_CACHE_CONTROL;
+    const KIND: &OperandKind = &OPERAND_KIND_LOAD_CACHE_CONTROL;
 }
 impl OperandEncoding for LoadCacheControl {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3823,7 +3823,7 @@ pub enum StoreCacheControl {
     StreamingINTEL = 3u32,
 }
 impl Operand for StoreCacheControl {
-    const KIND: OperandKind = OPERAND_KIND_STORE_CACHE_CONTROL;
+    const KIND: &OperandKind = &OPERAND_KIND_STORE_CACHE_CONTROL;
 }
 impl OperandEncoding for StoreCacheControl {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3852,7 +3852,7 @@ pub enum NamedMaximumNumberOfRegisters {
     AutoINTEL = 0u32,
 }
 impl Operand for NamedMaximumNumberOfRegisters {
-    const KIND: OperandKind = OPERAND_KIND_NAMED_MAXIMUM_NUMBER_OF_REGISTERS;
+    const KIND: &OperandKind = &OPERAND_KIND_NAMED_MAXIMUM_NUMBER_OF_REGISTERS;
 }
 impl OperandEncoding for NamedMaximumNumberOfRegisters {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3874,7 +3874,7 @@ impl OperandEncoding for NamedMaximumNumberOfRegisters {
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MatrixMultiplyAccumulateOperands : u32 { const None = 0u32 ; const MatrixASignedComponentsINTEL = 1u32 ; const MatrixBSignedComponentsINTEL = 2u32 ; const MatrixCBFloat16INTEL = 4u32 ; const MatrixResultBFloat16INTEL = 8u32 ; const MatrixAPackedInt8INTEL = 16u32 ; const MatrixBPackedInt8INTEL = 32u32 ; const MatrixAPackedInt4INTEL = 64u32 ; const MatrixBPackedInt4INTEL = 128u32 ; const MatrixATF32INTEL = 256u32 ; const MatrixBTF32INTEL = 512u32 ; const MatrixAPackedFloat16INTEL = 1024u32 ; const MatrixBPackedFloat16INTEL = 2048u32 ; const MatrixAPackedBFloat16INTEL = 4096u32 ; const MatrixBPackedBFloat16INTEL = 8192u32 ; } }
 impl Operand for MatrixMultiplyAccumulateOperands {
-    const KIND: OperandKind = OPERAND_KIND_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS;
+    const KIND: &OperandKind = &OPERAND_KIND_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS;
 }
 impl OperandEncoding for MatrixMultiplyAccumulateOperands {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3898,7 +3898,7 @@ pub enum FPEncoding {
     Float8E5M2EXT = 4215u32,
 }
 impl Operand for FPEncoding {
-    const KIND: OperandKind = OPERAND_KIND_FP_ENCODING;
+    const KIND: &OperandKind = &OPERAND_KIND_FP_ENCODING;
 }
 impl OperandEncoding for FPEncoding {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3929,7 +3929,7 @@ pub enum CooperativeVectorMatrixLayout {
     TrainingOptimalNV = 3u32,
 }
 impl Operand for CooperativeVectorMatrixLayout {
-    const KIND: OperandKind = OPERAND_KIND_COOPERATIVE_VECTOR_MATRIX_LAYOUT;
+    const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_VECTOR_MATRIX_LAYOUT;
 }
 impl OperandEncoding for CooperativeVectorMatrixLayout {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -3972,7 +3972,7 @@ pub enum ComponentType {
     FloatE5M2NV = 1000491003u32,
 }
 impl Operand for ComponentType {
-    const KIND: OperandKind = OPERAND_KIND_COMPONENT_TYPE;
+    const KIND: &OperandKind = &OPERAND_KIND_COMPONENT_TYPE;
 }
 impl OperandEncoding for ComponentType {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -4009,7 +4009,7 @@ impl OperandEncoding for ComponentType {
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PairLiteralIntegerIdRef(LiteralInteger, IdRef);
 impl Operand for PairLiteralIntegerIdRef {
-    const KIND: OperandKind = OPERAND_KIND_PAIR_LITERAL_INTEGER_ID_REF;
+    const KIND: &OperandKind = &OPERAND_KIND_PAIR_LITERAL_INTEGER_ID_REF;
 }
 impl OperandEncoding for PairLiteralIntegerIdRef {
     const FIXED_LEN: Option<usize> = FixedLenComposer::new()
@@ -4031,7 +4031,7 @@ impl OperandEncoding for PairLiteralIntegerIdRef {
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PairIdRefLiteralInteger(IdRef, LiteralInteger);
 impl Operand for PairIdRefLiteralInteger {
-    const KIND: OperandKind = OPERAND_KIND_PAIR_ID_REF_LITERAL_INTEGER;
+    const KIND: &OperandKind = &OPERAND_KIND_PAIR_ID_REF_LITERAL_INTEGER;
 }
 impl OperandEncoding for PairIdRefLiteralInteger {
     const FIXED_LEN: Option<usize> = FixedLenComposer::new()
@@ -4053,7 +4053,7 @@ impl OperandEncoding for PairIdRefLiteralInteger {
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PairIdRefIdRef(IdRef, IdRef);
 impl Operand for PairIdRefIdRef {
-    const KIND: OperandKind = OPERAND_KIND_PAIR_ID_REF_ID_REF;
+    const KIND: &OperandKind = &OPERAND_KIND_PAIR_ID_REF_ID_REF;
 }
 impl OperandEncoding for PairIdRefIdRef {
     const FIXED_LEN: Option<usize> = FixedLenComposer::new()
@@ -4074,7 +4074,7 @@ impl OperandEncoding for PairIdRefIdRef {
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct TensorOperands : u32 { const NoneARM = 0u32 ; const NontemporalARM = 1u32 ; const OutOfBoundsValueARM = 2u32 ; const MakeElementAvailableARM = 4u32 ; const MakeElementVisibleARM = 8u32 ; const NonPrivateElementARM = 16u32 ; } }
 impl Operand for TensorOperands {
-    const KIND: OperandKind = OPERAND_KIND_TENSOR_OPERANDS;
+    const KIND: &OperandKind = &OPERAND_KIND_TENSOR_OPERANDS;
 }
 impl OperandEncoding for TensorOperands {
     const FIXED_LEN: Option<usize> = Some(1);

@@ -31,7 +31,7 @@ impl Word {
 ///
 /// Requires [`OperandEncoding`], see that for encoding and decoding SPIR-V.
 pub trait Operand: OperandEncoding {
-    const KIND: OperandKind;
+    const KIND: &OperandKind;
 }
 
 /// A `OperandSpec` is an [`Operand`] with a [`Quantifier`] to describe the repetition of the [`Operand`].

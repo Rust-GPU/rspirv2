@@ -105,7 +105,7 @@ fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> 
         }
 
         impl Operand for #name {
-            const KIND: OperandKind = #kind;
+            const KIND: &OperandKind = &#kind;
         }
 
         impl OperandEncoding for #name {
@@ -163,7 +163,7 @@ fn emit_c_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> Tok
         }
 
         impl Operand for #name {
-            const KIND: OperandKind = #kind;
+            const KIND: &OperandKind = &#kind;
         }
 
         impl OperandEncoding for #name {
@@ -230,7 +230,7 @@ fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> T
         }
 
         impl Operand for #name {
-            const KIND: OperandKind = #kind;
+            const KIND: &OperandKind = &#kind;
         }
 
         impl OperandEncoding for #name {
@@ -272,7 +272,7 @@ fn emit_composite(operand_kind: &OperandKind, bases: &[Cow<str>]) -> TokenStream
         pub struct #name(#(#member_tys),*);
 
         impl Operand for #name {
-            const KIND: OperandKind = #kind;
+            const KIND: &OperandKind = &#kind;
         }
 
         impl OperandEncoding for #name {
