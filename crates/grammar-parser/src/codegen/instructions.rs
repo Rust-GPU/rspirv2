@@ -44,7 +44,7 @@ fn emit_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()
                 const META: &InstMeta = &#meta;
 
                 fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
-                    let len = 0 #(+OperandEncoding::word_len(&self.#members))*;
+                    let len = 1 #(+OperandEncoding::word_len(&self.#members))*;
                     writer.push(Word::new_op(Self::META.opcode, len)?)?;
                     #(OperandEncoding::encode(&self.#members, &mut *writer)?;)*
                     Ok(())
