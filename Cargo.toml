@@ -32,3 +32,4 @@ bitflags = "2.10.0"
 bytemuck = "1.25.0"
 prettyplease = "0.2.37"
 syn = { version = "2.0.116", default-features = false }
+clap = { version = "4.5.57", features = ["derive"] }
