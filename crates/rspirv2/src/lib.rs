@@ -3,6 +3,7 @@
 pub mod binary;
 pub mod inst;
 pub mod meta;
+pub mod module;
 pub mod operand;
 
 pub mod core;
