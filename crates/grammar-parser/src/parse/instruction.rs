@@ -102,7 +102,9 @@ mod codegen {
             let aliases = self.aliases.emit_ref();
             let provisional = self.provisional.emit_ref();
 
+            let doc = format!("opcode: {:#x}", self.opcode);
             quote! {
+                #[doc = #doc]
                 pub const #ident: InstMeta = InstMeta {
                     opname: #opname,
                     class: #class,

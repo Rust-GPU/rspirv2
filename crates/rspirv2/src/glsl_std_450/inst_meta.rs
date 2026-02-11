@@ -1,4 +1,5 @@
 use super::preamble::*;
+#[doc = "opcode: 0x1"]
 pub const ROUND: InstMeta = InstMeta {
     opname: "Round",
     class: None,
@@ -15,6 +16,7 @@ pub const ROUND: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x2"]
 pub const ROUND_EVEN: InstMeta = InstMeta {
     opname: "RoundEven",
     class: None,
@@ -31,6 +33,7 @@ pub const ROUND_EVEN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x3"]
 pub const TRUNC: InstMeta = InstMeta {
     opname: "Trunc",
     class: None,
@@ -47,6 +50,7 @@ pub const TRUNC: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x4"]
 pub const F_ABS: InstMeta = InstMeta {
     opname: "FAbs",
     class: None,
@@ -63,6 +67,7 @@ pub const F_ABS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x5"]
 pub const S_ABS: InstMeta = InstMeta {
     opname: "SAbs",
     class: None,
@@ -79,6 +84,7 @@ pub const S_ABS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x6"]
 pub const F_SIGN: InstMeta = InstMeta {
     opname: "FSign",
     class: None,
@@ -95,6 +101,7 @@ pub const F_SIGN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x7"]
 pub const S_SIGN: InstMeta = InstMeta {
     opname: "SSign",
     class: None,
@@ -111,6 +118,7 @@ pub const S_SIGN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x8"]
 pub const FLOOR: InstMeta = InstMeta {
     opname: "Floor",
     class: None,
@@ -127,6 +135,7 @@ pub const FLOOR: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x9"]
 pub const CEIL: InstMeta = InstMeta {
     opname: "Ceil",
     class: None,
@@ -143,6 +152,7 @@ pub const CEIL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0xa"]
 pub const FRACT: InstMeta = InstMeta {
     opname: "Fract",
     class: None,
@@ -159,6 +169,7 @@ pub const FRACT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0xb"]
 pub const RADIANS: InstMeta = InstMeta {
     opname: "Radians",
     class: None,
@@ -175,6 +186,7 @@ pub const RADIANS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0xc"]
 pub const DEGREES: InstMeta = InstMeta {
     opname: "Degrees",
     class: None,
@@ -191,6 +203,7 @@ pub const DEGREES: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0xd"]
 pub const SIN: InstMeta = InstMeta {
     opname: "Sin",
     class: None,
@@ -207,6 +220,7 @@ pub const SIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0xe"]
 pub const COS: InstMeta = InstMeta {
     opname: "Cos",
     class: None,
@@ -223,6 +237,7 @@ pub const COS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0xf"]
 pub const TAN: InstMeta = InstMeta {
     opname: "Tan",
     class: None,
@@ -239,6 +254,7 @@ pub const TAN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x10"]
 pub const ASIN: InstMeta = InstMeta {
     opname: "Asin",
     class: None,
@@ -255,6 +271,7 @@ pub const ASIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x11"]
 pub const ACOS: InstMeta = InstMeta {
     opname: "Acos",
     class: None,
@@ -271,6 +288,7 @@ pub const ACOS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x12"]
 pub const ATAN: InstMeta = InstMeta {
     opname: "Atan",
     class: None,
@@ -287,6 +305,7 @@ pub const ATAN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x13"]
 pub const SINH: InstMeta = InstMeta {
     opname: "Sinh",
     class: None,
@@ -303,6 +322,7 @@ pub const SINH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x14"]
 pub const COSH: InstMeta = InstMeta {
     opname: "Cosh",
     class: None,
@@ -319,6 +339,7 @@ pub const COSH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x15"]
 pub const TANH: InstMeta = InstMeta {
     opname: "Tanh",
     class: None,
@@ -335,6 +356,7 @@ pub const TANH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x16"]
 pub const ASINH: InstMeta = InstMeta {
     opname: "Asinh",
     class: None,
@@ -351,6 +373,7 @@ pub const ASINH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x17"]
 pub const ACOSH: InstMeta = InstMeta {
     opname: "Acosh",
     class: None,
@@ -367,6 +390,7 @@ pub const ACOSH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x18"]
 pub const ATANH: InstMeta = InstMeta {
     opname: "Atanh",
     class: None,
@@ -383,6 +407,7 @@ pub const ATANH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x19"]
 pub const ATAN_2: InstMeta = InstMeta {
     opname: "Atan2",
     class: None,
@@ -406,6 +431,7 @@ pub const ATAN_2: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x1a"]
 pub const POW: InstMeta = InstMeta {
     opname: "Pow",
     class: None,
@@ -429,6 +455,7 @@ pub const POW: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x1b"]
 pub const EXP: InstMeta = InstMeta {
     opname: "Exp",
     class: None,
@@ -445,6 +472,7 @@ pub const EXP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x1c"]
 pub const LOG: InstMeta = InstMeta {
     opname: "Log",
     class: None,
@@ -461,6 +489,7 @@ pub const LOG: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x1d"]
 pub const EXP_2: InstMeta = InstMeta {
     opname: "Exp2",
     class: None,
@@ -477,6 +506,7 @@ pub const EXP_2: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x1e"]
 pub const LOG_2: InstMeta = InstMeta {
     opname: "Log2",
     class: None,
@@ -493,6 +523,7 @@ pub const LOG_2: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x1f"]
 pub const SQRT: InstMeta = InstMeta {
     opname: "Sqrt",
     class: None,
@@ -509,6 +540,7 @@ pub const SQRT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x20"]
 pub const INVERSE_SQRT: InstMeta = InstMeta {
     opname: "InverseSqrt",
     class: None,
@@ -525,6 +557,7 @@ pub const INVERSE_SQRT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x21"]
 pub const DETERMINANT: InstMeta = InstMeta {
     opname: "Determinant",
     class: None,
@@ -541,6 +574,7 @@ pub const DETERMINANT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x22"]
 pub const MATRIX_INVERSE: InstMeta = InstMeta {
     opname: "MatrixInverse",
     class: None,
@@ -557,6 +591,7 @@ pub const MATRIX_INVERSE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x23"]
 pub const MODF: InstMeta = InstMeta {
     opname: "Modf",
     class: None,
@@ -580,6 +615,7 @@ pub const MODF: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x24"]
 pub const MODF_STRUCT: InstMeta = InstMeta {
     opname: "ModfStruct",
     class: None,
@@ -596,6 +632,7 @@ pub const MODF_STRUCT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x25"]
 pub const F_MIN: InstMeta = InstMeta {
     opname: "FMin",
     class: None,
@@ -619,6 +656,7 @@ pub const F_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x26"]
 pub const U_MIN: InstMeta = InstMeta {
     opname: "UMin",
     class: None,
@@ -642,6 +680,7 @@ pub const U_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x27"]
 pub const S_MIN: InstMeta = InstMeta {
     opname: "SMin",
     class: None,
@@ -665,6 +704,7 @@ pub const S_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x28"]
 pub const F_MAX: InstMeta = InstMeta {
     opname: "FMax",
     class: None,
@@ -688,6 +728,7 @@ pub const F_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x29"]
 pub const U_MAX: InstMeta = InstMeta {
     opname: "UMax",
     class: None,
@@ -711,6 +752,7 @@ pub const U_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x2a"]
 pub const S_MAX: InstMeta = InstMeta {
     opname: "SMax",
     class: None,
@@ -734,6 +776,7 @@ pub const S_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x2b"]
 pub const F_CLAMP: InstMeta = InstMeta {
     opname: "FClamp",
     class: None,
@@ -762,6 +805,7 @@ pub const F_CLAMP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x2c"]
 pub const U_CLAMP: InstMeta = InstMeta {
     opname: "UClamp",
     class: None,
@@ -790,6 +834,7 @@ pub const U_CLAMP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x2d"]
 pub const S_CLAMP: InstMeta = InstMeta {
     opname: "SClamp",
     class: None,
@@ -818,6 +863,7 @@ pub const S_CLAMP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x2e"]
 pub const F_MIX: InstMeta = InstMeta {
     opname: "FMix",
     class: None,
@@ -846,6 +892,7 @@ pub const F_MIX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x2f"]
 pub const I_MIX: InstMeta = InstMeta {
     opname: "IMix",
     class: None,
@@ -874,6 +921,7 @@ pub const I_MIX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x30"]
 pub const STEP: InstMeta = InstMeta {
     opname: "Step",
     class: None,
@@ -897,6 +945,7 @@ pub const STEP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x31"]
 pub const SMOOTH_STEP: InstMeta = InstMeta {
     opname: "SmoothStep",
     class: None,
@@ -925,6 +974,7 @@ pub const SMOOTH_STEP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x32"]
 pub const FMA: InstMeta = InstMeta {
     opname: "Fma",
     class: None,
@@ -953,6 +1003,7 @@ pub const FMA: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x33"]
 pub const FREXP: InstMeta = InstMeta {
     opname: "Frexp",
     class: None,
@@ -976,6 +1027,7 @@ pub const FREXP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x34"]
 pub const FREXP_STRUCT: InstMeta = InstMeta {
     opname: "FrexpStruct",
     class: None,
@@ -992,6 +1044,7 @@ pub const FREXP_STRUCT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x35"]
 pub const LDEXP: InstMeta = InstMeta {
     opname: "Ldexp",
     class: None,
@@ -1015,6 +1068,7 @@ pub const LDEXP: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x36"]
 pub const PACK_SNORM_4_X_8: InstMeta = InstMeta {
     opname: "PackSnorm4x8",
     class: None,
@@ -1031,6 +1085,7 @@ pub const PACK_SNORM_4_X_8: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x37"]
 pub const PACK_UNORM_4_X_8: InstMeta = InstMeta {
     opname: "PackUnorm4x8",
     class: None,
@@ -1047,6 +1102,7 @@ pub const PACK_UNORM_4_X_8: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x38"]
 pub const PACK_SNORM_2_X_16: InstMeta = InstMeta {
     opname: "PackSnorm2x16",
     class: None,
@@ -1063,6 +1119,7 @@ pub const PACK_SNORM_2_X_16: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x39"]
 pub const PACK_UNORM_2_X_16: InstMeta = InstMeta {
     opname: "PackUnorm2x16",
     class: None,
@@ -1079,6 +1136,7 @@ pub const PACK_UNORM_2_X_16: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x3a"]
 pub const PACK_HALF_2_X_16: InstMeta = InstMeta {
     opname: "PackHalf2x16",
     class: None,
@@ -1095,6 +1153,7 @@ pub const PACK_HALF_2_X_16: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x3b"]
 pub const PACK_DOUBLE_2_X_32: InstMeta = InstMeta {
     opname: "PackDouble2x32",
     class: None,
@@ -1111,6 +1170,7 @@ pub const PACK_DOUBLE_2_X_32: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x3c"]
 pub const UNPACK_SNORM_2_X_16: InstMeta = InstMeta {
     opname: "UnpackSnorm2x16",
     class: None,
@@ -1127,6 +1187,7 @@ pub const UNPACK_SNORM_2_X_16: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x3d"]
 pub const UNPACK_UNORM_2_X_16: InstMeta = InstMeta {
     opname: "UnpackUnorm2x16",
     class: None,
@@ -1143,6 +1204,7 @@ pub const UNPACK_UNORM_2_X_16: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x3e"]
 pub const UNPACK_HALF_2_X_16: InstMeta = InstMeta {
     opname: "UnpackHalf2x16",
     class: None,
@@ -1159,6 +1221,7 @@ pub const UNPACK_HALF_2_X_16: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x3f"]
 pub const UNPACK_SNORM_4_X_8: InstMeta = InstMeta {
     opname: "UnpackSnorm4x8",
     class: None,
@@ -1175,6 +1238,7 @@ pub const UNPACK_SNORM_4_X_8: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x40"]
 pub const UNPACK_UNORM_4_X_8: InstMeta = InstMeta {
     opname: "UnpackUnorm4x8",
     class: None,
@@ -1191,6 +1255,7 @@ pub const UNPACK_UNORM_4_X_8: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x41"]
 pub const UNPACK_DOUBLE_2_X_32: InstMeta = InstMeta {
     opname: "UnpackDouble2x32",
     class: None,
@@ -1207,6 +1272,7 @@ pub const UNPACK_DOUBLE_2_X_32: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x42"]
 pub const LENGTH: InstMeta = InstMeta {
     opname: "Length",
     class: None,
@@ -1223,6 +1289,7 @@ pub const LENGTH: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x43"]
 pub const DISTANCE: InstMeta = InstMeta {
     opname: "Distance",
     class: None,
@@ -1246,6 +1313,7 @@ pub const DISTANCE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x44"]
 pub const CROSS: InstMeta = InstMeta {
     opname: "Cross",
     class: None,
@@ -1269,6 +1337,7 @@ pub const CROSS: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x45"]
 pub const NORMALIZE: InstMeta = InstMeta {
     opname: "Normalize",
     class: None,
@@ -1285,6 +1354,7 @@ pub const NORMALIZE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x46"]
 pub const FACE_FORWARD: InstMeta = InstMeta {
     opname: "FaceForward",
     class: None,
@@ -1313,6 +1383,7 @@ pub const FACE_FORWARD: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x47"]
 pub const REFLECT: InstMeta = InstMeta {
     opname: "Reflect",
     class: None,
@@ -1336,6 +1407,7 @@ pub const REFLECT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x48"]
 pub const REFRACT: InstMeta = InstMeta {
     opname: "Refract",
     class: None,
@@ -1364,6 +1436,7 @@ pub const REFRACT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x49"]
 pub const FIND_I_LSB: InstMeta = InstMeta {
     opname: "FindILsb",
     class: None,
@@ -1380,6 +1453,7 @@ pub const FIND_I_LSB: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x4a"]
 pub const FIND_S_MSB: InstMeta = InstMeta {
     opname: "FindSMsb",
     class: None,
@@ -1396,6 +1470,7 @@ pub const FIND_S_MSB: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x4b"]
 pub const FIND_U_MSB: InstMeta = InstMeta {
     opname: "FindUMsb",
     class: None,
@@ -1412,6 +1487,7 @@ pub const FIND_U_MSB: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x4c"]
 pub const INTERPOLATE_AT_CENTROID: InstMeta = InstMeta {
     opname: "InterpolateAtCentroid",
     class: None,
@@ -1428,6 +1504,7 @@ pub const INTERPOLATE_AT_CENTROID: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x4d"]
 pub const INTERPOLATE_AT_SAMPLE: InstMeta = InstMeta {
     opname: "InterpolateAtSample",
     class: None,
@@ -1451,6 +1528,7 @@ pub const INTERPOLATE_AT_SAMPLE: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x4e"]
 pub const INTERPOLATE_AT_OFFSET: InstMeta = InstMeta {
     opname: "InterpolateAtOffset",
     class: None,
@@ -1474,6 +1552,7 @@ pub const INTERPOLATE_AT_OFFSET: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x4f"]
 pub const N_MIN: InstMeta = InstMeta {
     opname: "NMin",
     class: None,
@@ -1497,6 +1576,7 @@ pub const N_MIN: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x50"]
 pub const N_MAX: InstMeta = InstMeta {
     opname: "NMax",
     class: None,
@@ -1520,6 +1600,7 @@ pub const N_MAX: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+#[doc = "opcode: 0x51"]
 pub const N_CLAMP: InstMeta = InstMeta {
     opname: "NClamp",
     class: None,

@@ -1,4 +1,5 @@
 use super::preamble::*;
+#[doc = "opcode: 0x1"]
 pub const DEBUG_PRINTF: InstMeta = InstMeta {
     opname: "DebugPrintf",
     class: None,
