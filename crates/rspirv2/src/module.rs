@@ -172,7 +172,7 @@ impl Module {
     }
 
     pub fn instructions(&self) -> &[Word] {
-        &self.0[4..]
+        &self.0[5..]
     }
 
     pub fn reader(&self) -> ModuleReader<'_> {

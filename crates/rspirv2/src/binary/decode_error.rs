@@ -32,6 +32,9 @@ pub enum DecodeError {
         op_len: usize,
         module_remaining: usize,
     },
+    InstructionZeroSized {
+        inst_offset: usize,
+    },
     Utf8Error(FromUtf8Error),
     InvalidBitflags {
         name: &'static str,
@@ -90,6 +93,10 @@ impl Display for DecodeError {
                 f,
                 "The Instruction at offset {inst_offset} has a supposed length of {op_len} but the module only has \
                 {module_remaining} words remaining"
+            ),
+            DecodeError::InstructionZeroSized { inst_offset } => write!(
+                f,
+                "The Instruction at offset {inst_offset} has an invalid length of 0, but must at least be of length 1 to include the opcode itself."
             ),
             DecodeError::Utf8Error(inner) => write!(f, "UTF-8 error: {inner}"),
             DecodeError::InvalidBitflags {
