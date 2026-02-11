@@ -1,8 +1,8 @@
 [workspace]
 members = [
 	"crates/autogen",
-	"crates/grammar",
 	"crates/grammar-parser",
+	"crates/rspirv2",
 ]
 resolver = "3"
 
@@ -14,8 +14,8 @@ license = "MIT OR Apache-2.0"
 
 [workspace.dependencies]
 autogen = { path = "crates/autogen" }
-spirv-grammar = { path = "crates/grammar" }
 spirv-grammar-parser = { path = "crates/grammar-parser" }
+rspirv2 = { path = "crates/rspirv2" }
 
 anyhow = "1.0.100"
 serde = { version = "1.0.228", features = ["derive"] }

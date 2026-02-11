@@ -1,5 +1,5 @@
 [package]
-name = "spirv-grammar"
+name = "rspirv2"
 version.workspace = true
 edition.workspace = true
 

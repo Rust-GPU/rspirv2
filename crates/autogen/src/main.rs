@@ -9,7 +9,7 @@ use std::path::Path;
 
 mod grammar_path;
 
-pub const PATH_GRAMMAR_CRATE_SRC: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/../grammar/src/");
+pub const PATH_GRAMMAR_CRATE_SRC: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/../rspirv2/src/");
 
 pub fn main() -> anyhow::Result<()> {
     write_grammar(

@@ -62,6 +62,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "rspirv2"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bitflags",
+ "smallvec",
+]
+
+[[package]]
 name = "serde"
 version = "1.0.228"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -111,15 +120,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "67b1b7a3b5fe4f1376887184045fcf45c69e92af734b7aaddc05fb777b6fbd03"
 dependencies = [
  "serde",
-]
-
-[[package]]
-name = "spirv-grammar"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "bitflags",
- "smallvec",
 ]
 
 [[package]]
