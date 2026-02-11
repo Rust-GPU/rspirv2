@@ -5,6 +5,12 @@ use quote::quote;
 pub const SMALLVEC_LEN: usize = 4;
 
 pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+    emit_inst(writer, grammar)?;
+    emit_inst_dyn(writer, grammar)?;
+    Ok(())
+}
+
+fn emit_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
     let insts = grammar.insts.iter().map(|inst| {
         let struct_ident = InstMeta::type_ident(&inst.opname);
         let meta = InstMeta::const_ident(&inst.opname);
@@ -58,6 +64,28 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Resu
         "inst",
         quote! {
             #(#insts)*
+        },
+    )
+}
+
+fn emit_inst_dyn(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+    let insts = grammar.insts.iter().map(|inst| {
+        let name = InstMeta::type_ident(&inst.opname);
+        let opcode = inst.opcode;
+        quote!(#opcode => f(&<#name as Inst>::decode(reader)?))
+    });
+    writer.write_const_module(
+        "inst_dyn",
+        quote! {
+            pub fn decode_dyn<R, F>(reader: &mut InstructionReader, f: F) -> Result<R, DecodeError>
+                where
+                    F: FnOnce(&dyn DynInst) -> R
+            {
+                Ok(match reader.opcode() {
+                    #(#insts,)*
+                    opcode => return Err(DecodeError::UnknownOpCode { opcode }),
+                })
+            }
         },
     )
 }

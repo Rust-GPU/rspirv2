@@ -10,6 +10,9 @@ pub enum DecodeError {
         expected: u16,
         actual: u16,
     },
+    UnknownOpCode {
+        opcode: u16,
+    },
     LiteralIntegerNotLastOperand,
     /// This error must be cheap to crate, it will be discarded when iterating an `InstructionReader`.
     InstructionDecodePulledTooManyWords {
@@ -52,6 +55,7 @@ impl Display for DecodeError {
                 f,
                 "Op {name} with opcode {expected} got InstructionReader with differing opcode {actual}"
             ),
+            DecodeError::UnknownOpCode { opcode } => write!(f, "Unknown opcode {opcode}"),
             DecodeError::LiteralIntegerNotLastOperand => write!(
                 f,
                 "Implementation Limitation: The `LiteralConst` must be the last operand of an Instruction for parsing \

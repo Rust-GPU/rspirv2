@@ -12,6 +12,7 @@ pub use literal_float::*;
 pub use literal_integer::*;
 pub use literal_string::*;
 use smallvec::SmallVec;
+use std::fmt::Debug;
 
 /// A 32bit SPIR-V Word
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -66,7 +67,7 @@ impl<T: Operand> OperandSpec for T {
 /// [`Quantifier::ZeroOrMore`] (`Vec`).
 ///
 /// [`OperandSpecMeta`]: `crate::meta::OperandSpecMeta`
-pub trait OperandEncoding: Sized {
+pub trait OperandEncoding: Sized + Debug + Eq {
     /// The fixed length of the Operand, or `None` if it's variable length.
     ///
     /// If `Some`:

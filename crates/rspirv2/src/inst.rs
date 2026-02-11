@@ -1,13 +1,25 @@
 use crate::binary::{DecodeError, EncodeError, InstructionReader, InstructionWriter};
 use crate::meta::InstMeta;
+use std::any::Any;
 use std::fmt::Debug;
 
-pub trait Inst: Sized + Debug + Eq {
+/// A SPIR-V instruction
+pub trait Inst: Sized + Debug + Eq + 'static {
     const META: &InstMeta;
 
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError>;
 
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError>;
+}
+
+pub trait DynInst: Debug + Any {
+    fn dyn_meta(&self) -> &'static InstMeta;
+}
+
+impl<I: Inst> DynInst for I {
+    fn dyn_meta(&self) -> &'static InstMeta {
+        Self::META
+    }
 }
 
 #[cfg(test)]
