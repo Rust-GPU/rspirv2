@@ -1,13 +1,9 @@
 #![doc = include_str!("../README.md")]
 
-use crate::grammar_path::{
-    PATH_GRAMMAR_CORE, PATH_GRAMMAR_DEBUG_PRINTF, PATH_GRAMMAR_GLSL_STD_450,
-};
+use spirv_grammar::{PATH_GRAMMAR_CORE, PATH_GRAMMAR_DEBUG_PRINTF, PATH_GRAMMAR_GLSL_STD_450};
 use spirv_grammar_parser::codegen::{GrammarWriter, ModOptions, write_grammar};
 use spirv_grammar_parser::quote::quote;
 use std::path::Path;
-
-mod grammar_path;
 
 pub const PATH_GRAMMAR_CRATE_SRC: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/../rspirv2/src/");
 

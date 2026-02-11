@@ -1,5 +1,4 @@
 # autogen
 
-Use `cargo autogen` to regenerate the generated files of `spirv-grammar`.
-
-`headers/` contains the vulkan headers as a submodule, from where the SPIR-V grammar JSON files will be read from.
+Thin binary to provide `cargo autogen` to regenerate the files in `rspirv2`. Grabs the SPIR-V grammars from `spirv-grammar` and uses the 
+parses and codegen from `spirv-grammar-parser`.

@@ -56,7 +56,7 @@ mod test {
     pub fn parse_core_grammar() -> anyhow::Result<()> {
         let json = PATH_GRAMMAR_CORE.read()?;
         let core: CoreGrammar = json.parse_grammar()?;
-        println!("{core:?}");
+        println!("core has {} Instructions", core.insts.len());
         Ok(())
     }
 

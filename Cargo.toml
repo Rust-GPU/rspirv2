@@ -1,6 +1,7 @@
 [workspace]
 members = [
 	"crates/autogen",
+	"crates/grammar",
 	"crates/grammar-parser",
 	"crates/rspirv2",
 ]
@@ -13,7 +14,7 @@ edition = "2024"
 license = "MIT OR Apache-2.0"
 
 [workspace.dependencies]
-autogen = { path = "crates/autogen" }
+spirv-grammar = { path = "crates/grammar" }
 spirv-grammar-parser = { path = "crates/grammar-parser" }
 rspirv2 = { path = "crates/rspirv2" }
 
