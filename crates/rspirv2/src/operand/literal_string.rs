@@ -1,10 +1,11 @@
 use crate::binary::{DecodeError, EncodeError, InstructionReader, InstructionWriter};
 use crate::meta::OperandKind;
 use crate::operand::{Operand, OperandEncoding, Word};
+use std::fmt::{Debug, Formatter};
 use std::ops::{Deref, DerefMut};
 
 /// A SPIR-V String literal. Defined as a sequence of UTF-8, so we can just use an ordinary [`String`].
-#[derive(Clone, Debug, Eq, PartialEq, Hash)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct LiteralString(pub String);
 
 impl LiteralString {
@@ -32,6 +33,12 @@ impl Deref for LiteralString {
 impl DerefMut for LiteralString {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.0
+    }
+}
+
+impl Debug for LiteralString {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "LiteralString(r#\"{}\"#)", self.as_str())
     }
 }
 
