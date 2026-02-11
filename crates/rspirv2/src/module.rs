@@ -1,3 +1,4 @@
+use crate::binary::ModuleReader;
 use crate::operand::Word;
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
@@ -172,6 +173,10 @@ impl Module {
 
     pub fn instructions(&self) -> &[Word] {
         &self.0[4..]
+    }
+
+    pub fn reader(&self) -> ModuleReader<'_> {
+        ModuleReader::new(self.instructions())
     }
 }
 

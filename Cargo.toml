@@ -27,3 +27,4 @@ proc-macro2 = "1.0.106"
 unicode-ident = "1.0.22"
 convert_case = "0.10.0"
 bitflags = "2.10.0"
+clap = { version = "4.5.57", features = ["derive"] }
