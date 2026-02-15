@@ -6,6 +6,11 @@ use std::ops::{Deref, DerefMut};
 /// An `InstructionWriter` is some sort of `Vec` you can [`Self::push`] [`Word`]s into.
 pub trait InstructionWriter {
     fn write(&mut self, word: Word) -> Result<(), EncodeError>;
+
+    fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
+        self.write(Word::new_op(op, len)?)
+    }
+
     fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) -> Result<(), EncodeError> {
         for word in iter {
             self.write(word)?;
@@ -20,6 +25,11 @@ impl InstructionWriter for Vec<Word> {
         Ok(())
     }
 
+    fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
+        self.reserve(len);
+        self.write(Word::new_op(op, len)?)
+    }
+
     fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) -> Result<(), EncodeError> {
         Extend::extend(self, iter);
         Ok(())
@@ -32,6 +42,11 @@ impl InstructionWriter for Vec<u32> {
         Ok(())
     }
 
+    fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
+        self.reserve(len);
+        self.write(Word::new_op(op, len)?)
+    }
+
     fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) -> Result<(), EncodeError> {
         Extend::extend(self, iter.into_iter().map(|i| i.0));
         Ok(())
@@ -42,6 +57,11 @@ impl InstructionWriter for Vec<u8> {
     fn write(&mut self, word: Word) -> Result<(), EncodeError> {
         Extend::extend(self, word.to_u8_array());
         Ok(())
+    }
+
+    fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
+        self.reserve(len);
+        self.write(Word::new_op(op, len)?)
     }
 
     fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) -> Result<(), EncodeError> {
@@ -59,6 +79,11 @@ impl<const N: usize> InstructionWriter for SmallVec<[Word; N]> {
         Ok(())
     }
 
+    fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
+        self.reserve(len);
+        self.write(Word::new_op(op, len)?)
+    }
+
     fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) -> Result<(), EncodeError> {
         Extend::extend(self, iter);
         Ok(())
@@ -71,6 +96,11 @@ impl<const N: usize> InstructionWriter for SmallVec<[u32; N]> {
         Ok(())
     }
 
+    fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
+        self.reserve(len);
+        self.write(Word::new_op(op, len)?)
+    }
+
     fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) -> Result<(), EncodeError> {
         Extend::extend(self, iter.into_iter().map(|i| i.0));
         Ok(())
@@ -81,6 +111,11 @@ impl<const N: usize> InstructionWriter for SmallVec<[u8; N]> {
     fn write(&mut self, word: Word) -> Result<(), EncodeError> {
         Extend::extend(self, word.to_u8_array());
         Ok(())
+    }
+
+    fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
+        self.reserve(len);
+        self.write(Word::new_op(op, len)?)
     }
 
     fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) -> Result<(), EncodeError> {

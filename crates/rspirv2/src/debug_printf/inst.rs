@@ -9,7 +9,7 @@ impl Inst for DebugPrintf {
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.format) + OperandEncoding::word_len(&self.id_ref);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.format, &mut *writer)?;
         OperandEncoding::encode(&self.id_ref, &mut *writer)?;
         Ok(())

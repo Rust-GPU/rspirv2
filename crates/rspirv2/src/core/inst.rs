@@ -5,7 +5,7 @@ impl Inst for OpNop {
     const META: &InstMeta = &OP_NOP;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -24,7 +24,7 @@ impl Inst for OpUndef {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -45,7 +45,7 @@ impl Inst for OpSourceContinued {
     const META: &InstMeta = &OP_SOURCE_CONTINUED;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.continued_source);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.continued_source, &mut *writer)?;
         Ok(())
     }
@@ -71,7 +71,7 @@ impl Inst for OpSource {
             + OperandEncoding::word_len(&self.version)
             + OperandEncoding::word_len(&self.file)
             + OperandEncoding::word_len(&self.source);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.source_language, &mut *writer)?;
         OperandEncoding::encode(&self.version, &mut *writer)?;
         OperandEncoding::encode(&self.file, &mut *writer)?;
@@ -96,7 +96,7 @@ impl Inst for OpSourceExtension {
     const META: &InstMeta = &OP_SOURCE_EXTENSION;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.extension);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.extension, &mut *writer)?;
         Ok(())
     }
@@ -117,7 +117,7 @@ impl Inst for OpName {
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.target) + OperandEncoding::word_len(&self.name);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.target, &mut *writer)?;
         OperandEncoding::encode(&self.name, &mut *writer)?;
         Ok(())
@@ -143,7 +143,7 @@ impl Inst for OpMemberName {
             + OperandEncoding::word_len(&self.ty)
             + OperandEncoding::word_len(&self.member)
             + OperandEncoding::word_len(&self.name);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.ty, &mut *writer)?;
         OperandEncoding::encode(&self.member, &mut *writer)?;
         OperandEncoding::encode(&self.name, &mut *writer)?;
@@ -169,7 +169,7 @@ impl Inst for OpString {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.string);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.string, &mut *writer)?;
         Ok(())
@@ -195,7 +195,7 @@ impl Inst for OpLine {
             + OperandEncoding::word_len(&self.file)
             + OperandEncoding::word_len(&self.line)
             + OperandEncoding::word_len(&self.column);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.file, &mut *writer)?;
         OperandEncoding::encode(&self.line, &mut *writer)?;
         OperandEncoding::encode(&self.column, &mut *writer)?;
@@ -218,7 +218,7 @@ impl Inst for OpExtension {
     const META: &InstMeta = &OP_EXTENSION;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.name);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.name, &mut *writer)?;
         Ok(())
     }
@@ -239,7 +239,7 @@ impl Inst for OpExtInstImport {
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.id_result) + OperandEncoding::word_len(&self.name);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.name, &mut *writer)?;
         Ok(())
@@ -269,7 +269,7 @@ impl Inst for OpExtInst {
             + OperandEncoding::word_len(&self.set)
             + OperandEncoding::word_len(&self.instruction)
             + OperandEncoding::word_len(&self.id_ref);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.set, &mut *writer)?;
@@ -299,7 +299,7 @@ impl Inst for OpMemoryModel {
         let len = 0
             + OperandEncoding::word_len(&self.addressing_model)
             + OperandEncoding::word_len(&self.memory_model);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.addressing_model, &mut *writer)?;
         OperandEncoding::encode(&self.memory_model, &mut *writer)?;
         Ok(())
@@ -327,7 +327,7 @@ impl Inst for OpEntryPoint {
             + OperandEncoding::word_len(&self.entry_point)
             + OperandEncoding::word_len(&self.name)
             + OperandEncoding::word_len(&self.interface);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.execution_model, &mut *writer)?;
         OperandEncoding::encode(&self.entry_point, &mut *writer)?;
         OperandEncoding::encode(&self.name, &mut *writer)?;
@@ -355,7 +355,7 @@ impl Inst for OpExecutionMode {
         let len = 0
             + OperandEncoding::word_len(&self.entry_point)
             + OperandEncoding::word_len(&self.mode);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.entry_point, &mut *writer)?;
         OperandEncoding::encode(&self.mode, &mut *writer)?;
         Ok(())
@@ -376,7 +376,7 @@ impl Inst for OpCapability {
     const META: &InstMeta = &OP_CAPABILITY;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.capability);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.capability, &mut *writer)?;
         Ok(())
     }
@@ -395,7 +395,7 @@ impl Inst for OpTypeVoid {
     const META: &InstMeta = &OP_TYPE_VOID;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -414,7 +414,7 @@ impl Inst for OpTypeBool {
     const META: &InstMeta = &OP_TYPE_BOOL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -438,7 +438,7 @@ impl Inst for OpTypeInt {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.width)
             + OperandEncoding::word_len(&self.signedness);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.width, &mut *writer)?;
         OperandEncoding::encode(&self.signedness, &mut *writer)?;
@@ -466,7 +466,7 @@ impl Inst for OpTypeFloat {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.width)
             + OperandEncoding::word_len(&self.floating_point_encoding);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.width, &mut *writer)?;
         OperandEncoding::encode(&self.floating_point_encoding, &mut *writer)?;
@@ -494,7 +494,7 @@ impl Inst for OpTypeVector {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.component_type)
             + OperandEncoding::word_len(&self.component_count);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.component_type, &mut *writer)?;
         OperandEncoding::encode(&self.component_count, &mut *writer)?;
@@ -522,7 +522,7 @@ impl Inst for OpTypeMatrix {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.column_type)
             + OperandEncoding::word_len(&self.column_count);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.column_type, &mut *writer)?;
         OperandEncoding::encode(&self.column_count, &mut *writer)?;
@@ -562,7 +562,7 @@ impl Inst for OpTypeImage {
             + OperandEncoding::word_len(&self.sampled)
             + OperandEncoding::word_len(&self.image_format)
             + OperandEncoding::word_len(&self.access_qualifier);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_type, &mut *writer)?;
         OperandEncoding::encode(&self.dim, &mut *writer)?;
@@ -597,7 +597,7 @@ impl Inst for OpTypeSampler {
     const META: &InstMeta = &OP_TYPE_SAMPLER;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -619,7 +619,7 @@ impl Inst for OpTypeSampledImage {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.image_type);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image_type, &mut *writer)?;
         Ok(())
@@ -645,7 +645,7 @@ impl Inst for OpTypeArray {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.element_type)
             + OperandEncoding::word_len(&self.length);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.element_type, &mut *writer)?;
         OperandEncoding::encode(&self.length, &mut *writer)?;
@@ -671,7 +671,7 @@ impl Inst for OpTypeRuntimeArray {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.element_type);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.element_type, &mut *writer)?;
         Ok(())
@@ -695,7 +695,7 @@ impl Inst for OpTypeStruct {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.id_ref);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.id_ref, &mut *writer)?;
         Ok(())
@@ -719,7 +719,7 @@ impl Inst for OpTypeOpaque {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.literal_string);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.literal_string, &mut *writer)?;
         Ok(())
@@ -745,7 +745,7 @@ impl Inst for OpTypePointer {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.storage_class)
             + OperandEncoding::word_len(&self.ty);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.storage_class, &mut *writer)?;
         OperandEncoding::encode(&self.ty, &mut *writer)?;
@@ -773,7 +773,7 @@ impl Inst for OpTypeFunction {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.return_type)
             + OperandEncoding::word_len(&self.id_ref);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.return_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_ref, &mut *writer)?;
@@ -796,7 +796,7 @@ impl Inst for OpTypeEvent {
     const META: &InstMeta = &OP_TYPE_EVENT;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -815,7 +815,7 @@ impl Inst for OpTypeDeviceEvent {
     const META: &InstMeta = &OP_TYPE_DEVICE_EVENT;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -834,7 +834,7 @@ impl Inst for OpTypeReserveId {
     const META: &InstMeta = &OP_TYPE_RESERVE_ID;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -853,7 +853,7 @@ impl Inst for OpTypeQueue {
     const META: &InstMeta = &OP_TYPE_QUEUE;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -875,7 +875,7 @@ impl Inst for OpTypePipe {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.qualifier);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.qualifier, &mut *writer)?;
         Ok(())
@@ -899,7 +899,7 @@ impl Inst for OpTypeForwardPointer {
         let len = 0
             + OperandEncoding::word_len(&self.pointer_type)
             + OperandEncoding::word_len(&self.storage_class);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.pointer_type, &mut *writer)?;
         OperandEncoding::encode(&self.storage_class, &mut *writer)?;
         Ok(())
@@ -923,7 +923,7 @@ impl Inst for OpConstantTrue {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -947,7 +947,7 @@ impl Inst for OpConstantFalse {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -973,7 +973,7 @@ impl Inst for OpConstant {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
@@ -1001,7 +1001,7 @@ impl Inst for OpConstantComposite {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.constituents);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.constituents, &mut *writer)?;
@@ -1033,7 +1033,7 @@ impl Inst for OpConstantSampler {
             + OperandEncoding::word_len(&self.sampler_addressing_mode)
             + OperandEncoding::word_len(&self.param)
             + OperandEncoding::word_len(&self.sampler_filter_mode);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampler_addressing_mode, &mut *writer)?;
@@ -1063,7 +1063,7 @@ impl Inst for OpConstantNull {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -1087,7 +1087,7 @@ impl Inst for OpSpecConstantTrue {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -1111,7 +1111,7 @@ impl Inst for OpSpecConstantFalse {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -1137,7 +1137,7 @@ impl Inst for OpSpecConstant {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
@@ -1165,7 +1165,7 @@ impl Inst for OpSpecConstantComposite {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.constituents);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.constituents, &mut *writer)?;
@@ -1193,7 +1193,7 @@ impl Inst for OpSpecConstantOp {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.opcode);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.opcode, &mut *writer)?;
@@ -1223,7 +1223,7 @@ impl Inst for OpFunction {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.function_control)
             + OperandEncoding::word_len(&self.function_type);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.function_control, &mut *writer)?;
@@ -1251,7 +1251,7 @@ impl Inst for OpFunctionParameter {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -1270,7 +1270,7 @@ impl Inst for OpFunctionEnd {
     const META: &InstMeta = &OP_FUNCTION_END;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -1293,7 +1293,7 @@ impl Inst for OpFunctionCall {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.function)
             + OperandEncoding::word_len(&self.id_ref);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.function, &mut *writer)?;
@@ -1325,7 +1325,7 @@ impl Inst for OpVariable {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.storage_class)
             + OperandEncoding::word_len(&self.initializer);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.storage_class, &mut *writer)?;
@@ -1359,7 +1359,7 @@ impl Inst for OpImageTexelPointer {
             + OperandEncoding::word_len(&self.image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.sample);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -1393,7 +1393,7 @@ impl Inst for OpLoad {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.memory_access);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -1423,7 +1423,7 @@ impl Inst for OpStore {
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.object)
             + OperandEncoding::word_len(&self.memory_access);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
         OperandEncoding::encode(&self.object, &mut *writer)?;
         OperandEncoding::encode(&self.memory_access, &mut *writer)?;
@@ -1453,7 +1453,7 @@ impl Inst for OpCopyMemory {
             + OperandEncoding::word_len(&self.source)
             + OperandEncoding::word_len(&self.memory_access_0)
             + OperandEncoding::word_len(&self.memory_access_1);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.target, &mut *writer)?;
         OperandEncoding::encode(&self.source, &mut *writer)?;
         OperandEncoding::encode(&self.memory_access_0, &mut *writer)?;
@@ -1487,7 +1487,7 @@ impl Inst for OpCopyMemorySized {
             + OperandEncoding::word_len(&self.size)
             + OperandEncoding::word_len(&self.memory_access_0)
             + OperandEncoding::word_len(&self.memory_access_1);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.target, &mut *writer)?;
         OperandEncoding::encode(&self.source, &mut *writer)?;
         OperandEncoding::encode(&self.size, &mut *writer)?;
@@ -1521,7 +1521,7 @@ impl Inst for OpAccessChain {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.base)
             + OperandEncoding::word_len(&self.indexes);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base, &mut *writer)?;
@@ -1553,7 +1553,7 @@ impl Inst for OpInBoundsAccessChain {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.base)
             + OperandEncoding::word_len(&self.indexes);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base, &mut *writer)?;
@@ -1587,7 +1587,7 @@ impl Inst for OpPtrAccessChain {
             + OperandEncoding::word_len(&self.base)
             + OperandEncoding::word_len(&self.element)
             + OperandEncoding::word_len(&self.indexes);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base, &mut *writer)?;
@@ -1621,7 +1621,7 @@ impl Inst for OpArrayLength {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.structure)
             + OperandEncoding::word_len(&self.array_member);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.structure, &mut *writer)?;
@@ -1651,7 +1651,7 @@ impl Inst for OpGenericPtrMemSemantics {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.pointer);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -1683,7 +1683,7 @@ impl Inst for OpInBoundsPtrAccessChain {
             + OperandEncoding::word_len(&self.base)
             + OperandEncoding::word_len(&self.element)
             + OperandEncoding::word_len(&self.indexes);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base, &mut *writer)?;
@@ -1713,7 +1713,7 @@ impl Inst for OpDecorate {
         let len = 0
             + OperandEncoding::word_len(&self.target)
             + OperandEncoding::word_len(&self.decoration);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.target, &mut *writer)?;
         OperandEncoding::encode(&self.decoration, &mut *writer)?;
         Ok(())
@@ -1739,7 +1739,7 @@ impl Inst for OpMemberDecorate {
             + OperandEncoding::word_len(&self.structure_type)
             + OperandEncoding::word_len(&self.member)
             + OperandEncoding::word_len(&self.decoration);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.structure_type, &mut *writer)?;
         OperandEncoding::encode(&self.member, &mut *writer)?;
         OperandEncoding::encode(&self.decoration, &mut *writer)?;
@@ -1762,7 +1762,7 @@ impl Inst for OpDecorationGroup {
     const META: &InstMeta = &OP_DECORATION_GROUP;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -1784,7 +1784,7 @@ impl Inst for OpGroupDecorate {
         let len = 0
             + OperandEncoding::word_len(&self.decoration_group)
             + OperandEncoding::word_len(&self.targets);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.decoration_group, &mut *writer)?;
         OperandEncoding::encode(&self.targets, &mut *writer)?;
         Ok(())
@@ -1808,7 +1808,7 @@ impl Inst for OpGroupMemberDecorate {
         let len = 0
             + OperandEncoding::word_len(&self.decoration_group)
             + OperandEncoding::word_len(&self.targets);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.decoration_group, &mut *writer)?;
         OperandEncoding::encode(&self.targets, &mut *writer)?;
         Ok(())
@@ -1836,7 +1836,7 @@ impl Inst for OpVectorExtractDynamic {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.vector)
             + OperandEncoding::word_len(&self.index);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.vector, &mut *writer)?;
@@ -1870,7 +1870,7 @@ impl Inst for OpVectorInsertDynamic {
             + OperandEncoding::word_len(&self.vector)
             + OperandEncoding::word_len(&self.component)
             + OperandEncoding::word_len(&self.index);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.vector, &mut *writer)?;
@@ -1906,7 +1906,7 @@ impl Inst for OpVectorShuffle {
             + OperandEncoding::word_len(&self.vector_1)
             + OperandEncoding::word_len(&self.vector_2)
             + OperandEncoding::word_len(&self.components);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.vector_1, &mut *writer)?;
@@ -1938,7 +1938,7 @@ impl Inst for OpCompositeConstruct {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.constituents);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.constituents, &mut *writer)?;
@@ -1968,7 +1968,7 @@ impl Inst for OpCompositeExtract {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.composite)
             + OperandEncoding::word_len(&self.indexes);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.composite, &mut *writer)?;
@@ -2002,7 +2002,7 @@ impl Inst for OpCompositeInsert {
             + OperandEncoding::word_len(&self.object)
             + OperandEncoding::word_len(&self.composite)
             + OperandEncoding::word_len(&self.indexes);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.object, &mut *writer)?;
@@ -2034,7 +2034,7 @@ impl Inst for OpCopyObject {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -2062,7 +2062,7 @@ impl Inst for OpTranspose {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.matrix);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.matrix, &mut *writer)?;
@@ -2092,7 +2092,7 @@ impl Inst for OpSampledImage {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.image)
             + OperandEncoding::word_len(&self.sampler);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -2126,7 +2126,7 @@ impl Inst for OpImageSampleImplicitLod {
             + OperandEncoding::word_len(&self.sampled_image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -2162,7 +2162,7 @@ impl Inst for OpImageSampleExplicitLod {
             + OperandEncoding::word_len(&self.sampled_image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -2200,7 +2200,7 @@ impl Inst for OpImageSampleDrefImplicitLod {
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.id_ref)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -2240,7 +2240,7 @@ impl Inst for OpImageSampleDrefExplicitLod {
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.id_ref)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -2278,7 +2278,7 @@ impl Inst for OpImageSampleProjImplicitLod {
             + OperandEncoding::word_len(&self.sampled_image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -2314,7 +2314,7 @@ impl Inst for OpImageSampleProjExplicitLod {
             + OperandEncoding::word_len(&self.sampled_image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -2352,7 +2352,7 @@ impl Inst for OpImageSampleProjDrefImplicitLod {
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.id_ref)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -2392,7 +2392,7 @@ impl Inst for OpImageSampleProjDrefExplicitLod {
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.id_ref)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -2430,7 +2430,7 @@ impl Inst for OpImageFetch {
             + OperandEncoding::word_len(&self.image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -2468,7 +2468,7 @@ impl Inst for OpImageGather {
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.component)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -2508,7 +2508,7 @@ impl Inst for OpImageDrefGather {
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.id_ref)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -2546,7 +2546,7 @@ impl Inst for OpImageRead {
             + OperandEncoding::word_len(&self.image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -2580,7 +2580,7 @@ impl Inst for OpImageWrite {
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.texel)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
         OperandEncoding::encode(&self.coordinate, &mut *writer)?;
         OperandEncoding::encode(&self.texel, &mut *writer)?;
@@ -2610,7 +2610,7 @@ impl Inst for OpImage {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.sampled_image);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -2638,7 +2638,7 @@ impl Inst for OpImageQueryFormat {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.image);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -2666,7 +2666,7 @@ impl Inst for OpImageQueryOrder {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.image);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -2696,7 +2696,7 @@ impl Inst for OpImageQuerySizeLod {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.image)
             + OperandEncoding::word_len(&self.level_of_detail);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -2726,7 +2726,7 @@ impl Inst for OpImageQuerySize {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.image);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -2756,7 +2756,7 @@ impl Inst for OpImageQueryLod {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.sampled_image)
             + OperandEncoding::word_len(&self.coordinate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -2786,7 +2786,7 @@ impl Inst for OpImageQueryLevels {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.image);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -2814,7 +2814,7 @@ impl Inst for OpImageQuerySamples {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.image);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -2842,7 +2842,7 @@ impl Inst for OpConvertFToU {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.float_value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.float_value, &mut *writer)?;
@@ -2870,7 +2870,7 @@ impl Inst for OpConvertFToS {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.float_value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.float_value, &mut *writer)?;
@@ -2898,7 +2898,7 @@ impl Inst for OpConvertSToF {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.signed_value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.signed_value, &mut *writer)?;
@@ -2926,7 +2926,7 @@ impl Inst for OpConvertUToF {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.unsigned_value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.unsigned_value, &mut *writer)?;
@@ -2954,7 +2954,7 @@ impl Inst for OpUConvert {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.unsigned_value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.unsigned_value, &mut *writer)?;
@@ -2982,7 +2982,7 @@ impl Inst for OpSConvert {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.signed_value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.signed_value, &mut *writer)?;
@@ -3010,7 +3010,7 @@ impl Inst for OpFConvert {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.float_value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.float_value, &mut *writer)?;
@@ -3038,7 +3038,7 @@ impl Inst for OpQuantizeToF16 {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
@@ -3066,7 +3066,7 @@ impl Inst for OpConvertPtrToU {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.pointer);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -3094,7 +3094,7 @@ impl Inst for OpSatConvertSToU {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.signed_value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.signed_value, &mut *writer)?;
@@ -3122,7 +3122,7 @@ impl Inst for OpSatConvertUToS {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.unsigned_value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.unsigned_value, &mut *writer)?;
@@ -3150,7 +3150,7 @@ impl Inst for OpConvertUToPtr {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.integer_value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.integer_value, &mut *writer)?;
@@ -3178,7 +3178,7 @@ impl Inst for OpPtrCastToGeneric {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.pointer);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -3206,7 +3206,7 @@ impl Inst for OpGenericCastToPtr {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.pointer);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -3236,7 +3236,7 @@ impl Inst for OpGenericCastToPtrExplicit {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.storage);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -3266,7 +3266,7 @@ impl Inst for OpBitcast {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -3294,7 +3294,7 @@ impl Inst for OpSNegate {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -3322,7 +3322,7 @@ impl Inst for OpFNegate {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -3352,7 +3352,7 @@ impl Inst for OpIAdd {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -3384,7 +3384,7 @@ impl Inst for OpFAdd {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -3416,7 +3416,7 @@ impl Inst for OpISub {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -3448,7 +3448,7 @@ impl Inst for OpFSub {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -3480,7 +3480,7 @@ impl Inst for OpIMul {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -3512,7 +3512,7 @@ impl Inst for OpFMul {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -3544,7 +3544,7 @@ impl Inst for OpUDiv {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -3576,7 +3576,7 @@ impl Inst for OpSDiv {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -3608,7 +3608,7 @@ impl Inst for OpFDiv {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -3640,7 +3640,7 @@ impl Inst for OpUMod {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -3672,7 +3672,7 @@ impl Inst for OpSRem {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -3704,7 +3704,7 @@ impl Inst for OpSMod {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -3736,7 +3736,7 @@ impl Inst for OpFRem {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -3768,7 +3768,7 @@ impl Inst for OpFMod {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -3800,7 +3800,7 @@ impl Inst for OpVectorTimesScalar {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.vector)
             + OperandEncoding::word_len(&self.scalar);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.vector, &mut *writer)?;
@@ -3832,7 +3832,7 @@ impl Inst for OpMatrixTimesScalar {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.matrix)
             + OperandEncoding::word_len(&self.scalar);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.matrix, &mut *writer)?;
@@ -3864,7 +3864,7 @@ impl Inst for OpVectorTimesMatrix {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.vector)
             + OperandEncoding::word_len(&self.matrix);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.vector, &mut *writer)?;
@@ -3896,7 +3896,7 @@ impl Inst for OpMatrixTimesVector {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.matrix)
             + OperandEncoding::word_len(&self.vector);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.matrix, &mut *writer)?;
@@ -3928,7 +3928,7 @@ impl Inst for OpMatrixTimesMatrix {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.left_matrix)
             + OperandEncoding::word_len(&self.right_matrix);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.left_matrix, &mut *writer)?;
@@ -3960,7 +3960,7 @@ impl Inst for OpOuterProduct {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.vector_1)
             + OperandEncoding::word_len(&self.vector_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.vector_1, &mut *writer)?;
@@ -3992,7 +3992,7 @@ impl Inst for OpDot {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.vector_1)
             + OperandEncoding::word_len(&self.vector_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.vector_1, &mut *writer)?;
@@ -4024,7 +4024,7 @@ impl Inst for OpIAddCarry {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4056,7 +4056,7 @@ impl Inst for OpISubBorrow {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4088,7 +4088,7 @@ impl Inst for OpUMulExtended {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4120,7 +4120,7 @@ impl Inst for OpSMulExtended {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4150,7 +4150,7 @@ impl Inst for OpAny {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.vector);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.vector, &mut *writer)?;
@@ -4178,7 +4178,7 @@ impl Inst for OpAll {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.vector);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.vector, &mut *writer)?;
@@ -4206,7 +4206,7 @@ impl Inst for OpIsNan {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -4234,7 +4234,7 @@ impl Inst for OpIsInf {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -4262,7 +4262,7 @@ impl Inst for OpIsFinite {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -4290,7 +4290,7 @@ impl Inst for OpIsNormal {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -4318,7 +4318,7 @@ impl Inst for OpSignBitSet {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -4348,7 +4348,7 @@ impl Inst for OpLessOrGreater {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.x)
             + OperandEncoding::word_len(&self.y);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -4380,7 +4380,7 @@ impl Inst for OpOrdered {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.x)
             + OperandEncoding::word_len(&self.y);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -4412,7 +4412,7 @@ impl Inst for OpUnordered {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.x)
             + OperandEncoding::word_len(&self.y);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -4444,7 +4444,7 @@ impl Inst for OpLogicalEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4476,7 +4476,7 @@ impl Inst for OpLogicalNotEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4508,7 +4508,7 @@ impl Inst for OpLogicalOr {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4540,7 +4540,7 @@ impl Inst for OpLogicalAnd {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4570,7 +4570,7 @@ impl Inst for OpLogicalNot {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -4602,7 +4602,7 @@ impl Inst for OpSelect {
             + OperandEncoding::word_len(&self.condition)
             + OperandEncoding::word_len(&self.object_1)
             + OperandEncoding::word_len(&self.object_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.condition, &mut *writer)?;
@@ -4636,7 +4636,7 @@ impl Inst for OpIEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4668,7 +4668,7 @@ impl Inst for OpINotEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4700,7 +4700,7 @@ impl Inst for OpUGreaterThan {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4732,7 +4732,7 @@ impl Inst for OpSGreaterThan {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4764,7 +4764,7 @@ impl Inst for OpUGreaterThanEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4796,7 +4796,7 @@ impl Inst for OpSGreaterThanEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4828,7 +4828,7 @@ impl Inst for OpULessThan {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4860,7 +4860,7 @@ impl Inst for OpSLessThan {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4892,7 +4892,7 @@ impl Inst for OpULessThanEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4924,7 +4924,7 @@ impl Inst for OpSLessThanEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4956,7 +4956,7 @@ impl Inst for OpFOrdEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -4988,7 +4988,7 @@ impl Inst for OpFUnordEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -5020,7 +5020,7 @@ impl Inst for OpFOrdNotEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -5052,7 +5052,7 @@ impl Inst for OpFUnordNotEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -5084,7 +5084,7 @@ impl Inst for OpFOrdLessThan {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -5116,7 +5116,7 @@ impl Inst for OpFUnordLessThan {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -5148,7 +5148,7 @@ impl Inst for OpFOrdGreaterThan {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -5180,7 +5180,7 @@ impl Inst for OpFUnordGreaterThan {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -5212,7 +5212,7 @@ impl Inst for OpFOrdLessThanEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -5244,7 +5244,7 @@ impl Inst for OpFUnordLessThanEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -5276,7 +5276,7 @@ impl Inst for OpFOrdGreaterThanEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -5308,7 +5308,7 @@ impl Inst for OpFUnordGreaterThanEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -5340,7 +5340,7 @@ impl Inst for OpShiftRightLogical {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.base)
             + OperandEncoding::word_len(&self.shift);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base, &mut *writer)?;
@@ -5372,7 +5372,7 @@ impl Inst for OpShiftRightArithmetic {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.base)
             + OperandEncoding::word_len(&self.shift);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base, &mut *writer)?;
@@ -5404,7 +5404,7 @@ impl Inst for OpShiftLeftLogical {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.base)
             + OperandEncoding::word_len(&self.shift);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base, &mut *writer)?;
@@ -5436,7 +5436,7 @@ impl Inst for OpBitwiseOr {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -5468,7 +5468,7 @@ impl Inst for OpBitwiseXor {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -5500,7 +5500,7 @@ impl Inst for OpBitwiseAnd {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -5530,7 +5530,7 @@ impl Inst for OpNot {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -5564,7 +5564,7 @@ impl Inst for OpBitFieldInsert {
             + OperandEncoding::word_len(&self.insert)
             + OperandEncoding::word_len(&self.offset)
             + OperandEncoding::word_len(&self.count);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base, &mut *writer)?;
@@ -5602,7 +5602,7 @@ impl Inst for OpBitFieldSExtract {
             + OperandEncoding::word_len(&self.base)
             + OperandEncoding::word_len(&self.offset)
             + OperandEncoding::word_len(&self.count);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base, &mut *writer)?;
@@ -5638,7 +5638,7 @@ impl Inst for OpBitFieldUExtract {
             + OperandEncoding::word_len(&self.base)
             + OperandEncoding::word_len(&self.offset)
             + OperandEncoding::word_len(&self.count);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base, &mut *writer)?;
@@ -5670,7 +5670,7 @@ impl Inst for OpBitReverse {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.base);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base, &mut *writer)?;
@@ -5698,7 +5698,7 @@ impl Inst for OpBitCount {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.base);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base, &mut *writer)?;
@@ -5726,7 +5726,7 @@ impl Inst for OpDPdx {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.p);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
@@ -5754,7 +5754,7 @@ impl Inst for OpDPdy {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.p);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
@@ -5782,7 +5782,7 @@ impl Inst for OpFwidth {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.p);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
@@ -5810,7 +5810,7 @@ impl Inst for OpDPdxFine {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.p);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
@@ -5838,7 +5838,7 @@ impl Inst for OpDPdyFine {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.p);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
@@ -5866,7 +5866,7 @@ impl Inst for OpFwidthFine {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.p);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
@@ -5894,7 +5894,7 @@ impl Inst for OpDPdxCoarse {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.p);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
@@ -5922,7 +5922,7 @@ impl Inst for OpDPdyCoarse {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.p);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
@@ -5950,7 +5950,7 @@ impl Inst for OpFwidthCoarse {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.p);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
@@ -5971,7 +5971,7 @@ impl Inst for OpEmitVertex {
     const META: &InstMeta = &OP_EMIT_VERTEX;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -5985,7 +5985,7 @@ impl Inst for OpEndPrimitive {
     const META: &InstMeta = &OP_END_PRIMITIVE;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -6001,7 +6001,7 @@ impl Inst for OpEmitStreamVertex {
     const META: &InstMeta = &OP_EMIT_STREAM_VERTEX;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.stream);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.stream, &mut *writer)?;
         Ok(())
     }
@@ -6020,7 +6020,7 @@ impl Inst for OpEndStreamPrimitive {
     const META: &InstMeta = &OP_END_STREAM_PRIMITIVE;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.stream);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.stream, &mut *writer)?;
         Ok(())
     }
@@ -6044,7 +6044,7 @@ impl Inst for OpControlBarrier {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
         OperandEncoding::encode(&self.memory, &mut *writer)?;
         OperandEncoding::encode(&self.semantics, &mut *writer)?;
@@ -6070,7 +6070,7 @@ impl Inst for OpMemoryBarrier {
         let len = 0
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.memory, &mut *writer)?;
         OperandEncoding::encode(&self.semantics, &mut *writer)?;
         Ok(())
@@ -6100,7 +6100,7 @@ impl Inst for OpAtomicLoad {
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -6134,7 +6134,7 @@ impl Inst for OpAtomicStore {
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
         OperandEncoding::encode(&self.memory, &mut *writer)?;
         OperandEncoding::encode(&self.semantics, &mut *writer)?;
@@ -6170,7 +6170,7 @@ impl Inst for OpAtomicExchange {
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -6214,7 +6214,7 @@ impl Inst for OpAtomicCompareExchange {
             + OperandEncoding::word_len(&self.unequal)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.comparator);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -6262,7 +6262,7 @@ impl Inst for OpAtomicCompareExchangeWeak {
             + OperandEncoding::word_len(&self.unequal)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.comparator);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -6304,7 +6304,7 @@ impl Inst for OpAtomicIIncrement {
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -6340,7 +6340,7 @@ impl Inst for OpAtomicIDecrement {
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -6378,7 +6378,7 @@ impl Inst for OpAtomicIAdd {
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -6418,7 +6418,7 @@ impl Inst for OpAtomicISub {
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -6458,7 +6458,7 @@ impl Inst for OpAtomicSMin {
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -6498,7 +6498,7 @@ impl Inst for OpAtomicUMin {
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -6538,7 +6538,7 @@ impl Inst for OpAtomicSMax {
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -6578,7 +6578,7 @@ impl Inst for OpAtomicUMax {
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -6618,7 +6618,7 @@ impl Inst for OpAtomicAnd {
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -6658,7 +6658,7 @@ impl Inst for OpAtomicOr {
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -6698,7 +6698,7 @@ impl Inst for OpAtomicXor {
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -6732,7 +6732,7 @@ impl Inst for OpPhi {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.pair_id_ref_id_ref);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pair_id_ref_id_ref, &mut *writer)?;
@@ -6760,7 +6760,7 @@ impl Inst for OpLoopMerge {
             + OperandEncoding::word_len(&self.merge_block)
             + OperandEncoding::word_len(&self.continue_target)
             + OperandEncoding::word_len(&self.loop_control);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.merge_block, &mut *writer)?;
         OperandEncoding::encode(&self.continue_target, &mut *writer)?;
         OperandEncoding::encode(&self.loop_control, &mut *writer)?;
@@ -6786,7 +6786,7 @@ impl Inst for OpSelectionMerge {
         let len = 0
             + OperandEncoding::word_len(&self.merge_block)
             + OperandEncoding::word_len(&self.selection_control);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.merge_block, &mut *writer)?;
         OperandEncoding::encode(&self.selection_control, &mut *writer)?;
         Ok(())
@@ -6807,7 +6807,7 @@ impl Inst for OpLabel {
     const META: &InstMeta = &OP_LABEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -6826,7 +6826,7 @@ impl Inst for OpBranch {
     const META: &InstMeta = &OP_BRANCH;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.target_label);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.target_label, &mut *writer)?;
         Ok(())
     }
@@ -6852,7 +6852,7 @@ impl Inst for OpBranchConditional {
             + OperandEncoding::word_len(&self.true_label)
             + OperandEncoding::word_len(&self.false_label)
             + OperandEncoding::word_len(&self.branch_weights);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.condition, &mut *writer)?;
         OperandEncoding::encode(&self.true_label, &mut *writer)?;
         OperandEncoding::encode(&self.false_label, &mut *writer)?;
@@ -6882,7 +6882,7 @@ impl Inst for OpSwitch {
             + OperandEncoding::word_len(&self.selector)
             + OperandEncoding::word_len(&self.default)
             + OperandEncoding::word_len(&self.target);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.selector, &mut *writer)?;
         OperandEncoding::encode(&self.default, &mut *writer)?;
         OperandEncoding::encode(&self.target, &mut *writer)?;
@@ -6903,7 +6903,7 @@ impl Inst for OpKill {
     const META: &InstMeta = &OP_KILL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -6917,7 +6917,7 @@ impl Inst for OpReturn {
     const META: &InstMeta = &OP_RETURN;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -6933,7 +6933,7 @@ impl Inst for OpReturnValue {
     const META: &InstMeta = &OP_RETURN_VALUE;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
         Ok(())
     }
@@ -6950,7 +6950,7 @@ impl Inst for OpUnreachable {
     const META: &InstMeta = &OP_UNREACHABLE;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -6968,7 +6968,7 @@ impl Inst for OpLifetimeStart {
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.pointer) + OperandEncoding::word_len(&self.size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
         OperandEncoding::encode(&self.size, &mut *writer)?;
         Ok(())
@@ -6991,7 +6991,7 @@ impl Inst for OpLifetimeStop {
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.pointer) + OperandEncoding::word_len(&self.size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
         OperandEncoding::encode(&self.size, &mut *writer)?;
         Ok(())
@@ -7027,7 +7027,7 @@ impl Inst for OpGroupAsyncCopy {
             + OperandEncoding::word_len(&self.num_elements)
             + OperandEncoding::word_len(&self.stride)
             + OperandEncoding::word_len(&self.event);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -7065,7 +7065,7 @@ impl Inst for OpGroupWaitEvents {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.num_events)
             + OperandEncoding::word_len(&self.events_list);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
         OperandEncoding::encode(&self.num_events, &mut *writer)?;
         OperandEncoding::encode(&self.events_list, &mut *writer)?;
@@ -7095,7 +7095,7 @@ impl Inst for OpGroupAll {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.predicate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -7127,7 +7127,7 @@ impl Inst for OpGroupAny {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.predicate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -7161,7 +7161,7 @@ impl Inst for OpGroupBroadcast {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.local_id);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -7197,7 +7197,7 @@ impl Inst for OpGroupIAdd {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -7233,7 +7233,7 @@ impl Inst for OpGroupFAdd {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -7269,7 +7269,7 @@ impl Inst for OpGroupFMin {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -7305,7 +7305,7 @@ impl Inst for OpGroupUMin {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -7341,7 +7341,7 @@ impl Inst for OpGroupSMin {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -7377,7 +7377,7 @@ impl Inst for OpGroupFMax {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -7413,7 +7413,7 @@ impl Inst for OpGroupUMax {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -7449,7 +7449,7 @@ impl Inst for OpGroupSMax {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -7487,7 +7487,7 @@ impl Inst for OpReadPipe {
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pipe, &mut *writer)?;
@@ -7527,7 +7527,7 @@ impl Inst for OpWritePipe {
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pipe, &mut *writer)?;
@@ -7571,7 +7571,7 @@ impl Inst for OpReservedReadPipe {
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pipe, &mut *writer)?;
@@ -7619,7 +7619,7 @@ impl Inst for OpReservedWritePipe {
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pipe, &mut *writer)?;
@@ -7663,7 +7663,7 @@ impl Inst for OpReserveReadPipePackets {
             + OperandEncoding::word_len(&self.num_packets)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pipe, &mut *writer)?;
@@ -7703,7 +7703,7 @@ impl Inst for OpReserveWritePipePackets {
             + OperandEncoding::word_len(&self.num_packets)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pipe, &mut *writer)?;
@@ -7739,7 +7739,7 @@ impl Inst for OpCommitReadPipe {
             + OperandEncoding::word_len(&self.reserve_id)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.pipe, &mut *writer)?;
         OperandEncoding::encode(&self.reserve_id, &mut *writer)?;
         OperandEncoding::encode(&self.packet_size, &mut *writer)?;
@@ -7771,7 +7771,7 @@ impl Inst for OpCommitWritePipe {
             + OperandEncoding::word_len(&self.reserve_id)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.pipe, &mut *writer)?;
         OperandEncoding::encode(&self.reserve_id, &mut *writer)?;
         OperandEncoding::encode(&self.packet_size, &mut *writer)?;
@@ -7801,7 +7801,7 @@ impl Inst for OpIsValidReserveId {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.reserve_id);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.reserve_id, &mut *writer)?;
@@ -7833,7 +7833,7 @@ impl Inst for OpGetNumPipePackets {
             + OperandEncoding::word_len(&self.pipe)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pipe, &mut *writer)?;
@@ -7869,7 +7869,7 @@ impl Inst for OpGetMaxPipePackets {
             + OperandEncoding::word_len(&self.pipe)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pipe, &mut *writer)?;
@@ -7909,7 +7909,7 @@ impl Inst for OpGroupReserveReadPipePackets {
             + OperandEncoding::word_len(&self.num_packets)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -7953,7 +7953,7 @@ impl Inst for OpGroupReserveWritePipePackets {
             + OperandEncoding::word_len(&self.num_packets)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -7993,7 +7993,7 @@ impl Inst for OpGroupCommitReadPipe {
             + OperandEncoding::word_len(&self.reserve_id)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
         OperandEncoding::encode(&self.pipe, &mut *writer)?;
         OperandEncoding::encode(&self.reserve_id, &mut *writer)?;
@@ -8029,7 +8029,7 @@ impl Inst for OpGroupCommitWritePipe {
             + OperandEncoding::word_len(&self.reserve_id)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
         OperandEncoding::encode(&self.pipe, &mut *writer)?;
         OperandEncoding::encode(&self.reserve_id, &mut *writer)?;
@@ -8067,7 +8067,7 @@ impl Inst for OpEnqueueMarker {
             + OperandEncoding::word_len(&self.num_events)
             + OperandEncoding::word_len(&self.wait_events)
             + OperandEncoding::word_len(&self.ret_event);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.queue, &mut *writer)?;
@@ -8121,7 +8121,7 @@ impl Inst for OpEnqueueKernel {
             + OperandEncoding::word_len(&self.param_size)
             + OperandEncoding::word_len(&self.param_align)
             + OperandEncoding::word_len(&self.local_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.queue, &mut *writer)?;
@@ -8177,7 +8177,7 @@ impl Inst for OpGetKernelNDrangeSubGroupCount {
             + OperandEncoding::word_len(&self.param)
             + OperandEncoding::word_len(&self.param_size)
             + OperandEncoding::word_len(&self.param_align);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.nd_range, &mut *writer)?;
@@ -8221,7 +8221,7 @@ impl Inst for OpGetKernelNDrangeMaxSubGroupSize {
             + OperandEncoding::word_len(&self.param)
             + OperandEncoding::word_len(&self.param_size)
             + OperandEncoding::word_len(&self.param_align);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.nd_range, &mut *writer)?;
@@ -8263,7 +8263,7 @@ impl Inst for OpGetKernelWorkGroupSize {
             + OperandEncoding::word_len(&self.param)
             + OperandEncoding::word_len(&self.param_size)
             + OperandEncoding::word_len(&self.param_align);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.invoke, &mut *writer)?;
@@ -8303,7 +8303,7 @@ impl Inst for OpGetKernelPreferredWorkGroupSizeMultiple {
             + OperandEncoding::word_len(&self.param)
             + OperandEncoding::word_len(&self.param_size)
             + OperandEncoding::word_len(&self.param_align);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.invoke, &mut *writer)?;
@@ -8332,7 +8332,7 @@ impl Inst for OpRetainEvent {
     const META: &InstMeta = &OP_RETAIN_EVENT;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.event);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.event, &mut *writer)?;
         Ok(())
     }
@@ -8351,7 +8351,7 @@ impl Inst for OpReleaseEvent {
     const META: &InstMeta = &OP_RELEASE_EVENT;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.event);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.event, &mut *writer)?;
         Ok(())
     }
@@ -8373,7 +8373,7 @@ impl Inst for OpCreateUserEvent {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -8399,7 +8399,7 @@ impl Inst for OpIsValidEvent {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.event);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.event, &mut *writer)?;
@@ -8424,7 +8424,7 @@ impl Inst for OpSetUserEventStatus {
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.event) + OperandEncoding::word_len(&self.status);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.event, &mut *writer)?;
         OperandEncoding::encode(&self.status, &mut *writer)?;
         Ok(())
@@ -8450,7 +8450,7 @@ impl Inst for OpCaptureEventProfilingInfo {
             + OperandEncoding::word_len(&self.event)
             + OperandEncoding::word_len(&self.profiling_info)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.event, &mut *writer)?;
         OperandEncoding::encode(&self.profiling_info, &mut *writer)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
@@ -8476,7 +8476,7 @@ impl Inst for OpGetDefaultQueue {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -8506,7 +8506,7 @@ impl Inst for OpBuildNDRange {
             + OperandEncoding::word_len(&self.global_work_size)
             + OperandEncoding::word_len(&self.local_work_size)
             + OperandEncoding::word_len(&self.global_work_offset);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.global_work_size, &mut *writer)?;
@@ -8542,7 +8542,7 @@ impl Inst for OpImageSparseSampleImplicitLod {
             + OperandEncoding::word_len(&self.sampled_image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -8578,7 +8578,7 @@ impl Inst for OpImageSparseSampleExplicitLod {
             + OperandEncoding::word_len(&self.sampled_image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -8616,7 +8616,7 @@ impl Inst for OpImageSparseSampleDrefImplicitLod {
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.id_ref)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -8656,7 +8656,7 @@ impl Inst for OpImageSparseSampleDrefExplicitLod {
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.id_ref)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -8694,7 +8694,7 @@ impl Inst for OpImageSparseSampleProjImplicitLod {
             + OperandEncoding::word_len(&self.sampled_image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -8730,7 +8730,7 @@ impl Inst for OpImageSparseSampleProjExplicitLod {
             + OperandEncoding::word_len(&self.sampled_image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -8768,7 +8768,7 @@ impl Inst for OpImageSparseSampleProjDrefImplicitLod {
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.id_ref)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -8808,7 +8808,7 @@ impl Inst for OpImageSparseSampleProjDrefExplicitLod {
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.id_ref)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -8846,7 +8846,7 @@ impl Inst for OpImageSparseFetch {
             + OperandEncoding::word_len(&self.image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -8884,7 +8884,7 @@ impl Inst for OpImageSparseGather {
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.component)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -8924,7 +8924,7 @@ impl Inst for OpImageSparseDrefGather {
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.id_ref)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -8958,7 +8958,7 @@ impl Inst for OpImageSparseTexelsResident {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.resident_code);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.resident_code, &mut *writer)?;
@@ -8979,7 +8979,7 @@ impl Inst for OpNoLine {
     const META: &InstMeta = &OP_NO_LINE;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -9004,7 +9004,7 @@ impl Inst for OpAtomicFlagTestAndSet {
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -9036,7 +9036,7 @@ impl Inst for OpAtomicFlagClear {
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
         OperandEncoding::encode(&self.memory, &mut *writer)?;
         OperandEncoding::encode(&self.semantics, &mut *writer)?;
@@ -9068,7 +9068,7 @@ impl Inst for OpImageSparseRead {
             + OperandEncoding::word_len(&self.image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -9100,7 +9100,7 @@ impl Inst for OpSizeOf {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.pointer);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -9123,7 +9123,7 @@ impl Inst for OpTypePipeStorage {
     const META: &InstMeta = &OP_TYPE_PIPE_STORAGE;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -9151,7 +9151,7 @@ impl Inst for OpConstantPipeStorage {
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment)
             + OperandEncoding::word_len(&self.capacity);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.packet_size, &mut *writer)?;
@@ -9183,7 +9183,7 @@ impl Inst for OpCreatePipeFromPipeStorage {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.pipe_storage);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pipe_storage, &mut *writer)?;
@@ -9219,7 +9219,7 @@ impl Inst for OpGetKernelLocalSizeForSubgroupCount {
             + OperandEncoding::word_len(&self.param)
             + OperandEncoding::word_len(&self.param_size)
             + OperandEncoding::word_len(&self.param_align);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.subgroup_count, &mut *writer)?;
@@ -9261,7 +9261,7 @@ impl Inst for OpGetKernelMaxNumSubgroups {
             + OperandEncoding::word_len(&self.param)
             + OperandEncoding::word_len(&self.param_size)
             + OperandEncoding::word_len(&self.param_align);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.invoke, &mut *writer)?;
@@ -9290,7 +9290,7 @@ impl Inst for OpTypeNamedBarrier {
     const META: &InstMeta = &OP_TYPE_NAMED_BARRIER;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -9314,7 +9314,7 @@ impl Inst for OpNamedBarrierInitialize {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.subgroup_count);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.subgroup_count, &mut *writer)?;
@@ -9342,7 +9342,7 @@ impl Inst for OpMemoryNamedBarrier {
             + OperandEncoding::word_len(&self.named_barrier)
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.named_barrier, &mut *writer)?;
         OperandEncoding::encode(&self.memory, &mut *writer)?;
         OperandEncoding::encode(&self.semantics, &mut *writer)?;
@@ -9365,7 +9365,7 @@ impl Inst for OpModuleProcessed {
     const META: &InstMeta = &OP_MODULE_PROCESSED;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.process);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.process, &mut *writer)?;
         Ok(())
     }
@@ -9387,7 +9387,7 @@ impl Inst for OpExecutionModeId {
         let len = 0
             + OperandEncoding::word_len(&self.entry_point)
             + OperandEncoding::word_len(&self.mode);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.entry_point, &mut *writer)?;
         OperandEncoding::encode(&self.mode, &mut *writer)?;
         Ok(())
@@ -9411,7 +9411,7 @@ impl Inst for OpDecorateId {
         let len = 0
             + OperandEncoding::word_len(&self.target)
             + OperandEncoding::word_len(&self.decoration);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.target, &mut *writer)?;
         OperandEncoding::encode(&self.decoration, &mut *writer)?;
         Ok(())
@@ -9437,7 +9437,7 @@ impl Inst for OpGroupNonUniformElect {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.execution);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9467,7 +9467,7 @@ impl Inst for OpGroupNonUniformAll {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.predicate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9499,7 +9499,7 @@ impl Inst for OpGroupNonUniformAny {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.predicate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9531,7 +9531,7 @@ impl Inst for OpGroupNonUniformAllEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9565,7 +9565,7 @@ impl Inst for OpGroupNonUniformBroadcast {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.invocation_id);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9599,7 +9599,7 @@ impl Inst for OpGroupNonUniformBroadcastFirst {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9631,7 +9631,7 @@ impl Inst for OpGroupNonUniformBallot {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.predicate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9663,7 +9663,7 @@ impl Inst for OpGroupNonUniformInverseBallot {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9697,7 +9697,7 @@ impl Inst for OpGroupNonUniformBallotBitExtract {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.index);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9733,7 +9733,7 @@ impl Inst for OpGroupNonUniformBallotBitCount {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9767,7 +9767,7 @@ impl Inst for OpGroupNonUniformBallotFindLSB {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9799,7 +9799,7 @@ impl Inst for OpGroupNonUniformBallotFindMSB {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9833,7 +9833,7 @@ impl Inst for OpGroupNonUniformShuffle {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.invocation_id);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9869,7 +9869,7 @@ impl Inst for OpGroupNonUniformShuffleXor {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.mask);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9905,7 +9905,7 @@ impl Inst for OpGroupNonUniformShuffleUp {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.delta);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9941,7 +9941,7 @@ impl Inst for OpGroupNonUniformShuffleDown {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.delta);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -9979,7 +9979,7 @@ impl Inst for OpGroupNonUniformIAdd {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10019,7 +10019,7 @@ impl Inst for OpGroupNonUniformFAdd {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10059,7 +10059,7 @@ impl Inst for OpGroupNonUniformIMul {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10099,7 +10099,7 @@ impl Inst for OpGroupNonUniformFMul {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10139,7 +10139,7 @@ impl Inst for OpGroupNonUniformSMin {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10179,7 +10179,7 @@ impl Inst for OpGroupNonUniformUMin {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10219,7 +10219,7 @@ impl Inst for OpGroupNonUniformFMin {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10259,7 +10259,7 @@ impl Inst for OpGroupNonUniformSMax {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10299,7 +10299,7 @@ impl Inst for OpGroupNonUniformUMax {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10339,7 +10339,7 @@ impl Inst for OpGroupNonUniformFMax {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10379,7 +10379,7 @@ impl Inst for OpGroupNonUniformBitwiseAnd {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10419,7 +10419,7 @@ impl Inst for OpGroupNonUniformBitwiseOr {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10459,7 +10459,7 @@ impl Inst for OpGroupNonUniformBitwiseXor {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10499,7 +10499,7 @@ impl Inst for OpGroupNonUniformLogicalAnd {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10539,7 +10539,7 @@ impl Inst for OpGroupNonUniformLogicalOr {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10579,7 +10579,7 @@ impl Inst for OpGroupNonUniformLogicalXor {
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10617,7 +10617,7 @@ impl Inst for OpGroupNonUniformQuadBroadcast {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.index);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10653,7 +10653,7 @@ impl Inst for OpGroupNonUniformQuadSwap {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.direction);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -10685,7 +10685,7 @@ impl Inst for OpCopyLogical {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -10715,7 +10715,7 @@ impl Inst for OpPtrEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -10747,7 +10747,7 @@ impl Inst for OpPtrNotEqual {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -10779,7 +10779,7 @@ impl Inst for OpPtrDiff {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -10811,7 +10811,7 @@ impl Inst for OpColorAttachmentReadEXT {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.attachment)
             + OperandEncoding::word_len(&self.sample);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.attachment, &mut *writer)?;
@@ -10841,7 +10841,7 @@ impl Inst for OpDepthAttachmentReadEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.sample);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sample, &mut *writer)?;
@@ -10869,7 +10869,7 @@ impl Inst for OpStencilAttachmentReadEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.sample);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sample, &mut *writer)?;
@@ -10899,7 +10899,7 @@ impl Inst for OpTypeTensorARM {
             + OperandEncoding::word_len(&self.element_type)
             + OperandEncoding::word_len(&self.rank)
             + OperandEncoding::word_len(&self.shape);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.element_type, &mut *writer)?;
         OperandEncoding::encode(&self.rank, &mut *writer)?;
@@ -10933,7 +10933,7 @@ impl Inst for OpTensorReadARM {
             + OperandEncoding::word_len(&self.tensor)
             + OperandEncoding::word_len(&self.coordinates)
             + OperandEncoding::word_len(&self.tensor_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.tensor, &mut *writer)?;
@@ -10967,7 +10967,7 @@ impl Inst for OpTensorWriteARM {
             + OperandEncoding::word_len(&self.coordinates)
             + OperandEncoding::word_len(&self.object)
             + OperandEncoding::word_len(&self.tensor_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.tensor, &mut *writer)?;
         OperandEncoding::encode(&self.coordinates, &mut *writer)?;
         OperandEncoding::encode(&self.object, &mut *writer)?;
@@ -10999,7 +10999,7 @@ impl Inst for OpTensorQuerySizeARM {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.tensor)
             + OperandEncoding::word_len(&self.dimension);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.tensor, &mut *writer)?;
@@ -11029,7 +11029,7 @@ impl Inst for OpGraphConstantARM {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.graph_constant_id);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.graph_constant_id, &mut *writer)?;
@@ -11057,7 +11057,7 @@ impl Inst for OpGraphEntryPointARM {
             + OperandEncoding::word_len(&self.graph)
             + OperandEncoding::word_len(&self.name)
             + OperandEncoding::word_len(&self.interface);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.graph, &mut *writer)?;
         OperandEncoding::encode(&self.name, &mut *writer)?;
         OperandEncoding::encode(&self.interface, &mut *writer)?;
@@ -11083,7 +11083,7 @@ impl Inst for OpGraphARM {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -11111,7 +11111,7 @@ impl Inst for OpGraphInputARM {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.input_index)
             + OperandEncoding::word_len(&self.element_index);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.input_index, &mut *writer)?;
@@ -11141,7 +11141,7 @@ impl Inst for OpGraphSetOutputARM {
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.output_index)
             + OperandEncoding::word_len(&self.element_index);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
         OperandEncoding::encode(&self.output_index, &mut *writer)?;
         OperandEncoding::encode(&self.element_index, &mut *writer)?;
@@ -11162,7 +11162,7 @@ impl Inst for OpGraphEndARM {
     const META: &InstMeta = &OP_GRAPH_END_ARM;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -11183,7 +11183,7 @@ impl Inst for OpTypeGraphARM {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.num_inputs)
             + OperandEncoding::word_len(&self.in_out_types);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.num_inputs, &mut *writer)?;
         OperandEncoding::encode(&self.in_out_types, &mut *writer)?;
@@ -11204,7 +11204,7 @@ impl Inst for OpTerminateInvocation {
     const META: &InstMeta = &OP_TERMINATE_INVOCATION;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -11223,7 +11223,7 @@ impl Inst for OpTypeUntypedPointerKHR {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.storage_class);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.storage_class, &mut *writer)?;
         Ok(())
@@ -11253,7 +11253,7 @@ impl Inst for OpUntypedVariableKHR {
             + OperandEncoding::word_len(&self.storage_class)
             + OperandEncoding::word_len(&self.data_type)
             + OperandEncoding::word_len(&self.initializer);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.storage_class, &mut *writer)?;
@@ -11289,7 +11289,7 @@ impl Inst for OpUntypedAccessChainKHR {
             + OperandEncoding::word_len(&self.base_type)
             + OperandEncoding::word_len(&self.base)
             + OperandEncoding::word_len(&self.indexes);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base_type, &mut *writer)?;
@@ -11325,7 +11325,7 @@ impl Inst for OpUntypedInBoundsAccessChainKHR {
             + OperandEncoding::word_len(&self.base_type)
             + OperandEncoding::word_len(&self.base)
             + OperandEncoding::word_len(&self.indexes);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base_type, &mut *writer)?;
@@ -11357,7 +11357,7 @@ impl Inst for OpSubgroupBallotKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.predicate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.predicate, &mut *writer)?;
@@ -11385,7 +11385,7 @@ impl Inst for OpSubgroupFirstInvocationKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
@@ -11419,7 +11419,7 @@ impl Inst for OpUntypedPtrAccessChainKHR {
             + OperandEncoding::word_len(&self.base)
             + OperandEncoding::word_len(&self.element)
             + OperandEncoding::word_len(&self.indexes);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base_type, &mut *writer)?;
@@ -11459,7 +11459,7 @@ impl Inst for OpUntypedInBoundsPtrAccessChainKHR {
             + OperandEncoding::word_len(&self.base)
             + OperandEncoding::word_len(&self.element)
             + OperandEncoding::word_len(&self.indexes);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base_type, &mut *writer)?;
@@ -11497,7 +11497,7 @@ impl Inst for OpUntypedArrayLengthKHR {
             + OperandEncoding::word_len(&self.structure)
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.array_member);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.structure, &mut *writer)?;
@@ -11533,7 +11533,7 @@ impl Inst for OpUntypedPrefetchKHR {
             + OperandEncoding::word_len(&self.rw)
             + OperandEncoding::word_len(&self.locality)
             + OperandEncoding::word_len(&self.cache_type);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.pointer_type, &mut *writer)?;
         OperandEncoding::encode(&self.num_bytes, &mut *writer)?;
         OperandEncoding::encode(&self.rw, &mut *writer)?;
@@ -11569,7 +11569,7 @@ impl Inst for OpFmaKHR {
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2)
             + OperandEncoding::word_len(&self.operand_3);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -11601,7 +11601,7 @@ impl Inst for OpSubgroupAllKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.predicate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.predicate, &mut *writer)?;
@@ -11629,7 +11629,7 @@ impl Inst for OpSubgroupAnyKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.predicate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.predicate, &mut *writer)?;
@@ -11657,7 +11657,7 @@ impl Inst for OpSubgroupAllEqualKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.predicate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.predicate, &mut *writer)?;
@@ -11691,7 +11691,7 @@ impl Inst for OpGroupNonUniformRotateKHR {
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.delta)
             + OperandEncoding::word_len(&self.cluster_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -11727,7 +11727,7 @@ impl Inst for OpSubgroupReadInvocationKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.index);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
@@ -11761,7 +11761,7 @@ impl Inst for OpExtInstWithForwardRefsKHR {
             + OperandEncoding::word_len(&self.set)
             + OperandEncoding::word_len(&self.instruction)
             + OperandEncoding::word_len(&self.id_ref);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.set, &mut *writer)?;
@@ -11809,7 +11809,7 @@ impl Inst for OpUntypedGroupAsyncCopyKHR {
             + OperandEncoding::word_len(&self.event)
             + OperandEncoding::word_len(&self.destination_memory_operands)
             + OperandEncoding::word_len(&self.source_memory_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -11869,7 +11869,7 @@ impl Inst for OpTraceRayKHR {
             + OperandEncoding::word_len(&self.ray_direction)
             + OperandEncoding::word_len(&self.ray_tmax)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.accel, &mut *writer)?;
         OperandEncoding::encode(&self.ray_flags, &mut *writer)?;
         OperandEncoding::encode(&self.cull_mask, &mut *writer)?;
@@ -11911,7 +11911,7 @@ impl Inst for OpExecuteCallableKHR {
         let len = 0
             + OperandEncoding::word_len(&self.sbt_index)
             + OperandEncoding::word_len(&self.callable_data);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.sbt_index, &mut *writer)?;
         OperandEncoding::encode(&self.callable_data, &mut *writer)?;
         Ok(())
@@ -11937,7 +11937,7 @@ impl Inst for OpConvertUToAccelerationStructureKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.accel);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.accel, &mut *writer)?;
@@ -11958,7 +11958,7 @@ impl Inst for OpIgnoreIntersectionKHR {
     const META: &InstMeta = &OP_IGNORE_INTERSECTION_KHR;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -11972,7 +11972,7 @@ impl Inst for OpTerminateRayKHR {
     const META: &InstMeta = &OP_TERMINATE_RAY_KHR;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -11997,7 +11997,7 @@ impl Inst for OpSDot {
             + OperandEncoding::word_len(&self.vector_1)
             + OperandEncoding::word_len(&self.vector_2)
             + OperandEncoding::word_len(&self.packed_vector_format);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.vector_1, &mut *writer)?;
@@ -12033,7 +12033,7 @@ impl Inst for OpUDot {
             + OperandEncoding::word_len(&self.vector_1)
             + OperandEncoding::word_len(&self.vector_2)
             + OperandEncoding::word_len(&self.packed_vector_format);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.vector_1, &mut *writer)?;
@@ -12069,7 +12069,7 @@ impl Inst for OpSUDot {
             + OperandEncoding::word_len(&self.vector_1)
             + OperandEncoding::word_len(&self.vector_2)
             + OperandEncoding::word_len(&self.packed_vector_format);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.vector_1, &mut *writer)?;
@@ -12107,7 +12107,7 @@ impl Inst for OpSDotAccSat {
             + OperandEncoding::word_len(&self.vector_2)
             + OperandEncoding::word_len(&self.accumulator)
             + OperandEncoding::word_len(&self.packed_vector_format);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.vector_1, &mut *writer)?;
@@ -12147,7 +12147,7 @@ impl Inst for OpUDotAccSat {
             + OperandEncoding::word_len(&self.vector_2)
             + OperandEncoding::word_len(&self.accumulator)
             + OperandEncoding::word_len(&self.packed_vector_format);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.vector_1, &mut *writer)?;
@@ -12187,7 +12187,7 @@ impl Inst for OpSUDotAccSat {
             + OperandEncoding::word_len(&self.vector_2)
             + OperandEncoding::word_len(&self.accumulator)
             + OperandEncoding::word_len(&self.packed_vector_format);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.vector_1, &mut *writer)?;
@@ -12227,7 +12227,7 @@ impl Inst for OpTypeCooperativeMatrixKHR {
             + OperandEncoding::word_len(&self.rows)
             + OperandEncoding::word_len(&self.columns)
             + OperandEncoding::word_len(&self.usage);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.component_type, &mut *writer)?;
         OperandEncoding::encode(&self.scope, &mut *writer)?;
@@ -12267,7 +12267,7 @@ impl Inst for OpCooperativeMatrixLoadKHR {
             + OperandEncoding::word_len(&self.memory_layout)
             + OperandEncoding::word_len(&self.stride)
             + OperandEncoding::word_len(&self.memory_operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -12305,7 +12305,7 @@ impl Inst for OpCooperativeMatrixStoreKHR {
             + OperandEncoding::word_len(&self.memory_layout)
             + OperandEncoding::word_len(&self.stride)
             + OperandEncoding::word_len(&self.memory_operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
         OperandEncoding::encode(&self.object, &mut *writer)?;
         OperandEncoding::encode(&self.memory_layout, &mut *writer)?;
@@ -12343,7 +12343,7 @@ impl Inst for OpCooperativeMatrixMulAddKHR {
             + OperandEncoding::word_len(&self.b)
             + OperandEncoding::word_len(&self.c)
             + OperandEncoding::word_len(&self.cooperative_matrix_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -12377,7 +12377,7 @@ impl Inst for OpCooperativeMatrixLengthKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ty);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ty, &mut *writer)?;
@@ -12405,7 +12405,7 @@ impl Inst for OpConstantCompositeReplicateEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
@@ -12433,7 +12433,7 @@ impl Inst for OpSpecConstantCompositeReplicateEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
@@ -12461,7 +12461,7 @@ impl Inst for OpCompositeConstructReplicateEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
@@ -12484,7 +12484,7 @@ impl Inst for OpTypeRayQueryKHR {
     const META: &InstMeta = &OP_TYPE_RAY_QUERY_KHR;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -12518,7 +12518,7 @@ impl Inst for OpRayQueryInitializeKHR {
             + OperandEncoding::word_len(&self.ray_t_min)
             + OperandEncoding::word_len(&self.ray_direction)
             + OperandEncoding::word_len(&self.ray_t_max);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
         OperandEncoding::encode(&self.accel, &mut *writer)?;
         OperandEncoding::encode(&self.ray_flags, &mut *writer)?;
@@ -12551,7 +12551,7 @@ impl Inst for OpRayQueryTerminateKHR {
     const META: &InstMeta = &OP_RAY_QUERY_TERMINATE_KHR;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ray_query);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
         Ok(())
     }
@@ -12572,7 +12572,7 @@ impl Inst for OpRayQueryGenerateIntersectionKHR {
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.ray_query) + OperandEncoding::word_len(&self.hit_t);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
         OperandEncoding::encode(&self.hit_t, &mut *writer)?;
         Ok(())
@@ -12593,7 +12593,7 @@ impl Inst for OpRayQueryConfirmIntersectionKHR {
     const META: &InstMeta = &OP_RAY_QUERY_CONFIRM_INTERSECTION_KHR;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ray_query);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
         Ok(())
     }
@@ -12617,7 +12617,7 @@ impl Inst for OpRayQueryProceedKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -12647,7 +12647,7 @@ impl Inst for OpRayQueryGetIntersectionTypeKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -12681,7 +12681,7 @@ impl Inst for OpImageSampleWeightedQCOM {
             + OperandEncoding::word_len(&self.texture)
             + OperandEncoding::word_len(&self.coordinates)
             + OperandEncoding::word_len(&self.weights);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.texture, &mut *writer)?;
@@ -12717,7 +12717,7 @@ impl Inst for OpImageBoxFilterQCOM {
             + OperandEncoding::word_len(&self.texture)
             + OperandEncoding::word_len(&self.coordinates)
             + OperandEncoding::word_len(&self.box_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.texture, &mut *writer)?;
@@ -12757,7 +12757,7 @@ impl Inst for OpImageBlockMatchSSDQCOM {
             + OperandEncoding::word_len(&self.reference)
             + OperandEncoding::word_len(&self.reference_coordinates)
             + OperandEncoding::word_len(&self.block_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.target, &mut *writer)?;
@@ -12801,7 +12801,7 @@ impl Inst for OpImageBlockMatchSADQCOM {
             + OperandEncoding::word_len(&self.reference)
             + OperandEncoding::word_len(&self.reference_coordinates)
             + OperandEncoding::word_len(&self.block_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.target, &mut *writer)?;
@@ -12837,7 +12837,7 @@ impl Inst for OpBitCastArrayQCOM {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.source_array);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.source_array, &mut *writer)?;
@@ -12873,7 +12873,7 @@ impl Inst for OpImageBlockMatchWindowSSDQCOM {
             + OperandEncoding::word_len(&self.reference_sampled_image)
             + OperandEncoding::word_len(&self.reference_coordinates)
             + OperandEncoding::word_len(&self.block_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.target_sampled_image, &mut *writer)?;
@@ -12917,7 +12917,7 @@ impl Inst for OpImageBlockMatchWindowSADQCOM {
             + OperandEncoding::word_len(&self.reference_sampled_image)
             + OperandEncoding::word_len(&self.reference_coordinates)
             + OperandEncoding::word_len(&self.block_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.target_sampled_image, &mut *writer)?;
@@ -12961,7 +12961,7 @@ impl Inst for OpImageBlockMatchGatherSSDQCOM {
             + OperandEncoding::word_len(&self.reference_sampled_image)
             + OperandEncoding::word_len(&self.reference_coordinates)
             + OperandEncoding::word_len(&self.block_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.target_sampled_image, &mut *writer)?;
@@ -13005,7 +13005,7 @@ impl Inst for OpImageBlockMatchGatherSADQCOM {
             + OperandEncoding::word_len(&self.reference_sampled_image)
             + OperandEncoding::word_len(&self.reference_coordinates)
             + OperandEncoding::word_len(&self.block_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.target_sampled_image, &mut *writer)?;
@@ -13041,7 +13041,7 @@ impl Inst for OpCompositeConstructCoopMatQCOM {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.source_array);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.source_array, &mut *writer)?;
@@ -13069,7 +13069,7 @@ impl Inst for OpCompositeExtractCoopMatQCOM {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.source_cooperative_matrix);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.source_cooperative_matrix, &mut *writer)?;
@@ -13099,7 +13099,7 @@ impl Inst for OpExtractSubArrayQCOM {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.source_array)
             + OperandEncoding::word_len(&self.index);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.source_array, &mut *writer)?;
@@ -13133,7 +13133,7 @@ impl Inst for OpGroupIAddNonUniformAMD {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -13169,7 +13169,7 @@ impl Inst for OpGroupFAddNonUniformAMD {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -13205,7 +13205,7 @@ impl Inst for OpGroupFMinNonUniformAMD {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -13241,7 +13241,7 @@ impl Inst for OpGroupUMinNonUniformAMD {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -13277,7 +13277,7 @@ impl Inst for OpGroupSMinNonUniformAMD {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -13313,7 +13313,7 @@ impl Inst for OpGroupFMaxNonUniformAMD {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -13349,7 +13349,7 @@ impl Inst for OpGroupUMaxNonUniformAMD {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -13385,7 +13385,7 @@ impl Inst for OpGroupSMaxNonUniformAMD {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -13419,7 +13419,7 @@ impl Inst for OpFragmentMaskFetchAMD {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.image)
             + OperandEncoding::word_len(&self.coordinate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -13453,7 +13453,7 @@ impl Inst for OpFragmentFetchAMD {
             + OperandEncoding::word_len(&self.image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.fragment_index);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -13485,7 +13485,7 @@ impl Inst for OpReadClockKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.scope);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.scope, &mut *writer)?;
@@ -13517,7 +13517,7 @@ impl Inst for OpAllocateNodePayloadsAMDX {
             + OperandEncoding::word_len(&self.visibility)
             + OperandEncoding::word_len(&self.payload_count)
             + OperandEncoding::word_len(&self.node_index);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.visibility, &mut *writer)?;
@@ -13544,7 +13544,7 @@ impl Inst for OpEnqueueNodePayloadsAMDX {
     const META: &InstMeta = &OP_ENQUEUE_NODE_PAYLOADS_AMDX;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.payload_array);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.payload_array, &mut *writer)?;
         Ok(())
     }
@@ -13566,7 +13566,7 @@ impl Inst for OpTypeNodePayloadArrayAMDX {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload_type);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload_type, &mut *writer)?;
         Ok(())
@@ -13592,7 +13592,7 @@ impl Inst for OpFinishWritingNodePayloadAMDX {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -13620,7 +13620,7 @@ impl Inst for OpNodePayloadArrayLengthAMDX {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload_array);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload_array, &mut *writer)?;
@@ -13650,7 +13650,7 @@ impl Inst for OpIsNodePayloadValidAMDX {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload_type)
             + OperandEncoding::word_len(&self.node_index);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload_type, &mut *writer)?;
@@ -13678,7 +13678,7 @@ impl Inst for OpConstantStringAMDX {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.literal_string);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.literal_string, &mut *writer)?;
         Ok(())
@@ -13702,7 +13702,7 @@ impl Inst for OpSpecConstantStringAMDX {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.literal_string);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.literal_string, &mut *writer)?;
         Ok(())
@@ -13728,7 +13728,7 @@ impl Inst for OpGroupNonUniformQuadAllKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.predicate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.predicate, &mut *writer)?;
@@ -13756,7 +13756,7 @@ impl Inst for OpGroupNonUniformQuadAnyKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.predicate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.predicate, &mut *writer)?;
@@ -13782,7 +13782,7 @@ impl Inst for OpTypeBufferEXT {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.storage_class);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.storage_class, &mut *writer)?;
         Ok(())
@@ -13808,7 +13808,7 @@ impl Inst for OpBufferPointerEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.buffer);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.buffer, &mut *writer)?;
@@ -13842,7 +13842,7 @@ impl Inst for OpUntypedImageTexelPointerEXT {
             + OperandEncoding::word_len(&self.image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.sample);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image_type, &mut *writer)?;
@@ -13876,7 +13876,7 @@ impl Inst for OpMemberDecorateIdEXT {
             + OperandEncoding::word_len(&self.structure_type)
             + OperandEncoding::word_len(&self.member)
             + OperandEncoding::word_len(&self.decoration);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.structure_type, &mut *writer)?;
         OperandEncoding::encode(&self.member, &mut *writer)?;
         OperandEncoding::encode(&self.decoration, &mut *writer)?;
@@ -13904,7 +13904,7 @@ impl Inst for OpConstantSizeOfEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ty);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ty, &mut *writer)?;
@@ -13954,7 +13954,7 @@ impl Inst for OpHitObjectRecordHitMotionNV {
             + OperandEncoding::word_len(&self.t_max)
             + OperandEncoding::word_len(&self.current_time)
             + OperandEncoding::word_len(&self.hit_object_attributes);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.acceleration_structure, &mut *writer)?;
         OperandEncoding::encode(&self.instance_id, &mut *writer)?;
@@ -14024,7 +14024,7 @@ impl Inst for OpHitObjectRecordHitWithIndexMotionNV {
             + OperandEncoding::word_len(&self.t_max)
             + OperandEncoding::word_len(&self.current_time)
             + OperandEncoding::word_len(&self.hit_object_attributes);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.acceleration_structure, &mut *writer)?;
         OperandEncoding::encode(&self.instance_id, &mut *writer)?;
@@ -14080,7 +14080,7 @@ impl Inst for OpHitObjectRecordMissMotionNV {
             + OperandEncoding::word_len(&self.direction)
             + OperandEncoding::word_len(&self.t_max)
             + OperandEncoding::word_len(&self.current_time);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.sbt_index, &mut *writer)?;
         OperandEncoding::encode(&self.origin, &mut *writer)?;
@@ -14116,7 +14116,7 @@ impl Inst for OpHitObjectGetWorldToObjectNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14144,7 +14144,7 @@ impl Inst for OpHitObjectGetObjectToWorldNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14172,7 +14172,7 @@ impl Inst for OpHitObjectGetObjectRayDirectionNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14200,7 +14200,7 @@ impl Inst for OpHitObjectGetObjectRayOriginNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14248,7 +14248,7 @@ impl Inst for OpHitObjectTraceRayMotionNV {
             + OperandEncoding::word_len(&self.t_max)
             + OperandEncoding::word_len(&self.time)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.acceleration_structure, &mut *writer)?;
         OperandEncoding::encode(&self.ray_flags, &mut *writer)?;
@@ -14296,7 +14296,7 @@ impl Inst for OpHitObjectGetShaderRecordBufferHandleNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14324,7 +14324,7 @@ impl Inst for OpHitObjectGetShaderBindingTableRecordIndexNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14347,7 +14347,7 @@ impl Inst for OpHitObjectRecordEmptyNV {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_EMPTY_NV;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         Ok(())
     }
@@ -14389,7 +14389,7 @@ impl Inst for OpHitObjectTraceRayNV {
             + OperandEncoding::word_len(&self.direction)
             + OperandEncoding::word_len(&self.t_max)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.acceleration_structure, &mut *writer)?;
         OperandEncoding::encode(&self.ray_flags, &mut *writer)?;
@@ -14455,7 +14455,7 @@ impl Inst for OpHitObjectRecordHitNV {
             + OperandEncoding::word_len(&self.direction)
             + OperandEncoding::word_len(&self.t_max)
             + OperandEncoding::word_len(&self.hit_object_attributes);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.acceleration_structure, &mut *writer)?;
         OperandEncoding::encode(&self.instance_id, &mut *writer)?;
@@ -14521,7 +14521,7 @@ impl Inst for OpHitObjectRecordHitWithIndexNV {
             + OperandEncoding::word_len(&self.direction)
             + OperandEncoding::word_len(&self.t_max)
             + OperandEncoding::word_len(&self.hit_object_attributes);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.acceleration_structure, &mut *writer)?;
         OperandEncoding::encode(&self.instance_id, &mut *writer)?;
@@ -14573,7 +14573,7 @@ impl Inst for OpHitObjectRecordMissNV {
             + OperandEncoding::word_len(&self.t_min)
             + OperandEncoding::word_len(&self.direction)
             + OperandEncoding::word_len(&self.t_max);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.sbt_index, &mut *writer)?;
         OperandEncoding::encode(&self.origin, &mut *writer)?;
@@ -14605,7 +14605,7 @@ impl Inst for OpHitObjectExecuteShaderNV {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
         Ok(())
@@ -14631,7 +14631,7 @@ impl Inst for OpHitObjectGetCurrentTimeNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14657,7 +14657,7 @@ impl Inst for OpHitObjectGetAttributesNV {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.hit_object_attribute);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object_attribute, &mut *writer)?;
         Ok(())
@@ -14683,7 +14683,7 @@ impl Inst for OpHitObjectGetHitKindNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14711,7 +14711,7 @@ impl Inst for OpHitObjectGetPrimitiveIndexNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14739,7 +14739,7 @@ impl Inst for OpHitObjectGetGeometryIndexNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14767,7 +14767,7 @@ impl Inst for OpHitObjectGetInstanceIdNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14795,7 +14795,7 @@ impl Inst for OpHitObjectGetInstanceCustomIndexNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14823,7 +14823,7 @@ impl Inst for OpHitObjectGetWorldRayDirectionNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14851,7 +14851,7 @@ impl Inst for OpHitObjectGetWorldRayOriginNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14879,7 +14879,7 @@ impl Inst for OpHitObjectGetRayTMaxNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14907,7 +14907,7 @@ impl Inst for OpHitObjectGetRayTMinNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14935,7 +14935,7 @@ impl Inst for OpHitObjectIsEmptyNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14963,7 +14963,7 @@ impl Inst for OpHitObjectIsHitNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14991,7 +14991,7 @@ impl Inst for OpHitObjectIsMissNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -15019,7 +15019,7 @@ impl Inst for OpReorderThreadWithHitObjectNV {
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.hint)
             + OperandEncoding::word_len(&self.bits);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.hint, &mut *writer)?;
         OperandEncoding::encode(&self.bits, &mut *writer)?;
@@ -15043,7 +15043,7 @@ impl Inst for OpReorderThreadWithHintNV {
     const META: &InstMeta = &OP_REORDER_THREAD_WITH_HINT_NV;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hint) + OperandEncoding::word_len(&self.bits);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hint, &mut *writer)?;
         OperandEncoding::encode(&self.bits, &mut *writer)?;
         Ok(())
@@ -15064,7 +15064,7 @@ impl Inst for OpTypeHitObjectNV {
     const META: &InstMeta = &OP_TYPE_HIT_OBJECT_NV;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -15096,7 +15096,7 @@ impl Inst for OpImageSampleFootprintNV {
             + OperandEncoding::word_len(&self.granularity)
             + OperandEncoding::word_len(&self.coarse)
             + OperandEncoding::word_len(&self.image_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
@@ -15132,7 +15132,7 @@ impl Inst for OpTypeVectorIdEXT {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.component_type)
             + OperandEncoding::word_len(&self.component_count);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.component_type, &mut *writer)?;
         OperandEncoding::encode(&self.component_count, &mut *writer)?;
@@ -15180,7 +15180,7 @@ impl Inst for OpCooperativeVectorMatrixMulNV {
             + OperandEncoding::word_len(&self.transpose)
             + OperandEncoding::word_len(&self.matrix_stride)
             + OperandEncoding::word_len(&self.cooperative_matrix_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.input, &mut *writer)?;
@@ -15236,7 +15236,7 @@ impl Inst for OpCooperativeVectorOuterProductAccumulateNV {
             + OperandEncoding::word_len(&self.memory_layout)
             + OperandEncoding::word_len(&self.matrix_interpretation)
             + OperandEncoding::word_len(&self.matrix_stride);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
         OperandEncoding::encode(&self.offset, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -15272,7 +15272,7 @@ impl Inst for OpCooperativeVectorReduceSumAccumulateNV {
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.offset)
             + OperandEncoding::word_len(&self.v);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
         OperandEncoding::encode(&self.offset, &mut *writer)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
@@ -15326,7 +15326,7 @@ impl Inst for OpCooperativeVectorMatrixMulAddNV {
             + OperandEncoding::word_len(&self.transpose)
             + OperandEncoding::word_len(&self.matrix_stride)
             + OperandEncoding::word_len(&self.cooperative_matrix_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.input, &mut *writer)?;
@@ -15380,7 +15380,7 @@ impl Inst for OpCooperativeMatrixConvertNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.matrix);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.matrix, &mut *writer)?;
@@ -15410,7 +15410,7 @@ impl Inst for OpEmitMeshTasksEXT {
             + OperandEncoding::word_len(&self.group_count_y)
             + OperandEncoding::word_len(&self.group_count_z)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.group_count_x, &mut *writer)?;
         OperandEncoding::encode(&self.group_count_y, &mut *writer)?;
         OperandEncoding::encode(&self.group_count_z, &mut *writer)?;
@@ -15438,7 +15438,7 @@ impl Inst for OpSetMeshOutputsEXT {
         let len = 0
             + OperandEncoding::word_len(&self.vertex_count)
             + OperandEncoding::word_len(&self.primitive_count);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.vertex_count, &mut *writer)?;
         OperandEncoding::encode(&self.primitive_count, &mut *writer)?;
         Ok(())
@@ -15464,7 +15464,7 @@ impl Inst for OpGroupNonUniformPartitionEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
@@ -15490,7 +15490,7 @@ impl Inst for OpWritePackedPrimitiveIndices4x8NV {
         let len = 0
             + OperandEncoding::word_len(&self.index_offset)
             + OperandEncoding::word_len(&self.packed_indices);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.index_offset, &mut *writer)?;
         OperandEncoding::encode(&self.packed_indices, &mut *writer)?;
         Ok(())
@@ -15524,7 +15524,7 @@ impl Inst for OpFetchMicroTriangleVertexPositionNV {
             + OperandEncoding::word_len(&self.geometry_index)
             + OperandEncoding::word_len(&self.primitive_index)
             + OperandEncoding::word_len(&self.barycentric);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.accel, &mut *writer)?;
@@ -15568,7 +15568,7 @@ impl Inst for OpFetchMicroTriangleVertexBarycentricNV {
             + OperandEncoding::word_len(&self.geometry_index)
             + OperandEncoding::word_len(&self.primitive_index)
             + OperandEncoding::word_len(&self.barycentric);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.accel, &mut *writer)?;
@@ -15608,7 +15608,7 @@ impl Inst for OpCooperativeVectorLoadNV {
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.offset)
             + OperandEncoding::word_len(&self.memory_access);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -15642,7 +15642,7 @@ impl Inst for OpCooperativeVectorStoreNV {
             + OperandEncoding::word_len(&self.offset)
             + OperandEncoding::word_len(&self.object)
             + OperandEncoding::word_len(&self.memory_access);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
         OperandEncoding::encode(&self.offset, &mut *writer)?;
         OperandEncoding::encode(&self.object, &mut *writer)?;
@@ -15674,7 +15674,7 @@ impl Inst for OpHitObjectRecordFromQueryEXT {
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.sbt_record_index)
             + OperandEncoding::word_len(&self.hit_object_attributes);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
         OperandEncoding::encode(&self.sbt_record_index, &mut *writer)?;
@@ -15712,7 +15712,7 @@ impl Inst for OpHitObjectRecordMissEXT {
             + OperandEncoding::word_len(&self.ray_tmin)
             + OperandEncoding::word_len(&self.ray_direction)
             + OperandEncoding::word_len(&self.ray_tmax);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.ray_flags, &mut *writer)?;
         OperandEncoding::encode(&self.miss_index, &mut *writer)?;
@@ -15758,7 +15758,7 @@ impl Inst for OpHitObjectRecordMissMotionEXT {
             + OperandEncoding::word_len(&self.ray_direction)
             + OperandEncoding::word_len(&self.ray_tmax)
             + OperandEncoding::word_len(&self.current_time);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.ray_flags, &mut *writer)?;
         OperandEncoding::encode(&self.miss_index, &mut *writer)?;
@@ -15796,7 +15796,7 @@ impl Inst for OpHitObjectGetIntersectionTriangleVertexPositionsEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -15824,7 +15824,7 @@ impl Inst for OpHitObjectGetRayFlagsEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -15850,7 +15850,7 @@ impl Inst for OpHitObjectSetShaderBindingTableRecordIndexEXT {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.sbt_record_index);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.sbt_record_index, &mut *writer)?;
         Ok(())
@@ -15878,7 +15878,7 @@ impl Inst for OpHitObjectReorderExecuteShaderEXT {
             + OperandEncoding::word_len(&self.payload)
             + OperandEncoding::word_len(&self.hint)
             + OperandEncoding::word_len(&self.bits);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
         OperandEncoding::encode(&self.hint, &mut *writer)?;
@@ -15930,7 +15930,7 @@ impl Inst for OpHitObjectTraceReorderExecuteEXT {
             + OperandEncoding::word_len(&self.payload)
             + OperandEncoding::word_len(&self.hint)
             + OperandEncoding::word_len(&self.bits);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.acceleration_structure, &mut *writer)?;
         OperandEncoding::encode(&self.ray_flags, &mut *writer)?;
@@ -16004,7 +16004,7 @@ impl Inst for OpHitObjectTraceMotionReorderExecuteEXT {
             + OperandEncoding::word_len(&self.payload)
             + OperandEncoding::word_len(&self.hint)
             + OperandEncoding::word_len(&self.bits);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.acceleration_structure, &mut *writer)?;
         OperandEncoding::encode(&self.ray_flags, &mut *writer)?;
@@ -16051,7 +16051,7 @@ impl Inst for OpTypeHitObjectEXT {
     const META: &InstMeta = &OP_TYPE_HIT_OBJECT_EXT;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -16071,7 +16071,7 @@ impl Inst for OpReorderThreadWithHintEXT {
     const META: &InstMeta = &OP_REORDER_THREAD_WITH_HINT_EXT;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hint) + OperandEncoding::word_len(&self.bits);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hint, &mut *writer)?;
         OperandEncoding::encode(&self.bits, &mut *writer)?;
         Ok(())
@@ -16097,7 +16097,7 @@ impl Inst for OpReorderThreadWithHitObjectEXT {
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.hint)
             + OperandEncoding::word_len(&self.bits);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.hint, &mut *writer)?;
         OperandEncoding::encode(&self.bits, &mut *writer)?;
@@ -16143,7 +16143,7 @@ impl Inst for OpHitObjectTraceRayEXT {
             + OperandEncoding::word_len(&self.ray_direction)
             + OperandEncoding::word_len(&self.ray_tmax)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.acceleration_structure, &mut *writer)?;
         OperandEncoding::encode(&self.ray_flags, &mut *writer)?;
@@ -16209,7 +16209,7 @@ impl Inst for OpHitObjectTraceRayMotionEXT {
             + OperandEncoding::word_len(&self.ray_tmax)
             + OperandEncoding::word_len(&self.current_time)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.acceleration_structure, &mut *writer)?;
         OperandEncoding::encode(&self.ray_flags, &mut *writer)?;
@@ -16252,7 +16252,7 @@ impl Inst for OpHitObjectRecordEmptyEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_EMPTY_EXT;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         Ok(())
     }
@@ -16274,7 +16274,7 @@ impl Inst for OpHitObjectExecuteShaderEXT {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
         Ok(())
@@ -16300,7 +16300,7 @@ impl Inst for OpHitObjectGetCurrentTimeEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -16326,7 +16326,7 @@ impl Inst for OpHitObjectGetAttributesEXT {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.hit_object_attribute);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object_attribute, &mut *writer)?;
         Ok(())
@@ -16352,7 +16352,7 @@ impl Inst for OpHitObjectGetHitKindEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -16380,7 +16380,7 @@ impl Inst for OpHitObjectGetPrimitiveIndexEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -16408,7 +16408,7 @@ impl Inst for OpHitObjectGetGeometryIndexEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -16436,7 +16436,7 @@ impl Inst for OpHitObjectGetInstanceIdEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -16464,7 +16464,7 @@ impl Inst for OpHitObjectGetInstanceCustomIndexEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -16492,7 +16492,7 @@ impl Inst for OpHitObjectGetObjectRayOriginEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -16520,7 +16520,7 @@ impl Inst for OpHitObjectGetObjectRayDirectionEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -16548,7 +16548,7 @@ impl Inst for OpHitObjectGetWorldRayDirectionEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -16576,7 +16576,7 @@ impl Inst for OpHitObjectGetWorldRayOriginEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -16604,7 +16604,7 @@ impl Inst for OpHitObjectGetObjectToWorldEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -16632,7 +16632,7 @@ impl Inst for OpHitObjectGetWorldToObjectEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -16660,7 +16660,7 @@ impl Inst for OpHitObjectGetRayTMaxEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -16690,7 +16690,7 @@ impl Inst for OpReportIntersectionKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit)
             + OperandEncoding::word_len(&self.hit_kind);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit, &mut *writer)?;
@@ -16713,7 +16713,7 @@ impl Inst for OpIgnoreIntersectionNV {
     const META: &InstMeta = &OP_IGNORE_INTERSECTION_NV;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -16727,7 +16727,7 @@ impl Inst for OpTerminateRayNV {
     const META: &InstMeta = &OP_TERMINATE_RAY_NV;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -16764,7 +16764,7 @@ impl Inst for OpTraceNV {
             + OperandEncoding::word_len(&self.ray_direction)
             + OperandEncoding::word_len(&self.ray_tmax)
             + OperandEncoding::word_len(&self.payload_id);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.accel, &mut *writer)?;
         OperandEncoding::encode(&self.ray_flags, &mut *writer)?;
         OperandEncoding::encode(&self.cull_mask, &mut *writer)?;
@@ -16826,7 +16826,7 @@ impl Inst for OpTraceMotionNV {
             + OperandEncoding::word_len(&self.ray_tmax)
             + OperandEncoding::word_len(&self.time)
             + OperandEncoding::word_len(&self.payload_id);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.accel, &mut *writer)?;
         OperandEncoding::encode(&self.ray_flags, &mut *writer)?;
         OperandEncoding::encode(&self.cull_mask, &mut *writer)?;
@@ -16890,7 +16890,7 @@ impl Inst for OpTraceRayMotionNV {
             + OperandEncoding::word_len(&self.ray_tmax)
             + OperandEncoding::word_len(&self.time)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.accel, &mut *writer)?;
         OperandEncoding::encode(&self.ray_flags, &mut *writer)?;
         OperandEncoding::encode(&self.cull_mask, &mut *writer)?;
@@ -16938,7 +16938,7 @@ impl Inst for OpRayQueryGetIntersectionTriangleVertexPositionsKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -16963,7 +16963,7 @@ impl Inst for OpTypeAccelerationStructureKHR {
     const META: &InstMeta = &OP_TYPE_ACCELERATION_STRUCTURE_KHR;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -16985,7 +16985,7 @@ impl Inst for OpExecuteCallableNV {
         let len = 0
             + OperandEncoding::word_len(&self.sbt_index)
             + OperandEncoding::word_len(&self.callable_data_id);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.sbt_index, &mut *writer)?;
         OperandEncoding::encode(&self.callable_data_id, &mut *writer)?;
         Ok(())
@@ -17013,7 +17013,7 @@ impl Inst for OpRayQueryGetIntersectionClusterIdNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -17043,7 +17043,7 @@ impl Inst for OpHitObjectGetClusterIdNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -17071,7 +17071,7 @@ impl Inst for OpHitObjectGetRayTMinEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -17099,7 +17099,7 @@ impl Inst for OpHitObjectGetShaderBindingTableRecordIndexEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -17127,7 +17127,7 @@ impl Inst for OpHitObjectGetShaderRecordBufferHandleEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -17155,7 +17155,7 @@ impl Inst for OpHitObjectIsEmptyEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -17183,7 +17183,7 @@ impl Inst for OpHitObjectIsHitEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -17211,7 +17211,7 @@ impl Inst for OpHitObjectIsMissEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -17243,7 +17243,7 @@ impl Inst for OpTypeCooperativeMatrixNV {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.rows)
             + OperandEncoding::word_len(&self.columns);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.component_type, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -17281,7 +17281,7 @@ impl Inst for OpCooperativeMatrixLoadNV {
             + OperandEncoding::word_len(&self.stride)
             + OperandEncoding::word_len(&self.column_major)
             + OperandEncoding::word_len(&self.memory_access);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -17319,7 +17319,7 @@ impl Inst for OpCooperativeMatrixStoreNV {
             + OperandEncoding::word_len(&self.stride)
             + OperandEncoding::word_len(&self.column_major)
             + OperandEncoding::word_len(&self.memory_access);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
         OperandEncoding::encode(&self.object, &mut *writer)?;
         OperandEncoding::encode(&self.stride, &mut *writer)?;
@@ -17355,7 +17355,7 @@ impl Inst for OpCooperativeMatrixMulAddNV {
             + OperandEncoding::word_len(&self.a)
             + OperandEncoding::word_len(&self.b)
             + OperandEncoding::word_len(&self.c);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -17387,7 +17387,7 @@ impl Inst for OpCooperativeMatrixLengthNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ty);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ty, &mut *writer)?;
@@ -17408,7 +17408,7 @@ impl Inst for OpBeginInvocationInterlockEXT {
     const META: &InstMeta = &OP_BEGIN_INVOCATION_INTERLOCK_EXT;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -17422,7 +17422,7 @@ impl Inst for OpEndInvocationInterlockEXT {
     const META: &InstMeta = &OP_END_INVOCATION_INTERLOCK_EXT;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -17447,7 +17447,7 @@ impl Inst for OpCooperativeMatrixReduceNV {
             + OperandEncoding::word_len(&self.matrix)
             + OperandEncoding::word_len(&self.reduce)
             + OperandEncoding::word_len(&self.combine_func);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.matrix, &mut *writer)?;
@@ -17487,7 +17487,7 @@ impl Inst for OpCooperativeMatrixLoadTensorNV {
             + OperandEncoding::word_len(&self.tensor_layout)
             + OperandEncoding::word_len(&self.memory_operand)
             + OperandEncoding::word_len(&self.tensor_addressing_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -17527,7 +17527,7 @@ impl Inst for OpCooperativeMatrixStoreTensorNV {
             + OperandEncoding::word_len(&self.tensor_layout)
             + OperandEncoding::word_len(&self.memory_operand)
             + OperandEncoding::word_len(&self.tensor_addressing_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
         OperandEncoding::encode(&self.object, &mut *writer)?;
         OperandEncoding::encode(&self.tensor_layout, &mut *writer)?;
@@ -17563,7 +17563,7 @@ impl Inst for OpCooperativeMatrixPerElementOpNV {
             + OperandEncoding::word_len(&self.matrix)
             + OperandEncoding::word_len(&self.func)
             + OperandEncoding::word_len(&self.operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.matrix, &mut *writer)?;
@@ -17595,7 +17595,7 @@ impl Inst for OpTypeTensorLayoutNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.dim)
             + OperandEncoding::word_len(&self.clamp_mode);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.dim, &mut *writer)?;
         OperandEncoding::encode(&self.clamp_mode, &mut *writer)?;
@@ -17625,7 +17625,7 @@ impl Inst for OpTypeTensorViewNV {
             + OperandEncoding::word_len(&self.dim)
             + OperandEncoding::word_len(&self.has_dimensions)
             + OperandEncoding::word_len(&self.p);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.dim, &mut *writer)?;
         OperandEncoding::encode(&self.has_dimensions, &mut *writer)?;
@@ -17653,7 +17653,7 @@ impl Inst for OpCreateTensorLayoutNV {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -17681,7 +17681,7 @@ impl Inst for OpTensorLayoutSetDimensionNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.tensor_layout)
             + OperandEncoding::word_len(&self.dim);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.tensor_layout, &mut *writer)?;
@@ -17713,7 +17713,7 @@ impl Inst for OpTensorLayoutSetStrideNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.tensor_layout)
             + OperandEncoding::word_len(&self.stride);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.tensor_layout, &mut *writer)?;
@@ -17745,7 +17745,7 @@ impl Inst for OpTensorLayoutSliceNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.tensor_layout)
             + OperandEncoding::word_len(&self.operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.tensor_layout, &mut *writer)?;
@@ -17777,7 +17777,7 @@ impl Inst for OpTensorLayoutSetClampValueNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.tensor_layout)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.tensor_layout, &mut *writer)?;
@@ -17805,7 +17805,7 @@ impl Inst for OpCreateTensorViewNV {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -17833,7 +17833,7 @@ impl Inst for OpTensorViewSetDimensionNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.tensor_view)
             + OperandEncoding::word_len(&self.dim);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.tensor_view, &mut *writer)?;
@@ -17865,7 +17865,7 @@ impl Inst for OpTensorViewSetStrideNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.tensor_view)
             + OperandEncoding::word_len(&self.stride);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.tensor_view, &mut *writer)?;
@@ -17888,7 +17888,7 @@ impl Inst for OpDemoteToHelperInvocation {
     const META: &InstMeta = &OP_DEMOTE_TO_HELPER_INVOCATION;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0;
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         Ok(())
     }
     fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
@@ -17907,7 +17907,7 @@ impl Inst for OpIsHelperInvocationEXT {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -17941,7 +17941,7 @@ impl Inst for OpTensorViewSetClipNV {
             + OperandEncoding::word_len(&self.clip_row_span)
             + OperandEncoding::word_len(&self.clip_col_offset)
             + OperandEncoding::word_len(&self.clip_col_span);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.tensor_view, &mut *writer)?;
@@ -17979,7 +17979,7 @@ impl Inst for OpTensorLayoutSetBlockSizeNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.tensor_layout)
             + OperandEncoding::word_len(&self.block_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.tensor_layout, &mut *writer)?;
@@ -18009,7 +18009,7 @@ impl Inst for OpCooperativeMatrixTransposeNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.matrix);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.matrix, &mut *writer)?;
@@ -18037,7 +18037,7 @@ impl Inst for OpConvertUToImageNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -18065,7 +18065,7 @@ impl Inst for OpConvertUToSamplerNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -18093,7 +18093,7 @@ impl Inst for OpConvertImageToUNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -18121,7 +18121,7 @@ impl Inst for OpConvertSamplerToUNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -18149,7 +18149,7 @@ impl Inst for OpConvertUToSampledImageNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -18177,7 +18177,7 @@ impl Inst for OpConvertSampledImageToUNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -18200,7 +18200,7 @@ impl Inst for OpSamplerImageAddressingModeNV {
     const META: &InstMeta = &OP_SAMPLER_IMAGE_ADDRESSING_MODE_NV;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.bit_width);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.bit_width, &mut *writer)?;
         Ok(())
     }
@@ -18232,7 +18232,7 @@ impl Inst for OpRawAccessChainNV {
             + OperandEncoding::word_len(&self.element_index)
             + OperandEncoding::word_len(&self.byte_offset)
             + OperandEncoding::word_len(&self.raw_access_chain_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.base, &mut *writer)?;
@@ -18270,7 +18270,7 @@ impl Inst for OpRayQueryGetIntersectionSpherePositionNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -18302,7 +18302,7 @@ impl Inst for OpRayQueryGetIntersectionSphereRadiusNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -18334,7 +18334,7 @@ impl Inst for OpRayQueryGetIntersectionLSSPositionsNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -18366,7 +18366,7 @@ impl Inst for OpRayQueryGetIntersectionLSSRadiiNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -18398,7 +18398,7 @@ impl Inst for OpRayQueryGetIntersectionLSSHitValueNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -18428,7 +18428,7 @@ impl Inst for OpHitObjectGetSpherePositionNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -18456,7 +18456,7 @@ impl Inst for OpHitObjectGetSphereRadiusNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -18484,7 +18484,7 @@ impl Inst for OpHitObjectGetLSSPositionsNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -18512,7 +18512,7 @@ impl Inst for OpHitObjectGetLSSRadiiNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -18540,7 +18540,7 @@ impl Inst for OpHitObjectIsSphereHitNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -18568,7 +18568,7 @@ impl Inst for OpHitObjectIsLSSHitNV {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.hit_object);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -18598,7 +18598,7 @@ impl Inst for OpRayQueryIsSphereHitNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -18630,7 +18630,7 @@ impl Inst for OpRayQueryIsLSSHitNV {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -18662,7 +18662,7 @@ impl Inst for OpSubgroupShuffleINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.data)
             + OperandEncoding::word_len(&self.invocation_id);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.data, &mut *writer)?;
@@ -18696,7 +18696,7 @@ impl Inst for OpSubgroupShuffleDownINTEL {
             + OperandEncoding::word_len(&self.current)
             + OperandEncoding::word_len(&self.next)
             + OperandEncoding::word_len(&self.delta);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.current, &mut *writer)?;
@@ -18732,7 +18732,7 @@ impl Inst for OpSubgroupShuffleUpINTEL {
             + OperandEncoding::word_len(&self.previous)
             + OperandEncoding::word_len(&self.current)
             + OperandEncoding::word_len(&self.delta);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.previous, &mut *writer)?;
@@ -18766,7 +18766,7 @@ impl Inst for OpSubgroupShuffleXorINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.data)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.data, &mut *writer)?;
@@ -18796,7 +18796,7 @@ impl Inst for OpSubgroupBlockReadINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ptr);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ptr, &mut *writer)?;
@@ -18820,7 +18820,7 @@ impl Inst for OpSubgroupBlockWriteINTEL {
     const META: &InstMeta = &OP_SUBGROUP_BLOCK_WRITE_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ptr) + OperandEncoding::word_len(&self.data);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.ptr, &mut *writer)?;
         OperandEncoding::encode(&self.data, &mut *writer)?;
         Ok(())
@@ -18848,7 +18848,7 @@ impl Inst for OpSubgroupImageBlockReadINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.image)
             + OperandEncoding::word_len(&self.coordinate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -18878,7 +18878,7 @@ impl Inst for OpSubgroupImageBlockWriteINTEL {
             + OperandEncoding::word_len(&self.image)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.data);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
         OperandEncoding::encode(&self.coordinate, &mut *writer)?;
         OperandEncoding::encode(&self.data, &mut *writer)?;
@@ -18912,7 +18912,7 @@ impl Inst for OpSubgroupImageMediaBlockReadINTEL {
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.width)
             + OperandEncoding::word_len(&self.height);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
@@ -18950,7 +18950,7 @@ impl Inst for OpSubgroupImageMediaBlockWriteINTEL {
             + OperandEncoding::word_len(&self.width)
             + OperandEncoding::word_len(&self.height)
             + OperandEncoding::word_len(&self.data);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.image, &mut *writer)?;
         OperandEncoding::encode(&self.coordinate, &mut *writer)?;
         OperandEncoding::encode(&self.width, &mut *writer)?;
@@ -18982,7 +18982,7 @@ impl Inst for OpUCountLeadingZerosINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -19010,7 +19010,7 @@ impl Inst for OpUCountTrailingZerosINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -19040,7 +19040,7 @@ impl Inst for OpAbsISubINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -19072,7 +19072,7 @@ impl Inst for OpAbsUSubINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -19104,7 +19104,7 @@ impl Inst for OpIAddSatINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -19136,7 +19136,7 @@ impl Inst for OpUAddSatINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -19168,7 +19168,7 @@ impl Inst for OpIAverageINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -19200,7 +19200,7 @@ impl Inst for OpUAverageINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -19232,7 +19232,7 @@ impl Inst for OpIAverageRoundedINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -19264,7 +19264,7 @@ impl Inst for OpUAverageRoundedINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -19296,7 +19296,7 @@ impl Inst for OpISubSatINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -19328,7 +19328,7 @@ impl Inst for OpUSubSatINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -19360,7 +19360,7 @@ impl Inst for OpIMul32x16INTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -19392,7 +19392,7 @@ impl Inst for OpUMul32x16INTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1)
             + OperandEncoding::word_len(&self.operand_2);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -19422,7 +19422,7 @@ impl Inst for OpConstantFunctionPointerINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.function);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.function, &mut *writer)?;
@@ -19450,7 +19450,7 @@ impl Inst for OpFunctionPointerCallINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand_1);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand_1, &mut *writer)?;
@@ -19476,7 +19476,7 @@ impl Inst for OpAsmTargetINTEL {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.asm_target);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.asm_target, &mut *writer)?;
         Ok(())
@@ -19508,7 +19508,7 @@ impl Inst for OpAsmINTEL {
             + OperandEncoding::word_len(&self.target)
             + OperandEncoding::word_len(&self.asm_instructions)
             + OperandEncoding::word_len(&self.constraints);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.asm_type, &mut *writer)?;
@@ -19544,7 +19544,7 @@ impl Inst for OpAsmCallINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.asm)
             + OperandEncoding::word_len(&self.argument);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.asm, &mut *writer)?;
@@ -19580,7 +19580,7 @@ impl Inst for OpAtomicFMinEXT {
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -19620,7 +19620,7 @@ impl Inst for OpAtomicFMaxEXT {
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -19649,7 +19649,7 @@ impl Inst for OpAssumeTrueKHR {
     const META: &InstMeta = &OP_ASSUME_TRUE_KHR;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.condition);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.condition, &mut *writer)?;
         Ok(())
     }
@@ -19675,7 +19675,7 @@ impl Inst for OpExpectKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.expected_value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
@@ -19703,7 +19703,7 @@ impl Inst for OpDecorateString {
         let len = 0
             + OperandEncoding::word_len(&self.target)
             + OperandEncoding::word_len(&self.decoration);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.target, &mut *writer)?;
         OperandEncoding::encode(&self.decoration, &mut *writer)?;
         Ok(())
@@ -19729,7 +19729,7 @@ impl Inst for OpMemberDecorateString {
             + OperandEncoding::word_len(&self.struct_type)
             + OperandEncoding::word_len(&self.member)
             + OperandEncoding::word_len(&self.decoration);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.struct_type, &mut *writer)?;
         OperandEncoding::encode(&self.member, &mut *writer)?;
         OperandEncoding::encode(&self.decoration, &mut *writer)?;
@@ -19759,7 +19759,7 @@ impl Inst for OpVmeImageINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.image_type)
             + OperandEncoding::word_len(&self.sampler);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image_type, &mut *writer)?;
@@ -19787,7 +19787,7 @@ impl Inst for OpTypeVmeImageINTEL {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.image_type);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image_type, &mut *writer)?;
         Ok(())
@@ -19808,7 +19808,7 @@ impl Inst for OpTypeAvcImePayloadINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_PAYLOAD_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -19827,7 +19827,7 @@ impl Inst for OpTypeAvcRefPayloadINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_REF_PAYLOAD_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -19846,7 +19846,7 @@ impl Inst for OpTypeAvcSicPayloadINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_SIC_PAYLOAD_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -19865,7 +19865,7 @@ impl Inst for OpTypeAvcMcePayloadINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_MCE_PAYLOAD_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -19884,7 +19884,7 @@ impl Inst for OpTypeAvcMceResultINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_MCE_RESULT_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -19903,7 +19903,7 @@ impl Inst for OpTypeAvcImeResultINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_RESULT_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -19922,7 +19922,7 @@ impl Inst for OpTypeAvcImeResultSingleReferenceStreamoutINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_RESULT_SINGLE_REFERENCE_STREAMOUT_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -19941,7 +19941,7 @@ impl Inst for OpTypeAvcImeResultDualReferenceStreamoutINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_RESULT_DUAL_REFERENCE_STREAMOUT_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -19960,7 +19960,7 @@ impl Inst for OpTypeAvcImeSingleReferenceStreaminINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_SINGLE_REFERENCE_STREAMIN_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -19979,7 +19979,7 @@ impl Inst for OpTypeAvcImeDualReferenceStreaminINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_DUAL_REFERENCE_STREAMIN_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -19998,7 +19998,7 @@ impl Inst for OpTypeAvcRefResultINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_REF_RESULT_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -20017,7 +20017,7 @@ impl Inst for OpTypeAvcSicResultINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_SIC_RESULT_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -20044,7 +20044,7 @@ impl Inst for OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.slice_type)
             + OperandEncoding::word_len(&self.qp);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.slice_type, &mut *writer)?;
@@ -20076,7 +20076,7 @@ impl Inst for OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.reference_base_penalty)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.reference_base_penalty, &mut *writer)?;
@@ -20108,7 +20108,7 @@ impl Inst for OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.slice_type)
             + OperandEncoding::word_len(&self.qp);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.slice_type, &mut *writer)?;
@@ -20140,7 +20140,7 @@ impl Inst for OpSubgroupAvcMceSetInterShapePenaltyINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.packed_shape_penalty)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.packed_shape_penalty, &mut *writer)?;
@@ -20172,7 +20172,7 @@ impl Inst for OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.slice_type)
             + OperandEncoding::word_len(&self.qp);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.slice_type, &mut *writer)?;
@@ -20204,7 +20204,7 @@ impl Inst for OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.direction_cost)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.direction_cost, &mut *writer)?;
@@ -20236,7 +20236,7 @@ impl Inst for OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.slice_type)
             + OperandEncoding::word_len(&self.qp);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.slice_type, &mut *writer)?;
@@ -20268,7 +20268,7 @@ impl Inst for OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.slice_type)
             + OperandEncoding::word_len(&self.qp);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.slice_type, &mut *writer)?;
@@ -20296,7 +20296,7 @@ impl Inst for OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -20320,7 +20320,7 @@ impl Inst for OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -20344,7 +20344,7 @@ impl Inst for OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -20376,7 +20376,7 @@ impl Inst for OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL {
             + OperandEncoding::word_len(&self.packed_cost_table)
             + OperandEncoding::word_len(&self.cost_precision)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.packed_cost_center_delta, &mut *writer)?;
@@ -20412,7 +20412,7 @@ impl Inst for OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.slice_type)
             + OperandEncoding::word_len(&self.qp);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.slice_type, &mut *writer)?;
@@ -20440,7 +20440,7 @@ impl Inst for OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -20464,7 +20464,7 @@ impl Inst for OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -20490,7 +20490,7 @@ impl Inst for OpSubgroupAvcMceSetAcOnlyHaarINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -20520,7 +20520,7 @@ impl Inst for OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.source_field_polarity)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.source_field_polarity, &mut *writer)?;
@@ -20553,7 +20553,7 @@ impl Inst for OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.reference_field_polarity)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.reference_field_polarity, &mut *writer)?;
@@ -20588,7 +20588,7 @@ impl Inst for OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL {
             + OperandEncoding::word_len(&self.forward_reference_field_polarity)
             + OperandEncoding::word_len(&self.backward_reference_field_polarity)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.forward_reference_field_polarity, &mut *writer)?;
@@ -20620,7 +20620,7 @@ impl Inst for OpSubgroupAvcMceConvertToImePayloadINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -20648,7 +20648,7 @@ impl Inst for OpSubgroupAvcMceConvertToImeResultINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -20676,7 +20676,7 @@ impl Inst for OpSubgroupAvcMceConvertToRefPayloadINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -20704,7 +20704,7 @@ impl Inst for OpSubgroupAvcMceConvertToRefResultINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -20732,7 +20732,7 @@ impl Inst for OpSubgroupAvcMceConvertToSicPayloadINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -20760,7 +20760,7 @@ impl Inst for OpSubgroupAvcMceConvertToSicResultINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -20788,7 +20788,7 @@ impl Inst for OpSubgroupAvcMceGetMotionVectorsINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -20816,7 +20816,7 @@ impl Inst for OpSubgroupAvcMceGetInterDistortionsINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -20844,7 +20844,7 @@ impl Inst for OpSubgroupAvcMceGetBestInterDistortionsINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -20872,7 +20872,7 @@ impl Inst for OpSubgroupAvcMceGetInterMajorShapeINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -20900,7 +20900,7 @@ impl Inst for OpSubgroupAvcMceGetInterMinorShapeINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -20928,7 +20928,7 @@ impl Inst for OpSubgroupAvcMceGetInterDirectionsINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -20956,7 +20956,7 @@ impl Inst for OpSubgroupAvcMceGetInterMotionVectorCountINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -20984,7 +20984,7 @@ impl Inst for OpSubgroupAvcMceGetInterReferenceIdsINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -21017,7 +21017,7 @@ impl Inst for OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL {
             + OperandEncoding::word_len(&self.packed_reference_ids)
             + OperandEncoding::word_len(&self.packed_reference_parameter_field_polarities)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.packed_reference_ids, &mut *writer)?;
@@ -21056,7 +21056,7 @@ impl Inst for OpSubgroupAvcImeInitializeINTEL {
             + OperandEncoding::word_len(&self.src_coord)
             + OperandEncoding::word_len(&self.partition_mask)
             + OperandEncoding::word_len(&self.sad_adjustment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_coord, &mut *writer)?;
@@ -21092,7 +21092,7 @@ impl Inst for OpSubgroupAvcImeSetSingleReferenceINTEL {
             + OperandEncoding::word_len(&self.ref_offset)
             + OperandEncoding::word_len(&self.search_window_config)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ref_offset, &mut *writer)?;
@@ -21130,7 +21130,7 @@ impl Inst for OpSubgroupAvcImeSetDualReferenceINTEL {
             + OperandEncoding::word_len(&self.bwd_ref_offset)
             + OperandEncoding::word_len(&self.search_window_config)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.fwd_ref_offset, &mut *writer)?;
@@ -21166,7 +21166,7 @@ impl Inst for OpSubgroupAvcImeRefWindowSizeINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.search_window_config)
             + OperandEncoding::word_len(&self.dual_ref);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.search_window_config, &mut *writer)?;
@@ -21202,7 +21202,7 @@ impl Inst for OpSubgroupAvcImeAdjustRefOffsetINTEL {
             + OperandEncoding::word_len(&self.src_coord)
             + OperandEncoding::word_len(&self.ref_window_size)
             + OperandEncoding::word_len(&self.image_size);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ref_offset, &mut *writer)?;
@@ -21236,7 +21236,7 @@ impl Inst for OpSubgroupAvcImeConvertToMcePayloadINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -21266,7 +21266,7 @@ impl Inst for OpSubgroupAvcImeSetMaxMotionVectorCountINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.max_motion_vector_count)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.max_motion_vector_count, &mut *writer)?;
@@ -21296,7 +21296,7 @@ impl Inst for OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -21326,7 +21326,7 @@ impl Inst for OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.threshold)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.threshold, &mut *writer)?;
@@ -21358,7 +21358,7 @@ impl Inst for OpSubgroupAvcImeSetWeightedSadINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.packed_sad_weights)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.packed_sad_weights, &mut *writer)?;
@@ -21392,7 +21392,7 @@ impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL {
             + OperandEncoding::word_len(&self.src_image)
             + OperandEncoding::word_len(&self.ref_image)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -21430,7 +21430,7 @@ impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceINTEL {
             + OperandEncoding::word_len(&self.fwd_ref_image)
             + OperandEncoding::word_len(&self.bwd_ref_image)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -21470,7 +21470,7 @@ impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {
             + OperandEncoding::word_len(&self.ref_image)
             + OperandEncoding::word_len(&self.payload)
             + OperandEncoding::word_len(&self.streamin_components);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -21512,7 +21512,7 @@ impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {
             + OperandEncoding::word_len(&self.bwd_ref_image)
             + OperandEncoding::word_len(&self.payload)
             + OperandEncoding::word_len(&self.streamin_components);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -21552,7 +21552,7 @@ impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {
             + OperandEncoding::word_len(&self.src_image)
             + OperandEncoding::word_len(&self.ref_image)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -21590,7 +21590,7 @@ impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {
             + OperandEncoding::word_len(&self.fwd_ref_image)
             + OperandEncoding::word_len(&self.bwd_ref_image)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -21630,7 +21630,7 @@ impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {
             + OperandEncoding::word_len(&self.ref_image)
             + OperandEncoding::word_len(&self.payload)
             + OperandEncoding::word_len(&self.streamin_components);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -21672,7 +21672,7 @@ impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL {
             + OperandEncoding::word_len(&self.bwd_ref_image)
             + OperandEncoding::word_len(&self.payload)
             + OperandEncoding::word_len(&self.streamin_components);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -21708,7 +21708,7 @@ impl Inst for OpSubgroupAvcImeConvertToMceResultINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -21736,7 +21736,7 @@ impl Inst for OpSubgroupAvcImeGetSingleReferenceStreaminINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -21764,7 +21764,7 @@ impl Inst for OpSubgroupAvcImeGetDualReferenceStreaminINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -21792,7 +21792,7 @@ impl Inst for OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -21820,7 +21820,7 @@ impl Inst for OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -21851,7 +21851,7 @@ impl Inst for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectors
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload)
             + OperandEncoding::word_len(&self.major_shape);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -21884,7 +21884,7 @@ impl Inst for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsIN
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload)
             + OperandEncoding::word_len(&self.major_shape);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -21917,7 +21917,7 @@ impl Inst for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsI
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload)
             + OperandEncoding::word_len(&self.major_shape);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -21952,7 +21952,7 @@ impl Inst for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsIN
             + OperandEncoding::word_len(&self.payload)
             + OperandEncoding::word_len(&self.major_shape)
             + OperandEncoding::word_len(&self.direction);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -21989,7 +21989,7 @@ impl Inst for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTE
             + OperandEncoding::word_len(&self.payload)
             + OperandEncoding::word_len(&self.major_shape)
             + OperandEncoding::word_len(&self.direction);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -22026,7 +22026,7 @@ impl Inst for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINT
             + OperandEncoding::word_len(&self.payload)
             + OperandEncoding::word_len(&self.major_shape)
             + OperandEncoding::word_len(&self.direction);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -22060,7 +22060,7 @@ impl Inst for OpSubgroupAvcImeGetBorderReachedINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.image_select)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.image_select, &mut *writer)?;
@@ -22090,7 +22090,7 @@ impl Inst for OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -22118,7 +22118,7 @@ impl Inst for OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -22146,7 +22146,7 @@ impl Inst for OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -22174,7 +22174,7 @@ impl Inst for OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -22214,7 +22214,7 @@ impl Inst for OpSubgroupAvcFmeInitializeINTEL {
             + OperandEncoding::word_len(&self.direction)
             + OperandEncoding::word_len(&self.pixel_resolution)
             + OperandEncoding::word_len(&self.sad_adjustment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_coord, &mut *writer)?;
@@ -22268,7 +22268,7 @@ impl Inst for OpSubgroupAvcBmeInitializeINTEL {
             + OperandEncoding::word_len(&self.pixel_resolution)
             + OperandEncoding::word_len(&self.bidirectional_weight)
             + OperandEncoding::word_len(&self.sad_adjustment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_coord, &mut *writer)?;
@@ -22310,7 +22310,7 @@ impl Inst for OpSubgroupAvcRefConvertToMcePayloadINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -22338,7 +22338,7 @@ impl Inst for OpSubgroupAvcRefSetBidirectionalMixDisableINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -22366,7 +22366,7 @@ impl Inst for OpSubgroupAvcRefSetBilinearFilterEnableINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -22398,7 +22398,7 @@ impl Inst for OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL {
             + OperandEncoding::word_len(&self.src_image)
             + OperandEncoding::word_len(&self.ref_image)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -22436,7 +22436,7 @@ impl Inst for OpSubgroupAvcRefEvaluateWithDualReferenceINTEL {
             + OperandEncoding::word_len(&self.fwd_ref_image)
             + OperandEncoding::word_len(&self.bwd_ref_image)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -22474,7 +22474,7 @@ impl Inst for OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {
             + OperandEncoding::word_len(&self.src_image)
             + OperandEncoding::word_len(&self.packed_reference_ids)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -22512,7 +22512,7 @@ impl Inst for OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL {
             + OperandEncoding::word_len(&self.packed_reference_ids)
             + OperandEncoding::word_len(&self.packed_reference_field_polarities)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -22546,7 +22546,7 @@ impl Inst for OpSubgroupAvcRefConvertToMceResultINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -22574,7 +22574,7 @@ impl Inst for OpSubgroupAvcSicInitializeINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.src_coord);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_coord, &mut *writer)?;
@@ -22612,7 +22612,7 @@ impl Inst for OpSubgroupAvcSicConfigureSkcINTEL {
             + OperandEncoding::word_len(&self.bidirectional_weight)
             + OperandEncoding::word_len(&self.sad_adjustment)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.skip_block_partition_type, &mut *writer)?;
@@ -22664,7 +22664,7 @@ impl Inst for OpSubgroupAvcSicConfigureIpeLumaINTEL {
             + OperandEncoding::word_len(&self.upper_right_edge_luma_pixels)
             + OperandEncoding::word_len(&self.sad_adjustment)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.luma_intra_partition_mask, &mut *writer)?;
@@ -22726,7 +22726,7 @@ impl Inst for OpSubgroupAvcSicConfigureIpeLumaChromaINTEL {
             + OperandEncoding::word_len(&self.upper_edge_chroma_pixels)
             + OperandEncoding::word_len(&self.sad_adjustment)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.luma_intra_partition_mask, &mut *writer)?;
@@ -22776,7 +22776,7 @@ impl Inst for OpSubgroupAvcSicGetMotionVectorMaskINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.skip_block_partition_type)
             + OperandEncoding::word_len(&self.direction);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.skip_block_partition_type, &mut *writer)?;
@@ -22806,7 +22806,7 @@ impl Inst for OpSubgroupAvcSicConvertToMcePayloadINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -22836,7 +22836,7 @@ impl Inst for OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.packed_shape_penalty)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.packed_shape_penalty, &mut *writer)?;
@@ -22872,7 +22872,7 @@ impl Inst for OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {
             + OperandEncoding::word_len(&self.luma_packed_neighbor_modes)
             + OperandEncoding::word_len(&self.luma_packed_non_dc_penalty)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.luma_mode_penalty, &mut *writer)?;
@@ -22908,7 +22908,7 @@ impl Inst for OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.chroma_mode_base_penalty)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.chroma_mode_base_penalty, &mut *writer)?;
@@ -22938,7 +22938,7 @@ impl Inst for OpSubgroupAvcSicSetBilinearFilterEnableINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -22968,7 +22968,7 @@ impl Inst for OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.packed_sad_coefficients)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.packed_sad_coefficients, &mut *writer)?;
@@ -23000,7 +23000,7 @@ impl Inst for OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.block_based_skip_type)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.block_based_skip_type, &mut *writer)?;
@@ -23032,7 +23032,7 @@ impl Inst for OpSubgroupAvcSicEvaluateIpeINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.src_image)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -23066,7 +23066,7 @@ impl Inst for OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL {
             + OperandEncoding::word_len(&self.src_image)
             + OperandEncoding::word_len(&self.ref_image)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -23104,7 +23104,7 @@ impl Inst for OpSubgroupAvcSicEvaluateWithDualReferenceINTEL {
             + OperandEncoding::word_len(&self.fwd_ref_image)
             + OperandEncoding::word_len(&self.bwd_ref_image)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -23142,7 +23142,7 @@ impl Inst for OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {
             + OperandEncoding::word_len(&self.src_image)
             + OperandEncoding::word_len(&self.packed_reference_ids)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -23180,7 +23180,7 @@ impl Inst for OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL {
             + OperandEncoding::word_len(&self.packed_reference_ids)
             + OperandEncoding::word_len(&self.packed_reference_field_polarities)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.src_image, &mut *writer)?;
@@ -23214,7 +23214,7 @@ impl Inst for OpSubgroupAvcSicConvertToMceResultINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -23242,7 +23242,7 @@ impl Inst for OpSubgroupAvcSicGetIpeLumaShapeINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -23270,7 +23270,7 @@ impl Inst for OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -23298,7 +23298,7 @@ impl Inst for OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -23326,7 +23326,7 @@ impl Inst for OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -23354,7 +23354,7 @@ impl Inst for OpSubgroupAvcSicGetIpeChromaModeINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -23382,7 +23382,7 @@ impl Inst for OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -23410,7 +23410,7 @@ impl Inst for OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -23438,7 +23438,7 @@ impl Inst for OpSubgroupAvcSicGetInterRawSadsINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.payload, &mut *writer)?;
@@ -23466,7 +23466,7 @@ impl Inst for OpVariableLengthArrayINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.length);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.length, &mut *writer)?;
@@ -23492,7 +23492,7 @@ impl Inst for OpSaveMemoryINTEL {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
@@ -23513,7 +23513,7 @@ impl Inst for OpRestoreMemoryINTEL {
     const META: &InstMeta = &OP_RESTORE_MEMORY_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ptr);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.ptr, &mut *writer)?;
         Ok(())
     }
@@ -23547,7 +23547,7 @@ impl Inst for OpArbitraryFloatSinCosPiALTERA {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.rounding_accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -23595,7 +23595,7 @@ impl Inst for OpArbitraryFloatCastALTERA {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -23643,7 +23643,7 @@ impl Inst for OpArbitraryFloatCastFromIntALTERA {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -23691,7 +23691,7 @@ impl Inst for OpArbitraryFloatCastToIntALTERA {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -23743,7 +23743,7 @@ impl Inst for OpArbitraryFloatAddALTERA {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -23799,7 +23799,7 @@ impl Inst for OpArbitraryFloatSubALTERA {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -23855,7 +23855,7 @@ impl Inst for OpArbitraryFloatMulALTERA {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -23911,7 +23911,7 @@ impl Inst for OpArbitraryFloatDivALTERA {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -23959,7 +23959,7 @@ impl Inst for OpArbitraryFloatGTALTERA {
             + OperandEncoding::word_len(&self.ma)
             + OperandEncoding::word_len(&self.b)
             + OperandEncoding::word_len(&self.mb);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -23999,7 +23999,7 @@ impl Inst for OpArbitraryFloatGEALTERA {
             + OperandEncoding::word_len(&self.ma)
             + OperandEncoding::word_len(&self.b)
             + OperandEncoding::word_len(&self.mb);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24039,7 +24039,7 @@ impl Inst for OpArbitraryFloatLTALTERA {
             + OperandEncoding::word_len(&self.ma)
             + OperandEncoding::word_len(&self.b)
             + OperandEncoding::word_len(&self.mb);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24079,7 +24079,7 @@ impl Inst for OpArbitraryFloatLEALTERA {
             + OperandEncoding::word_len(&self.ma)
             + OperandEncoding::word_len(&self.b)
             + OperandEncoding::word_len(&self.mb);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24119,7 +24119,7 @@ impl Inst for OpArbitraryFloatEQALTERA {
             + OperandEncoding::word_len(&self.ma)
             + OperandEncoding::word_len(&self.b)
             + OperandEncoding::word_len(&self.mb);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24163,7 +24163,7 @@ impl Inst for OpArbitraryFloatRecipALTERA {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24211,7 +24211,7 @@ impl Inst for OpArbitraryFloatRSqrtALTERA {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24259,7 +24259,7 @@ impl Inst for OpArbitraryFloatCbrtALTERA {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24311,7 +24311,7 @@ impl Inst for OpArbitraryFloatHypotALTERA {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24363,7 +24363,7 @@ impl Inst for OpArbitraryFloatSqrtALTERA {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24411,7 +24411,7 @@ impl Inst for OpArbitraryFloatLogINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24459,7 +24459,7 @@ impl Inst for OpArbitraryFloatLog2INTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24507,7 +24507,7 @@ impl Inst for OpArbitraryFloatLog10INTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24555,7 +24555,7 @@ impl Inst for OpArbitraryFloatLog1pINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24603,7 +24603,7 @@ impl Inst for OpArbitraryFloatExpINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24651,7 +24651,7 @@ impl Inst for OpArbitraryFloatExp2INTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24699,7 +24699,7 @@ impl Inst for OpArbitraryFloatExp10INTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24747,7 +24747,7 @@ impl Inst for OpArbitraryFloatExpm1INTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24795,7 +24795,7 @@ impl Inst for OpArbitraryFloatSinINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24843,7 +24843,7 @@ impl Inst for OpArbitraryFloatCosINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24891,7 +24891,7 @@ impl Inst for OpArbitraryFloatSinCosINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24939,7 +24939,7 @@ impl Inst for OpArbitraryFloatSinPiINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -24987,7 +24987,7 @@ impl Inst for OpArbitraryFloatCosPiINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -25035,7 +25035,7 @@ impl Inst for OpArbitraryFloatASinINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -25083,7 +25083,7 @@ impl Inst for OpArbitraryFloatASinPiINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -25131,7 +25131,7 @@ impl Inst for OpArbitraryFloatACosINTEL {
             + OperandEncoding::word_len(&self.enable_subnormals)
             + OperandEncoding::word_len(&self.rounding_mode)
             + OperandEncoding::word_len(&self.rounding_accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -25179,7 +25179,7 @@ impl Inst for OpArbitraryFloatACosPiINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -25227,7 +25227,7 @@ impl Inst for OpArbitraryFloatATanINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -25275,7 +25275,7 @@ impl Inst for OpArbitraryFloatATanPiINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -25327,7 +25327,7 @@ impl Inst for OpArbitraryFloatATan2INTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -25383,7 +25383,7 @@ impl Inst for OpArbitraryFloatPowINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -25439,7 +25439,7 @@ impl Inst for OpArbitraryFloatPowRINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -25495,7 +25495,7 @@ impl Inst for OpArbitraryFloatPowNINTEL {
             + OperandEncoding::word_len(&self.subnormal)
             + OperandEncoding::word_len(&self.rounding)
             + OperandEncoding::word_len(&self.accuracy);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -25532,7 +25532,7 @@ impl Inst for OpLoopControlINTEL {
     const META: &InstMeta = &OP_LOOP_CONTROL_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.loop_control_parameters);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.loop_control_parameters, &mut *writer)?;
         Ok(())
     }
@@ -25553,7 +25553,7 @@ impl Inst for OpAliasDomainDeclINTEL {
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.id_result) + OperandEncoding::word_len(&self.name);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.name, &mut *writer)?;
         Ok(())
@@ -25579,7 +25579,7 @@ impl Inst for OpAliasScopeDeclINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.alias_domain)
             + OperandEncoding::word_len(&self.name);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.alias_domain, &mut *writer)?;
         OperandEncoding::encode(&self.name, &mut *writer)?;
@@ -25605,7 +25605,7 @@ impl Inst for OpAliasScopeListDeclINTEL {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.id_ref);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.id_ref, &mut *writer)?;
         Ok(())
@@ -25641,7 +25641,7 @@ impl Inst for OpFixedSqrtALTERA {
             + OperandEncoding::word_len(&self.r_i)
             + OperandEncoding::word_len(&self.q)
             + OperandEncoding::word_len(&self.o);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.input, &mut *writer)?;
@@ -25689,7 +25689,7 @@ impl Inst for OpFixedRecipALTERA {
             + OperandEncoding::word_len(&self.r_i)
             + OperandEncoding::word_len(&self.q)
             + OperandEncoding::word_len(&self.o);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.input, &mut *writer)?;
@@ -25737,7 +25737,7 @@ impl Inst for OpFixedRsqrtALTERA {
             + OperandEncoding::word_len(&self.r_i)
             + OperandEncoding::word_len(&self.q)
             + OperandEncoding::word_len(&self.o);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.input, &mut *writer)?;
@@ -25785,7 +25785,7 @@ impl Inst for OpFixedSinALTERA {
             + OperandEncoding::word_len(&self.r_i)
             + OperandEncoding::word_len(&self.q)
             + OperandEncoding::word_len(&self.o);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.input, &mut *writer)?;
@@ -25833,7 +25833,7 @@ impl Inst for OpFixedCosALTERA {
             + OperandEncoding::word_len(&self.r_i)
             + OperandEncoding::word_len(&self.q)
             + OperandEncoding::word_len(&self.o);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.input, &mut *writer)?;
@@ -25881,7 +25881,7 @@ impl Inst for OpFixedSinCosALTERA {
             + OperandEncoding::word_len(&self.r_i)
             + OperandEncoding::word_len(&self.q)
             + OperandEncoding::word_len(&self.o);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.input, &mut *writer)?;
@@ -25929,7 +25929,7 @@ impl Inst for OpFixedSinPiALTERA {
             + OperandEncoding::word_len(&self.r_i)
             + OperandEncoding::word_len(&self.q)
             + OperandEncoding::word_len(&self.o);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.input, &mut *writer)?;
@@ -25977,7 +25977,7 @@ impl Inst for OpFixedCosPiALTERA {
             + OperandEncoding::word_len(&self.r_i)
             + OperandEncoding::word_len(&self.q)
             + OperandEncoding::word_len(&self.o);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.input, &mut *writer)?;
@@ -26025,7 +26025,7 @@ impl Inst for OpFixedSinCosPiALTERA {
             + OperandEncoding::word_len(&self.r_i)
             + OperandEncoding::word_len(&self.q)
             + OperandEncoding::word_len(&self.o);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.input, &mut *writer)?;
@@ -26073,7 +26073,7 @@ impl Inst for OpFixedLogALTERA {
             + OperandEncoding::word_len(&self.r_i)
             + OperandEncoding::word_len(&self.q)
             + OperandEncoding::word_len(&self.o);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.input, &mut *writer)?;
@@ -26121,7 +26121,7 @@ impl Inst for OpFixedExpALTERA {
             + OperandEncoding::word_len(&self.r_i)
             + OperandEncoding::word_len(&self.q)
             + OperandEncoding::word_len(&self.o);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.input, &mut *writer)?;
@@ -26159,7 +26159,7 @@ impl Inst for OpPtrCastToCrossWorkgroupALTERA {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.pointer);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -26187,7 +26187,7 @@ impl Inst for OpCrossWorkgroupCastToPtrALTERA {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.pointer);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -26217,7 +26217,7 @@ impl Inst for OpReadPipeBlockingALTERA {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.packet_size, &mut *writer)?;
@@ -26249,7 +26249,7 @@ impl Inst for OpWritePipeBlockingALTERA {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.packet_size, &mut *writer)?;
@@ -26279,7 +26279,7 @@ impl Inst for OpFPGARegALTERA {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.input);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.input, &mut *writer)?;
@@ -26307,7 +26307,7 @@ impl Inst for OpRayQueryGetRayTMinKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26335,7 +26335,7 @@ impl Inst for OpRayQueryGetRayFlagsKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26365,7 +26365,7 @@ impl Inst for OpRayQueryGetIntersectionTKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26397,7 +26397,7 @@ impl Inst for OpRayQueryGetIntersectionInstanceCustomIndexKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26429,7 +26429,7 @@ impl Inst for OpRayQueryGetIntersectionInstanceIdKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26462,7 +26462,7 @@ impl Inst for OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26494,7 +26494,7 @@ impl Inst for OpRayQueryGetIntersectionGeometryIndexKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26526,7 +26526,7 @@ impl Inst for OpRayQueryGetIntersectionPrimitiveIndexKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26558,7 +26558,7 @@ impl Inst for OpRayQueryGetIntersectionBarycentricsKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26590,7 +26590,7 @@ impl Inst for OpRayQueryGetIntersectionFrontFaceKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26620,7 +26620,7 @@ impl Inst for OpRayQueryGetIntersectionCandidateAABBOpaqueKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26650,7 +26650,7 @@ impl Inst for OpRayQueryGetIntersectionObjectRayDirectionKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26682,7 +26682,7 @@ impl Inst for OpRayQueryGetIntersectionObjectRayOriginKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26712,7 +26712,7 @@ impl Inst for OpRayQueryGetWorldRayDirectionKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26740,7 +26740,7 @@ impl Inst for OpRayQueryGetWorldRayOriginKHR {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26770,7 +26770,7 @@ impl Inst for OpRayQueryGetIntersectionObjectToWorldKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26802,7 +26802,7 @@ impl Inst for OpRayQueryGetIntersectionWorldToObjectKHR {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.intersection);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -26838,7 +26838,7 @@ impl Inst for OpAtomicFAddEXT {
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics)
             + OperandEncoding::word_len(&self.value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.pointer, &mut *writer)?;
@@ -26870,7 +26870,7 @@ impl Inst for OpTypeBufferSurfaceINTEL {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.access_qualifier);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.access_qualifier, &mut *writer)?;
         Ok(())
@@ -26891,7 +26891,7 @@ impl Inst for OpTypeStructContinuedINTEL {
     const META: &InstMeta = &OP_TYPE_STRUCT_CONTINUED_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_ref);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_ref, &mut *writer)?;
         Ok(())
     }
@@ -26910,7 +26910,7 @@ impl Inst for OpConstantCompositeContinuedINTEL {
     const META: &InstMeta = &OP_CONSTANT_COMPOSITE_CONTINUED_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.constituents);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.constituents, &mut *writer)?;
         Ok(())
     }
@@ -26929,7 +26929,7 @@ impl Inst for OpSpecConstantCompositeContinuedINTEL {
     const META: &InstMeta = &OP_SPEC_CONSTANT_COMPOSITE_CONTINUED_INTEL;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.constituents);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.constituents, &mut *writer)?;
         Ok(())
     }
@@ -26953,7 +26953,7 @@ impl Inst for OpCompositeConstructContinuedINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.constituents);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.constituents, &mut *writer)?;
@@ -26981,7 +26981,7 @@ impl Inst for OpConvertFToBF16INTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.float_value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.float_value, &mut *writer)?;
@@ -27009,7 +27009,7 @@ impl Inst for OpConvertBF16ToFINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.b_float_16_value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.b_float_16_value, &mut *writer)?;
@@ -27037,7 +27037,7 @@ impl Inst for OpControlBarrierArriveINTEL {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
         OperandEncoding::encode(&self.memory, &mut *writer)?;
         OperandEncoding::encode(&self.semantics, &mut *writer)?;
@@ -27065,7 +27065,7 @@ impl Inst for OpControlBarrierWaitINTEL {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
         OperandEncoding::encode(&self.memory, &mut *writer)?;
         OperandEncoding::encode(&self.semantics, &mut *writer)?;
@@ -27093,7 +27093,7 @@ impl Inst for OpArithmeticFenceEXT {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.target);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.target, &mut *writer)?;
@@ -27129,7 +27129,7 @@ impl Inst for OpTaskSequenceCreateALTERA {
             + OperandEncoding::word_len(&self.use_stall_enable_clusters)
             + OperandEncoding::word_len(&self.get_capacity)
             + OperandEncoding::word_len(&self.async_capacity);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.function, &mut *writer)?;
@@ -27163,7 +27163,7 @@ impl Inst for OpTaskSequenceAsyncALTERA {
         let len = 0
             + OperandEncoding::word_len(&self.sequence)
             + OperandEncoding::word_len(&self.arguments);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.sequence, &mut *writer)?;
         OperandEncoding::encode(&self.arguments, &mut *writer)?;
         Ok(())
@@ -27189,7 +27189,7 @@ impl Inst for OpTaskSequenceGetALTERA {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.sequence);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.sequence, &mut *writer)?;
@@ -27212,7 +27212,7 @@ impl Inst for OpTaskSequenceReleaseALTERA {
     const META: &InstMeta = &OP_TASK_SEQUENCE_RELEASE_ALTERA;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.sequence);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.sequence, &mut *writer)?;
         Ok(())
     }
@@ -27231,7 +27231,7 @@ impl Inst for OpTypeTaskSequenceALTERA {
     const META: &InstMeta = &OP_TYPE_TASK_SEQUENCE_ALTERA;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         Ok(())
     }
@@ -27255,7 +27255,7 @@ impl Inst for OpSubgroupBlockPrefetchINTEL {
             + OperandEncoding::word_len(&self.ptr)
             + OperandEncoding::word_len(&self.num_bytes)
             + OperandEncoding::word_len(&self.memory_access);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.ptr, &mut *writer)?;
         OperandEncoding::encode(&self.num_bytes, &mut *writer)?;
         OperandEncoding::encode(&self.memory_access, &mut *writer)?;
@@ -27297,7 +27297,7 @@ impl Inst for OpSubgroup2DBlockLoadINTEL {
             + OperandEncoding::word_len(&self.memory_pitch)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.dst_pointer);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.element_size, &mut *writer)?;
         OperandEncoding::encode(&self.block_width, &mut *writer)?;
         OperandEncoding::encode(&self.block_height, &mut *writer)?;
@@ -27353,7 +27353,7 @@ impl Inst for OpSubgroup2DBlockLoadTransformINTEL {
             + OperandEncoding::word_len(&self.memory_pitch)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.dst_pointer);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.element_size, &mut *writer)?;
         OperandEncoding::encode(&self.block_width, &mut *writer)?;
         OperandEncoding::encode(&self.block_height, &mut *writer)?;
@@ -27409,7 +27409,7 @@ impl Inst for OpSubgroup2DBlockLoadTransposeINTEL {
             + OperandEncoding::word_len(&self.memory_pitch)
             + OperandEncoding::word_len(&self.coordinate)
             + OperandEncoding::word_len(&self.dst_pointer);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.element_size, &mut *writer)?;
         OperandEncoding::encode(&self.block_width, &mut *writer)?;
         OperandEncoding::encode(&self.block_height, &mut *writer)?;
@@ -27463,7 +27463,7 @@ impl Inst for OpSubgroup2DBlockPrefetchINTEL {
             + OperandEncoding::word_len(&self.memory_height)
             + OperandEncoding::word_len(&self.memory_pitch)
             + OperandEncoding::word_len(&self.coordinate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.element_size, &mut *writer)?;
         OperandEncoding::encode(&self.block_width, &mut *writer)?;
         OperandEncoding::encode(&self.block_height, &mut *writer)?;
@@ -27517,7 +27517,7 @@ impl Inst for OpSubgroup2DBlockStoreINTEL {
             + OperandEncoding::word_len(&self.memory_height)
             + OperandEncoding::word_len(&self.memory_pitch)
             + OperandEncoding::word_len(&self.coordinate);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.element_size, &mut *writer)?;
         OperandEncoding::encode(&self.block_width, &mut *writer)?;
         OperandEncoding::encode(&self.block_height, &mut *writer)?;
@@ -27567,7 +27567,7 @@ impl Inst for OpSubgroupMatrixMultiplyAccumulateINTEL {
             + OperandEncoding::word_len(&self.matrix_b)
             + OperandEncoding::word_len(&self.matrix_c)
             + OperandEncoding::word_len(&self.matrix_multiply_accumulate_operands);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.k_dim, &mut *writer)?;
@@ -27609,7 +27609,7 @@ impl Inst for OpBitwiseFunctionINTEL {
             + OperandEncoding::word_len(&self.b)
             + OperandEncoding::word_len(&self.c)
             + OperandEncoding::word_len(&self.lut_index);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.a, &mut *writer)?;
@@ -27645,7 +27645,7 @@ impl Inst for OpUntypedVariableLengthArrayINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.element_type)
             + OperandEncoding::word_len(&self.length);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.element_type, &mut *writer)?;
@@ -27672,7 +27672,7 @@ impl Inst for OpConditionalExtensionINTEL {
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.condition) + OperandEncoding::word_len(&self.name);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.condition, &mut *writer)?;
         OperandEncoding::encode(&self.name, &mut *writer)?;
         Ok(())
@@ -27702,7 +27702,7 @@ impl Inst for OpConditionalEntryPointINTEL {
             + OperandEncoding::word_len(&self.entry_point)
             + OperandEncoding::word_len(&self.name)
             + OperandEncoding::word_len(&self.interface);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.condition, &mut *writer)?;
         OperandEncoding::encode(&self.execution_model, &mut *writer)?;
         OperandEncoding::encode(&self.entry_point, &mut *writer)?;
@@ -27732,7 +27732,7 @@ impl Inst for OpConditionalCapabilityINTEL {
         let len = 0
             + OperandEncoding::word_len(&self.condition)
             + OperandEncoding::word_len(&self.capability);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.condition, &mut *writer)?;
         OperandEncoding::encode(&self.capability, &mut *writer)?;
         Ok(())
@@ -27760,7 +27760,7 @@ impl Inst for OpSpecConstantTargetINTEL {
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.target)
             + OperandEncoding::word_len(&self.features);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.target, &mut *writer)?;
@@ -27796,7 +27796,7 @@ impl Inst for OpSpecConstantArchitectureINTEL {
             + OperandEncoding::word_len(&self.family)
             + OperandEncoding::word_len(&self.opcode)
             + OperandEncoding::word_len(&self.architecture);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.category, &mut *writer)?;
@@ -27830,7 +27830,7 @@ impl Inst for OpSpecConstantCapabilitiesINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.capabilities);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.capabilities, &mut *writer)?;
@@ -27858,7 +27858,7 @@ impl Inst for OpConditionalCopyObjectINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.id_ref);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.id_ref, &mut *writer)?;
@@ -27890,7 +27890,7 @@ impl Inst for OpGroupIMulKHR {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -27926,7 +27926,7 @@ impl Inst for OpGroupFMulKHR {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -27962,7 +27962,7 @@ impl Inst for OpGroupBitwiseAndKHR {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -27998,7 +27998,7 @@ impl Inst for OpGroupBitwiseOrKHR {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -28034,7 +28034,7 @@ impl Inst for OpGroupBitwiseXorKHR {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -28070,7 +28070,7 @@ impl Inst for OpGroupLogicalAndKHR {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -28106,7 +28106,7 @@ impl Inst for OpGroupLogicalOrKHR {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -28142,7 +28142,7 @@ impl Inst for OpGroupLogicalXorKHR {
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.operation)
             + OperandEncoding::word_len(&self.x);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.execution, &mut *writer)?;
@@ -28174,7 +28174,7 @@ impl Inst for OpRoundFToTF32INTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.float_value);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.float_value, &mut *writer)?;
@@ -28208,7 +28208,7 @@ impl Inst for OpMaskedGatherINTEL {
             + OperandEncoding::word_len(&self.alignment)
             + OperandEncoding::word_len(&self.mask)
             + OperandEncoding::word_len(&self.fill_empty);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.ptr_vector, &mut *writer)?;
@@ -28244,7 +28244,7 @@ impl Inst for OpMaskedScatterINTEL {
             + OperandEncoding::word_len(&self.ptr_vector)
             + OperandEncoding::word_len(&self.alignment)
             + OperandEncoding::word_len(&self.mask);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.input_vector, &mut *writer)?;
         OperandEncoding::encode(&self.ptr_vector, &mut *writer)?;
         OperandEncoding::encode(&self.alignment, &mut *writer)?;
@@ -28274,7 +28274,7 @@ impl Inst for OpConvertHandleToImageINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -28302,7 +28302,7 @@ impl Inst for OpConvertHandleToSamplerINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
@@ -28330,7 +28330,7 @@ impl Inst for OpConvertHandleToSampledImageINTEL {
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.operand);
-        writer.write(Word::new_op(Self::META.opcode, len)?)?;
+        writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.operand, &mut *writer)?;
