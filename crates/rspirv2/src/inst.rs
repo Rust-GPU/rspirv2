@@ -1,4 +1,4 @@
-use crate::binary::{DecodeError, EncodeError, InstructionReader, InstructionWriter};
+use crate::binary::{DecodeError, EncodeError, InstReader, InstructionWriter};
 use crate::meta::InstMeta;
 use std::fmt::Debug;
 
@@ -7,7 +7,7 @@ pub trait Inst: Sized + Debug + Eq {
 
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError>;
 
-    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError>;
+    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError>;
 }
 
 #[cfg(test)]
@@ -34,7 +34,6 @@ mod tests {
         assert!(matches!(mod_reader.next(), Ok(None)));
         let decoded = T::decode(&mut inst_reader).unwrap();
         assert_eq!(inst, decoded);
-        assert_eq!(inst_reader.next(), None);
     }
 
     #[test]

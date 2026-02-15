@@ -9,7 +9,7 @@ unsafe impl OperandEncoding for ImageOperands {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(
             Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<ImageOperands>(
@@ -29,7 +29,7 @@ unsafe impl OperandEncoding for FPFastMathMode {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(
             Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FPFastMathMode>(
@@ -49,7 +49,7 @@ unsafe impl OperandEncoding for SelectionControl {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(
             Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<SelectionControl>(
@@ -69,7 +69,7 @@ unsafe impl OperandEncoding for LoopControl {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(
             Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<LoopControl>(
@@ -89,7 +89,7 @@ unsafe impl OperandEncoding for FunctionControl {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(
             Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FunctionControl>(
@@ -109,7 +109,7 @@ unsafe impl OperandEncoding for MemorySemantics {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(
             Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<MemorySemantics>(
@@ -129,7 +129,7 @@ unsafe impl OperandEncoding for MemoryAccess {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(
             Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<MemoryAccess>(
@@ -149,7 +149,7 @@ unsafe impl OperandEncoding for KernelProfilingInfo {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(
             Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<KernelProfilingInfo>(
@@ -169,7 +169,7 @@ unsafe impl OperandEncoding for RayFlags {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(
             Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<RayFlags>(
@@ -189,7 +189,7 @@ unsafe impl OperandEncoding for FragmentShadingRate {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(
             Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FragmentShadingRate>(
@@ -209,7 +209,7 @@ unsafe impl OperandEncoding for RawAccessChainOperands {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(
             Self::from_bits(bits).ok_or(
@@ -248,7 +248,7 @@ unsafe impl OperandEncoding for SourceLanguage {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Unknown,
@@ -304,7 +304,7 @@ unsafe impl OperandEncoding for ExecutionModel {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Vertex,
@@ -351,7 +351,7 @@ unsafe impl OperandEncoding for AddressingModel {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Logical,
@@ -385,7 +385,7 @@ unsafe impl OperandEncoding for MemoryModel {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Simple,
@@ -792,7 +792,7 @@ unsafe impl OperandEncoding for ExecutionMode {
         }
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Invocations(OperandEncoding::decode(&mut *reader)?),
@@ -984,7 +984,7 @@ unsafe impl OperandEncoding for StorageClass {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::UniformConstant,
@@ -1046,7 +1046,7 @@ unsafe impl OperandEncoding for Dim {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Dim1D,
@@ -1084,7 +1084,7 @@ unsafe impl OperandEncoding for SamplerAddressingMode {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::None,
@@ -1116,7 +1116,7 @@ unsafe impl OperandEncoding for SamplerFilterMode {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Nearest,
@@ -1185,7 +1185,7 @@ unsafe impl OperandEncoding for ImageFormat {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Unknown,
@@ -1272,7 +1272,7 @@ unsafe impl OperandEncoding for ImageChannelOrder {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::R,
@@ -1343,7 +1343,7 @@ unsafe impl OperandEncoding for ImageChannelDataType {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::SnormInt8,
@@ -1398,7 +1398,7 @@ unsafe impl OperandEncoding for FPRoundingMode {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RTE,
@@ -1429,7 +1429,7 @@ unsafe impl OperandEncoding for FPDenormMode {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Preserve,
@@ -1464,7 +1464,7 @@ unsafe impl OperandEncoding for QuantizationModes {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::TRN,
@@ -1499,7 +1499,7 @@ unsafe impl OperandEncoding for FPOperationMode {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::IEEE,
@@ -1530,7 +1530,7 @@ unsafe impl OperandEncoding for OverflowModes {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::WRAP,
@@ -1562,7 +1562,7 @@ unsafe impl OperandEncoding for LinkageType {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Export,
@@ -1593,7 +1593,7 @@ unsafe impl OperandEncoding for AccessQualifier {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::ReadOnly,
@@ -1625,7 +1625,7 @@ unsafe impl OperandEncoding for HostAccessQualifier {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::NoneINTEL,
@@ -1663,7 +1663,7 @@ unsafe impl OperandEncoding for FunctionParameterAttribute {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Zext,
@@ -2284,7 +2284,7 @@ unsafe impl OperandEncoding for Decoration {
         }
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RelaxedPrecision,
@@ -2635,7 +2635,7 @@ unsafe impl OperandEncoding for BuiltIn {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Position,
@@ -2796,7 +2796,7 @@ unsafe impl OperandEncoding for Scope {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::CrossDevice,
@@ -2836,7 +2836,7 @@ unsafe impl OperandEncoding for GroupOperation {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Reduce,
@@ -2871,7 +2871,7 @@ unsafe impl OperandEncoding for KernelEnqueueFlags {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::NoWait,
@@ -3230,7 +3230,7 @@ unsafe impl OperandEncoding for Capability {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Matrix,
@@ -3537,7 +3537,7 @@ unsafe impl OperandEncoding for RayQueryIntersection {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RayQueryCandidateIntersectionKHR,
@@ -3567,7 +3567,7 @@ unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RayQueryCommittedIntersectionNoneKHR,
@@ -3597,7 +3597,7 @@ unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RayQueryCandidateIntersectionTriangleKHR,
@@ -3626,7 +3626,7 @@ unsafe impl OperandEncoding for PackedVectorFormat {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::PackedVectorFormat4x8Bit,
@@ -3649,7 +3649,7 @@ unsafe impl OperandEncoding for CooperativeMatrixOperands {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(Self::from_bits(bits).ok_or(
             DecodeError::invalid_bitflags::<CooperativeMatrixOperands>(
@@ -3676,7 +3676,7 @@ unsafe impl OperandEncoding for CooperativeMatrixLayout {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RowMajorKHR,
@@ -3708,7 +3708,7 @@ unsafe impl OperandEncoding for CooperativeMatrixUse {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::MatrixAKHR,
@@ -3733,7 +3733,7 @@ unsafe impl OperandEncoding for CooperativeMatrixReduce {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(Self::from_bits(bits).ok_or(
             DecodeError::invalid_bitflags::<CooperativeMatrixReduce>(
@@ -3761,7 +3761,7 @@ unsafe impl OperandEncoding for TensorClampMode {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Undefined,
@@ -3788,7 +3788,7 @@ unsafe impl OperandEncoding for TensorAddressingOperands {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(Self::from_bits(bits).ok_or(
             DecodeError::invalid_bitflags::<TensorAddressingOperands>(
@@ -3813,7 +3813,7 @@ unsafe impl OperandEncoding for InitializationModeQualifier {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::InitOnDeviceReprogramALTERA,
@@ -3845,7 +3845,7 @@ unsafe impl OperandEncoding for LoadCacheControl {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::UncachedINTEL,
@@ -3879,7 +3879,7 @@ unsafe impl OperandEncoding for StoreCacheControl {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::UncachedINTEL,
@@ -3909,7 +3909,7 @@ unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::AutoINTEL,
@@ -3932,7 +3932,7 @@ unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<
             MatrixMultiplyAccumulateOperands,
@@ -3957,7 +3957,7 @@ unsafe impl OperandEncoding for FPEncoding {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::BFloat16KHR,
@@ -3989,7 +3989,7 @@ unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RowMajorNV,
@@ -4033,7 +4033,7 @@ unsafe impl OperandEncoding for ComponentType {
         writer.write(Word(*self as u32));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Float16NV,
@@ -4075,7 +4075,7 @@ unsafe impl OperandEncoding for PairLiteralIntegerIdRef {
         OperandEncoding::encode(&self.1, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(
             OperandEncoding::decode(&mut *reader)?,
             OperandEncoding::decode(&mut *reader)?,
@@ -4097,7 +4097,7 @@ unsafe impl OperandEncoding for PairIdRefLiteralInteger {
         OperandEncoding::encode(&self.1, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(
             OperandEncoding::decode(&mut *reader)?,
             OperandEncoding::decode(&mut *reader)?,
@@ -4119,7 +4119,7 @@ unsafe impl OperandEncoding for PairIdRefIdRef {
         OperandEncoding::encode(&self.1, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(
             OperandEncoding::decode(&mut *reader)?,
             OperandEncoding::decode(&mut *reader)?,
@@ -4136,7 +4136,7 @@ unsafe impl OperandEncoding for TensorOperands {
         writer.write(Word(self.bits()));
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
         Ok(
             Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<TensorOperands>(

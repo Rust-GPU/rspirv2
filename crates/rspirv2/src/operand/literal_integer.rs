@@ -1,4 +1,4 @@
-use crate::binary::{DecodeError, EncodeError, InstructionReader, InstructionWriter};
+use crate::binary::{DecodeError, EncodeError, InstructionWriter, OperandReader};
 use crate::meta::OperandKind;
 use crate::operand::{Operand, OperandEncoding, Word};
 
@@ -38,7 +38,7 @@ macro_rules! def_literal_integer {
                 Ok(())
             }
 
-            fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+            fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 Ok(Self(reader.pull()?))
             }
         }

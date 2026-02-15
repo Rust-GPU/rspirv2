@@ -4,7 +4,7 @@ mod literal_float;
 mod literal_integer;
 mod literal_string;
 
-use crate::binary::{DecodeError, EncodeError, InstructionReader, InstructionWriter, WordCounter};
+use crate::binary::{DecodeError, EncodeError, InstructionWriter, OperandReader, WordCounter};
 use crate::meta::{OperandKind, Quantifier};
 pub use id::*;
 pub use literal_const::*;
@@ -73,7 +73,7 @@ unsafe impl<T: Operand> OperandSpec for T {
 ///
 /// # Safety
 /// * [`Self::encode`] must [`InstructionWriter::write`] exactly [`Self::word_len`] many [`Word`]s.
-/// * [`Self::decode`] must [`InstructionReader::pull`] (or [`Iterator::next`]) exactly [`Self::word_len`] many
+/// * [`Self::decode`] must [`OperandReader::pull`] (or [`Iterator::next`]) exactly [`Self::word_len`] many
 ///   [`Word`]s.
 /// * If [`Self::FIXED_LEN`] is `Some`, it must equal the computed [`Self::word_len`].
 ///
@@ -120,14 +120,16 @@ pub unsafe trait OperandEncoding: Sized {
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError>;
 
     /// Parse the `Operand` from the supplied [`Iterator`] of [`Word`]s, advancing it in the process.
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError>;
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError>;
 
     /// Like [`Self::decode`], but the `Operand` is guaranteed to be the last one of this Instruction. This is used by
     /// [`LiteralInteger`] to consume all the remaining [`Word`]s and not have to calculate the exact size of a type.
     ///
     /// See [`LiteralInteger`] for details.
-    fn decode_last(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
-        Self::decode(reader)
+    fn decode_last(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        let result = Self::decode(reader)?;
+        reader.assert_finished()?;
+        Ok(result)
     }
 }
 
@@ -148,7 +150,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
         }
     }
 
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         if let Ok(_) = reader.peek() {
             Ok(Some(T::decode(reader)?))
         } else {
@@ -156,7 +158,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
         }
     }
 
-    fn decode_last(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode_last(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         if let Ok(_) = reader.peek() {
             Ok(Some(T::decode_last(reader)?))
         } else {
@@ -196,7 +198,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     /// * `ZeroOrMore` `ZeroOrMore` T: fails, but unrepresentable in the spec, only by using it manually.
     ///
     /// [`Quantifier`]: `crate::meta::Quantifier`
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let mut vec = if let Some(fixed_len) = T::FIXED_LEN {
             let remaining = reader.remaining();
             if remaining % fixed_len != 0 {
@@ -237,7 +239,7 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
         Ok(())
     }
 
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let mut vec = if let Some(fixed_len) = T::FIXED_LEN {
             let remaining = reader.remaining();
             if remaining % fixed_len != 0 {

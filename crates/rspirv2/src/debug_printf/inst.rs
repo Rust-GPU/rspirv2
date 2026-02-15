@@ -14,11 +14,11 @@ impl Inst for DebugPrintf {
         OperandEncoding::encode(&self.id_ref, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
-        reader.check_opcode(Self::META)?;
+    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+        let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
-            format: OperandEncoding::decode(&mut *reader)?,
-            id_ref: OperandEncoding::decode_last(&mut *reader)?,
+            format: OperandEncoding::decode(&mut op_reader)?,
+            id_ref: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
 }

@@ -27,6 +27,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Resu
             .collect::<Vec<_>>();
         let members_non_last = &members[..members.len().saturating_sub(1)];
         let members_last = members.last().into_iter();
+        let reader = (!members.is_empty()).then(|| quote!(let mut op_reader = ));
 
         quote! {
             #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -44,11 +45,11 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Resu
                     Ok(())
                 }
 
-                fn decode(reader: &mut InstructionReader) -> Result<Self, DecodeError> {
-                    reader.check_opcode(Self::META)?;
+                fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+                    #reader reader.check_opcode(Self::META)?;
                     Ok(Self {
-                        #(#members_non_last: OperandEncoding::decode(&mut *reader)?,)*
-                        #(#members_last: OperandEncoding::decode_last(&mut *reader)?,)*
+                        #(#members_non_last: OperandEncoding::decode(&mut op_reader)?,)*
+                        #(#members_last: OperandEncoding::decode_last(&mut op_reader)?,)*
                     })
                 }
             }

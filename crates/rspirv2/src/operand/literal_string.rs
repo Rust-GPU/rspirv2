@@ -1,4 +1,4 @@
-use crate::binary::{DecodeError, EncodeError, InstructionReader, InstructionWriter};
+use crate::binary::{DecodeError, EncodeError, InstructionWriter, OperandReader};
 use crate::meta::OperandKind;
 use crate::operand::{Operand, OperandEncoding, Word};
 use std::ops::{Deref, DerefMut};
@@ -61,7 +61,7 @@ unsafe impl OperandEncoding for LiteralString {
         Ok(())
     }
 
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bytes = reader
             .flat_map(|w| u32::to_ne_bytes(w.0).into_iter())
             .take_while(|p| *p != 0)
@@ -73,11 +73,13 @@ unsafe impl OperandEncoding for LiteralString {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::binary::InstReader;
 
     fn roundtrip(str: &str, expected_spirv: &[u32]) -> anyhow::Result<()> {
         let mut spirv = Vec::<Word>::new();
         LiteralString(str.to_string()).encode(&mut spirv)?;
-        let read = LiteralString::decode(&mut InstructionReader::new(0, spirv.as_slice(), 0))?;
+        let read =
+            LiteralString::decode(&mut InstReader::new(0, spirv.as_slice(), 0).operand_reader())?;
         assert_eq!(str, read.as_str());
         assert_eq!(
             spirv.into_iter().map(|w| w.0).collect::<Vec<_>>(),

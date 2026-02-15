@@ -18,6 +18,8 @@ pub enum DecodeError {
     },
     InstructionWithAdditionalOperants {
         inst_offset: usize,
+        op_len: usize,
+        remaining: usize,
     },
     InstructionWithMismatchedVariableOperants {
         inst_offset: usize,
@@ -50,7 +52,7 @@ impl Display for DecodeError {
                 actual,
             } => write!(
                 f,
-                "Op {name} with opcode {expected} got InstructionReader with differing opcode {actual}"
+                "Op {name} with opcode {expected} got InstructionReader with differing opcode {actual}."
             ),
             DecodeError::LiteralIntegerNotLastOperand => write!(
                 f,
@@ -63,11 +65,16 @@ impl Display for DecodeError {
             } => write!(
                 f,
                 "The Instruction at offset {inst_offset} with {op_len} param words tried to decode more Operants than \
-                were available"
+                were available."
             ),
-            DecodeError::InstructionWithAdditionalOperants { inst_offset } => write!(
+            DecodeError::InstructionWithAdditionalOperants {
+                inst_offset,
+                op_len,
+                remaining,
+            } => write!(
                 f,
-                "The fixed-size Instruction at offset {inst_offset} has unexpected additional Operants"
+                "The fixed-size Instruction at offset {inst_offset} with {op_len} param words has {remaining} Words \
+                left over after decoding."
             ),
             DecodeError::InstructionWithMismatchedVariableOperants {
                 inst_offset,
@@ -76,7 +83,7 @@ impl Display for DecodeError {
             } => write!(
                 f,
                 "The variable-sized Instruction at offset {inst_offset} has an unexpected operand length {op_len} \
-                which was expected to be a multiple of {expected_multiple}"
+                which was expected to be a multiple of {expected_multiple}."
             ),
             DecodeError::InstructionTooLong {
                 inst_offset,
@@ -85,19 +92,19 @@ impl Display for DecodeError {
             } => write!(
                 f,
                 "The Instruction at offset {inst_offset} has a supposed length of {op_len} but the module only has \
-                {module_remaining} words remaining"
+                {module_remaining} words remaining."
             ),
-            DecodeError::Utf8Error(inner) => write!(f, "UTF-8 error: {inner}"),
+            DecodeError::Utf8Error(inner) => write!(f, "UTF-8 error: {inner}."),
             DecodeError::InvalidBitflags {
                 name,
                 unknown,
                 bits,
             } => write!(
                 f,
-                "Bitflag {name} encountered unknown bits `{unknown:x}` in pattern `{bits:x}`"
+                "Bitflag {name} encountered unknown bits `{unknown:x}` in pattern `{bits:x}`."
             ),
             DecodeError::UnknownEnumVariant { name, variant } => {
-                write!(f, "Enum {name} encountered unknown variant `{variant}`")
+                write!(f, "Enum {name} encountered unknown variant `{variant}`.")
             }
         }
     }

@@ -1,6 +1,6 @@
 //! All Operands with `Category::Id`
 
-use crate::binary::{DecodeError, EncodeError, InstructionReader, InstructionWriter};
+use crate::binary::{DecodeError, EncodeError, InstructionWriter, OperandReader};
 use crate::meta::OperandKind;
 use crate::operand::{Operand, OperandEncoding, Word};
 
@@ -23,7 +23,7 @@ unsafe impl OperandEncoding for IdResult {
         Ok(())
     }
 
-    fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(reader.pull()?))
     }
 }
@@ -59,7 +59,7 @@ macro_rules! id_ref {
                 Ok(())
             }
 
-            fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+            fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 Ok(Self(IdResult(reader.pull()?)))
             }
         }

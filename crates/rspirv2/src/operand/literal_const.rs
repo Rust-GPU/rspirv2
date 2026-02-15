@@ -1,4 +1,4 @@
-use crate::binary::{DecodeError, EncodeError, InstructionReader, InstructionWriter};
+use crate::binary::{DecodeError, EncodeError, InstructionWriter, OperandReader};
 use crate::meta::OperandKind;
 use crate::operand::{Operand, OperandEncoding, Word};
 use smallvec::SmallVec;
@@ -98,11 +98,11 @@ unsafe impl OperandEncoding for LiteralConst {
         Ok(())
     }
 
-    fn decode(_: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(_: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Err(DecodeError::LiteralIntegerNotLastOperand)
     }
 
-    fn decode_last(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+    fn decode_last(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(reader.collect()))
     }
 }

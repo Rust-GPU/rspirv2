@@ -1,6 +1,7 @@
 use crate::binary::DecodeError;
 use crate::meta::InstMeta;
 use crate::operand::Word;
+use std::ops::Deref;
 
 /// Reader for an entire module
 pub struct ModuleReader<'a> {
@@ -13,7 +14,7 @@ impl<'a> ModuleReader<'a> {
         Self { data, offset: 0 }
     }
 
-    pub fn next(&mut self) -> Result<Option<InstructionReader<'a>>, DecodeError> {
+    pub fn next(&mut self) -> Result<Option<InstReader<'a>>, DecodeError> {
         let inst_offset = self.offset;
         let first = match self.data.get(inst_offset) {
             None => {
@@ -33,27 +34,25 @@ impl<'a> ModuleReader<'a> {
                 module_remaining: self.data.len(),
             })?;
         self.offset += op_len + 1;
-        Ok(Some(InstructionReader::new(opcode, params, inst_offset)))
+        Ok(Some(InstReader::new(opcode, params, inst_offset)))
     }
 }
 
 /// Reader for a single instruction
-pub struct InstructionReader<'a> {
+#[derive(Copy, Clone, Debug)]
+pub struct InstReader<'a> {
     /// opcode of the instruction
     opcode: u16,
     /// slice to the parameters of the instruction
     params: &'a [Word],
-    /// advancing offset pointing into params
-    params_offset: usize,
     inst_offset: usize,
 }
 
-impl<'a> InstructionReader<'a> {
+impl<'a> InstReader<'a> {
     pub fn new(opcode: u16, params: &'a [Word], inst_offset: usize) -> Self {
         Self {
             opcode,
             params,
-            params_offset: 0,
             inst_offset,
         }
     }
@@ -62,7 +61,7 @@ impl<'a> InstructionReader<'a> {
         self.opcode
     }
 
-    pub fn check_opcode(&self, meta: &InstMeta) -> Result<(), DecodeError> {
+    pub fn check_opcode(&self, meta: &InstMeta) -> Result<OperandReader<'a>, DecodeError> {
         if self.opcode != meta.opcode {
             Err(DecodeError::WrongOpCode {
                 name: meta.opname,
@@ -70,10 +69,37 @@ impl<'a> InstructionReader<'a> {
                 actual: self.opcode,
             })
         } else {
-            Ok(())
+            Ok(self.operand_reader())
         }
     }
 
+    pub fn operand_reader(&self) -> OperandReader<'a> {
+        OperandReader {
+            inst: *self,
+            params_offset: 0,
+        }
+    }
+}
+
+/// Reader for a single instruction
+///
+/// Not `Copy` to prevent accidental copies.
+#[derive(Clone, Debug)]
+pub struct OperandReader<'a> {
+    inst: InstReader<'a>,
+    /// advancing offset pointing into params
+    params_offset: usize,
+}
+
+impl<'a> Deref for OperandReader<'a> {
+    type Target = InstReader<'a>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.inst
+    }
+}
+
+impl<'a> OperandReader<'a> {
     /// Peek at the next [`Word`] in the [`InstructionReader`] without advancing the [`Self::params_offset`].
     ///
     /// Calling this again will yield the same value, advance the [`Self::params_offset`] by [`Self::pull`]ing the
@@ -94,6 +120,19 @@ impl<'a> InstructionReader<'a> {
         let result = self.peek();
         self.params_offset += 1;
         result
+    }
+
+    pub fn assert_finished(&self) -> Result<(), DecodeError> {
+        let remaining = self.remaining();
+        if remaining != 0 {
+            Err(DecodeError::InstructionWithAdditionalOperants {
+                inst_offset: self.inst_offset,
+                op_len: self.len(),
+                remaining,
+            })
+        } else {
+            Ok(())
+        }
     }
 
     /// Offset of the instruction, purely informational, for error reporting
@@ -117,7 +156,7 @@ impl<'a> InstructionReader<'a> {
     }
 }
 
-impl<'a> Iterator for InstructionReader<'a> {
+impl<'a> Iterator for OperandReader<'a> {
     type Item = Word;
 
     fn next(&mut self) -> Option<Self::Item> {

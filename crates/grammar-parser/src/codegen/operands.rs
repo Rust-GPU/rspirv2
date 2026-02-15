@@ -118,7 +118,7 @@ fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> 
                 Ok(())
             }
 
-            fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+            fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 let variant = reader.pull()?.0;
                 Ok(match variant {
                     #(#decode,)*
@@ -174,7 +174,7 @@ fn emit_c_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> Tok
                 Ok(())
             }
 
-            fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+            fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 let variant = reader.pull()?.0;
                 Ok(match variant {
                     #(#decode,)*
@@ -242,7 +242,7 @@ fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> T
                 Ok(())
             }
 
-            fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+            fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 let bits = reader.pull()?.0;
                 Ok(Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<#name>(stringify!(#name), bits))?)
             }
@@ -285,7 +285,7 @@ fn emit_composite(operand_kind: &OperandKind, bases: &[Cow<str>]) -> TokenStream
                 Ok(())
             }
 
-            fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
+            fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 Ok(Self(#(#decode),*))
             }
         }
