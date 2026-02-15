@@ -94,7 +94,7 @@ impl OperandEncoding for LiteralConst {
     }
 
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
-        writer.extend(self.0.iter().copied())
+        writer.write_iter(self.0.iter().copied())
     }
 
     fn decode(_: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {

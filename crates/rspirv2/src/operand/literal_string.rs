@@ -50,7 +50,7 @@ impl OperandEncoding for LiteralString {
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         let words = self.word_len();
         let load = |i, o| *self.as_bytes().get(i * 4 + o).unwrap_or(&0);
-        writer.extend((0..words).map(|i| {
+        writer.write_iter((0..words).map(|i| {
             Word(u32::from_ne_bytes([
                 load(i, 0),
                 load(i, 1),
