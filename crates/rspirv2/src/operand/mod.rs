@@ -70,7 +70,7 @@ pub trait OperandEncoding: Sized {
     /// The fixed length of the Operand, or `None` if it's variable length.
     ///
     /// If `Some`:
-    /// * [`Self::encode`] must [`InstructionWriter::push`] (or [`InstructionWriter::extend`]) exactly this many
+    /// * [`Self::encode`] must [`InstructionWriter::write`] (or [`InstructionWriter::extend`]) exactly this many
     ///   [`Word`]s
     /// * [`Self::decode`] must [`InstructionReader::pull`] (or [`Iterator::next`]) exactly this many [`Word`]s
     const FIXED_LEN: Option<usize>;

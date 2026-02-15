@@ -5,17 +5,17 @@ use std::ops::{Deref, DerefMut};
 
 /// An `InstructionWriter` is some sort of `Vec` you can [`Self::push`] [`Word`]s into.
 pub trait InstructionWriter {
-    fn push(&mut self, word: Word) -> Result<(), EncodeError>;
+    fn write(&mut self, word: Word) -> Result<(), EncodeError>;
     fn extend(&mut self, iter: impl IntoIterator<Item = Word>) -> Result<(), EncodeError> {
         for word in iter {
-            self.push(word)?;
+            self.write(word)?;
         }
         Ok(())
     }
 }
 
 impl InstructionWriter for Vec<Word> {
-    fn push(&mut self, word: Word) -> Result<(), EncodeError> {
+    fn write(&mut self, word: Word) -> Result<(), EncodeError> {
         self.push(word);
         Ok(())
     }
@@ -27,7 +27,7 @@ impl InstructionWriter for Vec<Word> {
 }
 
 impl InstructionWriter for Vec<u32> {
-    fn push(&mut self, word: Word) -> Result<(), EncodeError> {
+    fn write(&mut self, word: Word) -> Result<(), EncodeError> {
         self.push(word.0);
         Ok(())
     }
@@ -39,7 +39,7 @@ impl InstructionWriter for Vec<u32> {
 }
 
 impl InstructionWriter for Vec<u8> {
-    fn push(&mut self, word: Word) -> Result<(), EncodeError> {
+    fn write(&mut self, word: Word) -> Result<(), EncodeError> {
         Extend::extend(self, word.to_u8_array());
         Ok(())
     }
@@ -54,7 +54,7 @@ impl InstructionWriter for Vec<u8> {
 }
 
 impl<const N: usize> InstructionWriter for SmallVec<[Word; N]> {
-    fn push(&mut self, word: Word) -> Result<(), EncodeError> {
+    fn write(&mut self, word: Word) -> Result<(), EncodeError> {
         self.push(word);
         Ok(())
     }
@@ -66,7 +66,7 @@ impl<const N: usize> InstructionWriter for SmallVec<[Word; N]> {
 }
 
 impl<const N: usize> InstructionWriter for SmallVec<[u32; N]> {
-    fn push(&mut self, word: Word) -> Result<(), EncodeError> {
+    fn write(&mut self, word: Word) -> Result<(), EncodeError> {
         self.push(word.0);
         Ok(())
     }
@@ -78,7 +78,7 @@ impl<const N: usize> InstructionWriter for SmallVec<[u32; N]> {
 }
 
 impl<const N: usize> InstructionWriter for SmallVec<[u8; N]> {
-    fn push(&mut self, word: Word) -> Result<(), EncodeError> {
+    fn write(&mut self, word: Word) -> Result<(), EncodeError> {
         Extend::extend(self, word.to_u8_array());
         Ok(())
     }
@@ -111,7 +111,7 @@ impl DerefMut for WordCounter {
 }
 
 impl InstructionWriter for WordCounter {
-    fn push(&mut self, _: Word) -> Result<(), EncodeError> {
+    fn write(&mut self, _: Word) -> Result<(), EncodeError> {
         self.0 += 1;
         Ok(())
     }

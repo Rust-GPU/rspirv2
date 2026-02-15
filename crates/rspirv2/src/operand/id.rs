@@ -19,7 +19,7 @@ impl OperandEncoding for IdResult {
     const FIXED_LEN: Option<usize> = Some(1);
 
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
-        writer.push(self.0)
+        writer.write(self.0)
     }
 
     fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
@@ -54,7 +54,7 @@ macro_rules! id_ref {
             const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
-                writer.push(self.0.0)
+                writer.write(self.0.0)
             }
 
             fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {

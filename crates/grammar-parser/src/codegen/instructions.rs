@@ -39,7 +39,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Resu
 
                 fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
                     let len = 0 #(+OperandEncoding::word_len(&self.#members))*;
-                    writer.push(Word::new_op(Self::META.opcode, len)?)?;
+                    writer.write(Word::new_op(Self::META.opcode, len)?)?;
                     #(OperandEncoding::encode(&self.#members, &mut *writer)?;)*
                     Ok(())
                 }

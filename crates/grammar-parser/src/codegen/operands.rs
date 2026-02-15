@@ -78,12 +78,12 @@ fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> 
         if !param_symbols.is_empty() {
             quote! {
                 Self::#symbol (#(#param_symbols),*) => {
-                    writer.push(Word(#value))?;
+                    writer.write(Word(#value))?;
                     #(OperandEncoding::encode(#param_symbols, &mut *writer)?);*
                 }
             }
         } else {
-            quote!(Self::#symbol => writer.push(Word(#value))?)
+            quote!(Self::#symbol => writer.write(Word(#value))?)
         }
     });
 
@@ -170,7 +170,7 @@ fn emit_c_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> Tok
             const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
-                writer.push(Word(*self as u32))
+                writer.write(Word(*self as u32))
             }
 
             fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
@@ -237,7 +237,7 @@ fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> T
             const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
-                writer.push(Word(self.bits()))
+                writer.write(Word(self.bits()))
             }
 
             fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
