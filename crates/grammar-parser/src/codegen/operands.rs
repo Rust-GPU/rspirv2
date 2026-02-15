@@ -104,11 +104,11 @@ fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> 
             #(#variants),*
         }
 
-        impl Operand for #name {
+        unsafe impl Operand for #name {
             const KIND: &OperandKind = &#kind;
         }
 
-        impl OperandEncoding for #name {
+        unsafe impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = None;
 
             fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
@@ -162,11 +162,11 @@ fn emit_c_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> Tok
             #(#variants),*
         }
 
-        impl Operand for #name {
+        unsafe impl Operand for #name {
             const KIND: &OperandKind = &#kind;
         }
 
-        impl OperandEncoding for #name {
+        unsafe impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
@@ -229,11 +229,11 @@ fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> T
             }
         }
 
-        impl Operand for #name {
+        unsafe impl Operand for #name {
             const KIND: &OperandKind = &#kind;
         }
 
-        impl OperandEncoding for #name {
+        unsafe impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
@@ -271,11 +271,11 @@ fn emit_composite(operand_kind: &OperandKind, bases: &[Cow<str>]) -> TokenStream
         #[derive(Clone, Debug, Eq, PartialEq, Hash)]
         pub struct #name(#(#member_tys),*);
 
-        impl Operand for #name {
+        unsafe impl Operand for #name {
             const KIND: &OperandKind = &#kind;
         }
 
-        impl OperandEncoding for #name {
+        unsafe impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = FixedLenComposer::new()#(.append(#len))*.finish();
 
             fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {

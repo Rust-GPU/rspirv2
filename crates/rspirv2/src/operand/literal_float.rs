@@ -30,11 +30,11 @@ impl LiteralFloat {
     }
 }
 
-impl Operand for LiteralFloat {
+unsafe impl Operand for LiteralFloat {
     const KIND: &OperandKind = &crate::core::operand_kinds::OPERAND_KIND_LITERAL_FLOAT;
 }
 
-impl OperandEncoding for LiteralFloat {
+unsafe impl OperandEncoding for LiteralFloat {
     const FIXED_LEN: Option<usize> = Some(1);
 
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {

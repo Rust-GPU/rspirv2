@@ -35,11 +35,11 @@ impl DerefMut for LiteralString {
     }
 }
 
-impl Operand for LiteralString {
+unsafe impl Operand for LiteralString {
     const KIND: &OperandKind = &crate::core::operand_kinds::OPERAND_KIND_LITERAL_STRING;
 }
 
-impl OperandEncoding for LiteralString {
+unsafe impl OperandEncoding for LiteralString {
     const FIXED_LEN: Option<usize> = None;
 
     #[inline]

@@ -81,12 +81,12 @@ macro_rules! impl_float {
 impl_float!(f32);
 impl_float!(f64);
 
-impl Operand for LiteralConst {
+unsafe impl Operand for LiteralConst {
     const KIND: &OperandKind =
         &crate::core::operand_kinds::OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER;
 }
 
-impl OperandEncoding for LiteralConst {
+unsafe impl OperandEncoding for LiteralConst {
     const FIXED_LEN: Option<usize> = None;
 
     fn word_len(&self) -> usize {

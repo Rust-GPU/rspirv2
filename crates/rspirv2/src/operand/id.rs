@@ -11,11 +11,11 @@ use crate::operand::{Operand, OperandEncoding, Word};
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct IdResult(pub Word);
 
-impl Operand for IdResult {
+unsafe impl Operand for IdResult {
     const KIND: &OperandKind = &crate::core::operand_kinds::OPERAND_KIND_ID_RESULT;
 }
 
-impl OperandEncoding for IdResult {
+unsafe impl OperandEncoding for IdResult {
     const FIXED_LEN: Option<usize> = Some(1);
 
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
@@ -46,11 +46,11 @@ macro_rules! id_ref {
             }
         }
 
-        impl Operand for $name {
+        unsafe impl Operand for $name {
             const KIND: &OperandKind = &$kind;
         }
 
-        impl OperandEncoding for $name {
+        unsafe impl OperandEncoding for $name {
             const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {

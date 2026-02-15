@@ -39,7 +39,10 @@ impl Word {
 /// A SPIR-V operand. The associated const [`Self::KIND`] links to it's [`OperandKind`].
 ///
 /// Requires [`OperandEncoding`], see that for encoding and decoding SPIR-V.
-pub trait Operand: OperandEncoding {
+///
+/// # Safety
+/// * [`Self::KIND`] must match this implementation
+pub unsafe trait Operand: OperandEncoding {
     const KIND: &OperandKind;
 }
 
@@ -47,14 +50,17 @@ pub trait Operand: OperandEncoding {
 ///
 /// Any [`Operand`] implicitly implements this with [`Quantifier::One`], wrapping an Operand in [`Option`] will get a
 /// [`Quantifier::ZeroOrOne`] and wrapping it in a [`Vec`] or [`SmallVec`] will have a [`Quantifier::ZeroOrMore`].
-pub trait OperandSpec: OperandEncoding {
+///
+/// # Safety
+/// * should not be implemented outside of this file
+pub unsafe trait OperandSpec: OperandEncoding {
     /// The [`Operand`]
     type Operand: Operand;
     /// The [`Quantifier`] or repetition factor of the [`Self::Operand`]
     const QUANTIFIER: Quantifier;
 }
 
-impl<T: Operand> OperandSpec for T {
+unsafe impl<T: Operand> OperandSpec for T {
     type Operand = Self;
     const QUANTIFIER: Quantifier = Quantifier::One;
 }
@@ -65,14 +71,19 @@ impl<T: Operand> OperandSpec for T {
 /// representation of [`OperandSpecMeta`]s with [`Quantifier`] of [`Quantifier::ZeroOrOne`] (`Option`) and
 /// [`Quantifier::ZeroOrMore`] (`Vec`).
 ///
+/// # Safety
+/// * [`Self::encode`] must [`InstructionWriter::write`] exactly [`Self::word_len`] many [`Word`]s.
+/// * [`Self::decode`] must [`InstructionReader::pull`] (or [`Iterator::next`]) exactly [`Self::word_len`] many
+///   [`Word`]s.
+/// * If [`Self::FIXED_LEN`] is `Some`, it must equal the computed [`Self::word_len`].
+///
+/// These constraints should only be validated with `cfg!(debug_assertions)`, which are enabled by default in debug
+/// builds.
+///
 /// [`OperandSpecMeta`]: `crate::meta::OperandSpecMeta`
-pub trait OperandEncoding: Sized {
-    /// The fixed length of the Operand, or `None` if it's variable length.
-    ///
-    /// If `Some`:
-    /// * [`Self::encode`] must [`InstructionWriter::write`] (or [`InstructionWriter::write_iter`]) exactly this many
-    ///   [`Word`]s
-    /// * [`Self::decode`] must [`InstructionReader::pull`] (or [`Iterator::next`]) exactly this many [`Word`]s
+pub unsafe trait OperandEncoding: Sized {
+    /// The fixed length of the Operand, or `None` if it's variable length. Specifying this is an optimization for
+    /// operand length calculation. See the safety contract in [`OperandEncoding`].
     const FIXED_LEN: Option<usize>;
 
     /// The length of the operand in [`Word`]s.
@@ -120,7 +131,7 @@ pub trait OperandEncoding: Sized {
     }
 }
 
-impl<T: OperandEncoding> OperandEncoding for Option<T> {
+unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
     const FIXED_LEN: Option<usize> = None;
 
     fn word_len(&self) -> usize {
@@ -154,12 +165,12 @@ impl<T: OperandEncoding> OperandEncoding for Option<T> {
     }
 }
 
-impl<T: Operand> OperandSpec for Option<T> {
+unsafe impl<T: Operand> OperandSpec for Option<T> {
     type Operand = T;
     const QUANTIFIER: Quantifier = Quantifier::ZeroOrOne;
 }
 
-impl<T: OperandEncoding> OperandEncoding for Vec<T> {
+unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     const FIXED_LEN: Option<usize> = None;
 
     fn word_len(&self) -> usize {
@@ -206,13 +217,13 @@ impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     }
 }
 
-impl<T: Operand> OperandSpec for Vec<T> {
+unsafe impl<T: Operand> OperandSpec for Vec<T> {
     type Operand = T;
     const QUANTIFIER: Quantifier = Quantifier::ZeroOrMore;
 }
 
 /// copy of Vec impl above
-impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T; N]> {
+unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T; N]> {
     const FIXED_LEN: Option<usize> = None;
 
     fn word_len(&self) -> usize {
@@ -247,7 +258,7 @@ impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T; N]> {
     }
 }
 
-impl<T: Operand, const N: usize> OperandSpec for SmallVec<[T; N]> {
+unsafe impl<T: Operand, const N: usize> OperandSpec for SmallVec<[T; N]> {
     type Operand = T;
     const QUANTIFIER: Quantifier = Quantifier::ZeroOrMore;
 }

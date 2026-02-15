@@ -26,11 +26,11 @@ macro_rules! def_literal_integer {
             }
         }
 
-        impl Operand for $name {
+        unsafe impl Operand for $name {
             const KIND: &OperandKind = &$kind;
         }
 
-        impl OperandEncoding for $name {
+        unsafe impl OperandEncoding for $name {
             const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {

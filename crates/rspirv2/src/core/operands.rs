@@ -1,9 +1,9 @@
 use super::preamble::*;
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct ImageOperands : u32 { const None = 0u32 ; const Bias = 1u32 ; const Lod = 2u32 ; const Grad = 4u32 ; const ConstOffset = 8u32 ; const Offset = 16u32 ; const ConstOffsets = 32u32 ; const Sample = 64u32 ; const MinLod = 128u32 ; # [doc = "Since SPIR-V 1.5"] const MakeTexelAvailable = 256u32 ; # [doc = "Since SPIR-V 1.5"] const MakeTexelVisible = 512u32 ; # [doc = "Since SPIR-V 1.5"] const NonPrivateTexel = 1024u32 ; # [doc = "Since SPIR-V 1.5"] const VolatileTexel = 2048u32 ; # [doc = "Since SPIR-V 1.4"] const SignExtend = 4096u32 ; # [doc = "Since SPIR-V 1.4"] const ZeroExtend = 8192u32 ; # [doc = "Since SPIR-V 1.6"] const Nontemporal = 16384u32 ; const Offsets = 65536u32 ; } }
-impl Operand for ImageOperands {
+unsafe impl Operand for ImageOperands {
     const KIND: &OperandKind = &OPERAND_KIND_IMAGE_OPERANDS;
 }
-impl OperandEncoding for ImageOperands {
+unsafe impl OperandEncoding for ImageOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
@@ -19,10 +19,10 @@ impl OperandEncoding for ImageOperands {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct FPFastMathMode : u32 { const None = 0u32 ; const NotNaN = 1u32 ; const NotInf = 2u32 ; const NSZ = 4u32 ; const AllowRecip = 8u32 ; const Fast = 16u32 ; const AllowContract = 65536u32 ; const AllowReassoc = 131072u32 ; const AllowTransform = 262144u32 ; } }
-impl Operand for FPFastMathMode {
+unsafe impl Operand for FPFastMathMode {
     const KIND: &OperandKind = &OPERAND_KIND_FP_FAST_MATH_MODE;
 }
-impl OperandEncoding for FPFastMathMode {
+unsafe impl OperandEncoding for FPFastMathMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
@@ -38,10 +38,10 @@ impl OperandEncoding for FPFastMathMode {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct SelectionControl : u32 { const None = 0u32 ; const Flatten = 1u32 ; const DontFlatten = 2u32 ; } }
-impl Operand for SelectionControl {
+unsafe impl Operand for SelectionControl {
     const KIND: &OperandKind = &OPERAND_KIND_SELECTION_CONTROL;
 }
-impl OperandEncoding for SelectionControl {
+unsafe impl OperandEncoding for SelectionControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
@@ -57,10 +57,10 @@ impl OperandEncoding for SelectionControl {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct LoopControl : u32 { const None = 0u32 ; const Unroll = 1u32 ; const DontUnroll = 2u32 ; # [doc = "Since SPIR-V 1.1"] const DependencyInfinite = 4u32 ; # [doc = "Since SPIR-V 1.1"] const DependencyLength = 8u32 ; # [doc = "Since SPIR-V 1.4"] const MinIterations = 16u32 ; # [doc = "Since SPIR-V 1.4"] const MaxIterations = 32u32 ; # [doc = "Since SPIR-V 1.4"] const IterationMultiple = 64u32 ; # [doc = "Since SPIR-V 1.4"] const PeelCount = 128u32 ; # [doc = "Since SPIR-V 1.4"] const PartialCount = 256u32 ; const InitiationIntervalALTERA = 65536u32 ; const MaxConcurrencyALTERA = 131072u32 ; const DependencyArrayALTERA = 262144u32 ; const PipelineEnableALTERA = 524288u32 ; const LoopCoalesceALTERA = 1048576u32 ; const MaxInterleavingALTERA = 2097152u32 ; const SpeculatedIterationsALTERA = 4194304u32 ; const NoFusionALTERA = 8388608u32 ; const LoopCountALTERA = 16777216u32 ; const MaxReinvocationDelayALTERA = 33554432u32 ; } }
-impl Operand for LoopControl {
+unsafe impl Operand for LoopControl {
     const KIND: &OperandKind = &OPERAND_KIND_LOOP_CONTROL;
 }
-impl OperandEncoding for LoopControl {
+unsafe impl OperandEncoding for LoopControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
@@ -76,10 +76,10 @@ impl OperandEncoding for LoopControl {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct FunctionControl : u32 { const None = 0u32 ; const Inline = 1u32 ; const DontInline = 2u32 ; const Pure = 4u32 ; const Const = 8u32 ; const OptNoneEXT = 65536u32 ; } }
-impl Operand for FunctionControl {
+unsafe impl Operand for FunctionControl {
     const KIND: &OperandKind = &OPERAND_KIND_FUNCTION_CONTROL;
 }
-impl OperandEncoding for FunctionControl {
+unsafe impl OperandEncoding for FunctionControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
@@ -95,10 +95,10 @@ impl OperandEncoding for FunctionControl {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MemorySemantics : u32 { const Relaxed = 0u32 ; const Acquire = 2u32 ; const Release = 4u32 ; const AcquireRelease = 8u32 ; const SequentiallyConsistent = 16u32 ; const UniformMemory = 64u32 ; const SubgroupMemory = 128u32 ; const WorkgroupMemory = 256u32 ; const CrossWorkgroupMemory = 512u32 ; const AtomicCounterMemory = 1024u32 ; const ImageMemory = 2048u32 ; # [doc = "Since SPIR-V 1.5"] const OutputMemory = 4096u32 ; # [doc = "Since SPIR-V 1.5"] const MakeAvailable = 8192u32 ; # [doc = "Since SPIR-V 1.5"] const MakeVisible = 16384u32 ; # [doc = "Since SPIR-V 1.5"] const Volatile = 32768u32 ; } }
-impl Operand for MemorySemantics {
+unsafe impl Operand for MemorySemantics {
     const KIND: &OperandKind = &OPERAND_KIND_MEMORY_SEMANTICS;
 }
-impl OperandEncoding for MemorySemantics {
+unsafe impl OperandEncoding for MemorySemantics {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
@@ -114,10 +114,10 @@ impl OperandEncoding for MemorySemantics {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MemoryAccess : u32 { const None = 0u32 ; const Volatile = 1u32 ; const Aligned = 2u32 ; const Nontemporal = 4u32 ; # [doc = "Since SPIR-V 1.5"] const MakePointerAvailable = 8u32 ; # [doc = "Since SPIR-V 1.5"] const MakePointerVisible = 16u32 ; # [doc = "Since SPIR-V 1.5"] const NonPrivatePointer = 32u32 ; const AliasScopeINTELMask = 65536u32 ; const NoAliasINTELMask = 131072u32 ; } }
-impl Operand for MemoryAccess {
+unsafe impl Operand for MemoryAccess {
     const KIND: &OperandKind = &OPERAND_KIND_MEMORY_ACCESS;
 }
-impl OperandEncoding for MemoryAccess {
+unsafe impl OperandEncoding for MemoryAccess {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
@@ -133,10 +133,10 @@ impl OperandEncoding for MemoryAccess {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct KernelProfilingInfo : u32 { const None = 0u32 ; const CmdExecTime = 1u32 ; } }
-impl Operand for KernelProfilingInfo {
+unsafe impl Operand for KernelProfilingInfo {
     const KIND: &OperandKind = &OPERAND_KIND_KERNEL_PROFILING_INFO;
 }
-impl OperandEncoding for KernelProfilingInfo {
+unsafe impl OperandEncoding for KernelProfilingInfo {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
@@ -152,10 +152,10 @@ impl OperandEncoding for KernelProfilingInfo {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct RayFlags : u32 { const NoneKHR = 0u32 ; const OpaqueKHR = 1u32 ; const NoOpaqueKHR = 2u32 ; const TerminateOnFirstHitKHR = 4u32 ; const SkipClosestHitShaderKHR = 8u32 ; const CullBackFacingTrianglesKHR = 16u32 ; const CullFrontFacingTrianglesKHR = 32u32 ; const CullOpaqueKHR = 64u32 ; const CullNoOpaqueKHR = 128u32 ; const SkipTrianglesKHR = 256u32 ; const SkipAABBsKHR = 512u32 ; const ForceOpacityMicromap2StateEXT = 1024u32 ; } }
-impl Operand for RayFlags {
+unsafe impl Operand for RayFlags {
     const KIND: &OperandKind = &OPERAND_KIND_RAY_FLAGS;
 }
-impl OperandEncoding for RayFlags {
+unsafe impl OperandEncoding for RayFlags {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
@@ -171,10 +171,10 @@ impl OperandEncoding for RayFlags {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct FragmentShadingRate : u32 { const Vertical2Pixels = 1u32 ; const Vertical4Pixels = 2u32 ; const Horizontal2Pixels = 4u32 ; const Horizontal4Pixels = 8u32 ; } }
-impl Operand for FragmentShadingRate {
+unsafe impl Operand for FragmentShadingRate {
     const KIND: &OperandKind = &OPERAND_KIND_FRAGMENT_SHADING_RATE;
 }
-impl OperandEncoding for FragmentShadingRate {
+unsafe impl OperandEncoding for FragmentShadingRate {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
@@ -190,10 +190,10 @@ impl OperandEncoding for FragmentShadingRate {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct RawAccessChainOperands : u32 { const None = 0u32 ; const RobustnessPerComponentNV = 1u32 ; const RobustnessPerElementNV = 2u32 ; } }
-impl Operand for RawAccessChainOperands {
+unsafe impl Operand for RawAccessChainOperands {
     const KIND: &OperandKind = &OPERAND_KIND_RAW_ACCESS_CHAIN_OPERANDS;
 }
-impl OperandEncoding for RawAccessChainOperands {
+unsafe impl OperandEncoding for RawAccessChainOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
@@ -228,10 +228,10 @@ pub enum SourceLanguage {
     Zig = 12u32,
     Rust = 13u32,
 }
-impl Operand for SourceLanguage {
+unsafe impl Operand for SourceLanguage {
     const KIND: &OperandKind = &OPERAND_KIND_SOURCE_LANGUAGE;
 }
-impl OperandEncoding for SourceLanguage {
+unsafe impl OperandEncoding for SourceLanguage {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -283,10 +283,10 @@ pub enum ExecutionModel {
     TaskEXT = 5364u32,
     MeshEXT = 5365u32,
 }
-impl Operand for ExecutionModel {
+unsafe impl Operand for ExecutionModel {
     const KIND: &OperandKind = &OPERAND_KIND_EXECUTION_MODEL;
 }
-impl OperandEncoding for ExecutionModel {
+unsafe impl OperandEncoding for ExecutionModel {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -329,10 +329,10 @@ pub enum AddressingModel {
     #[doc = "Since SPIR-V 1.5"]
     PhysicalStorageBuffer64 = 5348u32,
 }
-impl Operand for AddressingModel {
+unsafe impl Operand for AddressingModel {
     const KIND: &OperandKind = &OPERAND_KIND_ADDRESSING_MODEL;
 }
-impl OperandEncoding for AddressingModel {
+unsafe impl OperandEncoding for AddressingModel {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -362,10 +362,10 @@ pub enum MemoryModel {
     #[doc = "Since SPIR-V 1.5"]
     Vulkan = 3u32,
 }
-impl Operand for MemoryModel {
+unsafe impl Operand for MemoryModel {
     const KIND: &OperandKind = &OPERAND_KIND_MEMORY_MODEL;
 }
-impl OperandEncoding for MemoryModel {
+unsafe impl OperandEncoding for MemoryModel {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -535,10 +535,10 @@ pub enum ExecutionMode {
         #[doc = "Named Maximum Number of Registers"] NamedMaximumNumberOfRegisters,
     ),
 }
-impl Operand for ExecutionMode {
+unsafe impl Operand for ExecutionMode {
     const KIND: &OperandKind = &OPERAND_KIND_EXECUTION_MODE;
 }
-impl OperandEncoding for ExecutionMode {
+unsafe impl OperandEncoding for ExecutionMode {
     const FIXED_LEN: Option<usize> = None;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         match self {
@@ -960,10 +960,10 @@ pub enum StorageClass {
     DeviceOnlyALTERA = 5936u32,
     HostOnlyALTERA = 5937u32,
 }
-impl Operand for StorageClass {
+unsafe impl Operand for StorageClass {
     const KIND: &OperandKind = &OPERAND_KIND_STORAGE_CLASS;
 }
-impl OperandEncoding for StorageClass {
+unsafe impl OperandEncoding for StorageClass {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1021,10 +1021,10 @@ pub enum Dim {
     SubpassData = 6u32,
     TileImageDataEXT = 4173u32,
 }
-impl Operand for Dim {
+unsafe impl Operand for Dim {
     const KIND: &OperandKind = &OPERAND_KIND_DIM;
 }
-impl OperandEncoding for Dim {
+unsafe impl OperandEncoding for Dim {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1058,10 +1058,10 @@ pub enum SamplerAddressingMode {
     Repeat = 3u32,
     RepeatMirrored = 4u32,
 }
-impl Operand for SamplerAddressingMode {
+unsafe impl Operand for SamplerAddressingMode {
     const KIND: &OperandKind = &OPERAND_KIND_SAMPLER_ADDRESSING_MODE;
 }
-impl OperandEncoding for SamplerAddressingMode {
+unsafe impl OperandEncoding for SamplerAddressingMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1089,10 +1089,10 @@ pub enum SamplerFilterMode {
     Nearest = 0u32,
     Linear = 1u32,
 }
-impl Operand for SamplerFilterMode {
+unsafe impl Operand for SamplerFilterMode {
     const KIND: &OperandKind = &OPERAND_KIND_SAMPLER_FILTER_MODE;
 }
-impl OperandEncoding for SamplerFilterMode {
+unsafe impl OperandEncoding for SamplerFilterMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1157,10 +1157,10 @@ pub enum ImageFormat {
     R64ui = 40u32,
     R64i = 41u32,
 }
-impl Operand for ImageFormat {
+unsafe impl Operand for ImageFormat {
     const KIND: &OperandKind = &OPERAND_KIND_IMAGE_FORMAT;
 }
-impl OperandEncoding for ImageFormat {
+unsafe impl OperandEncoding for ImageFormat {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1243,10 +1243,10 @@ pub enum ImageChannelOrder {
     sBGRA = 18u32,
     ABGR = 19u32,
 }
-impl Operand for ImageChannelOrder {
+unsafe impl Operand for ImageChannelOrder {
     const KIND: &OperandKind = &OPERAND_KIND_IMAGE_CHANNEL_ORDER;
 }
-impl OperandEncoding for ImageChannelOrder {
+unsafe impl OperandEncoding for ImageChannelOrder {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1313,10 +1313,10 @@ pub enum ImageChannelDataType {
     UnormInt12X4EXT = 25u32,
     UnormInt14X2EXT = 26u32,
 }
-impl Operand for ImageChannelDataType {
+unsafe impl Operand for ImageChannelDataType {
     const KIND: &OperandKind = &OPERAND_KIND_IMAGE_CHANNEL_DATA_TYPE;
 }
-impl OperandEncoding for ImageChannelDataType {
+unsafe impl OperandEncoding for ImageChannelDataType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1367,10 +1367,10 @@ pub enum FPRoundingMode {
     RTP = 2u32,
     RTN = 3u32,
 }
-impl Operand for FPRoundingMode {
+unsafe impl Operand for FPRoundingMode {
     const KIND: &OperandKind = &OPERAND_KIND_FP_ROUNDING_MODE;
 }
-impl OperandEncoding for FPRoundingMode {
+unsafe impl OperandEncoding for FPRoundingMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1397,10 +1397,10 @@ pub enum FPDenormMode {
     Preserve = 0u32,
     FlushToZero = 1u32,
 }
-impl Operand for FPDenormMode {
+unsafe impl Operand for FPDenormMode {
     const KIND: &OperandKind = &OPERAND_KIND_FP_DENORM_MODE;
 }
-impl OperandEncoding for FPDenormMode {
+unsafe impl OperandEncoding for FPDenormMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1431,10 +1431,10 @@ pub enum QuantizationModes {
     RND_CONV = 6u32,
     RND_CONV_ODD = 7u32,
 }
-impl Operand for QuantizationModes {
+unsafe impl Operand for QuantizationModes {
     const KIND: &OperandKind = &OPERAND_KIND_QUANTIZATION_MODES;
 }
-impl OperandEncoding for QuantizationModes {
+unsafe impl OperandEncoding for QuantizationModes {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1465,10 +1465,10 @@ pub enum FPOperationMode {
     IEEE = 0u32,
     ALT = 1u32,
 }
-impl Operand for FPOperationMode {
+unsafe impl Operand for FPOperationMode {
     const KIND: &OperandKind = &OPERAND_KIND_FP_OPERATION_MODE;
 }
-impl OperandEncoding for FPOperationMode {
+unsafe impl OperandEncoding for FPOperationMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1495,10 +1495,10 @@ pub enum OverflowModes {
     SAT_ZERO = 2u32,
     SAT_SYM = 3u32,
 }
-impl Operand for OverflowModes {
+unsafe impl Operand for OverflowModes {
     const KIND: &OperandKind = &OPERAND_KIND_OVERFLOW_MODES;
 }
-impl OperandEncoding for OverflowModes {
+unsafe impl OperandEncoding for OverflowModes {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1526,10 +1526,10 @@ pub enum LinkageType {
     Import = 1u32,
     LinkOnceODR = 2u32,
 }
-impl Operand for LinkageType {
+unsafe impl Operand for LinkageType {
     const KIND: &OperandKind = &OPERAND_KIND_LINKAGE_TYPE;
 }
-impl OperandEncoding for LinkageType {
+unsafe impl OperandEncoding for LinkageType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1556,10 +1556,10 @@ pub enum AccessQualifier {
     WriteOnly = 1u32,
     ReadWrite = 2u32,
 }
-impl Operand for AccessQualifier {
+unsafe impl Operand for AccessQualifier {
     const KIND: &OperandKind = &OPERAND_KIND_ACCESS_QUALIFIER;
 }
-impl OperandEncoding for AccessQualifier {
+unsafe impl OperandEncoding for AccessQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1587,10 +1587,10 @@ pub enum HostAccessQualifier {
     WriteINTEL = 2u32,
     ReadWriteINTEL = 3u32,
 }
-impl Operand for HostAccessQualifier {
+unsafe impl Operand for HostAccessQualifier {
     const KIND: &OperandKind = &OPERAND_KIND_HOST_ACCESS_QUALIFIER;
 }
-impl OperandEncoding for HostAccessQualifier {
+unsafe impl OperandEncoding for HostAccessQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1624,10 +1624,10 @@ pub enum FunctionParameterAttribute {
     NoReadWrite = 7u32,
     RuntimeAlignedALTERA = 5940u32,
 }
-impl Operand for FunctionParameterAttribute {
+unsafe impl Operand for FunctionParameterAttribute {
     const KIND: &OperandKind = &OPERAND_KIND_FUNCTION_PARAMETER_ATTRIBUTE;
 }
-impl OperandEncoding for FunctionParameterAttribute {
+unsafe impl OperandEncoding for FunctionParameterAttribute {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -1849,10 +1849,10 @@ pub enum Decoration {
         #[doc = "Cache Control"] StoreCacheControl,
     ),
 }
-impl Operand for Decoration {
+unsafe impl Operand for Decoration {
     const KIND: &OperandKind = &OPERAND_KIND_DECORATION;
 }
-impl OperandEncoding for Decoration {
+unsafe impl OperandEncoding for Decoration {
     const FIXED_LEN: Option<usize> = None;
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         match self {
@@ -2595,10 +2595,10 @@ pub enum BuiltIn {
     ClusterIDNV = 5436u32,
     CullMaskKHR = 6021u32,
 }
-impl Operand for BuiltIn {
+unsafe impl Operand for BuiltIn {
     const KIND: &OperandKind = &OPERAND_KIND_BUILT_IN;
 }
-impl OperandEncoding for BuiltIn {
+unsafe impl OperandEncoding for BuiltIn {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -2755,10 +2755,10 @@ pub enum Scope {
     QueueFamily = 5u32,
     ShaderCallKHR = 6u32,
 }
-impl Operand for Scope {
+unsafe impl Operand for Scope {
     const KIND: &OperandKind = &OPERAND_KIND_SCOPE;
 }
-impl OperandEncoding for Scope {
+unsafe impl OperandEncoding for Scope {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -2794,10 +2794,10 @@ pub enum GroupOperation {
     PartitionedInclusiveScanEXT = 7u32,
     PartitionedExclusiveScanEXT = 8u32,
 }
-impl Operand for GroupOperation {
+unsafe impl Operand for GroupOperation {
     const KIND: &OperandKind = &OPERAND_KIND_GROUP_OPERATION;
 }
-impl OperandEncoding for GroupOperation {
+unsafe impl OperandEncoding for GroupOperation {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -2828,10 +2828,10 @@ pub enum KernelEnqueueFlags {
     WaitKernel = 1u32,
     WaitWorkGroup = 2u32,
 }
-impl Operand for KernelEnqueueFlags {
+unsafe impl Operand for KernelEnqueueFlags {
     const KIND: &OperandKind = &OPERAND_KIND_KERNEL_ENQUEUE_FLAGS;
 }
-impl OperandEncoding for KernelEnqueueFlags {
+unsafe impl OperandEncoding for KernelEnqueueFlags {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -3186,10 +3186,10 @@ pub enum Capability {
     RegisterLimitsINTEL = 6460u32,
     BindlessImagesINTEL = 6528u32,
 }
-impl Operand for Capability {
+unsafe impl Operand for Capability {
     const KIND: &OperandKind = &OPERAND_KIND_CAPABILITY;
 }
-impl OperandEncoding for Capability {
+unsafe impl OperandEncoding for Capability {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -3492,10 +3492,10 @@ pub enum RayQueryIntersection {
     RayQueryCandidateIntersectionKHR = 0u32,
     RayQueryCommittedIntersectionKHR = 1u32,
 }
-impl Operand for RayQueryIntersection {
+unsafe impl Operand for RayQueryIntersection {
     const KIND: &OperandKind = &OPERAND_KIND_RAY_QUERY_INTERSECTION;
 }
-impl OperandEncoding for RayQueryIntersection {
+unsafe impl OperandEncoding for RayQueryIntersection {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -3521,10 +3521,10 @@ pub enum RayQueryCommittedIntersectionType {
     RayQueryCommittedIntersectionTriangleKHR = 1u32,
     RayQueryCommittedIntersectionGeneratedKHR = 2u32,
 }
-impl Operand for RayQueryCommittedIntersectionType {
+unsafe impl Operand for RayQueryCommittedIntersectionType {
     const KIND: &OperandKind = &OPERAND_KIND_RAY_QUERY_COMMITTED_INTERSECTION_TYPE;
 }
-impl OperandEncoding for RayQueryCommittedIntersectionType {
+unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -3550,10 +3550,10 @@ pub enum RayQueryCandidateIntersectionType {
     RayQueryCandidateIntersectionTriangleKHR = 0u32,
     RayQueryCandidateIntersectionAABBKHR = 1u32,
 }
-impl Operand for RayQueryCandidateIntersectionType {
+unsafe impl Operand for RayQueryCandidateIntersectionType {
     const KIND: &OperandKind = &OPERAND_KIND_RAY_QUERY_CANDIDATE_INTERSECTION_TYPE;
 }
-impl OperandEncoding for RayQueryCandidateIntersectionType {
+unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -3578,10 +3578,10 @@ pub enum PackedVectorFormat {
     #[doc = "Since SPIR-V 1.6"]
     PackedVectorFormat4x8Bit = 0u32,
 }
-impl Operand for PackedVectorFormat {
+unsafe impl Operand for PackedVectorFormat {
     const KIND: &OperandKind = &OPERAND_KIND_PACKED_VECTOR_FORMAT;
 }
-impl OperandEncoding for PackedVectorFormat {
+unsafe impl OperandEncoding for PackedVectorFormat {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -3600,10 +3600,10 @@ impl OperandEncoding for PackedVectorFormat {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct CooperativeMatrixOperands : u32 { const NoneKHR = 0u32 ; const MatrixASignedComponentsKHR = 1u32 ; const MatrixBSignedComponentsKHR = 2u32 ; const MatrixCSignedComponentsKHR = 4u32 ; const MatrixResultSignedComponentsKHR = 8u32 ; const SaturatingAccumulationKHR = 16u32 ; } }
-impl Operand for CooperativeMatrixOperands {
+unsafe impl Operand for CooperativeMatrixOperands {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_OPERANDS;
 }
-impl OperandEncoding for CooperativeMatrixOperands {
+unsafe impl OperandEncoding for CooperativeMatrixOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
@@ -3626,10 +3626,10 @@ pub enum CooperativeMatrixLayout {
     RowBlockedInterleavedARM = 4202u32,
     ColumnBlockedInterleavedARM = 4203u32,
 }
-impl Operand for CooperativeMatrixLayout {
+unsafe impl Operand for CooperativeMatrixLayout {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_LAYOUT;
 }
-impl OperandEncoding for CooperativeMatrixLayout {
+unsafe impl OperandEncoding for CooperativeMatrixLayout {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -3657,10 +3657,10 @@ pub enum CooperativeMatrixUse {
     MatrixBKHR = 1u32,
     MatrixAccumulatorKHR = 2u32,
 }
-impl Operand for CooperativeMatrixUse {
+unsafe impl Operand for CooperativeMatrixUse {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_USE;
 }
-impl OperandEncoding for CooperativeMatrixUse {
+unsafe impl OperandEncoding for CooperativeMatrixUse {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -3681,10 +3681,10 @@ impl OperandEncoding for CooperativeMatrixUse {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct CooperativeMatrixReduce : u32 { const Row = 1u32 ; const Column = 2u32 ; const TwoByTwo = 4u32 ; } }
-impl Operand for CooperativeMatrixReduce {
+unsafe impl Operand for CooperativeMatrixReduce {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_REDUCE;
 }
-impl OperandEncoding for CooperativeMatrixReduce {
+unsafe impl OperandEncoding for CooperativeMatrixReduce {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
@@ -3708,10 +3708,10 @@ pub enum TensorClampMode {
     Repeat = 3u32,
     RepeatMirrored = 4u32,
 }
-impl Operand for TensorClampMode {
+unsafe impl Operand for TensorClampMode {
     const KIND: &OperandKind = &OPERAND_KIND_TENSOR_CLAMP_MODE;
 }
-impl OperandEncoding for TensorClampMode {
+unsafe impl OperandEncoding for TensorClampMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -3734,10 +3734,10 @@ impl OperandEncoding for TensorClampMode {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct TensorAddressingOperands : u32 { const None = 0u32 ; const TensorView = 1u32 ; const DecodeFunc = 2u32 ; } }
-impl Operand for TensorAddressingOperands {
+unsafe impl Operand for TensorAddressingOperands {
     const KIND: &OperandKind = &OPERAND_KIND_TENSOR_ADDRESSING_OPERANDS;
 }
-impl OperandEncoding for TensorAddressingOperands {
+unsafe impl OperandEncoding for TensorAddressingOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
@@ -3758,10 +3758,10 @@ pub enum InitializationModeQualifier {
     InitOnDeviceReprogramALTERA = 0u32,
     InitOnDeviceResetALTERA = 1u32,
 }
-impl Operand for InitializationModeQualifier {
+unsafe impl Operand for InitializationModeQualifier {
     const KIND: &OperandKind = &OPERAND_KIND_INITIALIZATION_MODE_QUALIFIER;
 }
-impl OperandEncoding for InitializationModeQualifier {
+unsafe impl OperandEncoding for InitializationModeQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -3789,10 +3789,10 @@ pub enum LoadCacheControl {
     InvalidateAfterReadINTEL = 3u32,
     ConstCachedINTEL = 4u32,
 }
-impl Operand for LoadCacheControl {
+unsafe impl Operand for LoadCacheControl {
     const KIND: &OperandKind = &OPERAND_KIND_LOAD_CACHE_CONTROL;
 }
-impl OperandEncoding for LoadCacheControl {
+unsafe impl OperandEncoding for LoadCacheControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -3822,10 +3822,10 @@ pub enum StoreCacheControl {
     WriteBackINTEL = 2u32,
     StreamingINTEL = 3u32,
 }
-impl Operand for StoreCacheControl {
+unsafe impl Operand for StoreCacheControl {
     const KIND: &OperandKind = &OPERAND_KIND_STORE_CACHE_CONTROL;
 }
-impl OperandEncoding for StoreCacheControl {
+unsafe impl OperandEncoding for StoreCacheControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -3851,10 +3851,10 @@ impl OperandEncoding for StoreCacheControl {
 pub enum NamedMaximumNumberOfRegisters {
     AutoINTEL = 0u32,
 }
-impl Operand for NamedMaximumNumberOfRegisters {
+unsafe impl Operand for NamedMaximumNumberOfRegisters {
     const KIND: &OperandKind = &OPERAND_KIND_NAMED_MAXIMUM_NUMBER_OF_REGISTERS;
 }
-impl OperandEncoding for NamedMaximumNumberOfRegisters {
+unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -3873,10 +3873,10 @@ impl OperandEncoding for NamedMaximumNumberOfRegisters {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MatrixMultiplyAccumulateOperands : u32 { const None = 0u32 ; const MatrixASignedComponentsINTEL = 1u32 ; const MatrixBSignedComponentsINTEL = 2u32 ; const MatrixCBFloat16INTEL = 4u32 ; const MatrixResultBFloat16INTEL = 8u32 ; const MatrixAPackedInt8INTEL = 16u32 ; const MatrixBPackedInt8INTEL = 32u32 ; const MatrixAPackedInt4INTEL = 64u32 ; const MatrixBPackedInt4INTEL = 128u32 ; const MatrixATF32INTEL = 256u32 ; const MatrixBTF32INTEL = 512u32 ; const MatrixAPackedFloat16INTEL = 1024u32 ; const MatrixBPackedFloat16INTEL = 2048u32 ; const MatrixAPackedBFloat16INTEL = 4096u32 ; const MatrixBPackedBFloat16INTEL = 8192u32 ; } }
-impl Operand for MatrixMultiplyAccumulateOperands {
+unsafe impl Operand for MatrixMultiplyAccumulateOperands {
     const KIND: &OperandKind = &OPERAND_KIND_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS;
 }
-impl OperandEncoding for MatrixMultiplyAccumulateOperands {
+unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
@@ -3897,10 +3897,10 @@ pub enum FPEncoding {
     Float8E4M3EXT = 4214u32,
     Float8E5M2EXT = 4215u32,
 }
-impl Operand for FPEncoding {
+unsafe impl Operand for FPEncoding {
     const KIND: &OperandKind = &OPERAND_KIND_FP_ENCODING;
 }
-impl OperandEncoding for FPEncoding {
+unsafe impl OperandEncoding for FPEncoding {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -3928,10 +3928,10 @@ pub enum CooperativeVectorMatrixLayout {
     InferencingOptimalNV = 2u32,
     TrainingOptimalNV = 3u32,
 }
-impl Operand for CooperativeVectorMatrixLayout {
+unsafe impl Operand for CooperativeVectorMatrixLayout {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_VECTOR_MATRIX_LAYOUT;
 }
-impl OperandEncoding for CooperativeVectorMatrixLayout {
+unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -3971,10 +3971,10 @@ pub enum ComponentType {
     FloatE4M3NV = 1000491002u32,
     FloatE5M2NV = 1000491003u32,
 }
-impl Operand for ComponentType {
+unsafe impl Operand for ComponentType {
     const KIND: &OperandKind = &OPERAND_KIND_COMPONENT_TYPE;
 }
-impl OperandEncoding for ComponentType {
+unsafe impl OperandEncoding for ComponentType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32))
@@ -4008,10 +4008,10 @@ impl OperandEncoding for ComponentType {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PairLiteralIntegerIdRef(LiteralInteger, IdRef);
-impl Operand for PairLiteralIntegerIdRef {
+unsafe impl Operand for PairLiteralIntegerIdRef {
     const KIND: &OperandKind = &OPERAND_KIND_PAIR_LITERAL_INTEGER_ID_REF;
 }
-impl OperandEncoding for PairLiteralIntegerIdRef {
+unsafe impl OperandEncoding for PairLiteralIntegerIdRef {
     const FIXED_LEN: Option<usize> = FixedLenComposer::new()
         .append(<LiteralInteger as OperandEncoding>::FIXED_LEN)
         .append(<IdRef as OperandEncoding>::FIXED_LEN)
@@ -4030,10 +4030,10 @@ impl OperandEncoding for PairLiteralIntegerIdRef {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PairIdRefLiteralInteger(IdRef, LiteralInteger);
-impl Operand for PairIdRefLiteralInteger {
+unsafe impl Operand for PairIdRefLiteralInteger {
     const KIND: &OperandKind = &OPERAND_KIND_PAIR_ID_REF_LITERAL_INTEGER;
 }
-impl OperandEncoding for PairIdRefLiteralInteger {
+unsafe impl OperandEncoding for PairIdRefLiteralInteger {
     const FIXED_LEN: Option<usize> = FixedLenComposer::new()
         .append(<IdRef as OperandEncoding>::FIXED_LEN)
         .append(<LiteralInteger as OperandEncoding>::FIXED_LEN)
@@ -4052,10 +4052,10 @@ impl OperandEncoding for PairIdRefLiteralInteger {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PairIdRefIdRef(IdRef, IdRef);
-impl Operand for PairIdRefIdRef {
+unsafe impl Operand for PairIdRefIdRef {
     const KIND: &OperandKind = &OPERAND_KIND_PAIR_ID_REF_ID_REF;
 }
-impl OperandEncoding for PairIdRefIdRef {
+unsafe impl OperandEncoding for PairIdRefIdRef {
     const FIXED_LEN: Option<usize> = FixedLenComposer::new()
         .append(<IdRef as OperandEncoding>::FIXED_LEN)
         .append(<IdRef as OperandEncoding>::FIXED_LEN)
@@ -4073,10 +4073,10 @@ impl OperandEncoding for PairIdRefIdRef {
     }
 }
 bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct TensorOperands : u32 { const NoneARM = 0u32 ; const NontemporalARM = 1u32 ; const OutOfBoundsValueARM = 2u32 ; const MakeElementAvailableARM = 4u32 ; const MakeElementVisibleARM = 8u32 ; const NonPrivateElementARM = 16u32 ; } }
-impl Operand for TensorOperands {
+unsafe impl Operand for TensorOperands {
     const KIND: &OperandKind = &OPERAND_KIND_TENSOR_OPERANDS;
 }
-impl OperandEncoding for TensorOperands {
+unsafe impl OperandEncoding for TensorOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()))
