@@ -57,7 +57,8 @@ unsafe impl OperandEncoding for LiteralString {
                 load(i, 2),
                 load(i, 3),
             ]))
-        }))
+        }));
+        Ok(())
     }
 
     fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {

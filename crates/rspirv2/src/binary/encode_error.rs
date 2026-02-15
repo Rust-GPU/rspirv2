@@ -3,17 +3,15 @@ use std::fmt::{Debug, Display, Formatter};
 
 #[derive(Clone, PartialEq)]
 pub enum EncodeError {
-    /// A customizable error for [`InstructionWriter`]s, currently unused
-    ///
-    /// [`InstructionWriter`]: `crate::binary::InstructionWriter`
-    WriterError(String),
+    /// A customizable error
+    CustomError(String),
     OpTooLong,
 }
 
 impl Display for EncodeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            EncodeError::WriterError(err) => write!(f, "{}", err),
+            EncodeError::CustomError(err) => write!(f, "{}", err),
             EncodeError::OpTooLong => write!(f, "Op too long, u16 overflow"),
         }
     }

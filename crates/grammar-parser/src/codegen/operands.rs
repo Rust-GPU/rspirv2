@@ -78,12 +78,12 @@ fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> 
         if !param_symbols.is_empty() {
             quote! {
                 Self::#symbol (#(#param_symbols),*) => {
-                    writer.write(Word(#value))?;
+                    writer.write(Word(#value));
                     #(OperandEncoding::encode(#param_symbols, &mut *writer)?);*
                 }
             }
         } else {
-            quote!(Self::#symbol => writer.write(Word(#value))?)
+            quote!(Self::#symbol => writer.write(Word(#value)))
         }
     });
 
@@ -169,8 +169,9 @@ fn emit_c_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> Tok
         unsafe impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = Some(1);
 
-            fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
-                writer.write(Word(*self as u32))
+            fn encode(&self, writer: &mut impl InstructionWriter)  -> Result<(), EncodeError>{
+                writer.write(Word(*self as u32));
+                Ok(())
             }
 
             fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
@@ -237,7 +238,8 @@ fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> T
             const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
-                writer.write(Word(self.bits()))
+                writer.write(Word(self.bits()));
+                Ok(())
             }
 
             fn decode(reader: &mut InstructionReader<'_>) -> Result<Self, DecodeError> {
