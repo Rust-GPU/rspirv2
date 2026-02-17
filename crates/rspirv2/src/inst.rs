@@ -1,11 +1,11 @@
-use crate::binary::{DecodeError, EncodeError, InstReader, InstructionWriter};
+use crate::binary::{DecodeError, EncodeError, InstReader, WordWriter};
 use crate::meta::InstMeta;
 use std::fmt::Debug;
 
 pub trait Inst: Sized + Debug + Eq {
     const META: &InstMeta;
 
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError>;
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError>;
 
     fn decode(reader: &mut InstReader) -> Result<Self, DecodeError>;
 }

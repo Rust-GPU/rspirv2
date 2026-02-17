@@ -1,4 +1,4 @@
-use crate::binary::{DecodeError, EncodeError, InstructionWriter, OperandReader};
+use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
 use crate::meta::OperandKind;
 use crate::operand::{Operand, OperandEncoding, Word};
 use std::ops::{Deref, DerefMut};
@@ -47,7 +47,7 @@ unsafe impl OperandEncoding for LiteralString {
         (self.0.len() + 1).div_ceil(4)
     }
 
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let words = self.word_len();
         let load = |i, o| *self.as_bytes().get(i * 4 + o).unwrap_or(&0);
         writer.write_iter((0..words).map(|i| {
@@ -76,7 +76,7 @@ mod tests {
     use crate::binary::InstReader;
 
     fn roundtrip(str: &str, expected_spirv: &[u32]) -> anyhow::Result<()> {
-        let mut spirv = Vec::<Word>::new();
+        let mut spirv = Vec::<Word>::default();
         LiteralString(str.to_string()).encode(&mut spirv)?;
         let read =
             LiteralString::decode(&mut InstReader::new(0, spirv.as_slice(), 0).operand_reader())?;

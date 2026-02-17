@@ -111,7 +111,7 @@ fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> 
         unsafe impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = None;
 
-            fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+            fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
                 match self {
                     #(#encode),*
                 }
@@ -169,7 +169,7 @@ fn emit_c_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> Tok
         unsafe impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = Some(1);
 
-            fn encode(&self, writer: &mut impl InstructionWriter)  -> Result<(), EncodeError>{
+            fn encode(&self, writer: &mut impl WordWriter)  -> Result<(), EncodeError>{
                 writer.write(Word(*self as u32));
                 Ok(())
             }
@@ -237,7 +237,7 @@ fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> T
         unsafe impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = Some(1);
 
-            fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+            fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
                 writer.write(Word(self.bits()));
                 Ok(())
             }
@@ -280,7 +280,7 @@ fn emit_composite(operand_kind: &OperandKind, bases: &[Cow<str>]) -> TokenStream
         unsafe impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = FixedLenComposer::new()#(.append(#len))*.finish();
 
-            fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+            fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
                 #(#encode;)*
                 Ok(())
             }

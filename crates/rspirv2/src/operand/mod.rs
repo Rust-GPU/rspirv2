@@ -4,7 +4,7 @@ mod literal_float;
 mod literal_integer;
 mod literal_string;
 
-use crate::binary::{DecodeError, EncodeError, InstructionWriter, OperandReader, WordCounter};
+use crate::binary::{DecodeError, EncodeError, OperandReader, WordCounter, WordWriter};
 use crate::meta::{OperandKind, Quantifier};
 pub use id::*;
 pub use literal_const::*;
@@ -117,7 +117,7 @@ pub unsafe trait OperandEncoding: Sized {
     }
 
     /// Encode this `Operand` to a sequence of [`Word`]s.
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError>;
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError>;
 
     /// Parse the `Operand` from the supplied [`Iterator`] of [`Word`]s, advancing it in the process.
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError>;
@@ -143,7 +143,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
         }
     }
 
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         match self {
             None => Ok(()),
             Some(e) => e.encode(writer),
@@ -179,7 +179,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
         self.iter().map(|e| e.word_len()).sum()
     }
 
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         for x in self {
             x.encode(&mut *writer)?;
         }
@@ -232,7 +232,7 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
         self.iter().map(|e| e.word_len()).sum()
     }
 
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         for x in self {
             x.encode(&mut *writer)?;
         }

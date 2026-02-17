@@ -1,4 +1,4 @@
-use crate::binary::{DecodeError, EncodeError, InstructionWriter, OperandReader};
+use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
 use crate::meta::OperandKind;
 use crate::operand::{Operand, OperandEncoding, Word};
 use smallvec::SmallVec;
@@ -93,7 +93,7 @@ unsafe impl OperandEncoding for LiteralConst {
         self.0.len()
     }
 
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write_iter(self.0.iter().copied());
         Ok(())
     }

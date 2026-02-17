@@ -5,7 +5,7 @@ unsafe impl Operand for ImageOperands {
 }
 unsafe impl OperandEncoding for ImageOperands {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }
@@ -25,7 +25,7 @@ unsafe impl Operand for FPFastMathMode {
 }
 unsafe impl OperandEncoding for FPFastMathMode {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }
@@ -45,7 +45,7 @@ unsafe impl Operand for SelectionControl {
 }
 unsafe impl OperandEncoding for SelectionControl {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }
@@ -65,7 +65,7 @@ unsafe impl Operand for LoopControl {
 }
 unsafe impl OperandEncoding for LoopControl {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }
@@ -85,7 +85,7 @@ unsafe impl Operand for FunctionControl {
 }
 unsafe impl OperandEncoding for FunctionControl {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }
@@ -105,7 +105,7 @@ unsafe impl Operand for MemorySemantics {
 }
 unsafe impl OperandEncoding for MemorySemantics {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }
@@ -125,7 +125,7 @@ unsafe impl Operand for MemoryAccess {
 }
 unsafe impl OperandEncoding for MemoryAccess {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }
@@ -145,7 +145,7 @@ unsafe impl Operand for KernelProfilingInfo {
 }
 unsafe impl OperandEncoding for KernelProfilingInfo {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }
@@ -165,7 +165,7 @@ unsafe impl Operand for RayFlags {
 }
 unsafe impl OperandEncoding for RayFlags {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }
@@ -185,7 +185,7 @@ unsafe impl Operand for FragmentShadingRate {
 }
 unsafe impl OperandEncoding for FragmentShadingRate {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }
@@ -205,7 +205,7 @@ unsafe impl Operand for RawAccessChainOperands {
 }
 unsafe impl OperandEncoding for RawAccessChainOperands {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }
@@ -244,7 +244,7 @@ unsafe impl Operand for SourceLanguage {
 }
 unsafe impl OperandEncoding for SourceLanguage {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -300,7 +300,7 @@ unsafe impl Operand for ExecutionModel {
 }
 unsafe impl OperandEncoding for ExecutionModel {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -347,7 +347,7 @@ unsafe impl Operand for AddressingModel {
 }
 unsafe impl OperandEncoding for AddressingModel {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -381,7 +381,7 @@ unsafe impl Operand for MemoryModel {
 }
 unsafe impl OperandEncoding for MemoryModel {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -555,7 +555,7 @@ unsafe impl Operand for ExecutionMode {
 }
 unsafe impl OperandEncoding for ExecutionMode {
     const FIXED_LEN: Option<usize> = None;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         match self {
             Self::Invocations(p0) => {
                 writer.write(Word(0u32));
@@ -980,7 +980,7 @@ unsafe impl Operand for StorageClass {
 }
 unsafe impl OperandEncoding for StorageClass {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1042,7 +1042,7 @@ unsafe impl Operand for Dim {
 }
 unsafe impl OperandEncoding for Dim {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1080,7 +1080,7 @@ unsafe impl Operand for SamplerAddressingMode {
 }
 unsafe impl OperandEncoding for SamplerAddressingMode {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1112,7 +1112,7 @@ unsafe impl Operand for SamplerFilterMode {
 }
 unsafe impl OperandEncoding for SamplerFilterMode {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1181,7 +1181,7 @@ unsafe impl Operand for ImageFormat {
 }
 unsafe impl OperandEncoding for ImageFormat {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1268,7 +1268,7 @@ unsafe impl Operand for ImageChannelOrder {
 }
 unsafe impl OperandEncoding for ImageChannelOrder {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1339,7 +1339,7 @@ unsafe impl Operand for ImageChannelDataType {
 }
 unsafe impl OperandEncoding for ImageChannelDataType {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1394,7 +1394,7 @@ unsafe impl Operand for FPRoundingMode {
 }
 unsafe impl OperandEncoding for FPRoundingMode {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1425,7 +1425,7 @@ unsafe impl Operand for FPDenormMode {
 }
 unsafe impl OperandEncoding for FPDenormMode {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1460,7 +1460,7 @@ unsafe impl Operand for QuantizationModes {
 }
 unsafe impl OperandEncoding for QuantizationModes {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1495,7 +1495,7 @@ unsafe impl Operand for FPOperationMode {
 }
 unsafe impl OperandEncoding for FPOperationMode {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1526,7 +1526,7 @@ unsafe impl Operand for OverflowModes {
 }
 unsafe impl OperandEncoding for OverflowModes {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1558,7 +1558,7 @@ unsafe impl Operand for LinkageType {
 }
 unsafe impl OperandEncoding for LinkageType {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1589,7 +1589,7 @@ unsafe impl Operand for AccessQualifier {
 }
 unsafe impl OperandEncoding for AccessQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1621,7 +1621,7 @@ unsafe impl Operand for HostAccessQualifier {
 }
 unsafe impl OperandEncoding for HostAccessQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1659,7 +1659,7 @@ unsafe impl Operand for FunctionParameterAttribute {
 }
 unsafe impl OperandEncoding for FunctionParameterAttribute {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -1885,7 +1885,7 @@ unsafe impl Operand for Decoration {
 }
 unsafe impl OperandEncoding for Decoration {
     const FIXED_LEN: Option<usize> = None;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         match self {
             Self::RelaxedPrecision => writer.write(Word(0u32)),
             Self::SpecId(p0) => {
@@ -2631,7 +2631,7 @@ unsafe impl Operand for BuiltIn {
 }
 unsafe impl OperandEncoding for BuiltIn {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -2792,7 +2792,7 @@ unsafe impl Operand for Scope {
 }
 unsafe impl OperandEncoding for Scope {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -2832,7 +2832,7 @@ unsafe impl Operand for GroupOperation {
 }
 unsafe impl OperandEncoding for GroupOperation {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -2867,7 +2867,7 @@ unsafe impl Operand for KernelEnqueueFlags {
 }
 unsafe impl OperandEncoding for KernelEnqueueFlags {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -3226,7 +3226,7 @@ unsafe impl Operand for Capability {
 }
 unsafe impl OperandEncoding for Capability {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -3533,7 +3533,7 @@ unsafe impl Operand for RayQueryIntersection {
 }
 unsafe impl OperandEncoding for RayQueryIntersection {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -3563,7 +3563,7 @@ unsafe impl Operand for RayQueryCommittedIntersectionType {
 }
 unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -3593,7 +3593,7 @@ unsafe impl Operand for RayQueryCandidateIntersectionType {
 }
 unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -3622,7 +3622,7 @@ unsafe impl Operand for PackedVectorFormat {
 }
 unsafe impl OperandEncoding for PackedVectorFormat {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -3645,7 +3645,7 @@ unsafe impl Operand for CooperativeMatrixOperands {
 }
 unsafe impl OperandEncoding for CooperativeMatrixOperands {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }
@@ -3672,7 +3672,7 @@ unsafe impl Operand for CooperativeMatrixLayout {
 }
 unsafe impl OperandEncoding for CooperativeMatrixLayout {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -3704,7 +3704,7 @@ unsafe impl Operand for CooperativeMatrixUse {
 }
 unsafe impl OperandEncoding for CooperativeMatrixUse {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -3729,7 +3729,7 @@ unsafe impl Operand for CooperativeMatrixReduce {
 }
 unsafe impl OperandEncoding for CooperativeMatrixReduce {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }
@@ -3757,7 +3757,7 @@ unsafe impl Operand for TensorClampMode {
 }
 unsafe impl OperandEncoding for TensorClampMode {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -3784,7 +3784,7 @@ unsafe impl Operand for TensorAddressingOperands {
 }
 unsafe impl OperandEncoding for TensorAddressingOperands {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }
@@ -3809,7 +3809,7 @@ unsafe impl Operand for InitializationModeQualifier {
 }
 unsafe impl OperandEncoding for InitializationModeQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -3841,7 +3841,7 @@ unsafe impl Operand for LoadCacheControl {
 }
 unsafe impl OperandEncoding for LoadCacheControl {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -3875,7 +3875,7 @@ unsafe impl Operand for StoreCacheControl {
 }
 unsafe impl OperandEncoding for StoreCacheControl {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -3905,7 +3905,7 @@ unsafe impl Operand for NamedMaximumNumberOfRegisters {
 }
 unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -3928,7 +3928,7 @@ unsafe impl Operand for MatrixMultiplyAccumulateOperands {
 }
 unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }
@@ -3953,7 +3953,7 @@ unsafe impl Operand for FPEncoding {
 }
 unsafe impl OperandEncoding for FPEncoding {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -3985,7 +3985,7 @@ unsafe impl Operand for CooperativeVectorMatrixLayout {
 }
 unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -4029,7 +4029,7 @@ unsafe impl Operand for ComponentType {
 }
 unsafe impl OperandEncoding for ComponentType {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
         Ok(())
     }
@@ -4070,7 +4070,7 @@ unsafe impl OperandEncoding for PairLiteralIntegerIdRef {
         .append(<LiteralInteger as OperandEncoding>::FIXED_LEN)
         .append(<IdRef as OperandEncoding>::FIXED_LEN)
         .finish();
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         OperandEncoding::encode(&self.0, &mut *writer)?;
         OperandEncoding::encode(&self.1, &mut *writer)?;
         Ok(())
@@ -4092,7 +4092,7 @@ unsafe impl OperandEncoding for PairIdRefLiteralInteger {
         .append(<IdRef as OperandEncoding>::FIXED_LEN)
         .append(<LiteralInteger as OperandEncoding>::FIXED_LEN)
         .finish();
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         OperandEncoding::encode(&self.0, &mut *writer)?;
         OperandEncoding::encode(&self.1, &mut *writer)?;
         Ok(())
@@ -4114,7 +4114,7 @@ unsafe impl OperandEncoding for PairIdRefIdRef {
         .append(<IdRef as OperandEncoding>::FIXED_LEN)
         .append(<IdRef as OperandEncoding>::FIXED_LEN)
         .finish();
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         OperandEncoding::encode(&self.0, &mut *writer)?;
         OperandEncoding::encode(&self.1, &mut *writer)?;
         Ok(())
@@ -4132,7 +4132,7 @@ unsafe impl Operand for TensorOperands {
 }
 unsafe impl OperandEncoding for TensorOperands {
     const FIXED_LEN: Option<usize> = Some(1);
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
         Ok(())
     }

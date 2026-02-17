@@ -6,7 +6,7 @@ pub struct DebugPrintf {
 }
 impl Inst for DebugPrintf {
     const META: &InstMeta = &DEBUG_PRINTF;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.format) + OperandEncoding::word_len(&self.id_ref);
         writer.write_op(Self::META.opcode, len)?;

@@ -3,7 +3,7 @@ use super::preamble::*;
 pub struct OpNop {}
 impl Inst for OpNop {
     const META: &InstMeta = &OP_NOP;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -20,7 +20,7 @@ pub struct OpUndef {
 }
 impl Inst for OpUndef {
     const META: &InstMeta = &OP_UNDEF;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -43,7 +43,7 @@ pub struct OpSourceContinued {
 }
 impl Inst for OpSourceContinued {
     const META: &InstMeta = &OP_SOURCE_CONTINUED;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.continued_source);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.continued_source, &mut *writer)?;
@@ -65,7 +65,7 @@ pub struct OpSource {
 }
 impl Inst for OpSource {
     const META: &InstMeta = &OP_SOURCE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.source_language)
             + OperandEncoding::word_len(&self.version)
@@ -94,7 +94,7 @@ pub struct OpSourceExtension {
 }
 impl Inst for OpSourceExtension {
     const META: &InstMeta = &OP_SOURCE_EXTENSION;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.extension);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.extension, &mut *writer)?;
@@ -114,7 +114,7 @@ pub struct OpName {
 }
 impl Inst for OpName {
     const META: &InstMeta = &OP_NAME;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.target) + OperandEncoding::word_len(&self.name);
         writer.write_op(Self::META.opcode, len)?;
@@ -138,7 +138,7 @@ pub struct OpMemberName {
 }
 impl Inst for OpMemberName {
     const META: &InstMeta = &OP_MEMBER_NAME;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.ty)
             + OperandEncoding::word_len(&self.member)
@@ -165,7 +165,7 @@ pub struct OpString {
 }
 impl Inst for OpString {
     const META: &InstMeta = &OP_STRING;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.string);
@@ -190,7 +190,7 @@ pub struct OpLine {
 }
 impl Inst for OpLine {
     const META: &InstMeta = &OP_LINE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.file)
             + OperandEncoding::word_len(&self.line)
@@ -216,7 +216,7 @@ pub struct OpExtension {
 }
 impl Inst for OpExtension {
     const META: &InstMeta = &OP_EXTENSION;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.name);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.name, &mut *writer)?;
@@ -236,7 +236,7 @@ pub struct OpExtInstImport {
 }
 impl Inst for OpExtInstImport {
     const META: &InstMeta = &OP_EXT_INST_IMPORT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.id_result) + OperandEncoding::word_len(&self.name);
         writer.write_op(Self::META.opcode, len)?;
@@ -262,7 +262,7 @@ pub struct OpExtInst {
 }
 impl Inst for OpExtInst {
     const META: &InstMeta = &OP_EXT_INST;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -295,7 +295,7 @@ pub struct OpMemoryModel {
 }
 impl Inst for OpMemoryModel {
     const META: &InstMeta = &OP_MEMORY_MODEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.addressing_model)
             + OperandEncoding::word_len(&self.memory_model);
@@ -321,7 +321,7 @@ pub struct OpEntryPoint {
 }
 impl Inst for OpEntryPoint {
     const META: &InstMeta = &OP_ENTRY_POINT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution_model)
             + OperandEncoding::word_len(&self.entry_point)
@@ -351,7 +351,7 @@ pub struct OpExecutionMode {
 }
 impl Inst for OpExecutionMode {
     const META: &InstMeta = &OP_EXECUTION_MODE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.entry_point)
             + OperandEncoding::word_len(&self.mode);
@@ -374,7 +374,7 @@ pub struct OpCapability {
 }
 impl Inst for OpCapability {
     const META: &InstMeta = &OP_CAPABILITY;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.capability);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.capability, &mut *writer)?;
@@ -393,7 +393,7 @@ pub struct OpTypeVoid {
 }
 impl Inst for OpTypeVoid {
     const META: &InstMeta = &OP_TYPE_VOID;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -412,7 +412,7 @@ pub struct OpTypeBool {
 }
 impl Inst for OpTypeBool {
     const META: &InstMeta = &OP_TYPE_BOOL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -433,7 +433,7 @@ pub struct OpTypeInt {
 }
 impl Inst for OpTypeInt {
     const META: &InstMeta = &OP_TYPE_INT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.width)
@@ -461,7 +461,7 @@ pub struct OpTypeFloat {
 }
 impl Inst for OpTypeFloat {
     const META: &InstMeta = &OP_TYPE_FLOAT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.width)
@@ -489,7 +489,7 @@ pub struct OpTypeVector {
 }
 impl Inst for OpTypeVector {
     const META: &InstMeta = &OP_TYPE_VECTOR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.component_type)
@@ -517,7 +517,7 @@ pub struct OpTypeMatrix {
 }
 impl Inst for OpTypeMatrix {
     const META: &InstMeta = &OP_TYPE_MATRIX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.column_type)
@@ -551,7 +551,7 @@ pub struct OpTypeImage {
 }
 impl Inst for OpTypeImage {
     const META: &InstMeta = &OP_TYPE_IMAGE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.sampled_type)
@@ -595,7 +595,7 @@ pub struct OpTypeSampler {
 }
 impl Inst for OpTypeSampler {
     const META: &InstMeta = &OP_TYPE_SAMPLER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -615,7 +615,7 @@ pub struct OpTypeSampledImage {
 }
 impl Inst for OpTypeSampledImage {
     const META: &InstMeta = &OP_TYPE_SAMPLED_IMAGE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.image_type);
@@ -640,7 +640,7 @@ pub struct OpTypeArray {
 }
 impl Inst for OpTypeArray {
     const META: &InstMeta = &OP_TYPE_ARRAY;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.element_type)
@@ -667,7 +667,7 @@ pub struct OpTypeRuntimeArray {
 }
 impl Inst for OpTypeRuntimeArray {
     const META: &InstMeta = &OP_TYPE_RUNTIME_ARRAY;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.element_type);
@@ -691,7 +691,7 @@ pub struct OpTypeStruct {
 }
 impl Inst for OpTypeStruct {
     const META: &InstMeta = &OP_TYPE_STRUCT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.id_ref);
@@ -715,7 +715,7 @@ pub struct OpTypeOpaque {
 }
 impl Inst for OpTypeOpaque {
     const META: &InstMeta = &OP_TYPE_OPAQUE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.literal_string);
@@ -740,7 +740,7 @@ pub struct OpTypePointer {
 }
 impl Inst for OpTypePointer {
     const META: &InstMeta = &OP_TYPE_POINTER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.storage_class)
@@ -768,7 +768,7 @@ pub struct OpTypeFunction {
 }
 impl Inst for OpTypeFunction {
     const META: &InstMeta = &OP_TYPE_FUNCTION;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.return_type)
@@ -794,7 +794,7 @@ pub struct OpTypeEvent {
 }
 impl Inst for OpTypeEvent {
     const META: &InstMeta = &OP_TYPE_EVENT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -813,7 +813,7 @@ pub struct OpTypeDeviceEvent {
 }
 impl Inst for OpTypeDeviceEvent {
     const META: &InstMeta = &OP_TYPE_DEVICE_EVENT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -832,7 +832,7 @@ pub struct OpTypeReserveId {
 }
 impl Inst for OpTypeReserveId {
     const META: &InstMeta = &OP_TYPE_RESERVE_ID;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -851,7 +851,7 @@ pub struct OpTypeQueue {
 }
 impl Inst for OpTypeQueue {
     const META: &InstMeta = &OP_TYPE_QUEUE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -871,7 +871,7 @@ pub struct OpTypePipe {
 }
 impl Inst for OpTypePipe {
     const META: &InstMeta = &OP_TYPE_PIPE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.qualifier);
@@ -895,7 +895,7 @@ pub struct OpTypeForwardPointer {
 }
 impl Inst for OpTypeForwardPointer {
     const META: &InstMeta = &OP_TYPE_FORWARD_POINTER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer_type)
             + OperandEncoding::word_len(&self.storage_class);
@@ -919,7 +919,7 @@ pub struct OpConstantTrue {
 }
 impl Inst for OpConstantTrue {
     const META: &InstMeta = &OP_CONSTANT_TRUE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -943,7 +943,7 @@ pub struct OpConstantFalse {
 }
 impl Inst for OpConstantFalse {
     const META: &InstMeta = &OP_CONSTANT_FALSE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -968,7 +968,7 @@ pub struct OpConstant {
 }
 impl Inst for OpConstant {
     const META: &InstMeta = &OP_CONSTANT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -996,7 +996,7 @@ pub struct OpConstantComposite {
 }
 impl Inst for OpConstantComposite {
     const META: &InstMeta = &OP_CONSTANT_COMPOSITE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1026,7 +1026,7 @@ pub struct OpConstantSampler {
 }
 impl Inst for OpConstantSampler {
     const META: &InstMeta = &OP_CONSTANT_SAMPLER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1059,7 +1059,7 @@ pub struct OpConstantNull {
 }
 impl Inst for OpConstantNull {
     const META: &InstMeta = &OP_CONSTANT_NULL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -1083,7 +1083,7 @@ pub struct OpSpecConstantTrue {
 }
 impl Inst for OpSpecConstantTrue {
     const META: &InstMeta = &OP_SPEC_CONSTANT_TRUE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -1107,7 +1107,7 @@ pub struct OpSpecConstantFalse {
 }
 impl Inst for OpSpecConstantFalse {
     const META: &InstMeta = &OP_SPEC_CONSTANT_FALSE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -1132,7 +1132,7 @@ pub struct OpSpecConstant {
 }
 impl Inst for OpSpecConstant {
     const META: &InstMeta = &OP_SPEC_CONSTANT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1160,7 +1160,7 @@ pub struct OpSpecConstantComposite {
 }
 impl Inst for OpSpecConstantComposite {
     const META: &InstMeta = &OP_SPEC_CONSTANT_COMPOSITE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1188,7 +1188,7 @@ pub struct OpSpecConstantOp {
 }
 impl Inst for OpSpecConstantOp {
     const META: &InstMeta = &OP_SPEC_CONSTANT_OP;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1217,7 +1217,7 @@ pub struct OpFunction {
 }
 impl Inst for OpFunction {
     const META: &InstMeta = &OP_FUNCTION;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1247,7 +1247,7 @@ pub struct OpFunctionParameter {
 }
 impl Inst for OpFunctionParameter {
     const META: &InstMeta = &OP_FUNCTION_PARAMETER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -1268,7 +1268,7 @@ impl Inst for OpFunctionParameter {
 pub struct OpFunctionEnd {}
 impl Inst for OpFunctionEnd {
     const META: &InstMeta = &OP_FUNCTION_END;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -1287,7 +1287,7 @@ pub struct OpFunctionCall {
 }
 impl Inst for OpFunctionCall {
     const META: &InstMeta = &OP_FUNCTION_CALL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1319,7 +1319,7 @@ pub struct OpVariable {
 }
 impl Inst for OpVariable {
     const META: &InstMeta = &OP_VARIABLE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1352,7 +1352,7 @@ pub struct OpImageTexelPointer {
 }
 impl Inst for OpImageTexelPointer {
     const META: &InstMeta = &OP_IMAGE_TEXEL_POINTER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1387,7 +1387,7 @@ pub struct OpLoad {
 }
 impl Inst for OpLoad {
     const META: &InstMeta = &OP_LOAD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1418,7 +1418,7 @@ pub struct OpStore {
 }
 impl Inst for OpStore {
     const META: &InstMeta = &OP_STORE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.object)
@@ -1447,7 +1447,7 @@ pub struct OpCopyMemory {
 }
 impl Inst for OpCopyMemory {
     const META: &InstMeta = &OP_COPY_MEMORY;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.target)
             + OperandEncoding::word_len(&self.source)
@@ -1480,7 +1480,7 @@ pub struct OpCopyMemorySized {
 }
 impl Inst for OpCopyMemorySized {
     const META: &InstMeta = &OP_COPY_MEMORY_SIZED;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.target)
             + OperandEncoding::word_len(&self.source)
@@ -1515,7 +1515,7 @@ pub struct OpAccessChain {
 }
 impl Inst for OpAccessChain {
     const META: &InstMeta = &OP_ACCESS_CHAIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1547,7 +1547,7 @@ pub struct OpInBoundsAccessChain {
 }
 impl Inst for OpInBoundsAccessChain {
     const META: &InstMeta = &OP_IN_BOUNDS_ACCESS_CHAIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1580,7 +1580,7 @@ pub struct OpPtrAccessChain {
 }
 impl Inst for OpPtrAccessChain {
     const META: &InstMeta = &OP_PTR_ACCESS_CHAIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1615,7 +1615,7 @@ pub struct OpArrayLength {
 }
 impl Inst for OpArrayLength {
     const META: &InstMeta = &OP_ARRAY_LENGTH;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1646,7 +1646,7 @@ pub struct OpGenericPtrMemSemantics {
 }
 impl Inst for OpGenericPtrMemSemantics {
     const META: &InstMeta = &OP_GENERIC_PTR_MEM_SEMANTICS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1676,7 +1676,7 @@ pub struct OpInBoundsPtrAccessChain {
 }
 impl Inst for OpInBoundsPtrAccessChain {
     const META: &InstMeta = &OP_IN_BOUNDS_PTR_ACCESS_CHAIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1709,7 +1709,7 @@ pub struct OpDecorate {
 }
 impl Inst for OpDecorate {
     const META: &InstMeta = &OP_DECORATE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.target)
             + OperandEncoding::word_len(&self.decoration);
@@ -1734,7 +1734,7 @@ pub struct OpMemberDecorate {
 }
 impl Inst for OpMemberDecorate {
     const META: &InstMeta = &OP_MEMBER_DECORATE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.structure_type)
             + OperandEncoding::word_len(&self.member)
@@ -1760,7 +1760,7 @@ pub struct OpDecorationGroup {
 }
 impl Inst for OpDecorationGroup {
     const META: &InstMeta = &OP_DECORATION_GROUP;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -1780,7 +1780,7 @@ pub struct OpGroupDecorate {
 }
 impl Inst for OpGroupDecorate {
     const META: &InstMeta = &OP_GROUP_DECORATE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.decoration_group)
             + OperandEncoding::word_len(&self.targets);
@@ -1804,7 +1804,7 @@ pub struct OpGroupMemberDecorate {
 }
 impl Inst for OpGroupMemberDecorate {
     const META: &InstMeta = &OP_GROUP_MEMBER_DECORATE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.decoration_group)
             + OperandEncoding::word_len(&self.targets);
@@ -1830,7 +1830,7 @@ pub struct OpVectorExtractDynamic {
 }
 impl Inst for OpVectorExtractDynamic {
     const META: &InstMeta = &OP_VECTOR_EXTRACT_DYNAMIC;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1863,7 +1863,7 @@ pub struct OpVectorInsertDynamic {
 }
 impl Inst for OpVectorInsertDynamic {
     const META: &InstMeta = &OP_VECTOR_INSERT_DYNAMIC;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1899,7 +1899,7 @@ pub struct OpVectorShuffle {
 }
 impl Inst for OpVectorShuffle {
     const META: &InstMeta = &OP_VECTOR_SHUFFLE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1933,7 +1933,7 @@ pub struct OpCompositeConstruct {
 }
 impl Inst for OpCompositeConstruct {
     const META: &InstMeta = &OP_COMPOSITE_CONSTRUCT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1962,7 +1962,7 @@ pub struct OpCompositeExtract {
 }
 impl Inst for OpCompositeExtract {
     const META: &InstMeta = &OP_COMPOSITE_EXTRACT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -1995,7 +1995,7 @@ pub struct OpCompositeInsert {
 }
 impl Inst for OpCompositeInsert {
     const META: &InstMeta = &OP_COMPOSITE_INSERT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2029,7 +2029,7 @@ pub struct OpCopyObject {
 }
 impl Inst for OpCopyObject {
     const META: &InstMeta = &OP_COPY_OBJECT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2057,7 +2057,7 @@ pub struct OpTranspose {
 }
 impl Inst for OpTranspose {
     const META: &InstMeta = &OP_TRANSPOSE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2086,7 +2086,7 @@ pub struct OpSampledImage {
 }
 impl Inst for OpSampledImage {
     const META: &InstMeta = &OP_SAMPLED_IMAGE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2119,7 +2119,7 @@ pub struct OpImageSampleImplicitLod {
 }
 impl Inst for OpImageSampleImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_IMPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2155,7 +2155,7 @@ pub struct OpImageSampleExplicitLod {
 }
 impl Inst for OpImageSampleExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_EXPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2192,7 +2192,7 @@ pub struct OpImageSampleDrefImplicitLod {
 }
 impl Inst for OpImageSampleDrefImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_DREF_IMPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2232,7 +2232,7 @@ pub struct OpImageSampleDrefExplicitLod {
 }
 impl Inst for OpImageSampleDrefExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_DREF_EXPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2271,7 +2271,7 @@ pub struct OpImageSampleProjImplicitLod {
 }
 impl Inst for OpImageSampleProjImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_PROJ_IMPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2307,7 +2307,7 @@ pub struct OpImageSampleProjExplicitLod {
 }
 impl Inst for OpImageSampleProjExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_PROJ_EXPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2344,7 +2344,7 @@ pub struct OpImageSampleProjDrefImplicitLod {
 }
 impl Inst for OpImageSampleProjDrefImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_PROJ_DREF_IMPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2384,7 +2384,7 @@ pub struct OpImageSampleProjDrefExplicitLod {
 }
 impl Inst for OpImageSampleProjDrefExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_PROJ_DREF_EXPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2423,7 +2423,7 @@ pub struct OpImageFetch {
 }
 impl Inst for OpImageFetch {
     const META: &InstMeta = &OP_IMAGE_FETCH;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2460,7 +2460,7 @@ pub struct OpImageGather {
 }
 impl Inst for OpImageGather {
     const META: &InstMeta = &OP_IMAGE_GATHER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2500,7 +2500,7 @@ pub struct OpImageDrefGather {
 }
 impl Inst for OpImageDrefGather {
     const META: &InstMeta = &OP_IMAGE_DREF_GATHER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2539,7 +2539,7 @@ pub struct OpImageRead {
 }
 impl Inst for OpImageRead {
     const META: &InstMeta = &OP_IMAGE_READ;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2574,7 +2574,7 @@ pub struct OpImageWrite {
 }
 impl Inst for OpImageWrite {
     const META: &InstMeta = &OP_IMAGE_WRITE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.image)
             + OperandEncoding::word_len(&self.coordinate)
@@ -2605,7 +2605,7 @@ pub struct OpImage {
 }
 impl Inst for OpImage {
     const META: &InstMeta = &OP_IMAGE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2633,7 +2633,7 @@ pub struct OpImageQueryFormat {
 }
 impl Inst for OpImageQueryFormat {
     const META: &InstMeta = &OP_IMAGE_QUERY_FORMAT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2661,7 +2661,7 @@ pub struct OpImageQueryOrder {
 }
 impl Inst for OpImageQueryOrder {
     const META: &InstMeta = &OP_IMAGE_QUERY_ORDER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2690,7 +2690,7 @@ pub struct OpImageQuerySizeLod {
 }
 impl Inst for OpImageQuerySizeLod {
     const META: &InstMeta = &OP_IMAGE_QUERY_SIZE_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2721,7 +2721,7 @@ pub struct OpImageQuerySize {
 }
 impl Inst for OpImageQuerySize {
     const META: &InstMeta = &OP_IMAGE_QUERY_SIZE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2750,7 +2750,7 @@ pub struct OpImageQueryLod {
 }
 impl Inst for OpImageQueryLod {
     const META: &InstMeta = &OP_IMAGE_QUERY_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2781,7 +2781,7 @@ pub struct OpImageQueryLevels {
 }
 impl Inst for OpImageQueryLevels {
     const META: &InstMeta = &OP_IMAGE_QUERY_LEVELS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2809,7 +2809,7 @@ pub struct OpImageQuerySamples {
 }
 impl Inst for OpImageQuerySamples {
     const META: &InstMeta = &OP_IMAGE_QUERY_SAMPLES;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2837,7 +2837,7 @@ pub struct OpConvertFToU {
 }
 impl Inst for OpConvertFToU {
     const META: &InstMeta = &OP_CONVERT_F_TO_U;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2865,7 +2865,7 @@ pub struct OpConvertFToS {
 }
 impl Inst for OpConvertFToS {
     const META: &InstMeta = &OP_CONVERT_F_TO_S;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2893,7 +2893,7 @@ pub struct OpConvertSToF {
 }
 impl Inst for OpConvertSToF {
     const META: &InstMeta = &OP_CONVERT_S_TO_F;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2921,7 +2921,7 @@ pub struct OpConvertUToF {
 }
 impl Inst for OpConvertUToF {
     const META: &InstMeta = &OP_CONVERT_U_TO_F;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2949,7 +2949,7 @@ pub struct OpUConvert {
 }
 impl Inst for OpUConvert {
     const META: &InstMeta = &OP_U_CONVERT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -2977,7 +2977,7 @@ pub struct OpSConvert {
 }
 impl Inst for OpSConvert {
     const META: &InstMeta = &OP_S_CONVERT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3005,7 +3005,7 @@ pub struct OpFConvert {
 }
 impl Inst for OpFConvert {
     const META: &InstMeta = &OP_F_CONVERT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3033,7 +3033,7 @@ pub struct OpQuantizeToF16 {
 }
 impl Inst for OpQuantizeToF16 {
     const META: &InstMeta = &OP_QUANTIZE_TO_F_16;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3061,7 +3061,7 @@ pub struct OpConvertPtrToU {
 }
 impl Inst for OpConvertPtrToU {
     const META: &InstMeta = &OP_CONVERT_PTR_TO_U;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3089,7 +3089,7 @@ pub struct OpSatConvertSToU {
 }
 impl Inst for OpSatConvertSToU {
     const META: &InstMeta = &OP_SAT_CONVERT_S_TO_U;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3117,7 +3117,7 @@ pub struct OpSatConvertUToS {
 }
 impl Inst for OpSatConvertUToS {
     const META: &InstMeta = &OP_SAT_CONVERT_U_TO_S;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3145,7 +3145,7 @@ pub struct OpConvertUToPtr {
 }
 impl Inst for OpConvertUToPtr {
     const META: &InstMeta = &OP_CONVERT_U_TO_PTR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3173,7 +3173,7 @@ pub struct OpPtrCastToGeneric {
 }
 impl Inst for OpPtrCastToGeneric {
     const META: &InstMeta = &OP_PTR_CAST_TO_GENERIC;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3201,7 +3201,7 @@ pub struct OpGenericCastToPtr {
 }
 impl Inst for OpGenericCastToPtr {
     const META: &InstMeta = &OP_GENERIC_CAST_TO_PTR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3230,7 +3230,7 @@ pub struct OpGenericCastToPtrExplicit {
 }
 impl Inst for OpGenericCastToPtrExplicit {
     const META: &InstMeta = &OP_GENERIC_CAST_TO_PTR_EXPLICIT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3261,7 +3261,7 @@ pub struct OpBitcast {
 }
 impl Inst for OpBitcast {
     const META: &InstMeta = &OP_BITCAST;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3289,7 +3289,7 @@ pub struct OpSNegate {
 }
 impl Inst for OpSNegate {
     const META: &InstMeta = &OP_S_NEGATE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3317,7 +3317,7 @@ pub struct OpFNegate {
 }
 impl Inst for OpFNegate {
     const META: &InstMeta = &OP_F_NEGATE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3346,7 +3346,7 @@ pub struct OpIAdd {
 }
 impl Inst for OpIAdd {
     const META: &InstMeta = &OP_I_ADD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3378,7 +3378,7 @@ pub struct OpFAdd {
 }
 impl Inst for OpFAdd {
     const META: &InstMeta = &OP_F_ADD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3410,7 +3410,7 @@ pub struct OpISub {
 }
 impl Inst for OpISub {
     const META: &InstMeta = &OP_I_SUB;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3442,7 +3442,7 @@ pub struct OpFSub {
 }
 impl Inst for OpFSub {
     const META: &InstMeta = &OP_F_SUB;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3474,7 +3474,7 @@ pub struct OpIMul {
 }
 impl Inst for OpIMul {
     const META: &InstMeta = &OP_I_MUL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3506,7 +3506,7 @@ pub struct OpFMul {
 }
 impl Inst for OpFMul {
     const META: &InstMeta = &OP_F_MUL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3538,7 +3538,7 @@ pub struct OpUDiv {
 }
 impl Inst for OpUDiv {
     const META: &InstMeta = &OP_U_DIV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3570,7 +3570,7 @@ pub struct OpSDiv {
 }
 impl Inst for OpSDiv {
     const META: &InstMeta = &OP_S_DIV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3602,7 +3602,7 @@ pub struct OpFDiv {
 }
 impl Inst for OpFDiv {
     const META: &InstMeta = &OP_F_DIV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3634,7 +3634,7 @@ pub struct OpUMod {
 }
 impl Inst for OpUMod {
     const META: &InstMeta = &OP_U_MOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3666,7 +3666,7 @@ pub struct OpSRem {
 }
 impl Inst for OpSRem {
     const META: &InstMeta = &OP_S_REM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3698,7 +3698,7 @@ pub struct OpSMod {
 }
 impl Inst for OpSMod {
     const META: &InstMeta = &OP_S_MOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3730,7 +3730,7 @@ pub struct OpFRem {
 }
 impl Inst for OpFRem {
     const META: &InstMeta = &OP_F_REM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3762,7 +3762,7 @@ pub struct OpFMod {
 }
 impl Inst for OpFMod {
     const META: &InstMeta = &OP_F_MOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3794,7 +3794,7 @@ pub struct OpVectorTimesScalar {
 }
 impl Inst for OpVectorTimesScalar {
     const META: &InstMeta = &OP_VECTOR_TIMES_SCALAR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3826,7 +3826,7 @@ pub struct OpMatrixTimesScalar {
 }
 impl Inst for OpMatrixTimesScalar {
     const META: &InstMeta = &OP_MATRIX_TIMES_SCALAR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3858,7 +3858,7 @@ pub struct OpVectorTimesMatrix {
 }
 impl Inst for OpVectorTimesMatrix {
     const META: &InstMeta = &OP_VECTOR_TIMES_MATRIX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3890,7 +3890,7 @@ pub struct OpMatrixTimesVector {
 }
 impl Inst for OpMatrixTimesVector {
     const META: &InstMeta = &OP_MATRIX_TIMES_VECTOR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3922,7 +3922,7 @@ pub struct OpMatrixTimesMatrix {
 }
 impl Inst for OpMatrixTimesMatrix {
     const META: &InstMeta = &OP_MATRIX_TIMES_MATRIX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3954,7 +3954,7 @@ pub struct OpOuterProduct {
 }
 impl Inst for OpOuterProduct {
     const META: &InstMeta = &OP_OUTER_PRODUCT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -3986,7 +3986,7 @@ pub struct OpDot {
 }
 impl Inst for OpDot {
     const META: &InstMeta = &OP_DOT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4018,7 +4018,7 @@ pub struct OpIAddCarry {
 }
 impl Inst for OpIAddCarry {
     const META: &InstMeta = &OP_I_ADD_CARRY;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4050,7 +4050,7 @@ pub struct OpISubBorrow {
 }
 impl Inst for OpISubBorrow {
     const META: &InstMeta = &OP_I_SUB_BORROW;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4082,7 +4082,7 @@ pub struct OpUMulExtended {
 }
 impl Inst for OpUMulExtended {
     const META: &InstMeta = &OP_U_MUL_EXTENDED;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4114,7 +4114,7 @@ pub struct OpSMulExtended {
 }
 impl Inst for OpSMulExtended {
     const META: &InstMeta = &OP_S_MUL_EXTENDED;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4145,7 +4145,7 @@ pub struct OpAny {
 }
 impl Inst for OpAny {
     const META: &InstMeta = &OP_ANY;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4173,7 +4173,7 @@ pub struct OpAll {
 }
 impl Inst for OpAll {
     const META: &InstMeta = &OP_ALL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4201,7 +4201,7 @@ pub struct OpIsNan {
 }
 impl Inst for OpIsNan {
     const META: &InstMeta = &OP_IS_NAN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4229,7 +4229,7 @@ pub struct OpIsInf {
 }
 impl Inst for OpIsInf {
     const META: &InstMeta = &OP_IS_INF;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4257,7 +4257,7 @@ pub struct OpIsFinite {
 }
 impl Inst for OpIsFinite {
     const META: &InstMeta = &OP_IS_FINITE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4285,7 +4285,7 @@ pub struct OpIsNormal {
 }
 impl Inst for OpIsNormal {
     const META: &InstMeta = &OP_IS_NORMAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4313,7 +4313,7 @@ pub struct OpSignBitSet {
 }
 impl Inst for OpSignBitSet {
     const META: &InstMeta = &OP_SIGN_BIT_SET;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4342,7 +4342,7 @@ pub struct OpLessOrGreater {
 }
 impl Inst for OpLessOrGreater {
     const META: &InstMeta = &OP_LESS_OR_GREATER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4374,7 +4374,7 @@ pub struct OpOrdered {
 }
 impl Inst for OpOrdered {
     const META: &InstMeta = &OP_ORDERED;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4406,7 +4406,7 @@ pub struct OpUnordered {
 }
 impl Inst for OpUnordered {
     const META: &InstMeta = &OP_UNORDERED;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4438,7 +4438,7 @@ pub struct OpLogicalEqual {
 }
 impl Inst for OpLogicalEqual {
     const META: &InstMeta = &OP_LOGICAL_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4470,7 +4470,7 @@ pub struct OpLogicalNotEqual {
 }
 impl Inst for OpLogicalNotEqual {
     const META: &InstMeta = &OP_LOGICAL_NOT_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4502,7 +4502,7 @@ pub struct OpLogicalOr {
 }
 impl Inst for OpLogicalOr {
     const META: &InstMeta = &OP_LOGICAL_OR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4534,7 +4534,7 @@ pub struct OpLogicalAnd {
 }
 impl Inst for OpLogicalAnd {
     const META: &InstMeta = &OP_LOGICAL_AND;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4565,7 +4565,7 @@ pub struct OpLogicalNot {
 }
 impl Inst for OpLogicalNot {
     const META: &InstMeta = &OP_LOGICAL_NOT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4595,7 +4595,7 @@ pub struct OpSelect {
 }
 impl Inst for OpSelect {
     const META: &InstMeta = &OP_SELECT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4630,7 +4630,7 @@ pub struct OpIEqual {
 }
 impl Inst for OpIEqual {
     const META: &InstMeta = &OP_I_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4662,7 +4662,7 @@ pub struct OpINotEqual {
 }
 impl Inst for OpINotEqual {
     const META: &InstMeta = &OP_I_NOT_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4694,7 +4694,7 @@ pub struct OpUGreaterThan {
 }
 impl Inst for OpUGreaterThan {
     const META: &InstMeta = &OP_U_GREATER_THAN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4726,7 +4726,7 @@ pub struct OpSGreaterThan {
 }
 impl Inst for OpSGreaterThan {
     const META: &InstMeta = &OP_S_GREATER_THAN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4758,7 +4758,7 @@ pub struct OpUGreaterThanEqual {
 }
 impl Inst for OpUGreaterThanEqual {
     const META: &InstMeta = &OP_U_GREATER_THAN_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4790,7 +4790,7 @@ pub struct OpSGreaterThanEqual {
 }
 impl Inst for OpSGreaterThanEqual {
     const META: &InstMeta = &OP_S_GREATER_THAN_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4822,7 +4822,7 @@ pub struct OpULessThan {
 }
 impl Inst for OpULessThan {
     const META: &InstMeta = &OP_U_LESS_THAN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4854,7 +4854,7 @@ pub struct OpSLessThan {
 }
 impl Inst for OpSLessThan {
     const META: &InstMeta = &OP_S_LESS_THAN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4886,7 +4886,7 @@ pub struct OpULessThanEqual {
 }
 impl Inst for OpULessThanEqual {
     const META: &InstMeta = &OP_U_LESS_THAN_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4918,7 +4918,7 @@ pub struct OpSLessThanEqual {
 }
 impl Inst for OpSLessThanEqual {
     const META: &InstMeta = &OP_S_LESS_THAN_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4950,7 +4950,7 @@ pub struct OpFOrdEqual {
 }
 impl Inst for OpFOrdEqual {
     const META: &InstMeta = &OP_F_ORD_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -4982,7 +4982,7 @@ pub struct OpFUnordEqual {
 }
 impl Inst for OpFUnordEqual {
     const META: &InstMeta = &OP_F_UNORD_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5014,7 +5014,7 @@ pub struct OpFOrdNotEqual {
 }
 impl Inst for OpFOrdNotEqual {
     const META: &InstMeta = &OP_F_ORD_NOT_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5046,7 +5046,7 @@ pub struct OpFUnordNotEqual {
 }
 impl Inst for OpFUnordNotEqual {
     const META: &InstMeta = &OP_F_UNORD_NOT_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5078,7 +5078,7 @@ pub struct OpFOrdLessThan {
 }
 impl Inst for OpFOrdLessThan {
     const META: &InstMeta = &OP_F_ORD_LESS_THAN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5110,7 +5110,7 @@ pub struct OpFUnordLessThan {
 }
 impl Inst for OpFUnordLessThan {
     const META: &InstMeta = &OP_F_UNORD_LESS_THAN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5142,7 +5142,7 @@ pub struct OpFOrdGreaterThan {
 }
 impl Inst for OpFOrdGreaterThan {
     const META: &InstMeta = &OP_F_ORD_GREATER_THAN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5174,7 +5174,7 @@ pub struct OpFUnordGreaterThan {
 }
 impl Inst for OpFUnordGreaterThan {
     const META: &InstMeta = &OP_F_UNORD_GREATER_THAN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5206,7 +5206,7 @@ pub struct OpFOrdLessThanEqual {
 }
 impl Inst for OpFOrdLessThanEqual {
     const META: &InstMeta = &OP_F_ORD_LESS_THAN_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5238,7 +5238,7 @@ pub struct OpFUnordLessThanEqual {
 }
 impl Inst for OpFUnordLessThanEqual {
     const META: &InstMeta = &OP_F_UNORD_LESS_THAN_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5270,7 +5270,7 @@ pub struct OpFOrdGreaterThanEqual {
 }
 impl Inst for OpFOrdGreaterThanEqual {
     const META: &InstMeta = &OP_F_ORD_GREATER_THAN_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5302,7 +5302,7 @@ pub struct OpFUnordGreaterThanEqual {
 }
 impl Inst for OpFUnordGreaterThanEqual {
     const META: &InstMeta = &OP_F_UNORD_GREATER_THAN_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5334,7 +5334,7 @@ pub struct OpShiftRightLogical {
 }
 impl Inst for OpShiftRightLogical {
     const META: &InstMeta = &OP_SHIFT_RIGHT_LOGICAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5366,7 +5366,7 @@ pub struct OpShiftRightArithmetic {
 }
 impl Inst for OpShiftRightArithmetic {
     const META: &InstMeta = &OP_SHIFT_RIGHT_ARITHMETIC;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5398,7 +5398,7 @@ pub struct OpShiftLeftLogical {
 }
 impl Inst for OpShiftLeftLogical {
     const META: &InstMeta = &OP_SHIFT_LEFT_LOGICAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5430,7 +5430,7 @@ pub struct OpBitwiseOr {
 }
 impl Inst for OpBitwiseOr {
     const META: &InstMeta = &OP_BITWISE_OR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5462,7 +5462,7 @@ pub struct OpBitwiseXor {
 }
 impl Inst for OpBitwiseXor {
     const META: &InstMeta = &OP_BITWISE_XOR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5494,7 +5494,7 @@ pub struct OpBitwiseAnd {
 }
 impl Inst for OpBitwiseAnd {
     const META: &InstMeta = &OP_BITWISE_AND;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5525,7 +5525,7 @@ pub struct OpNot {
 }
 impl Inst for OpNot {
     const META: &InstMeta = &OP_NOT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5556,7 +5556,7 @@ pub struct OpBitFieldInsert {
 }
 impl Inst for OpBitFieldInsert {
     const META: &InstMeta = &OP_BIT_FIELD_INSERT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5595,7 +5595,7 @@ pub struct OpBitFieldSExtract {
 }
 impl Inst for OpBitFieldSExtract {
     const META: &InstMeta = &OP_BIT_FIELD_S_EXTRACT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5631,7 +5631,7 @@ pub struct OpBitFieldUExtract {
 }
 impl Inst for OpBitFieldUExtract {
     const META: &InstMeta = &OP_BIT_FIELD_U_EXTRACT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5665,7 +5665,7 @@ pub struct OpBitReverse {
 }
 impl Inst for OpBitReverse {
     const META: &InstMeta = &OP_BIT_REVERSE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5693,7 +5693,7 @@ pub struct OpBitCount {
 }
 impl Inst for OpBitCount {
     const META: &InstMeta = &OP_BIT_COUNT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5721,7 +5721,7 @@ pub struct OpDPdx {
 }
 impl Inst for OpDPdx {
     const META: &InstMeta = &OP_D_PDX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5749,7 +5749,7 @@ pub struct OpDPdy {
 }
 impl Inst for OpDPdy {
     const META: &InstMeta = &OP_D_PDY;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5777,7 +5777,7 @@ pub struct OpFwidth {
 }
 impl Inst for OpFwidth {
     const META: &InstMeta = &OP_FWIDTH;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5805,7 +5805,7 @@ pub struct OpDPdxFine {
 }
 impl Inst for OpDPdxFine {
     const META: &InstMeta = &OP_D_PDX_FINE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5833,7 +5833,7 @@ pub struct OpDPdyFine {
 }
 impl Inst for OpDPdyFine {
     const META: &InstMeta = &OP_D_PDY_FINE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5861,7 +5861,7 @@ pub struct OpFwidthFine {
 }
 impl Inst for OpFwidthFine {
     const META: &InstMeta = &OP_FWIDTH_FINE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5889,7 +5889,7 @@ pub struct OpDPdxCoarse {
 }
 impl Inst for OpDPdxCoarse {
     const META: &InstMeta = &OP_D_PDX_COARSE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5917,7 +5917,7 @@ pub struct OpDPdyCoarse {
 }
 impl Inst for OpDPdyCoarse {
     const META: &InstMeta = &OP_D_PDY_COARSE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5945,7 +5945,7 @@ pub struct OpFwidthCoarse {
 }
 impl Inst for OpFwidthCoarse {
     const META: &InstMeta = &OP_FWIDTH_COARSE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -5969,7 +5969,7 @@ impl Inst for OpFwidthCoarse {
 pub struct OpEmitVertex {}
 impl Inst for OpEmitVertex {
     const META: &InstMeta = &OP_EMIT_VERTEX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -5983,7 +5983,7 @@ impl Inst for OpEmitVertex {
 pub struct OpEndPrimitive {}
 impl Inst for OpEndPrimitive {
     const META: &InstMeta = &OP_END_PRIMITIVE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -5999,7 +5999,7 @@ pub struct OpEmitStreamVertex {
 }
 impl Inst for OpEmitStreamVertex {
     const META: &InstMeta = &OP_EMIT_STREAM_VERTEX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.stream);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.stream, &mut *writer)?;
@@ -6018,7 +6018,7 @@ pub struct OpEndStreamPrimitive {
 }
 impl Inst for OpEndStreamPrimitive {
     const META: &InstMeta = &OP_END_STREAM_PRIMITIVE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.stream);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.stream, &mut *writer)?;
@@ -6039,7 +6039,7 @@ pub struct OpControlBarrier {
 }
 impl Inst for OpControlBarrier {
     const META: &InstMeta = &OP_CONTROL_BARRIER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.memory)
@@ -6066,7 +6066,7 @@ pub struct OpMemoryBarrier {
 }
 impl Inst for OpMemoryBarrier {
     const META: &InstMeta = &OP_MEMORY_BARRIER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.memory)
             + OperandEncoding::word_len(&self.semantics);
@@ -6093,7 +6093,7 @@ pub struct OpAtomicLoad {
 }
 impl Inst for OpAtomicLoad {
     const META: &InstMeta = &OP_ATOMIC_LOAD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6128,7 +6128,7 @@ pub struct OpAtomicStore {
 }
 impl Inst for OpAtomicStore {
     const META: &InstMeta = &OP_ATOMIC_STORE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.memory)
@@ -6162,7 +6162,7 @@ pub struct OpAtomicExchange {
 }
 impl Inst for OpAtomicExchange {
     const META: &InstMeta = &OP_ATOMIC_EXCHANGE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6204,7 +6204,7 @@ pub struct OpAtomicCompareExchange {
 }
 impl Inst for OpAtomicCompareExchange {
     const META: &InstMeta = &OP_ATOMIC_COMPARE_EXCHANGE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6252,7 +6252,7 @@ pub struct OpAtomicCompareExchangeWeak {
 }
 impl Inst for OpAtomicCompareExchangeWeak {
     const META: &InstMeta = &OP_ATOMIC_COMPARE_EXCHANGE_WEAK;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6297,7 +6297,7 @@ pub struct OpAtomicIIncrement {
 }
 impl Inst for OpAtomicIIncrement {
     const META: &InstMeta = &OP_ATOMIC_I_INCREMENT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6333,7 +6333,7 @@ pub struct OpAtomicIDecrement {
 }
 impl Inst for OpAtomicIDecrement {
     const META: &InstMeta = &OP_ATOMIC_I_DECREMENT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6370,7 +6370,7 @@ pub struct OpAtomicIAdd {
 }
 impl Inst for OpAtomicIAdd {
     const META: &InstMeta = &OP_ATOMIC_I_ADD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6410,7 +6410,7 @@ pub struct OpAtomicISub {
 }
 impl Inst for OpAtomicISub {
     const META: &InstMeta = &OP_ATOMIC_I_SUB;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6450,7 +6450,7 @@ pub struct OpAtomicSMin {
 }
 impl Inst for OpAtomicSMin {
     const META: &InstMeta = &OP_ATOMIC_S_MIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6490,7 +6490,7 @@ pub struct OpAtomicUMin {
 }
 impl Inst for OpAtomicUMin {
     const META: &InstMeta = &OP_ATOMIC_U_MIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6530,7 +6530,7 @@ pub struct OpAtomicSMax {
 }
 impl Inst for OpAtomicSMax {
     const META: &InstMeta = &OP_ATOMIC_S_MAX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6570,7 +6570,7 @@ pub struct OpAtomicUMax {
 }
 impl Inst for OpAtomicUMax {
     const META: &InstMeta = &OP_ATOMIC_U_MAX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6610,7 +6610,7 @@ pub struct OpAtomicAnd {
 }
 impl Inst for OpAtomicAnd {
     const META: &InstMeta = &OP_ATOMIC_AND;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6650,7 +6650,7 @@ pub struct OpAtomicOr {
 }
 impl Inst for OpAtomicOr {
     const META: &InstMeta = &OP_ATOMIC_OR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6690,7 +6690,7 @@ pub struct OpAtomicXor {
 }
 impl Inst for OpAtomicXor {
     const META: &InstMeta = &OP_ATOMIC_XOR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6727,7 +6727,7 @@ pub struct OpPhi {
 }
 impl Inst for OpPhi {
     const META: &InstMeta = &OP_PHI;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -6755,7 +6755,7 @@ pub struct OpLoopMerge {
 }
 impl Inst for OpLoopMerge {
     const META: &InstMeta = &OP_LOOP_MERGE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.merge_block)
             + OperandEncoding::word_len(&self.continue_target)
@@ -6782,7 +6782,7 @@ pub struct OpSelectionMerge {
 }
 impl Inst for OpSelectionMerge {
     const META: &InstMeta = &OP_SELECTION_MERGE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.merge_block)
             + OperandEncoding::word_len(&self.selection_control);
@@ -6805,7 +6805,7 @@ pub struct OpLabel {
 }
 impl Inst for OpLabel {
     const META: &InstMeta = &OP_LABEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -6824,7 +6824,7 @@ pub struct OpBranch {
 }
 impl Inst for OpBranch {
     const META: &InstMeta = &OP_BRANCH;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.target_label);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.target_label, &mut *writer)?;
@@ -6846,7 +6846,7 @@ pub struct OpBranchConditional {
 }
 impl Inst for OpBranchConditional {
     const META: &InstMeta = &OP_BRANCH_CONDITIONAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.condition)
             + OperandEncoding::word_len(&self.true_label)
@@ -6877,7 +6877,7 @@ pub struct OpSwitch {
 }
 impl Inst for OpSwitch {
     const META: &InstMeta = &OP_SWITCH;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.selector)
             + OperandEncoding::word_len(&self.default)
@@ -6901,7 +6901,7 @@ impl Inst for OpSwitch {
 pub struct OpKill {}
 impl Inst for OpKill {
     const META: &InstMeta = &OP_KILL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -6915,7 +6915,7 @@ impl Inst for OpKill {
 pub struct OpReturn {}
 impl Inst for OpReturn {
     const META: &InstMeta = &OP_RETURN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -6931,7 +6931,7 @@ pub struct OpReturnValue {
 }
 impl Inst for OpReturnValue {
     const META: &InstMeta = &OP_RETURN_VALUE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.value);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
@@ -6948,7 +6948,7 @@ impl Inst for OpReturnValue {
 pub struct OpUnreachable {}
 impl Inst for OpUnreachable {
     const META: &InstMeta = &OP_UNREACHABLE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -6965,7 +6965,7 @@ pub struct OpLifetimeStart {
 }
 impl Inst for OpLifetimeStart {
     const META: &InstMeta = &OP_LIFETIME_START;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.pointer) + OperandEncoding::word_len(&self.size);
         writer.write_op(Self::META.opcode, len)?;
@@ -6988,7 +6988,7 @@ pub struct OpLifetimeStop {
 }
 impl Inst for OpLifetimeStop {
     const META: &InstMeta = &OP_LIFETIME_STOP;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.pointer) + OperandEncoding::word_len(&self.size);
         writer.write_op(Self::META.opcode, len)?;
@@ -7017,7 +7017,7 @@ pub struct OpGroupAsyncCopy {
 }
 impl Inst for OpGroupAsyncCopy {
     const META: &InstMeta = &OP_GROUP_ASYNC_COPY;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7060,7 +7060,7 @@ pub struct OpGroupWaitEvents {
 }
 impl Inst for OpGroupWaitEvents {
     const META: &InstMeta = &OP_GROUP_WAIT_EVENTS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.num_events)
@@ -7089,7 +7089,7 @@ pub struct OpGroupAll {
 }
 impl Inst for OpGroupAll {
     const META: &InstMeta = &OP_GROUP_ALL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7121,7 +7121,7 @@ pub struct OpGroupAny {
 }
 impl Inst for OpGroupAny {
     const META: &InstMeta = &OP_GROUP_ANY;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7154,7 +7154,7 @@ pub struct OpGroupBroadcast {
 }
 impl Inst for OpGroupBroadcast {
     const META: &InstMeta = &OP_GROUP_BROADCAST;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7190,7 +7190,7 @@ pub struct OpGroupIAdd {
 }
 impl Inst for OpGroupIAdd {
     const META: &InstMeta = &OP_GROUP_I_ADD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7226,7 +7226,7 @@ pub struct OpGroupFAdd {
 }
 impl Inst for OpGroupFAdd {
     const META: &InstMeta = &OP_GROUP_F_ADD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7262,7 +7262,7 @@ pub struct OpGroupFMin {
 }
 impl Inst for OpGroupFMin {
     const META: &InstMeta = &OP_GROUP_F_MIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7298,7 +7298,7 @@ pub struct OpGroupUMin {
 }
 impl Inst for OpGroupUMin {
     const META: &InstMeta = &OP_GROUP_U_MIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7334,7 +7334,7 @@ pub struct OpGroupSMin {
 }
 impl Inst for OpGroupSMin {
     const META: &InstMeta = &OP_GROUP_S_MIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7370,7 +7370,7 @@ pub struct OpGroupFMax {
 }
 impl Inst for OpGroupFMax {
     const META: &InstMeta = &OP_GROUP_F_MAX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7406,7 +7406,7 @@ pub struct OpGroupUMax {
 }
 impl Inst for OpGroupUMax {
     const META: &InstMeta = &OP_GROUP_U_MAX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7442,7 +7442,7 @@ pub struct OpGroupSMax {
 }
 impl Inst for OpGroupSMax {
     const META: &InstMeta = &OP_GROUP_S_MAX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7479,7 +7479,7 @@ pub struct OpReadPipe {
 }
 impl Inst for OpReadPipe {
     const META: &InstMeta = &OP_READ_PIPE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7519,7 +7519,7 @@ pub struct OpWritePipe {
 }
 impl Inst for OpWritePipe {
     const META: &InstMeta = &OP_WRITE_PIPE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7561,7 +7561,7 @@ pub struct OpReservedReadPipe {
 }
 impl Inst for OpReservedReadPipe {
     const META: &InstMeta = &OP_RESERVED_READ_PIPE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7609,7 +7609,7 @@ pub struct OpReservedWritePipe {
 }
 impl Inst for OpReservedWritePipe {
     const META: &InstMeta = &OP_RESERVED_WRITE_PIPE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7655,7 +7655,7 @@ pub struct OpReserveReadPipePackets {
 }
 impl Inst for OpReserveReadPipePackets {
     const META: &InstMeta = &OP_RESERVE_READ_PIPE_PACKETS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7695,7 +7695,7 @@ pub struct OpReserveWritePipePackets {
 }
 impl Inst for OpReserveWritePipePackets {
     const META: &InstMeta = &OP_RESERVE_WRITE_PIPE_PACKETS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7733,7 +7733,7 @@ pub struct OpCommitReadPipe {
 }
 impl Inst for OpCommitReadPipe {
     const META: &InstMeta = &OP_COMMIT_READ_PIPE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pipe)
             + OperandEncoding::word_len(&self.reserve_id)
@@ -7765,7 +7765,7 @@ pub struct OpCommitWritePipe {
 }
 impl Inst for OpCommitWritePipe {
     const META: &InstMeta = &OP_COMMIT_WRITE_PIPE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pipe)
             + OperandEncoding::word_len(&self.reserve_id)
@@ -7796,7 +7796,7 @@ pub struct OpIsValidReserveId {
 }
 impl Inst for OpIsValidReserveId {
     const META: &InstMeta = &OP_IS_VALID_RESERVE_ID;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7826,7 +7826,7 @@ pub struct OpGetNumPipePackets {
 }
 impl Inst for OpGetNumPipePackets {
     const META: &InstMeta = &OP_GET_NUM_PIPE_PACKETS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7862,7 +7862,7 @@ pub struct OpGetMaxPipePackets {
 }
 impl Inst for OpGetMaxPipePackets {
     const META: &InstMeta = &OP_GET_MAX_PIPE_PACKETS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7900,7 +7900,7 @@ pub struct OpGroupReserveReadPipePackets {
 }
 impl Inst for OpGroupReserveReadPipePackets {
     const META: &InstMeta = &OP_GROUP_RESERVE_READ_PIPE_PACKETS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7944,7 +7944,7 @@ pub struct OpGroupReserveWritePipePackets {
 }
 impl Inst for OpGroupReserveWritePipePackets {
     const META: &InstMeta = &OP_GROUP_RESERVE_WRITE_PIPE_PACKETS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -7986,7 +7986,7 @@ pub struct OpGroupCommitReadPipe {
 }
 impl Inst for OpGroupCommitReadPipe {
     const META: &InstMeta = &OP_GROUP_COMMIT_READ_PIPE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.pipe)
@@ -8022,7 +8022,7 @@ pub struct OpGroupCommitWritePipe {
 }
 impl Inst for OpGroupCommitWritePipe {
     const META: &InstMeta = &OP_GROUP_COMMIT_WRITE_PIPE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.pipe)
@@ -8059,7 +8059,7 @@ pub struct OpEnqueueMarker {
 }
 impl Inst for OpEnqueueMarker {
     const META: &InstMeta = &OP_ENQUEUE_MARKER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8106,7 +8106,7 @@ pub struct OpEnqueueKernel {
 }
 impl Inst for OpEnqueueKernel {
     const META: &InstMeta = &OP_ENQUEUE_KERNEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8168,7 +8168,7 @@ pub struct OpGetKernelNDrangeSubGroupCount {
 }
 impl Inst for OpGetKernelNDrangeSubGroupCount {
     const META: &InstMeta = &OP_GET_KERNEL_N_DRANGE_SUB_GROUP_COUNT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8212,7 +8212,7 @@ pub struct OpGetKernelNDrangeMaxSubGroupSize {
 }
 impl Inst for OpGetKernelNDrangeMaxSubGroupSize {
     const META: &InstMeta = &OP_GET_KERNEL_N_DRANGE_MAX_SUB_GROUP_SIZE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8255,7 +8255,7 @@ pub struct OpGetKernelWorkGroupSize {
 }
 impl Inst for OpGetKernelWorkGroupSize {
     const META: &InstMeta = &OP_GET_KERNEL_WORK_GROUP_SIZE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8295,7 +8295,7 @@ pub struct OpGetKernelPreferredWorkGroupSizeMultiple {
 }
 impl Inst for OpGetKernelPreferredWorkGroupSizeMultiple {
     const META: &InstMeta = &OP_GET_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8330,7 +8330,7 @@ pub struct OpRetainEvent {
 }
 impl Inst for OpRetainEvent {
     const META: &InstMeta = &OP_RETAIN_EVENT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.event);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.event, &mut *writer)?;
@@ -8349,7 +8349,7 @@ pub struct OpReleaseEvent {
 }
 impl Inst for OpReleaseEvent {
     const META: &InstMeta = &OP_RELEASE_EVENT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.event);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.event, &mut *writer)?;
@@ -8369,7 +8369,7 @@ pub struct OpCreateUserEvent {
 }
 impl Inst for OpCreateUserEvent {
     const META: &InstMeta = &OP_CREATE_USER_EVENT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -8394,7 +8394,7 @@ pub struct OpIsValidEvent {
 }
 impl Inst for OpIsValidEvent {
     const META: &InstMeta = &OP_IS_VALID_EVENT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8421,7 +8421,7 @@ pub struct OpSetUserEventStatus {
 }
 impl Inst for OpSetUserEventStatus {
     const META: &InstMeta = &OP_SET_USER_EVENT_STATUS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.event) + OperandEncoding::word_len(&self.status);
         writer.write_op(Self::META.opcode, len)?;
@@ -8445,7 +8445,7 @@ pub struct OpCaptureEventProfilingInfo {
 }
 impl Inst for OpCaptureEventProfilingInfo {
     const META: &InstMeta = &OP_CAPTURE_EVENT_PROFILING_INFO;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.event)
             + OperandEncoding::word_len(&self.profiling_info)
@@ -8472,7 +8472,7 @@ pub struct OpGetDefaultQueue {
 }
 impl Inst for OpGetDefaultQueue {
     const META: &InstMeta = &OP_GET_DEFAULT_QUEUE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -8499,7 +8499,7 @@ pub struct OpBuildNDRange {
 }
 impl Inst for OpBuildNDRange {
     const META: &InstMeta = &OP_BUILD_ND_RANGE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8535,7 +8535,7 @@ pub struct OpImageSparseSampleImplicitLod {
 }
 impl Inst for OpImageSparseSampleImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_IMPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8571,7 +8571,7 @@ pub struct OpImageSparseSampleExplicitLod {
 }
 impl Inst for OpImageSparseSampleExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_EXPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8608,7 +8608,7 @@ pub struct OpImageSparseSampleDrefImplicitLod {
 }
 impl Inst for OpImageSparseSampleDrefImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_DREF_IMPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8648,7 +8648,7 @@ pub struct OpImageSparseSampleDrefExplicitLod {
 }
 impl Inst for OpImageSparseSampleDrefExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_DREF_EXPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8687,7 +8687,7 @@ pub struct OpImageSparseSampleProjImplicitLod {
 }
 impl Inst for OpImageSparseSampleProjImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_PROJ_IMPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8723,7 +8723,7 @@ pub struct OpImageSparseSampleProjExplicitLod {
 }
 impl Inst for OpImageSparseSampleProjExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_PROJ_EXPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8760,7 +8760,7 @@ pub struct OpImageSparseSampleProjDrefImplicitLod {
 }
 impl Inst for OpImageSparseSampleProjDrefImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_PROJ_DREF_IMPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8800,7 +8800,7 @@ pub struct OpImageSparseSampleProjDrefExplicitLod {
 }
 impl Inst for OpImageSparseSampleProjDrefExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_PROJ_DREF_EXPLICIT_LOD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8839,7 +8839,7 @@ pub struct OpImageSparseFetch {
 }
 impl Inst for OpImageSparseFetch {
     const META: &InstMeta = &OP_IMAGE_SPARSE_FETCH;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8876,7 +8876,7 @@ pub struct OpImageSparseGather {
 }
 impl Inst for OpImageSparseGather {
     const META: &InstMeta = &OP_IMAGE_SPARSE_GATHER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8916,7 +8916,7 @@ pub struct OpImageSparseDrefGather {
 }
 impl Inst for OpImageSparseDrefGather {
     const META: &InstMeta = &OP_IMAGE_SPARSE_DREF_GATHER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8953,7 +8953,7 @@ pub struct OpImageSparseTexelsResident {
 }
 impl Inst for OpImageSparseTexelsResident {
     const META: &InstMeta = &OP_IMAGE_SPARSE_TEXELS_RESIDENT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -8977,7 +8977,7 @@ impl Inst for OpImageSparseTexelsResident {
 pub struct OpNoLine {}
 impl Inst for OpNoLine {
     const META: &InstMeta = &OP_NO_LINE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -8997,7 +8997,7 @@ pub struct OpAtomicFlagTestAndSet {
 }
 impl Inst for OpAtomicFlagTestAndSet {
     const META: &InstMeta = &OP_ATOMIC_FLAG_TEST_AND_SET;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9031,7 +9031,7 @@ pub struct OpAtomicFlagClear {
 }
 impl Inst for OpAtomicFlagClear {
     const META: &InstMeta = &OP_ATOMIC_FLAG_CLEAR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.memory)
@@ -9061,7 +9061,7 @@ pub struct OpImageSparseRead {
 }
 impl Inst for OpImageSparseRead {
     const META: &InstMeta = &OP_IMAGE_SPARSE_READ;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9095,7 +9095,7 @@ pub struct OpSizeOf {
 }
 impl Inst for OpSizeOf {
     const META: &InstMeta = &OP_SIZE_OF;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9121,7 +9121,7 @@ pub struct OpTypePipeStorage {
 }
 impl Inst for OpTypePipeStorage {
     const META: &InstMeta = &OP_TYPE_PIPE_STORAGE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -9144,7 +9144,7 @@ pub struct OpConstantPipeStorage {
 }
 impl Inst for OpConstantPipeStorage {
     const META: &InstMeta = &OP_CONSTANT_PIPE_STORAGE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9178,7 +9178,7 @@ pub struct OpCreatePipeFromPipeStorage {
 }
 impl Inst for OpCreatePipeFromPipeStorage {
     const META: &InstMeta = &OP_CREATE_PIPE_FROM_PIPE_STORAGE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9210,7 +9210,7 @@ pub struct OpGetKernelLocalSizeForSubgroupCount {
 }
 impl Inst for OpGetKernelLocalSizeForSubgroupCount {
     const META: &InstMeta = &OP_GET_KERNEL_LOCAL_SIZE_FOR_SUBGROUP_COUNT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9253,7 +9253,7 @@ pub struct OpGetKernelMaxNumSubgroups {
 }
 impl Inst for OpGetKernelMaxNumSubgroups {
     const META: &InstMeta = &OP_GET_KERNEL_MAX_NUM_SUBGROUPS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9288,7 +9288,7 @@ pub struct OpTypeNamedBarrier {
 }
 impl Inst for OpTypeNamedBarrier {
     const META: &InstMeta = &OP_TYPE_NAMED_BARRIER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -9309,7 +9309,7 @@ pub struct OpNamedBarrierInitialize {
 }
 impl Inst for OpNamedBarrierInitialize {
     const META: &InstMeta = &OP_NAMED_BARRIER_INITIALIZE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9337,7 +9337,7 @@ pub struct OpMemoryNamedBarrier {
 }
 impl Inst for OpMemoryNamedBarrier {
     const META: &InstMeta = &OP_MEMORY_NAMED_BARRIER;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.named_barrier)
             + OperandEncoding::word_len(&self.memory)
@@ -9363,7 +9363,7 @@ pub struct OpModuleProcessed {
 }
 impl Inst for OpModuleProcessed {
     const META: &InstMeta = &OP_MODULE_PROCESSED;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.process);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.process, &mut *writer)?;
@@ -9383,7 +9383,7 @@ pub struct OpExecutionModeId {
 }
 impl Inst for OpExecutionModeId {
     const META: &InstMeta = &OP_EXECUTION_MODE_ID;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.entry_point)
             + OperandEncoding::word_len(&self.mode);
@@ -9407,7 +9407,7 @@ pub struct OpDecorateId {
 }
 impl Inst for OpDecorateId {
     const META: &InstMeta = &OP_DECORATE_ID;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.target)
             + OperandEncoding::word_len(&self.decoration);
@@ -9432,7 +9432,7 @@ pub struct OpGroupNonUniformElect {
 }
 impl Inst for OpGroupNonUniformElect {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_ELECT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9461,7 +9461,7 @@ pub struct OpGroupNonUniformAll {
 }
 impl Inst for OpGroupNonUniformAll {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_ALL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9493,7 +9493,7 @@ pub struct OpGroupNonUniformAny {
 }
 impl Inst for OpGroupNonUniformAny {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_ANY;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9525,7 +9525,7 @@ pub struct OpGroupNonUniformAllEqual {
 }
 impl Inst for OpGroupNonUniformAllEqual {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_ALL_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9558,7 +9558,7 @@ pub struct OpGroupNonUniformBroadcast {
 }
 impl Inst for OpGroupNonUniformBroadcast {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BROADCAST;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9593,7 +9593,7 @@ pub struct OpGroupNonUniformBroadcastFirst {
 }
 impl Inst for OpGroupNonUniformBroadcastFirst {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BROADCAST_FIRST;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9625,7 +9625,7 @@ pub struct OpGroupNonUniformBallot {
 }
 impl Inst for OpGroupNonUniformBallot {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BALLOT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9657,7 +9657,7 @@ pub struct OpGroupNonUniformInverseBallot {
 }
 impl Inst for OpGroupNonUniformInverseBallot {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_INVERSE_BALLOT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9690,7 +9690,7 @@ pub struct OpGroupNonUniformBallotBitExtract {
 }
 impl Inst for OpGroupNonUniformBallotBitExtract {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BALLOT_BIT_EXTRACT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9726,7 +9726,7 @@ pub struct OpGroupNonUniformBallotBitCount {
 }
 impl Inst for OpGroupNonUniformBallotBitCount {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BALLOT_BIT_COUNT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9761,7 +9761,7 @@ pub struct OpGroupNonUniformBallotFindLSB {
 }
 impl Inst for OpGroupNonUniformBallotFindLSB {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BALLOT_FIND_LSB;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9793,7 +9793,7 @@ pub struct OpGroupNonUniformBallotFindMSB {
 }
 impl Inst for OpGroupNonUniformBallotFindMSB {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BALLOT_FIND_MSB;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9826,7 +9826,7 @@ pub struct OpGroupNonUniformShuffle {
 }
 impl Inst for OpGroupNonUniformShuffle {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_SHUFFLE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9862,7 +9862,7 @@ pub struct OpGroupNonUniformShuffleXor {
 }
 impl Inst for OpGroupNonUniformShuffleXor {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_SHUFFLE_XOR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9898,7 +9898,7 @@ pub struct OpGroupNonUniformShuffleUp {
 }
 impl Inst for OpGroupNonUniformShuffleUp {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_SHUFFLE_UP;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9934,7 +9934,7 @@ pub struct OpGroupNonUniformShuffleDown {
 }
 impl Inst for OpGroupNonUniformShuffleDown {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_SHUFFLE_DOWN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -9971,7 +9971,7 @@ pub struct OpGroupNonUniformIAdd {
 }
 impl Inst for OpGroupNonUniformIAdd {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_I_ADD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10011,7 +10011,7 @@ pub struct OpGroupNonUniformFAdd {
 }
 impl Inst for OpGroupNonUniformFAdd {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_F_ADD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10051,7 +10051,7 @@ pub struct OpGroupNonUniformIMul {
 }
 impl Inst for OpGroupNonUniformIMul {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_I_MUL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10091,7 +10091,7 @@ pub struct OpGroupNonUniformFMul {
 }
 impl Inst for OpGroupNonUniformFMul {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_F_MUL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10131,7 +10131,7 @@ pub struct OpGroupNonUniformSMin {
 }
 impl Inst for OpGroupNonUniformSMin {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_S_MIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10171,7 +10171,7 @@ pub struct OpGroupNonUniformUMin {
 }
 impl Inst for OpGroupNonUniformUMin {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_U_MIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10211,7 +10211,7 @@ pub struct OpGroupNonUniformFMin {
 }
 impl Inst for OpGroupNonUniformFMin {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_F_MIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10251,7 +10251,7 @@ pub struct OpGroupNonUniformSMax {
 }
 impl Inst for OpGroupNonUniformSMax {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_S_MAX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10291,7 +10291,7 @@ pub struct OpGroupNonUniformUMax {
 }
 impl Inst for OpGroupNonUniformUMax {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_U_MAX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10331,7 +10331,7 @@ pub struct OpGroupNonUniformFMax {
 }
 impl Inst for OpGroupNonUniformFMax {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_F_MAX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10371,7 +10371,7 @@ pub struct OpGroupNonUniformBitwiseAnd {
 }
 impl Inst for OpGroupNonUniformBitwiseAnd {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BITWISE_AND;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10411,7 +10411,7 @@ pub struct OpGroupNonUniformBitwiseOr {
 }
 impl Inst for OpGroupNonUniformBitwiseOr {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BITWISE_OR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10451,7 +10451,7 @@ pub struct OpGroupNonUniformBitwiseXor {
 }
 impl Inst for OpGroupNonUniformBitwiseXor {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BITWISE_XOR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10491,7 +10491,7 @@ pub struct OpGroupNonUniformLogicalAnd {
 }
 impl Inst for OpGroupNonUniformLogicalAnd {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_LOGICAL_AND;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10531,7 +10531,7 @@ pub struct OpGroupNonUniformLogicalOr {
 }
 impl Inst for OpGroupNonUniformLogicalOr {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_LOGICAL_OR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10571,7 +10571,7 @@ pub struct OpGroupNonUniformLogicalXor {
 }
 impl Inst for OpGroupNonUniformLogicalXor {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_LOGICAL_XOR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10610,7 +10610,7 @@ pub struct OpGroupNonUniformQuadBroadcast {
 }
 impl Inst for OpGroupNonUniformQuadBroadcast {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_QUAD_BROADCAST;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10646,7 +10646,7 @@ pub struct OpGroupNonUniformQuadSwap {
 }
 impl Inst for OpGroupNonUniformQuadSwap {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_QUAD_SWAP;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10680,7 +10680,7 @@ pub struct OpCopyLogical {
 }
 impl Inst for OpCopyLogical {
     const META: &InstMeta = &OP_COPY_LOGICAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10709,7 +10709,7 @@ pub struct OpPtrEqual {
 }
 impl Inst for OpPtrEqual {
     const META: &InstMeta = &OP_PTR_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10741,7 +10741,7 @@ pub struct OpPtrNotEqual {
 }
 impl Inst for OpPtrNotEqual {
     const META: &InstMeta = &OP_PTR_NOT_EQUAL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10773,7 +10773,7 @@ pub struct OpPtrDiff {
 }
 impl Inst for OpPtrDiff {
     const META: &InstMeta = &OP_PTR_DIFF;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10805,7 +10805,7 @@ pub struct OpColorAttachmentReadEXT {
 }
 impl Inst for OpColorAttachmentReadEXT {
     const META: &InstMeta = &OP_COLOR_ATTACHMENT_READ_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10836,7 +10836,7 @@ pub struct OpDepthAttachmentReadEXT {
 }
 impl Inst for OpDepthAttachmentReadEXT {
     const META: &InstMeta = &OP_DEPTH_ATTACHMENT_READ_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10864,7 +10864,7 @@ pub struct OpStencilAttachmentReadEXT {
 }
 impl Inst for OpStencilAttachmentReadEXT {
     const META: &InstMeta = &OP_STENCIL_ATTACHMENT_READ_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10893,7 +10893,7 @@ pub struct OpTypeTensorARM {
 }
 impl Inst for OpTypeTensorARM {
     const META: &InstMeta = &OP_TYPE_TENSOR_ARM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.element_type)
@@ -10926,7 +10926,7 @@ pub struct OpTensorReadARM {
 }
 impl Inst for OpTensorReadARM {
     const META: &InstMeta = &OP_TENSOR_READ_ARM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -10961,7 +10961,7 @@ pub struct OpTensorWriteARM {
 }
 impl Inst for OpTensorWriteARM {
     const META: &InstMeta = &OP_TENSOR_WRITE_ARM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.tensor)
             + OperandEncoding::word_len(&self.coordinates)
@@ -10993,7 +10993,7 @@ pub struct OpTensorQuerySizeARM {
 }
 impl Inst for OpTensorQuerySizeARM {
     const META: &InstMeta = &OP_TENSOR_QUERY_SIZE_ARM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11024,7 +11024,7 @@ pub struct OpGraphConstantARM {
 }
 impl Inst for OpGraphConstantARM {
     const META: &InstMeta = &OP_GRAPH_CONSTANT_ARM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11052,7 +11052,7 @@ pub struct OpGraphEntryPointARM {
 }
 impl Inst for OpGraphEntryPointARM {
     const META: &InstMeta = &OP_GRAPH_ENTRY_POINT_ARM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.graph)
             + OperandEncoding::word_len(&self.name)
@@ -11079,7 +11079,7 @@ pub struct OpGraphARM {
 }
 impl Inst for OpGraphARM {
     const META: &InstMeta = &OP_GRAPH_ARM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -11105,7 +11105,7 @@ pub struct OpGraphInputARM {
 }
 impl Inst for OpGraphInputARM {
     const META: &InstMeta = &OP_GRAPH_INPUT_ARM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11136,7 +11136,7 @@ pub struct OpGraphSetOutputARM {
 }
 impl Inst for OpGraphSetOutputARM {
     const META: &InstMeta = &OP_GRAPH_SET_OUTPUT_ARM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.value)
             + OperandEncoding::word_len(&self.output_index)
@@ -11160,7 +11160,7 @@ impl Inst for OpGraphSetOutputARM {
 pub struct OpGraphEndARM {}
 impl Inst for OpGraphEndARM {
     const META: &InstMeta = &OP_GRAPH_END_ARM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -11178,7 +11178,7 @@ pub struct OpTypeGraphARM {
 }
 impl Inst for OpTypeGraphARM {
     const META: &InstMeta = &OP_TYPE_GRAPH_ARM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.num_inputs)
@@ -11202,7 +11202,7 @@ impl Inst for OpTypeGraphARM {
 pub struct OpTerminateInvocation {}
 impl Inst for OpTerminateInvocation {
     const META: &InstMeta = &OP_TERMINATE_INVOCATION;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -11219,7 +11219,7 @@ pub struct OpTypeUntypedPointerKHR {
 }
 impl Inst for OpTypeUntypedPointerKHR {
     const META: &InstMeta = &OP_TYPE_UNTYPED_POINTER_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.storage_class);
@@ -11246,7 +11246,7 @@ pub struct OpUntypedVariableKHR {
 }
 impl Inst for OpUntypedVariableKHR {
     const META: &InstMeta = &OP_UNTYPED_VARIABLE_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11282,7 +11282,7 @@ pub struct OpUntypedAccessChainKHR {
 }
 impl Inst for OpUntypedAccessChainKHR {
     const META: &InstMeta = &OP_UNTYPED_ACCESS_CHAIN_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11318,7 +11318,7 @@ pub struct OpUntypedInBoundsAccessChainKHR {
 }
 impl Inst for OpUntypedInBoundsAccessChainKHR {
     const META: &InstMeta = &OP_UNTYPED_IN_BOUNDS_ACCESS_CHAIN_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11352,7 +11352,7 @@ pub struct OpSubgroupBallotKHR {
 }
 impl Inst for OpSubgroupBallotKHR {
     const META: &InstMeta = &OP_SUBGROUP_BALLOT_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11380,7 +11380,7 @@ pub struct OpSubgroupFirstInvocationKHR {
 }
 impl Inst for OpSubgroupFirstInvocationKHR {
     const META: &InstMeta = &OP_SUBGROUP_FIRST_INVOCATION_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11411,7 +11411,7 @@ pub struct OpUntypedPtrAccessChainKHR {
 }
 impl Inst for OpUntypedPtrAccessChainKHR {
     const META: &InstMeta = &OP_UNTYPED_PTR_ACCESS_CHAIN_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11451,7 +11451,7 @@ pub struct OpUntypedInBoundsPtrAccessChainKHR {
 }
 impl Inst for OpUntypedInBoundsPtrAccessChainKHR {
     const META: &InstMeta = &OP_UNTYPED_IN_BOUNDS_PTR_ACCESS_CHAIN_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11490,7 +11490,7 @@ pub struct OpUntypedArrayLengthKHR {
 }
 impl Inst for OpUntypedArrayLengthKHR {
     const META: &InstMeta = &OP_UNTYPED_ARRAY_LENGTH_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11526,7 +11526,7 @@ pub struct OpUntypedPrefetchKHR {
 }
 impl Inst for OpUntypedPrefetchKHR {
     const META: &InstMeta = &OP_UNTYPED_PREFETCH_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer_type)
             + OperandEncoding::word_len(&self.num_bytes)
@@ -11562,7 +11562,7 @@ pub struct OpFmaKHR {
 }
 impl Inst for OpFmaKHR {
     const META: &InstMeta = &OP_FMA_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11596,7 +11596,7 @@ pub struct OpSubgroupAllKHR {
 }
 impl Inst for OpSubgroupAllKHR {
     const META: &InstMeta = &OP_SUBGROUP_ALL_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11624,7 +11624,7 @@ pub struct OpSubgroupAnyKHR {
 }
 impl Inst for OpSubgroupAnyKHR {
     const META: &InstMeta = &OP_SUBGROUP_ANY_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11652,7 +11652,7 @@ pub struct OpSubgroupAllEqualKHR {
 }
 impl Inst for OpSubgroupAllEqualKHR {
     const META: &InstMeta = &OP_SUBGROUP_ALL_EQUAL_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11683,7 +11683,7 @@ pub struct OpGroupNonUniformRotateKHR {
 }
 impl Inst for OpGroupNonUniformRotateKHR {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_ROTATE_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11721,7 +11721,7 @@ pub struct OpSubgroupReadInvocationKHR {
 }
 impl Inst for OpSubgroupReadInvocationKHR {
     const META: &InstMeta = &OP_SUBGROUP_READ_INVOCATION_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11754,7 +11754,7 @@ pub struct OpExtInstWithForwardRefsKHR {
 }
 impl Inst for OpExtInstWithForwardRefsKHR {
     const META: &InstMeta = &OP_EXT_INST_WITH_FORWARD_REFS_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11796,7 +11796,7 @@ pub struct OpUntypedGroupAsyncCopyKHR {
 }
 impl Inst for OpUntypedGroupAsyncCopyKHR {
     const META: &InstMeta = &OP_UNTYPED_GROUP_ASYNC_COPY_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11856,7 +11856,7 @@ pub struct OpTraceRayKHR {
 }
 impl Inst for OpTraceRayKHR {
     const META: &InstMeta = &OP_TRACE_RAY_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.accel)
             + OperandEncoding::word_len(&self.ray_flags)
@@ -11907,7 +11907,7 @@ pub struct OpExecuteCallableKHR {
 }
 impl Inst for OpExecuteCallableKHR {
     const META: &InstMeta = &OP_EXECUTE_CALLABLE_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.sbt_index)
             + OperandEncoding::word_len(&self.callable_data);
@@ -11932,7 +11932,7 @@ pub struct OpConvertUToAccelerationStructureKHR {
 }
 impl Inst for OpConvertUToAccelerationStructureKHR {
     const META: &InstMeta = &OP_CONVERT_U_TO_ACCELERATION_STRUCTURE_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -11956,7 +11956,7 @@ impl Inst for OpConvertUToAccelerationStructureKHR {
 pub struct OpIgnoreIntersectionKHR {}
 impl Inst for OpIgnoreIntersectionKHR {
     const META: &InstMeta = &OP_IGNORE_INTERSECTION_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -11970,7 +11970,7 @@ impl Inst for OpIgnoreIntersectionKHR {
 pub struct OpTerminateRayKHR {}
 impl Inst for OpTerminateRayKHR {
     const META: &InstMeta = &OP_TERMINATE_RAY_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -11990,7 +11990,7 @@ pub struct OpSDot {
 }
 impl Inst for OpSDot {
     const META: &InstMeta = &OP_S_DOT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12026,7 +12026,7 @@ pub struct OpUDot {
 }
 impl Inst for OpUDot {
     const META: &InstMeta = &OP_U_DOT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12062,7 +12062,7 @@ pub struct OpSUDot {
 }
 impl Inst for OpSUDot {
     const META: &InstMeta = &OP_SU_DOT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12099,7 +12099,7 @@ pub struct OpSDotAccSat {
 }
 impl Inst for OpSDotAccSat {
     const META: &InstMeta = &OP_S_DOT_ACC_SAT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12139,7 +12139,7 @@ pub struct OpUDotAccSat {
 }
 impl Inst for OpUDotAccSat {
     const META: &InstMeta = &OP_U_DOT_ACC_SAT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12179,7 +12179,7 @@ pub struct OpSUDotAccSat {
 }
 impl Inst for OpSUDotAccSat {
     const META: &InstMeta = &OP_SU_DOT_ACC_SAT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12219,7 +12219,7 @@ pub struct OpTypeCooperativeMatrixKHR {
 }
 impl Inst for OpTypeCooperativeMatrixKHR {
     const META: &InstMeta = &OP_TYPE_COOPERATIVE_MATRIX_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.component_type)
@@ -12259,7 +12259,7 @@ pub struct OpCooperativeMatrixLoadKHR {
 }
 impl Inst for OpCooperativeMatrixLoadKHR {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_LOAD_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12298,7 +12298,7 @@ pub struct OpCooperativeMatrixStoreKHR {
 }
 impl Inst for OpCooperativeMatrixStoreKHR {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_STORE_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.object)
@@ -12335,7 +12335,7 @@ pub struct OpCooperativeMatrixMulAddKHR {
 }
 impl Inst for OpCooperativeMatrixMulAddKHR {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_MUL_ADD_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12372,7 +12372,7 @@ pub struct OpCooperativeMatrixLengthKHR {
 }
 impl Inst for OpCooperativeMatrixLengthKHR {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_LENGTH_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12400,7 +12400,7 @@ pub struct OpConstantCompositeReplicateEXT {
 }
 impl Inst for OpConstantCompositeReplicateEXT {
     const META: &InstMeta = &OP_CONSTANT_COMPOSITE_REPLICATE_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12428,7 +12428,7 @@ pub struct OpSpecConstantCompositeReplicateEXT {
 }
 impl Inst for OpSpecConstantCompositeReplicateEXT {
     const META: &InstMeta = &OP_SPEC_CONSTANT_COMPOSITE_REPLICATE_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12456,7 +12456,7 @@ pub struct OpCompositeConstructReplicateEXT {
 }
 impl Inst for OpCompositeConstructReplicateEXT {
     const META: &InstMeta = &OP_COMPOSITE_CONSTRUCT_REPLICATE_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12482,7 +12482,7 @@ pub struct OpTypeRayQueryKHR {
 }
 impl Inst for OpTypeRayQueryKHR {
     const META: &InstMeta = &OP_TYPE_RAY_QUERY_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -12508,7 +12508,7 @@ pub struct OpRayQueryInitializeKHR {
 }
 impl Inst for OpRayQueryInitializeKHR {
     const META: &InstMeta = &OP_RAY_QUERY_INITIALIZE_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.accel)
@@ -12549,7 +12549,7 @@ pub struct OpRayQueryTerminateKHR {
 }
 impl Inst for OpRayQueryTerminateKHR {
     const META: &InstMeta = &OP_RAY_QUERY_TERMINATE_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ray_query);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -12569,7 +12569,7 @@ pub struct OpRayQueryGenerateIntersectionKHR {
 }
 impl Inst for OpRayQueryGenerateIntersectionKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GENERATE_INTERSECTION_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.ray_query) + OperandEncoding::word_len(&self.hit_t);
         writer.write_op(Self::META.opcode, len)?;
@@ -12591,7 +12591,7 @@ pub struct OpRayQueryConfirmIntersectionKHR {
 }
 impl Inst for OpRayQueryConfirmIntersectionKHR {
     const META: &InstMeta = &OP_RAY_QUERY_CONFIRM_INTERSECTION_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ray_query);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
@@ -12612,7 +12612,7 @@ pub struct OpRayQueryProceedKHR {
 }
 impl Inst for OpRayQueryProceedKHR {
     const META: &InstMeta = &OP_RAY_QUERY_PROCEED_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12641,7 +12641,7 @@ pub struct OpRayQueryGetIntersectionTypeKHR {
 }
 impl Inst for OpRayQueryGetIntersectionTypeKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_TYPE_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12674,7 +12674,7 @@ pub struct OpImageSampleWeightedQCOM {
 }
 impl Inst for OpImageSampleWeightedQCOM {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_WEIGHTED_QCOM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12710,7 +12710,7 @@ pub struct OpImageBoxFilterQCOM {
 }
 impl Inst for OpImageBoxFilterQCOM {
     const META: &InstMeta = &OP_IMAGE_BOX_FILTER_QCOM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12748,7 +12748,7 @@ pub struct OpImageBlockMatchSSDQCOM {
 }
 impl Inst for OpImageBlockMatchSSDQCOM {
     const META: &InstMeta = &OP_IMAGE_BLOCK_MATCH_SSDQCOM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12792,7 +12792,7 @@ pub struct OpImageBlockMatchSADQCOM {
 }
 impl Inst for OpImageBlockMatchSADQCOM {
     const META: &InstMeta = &OP_IMAGE_BLOCK_MATCH_SADQCOM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12832,7 +12832,7 @@ pub struct OpBitCastArrayQCOM {
 }
 impl Inst for OpBitCastArrayQCOM {
     const META: &InstMeta = &OP_BIT_CAST_ARRAY_QCOM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12864,7 +12864,7 @@ pub struct OpImageBlockMatchWindowSSDQCOM {
 }
 impl Inst for OpImageBlockMatchWindowSSDQCOM {
     const META: &InstMeta = &OP_IMAGE_BLOCK_MATCH_WINDOW_SSDQCOM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12908,7 +12908,7 @@ pub struct OpImageBlockMatchWindowSADQCOM {
 }
 impl Inst for OpImageBlockMatchWindowSADQCOM {
     const META: &InstMeta = &OP_IMAGE_BLOCK_MATCH_WINDOW_SADQCOM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12952,7 +12952,7 @@ pub struct OpImageBlockMatchGatherSSDQCOM {
 }
 impl Inst for OpImageBlockMatchGatherSSDQCOM {
     const META: &InstMeta = &OP_IMAGE_BLOCK_MATCH_GATHER_SSDQCOM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -12996,7 +12996,7 @@ pub struct OpImageBlockMatchGatherSADQCOM {
 }
 impl Inst for OpImageBlockMatchGatherSADQCOM {
     const META: &InstMeta = &OP_IMAGE_BLOCK_MATCH_GATHER_SADQCOM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13036,7 +13036,7 @@ pub struct OpCompositeConstructCoopMatQCOM {
 }
 impl Inst for OpCompositeConstructCoopMatQCOM {
     const META: &InstMeta = &OP_COMPOSITE_CONSTRUCT_COOP_MAT_QCOM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13064,7 +13064,7 @@ pub struct OpCompositeExtractCoopMatQCOM {
 }
 impl Inst for OpCompositeExtractCoopMatQCOM {
     const META: &InstMeta = &OP_COMPOSITE_EXTRACT_COOP_MAT_QCOM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13093,7 +13093,7 @@ pub struct OpExtractSubArrayQCOM {
 }
 impl Inst for OpExtractSubArrayQCOM {
     const META: &InstMeta = &OP_EXTRACT_SUB_ARRAY_QCOM;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13126,7 +13126,7 @@ pub struct OpGroupIAddNonUniformAMD {
 }
 impl Inst for OpGroupIAddNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_I_ADD_NON_UNIFORM_AMD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13162,7 +13162,7 @@ pub struct OpGroupFAddNonUniformAMD {
 }
 impl Inst for OpGroupFAddNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_F_ADD_NON_UNIFORM_AMD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13198,7 +13198,7 @@ pub struct OpGroupFMinNonUniformAMD {
 }
 impl Inst for OpGroupFMinNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_F_MIN_NON_UNIFORM_AMD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13234,7 +13234,7 @@ pub struct OpGroupUMinNonUniformAMD {
 }
 impl Inst for OpGroupUMinNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_U_MIN_NON_UNIFORM_AMD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13270,7 +13270,7 @@ pub struct OpGroupSMinNonUniformAMD {
 }
 impl Inst for OpGroupSMinNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_S_MIN_NON_UNIFORM_AMD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13306,7 +13306,7 @@ pub struct OpGroupFMaxNonUniformAMD {
 }
 impl Inst for OpGroupFMaxNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_F_MAX_NON_UNIFORM_AMD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13342,7 +13342,7 @@ pub struct OpGroupUMaxNonUniformAMD {
 }
 impl Inst for OpGroupUMaxNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_U_MAX_NON_UNIFORM_AMD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13378,7 +13378,7 @@ pub struct OpGroupSMaxNonUniformAMD {
 }
 impl Inst for OpGroupSMaxNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_S_MAX_NON_UNIFORM_AMD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13413,7 +13413,7 @@ pub struct OpFragmentMaskFetchAMD {
 }
 impl Inst for OpFragmentMaskFetchAMD {
     const META: &InstMeta = &OP_FRAGMENT_MASK_FETCH_AMD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13446,7 +13446,7 @@ pub struct OpFragmentFetchAMD {
 }
 impl Inst for OpFragmentFetchAMD {
     const META: &InstMeta = &OP_FRAGMENT_FETCH_AMD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13480,7 +13480,7 @@ pub struct OpReadClockKHR {
 }
 impl Inst for OpReadClockKHR {
     const META: &InstMeta = &OP_READ_CLOCK_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13510,7 +13510,7 @@ pub struct OpAllocateNodePayloadsAMDX {
 }
 impl Inst for OpAllocateNodePayloadsAMDX {
     const META: &InstMeta = &OP_ALLOCATE_NODE_PAYLOADS_AMDX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13542,7 +13542,7 @@ pub struct OpEnqueueNodePayloadsAMDX {
 }
 impl Inst for OpEnqueueNodePayloadsAMDX {
     const META: &InstMeta = &OP_ENQUEUE_NODE_PAYLOADS_AMDX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.payload_array);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.payload_array, &mut *writer)?;
@@ -13562,7 +13562,7 @@ pub struct OpTypeNodePayloadArrayAMDX {
 }
 impl Inst for OpTypeNodePayloadArrayAMDX {
     const META: &InstMeta = &OP_TYPE_NODE_PAYLOAD_ARRAY_AMDX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.payload_type);
@@ -13587,7 +13587,7 @@ pub struct OpFinishWritingNodePayloadAMDX {
 }
 impl Inst for OpFinishWritingNodePayloadAMDX {
     const META: &InstMeta = &OP_FINISH_WRITING_NODE_PAYLOAD_AMDX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13615,7 +13615,7 @@ pub struct OpNodePayloadArrayLengthAMDX {
 }
 impl Inst for OpNodePayloadArrayLengthAMDX {
     const META: &InstMeta = &OP_NODE_PAYLOAD_ARRAY_LENGTH_AMDX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13644,7 +13644,7 @@ pub struct OpIsNodePayloadValidAMDX {
 }
 impl Inst for OpIsNodePayloadValidAMDX {
     const META: &InstMeta = &OP_IS_NODE_PAYLOAD_VALID_AMDX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13674,7 +13674,7 @@ pub struct OpConstantStringAMDX {
 }
 impl Inst for OpConstantStringAMDX {
     const META: &InstMeta = &OP_CONSTANT_STRING_AMDX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.literal_string);
@@ -13698,7 +13698,7 @@ pub struct OpSpecConstantStringAMDX {
 }
 impl Inst for OpSpecConstantStringAMDX {
     const META: &InstMeta = &OP_SPEC_CONSTANT_STRING_AMDX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.literal_string);
@@ -13723,7 +13723,7 @@ pub struct OpGroupNonUniformQuadAllKHR {
 }
 impl Inst for OpGroupNonUniformQuadAllKHR {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_QUAD_ALL_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13751,7 +13751,7 @@ pub struct OpGroupNonUniformQuadAnyKHR {
 }
 impl Inst for OpGroupNonUniformQuadAnyKHR {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_QUAD_ANY_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13778,7 +13778,7 @@ pub struct OpTypeBufferEXT {
 }
 impl Inst for OpTypeBufferEXT {
     const META: &InstMeta = &OP_TYPE_BUFFER_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.storage_class);
@@ -13803,7 +13803,7 @@ pub struct OpBufferPointerEXT {
 }
 impl Inst for OpBufferPointerEXT {
     const META: &InstMeta = &OP_BUFFER_POINTER_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13834,7 +13834,7 @@ pub struct OpUntypedImageTexelPointerEXT {
 }
 impl Inst for OpUntypedImageTexelPointerEXT {
     const META: &InstMeta = &OP_UNTYPED_IMAGE_TEXEL_POINTER_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13871,7 +13871,7 @@ pub struct OpMemberDecorateIdEXT {
 }
 impl Inst for OpMemberDecorateIdEXT {
     const META: &InstMeta = &OP_MEMBER_DECORATE_ID_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.structure_type)
             + OperandEncoding::word_len(&self.member)
@@ -13899,7 +13899,7 @@ pub struct OpConstantSizeOfEXT {
 }
 impl Inst for OpConstantSizeOfEXT {
     const META: &InstMeta = &OP_CONSTANT_SIZE_OF_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -13938,7 +13938,7 @@ pub struct OpHitObjectRecordHitMotionNV {
 }
 impl Inst for OpHitObjectRecordHitMotionNV {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_HIT_MOTION_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.acceleration_structure)
@@ -14009,7 +14009,7 @@ pub struct OpHitObjectRecordHitWithIndexMotionNV {
 }
 impl Inst for OpHitObjectRecordHitWithIndexMotionNV {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_HIT_WITH_INDEX_MOTION_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.acceleration_structure)
@@ -14071,7 +14071,7 @@ pub struct OpHitObjectRecordMissMotionNV {
 }
 impl Inst for OpHitObjectRecordMissMotionNV {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_MISS_MOTION_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.sbt_index)
@@ -14111,7 +14111,7 @@ pub struct OpHitObjectGetWorldToObjectNV {
 }
 impl Inst for OpHitObjectGetWorldToObjectNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_WORLD_TO_OBJECT_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14139,7 +14139,7 @@ pub struct OpHitObjectGetObjectToWorldNV {
 }
 impl Inst for OpHitObjectGetObjectToWorldNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_OBJECT_TO_WORLD_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14167,7 +14167,7 @@ pub struct OpHitObjectGetObjectRayDirectionNV {
 }
 impl Inst for OpHitObjectGetObjectRayDirectionNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_OBJECT_RAY_DIRECTION_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14195,7 +14195,7 @@ pub struct OpHitObjectGetObjectRayOriginNV {
 }
 impl Inst for OpHitObjectGetObjectRayOriginNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_OBJECT_RAY_ORIGIN_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14233,7 +14233,7 @@ pub struct OpHitObjectTraceRayMotionNV {
 }
 impl Inst for OpHitObjectTraceRayMotionNV {
     const META: &InstMeta = &OP_HIT_OBJECT_TRACE_RAY_MOTION_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.acceleration_structure)
@@ -14291,7 +14291,7 @@ pub struct OpHitObjectGetShaderRecordBufferHandleNV {
 }
 impl Inst for OpHitObjectGetShaderRecordBufferHandleNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_SHADER_RECORD_BUFFER_HANDLE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14319,7 +14319,7 @@ pub struct OpHitObjectGetShaderBindingTableRecordIndexNV {
 }
 impl Inst for OpHitObjectGetShaderBindingTableRecordIndexNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_SHADER_BINDING_TABLE_RECORD_INDEX_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14345,7 +14345,7 @@ pub struct OpHitObjectRecordEmptyNV {
 }
 impl Inst for OpHitObjectRecordEmptyNV {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_EMPTY_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hit_object);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -14375,7 +14375,7 @@ pub struct OpHitObjectTraceRayNV {
 }
 impl Inst for OpHitObjectTraceRayNV {
     const META: &InstMeta = &OP_HIT_OBJECT_TRACE_RAY_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.acceleration_structure)
@@ -14440,7 +14440,7 @@ pub struct OpHitObjectRecordHitNV {
 }
 impl Inst for OpHitObjectRecordHitNV {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_HIT_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.acceleration_structure)
@@ -14507,7 +14507,7 @@ pub struct OpHitObjectRecordHitWithIndexNV {
 }
 impl Inst for OpHitObjectRecordHitWithIndexNV {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_HIT_WITH_INDEX_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.acceleration_structure)
@@ -14565,7 +14565,7 @@ pub struct OpHitObjectRecordMissNV {
 }
 impl Inst for OpHitObjectRecordMissNV {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_MISS_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.sbt_index)
@@ -14601,7 +14601,7 @@ pub struct OpHitObjectExecuteShaderNV {
 }
 impl Inst for OpHitObjectExecuteShaderNV {
     const META: &InstMeta = &OP_HIT_OBJECT_EXECUTE_SHADER_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.payload);
@@ -14626,7 +14626,7 @@ pub struct OpHitObjectGetCurrentTimeNV {
 }
 impl Inst for OpHitObjectGetCurrentTimeNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_CURRENT_TIME_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14653,7 +14653,7 @@ pub struct OpHitObjectGetAttributesNV {
 }
 impl Inst for OpHitObjectGetAttributesNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_ATTRIBUTES_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.hit_object_attribute);
@@ -14678,7 +14678,7 @@ pub struct OpHitObjectGetHitKindNV {
 }
 impl Inst for OpHitObjectGetHitKindNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_HIT_KIND_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14706,7 +14706,7 @@ pub struct OpHitObjectGetPrimitiveIndexNV {
 }
 impl Inst for OpHitObjectGetPrimitiveIndexNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_PRIMITIVE_INDEX_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14734,7 +14734,7 @@ pub struct OpHitObjectGetGeometryIndexNV {
 }
 impl Inst for OpHitObjectGetGeometryIndexNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_GEOMETRY_INDEX_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14762,7 +14762,7 @@ pub struct OpHitObjectGetInstanceIdNV {
 }
 impl Inst for OpHitObjectGetInstanceIdNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_INSTANCE_ID_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14790,7 +14790,7 @@ pub struct OpHitObjectGetInstanceCustomIndexNV {
 }
 impl Inst for OpHitObjectGetInstanceCustomIndexNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_INSTANCE_CUSTOM_INDEX_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14818,7 +14818,7 @@ pub struct OpHitObjectGetWorldRayDirectionNV {
 }
 impl Inst for OpHitObjectGetWorldRayDirectionNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_WORLD_RAY_DIRECTION_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14846,7 +14846,7 @@ pub struct OpHitObjectGetWorldRayOriginNV {
 }
 impl Inst for OpHitObjectGetWorldRayOriginNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_WORLD_RAY_ORIGIN_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14874,7 +14874,7 @@ pub struct OpHitObjectGetRayTMaxNV {
 }
 impl Inst for OpHitObjectGetRayTMaxNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_RAY_T_MAX_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14902,7 +14902,7 @@ pub struct OpHitObjectGetRayTMinNV {
 }
 impl Inst for OpHitObjectGetRayTMinNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_RAY_T_MIN_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14930,7 +14930,7 @@ pub struct OpHitObjectIsEmptyNV {
 }
 impl Inst for OpHitObjectIsEmptyNV {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_EMPTY_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14958,7 +14958,7 @@ pub struct OpHitObjectIsHitNV {
 }
 impl Inst for OpHitObjectIsHitNV {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_HIT_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -14986,7 +14986,7 @@ pub struct OpHitObjectIsMissNV {
 }
 impl Inst for OpHitObjectIsMissNV {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_MISS_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -15014,7 +15014,7 @@ pub struct OpReorderThreadWithHitObjectNV {
 }
 impl Inst for OpReorderThreadWithHitObjectNV {
     const META: &InstMeta = &OP_REORDER_THREAD_WITH_HIT_OBJECT_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.hint)
@@ -15041,7 +15041,7 @@ pub struct OpReorderThreadWithHintNV {
 }
 impl Inst for OpReorderThreadWithHintNV {
     const META: &InstMeta = &OP_REORDER_THREAD_WITH_HINT_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hint) + OperandEncoding::word_len(&self.bits);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hint, &mut *writer)?;
@@ -15062,7 +15062,7 @@ pub struct OpTypeHitObjectNV {
 }
 impl Inst for OpTypeHitObjectNV {
     const META: &InstMeta = &OP_TYPE_HIT_OBJECT_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -15087,7 +15087,7 @@ pub struct OpImageSampleFootprintNV {
 }
 impl Inst for OpImageSampleFootprintNV {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_FOOTPRINT_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -15127,7 +15127,7 @@ pub struct OpTypeVectorIdEXT {
 }
 impl Inst for OpTypeVectorIdEXT {
     const META: &InstMeta = &OP_TYPE_VECTOR_ID_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.component_type)
@@ -15165,7 +15165,7 @@ pub struct OpCooperativeVectorMatrixMulNV {
 }
 impl Inst for OpCooperativeVectorMatrixMulNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_MATRIX_MUL_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -15227,7 +15227,7 @@ pub struct OpCooperativeVectorOuterProductAccumulateNV {
 }
 impl Inst for OpCooperativeVectorOuterProductAccumulateNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_OUTER_PRODUCT_ACCUMULATE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.offset)
@@ -15267,7 +15267,7 @@ pub struct OpCooperativeVectorReduceSumAccumulateNV {
 }
 impl Inst for OpCooperativeVectorReduceSumAccumulateNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_REDUCE_SUM_ACCUMULATE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.offset)
@@ -15308,7 +15308,7 @@ pub struct OpCooperativeVectorMatrixMulAddNV {
 }
 impl Inst for OpCooperativeVectorMatrixMulAddNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_MATRIX_MUL_ADD_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -15375,7 +15375,7 @@ pub struct OpCooperativeMatrixConvertNV {
 }
 impl Inst for OpCooperativeMatrixConvertNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_CONVERT_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -15404,7 +15404,7 @@ pub struct OpEmitMeshTasksEXT {
 }
 impl Inst for OpEmitMeshTasksEXT {
     const META: &InstMeta = &OP_EMIT_MESH_TASKS_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.group_count_x)
             + OperandEncoding::word_len(&self.group_count_y)
@@ -15434,7 +15434,7 @@ pub struct OpSetMeshOutputsEXT {
 }
 impl Inst for OpSetMeshOutputsEXT {
     const META: &InstMeta = &OP_SET_MESH_OUTPUTS_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.vertex_count)
             + OperandEncoding::word_len(&self.primitive_count);
@@ -15459,7 +15459,7 @@ pub struct OpGroupNonUniformPartitionEXT {
 }
 impl Inst for OpGroupNonUniformPartitionEXT {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_PARTITION_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -15486,7 +15486,7 @@ pub struct OpWritePackedPrimitiveIndices4x8NV {
 }
 impl Inst for OpWritePackedPrimitiveIndices4x8NV {
     const META: &InstMeta = &OP_WRITE_PACKED_PRIMITIVE_INDICES_4_X_8_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.index_offset)
             + OperandEncoding::word_len(&self.packed_indices);
@@ -15515,7 +15515,7 @@ pub struct OpFetchMicroTriangleVertexPositionNV {
 }
 impl Inst for OpFetchMicroTriangleVertexPositionNV {
     const META: &InstMeta = &OP_FETCH_MICRO_TRIANGLE_VERTEX_POSITION_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -15559,7 +15559,7 @@ pub struct OpFetchMicroTriangleVertexBarycentricNV {
 }
 impl Inst for OpFetchMicroTriangleVertexBarycentricNV {
     const META: &InstMeta = &OP_FETCH_MICRO_TRIANGLE_VERTEX_BARYCENTRIC_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -15601,7 +15601,7 @@ pub struct OpCooperativeVectorLoadNV {
 }
 impl Inst for OpCooperativeVectorLoadNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_LOAD_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -15636,7 +15636,7 @@ pub struct OpCooperativeVectorStoreNV {
 }
 impl Inst for OpCooperativeVectorStoreNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_STORE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.offset)
@@ -15668,7 +15668,7 @@ pub struct OpHitObjectRecordFromQueryEXT {
 }
 impl Inst for OpHitObjectRecordFromQueryEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_FROM_QUERY_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.ray_query)
@@ -15703,7 +15703,7 @@ pub struct OpHitObjectRecordMissEXT {
 }
 impl Inst for OpHitObjectRecordMissEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_MISS_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.ray_flags)
@@ -15748,7 +15748,7 @@ pub struct OpHitObjectRecordMissMotionEXT {
 }
 impl Inst for OpHitObjectRecordMissMotionEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_MISS_MOTION_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.ray_flags)
@@ -15791,7 +15791,7 @@ pub struct OpHitObjectGetIntersectionTriangleVertexPositionsEXT {
 }
 impl Inst for OpHitObjectGetIntersectionTriangleVertexPositionsEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_INTERSECTION_TRIANGLE_VERTEX_POSITIONS_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -15819,7 +15819,7 @@ pub struct OpHitObjectGetRayFlagsEXT {
 }
 impl Inst for OpHitObjectGetRayFlagsEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_RAY_FLAGS_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -15846,7 +15846,7 @@ pub struct OpHitObjectSetShaderBindingTableRecordIndexEXT {
 }
 impl Inst for OpHitObjectSetShaderBindingTableRecordIndexEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_SET_SHADER_BINDING_TABLE_RECORD_INDEX_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.sbt_record_index);
@@ -15872,7 +15872,7 @@ pub struct OpHitObjectReorderExecuteShaderEXT {
 }
 impl Inst for OpHitObjectReorderExecuteShaderEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_REORDER_EXECUTE_SHADER_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.payload)
@@ -15914,7 +15914,7 @@ pub struct OpHitObjectTraceReorderExecuteEXT {
 }
 impl Inst for OpHitObjectTraceReorderExecuteEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_TRACE_REORDER_EXECUTE_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.acceleration_structure)
@@ -15987,7 +15987,7 @@ pub struct OpHitObjectTraceMotionReorderExecuteEXT {
 }
 impl Inst for OpHitObjectTraceMotionReorderExecuteEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_TRACE_MOTION_REORDER_EXECUTE_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.acceleration_structure)
@@ -16049,7 +16049,7 @@ pub struct OpTypeHitObjectEXT {
 }
 impl Inst for OpTypeHitObjectEXT {
     const META: &InstMeta = &OP_TYPE_HIT_OBJECT_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -16069,7 +16069,7 @@ pub struct OpReorderThreadWithHintEXT {
 }
 impl Inst for OpReorderThreadWithHintEXT {
     const META: &InstMeta = &OP_REORDER_THREAD_WITH_HINT_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hint) + OperandEncoding::word_len(&self.bits);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hint, &mut *writer)?;
@@ -16092,7 +16092,7 @@ pub struct OpReorderThreadWithHitObjectEXT {
 }
 impl Inst for OpReorderThreadWithHitObjectEXT {
     const META: &InstMeta = &OP_REORDER_THREAD_WITH_HIT_OBJECT_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.hint)
@@ -16129,7 +16129,7 @@ pub struct OpHitObjectTraceRayEXT {
 }
 impl Inst for OpHitObjectTraceRayEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_TRACE_RAY_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.acceleration_structure)
@@ -16194,7 +16194,7 @@ pub struct OpHitObjectTraceRayMotionEXT {
 }
 impl Inst for OpHitObjectTraceRayMotionEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_TRACE_RAY_MOTION_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.acceleration_structure)
@@ -16250,7 +16250,7 @@ pub struct OpHitObjectRecordEmptyEXT {
 }
 impl Inst for OpHitObjectRecordEmptyEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_EMPTY_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hit_object);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
@@ -16270,7 +16270,7 @@ pub struct OpHitObjectExecuteShaderEXT {
 }
 impl Inst for OpHitObjectExecuteShaderEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_EXECUTE_SHADER_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.payload);
@@ -16295,7 +16295,7 @@ pub struct OpHitObjectGetCurrentTimeEXT {
 }
 impl Inst for OpHitObjectGetCurrentTimeEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_CURRENT_TIME_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -16322,7 +16322,7 @@ pub struct OpHitObjectGetAttributesEXT {
 }
 impl Inst for OpHitObjectGetAttributesEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_ATTRIBUTES_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.hit_object_attribute);
@@ -16347,7 +16347,7 @@ pub struct OpHitObjectGetHitKindEXT {
 }
 impl Inst for OpHitObjectGetHitKindEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_HIT_KIND_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -16375,7 +16375,7 @@ pub struct OpHitObjectGetPrimitiveIndexEXT {
 }
 impl Inst for OpHitObjectGetPrimitiveIndexEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_PRIMITIVE_INDEX_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -16403,7 +16403,7 @@ pub struct OpHitObjectGetGeometryIndexEXT {
 }
 impl Inst for OpHitObjectGetGeometryIndexEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_GEOMETRY_INDEX_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -16431,7 +16431,7 @@ pub struct OpHitObjectGetInstanceIdEXT {
 }
 impl Inst for OpHitObjectGetInstanceIdEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_INSTANCE_ID_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -16459,7 +16459,7 @@ pub struct OpHitObjectGetInstanceCustomIndexEXT {
 }
 impl Inst for OpHitObjectGetInstanceCustomIndexEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_INSTANCE_CUSTOM_INDEX_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -16487,7 +16487,7 @@ pub struct OpHitObjectGetObjectRayOriginEXT {
 }
 impl Inst for OpHitObjectGetObjectRayOriginEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_OBJECT_RAY_ORIGIN_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -16515,7 +16515,7 @@ pub struct OpHitObjectGetObjectRayDirectionEXT {
 }
 impl Inst for OpHitObjectGetObjectRayDirectionEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_OBJECT_RAY_DIRECTION_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -16543,7 +16543,7 @@ pub struct OpHitObjectGetWorldRayDirectionEXT {
 }
 impl Inst for OpHitObjectGetWorldRayDirectionEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_WORLD_RAY_DIRECTION_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -16571,7 +16571,7 @@ pub struct OpHitObjectGetWorldRayOriginEXT {
 }
 impl Inst for OpHitObjectGetWorldRayOriginEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_WORLD_RAY_ORIGIN_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -16599,7 +16599,7 @@ pub struct OpHitObjectGetObjectToWorldEXT {
 }
 impl Inst for OpHitObjectGetObjectToWorldEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_OBJECT_TO_WORLD_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -16627,7 +16627,7 @@ pub struct OpHitObjectGetWorldToObjectEXT {
 }
 impl Inst for OpHitObjectGetWorldToObjectEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_WORLD_TO_OBJECT_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -16655,7 +16655,7 @@ pub struct OpHitObjectGetRayTMaxEXT {
 }
 impl Inst for OpHitObjectGetRayTMaxEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_RAY_T_MAX_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -16684,7 +16684,7 @@ pub struct OpReportIntersectionKHR {
 }
 impl Inst for OpReportIntersectionKHR {
     const META: &InstMeta = &OP_REPORT_INTERSECTION_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -16711,7 +16711,7 @@ impl Inst for OpReportIntersectionKHR {
 pub struct OpIgnoreIntersectionNV {}
 impl Inst for OpIgnoreIntersectionNV {
     const META: &InstMeta = &OP_IGNORE_INTERSECTION_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -16725,7 +16725,7 @@ impl Inst for OpIgnoreIntersectionNV {
 pub struct OpTerminateRayNV {}
 impl Inst for OpTerminateRayNV {
     const META: &InstMeta = &OP_TERMINATE_RAY_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -16751,7 +16751,7 @@ pub struct OpTraceNV {
 }
 impl Inst for OpTraceNV {
     const META: &InstMeta = &OP_TRACE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.accel)
             + OperandEncoding::word_len(&self.ray_flags)
@@ -16812,7 +16812,7 @@ pub struct OpTraceMotionNV {
 }
 impl Inst for OpTraceMotionNV {
     const META: &InstMeta = &OP_TRACE_MOTION_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.accel)
             + OperandEncoding::word_len(&self.ray_flags)
@@ -16876,7 +16876,7 @@ pub struct OpTraceRayMotionNV {
 }
 impl Inst for OpTraceRayMotionNV {
     const META: &InstMeta = &OP_TRACE_RAY_MOTION_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.accel)
             + OperandEncoding::word_len(&self.ray_flags)
@@ -16932,7 +16932,7 @@ pub struct OpRayQueryGetIntersectionTriangleVertexPositionsKHR {
 }
 impl Inst for OpRayQueryGetIntersectionTriangleVertexPositionsKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_TRIANGLE_VERTEX_POSITIONS_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -16961,7 +16961,7 @@ pub struct OpTypeAccelerationStructureKHR {
 }
 impl Inst for OpTypeAccelerationStructureKHR {
     const META: &InstMeta = &OP_TYPE_ACCELERATION_STRUCTURE_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -16981,7 +16981,7 @@ pub struct OpExecuteCallableNV {
 }
 impl Inst for OpExecuteCallableNV {
     const META: &InstMeta = &OP_EXECUTE_CALLABLE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.sbt_index)
             + OperandEncoding::word_len(&self.callable_data_id);
@@ -17007,7 +17007,7 @@ pub struct OpRayQueryGetIntersectionClusterIdNV {
 }
 impl Inst for OpRayQueryGetIntersectionClusterIdNV {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_CLUSTER_ID_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17038,7 +17038,7 @@ pub struct OpHitObjectGetClusterIdNV {
 }
 impl Inst for OpHitObjectGetClusterIdNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_CLUSTER_ID_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17066,7 +17066,7 @@ pub struct OpHitObjectGetRayTMinEXT {
 }
 impl Inst for OpHitObjectGetRayTMinEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_RAY_T_MIN_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17094,7 +17094,7 @@ pub struct OpHitObjectGetShaderBindingTableRecordIndexEXT {
 }
 impl Inst for OpHitObjectGetShaderBindingTableRecordIndexEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_SHADER_BINDING_TABLE_RECORD_INDEX_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17122,7 +17122,7 @@ pub struct OpHitObjectGetShaderRecordBufferHandleEXT {
 }
 impl Inst for OpHitObjectGetShaderRecordBufferHandleEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_SHADER_RECORD_BUFFER_HANDLE_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17150,7 +17150,7 @@ pub struct OpHitObjectIsEmptyEXT {
 }
 impl Inst for OpHitObjectIsEmptyEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_EMPTY_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17178,7 +17178,7 @@ pub struct OpHitObjectIsHitEXT {
 }
 impl Inst for OpHitObjectIsHitEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_HIT_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17206,7 +17206,7 @@ pub struct OpHitObjectIsMissEXT {
 }
 impl Inst for OpHitObjectIsMissEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_MISS_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17236,7 +17236,7 @@ pub struct OpTypeCooperativeMatrixNV {
 }
 impl Inst for OpTypeCooperativeMatrixNV {
     const META: &InstMeta = &OP_TYPE_COOPERATIVE_MATRIX_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.component_type)
@@ -17273,7 +17273,7 @@ pub struct OpCooperativeMatrixLoadNV {
 }
 impl Inst for OpCooperativeMatrixLoadNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_LOAD_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17312,7 +17312,7 @@ pub struct OpCooperativeMatrixStoreNV {
 }
 impl Inst for OpCooperativeMatrixStoreNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_STORE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.object)
@@ -17348,7 +17348,7 @@ pub struct OpCooperativeMatrixMulAddNV {
 }
 impl Inst for OpCooperativeMatrixMulAddNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_MUL_ADD_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17382,7 +17382,7 @@ pub struct OpCooperativeMatrixLengthNV {
 }
 impl Inst for OpCooperativeMatrixLengthNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_LENGTH_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17406,7 +17406,7 @@ impl Inst for OpCooperativeMatrixLengthNV {
 pub struct OpBeginInvocationInterlockEXT {}
 impl Inst for OpBeginInvocationInterlockEXT {
     const META: &InstMeta = &OP_BEGIN_INVOCATION_INTERLOCK_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -17420,7 +17420,7 @@ impl Inst for OpBeginInvocationInterlockEXT {
 pub struct OpEndInvocationInterlockEXT {}
 impl Inst for OpEndInvocationInterlockEXT {
     const META: &InstMeta = &OP_END_INVOCATION_INTERLOCK_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -17440,7 +17440,7 @@ pub struct OpCooperativeMatrixReduceNV {
 }
 impl Inst for OpCooperativeMatrixReduceNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_REDUCE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17478,7 +17478,7 @@ pub struct OpCooperativeMatrixLoadTensorNV {
 }
 impl Inst for OpCooperativeMatrixLoadTensorNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_LOAD_TENSOR_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17520,7 +17520,7 @@ pub struct OpCooperativeMatrixStoreTensorNV {
 }
 impl Inst for OpCooperativeMatrixStoreTensorNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_STORE_TENSOR_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.object)
@@ -17556,7 +17556,7 @@ pub struct OpCooperativeMatrixPerElementOpNV {
 }
 impl Inst for OpCooperativeMatrixPerElementOpNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_PER_ELEMENT_OP_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17590,7 +17590,7 @@ pub struct OpTypeTensorLayoutNV {
 }
 impl Inst for OpTypeTensorLayoutNV {
     const META: &InstMeta = &OP_TYPE_TENSOR_LAYOUT_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.dim)
@@ -17619,7 +17619,7 @@ pub struct OpTypeTensorViewNV {
 }
 impl Inst for OpTypeTensorViewNV {
     const META: &InstMeta = &OP_TYPE_TENSOR_VIEW_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.dim)
@@ -17649,7 +17649,7 @@ pub struct OpCreateTensorLayoutNV {
 }
 impl Inst for OpCreateTensorLayoutNV {
     const META: &InstMeta = &OP_CREATE_TENSOR_LAYOUT_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -17675,7 +17675,7 @@ pub struct OpTensorLayoutSetDimensionNV {
 }
 impl Inst for OpTensorLayoutSetDimensionNV {
     const META: &InstMeta = &OP_TENSOR_LAYOUT_SET_DIMENSION_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17707,7 +17707,7 @@ pub struct OpTensorLayoutSetStrideNV {
 }
 impl Inst for OpTensorLayoutSetStrideNV {
     const META: &InstMeta = &OP_TENSOR_LAYOUT_SET_STRIDE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17739,7 +17739,7 @@ pub struct OpTensorLayoutSliceNV {
 }
 impl Inst for OpTensorLayoutSliceNV {
     const META: &InstMeta = &OP_TENSOR_LAYOUT_SLICE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17771,7 +17771,7 @@ pub struct OpTensorLayoutSetClampValueNV {
 }
 impl Inst for OpTensorLayoutSetClampValueNV {
     const META: &InstMeta = &OP_TENSOR_LAYOUT_SET_CLAMP_VALUE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17801,7 +17801,7 @@ pub struct OpCreateTensorViewNV {
 }
 impl Inst for OpCreateTensorViewNV {
     const META: &InstMeta = &OP_CREATE_TENSOR_VIEW_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -17827,7 +17827,7 @@ pub struct OpTensorViewSetDimensionNV {
 }
 impl Inst for OpTensorViewSetDimensionNV {
     const META: &InstMeta = &OP_TENSOR_VIEW_SET_DIMENSION_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17859,7 +17859,7 @@ pub struct OpTensorViewSetStrideNV {
 }
 impl Inst for OpTensorViewSetStrideNV {
     const META: &InstMeta = &OP_TENSOR_VIEW_SET_STRIDE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17886,7 +17886,7 @@ impl Inst for OpTensorViewSetStrideNV {
 pub struct OpDemoteToHelperInvocation {}
 impl Inst for OpDemoteToHelperInvocation {
     const META: &InstMeta = &OP_DEMOTE_TO_HELPER_INVOCATION;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
         Ok(())
@@ -17903,7 +17903,7 @@ pub struct OpIsHelperInvocationEXT {
 }
 impl Inst for OpIsHelperInvocationEXT {
     const META: &InstMeta = &OP_IS_HELPER_INVOCATION_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -17932,7 +17932,7 @@ pub struct OpTensorViewSetClipNV {
 }
 impl Inst for OpTensorViewSetClipNV {
     const META: &InstMeta = &OP_TENSOR_VIEW_SET_CLIP_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -17973,7 +17973,7 @@ pub struct OpTensorLayoutSetBlockSizeNV {
 }
 impl Inst for OpTensorLayoutSetBlockSizeNV {
     const META: &InstMeta = &OP_TENSOR_LAYOUT_SET_BLOCK_SIZE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18004,7 +18004,7 @@ pub struct OpCooperativeMatrixTransposeNV {
 }
 impl Inst for OpCooperativeMatrixTransposeNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_TRANSPOSE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18032,7 +18032,7 @@ pub struct OpConvertUToImageNV {
 }
 impl Inst for OpConvertUToImageNV {
     const META: &InstMeta = &OP_CONVERT_U_TO_IMAGE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18060,7 +18060,7 @@ pub struct OpConvertUToSamplerNV {
 }
 impl Inst for OpConvertUToSamplerNV {
     const META: &InstMeta = &OP_CONVERT_U_TO_SAMPLER_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18088,7 +18088,7 @@ pub struct OpConvertImageToUNV {
 }
 impl Inst for OpConvertImageToUNV {
     const META: &InstMeta = &OP_CONVERT_IMAGE_TO_UNV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18116,7 +18116,7 @@ pub struct OpConvertSamplerToUNV {
 }
 impl Inst for OpConvertSamplerToUNV {
     const META: &InstMeta = &OP_CONVERT_SAMPLER_TO_UNV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18144,7 +18144,7 @@ pub struct OpConvertUToSampledImageNV {
 }
 impl Inst for OpConvertUToSampledImageNV {
     const META: &InstMeta = &OP_CONVERT_U_TO_SAMPLED_IMAGE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18172,7 +18172,7 @@ pub struct OpConvertSampledImageToUNV {
 }
 impl Inst for OpConvertSampledImageToUNV {
     const META: &InstMeta = &OP_CONVERT_SAMPLED_IMAGE_TO_UNV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18198,7 +18198,7 @@ pub struct OpSamplerImageAddressingModeNV {
 }
 impl Inst for OpSamplerImageAddressingModeNV {
     const META: &InstMeta = &OP_SAMPLER_IMAGE_ADDRESSING_MODE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.bit_width);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.bit_width, &mut *writer)?;
@@ -18223,7 +18223,7 @@ pub struct OpRawAccessChainNV {
 }
 impl Inst for OpRawAccessChainNV {
     const META: &InstMeta = &OP_RAW_ACCESS_CHAIN_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18264,7 +18264,7 @@ pub struct OpRayQueryGetIntersectionSpherePositionNV {
 }
 impl Inst for OpRayQueryGetIntersectionSpherePositionNV {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_SPHERE_POSITION_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18296,7 +18296,7 @@ pub struct OpRayQueryGetIntersectionSphereRadiusNV {
 }
 impl Inst for OpRayQueryGetIntersectionSphereRadiusNV {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_SPHERE_RADIUS_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18328,7 +18328,7 @@ pub struct OpRayQueryGetIntersectionLSSPositionsNV {
 }
 impl Inst for OpRayQueryGetIntersectionLSSPositionsNV {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_LSS_POSITIONS_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18360,7 +18360,7 @@ pub struct OpRayQueryGetIntersectionLSSRadiiNV {
 }
 impl Inst for OpRayQueryGetIntersectionLSSRadiiNV {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_LSS_RADII_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18392,7 +18392,7 @@ pub struct OpRayQueryGetIntersectionLSSHitValueNV {
 }
 impl Inst for OpRayQueryGetIntersectionLSSHitValueNV {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_LSS_HIT_VALUE_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18423,7 +18423,7 @@ pub struct OpHitObjectGetSpherePositionNV {
 }
 impl Inst for OpHitObjectGetSpherePositionNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_SPHERE_POSITION_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18451,7 +18451,7 @@ pub struct OpHitObjectGetSphereRadiusNV {
 }
 impl Inst for OpHitObjectGetSphereRadiusNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_SPHERE_RADIUS_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18479,7 +18479,7 @@ pub struct OpHitObjectGetLSSPositionsNV {
 }
 impl Inst for OpHitObjectGetLSSPositionsNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_LSS_POSITIONS_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18507,7 +18507,7 @@ pub struct OpHitObjectGetLSSRadiiNV {
 }
 impl Inst for OpHitObjectGetLSSRadiiNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_LSS_RADII_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18535,7 +18535,7 @@ pub struct OpHitObjectIsSphereHitNV {
 }
 impl Inst for OpHitObjectIsSphereHitNV {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_SPHERE_HIT_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18563,7 +18563,7 @@ pub struct OpHitObjectIsLSSHitNV {
 }
 impl Inst for OpHitObjectIsLSSHitNV {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_LSS_HIT_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18592,7 +18592,7 @@ pub struct OpRayQueryIsSphereHitNV {
 }
 impl Inst for OpRayQueryIsSphereHitNV {
     const META: &InstMeta = &OP_RAY_QUERY_IS_SPHERE_HIT_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18624,7 +18624,7 @@ pub struct OpRayQueryIsLSSHitNV {
 }
 impl Inst for OpRayQueryIsLSSHitNV {
     const META: &InstMeta = &OP_RAY_QUERY_IS_LSS_HIT_NV;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18656,7 +18656,7 @@ pub struct OpSubgroupShuffleINTEL {
 }
 impl Inst for OpSubgroupShuffleINTEL {
     const META: &InstMeta = &OP_SUBGROUP_SHUFFLE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18689,7 +18689,7 @@ pub struct OpSubgroupShuffleDownINTEL {
 }
 impl Inst for OpSubgroupShuffleDownINTEL {
     const META: &InstMeta = &OP_SUBGROUP_SHUFFLE_DOWN_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18725,7 +18725,7 @@ pub struct OpSubgroupShuffleUpINTEL {
 }
 impl Inst for OpSubgroupShuffleUpINTEL {
     const META: &InstMeta = &OP_SUBGROUP_SHUFFLE_UP_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18760,7 +18760,7 @@ pub struct OpSubgroupShuffleXorINTEL {
 }
 impl Inst for OpSubgroupShuffleXorINTEL {
     const META: &InstMeta = &OP_SUBGROUP_SHUFFLE_XOR_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18791,7 +18791,7 @@ pub struct OpSubgroupBlockReadINTEL {
 }
 impl Inst for OpSubgroupBlockReadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_BLOCK_READ_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18818,7 +18818,7 @@ pub struct OpSubgroupBlockWriteINTEL {
 }
 impl Inst for OpSubgroupBlockWriteINTEL {
     const META: &InstMeta = &OP_SUBGROUP_BLOCK_WRITE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ptr) + OperandEncoding::word_len(&self.data);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.ptr, &mut *writer)?;
@@ -18842,7 +18842,7 @@ pub struct OpSubgroupImageBlockReadINTEL {
 }
 impl Inst for OpSubgroupImageBlockReadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_IMAGE_BLOCK_READ_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18873,7 +18873,7 @@ pub struct OpSubgroupImageBlockWriteINTEL {
 }
 impl Inst for OpSubgroupImageBlockWriteINTEL {
     const META: &InstMeta = &OP_SUBGROUP_IMAGE_BLOCK_WRITE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.image)
             + OperandEncoding::word_len(&self.coordinate)
@@ -18904,7 +18904,7 @@ pub struct OpSubgroupImageMediaBlockReadINTEL {
 }
 impl Inst for OpSubgroupImageMediaBlockReadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_IMAGE_MEDIA_BLOCK_READ_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -18943,7 +18943,7 @@ pub struct OpSubgroupImageMediaBlockWriteINTEL {
 }
 impl Inst for OpSubgroupImageMediaBlockWriteINTEL {
     const META: &InstMeta = &OP_SUBGROUP_IMAGE_MEDIA_BLOCK_WRITE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.image)
             + OperandEncoding::word_len(&self.coordinate)
@@ -18977,7 +18977,7 @@ pub struct OpUCountLeadingZerosINTEL {
 }
 impl Inst for OpUCountLeadingZerosINTEL {
     const META: &InstMeta = &OP_U_COUNT_LEADING_ZEROS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19005,7 +19005,7 @@ pub struct OpUCountTrailingZerosINTEL {
 }
 impl Inst for OpUCountTrailingZerosINTEL {
     const META: &InstMeta = &OP_U_COUNT_TRAILING_ZEROS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19034,7 +19034,7 @@ pub struct OpAbsISubINTEL {
 }
 impl Inst for OpAbsISubINTEL {
     const META: &InstMeta = &OP_ABS_I_SUB_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19066,7 +19066,7 @@ pub struct OpAbsUSubINTEL {
 }
 impl Inst for OpAbsUSubINTEL {
     const META: &InstMeta = &OP_ABS_U_SUB_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19098,7 +19098,7 @@ pub struct OpIAddSatINTEL {
 }
 impl Inst for OpIAddSatINTEL {
     const META: &InstMeta = &OP_I_ADD_SAT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19130,7 +19130,7 @@ pub struct OpUAddSatINTEL {
 }
 impl Inst for OpUAddSatINTEL {
     const META: &InstMeta = &OP_U_ADD_SAT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19162,7 +19162,7 @@ pub struct OpIAverageINTEL {
 }
 impl Inst for OpIAverageINTEL {
     const META: &InstMeta = &OP_I_AVERAGE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19194,7 +19194,7 @@ pub struct OpUAverageINTEL {
 }
 impl Inst for OpUAverageINTEL {
     const META: &InstMeta = &OP_U_AVERAGE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19226,7 +19226,7 @@ pub struct OpIAverageRoundedINTEL {
 }
 impl Inst for OpIAverageRoundedINTEL {
     const META: &InstMeta = &OP_I_AVERAGE_ROUNDED_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19258,7 +19258,7 @@ pub struct OpUAverageRoundedINTEL {
 }
 impl Inst for OpUAverageRoundedINTEL {
     const META: &InstMeta = &OP_U_AVERAGE_ROUNDED_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19290,7 +19290,7 @@ pub struct OpISubSatINTEL {
 }
 impl Inst for OpISubSatINTEL {
     const META: &InstMeta = &OP_I_SUB_SAT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19322,7 +19322,7 @@ pub struct OpUSubSatINTEL {
 }
 impl Inst for OpUSubSatINTEL {
     const META: &InstMeta = &OP_U_SUB_SAT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19354,7 +19354,7 @@ pub struct OpIMul32x16INTEL {
 }
 impl Inst for OpIMul32x16INTEL {
     const META: &InstMeta = &OP_I_MUL_32_X_16_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19386,7 +19386,7 @@ pub struct OpUMul32x16INTEL {
 }
 impl Inst for OpUMul32x16INTEL {
     const META: &InstMeta = &OP_U_MUL_32_X_16_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19417,7 +19417,7 @@ pub struct OpConstantFunctionPointerINTEL {
 }
 impl Inst for OpConstantFunctionPointerINTEL {
     const META: &InstMeta = &OP_CONSTANT_FUNCTION_POINTER_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19445,7 +19445,7 @@ pub struct OpFunctionPointerCallINTEL {
 }
 impl Inst for OpFunctionPointerCallINTEL {
     const META: &InstMeta = &OP_FUNCTION_POINTER_CALL_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19472,7 +19472,7 @@ pub struct OpAsmTargetINTEL {
 }
 impl Inst for OpAsmTargetINTEL {
     const META: &InstMeta = &OP_ASM_TARGET_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.asm_target);
@@ -19500,7 +19500,7 @@ pub struct OpAsmINTEL {
 }
 impl Inst for OpAsmINTEL {
     const META: &InstMeta = &OP_ASM_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19538,7 +19538,7 @@ pub struct OpAsmCallINTEL {
 }
 impl Inst for OpAsmCallINTEL {
     const META: &InstMeta = &OP_ASM_CALL_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19572,7 +19572,7 @@ pub struct OpAtomicFMinEXT {
 }
 impl Inst for OpAtomicFMinEXT {
     const META: &InstMeta = &OP_ATOMIC_F_MIN_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19612,7 +19612,7 @@ pub struct OpAtomicFMaxEXT {
 }
 impl Inst for OpAtomicFMaxEXT {
     const META: &InstMeta = &OP_ATOMIC_F_MAX_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19647,7 +19647,7 @@ pub struct OpAssumeTrueKHR {
 }
 impl Inst for OpAssumeTrueKHR {
     const META: &InstMeta = &OP_ASSUME_TRUE_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.condition);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.condition, &mut *writer)?;
@@ -19669,7 +19669,7 @@ pub struct OpExpectKHR {
 }
 impl Inst for OpExpectKHR {
     const META: &InstMeta = &OP_EXPECT_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19699,7 +19699,7 @@ pub struct OpDecorateString {
 }
 impl Inst for OpDecorateString {
     const META: &InstMeta = &OP_DECORATE_STRING;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.target)
             + OperandEncoding::word_len(&self.decoration);
@@ -19724,7 +19724,7 @@ pub struct OpMemberDecorateString {
 }
 impl Inst for OpMemberDecorateString {
     const META: &InstMeta = &OP_MEMBER_DECORATE_STRING;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.struct_type)
             + OperandEncoding::word_len(&self.member)
@@ -19753,7 +19753,7 @@ pub struct OpVmeImageINTEL {
 }
 impl Inst for OpVmeImageINTEL {
     const META: &InstMeta = &OP_VME_IMAGE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -19783,7 +19783,7 @@ pub struct OpTypeVmeImageINTEL {
 }
 impl Inst for OpTypeVmeImageINTEL {
     const META: &InstMeta = &OP_TYPE_VME_IMAGE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.image_type);
@@ -19806,7 +19806,7 @@ pub struct OpTypeAvcImePayloadINTEL {
 }
 impl Inst for OpTypeAvcImePayloadINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_PAYLOAD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -19825,7 +19825,7 @@ pub struct OpTypeAvcRefPayloadINTEL {
 }
 impl Inst for OpTypeAvcRefPayloadINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_REF_PAYLOAD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -19844,7 +19844,7 @@ pub struct OpTypeAvcSicPayloadINTEL {
 }
 impl Inst for OpTypeAvcSicPayloadINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_SIC_PAYLOAD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -19863,7 +19863,7 @@ pub struct OpTypeAvcMcePayloadINTEL {
 }
 impl Inst for OpTypeAvcMcePayloadINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_MCE_PAYLOAD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -19882,7 +19882,7 @@ pub struct OpTypeAvcMceResultINTEL {
 }
 impl Inst for OpTypeAvcMceResultINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_MCE_RESULT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -19901,7 +19901,7 @@ pub struct OpTypeAvcImeResultINTEL {
 }
 impl Inst for OpTypeAvcImeResultINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_RESULT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -19920,7 +19920,7 @@ pub struct OpTypeAvcImeResultSingleReferenceStreamoutINTEL {
 }
 impl Inst for OpTypeAvcImeResultSingleReferenceStreamoutINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_RESULT_SINGLE_REFERENCE_STREAMOUT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -19939,7 +19939,7 @@ pub struct OpTypeAvcImeResultDualReferenceStreamoutINTEL {
 }
 impl Inst for OpTypeAvcImeResultDualReferenceStreamoutINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_RESULT_DUAL_REFERENCE_STREAMOUT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -19958,7 +19958,7 @@ pub struct OpTypeAvcImeSingleReferenceStreaminINTEL {
 }
 impl Inst for OpTypeAvcImeSingleReferenceStreaminINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_SINGLE_REFERENCE_STREAMIN_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -19977,7 +19977,7 @@ pub struct OpTypeAvcImeDualReferenceStreaminINTEL {
 }
 impl Inst for OpTypeAvcImeDualReferenceStreaminINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_DUAL_REFERENCE_STREAMIN_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -19996,7 +19996,7 @@ pub struct OpTypeAvcRefResultINTEL {
 }
 impl Inst for OpTypeAvcRefResultINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_REF_RESULT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -20015,7 +20015,7 @@ pub struct OpTypeAvcSicResultINTEL {
 }
 impl Inst for OpTypeAvcSicResultINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_SIC_RESULT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -20038,7 +20038,7 @@ pub struct OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL {
 impl Inst for OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_BASE_MULTI_REFERENCE_PENALTY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20070,7 +20070,7 @@ pub struct OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_SET_INTER_BASE_MULTI_REFERENCE_PENALTY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20102,7 +20102,7 @@ pub struct OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_SHAPE_PENALTY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20134,7 +20134,7 @@ pub struct OpSubgroupAvcMceSetInterShapePenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceSetInterShapePenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_SET_INTER_SHAPE_PENALTY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20166,7 +20166,7 @@ pub struct OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_DIRECTION_PENALTY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20198,7 +20198,7 @@ pub struct OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_SET_INTER_DIRECTION_PENALTY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20230,7 +20230,7 @@ pub struct OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTRA_LUMA_SHAPE_PENALTY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20262,7 +20262,7 @@ pub struct OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_MOTION_VECTOR_COST_TABLE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20292,7 +20292,7 @@ pub struct OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_HIGH_PENALTY_COST_TABLE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -20316,7 +20316,7 @@ pub struct OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_MEDIUM_PENALTY_COST_TABLE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -20340,7 +20340,7 @@ pub struct OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_LOW_PENALTY_COST_TABLE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -20368,7 +20368,7 @@ pub struct OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL {
 }
 impl Inst for OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_SET_MOTION_VECTOR_COST_FUNCTION_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20406,7 +20406,7 @@ pub struct OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTRA_LUMA_MODE_PENALTY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20436,7 +20436,7 @@ pub struct OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_NON_DC_LUMA_INTRA_PENALTY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -20460,7 +20460,7 @@ pub struct OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTRA_CHROMA_MODE_BASE_PENALTY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -20485,7 +20485,7 @@ pub struct OpSubgroupAvcMceSetAcOnlyHaarINTEL {
 }
 impl Inst for OpSubgroupAvcMceSetAcOnlyHaarINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_SET_AC_ONLY_HAAR_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20514,7 +20514,7 @@ pub struct OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {
 }
 impl Inst for OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_SET_SOURCE_INTERLACED_FIELD_POLARITY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20547,7 +20547,7 @@ pub struct OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {
 impl Inst for OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_MCE_SET_SINGLE_REFERENCE_INTERLACED_FIELD_POLARITY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20581,7 +20581,7 @@ pub struct OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL {
 impl Inst for OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_MCE_SET_DUAL_REFERENCE_INTERLACED_FIELD_POLARITIES_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20615,7 +20615,7 @@ pub struct OpSubgroupAvcMceConvertToImePayloadINTEL {
 }
 impl Inst for OpSubgroupAvcMceConvertToImePayloadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_CONVERT_TO_IME_PAYLOAD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20643,7 +20643,7 @@ pub struct OpSubgroupAvcMceConvertToImeResultINTEL {
 }
 impl Inst for OpSubgroupAvcMceConvertToImeResultINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_CONVERT_TO_IME_RESULT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20671,7 +20671,7 @@ pub struct OpSubgroupAvcMceConvertToRefPayloadINTEL {
 }
 impl Inst for OpSubgroupAvcMceConvertToRefPayloadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_CONVERT_TO_REF_PAYLOAD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20699,7 +20699,7 @@ pub struct OpSubgroupAvcMceConvertToRefResultINTEL {
 }
 impl Inst for OpSubgroupAvcMceConvertToRefResultINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_CONVERT_TO_REF_RESULT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20727,7 +20727,7 @@ pub struct OpSubgroupAvcMceConvertToSicPayloadINTEL {
 }
 impl Inst for OpSubgroupAvcMceConvertToSicPayloadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_CONVERT_TO_SIC_PAYLOAD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20755,7 +20755,7 @@ pub struct OpSubgroupAvcMceConvertToSicResultINTEL {
 }
 impl Inst for OpSubgroupAvcMceConvertToSicResultINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_CONVERT_TO_SIC_RESULT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20783,7 +20783,7 @@ pub struct OpSubgroupAvcMceGetMotionVectorsINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetMotionVectorsINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_MOTION_VECTORS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20811,7 +20811,7 @@ pub struct OpSubgroupAvcMceGetInterDistortionsINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetInterDistortionsINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_INTER_DISTORTIONS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20839,7 +20839,7 @@ pub struct OpSubgroupAvcMceGetBestInterDistortionsINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetBestInterDistortionsINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_BEST_INTER_DISTORTIONS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20867,7 +20867,7 @@ pub struct OpSubgroupAvcMceGetInterMajorShapeINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetInterMajorShapeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_INTER_MAJOR_SHAPE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20895,7 +20895,7 @@ pub struct OpSubgroupAvcMceGetInterMinorShapeINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetInterMinorShapeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_INTER_MINOR_SHAPE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20923,7 +20923,7 @@ pub struct OpSubgroupAvcMceGetInterDirectionsINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetInterDirectionsINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_INTER_DIRECTIONS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20951,7 +20951,7 @@ pub struct OpSubgroupAvcMceGetInterMotionVectorCountINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetInterMotionVectorCountINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_INTER_MOTION_VECTOR_COUNT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -20979,7 +20979,7 @@ pub struct OpSubgroupAvcMceGetInterReferenceIdsINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetInterReferenceIdsINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_INTER_REFERENCE_IDS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21010,7 +21010,7 @@ pub struct OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL {
 impl Inst for OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_MCE_GET_INTER_REFERENCE_INTERLACED_FIELD_POLARITIES_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21049,7 +21049,7 @@ pub struct OpSubgroupAvcImeInitializeINTEL {
 }
 impl Inst for OpSubgroupAvcImeInitializeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_INITIALIZE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21085,7 +21085,7 @@ pub struct OpSubgroupAvcImeSetSingleReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcImeSetSingleReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_SET_SINGLE_REFERENCE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21122,7 +21122,7 @@ pub struct OpSubgroupAvcImeSetDualReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcImeSetDualReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_SET_DUAL_REFERENCE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21160,7 +21160,7 @@ pub struct OpSubgroupAvcImeRefWindowSizeINTEL {
 }
 impl Inst for OpSubgroupAvcImeRefWindowSizeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_REF_WINDOW_SIZE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21194,7 +21194,7 @@ pub struct OpSubgroupAvcImeAdjustRefOffsetINTEL {
 }
 impl Inst for OpSubgroupAvcImeAdjustRefOffsetINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_ADJUST_REF_OFFSET_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21231,7 +21231,7 @@ pub struct OpSubgroupAvcImeConvertToMcePayloadINTEL {
 }
 impl Inst for OpSubgroupAvcImeConvertToMcePayloadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_CONVERT_TO_MCE_PAYLOAD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21260,7 +21260,7 @@ pub struct OpSubgroupAvcImeSetMaxMotionVectorCountINTEL {
 }
 impl Inst for OpSubgroupAvcImeSetMaxMotionVectorCountINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_SET_MAX_MOTION_VECTOR_COUNT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21291,7 +21291,7 @@ pub struct OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {
 }
 impl Inst for OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_SET_UNIDIRECTIONAL_MIX_DISABLE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21320,7 +21320,7 @@ pub struct OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {
 }
 impl Inst for OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_SET_EARLY_SEARCH_TERMINATION_THRESHOLD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21352,7 +21352,7 @@ pub struct OpSubgroupAvcImeSetWeightedSadINTEL {
 }
 impl Inst for OpSubgroupAvcImeSetWeightedSadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_SET_WEIGHTED_SAD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21385,7 +21385,7 @@ pub struct OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21422,7 +21422,7 @@ pub struct OpSubgroupAvcImeEvaluateWithDualReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21462,7 +21462,7 @@ pub struct OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_STREAMIN_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21503,7 +21503,7 @@ pub struct OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_STREAMIN_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21545,7 +21545,7 @@ pub struct OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_STREAMOUT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21582,7 +21582,7 @@ pub struct OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_STREAMOUT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21622,7 +21622,7 @@ pub struct OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_STREAMINOUT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21663,7 +21663,7 @@ pub struct OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_STREAMINOUT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21703,7 +21703,7 @@ pub struct OpSubgroupAvcImeConvertToMceResultINTEL {
 }
 impl Inst for OpSubgroupAvcImeConvertToMceResultINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_CONVERT_TO_MCE_RESULT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21731,7 +21731,7 @@ pub struct OpSubgroupAvcImeGetSingleReferenceStreaminINTEL {
 }
 impl Inst for OpSubgroupAvcImeGetSingleReferenceStreaminINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_GET_SINGLE_REFERENCE_STREAMIN_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21759,7 +21759,7 @@ pub struct OpSubgroupAvcImeGetDualReferenceStreaminINTEL {
 }
 impl Inst for OpSubgroupAvcImeGetDualReferenceStreaminINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_GET_DUAL_REFERENCE_STREAMIN_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21787,7 +21787,7 @@ pub struct OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL {
 }
 impl Inst for OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_STRIP_SINGLE_REFERENCE_STREAMOUT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21815,7 +21815,7 @@ pub struct OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {
 }
 impl Inst for OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_STRIP_DUAL_REFERENCE_STREAMOUT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21845,7 +21845,7 @@ pub struct OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINT
 impl Inst for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_IME_GET_STREAMOUT_SINGLE_REFERENCE_MAJOR_SHAPE_MOTION_VECTORS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21878,7 +21878,7 @@ pub struct OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL
 impl Inst for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_IME_GET_STREAMOUT_SINGLE_REFERENCE_MAJOR_SHAPE_DISTORTIONS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21911,7 +21911,7 @@ pub struct OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTE
 impl Inst for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_IME_GET_STREAMOUT_SINGLE_REFERENCE_MAJOR_SHAPE_REFERENCE_IDS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21945,7 +21945,7 @@ pub struct OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL
 impl Inst for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_IME_GET_STREAMOUT_DUAL_REFERENCE_MAJOR_SHAPE_MOTION_VECTORS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -21982,7 +21982,7 @@ pub struct OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL {
 impl Inst for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_IME_GET_STREAMOUT_DUAL_REFERENCE_MAJOR_SHAPE_DISTORTIONS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22019,7 +22019,7 @@ pub struct OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL 
 impl Inst for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_IME_GET_STREAMOUT_DUAL_REFERENCE_MAJOR_SHAPE_REFERENCE_IDS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22054,7 +22054,7 @@ pub struct OpSubgroupAvcImeGetBorderReachedINTEL {
 }
 impl Inst for OpSubgroupAvcImeGetBorderReachedINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_GET_BORDER_REACHED_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22085,7 +22085,7 @@ pub struct OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {
 }
 impl Inst for OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_GET_TRUNCATED_SEARCH_INDICATION_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22113,7 +22113,7 @@ pub struct OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL {
 }
 impl Inst for OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_GET_UNIDIRECTIONAL_EARLY_SEARCH_TERMINATION_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22141,7 +22141,7 @@ pub struct OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {
 }
 impl Inst for OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_GET_WEIGHTING_PATTERN_MINIMUM_MOTION_VECTOR_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22169,7 +22169,7 @@ pub struct OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {
 }
 impl Inst for OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_GET_WEIGHTING_PATTERN_MINIMUM_DISTORTION_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22203,7 +22203,7 @@ pub struct OpSubgroupAvcFmeInitializeINTEL {
 }
 impl Inst for OpSubgroupAvcFmeInitializeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_FME_INITIALIZE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22256,7 +22256,7 @@ pub struct OpSubgroupAvcBmeInitializeINTEL {
 }
 impl Inst for OpSubgroupAvcBmeInitializeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_BME_INITIALIZE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22305,7 +22305,7 @@ pub struct OpSubgroupAvcRefConvertToMcePayloadINTEL {
 }
 impl Inst for OpSubgroupAvcRefConvertToMcePayloadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_CONVERT_TO_MCE_PAYLOAD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22333,7 +22333,7 @@ pub struct OpSubgroupAvcRefSetBidirectionalMixDisableINTEL {
 }
 impl Inst for OpSubgroupAvcRefSetBidirectionalMixDisableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_SET_BIDIRECTIONAL_MIX_DISABLE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22361,7 +22361,7 @@ pub struct OpSubgroupAvcRefSetBilinearFilterEnableINTEL {
 }
 impl Inst for OpSubgroupAvcRefSetBilinearFilterEnableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_SET_BILINEAR_FILTER_ENABLE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22391,7 +22391,7 @@ pub struct OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_EVALUATE_WITH_SINGLE_REFERENCE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22428,7 +22428,7 @@ pub struct OpSubgroupAvcRefEvaluateWithDualReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcRefEvaluateWithDualReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_EVALUATE_WITH_DUAL_REFERENCE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22467,7 +22467,7 @@ pub struct OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_EVALUATE_WITH_MULTI_REFERENCE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22504,7 +22504,7 @@ pub struct OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL {
 }
 impl Inst for OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_EVALUATE_WITH_MULTI_REFERENCE_INTERLACED_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22541,7 +22541,7 @@ pub struct OpSubgroupAvcRefConvertToMceResultINTEL {
 }
 impl Inst for OpSubgroupAvcRefConvertToMceResultINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_CONVERT_TO_MCE_RESULT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22569,7 +22569,7 @@ pub struct OpSubgroupAvcSicInitializeINTEL {
 }
 impl Inst for OpSubgroupAvcSicInitializeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_INITIALIZE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22602,7 +22602,7 @@ pub struct OpSubgroupAvcSicConfigureSkcINTEL {
 }
 impl Inst for OpSubgroupAvcSicConfigureSkcINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_CONFIGURE_SKC_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22652,7 +22652,7 @@ pub struct OpSubgroupAvcSicConfigureIpeLumaINTEL {
 }
 impl Inst for OpSubgroupAvcSicConfigureIpeLumaINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_CONFIGURE_IPE_LUMA_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22711,7 +22711,7 @@ pub struct OpSubgroupAvcSicConfigureIpeLumaChromaINTEL {
 }
 impl Inst for OpSubgroupAvcSicConfigureIpeLumaChromaINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_CONFIGURE_IPE_LUMA_CHROMA_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22770,7 +22770,7 @@ pub struct OpSubgroupAvcSicGetMotionVectorMaskINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetMotionVectorMaskINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_MOTION_VECTOR_MASK_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22801,7 +22801,7 @@ pub struct OpSubgroupAvcSicConvertToMcePayloadINTEL {
 }
 impl Inst for OpSubgroupAvcSicConvertToMcePayloadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_CONVERT_TO_MCE_PAYLOAD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22830,7 +22830,7 @@ pub struct OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_SET_INTRA_LUMA_SHAPE_PENALTY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22864,7 +22864,7 @@ pub struct OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {
 }
 impl Inst for OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_SET_INTRA_LUMA_MODE_COST_FUNCTION_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22902,7 +22902,7 @@ pub struct OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {
 }
 impl Inst for OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_SET_INTRA_CHROMA_MODE_COST_FUNCTION_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22933,7 +22933,7 @@ pub struct OpSubgroupAvcSicSetBilinearFilterEnableINTEL {
 }
 impl Inst for OpSubgroupAvcSicSetBilinearFilterEnableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_SET_BILINEAR_FILTER_ENABLE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22962,7 +22962,7 @@ pub struct OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL {
 }
 impl Inst for OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_SET_SKC_FORWARD_TRANSFORM_ENABLE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -22994,7 +22994,7 @@ pub struct OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {
 }
 impl Inst for OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_SET_BLOCK_BASED_RAW_SKIP_SAD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23026,7 +23026,7 @@ pub struct OpSubgroupAvcSicEvaluateIpeINTEL {
 }
 impl Inst for OpSubgroupAvcSicEvaluateIpeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_EVALUATE_IPE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23059,7 +23059,7 @@ pub struct OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_SINGLE_REFERENCE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23096,7 +23096,7 @@ pub struct OpSubgroupAvcSicEvaluateWithDualReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcSicEvaluateWithDualReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_DUAL_REFERENCE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23135,7 +23135,7 @@ pub struct OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_MULTI_REFERENCE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23172,7 +23172,7 @@ pub struct OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL {
 }
 impl Inst for OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_MULTI_REFERENCE_INTERLACED_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23209,7 +23209,7 @@ pub struct OpSubgroupAvcSicConvertToMceResultINTEL {
 }
 impl Inst for OpSubgroupAvcSicConvertToMceResultINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_CONVERT_TO_MCE_RESULT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23237,7 +23237,7 @@ pub struct OpSubgroupAvcSicGetIpeLumaShapeINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetIpeLumaShapeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_IPE_LUMA_SHAPE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23265,7 +23265,7 @@ pub struct OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_BEST_IPE_LUMA_DISTORTION_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23293,7 +23293,7 @@ pub struct OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_BEST_IPE_CHROMA_DISTORTION_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23321,7 +23321,7 @@ pub struct OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_PACKED_IPE_LUMA_MODES_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23349,7 +23349,7 @@ pub struct OpSubgroupAvcSicGetIpeChromaModeINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetIpeChromaModeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_IPE_CHROMA_MODE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23377,7 +23377,7 @@ pub struct OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_PACKED_SKC_LUMA_COUNT_THRESHOLD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23405,7 +23405,7 @@ pub struct OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_PACKED_SKC_LUMA_SUM_THRESHOLD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23433,7 +23433,7 @@ pub struct OpSubgroupAvcSicGetInterRawSadsINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetInterRawSadsINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_INTER_RAW_SADS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23461,7 +23461,7 @@ pub struct OpVariableLengthArrayINTEL {
 }
 impl Inst for OpVariableLengthArrayINTEL {
     const META: &InstMeta = &OP_VARIABLE_LENGTH_ARRAY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23488,7 +23488,7 @@ pub struct OpSaveMemoryINTEL {
 }
 impl Inst for OpSaveMemoryINTEL {
     const META: &InstMeta = &OP_SAVE_MEMORY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result);
@@ -23511,7 +23511,7 @@ pub struct OpRestoreMemoryINTEL {
 }
 impl Inst for OpRestoreMemoryINTEL {
     const META: &InstMeta = &OP_RESTORE_MEMORY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ptr);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.ptr, &mut *writer)?;
@@ -23537,7 +23537,7 @@ pub struct OpArbitraryFloatSinCosPiALTERA {
 }
 impl Inst for OpArbitraryFloatSinCosPiALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_SIN_COS_PI_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23585,7 +23585,7 @@ pub struct OpArbitraryFloatCastALTERA {
 }
 impl Inst for OpArbitraryFloatCastALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_CAST_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23633,7 +23633,7 @@ pub struct OpArbitraryFloatCastFromIntALTERA {
 }
 impl Inst for OpArbitraryFloatCastFromIntALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_CAST_FROM_INT_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23681,7 +23681,7 @@ pub struct OpArbitraryFloatCastToIntALTERA {
 }
 impl Inst for OpArbitraryFloatCastToIntALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_CAST_TO_INT_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23731,7 +23731,7 @@ pub struct OpArbitraryFloatAddALTERA {
 }
 impl Inst for OpArbitraryFloatAddALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_ADD_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23787,7 +23787,7 @@ pub struct OpArbitraryFloatSubALTERA {
 }
 impl Inst for OpArbitraryFloatSubALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_SUB_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23843,7 +23843,7 @@ pub struct OpArbitraryFloatMulALTERA {
 }
 impl Inst for OpArbitraryFloatMulALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_MUL_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23899,7 +23899,7 @@ pub struct OpArbitraryFloatDivALTERA {
 }
 impl Inst for OpArbitraryFloatDivALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_DIV_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23951,7 +23951,7 @@ pub struct OpArbitraryFloatGTALTERA {
 }
 impl Inst for OpArbitraryFloatGTALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_GTALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -23991,7 +23991,7 @@ pub struct OpArbitraryFloatGEALTERA {
 }
 impl Inst for OpArbitraryFloatGEALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_GEALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24031,7 +24031,7 @@ pub struct OpArbitraryFloatLTALTERA {
 }
 impl Inst for OpArbitraryFloatLTALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_LTALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24071,7 +24071,7 @@ pub struct OpArbitraryFloatLEALTERA {
 }
 impl Inst for OpArbitraryFloatLEALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_LEALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24111,7 +24111,7 @@ pub struct OpArbitraryFloatEQALTERA {
 }
 impl Inst for OpArbitraryFloatEQALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_EQALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24153,7 +24153,7 @@ pub struct OpArbitraryFloatRecipALTERA {
 }
 impl Inst for OpArbitraryFloatRecipALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_RECIP_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24201,7 +24201,7 @@ pub struct OpArbitraryFloatRSqrtALTERA {
 }
 impl Inst for OpArbitraryFloatRSqrtALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_R_SQRT_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24249,7 +24249,7 @@ pub struct OpArbitraryFloatCbrtALTERA {
 }
 impl Inst for OpArbitraryFloatCbrtALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_CBRT_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24299,7 +24299,7 @@ pub struct OpArbitraryFloatHypotALTERA {
 }
 impl Inst for OpArbitraryFloatHypotALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_HYPOT_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24353,7 +24353,7 @@ pub struct OpArbitraryFloatSqrtALTERA {
 }
 impl Inst for OpArbitraryFloatSqrtALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_SQRT_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24401,7 +24401,7 @@ pub struct OpArbitraryFloatLogINTEL {
 }
 impl Inst for OpArbitraryFloatLogINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_LOG_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24449,7 +24449,7 @@ pub struct OpArbitraryFloatLog2INTEL {
 }
 impl Inst for OpArbitraryFloatLog2INTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_LOG_2_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24497,7 +24497,7 @@ pub struct OpArbitraryFloatLog10INTEL {
 }
 impl Inst for OpArbitraryFloatLog10INTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_LOG_10_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24545,7 +24545,7 @@ pub struct OpArbitraryFloatLog1pINTEL {
 }
 impl Inst for OpArbitraryFloatLog1pINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_LOG_1_P_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24593,7 +24593,7 @@ pub struct OpArbitraryFloatExpINTEL {
 }
 impl Inst for OpArbitraryFloatExpINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_EXP_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24641,7 +24641,7 @@ pub struct OpArbitraryFloatExp2INTEL {
 }
 impl Inst for OpArbitraryFloatExp2INTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_EXP_2_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24689,7 +24689,7 @@ pub struct OpArbitraryFloatExp10INTEL {
 }
 impl Inst for OpArbitraryFloatExp10INTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_EXP_10_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24737,7 +24737,7 @@ pub struct OpArbitraryFloatExpm1INTEL {
 }
 impl Inst for OpArbitraryFloatExpm1INTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_EXPM_1_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24785,7 +24785,7 @@ pub struct OpArbitraryFloatSinINTEL {
 }
 impl Inst for OpArbitraryFloatSinINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_SIN_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24833,7 +24833,7 @@ pub struct OpArbitraryFloatCosINTEL {
 }
 impl Inst for OpArbitraryFloatCosINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_COS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24881,7 +24881,7 @@ pub struct OpArbitraryFloatSinCosINTEL {
 }
 impl Inst for OpArbitraryFloatSinCosINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_SIN_COS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24929,7 +24929,7 @@ pub struct OpArbitraryFloatSinPiINTEL {
 }
 impl Inst for OpArbitraryFloatSinPiINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_SIN_PI_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -24977,7 +24977,7 @@ pub struct OpArbitraryFloatCosPiINTEL {
 }
 impl Inst for OpArbitraryFloatCosPiINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_COS_PI_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25025,7 +25025,7 @@ pub struct OpArbitraryFloatASinINTEL {
 }
 impl Inst for OpArbitraryFloatASinINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_A_SIN_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25073,7 +25073,7 @@ pub struct OpArbitraryFloatASinPiINTEL {
 }
 impl Inst for OpArbitraryFloatASinPiINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_A_SIN_PI_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25121,7 +25121,7 @@ pub struct OpArbitraryFloatACosINTEL {
 }
 impl Inst for OpArbitraryFloatACosINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_A_COS_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25169,7 +25169,7 @@ pub struct OpArbitraryFloatACosPiINTEL {
 }
 impl Inst for OpArbitraryFloatACosPiINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_A_COS_PI_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25217,7 +25217,7 @@ pub struct OpArbitraryFloatATanINTEL {
 }
 impl Inst for OpArbitraryFloatATanINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_A_TAN_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25265,7 +25265,7 @@ pub struct OpArbitraryFloatATanPiINTEL {
 }
 impl Inst for OpArbitraryFloatATanPiINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_A_TAN_PI_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25315,7 +25315,7 @@ pub struct OpArbitraryFloatATan2INTEL {
 }
 impl Inst for OpArbitraryFloatATan2INTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_A_TAN_2_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25371,7 +25371,7 @@ pub struct OpArbitraryFloatPowINTEL {
 }
 impl Inst for OpArbitraryFloatPowINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_POW_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25427,7 +25427,7 @@ pub struct OpArbitraryFloatPowRINTEL {
 }
 impl Inst for OpArbitraryFloatPowRINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_POW_RINTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25483,7 +25483,7 @@ pub struct OpArbitraryFloatPowNINTEL {
 }
 impl Inst for OpArbitraryFloatPowNINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_POW_NINTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25530,7 +25530,7 @@ pub struct OpLoopControlINTEL {
 }
 impl Inst for OpLoopControlINTEL {
     const META: &InstMeta = &OP_LOOP_CONTROL_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.loop_control_parameters);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.loop_control_parameters, &mut *writer)?;
@@ -25550,7 +25550,7 @@ pub struct OpAliasDomainDeclINTEL {
 }
 impl Inst for OpAliasDomainDeclINTEL {
     const META: &InstMeta = &OP_ALIAS_DOMAIN_DECL_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.id_result) + OperandEncoding::word_len(&self.name);
         writer.write_op(Self::META.opcode, len)?;
@@ -25574,7 +25574,7 @@ pub struct OpAliasScopeDeclINTEL {
 }
 impl Inst for OpAliasScopeDeclINTEL {
     const META: &InstMeta = &OP_ALIAS_SCOPE_DECL_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.alias_domain)
@@ -25601,7 +25601,7 @@ pub struct OpAliasScopeListDeclINTEL {
 }
 impl Inst for OpAliasScopeListDeclINTEL {
     const META: &InstMeta = &OP_ALIAS_SCOPE_LIST_DECL_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.id_ref);
@@ -25631,7 +25631,7 @@ pub struct OpFixedSqrtALTERA {
 }
 impl Inst for OpFixedSqrtALTERA {
     const META: &InstMeta = &OP_FIXED_SQRT_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25679,7 +25679,7 @@ pub struct OpFixedRecipALTERA {
 }
 impl Inst for OpFixedRecipALTERA {
     const META: &InstMeta = &OP_FIXED_RECIP_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25727,7 +25727,7 @@ pub struct OpFixedRsqrtALTERA {
 }
 impl Inst for OpFixedRsqrtALTERA {
     const META: &InstMeta = &OP_FIXED_RSQRT_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25775,7 +25775,7 @@ pub struct OpFixedSinALTERA {
 }
 impl Inst for OpFixedSinALTERA {
     const META: &InstMeta = &OP_FIXED_SIN_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25823,7 +25823,7 @@ pub struct OpFixedCosALTERA {
 }
 impl Inst for OpFixedCosALTERA {
     const META: &InstMeta = &OP_FIXED_COS_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25871,7 +25871,7 @@ pub struct OpFixedSinCosALTERA {
 }
 impl Inst for OpFixedSinCosALTERA {
     const META: &InstMeta = &OP_FIXED_SIN_COS_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25919,7 +25919,7 @@ pub struct OpFixedSinPiALTERA {
 }
 impl Inst for OpFixedSinPiALTERA {
     const META: &InstMeta = &OP_FIXED_SIN_PI_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -25967,7 +25967,7 @@ pub struct OpFixedCosPiALTERA {
 }
 impl Inst for OpFixedCosPiALTERA {
     const META: &InstMeta = &OP_FIXED_COS_PI_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26015,7 +26015,7 @@ pub struct OpFixedSinCosPiALTERA {
 }
 impl Inst for OpFixedSinCosPiALTERA {
     const META: &InstMeta = &OP_FIXED_SIN_COS_PI_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26063,7 +26063,7 @@ pub struct OpFixedLogALTERA {
 }
 impl Inst for OpFixedLogALTERA {
     const META: &InstMeta = &OP_FIXED_LOG_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26111,7 +26111,7 @@ pub struct OpFixedExpALTERA {
 }
 impl Inst for OpFixedExpALTERA {
     const META: &InstMeta = &OP_FIXED_EXP_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26154,7 +26154,7 @@ pub struct OpPtrCastToCrossWorkgroupALTERA {
 }
 impl Inst for OpPtrCastToCrossWorkgroupALTERA {
     const META: &InstMeta = &OP_PTR_CAST_TO_CROSS_WORKGROUP_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26182,7 +26182,7 @@ pub struct OpCrossWorkgroupCastToPtrALTERA {
 }
 impl Inst for OpCrossWorkgroupCastToPtrALTERA {
     const META: &InstMeta = &OP_CROSS_WORKGROUP_CAST_TO_PTR_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26211,7 +26211,7 @@ pub struct OpReadPipeBlockingALTERA {
 }
 impl Inst for OpReadPipeBlockingALTERA {
     const META: &InstMeta = &OP_READ_PIPE_BLOCKING_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26243,7 +26243,7 @@ pub struct OpWritePipeBlockingALTERA {
 }
 impl Inst for OpWritePipeBlockingALTERA {
     const META: &InstMeta = &OP_WRITE_PIPE_BLOCKING_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26274,7 +26274,7 @@ pub struct OpFPGARegALTERA {
 }
 impl Inst for OpFPGARegALTERA {
     const META: &InstMeta = &OP_FPGA_REG_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26302,7 +26302,7 @@ pub struct OpRayQueryGetRayTMinKHR {
 }
 impl Inst for OpRayQueryGetRayTMinKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_RAY_T_MIN_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26330,7 +26330,7 @@ pub struct OpRayQueryGetRayFlagsKHR {
 }
 impl Inst for OpRayQueryGetRayFlagsKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_RAY_FLAGS_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26359,7 +26359,7 @@ pub struct OpRayQueryGetIntersectionTKHR {
 }
 impl Inst for OpRayQueryGetIntersectionTKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_TKHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26391,7 +26391,7 @@ pub struct OpRayQueryGetIntersectionInstanceCustomIndexKHR {
 }
 impl Inst for OpRayQueryGetIntersectionInstanceCustomIndexKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_INSTANCE_CUSTOM_INDEX_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26423,7 +26423,7 @@ pub struct OpRayQueryGetIntersectionInstanceIdKHR {
 }
 impl Inst for OpRayQueryGetIntersectionInstanceIdKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_INSTANCE_ID_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26456,7 +26456,7 @@ pub struct OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR {
 impl Inst for OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR {
     const META: &InstMeta =
         &OP_RAY_QUERY_GET_INTERSECTION_INSTANCE_SHADER_BINDING_TABLE_RECORD_OFFSET_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26488,7 +26488,7 @@ pub struct OpRayQueryGetIntersectionGeometryIndexKHR {
 }
 impl Inst for OpRayQueryGetIntersectionGeometryIndexKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_GEOMETRY_INDEX_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26520,7 +26520,7 @@ pub struct OpRayQueryGetIntersectionPrimitiveIndexKHR {
 }
 impl Inst for OpRayQueryGetIntersectionPrimitiveIndexKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_PRIMITIVE_INDEX_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26552,7 +26552,7 @@ pub struct OpRayQueryGetIntersectionBarycentricsKHR {
 }
 impl Inst for OpRayQueryGetIntersectionBarycentricsKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_BARYCENTRICS_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26584,7 +26584,7 @@ pub struct OpRayQueryGetIntersectionFrontFaceKHR {
 }
 impl Inst for OpRayQueryGetIntersectionFrontFaceKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_FRONT_FACE_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26615,7 +26615,7 @@ pub struct OpRayQueryGetIntersectionCandidateAABBOpaqueKHR {
 }
 impl Inst for OpRayQueryGetIntersectionCandidateAABBOpaqueKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_CANDIDATE_AABB_OPAQUE_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26644,7 +26644,7 @@ pub struct OpRayQueryGetIntersectionObjectRayDirectionKHR {
 }
 impl Inst for OpRayQueryGetIntersectionObjectRayDirectionKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_OBJECT_RAY_DIRECTION_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26676,7 +26676,7 @@ pub struct OpRayQueryGetIntersectionObjectRayOriginKHR {
 }
 impl Inst for OpRayQueryGetIntersectionObjectRayOriginKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_OBJECT_RAY_ORIGIN_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26707,7 +26707,7 @@ pub struct OpRayQueryGetWorldRayDirectionKHR {
 }
 impl Inst for OpRayQueryGetWorldRayDirectionKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_WORLD_RAY_DIRECTION_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26735,7 +26735,7 @@ pub struct OpRayQueryGetWorldRayOriginKHR {
 }
 impl Inst for OpRayQueryGetWorldRayOriginKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_WORLD_RAY_ORIGIN_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26764,7 +26764,7 @@ pub struct OpRayQueryGetIntersectionObjectToWorldKHR {
 }
 impl Inst for OpRayQueryGetIntersectionObjectToWorldKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_OBJECT_TO_WORLD_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26796,7 +26796,7 @@ pub struct OpRayQueryGetIntersectionWorldToObjectKHR {
 }
 impl Inst for OpRayQueryGetIntersectionWorldToObjectKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_WORLD_TO_OBJECT_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26830,7 +26830,7 @@ pub struct OpAtomicFAddEXT {
 }
 impl Inst for OpAtomicFAddEXT {
     const META: &InstMeta = &OP_ATOMIC_F_ADD_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26866,7 +26866,7 @@ pub struct OpTypeBufferSurfaceINTEL {
 }
 impl Inst for OpTypeBufferSurfaceINTEL {
     const META: &InstMeta = &OP_TYPE_BUFFER_SURFACE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
             + OperandEncoding::word_len(&self.access_qualifier);
@@ -26889,7 +26889,7 @@ pub struct OpTypeStructContinuedINTEL {
 }
 impl Inst for OpTypeStructContinuedINTEL {
     const META: &InstMeta = &OP_TYPE_STRUCT_CONTINUED_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_ref);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_ref, &mut *writer)?;
@@ -26908,7 +26908,7 @@ pub struct OpConstantCompositeContinuedINTEL {
 }
 impl Inst for OpConstantCompositeContinuedINTEL {
     const META: &InstMeta = &OP_CONSTANT_COMPOSITE_CONTINUED_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.constituents);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.constituents, &mut *writer)?;
@@ -26927,7 +26927,7 @@ pub struct OpSpecConstantCompositeContinuedINTEL {
 }
 impl Inst for OpSpecConstantCompositeContinuedINTEL {
     const META: &InstMeta = &OP_SPEC_CONSTANT_COMPOSITE_CONTINUED_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.constituents);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.constituents, &mut *writer)?;
@@ -26948,7 +26948,7 @@ pub struct OpCompositeConstructContinuedINTEL {
 }
 impl Inst for OpCompositeConstructContinuedINTEL {
     const META: &InstMeta = &OP_COMPOSITE_CONSTRUCT_CONTINUED_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -26976,7 +26976,7 @@ pub struct OpConvertFToBF16INTEL {
 }
 impl Inst for OpConvertFToBF16INTEL {
     const META: &InstMeta = &OP_CONVERT_F_TO_BF_16_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -27004,7 +27004,7 @@ pub struct OpConvertBF16ToFINTEL {
 }
 impl Inst for OpConvertBF16ToFINTEL {
     const META: &InstMeta = &OP_CONVERT_BF_16_TO_FINTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -27032,7 +27032,7 @@ pub struct OpControlBarrierArriveINTEL {
 }
 impl Inst for OpControlBarrierArriveINTEL {
     const META: &InstMeta = &OP_CONTROL_BARRIER_ARRIVE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.memory)
@@ -27060,7 +27060,7 @@ pub struct OpControlBarrierWaitINTEL {
 }
 impl Inst for OpControlBarrierWaitINTEL {
     const META: &InstMeta = &OP_CONTROL_BARRIER_WAIT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
             + OperandEncoding::word_len(&self.memory)
@@ -27088,7 +27088,7 @@ pub struct OpArithmeticFenceEXT {
 }
 impl Inst for OpArithmeticFenceEXT {
     const META: &InstMeta = &OP_ARITHMETIC_FENCE_EXT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -27120,7 +27120,7 @@ pub struct OpTaskSequenceCreateALTERA {
 }
 impl Inst for OpTaskSequenceCreateALTERA {
     const META: &InstMeta = &OP_TASK_SEQUENCE_CREATE_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -27159,7 +27159,7 @@ pub struct OpTaskSequenceAsyncALTERA {
 }
 impl Inst for OpTaskSequenceAsyncALTERA {
     const META: &InstMeta = &OP_TASK_SEQUENCE_ASYNC_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.sequence)
             + OperandEncoding::word_len(&self.arguments);
@@ -27184,7 +27184,7 @@ pub struct OpTaskSequenceGetALTERA {
 }
 impl Inst for OpTaskSequenceGetALTERA {
     const META: &InstMeta = &OP_TASK_SEQUENCE_GET_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -27210,7 +27210,7 @@ pub struct OpTaskSequenceReleaseALTERA {
 }
 impl Inst for OpTaskSequenceReleaseALTERA {
     const META: &InstMeta = &OP_TASK_SEQUENCE_RELEASE_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.sequence);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.sequence, &mut *writer)?;
@@ -27229,7 +27229,7 @@ pub struct OpTypeTaskSequenceALTERA {
 }
 impl Inst for OpTypeTaskSequenceALTERA {
     const META: &InstMeta = &OP_TYPE_TASK_SEQUENCE_ALTERA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.id_result, &mut *writer)?;
@@ -27250,7 +27250,7 @@ pub struct OpSubgroupBlockPrefetchINTEL {
 }
 impl Inst for OpSubgroupBlockPrefetchINTEL {
     const META: &InstMeta = &OP_SUBGROUP_BLOCK_PREFETCH_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.ptr)
             + OperandEncoding::word_len(&self.num_bytes)
@@ -27285,7 +27285,7 @@ pub struct OpSubgroup2DBlockLoadINTEL {
 }
 impl Inst for OpSubgroup2DBlockLoadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_2_D_BLOCK_LOAD_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.element_size)
             + OperandEncoding::word_len(&self.block_width)
@@ -27341,7 +27341,7 @@ pub struct OpSubgroup2DBlockLoadTransformINTEL {
 }
 impl Inst for OpSubgroup2DBlockLoadTransformINTEL {
     const META: &InstMeta = &OP_SUBGROUP_2_D_BLOCK_LOAD_TRANSFORM_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.element_size)
             + OperandEncoding::word_len(&self.block_width)
@@ -27397,7 +27397,7 @@ pub struct OpSubgroup2DBlockLoadTransposeINTEL {
 }
 impl Inst for OpSubgroup2DBlockLoadTransposeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_2_D_BLOCK_LOAD_TRANSPOSE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.element_size)
             + OperandEncoding::word_len(&self.block_width)
@@ -27452,7 +27452,7 @@ pub struct OpSubgroup2DBlockPrefetchINTEL {
 }
 impl Inst for OpSubgroup2DBlockPrefetchINTEL {
     const META: &InstMeta = &OP_SUBGROUP_2_D_BLOCK_PREFETCH_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.element_size)
             + OperandEncoding::word_len(&self.block_width)
@@ -27505,7 +27505,7 @@ pub struct OpSubgroup2DBlockStoreINTEL {
 }
 impl Inst for OpSubgroup2DBlockStoreINTEL {
     const META: &InstMeta = &OP_SUBGROUP_2_D_BLOCK_STORE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.element_size)
             + OperandEncoding::word_len(&self.block_width)
@@ -27558,7 +27558,7 @@ pub struct OpSubgroupMatrixMultiplyAccumulateINTEL {
 }
 impl Inst for OpSubgroupMatrixMultiplyAccumulateINTEL {
     const META: &InstMeta = &OP_SUBGROUP_MATRIX_MULTIPLY_ACCUMULATE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -27601,7 +27601,7 @@ pub struct OpBitwiseFunctionINTEL {
 }
 impl Inst for OpBitwiseFunctionINTEL {
     const META: &InstMeta = &OP_BITWISE_FUNCTION_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -27639,7 +27639,7 @@ pub struct OpUntypedVariableLengthArrayINTEL {
 }
 impl Inst for OpUntypedVariableLengthArrayINTEL {
     const META: &InstMeta = &OP_UNTYPED_VARIABLE_LENGTH_ARRAY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -27669,7 +27669,7 @@ pub struct OpConditionalExtensionINTEL {
 }
 impl Inst for OpConditionalExtensionINTEL {
     const META: &InstMeta = &OP_CONDITIONAL_EXTENSION_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.condition) + OperandEncoding::word_len(&self.name);
         writer.write_op(Self::META.opcode, len)?;
@@ -27695,7 +27695,7 @@ pub struct OpConditionalEntryPointINTEL {
 }
 impl Inst for OpConditionalEntryPointINTEL {
     const META: &InstMeta = &OP_CONDITIONAL_ENTRY_POINT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.condition)
             + OperandEncoding::word_len(&self.execution_model)
@@ -27728,7 +27728,7 @@ pub struct OpConditionalCapabilityINTEL {
 }
 impl Inst for OpConditionalCapabilityINTEL {
     const META: &InstMeta = &OP_CONDITIONAL_CAPABILITY_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.condition)
             + OperandEncoding::word_len(&self.capability);
@@ -27754,7 +27754,7 @@ pub struct OpSpecConstantTargetINTEL {
 }
 impl Inst for OpSpecConstantTargetINTEL {
     const META: &InstMeta = &OP_SPEC_CONSTANT_TARGET_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -27788,7 +27788,7 @@ pub struct OpSpecConstantArchitectureINTEL {
 }
 impl Inst for OpSpecConstantArchitectureINTEL {
     const META: &InstMeta = &OP_SPEC_CONSTANT_ARCHITECTURE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -27825,7 +27825,7 @@ pub struct OpSpecConstantCapabilitiesINTEL {
 }
 impl Inst for OpSpecConstantCapabilitiesINTEL {
     const META: &InstMeta = &OP_SPEC_CONSTANT_CAPABILITIES_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -27853,7 +27853,7 @@ pub struct OpConditionalCopyObjectINTEL {
 }
 impl Inst for OpConditionalCopyObjectINTEL {
     const META: &InstMeta = &OP_CONDITIONAL_COPY_OBJECT_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -27883,7 +27883,7 @@ pub struct OpGroupIMulKHR {
 }
 impl Inst for OpGroupIMulKHR {
     const META: &InstMeta = &OP_GROUP_I_MUL_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -27919,7 +27919,7 @@ pub struct OpGroupFMulKHR {
 }
 impl Inst for OpGroupFMulKHR {
     const META: &InstMeta = &OP_GROUP_F_MUL_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -27955,7 +27955,7 @@ pub struct OpGroupBitwiseAndKHR {
 }
 impl Inst for OpGroupBitwiseAndKHR {
     const META: &InstMeta = &OP_GROUP_BITWISE_AND_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -27991,7 +27991,7 @@ pub struct OpGroupBitwiseOrKHR {
 }
 impl Inst for OpGroupBitwiseOrKHR {
     const META: &InstMeta = &OP_GROUP_BITWISE_OR_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -28027,7 +28027,7 @@ pub struct OpGroupBitwiseXorKHR {
 }
 impl Inst for OpGroupBitwiseXorKHR {
     const META: &InstMeta = &OP_GROUP_BITWISE_XOR_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -28063,7 +28063,7 @@ pub struct OpGroupLogicalAndKHR {
 }
 impl Inst for OpGroupLogicalAndKHR {
     const META: &InstMeta = &OP_GROUP_LOGICAL_AND_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -28099,7 +28099,7 @@ pub struct OpGroupLogicalOrKHR {
 }
 impl Inst for OpGroupLogicalOrKHR {
     const META: &InstMeta = &OP_GROUP_LOGICAL_OR_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -28135,7 +28135,7 @@ pub struct OpGroupLogicalXorKHR {
 }
 impl Inst for OpGroupLogicalXorKHR {
     const META: &InstMeta = &OP_GROUP_LOGICAL_XOR_KHR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -28169,7 +28169,7 @@ pub struct OpRoundFToTF32INTEL {
 }
 impl Inst for OpRoundFToTF32INTEL {
     const META: &InstMeta = &OP_ROUND_F_TO_TF_32_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -28200,7 +28200,7 @@ pub struct OpMaskedGatherINTEL {
 }
 impl Inst for OpMaskedGatherINTEL {
     const META: &InstMeta = &OP_MASKED_GATHER_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -28238,7 +28238,7 @@ pub struct OpMaskedScatterINTEL {
 }
 impl Inst for OpMaskedScatterINTEL {
     const META: &InstMeta = &OP_MASKED_SCATTER_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.input_vector)
             + OperandEncoding::word_len(&self.ptr_vector)
@@ -28269,7 +28269,7 @@ pub struct OpConvertHandleToImageINTEL {
 }
 impl Inst for OpConvertHandleToImageINTEL {
     const META: &InstMeta = &OP_CONVERT_HANDLE_TO_IMAGE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -28297,7 +28297,7 @@ pub struct OpConvertHandleToSamplerINTEL {
 }
 impl Inst for OpConvertHandleToSamplerINTEL {
     const META: &InstMeta = &OP_CONVERT_HANDLE_TO_SAMPLER_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)
@@ -28325,7 +28325,7 @@ pub struct OpConvertHandleToSampledImageINTEL {
 }
 impl Inst for OpConvertHandleToSampledImageINTEL {
     const META: &InstMeta = &OP_CONVERT_HANDLE_TO_SAMPLED_IMAGE_INTEL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
             + OperandEncoding::word_len(&self.id_result)

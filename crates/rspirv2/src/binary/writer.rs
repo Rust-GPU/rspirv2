@@ -3,121 +3,67 @@ use crate::operand::Word;
 use smallvec::SmallVec;
 use std::ops::{Deref, DerefMut};
 
-/// An `InstructionWriter` is some sort of `Vec` you can [`Self::push`] [`Word`]s into.
-pub trait InstructionWriter {
+/// A `WordWriter` allows you to [`Self::write`] [`Word`]s into it and is usually backed by a [`Vec`].
+///
+/// Implementations include `Vec<Word>` and [`WordCounter`].
+pub trait WordWriter: Sized {
+    /// Write a single [`Word`]
     fn write(&mut self, word: Word);
 
+    /// Write an [`Iterator`] of [`Word`]s
+    fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>);
+
+    /// Encode and write the opcode and len of an instruction.
+    ///
+    /// Should not be overwritten.
+    #[inline]
     fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
+        self.inst_reserve(len);
         self.write(Word::new_op(op, len)?);
         Ok(())
     }
 
-    fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) {
-        for word in iter {
-            self.write(word);
-        }
+    /// Expect this many words to be written by the next instruction.
+    ///
+    /// Usually called right before an instruction is emitted, with the length of the instruction, so expect this to be
+    /// called quite often. If you're writing into a [`Vec`], prefer [`Vec::reserve`] over [`Vec::reserve_exact`].
+    #[inline]
+    fn inst_reserve(&mut self, len: usize) {
+        let _ = len;
     }
 }
 
-impl InstructionWriter for Vec<Word> {
+impl WordWriter for Vec<Word> {
+    #[inline]
     fn write(&mut self, word: Word) {
         self.push(word);
     }
 
-    fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
-        self.reserve(len);
-        self.write(Word::new_op(op, len)?);
-        Ok(())
+    #[inline]
+    fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) {
+        self.extend(iter);
     }
 
-    fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) {
-        Extend::extend(self, iter);
+    #[inline]
+    fn inst_reserve(&mut self, len: usize) {
+        self.reserve(len);
     }
 }
 
-impl InstructionWriter for Vec<u32> {
-    fn write(&mut self, word: Word) {
-        self.push(word.0);
-    }
-
-    fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
-        self.reserve(len);
-        self.write(Word::new_op(op, len)?);
-        Ok(())
-    }
-
-    fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) {
-        Extend::extend(self, iter.into_iter().map(|i| i.0));
-    }
-}
-
-impl InstructionWriter for Vec<u8> {
-    fn write(&mut self, word: Word) {
-        Extend::extend(self, word.to_u8_array());
-    }
-
-    fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
-        self.reserve(len);
-        self.write(Word::new_op(op, len)?);
-        Ok(())
-    }
-
-    fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) {
-        Extend::extend(
-            self,
-            iter.into_iter().flat_map(|i| i.to_u8_array().into_iter()),
-        );
-    }
-}
-
-impl<const N: usize> InstructionWriter for SmallVec<[Word; N]> {
+impl<const N: usize> WordWriter for SmallVec<[Word; N]> {
+    #[inline]
     fn write(&mut self, word: Word) {
         self.push(word);
     }
 
-    fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
-        self.reserve(len);
-        self.write(Word::new_op(op, len)?);
-        Ok(())
-    }
-
+    #[inline]
     fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) {
-        Extend::extend(self, iter);
-    }
-}
-
-impl<const N: usize> InstructionWriter for SmallVec<[u32; N]> {
-    fn write(&mut self, word: Word) {
-        self.push(word.0);
+        self.extend(iter);
     }
 
-    fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
+    #[inline]
+    fn inst_reserve(&mut self, len: usize) {
         self.reserve(len);
-        self.write(Word::new_op(op, len)?);
-        Ok(())
-    }
-
-    fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) {
-        Extend::extend(self, iter.into_iter().map(|i| i.0));
-    }
-}
-
-impl<const N: usize> InstructionWriter for SmallVec<[u8; N]> {
-    fn write(&mut self, word: Word) {
-        Extend::extend(self, word.to_u8_array());
-    }
-
-    fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
-        self.reserve(len);
-        self.write(Word::new_op(op, len)?);
-        Ok(())
-    }
-
-    fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) {
-        Extend::extend(
-            self,
-            iter.into_iter().flat_map(|i| i.to_u8_array().into_iter()),
-        );
     }
 }
 
@@ -128,22 +74,26 @@ pub struct WordCounter(pub usize);
 impl Deref for WordCounter {
     type Target = usize;
 
+    #[inline]
     fn deref(&self) -> &Self::Target {
         &self.0
     }
 }
 
 impl DerefMut for WordCounter {
+    #[inline]
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.0
     }
 }
 
-impl InstructionWriter for WordCounter {
+impl WordWriter for WordCounter {
+    #[inline]
     fn write(&mut self, _: Word) {
         self.0 += 1;
     }
 
+    #[inline]
     fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) {
         self.0 += iter.into_iter().count();
     }

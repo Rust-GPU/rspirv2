@@ -5,7 +5,7 @@ pub struct Round {
 }
 impl Inst for Round {
     const META: &InstMeta = &ROUND;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -24,7 +24,7 @@ pub struct RoundEven {
 }
 impl Inst for RoundEven {
     const META: &InstMeta = &ROUND_EVEN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -43,7 +43,7 @@ pub struct Trunc {
 }
 impl Inst for Trunc {
     const META: &InstMeta = &TRUNC;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -62,7 +62,7 @@ pub struct FAbs {
 }
 impl Inst for FAbs {
     const META: &InstMeta = &F_ABS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -81,7 +81,7 @@ pub struct SAbs {
 }
 impl Inst for SAbs {
     const META: &InstMeta = &S_ABS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -100,7 +100,7 @@ pub struct FSign {
 }
 impl Inst for FSign {
     const META: &InstMeta = &F_SIGN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -119,7 +119,7 @@ pub struct SSign {
 }
 impl Inst for SSign {
     const META: &InstMeta = &S_SIGN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -138,7 +138,7 @@ pub struct Floor {
 }
 impl Inst for Floor {
     const META: &InstMeta = &FLOOR;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -157,7 +157,7 @@ pub struct Ceil {
 }
 impl Inst for Ceil {
     const META: &InstMeta = &CEIL;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -176,7 +176,7 @@ pub struct Fract {
 }
 impl Inst for Fract {
     const META: &InstMeta = &FRACT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -195,7 +195,7 @@ pub struct Radians {
 }
 impl Inst for Radians {
     const META: &InstMeta = &RADIANS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.degrees);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.degrees, &mut *writer)?;
@@ -214,7 +214,7 @@ pub struct Degrees {
 }
 impl Inst for Degrees {
     const META: &InstMeta = &DEGREES;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.radians);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.radians, &mut *writer)?;
@@ -233,7 +233,7 @@ pub struct Sin {
 }
 impl Inst for Sin {
     const META: &InstMeta = &SIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -252,7 +252,7 @@ pub struct Cos {
 }
 impl Inst for Cos {
     const META: &InstMeta = &COS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -271,7 +271,7 @@ pub struct Tan {
 }
 impl Inst for Tan {
     const META: &InstMeta = &TAN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -290,7 +290,7 @@ pub struct Asin {
 }
 impl Inst for Asin {
     const META: &InstMeta = &ASIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -309,7 +309,7 @@ pub struct Acos {
 }
 impl Inst for Acos {
     const META: &InstMeta = &ACOS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -328,7 +328,7 @@ pub struct Atan {
 }
 impl Inst for Atan {
     const META: &InstMeta = &ATAN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.y_over_x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.y_over_x, &mut *writer)?;
@@ -347,7 +347,7 @@ pub struct Sinh {
 }
 impl Inst for Sinh {
     const META: &InstMeta = &SINH;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -366,7 +366,7 @@ pub struct Cosh {
 }
 impl Inst for Cosh {
     const META: &InstMeta = &COSH;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -385,7 +385,7 @@ pub struct Tanh {
 }
 impl Inst for Tanh {
     const META: &InstMeta = &TANH;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -404,7 +404,7 @@ pub struct Asinh {
 }
 impl Inst for Asinh {
     const META: &InstMeta = &ASINH;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -423,7 +423,7 @@ pub struct Acosh {
 }
 impl Inst for Acosh {
     const META: &InstMeta = &ACOSH;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -442,7 +442,7 @@ pub struct Atanh {
 }
 impl Inst for Atanh {
     const META: &InstMeta = &ATANH;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -462,7 +462,7 @@ pub struct Atan2 {
 }
 impl Inst for Atan2 {
     const META: &InstMeta = &ATAN_2;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.y) + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.y, &mut *writer)?;
@@ -484,7 +484,7 @@ pub struct Pow {
 }
 impl Inst for Pow {
     const META: &InstMeta = &POW;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -505,7 +505,7 @@ pub struct Exp {
 }
 impl Inst for Exp {
     const META: &InstMeta = &EXP;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -524,7 +524,7 @@ pub struct Log {
 }
 impl Inst for Log {
     const META: &InstMeta = &LOG;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -543,7 +543,7 @@ pub struct Exp2 {
 }
 impl Inst for Exp2 {
     const META: &InstMeta = &EXP_2;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -562,7 +562,7 @@ pub struct Log2 {
 }
 impl Inst for Log2 {
     const META: &InstMeta = &LOG_2;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -581,7 +581,7 @@ pub struct Sqrt {
 }
 impl Inst for Sqrt {
     const META: &InstMeta = &SQRT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -600,7 +600,7 @@ pub struct InverseSqrt {
 }
 impl Inst for InverseSqrt {
     const META: &InstMeta = &INVERSE_SQRT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -619,7 +619,7 @@ pub struct Determinant {
 }
 impl Inst for Determinant {
     const META: &InstMeta = &DETERMINANT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -638,7 +638,7 @@ pub struct MatrixInverse {
 }
 impl Inst for MatrixInverse {
     const META: &InstMeta = &MATRIX_INVERSE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -658,7 +658,7 @@ pub struct Modf {
 }
 impl Inst for Modf {
     const META: &InstMeta = &MODF;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.i);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -679,7 +679,7 @@ pub struct ModfStruct {
 }
 impl Inst for ModfStruct {
     const META: &InstMeta = &MODF_STRUCT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -699,7 +699,7 @@ pub struct FMin {
 }
 impl Inst for FMin {
     const META: &InstMeta = &F_MIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -721,7 +721,7 @@ pub struct UMin {
 }
 impl Inst for UMin {
     const META: &InstMeta = &U_MIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -743,7 +743,7 @@ pub struct SMin {
 }
 impl Inst for SMin {
     const META: &InstMeta = &S_MIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -765,7 +765,7 @@ pub struct FMax {
 }
 impl Inst for FMax {
     const META: &InstMeta = &F_MAX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -787,7 +787,7 @@ pub struct UMax {
 }
 impl Inst for UMax {
     const META: &InstMeta = &U_MAX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -809,7 +809,7 @@ pub struct SMax {
 }
 impl Inst for SMax {
     const META: &InstMeta = &S_MAX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -832,7 +832,7 @@ pub struct FClamp {
 }
 impl Inst for FClamp {
     const META: &InstMeta = &F_CLAMP;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.x)
             + OperandEncoding::word_len(&self.min_val)
@@ -860,7 +860,7 @@ pub struct UClamp {
 }
 impl Inst for UClamp {
     const META: &InstMeta = &U_CLAMP;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.x)
             + OperandEncoding::word_len(&self.min_val)
@@ -888,7 +888,7 @@ pub struct SClamp {
 }
 impl Inst for SClamp {
     const META: &InstMeta = &S_CLAMP;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.x)
             + OperandEncoding::word_len(&self.min_val)
@@ -916,7 +916,7 @@ pub struct FMix {
 }
 impl Inst for FMix {
     const META: &InstMeta = &F_MIX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.x)
             + OperandEncoding::word_len(&self.y)
@@ -944,7 +944,7 @@ pub struct IMix {
 }
 impl Inst for IMix {
     const META: &InstMeta = &I_MIX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.x)
             + OperandEncoding::word_len(&self.y)
@@ -971,7 +971,7 @@ pub struct Step {
 }
 impl Inst for Step {
     const META: &InstMeta = &STEP;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.edge) + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.edge, &mut *writer)?;
@@ -994,7 +994,7 @@ pub struct SmoothStep {
 }
 impl Inst for SmoothStep {
     const META: &InstMeta = &SMOOTH_STEP;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.edge_0)
             + OperandEncoding::word_len(&self.edge_1)
@@ -1022,7 +1022,7 @@ pub struct Fma {
 }
 impl Inst for Fma {
     const META: &InstMeta = &FMA;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.a)
             + OperandEncoding::word_len(&self.b)
@@ -1049,7 +1049,7 @@ pub struct Frexp {
 }
 impl Inst for Frexp {
     const META: &InstMeta = &FREXP;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.exp);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1070,7 +1070,7 @@ pub struct FrexpStruct {
 }
 impl Inst for FrexpStruct {
     const META: &InstMeta = &FREXP_STRUCT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1090,7 +1090,7 @@ pub struct Ldexp {
 }
 impl Inst for Ldexp {
     const META: &InstMeta = &LDEXP;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.exp);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1111,7 +1111,7 @@ pub struct PackSnorm4x8 {
 }
 impl Inst for PackSnorm4x8 {
     const META: &InstMeta = &PACK_SNORM_4_X_8;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
@@ -1130,7 +1130,7 @@ pub struct PackUnorm4x8 {
 }
 impl Inst for PackUnorm4x8 {
     const META: &InstMeta = &PACK_UNORM_4_X_8;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
@@ -1149,7 +1149,7 @@ pub struct PackSnorm2x16 {
 }
 impl Inst for PackSnorm2x16 {
     const META: &InstMeta = &PACK_SNORM_2_X_16;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
@@ -1168,7 +1168,7 @@ pub struct PackUnorm2x16 {
 }
 impl Inst for PackUnorm2x16 {
     const META: &InstMeta = &PACK_UNORM_2_X_16;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
@@ -1187,7 +1187,7 @@ pub struct PackHalf2x16 {
 }
 impl Inst for PackHalf2x16 {
     const META: &InstMeta = &PACK_HALF_2_X_16;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
@@ -1206,7 +1206,7 @@ pub struct PackDouble2x32 {
 }
 impl Inst for PackDouble2x32 {
     const META: &InstMeta = &PACK_DOUBLE_2_X_32;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
@@ -1225,7 +1225,7 @@ pub struct UnpackSnorm2x16 {
 }
 impl Inst for UnpackSnorm2x16 {
     const META: &InstMeta = &UNPACK_SNORM_2_X_16;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
@@ -1244,7 +1244,7 @@ pub struct UnpackUnorm2x16 {
 }
 impl Inst for UnpackUnorm2x16 {
     const META: &InstMeta = &UNPACK_UNORM_2_X_16;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
@@ -1263,7 +1263,7 @@ pub struct UnpackHalf2x16 {
 }
 impl Inst for UnpackHalf2x16 {
     const META: &InstMeta = &UNPACK_HALF_2_X_16;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
@@ -1282,7 +1282,7 @@ pub struct UnpackSnorm4x8 {
 }
 impl Inst for UnpackSnorm4x8 {
     const META: &InstMeta = &UNPACK_SNORM_4_X_8;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
@@ -1301,7 +1301,7 @@ pub struct UnpackUnorm4x8 {
 }
 impl Inst for UnpackUnorm4x8 {
     const META: &InstMeta = &UNPACK_UNORM_4_X_8;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
@@ -1320,7 +1320,7 @@ pub struct UnpackDouble2x32 {
 }
 impl Inst for UnpackDouble2x32 {
     const META: &InstMeta = &UNPACK_DOUBLE_2_X_32;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
@@ -1339,7 +1339,7 @@ pub struct Length {
 }
 impl Inst for Length {
     const META: &InstMeta = &LENGTH;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1359,7 +1359,7 @@ pub struct Distance {
 }
 impl Inst for Distance {
     const META: &InstMeta = &DISTANCE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.p_0) + OperandEncoding::word_len(&self.p_1);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.p_0, &mut *writer)?;
@@ -1381,7 +1381,7 @@ pub struct Cross {
 }
 impl Inst for Cross {
     const META: &InstMeta = &CROSS;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1402,7 +1402,7 @@ pub struct Normalize {
 }
 impl Inst for Normalize {
     const META: &InstMeta = &NORMALIZE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1423,7 +1423,7 @@ pub struct FaceForward {
 }
 impl Inst for FaceForward {
     const META: &InstMeta = &FACE_FORWARD;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.n)
             + OperandEncoding::word_len(&self.i)
@@ -1450,7 +1450,7 @@ pub struct Reflect {
 }
 impl Inst for Reflect {
     const META: &InstMeta = &REFLECT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.i) + OperandEncoding::word_len(&self.n);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.i, &mut *writer)?;
@@ -1473,7 +1473,7 @@ pub struct Refract {
 }
 impl Inst for Refract {
     const META: &InstMeta = &REFRACT;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.i)
             + OperandEncoding::word_len(&self.n)
@@ -1499,7 +1499,7 @@ pub struct FindILsb {
 }
 impl Inst for FindILsb {
     const META: &InstMeta = &FIND_I_LSB;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.value);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
@@ -1518,7 +1518,7 @@ pub struct FindSMsb {
 }
 impl Inst for FindSMsb {
     const META: &InstMeta = &FIND_S_MSB;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.value);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
@@ -1537,7 +1537,7 @@ pub struct FindUMsb {
 }
 impl Inst for FindUMsb {
     const META: &InstMeta = &FIND_U_MSB;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.value);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
@@ -1556,7 +1556,7 @@ pub struct InterpolateAtCentroid {
 }
 impl Inst for InterpolateAtCentroid {
     const META: &InstMeta = &INTERPOLATE_AT_CENTROID;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.interpolant);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.interpolant, &mut *writer)?;
@@ -1576,7 +1576,7 @@ pub struct InterpolateAtSample {
 }
 impl Inst for InterpolateAtSample {
     const META: &InstMeta = &INTERPOLATE_AT_SAMPLE;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.interpolant)
             + OperandEncoding::word_len(&self.sample);
@@ -1600,7 +1600,7 @@ pub struct InterpolateAtOffset {
 }
 impl Inst for InterpolateAtOffset {
     const META: &InstMeta = &INTERPOLATE_AT_OFFSET;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.interpolant)
             + OperandEncoding::word_len(&self.offset);
@@ -1624,7 +1624,7 @@ pub struct NMin {
 }
 impl Inst for NMin {
     const META: &InstMeta = &N_MIN;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1646,7 +1646,7 @@ pub struct NMax {
 }
 impl Inst for NMax {
     const META: &InstMeta = &N_MAX;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1669,7 +1669,7 @@ pub struct NClamp {
 }
 impl Inst for NClamp {
     const META: &InstMeta = &N_CLAMP;
-    fn encode(&self, writer: &mut impl InstructionWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.x)
             + OperandEncoding::word_len(&self.min_val)

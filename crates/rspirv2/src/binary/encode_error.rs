@@ -6,6 +6,7 @@ pub enum EncodeError {
     /// A customizable error
     CustomError(String),
     OpTooLong,
+    OutOfIdResults,
 }
 
 impl Display for EncodeError {
@@ -13,6 +14,7 @@ impl Display for EncodeError {
         match self {
             EncodeError::CustomError(err) => write!(f, "{}", err),
             EncodeError::OpTooLong => write!(f, "Op too long, u16 overflow"),
+            EncodeError::OutOfIdResults => write!(f, "Out of `IdResult`"),
         }
     }
 }
