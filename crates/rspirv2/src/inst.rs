@@ -13,7 +13,7 @@ pub trait Inst: Sized + Debug + Eq {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::binary::ModuleReader;
+    use crate::binary::{IdResultAlloc, IdResultAllocator, ModuleReader};
     use crate::core::inst::{
         OpConstant, OpConvertUToF, OpDecorate, OpIAdd, OpNop, OpStore, OpTypeFloat, OpTypeInt,
         OpTypePointer, OpVariable,
@@ -23,8 +23,6 @@ mod tests {
     use crate::operand::{IdRef, IdResult, IdResultType, LiteralConst, LiteralInteger, Word};
     use anyhow::Context;
     use smallvec::SmallVec;
-    use std::sync::atomic::AtomicU32;
-    use std::sync::atomic::Ordering::Relaxed;
 
     fn roundtrip<T: Inst>(inst: T) {
         let mut spirv = Vec::<Word>::new();
@@ -116,42 +114,42 @@ mod tests {
     /// ```
     #[test]
     fn test_non_trivial_code() -> anyhow::Result<()> {
-        let id = AtomicU32::new(0);
+        let mut alloc = IdResultAllocator::default();
 
         let u32 = OpTypeInt {
-            id_result: IdResult(Word(id.fetch_add(1, Relaxed))),
+            id_result: alloc.alloc_id()?,
             width: LiteralInteger::new(32),
             signedness: LiteralInteger::new(0),
         };
         let u32_1 = OpConstant {
             id_result_type: IdResultType(u32.id_result),
-            id_result: IdResult(Word(id.fetch_add(1, Relaxed))),
+            id_result: alloc.alloc_id()?,
             value: LiteralConst::from(123u32),
         };
         let add = OpIAdd {
             id_result_type: IdResultType(u32.id_result),
-            id_result: IdResult(Word(id.fetch_add(1, Relaxed))),
+            id_result: alloc.alloc_id()?,
             operand_1: IdRef(u32_1.id_result),
             operand_2: IdRef(u32_1.id_result),
         };
         let f32 = OpTypeFloat {
-            id_result: IdResult(Word(id.fetch_add(1, Relaxed))),
+            id_result: alloc.alloc_id()?,
             width: LiteralInteger::new(32),
             floating_point_encoding: None,
         };
         let u_to_f = OpConvertUToF {
             id_result_type: IdResultType(f32.id_result),
-            id_result: IdResult(Word(id.fetch_add(1, Relaxed))),
+            id_result: alloc.alloc_id()?,
             unsigned_value: IdRef(add.id_result),
         };
         let f32_ptr = OpTypePointer {
-            id_result: IdResult(Word(id.fetch_add(1, Relaxed))),
+            id_result: alloc.alloc_id()?,
             storage_class: StorageClass::Output,
             ty: IdRef(f32.id_result),
         };
         let var_out = OpVariable {
             id_result_type: IdResultType(f32_ptr.id_result),
-            id_result: IdResult(Word(id.fetch_add(1, Relaxed))),
+            id_result: alloc.alloc_id()?,
             storage_class: StorageClass::Output,
             initializer: None,
         };
