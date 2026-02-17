@@ -162,6 +162,11 @@ fn emit_c_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> Tok
             #(#variants),*
         }
 
+        #[cfg(feature = "bytemuck")]
+        unsafe impl bytemuck::Zeroable for #name {}
+        #[cfg(feature = "bytemuck")]
+        unsafe impl bytemuck::Pod for #name {}
+
         unsafe impl Operand for #name {
             const KIND: &OperandKind = &#kind;
         }

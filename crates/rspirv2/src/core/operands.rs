@@ -239,6 +239,10 @@ pub enum SourceLanguage {
     Zig = 12u32,
     Rust = 13u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for SourceLanguage {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for SourceLanguage {}
 unsafe impl Operand for SourceLanguage {
     const KIND: &OperandKind = &OPERAND_KIND_SOURCE_LANGUAGE;
 }
@@ -295,6 +299,10 @@ pub enum ExecutionModel {
     TaskEXT = 5364u32,
     MeshEXT = 5365u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for ExecutionModel {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for ExecutionModel {}
 unsafe impl Operand for ExecutionModel {
     const KIND: &OperandKind = &OPERAND_KIND_EXECUTION_MODEL;
 }
@@ -342,6 +350,10 @@ pub enum AddressingModel {
     #[doc = "Since SPIR-V 1.5"]
     PhysicalStorageBuffer64 = 5348u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for AddressingModel {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for AddressingModel {}
 unsafe impl Operand for AddressingModel {
     const KIND: &OperandKind = &OPERAND_KIND_ADDRESSING_MODEL;
 }
@@ -376,6 +388,10 @@ pub enum MemoryModel {
     #[doc = "Since SPIR-V 1.5"]
     Vulkan = 3u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for MemoryModel {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for MemoryModel {}
 unsafe impl Operand for MemoryModel {
     const KIND: &OperandKind = &OPERAND_KIND_MEMORY_MODEL;
 }
@@ -975,6 +991,10 @@ pub enum StorageClass {
     DeviceOnlyALTERA = 5936u32,
     HostOnlyALTERA = 5937u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for StorageClass {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for StorageClass {}
 unsafe impl Operand for StorageClass {
     const KIND: &OperandKind = &OPERAND_KIND_STORAGE_CLASS;
 }
@@ -1037,6 +1057,10 @@ pub enum Dim {
     SubpassData = 6u32,
     TileImageDataEXT = 4173u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for Dim {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for Dim {}
 unsafe impl Operand for Dim {
     const KIND: &OperandKind = &OPERAND_KIND_DIM;
 }
@@ -1075,6 +1099,10 @@ pub enum SamplerAddressingMode {
     Repeat = 3u32,
     RepeatMirrored = 4u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for SamplerAddressingMode {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for SamplerAddressingMode {}
 unsafe impl Operand for SamplerAddressingMode {
     const KIND: &OperandKind = &OPERAND_KIND_SAMPLER_ADDRESSING_MODE;
 }
@@ -1107,6 +1135,10 @@ pub enum SamplerFilterMode {
     Nearest = 0u32,
     Linear = 1u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for SamplerFilterMode {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for SamplerFilterMode {}
 unsafe impl Operand for SamplerFilterMode {
     const KIND: &OperandKind = &OPERAND_KIND_SAMPLER_FILTER_MODE;
 }
@@ -1176,6 +1208,10 @@ pub enum ImageFormat {
     R64ui = 40u32,
     R64i = 41u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for ImageFormat {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for ImageFormat {}
 unsafe impl Operand for ImageFormat {
     const KIND: &OperandKind = &OPERAND_KIND_IMAGE_FORMAT;
 }
@@ -1263,6 +1299,10 @@ pub enum ImageChannelOrder {
     sBGRA = 18u32,
     ABGR = 19u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for ImageChannelOrder {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for ImageChannelOrder {}
 unsafe impl Operand for ImageChannelOrder {
     const KIND: &OperandKind = &OPERAND_KIND_IMAGE_CHANNEL_ORDER;
 }
@@ -1334,6 +1374,10 @@ pub enum ImageChannelDataType {
     UnormInt12X4EXT = 25u32,
     UnormInt14X2EXT = 26u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for ImageChannelDataType {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for ImageChannelDataType {}
 unsafe impl Operand for ImageChannelDataType {
     const KIND: &OperandKind = &OPERAND_KIND_IMAGE_CHANNEL_DATA_TYPE;
 }
@@ -1389,6 +1433,10 @@ pub enum FPRoundingMode {
     RTP = 2u32,
     RTN = 3u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for FPRoundingMode {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for FPRoundingMode {}
 unsafe impl Operand for FPRoundingMode {
     const KIND: &OperandKind = &OPERAND_KIND_FP_ROUNDING_MODE;
 }
@@ -1420,6 +1468,10 @@ pub enum FPDenormMode {
     Preserve = 0u32,
     FlushToZero = 1u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for FPDenormMode {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for FPDenormMode {}
 unsafe impl Operand for FPDenormMode {
     const KIND: &OperandKind = &OPERAND_KIND_FP_DENORM_MODE;
 }
@@ -1455,6 +1507,10 @@ pub enum QuantizationModes {
     RND_CONV = 6u32,
     RND_CONV_ODD = 7u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for QuantizationModes {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for QuantizationModes {}
 unsafe impl Operand for QuantizationModes {
     const KIND: &OperandKind = &OPERAND_KIND_QUANTIZATION_MODES;
 }
@@ -1490,6 +1546,10 @@ pub enum FPOperationMode {
     IEEE = 0u32,
     ALT = 1u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for FPOperationMode {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for FPOperationMode {}
 unsafe impl Operand for FPOperationMode {
     const KIND: &OperandKind = &OPERAND_KIND_FP_OPERATION_MODE;
 }
@@ -1521,6 +1581,10 @@ pub enum OverflowModes {
     SAT_ZERO = 2u32,
     SAT_SYM = 3u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for OverflowModes {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for OverflowModes {}
 unsafe impl Operand for OverflowModes {
     const KIND: &OperandKind = &OPERAND_KIND_OVERFLOW_MODES;
 }
@@ -1553,6 +1617,10 @@ pub enum LinkageType {
     Import = 1u32,
     LinkOnceODR = 2u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for LinkageType {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for LinkageType {}
 unsafe impl Operand for LinkageType {
     const KIND: &OperandKind = &OPERAND_KIND_LINKAGE_TYPE;
 }
@@ -1584,6 +1652,10 @@ pub enum AccessQualifier {
     WriteOnly = 1u32,
     ReadWrite = 2u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for AccessQualifier {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for AccessQualifier {}
 unsafe impl Operand for AccessQualifier {
     const KIND: &OperandKind = &OPERAND_KIND_ACCESS_QUALIFIER;
 }
@@ -1616,6 +1688,10 @@ pub enum HostAccessQualifier {
     WriteINTEL = 2u32,
     ReadWriteINTEL = 3u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for HostAccessQualifier {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for HostAccessQualifier {}
 unsafe impl Operand for HostAccessQualifier {
     const KIND: &OperandKind = &OPERAND_KIND_HOST_ACCESS_QUALIFIER;
 }
@@ -1654,6 +1730,10 @@ pub enum FunctionParameterAttribute {
     NoReadWrite = 7u32,
     RuntimeAlignedALTERA = 5940u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for FunctionParameterAttribute {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for FunctionParameterAttribute {}
 unsafe impl Operand for FunctionParameterAttribute {
     const KIND: &OperandKind = &OPERAND_KIND_FUNCTION_PARAMETER_ATTRIBUTE;
 }
@@ -2626,6 +2706,10 @@ pub enum BuiltIn {
     ClusterIDNV = 5436u32,
     CullMaskKHR = 6021u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for BuiltIn {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for BuiltIn {}
 unsafe impl Operand for BuiltIn {
     const KIND: &OperandKind = &OPERAND_KIND_BUILT_IN;
 }
@@ -2787,6 +2871,10 @@ pub enum Scope {
     QueueFamily = 5u32,
     ShaderCallKHR = 6u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for Scope {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for Scope {}
 unsafe impl Operand for Scope {
     const KIND: &OperandKind = &OPERAND_KIND_SCOPE;
 }
@@ -2827,6 +2915,10 @@ pub enum GroupOperation {
     PartitionedInclusiveScanEXT = 7u32,
     PartitionedExclusiveScanEXT = 8u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for GroupOperation {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for GroupOperation {}
 unsafe impl Operand for GroupOperation {
     const KIND: &OperandKind = &OPERAND_KIND_GROUP_OPERATION;
 }
@@ -2862,6 +2954,10 @@ pub enum KernelEnqueueFlags {
     WaitKernel = 1u32,
     WaitWorkGroup = 2u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for KernelEnqueueFlags {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for KernelEnqueueFlags {}
 unsafe impl Operand for KernelEnqueueFlags {
     const KIND: &OperandKind = &OPERAND_KIND_KERNEL_ENQUEUE_FLAGS;
 }
@@ -3221,6 +3317,10 @@ pub enum Capability {
     RegisterLimitsINTEL = 6460u32,
     BindlessImagesINTEL = 6528u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for Capability {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for Capability {}
 unsafe impl Operand for Capability {
     const KIND: &OperandKind = &OPERAND_KIND_CAPABILITY;
 }
@@ -3528,6 +3628,10 @@ pub enum RayQueryIntersection {
     RayQueryCandidateIntersectionKHR = 0u32,
     RayQueryCommittedIntersectionKHR = 1u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for RayQueryIntersection {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for RayQueryIntersection {}
 unsafe impl Operand for RayQueryIntersection {
     const KIND: &OperandKind = &OPERAND_KIND_RAY_QUERY_INTERSECTION;
 }
@@ -3558,6 +3662,10 @@ pub enum RayQueryCommittedIntersectionType {
     RayQueryCommittedIntersectionTriangleKHR = 1u32,
     RayQueryCommittedIntersectionGeneratedKHR = 2u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for RayQueryCommittedIntersectionType {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for RayQueryCommittedIntersectionType {}
 unsafe impl Operand for RayQueryCommittedIntersectionType {
     const KIND: &OperandKind = &OPERAND_KIND_RAY_QUERY_COMMITTED_INTERSECTION_TYPE;
 }
@@ -3588,6 +3696,10 @@ pub enum RayQueryCandidateIntersectionType {
     RayQueryCandidateIntersectionTriangleKHR = 0u32,
     RayQueryCandidateIntersectionAABBKHR = 1u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for RayQueryCandidateIntersectionType {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for RayQueryCandidateIntersectionType {}
 unsafe impl Operand for RayQueryCandidateIntersectionType {
     const KIND: &OperandKind = &OPERAND_KIND_RAY_QUERY_CANDIDATE_INTERSECTION_TYPE;
 }
@@ -3617,6 +3729,10 @@ pub enum PackedVectorFormat {
     #[doc = "Since SPIR-V 1.6"]
     PackedVectorFormat4x8Bit = 0u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for PackedVectorFormat {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for PackedVectorFormat {}
 unsafe impl Operand for PackedVectorFormat {
     const KIND: &OperandKind = &OPERAND_KIND_PACKED_VECTOR_FORMAT;
 }
@@ -3667,6 +3783,10 @@ pub enum CooperativeMatrixLayout {
     RowBlockedInterleavedARM = 4202u32,
     ColumnBlockedInterleavedARM = 4203u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for CooperativeMatrixLayout {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for CooperativeMatrixLayout {}
 unsafe impl Operand for CooperativeMatrixLayout {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_LAYOUT;
 }
@@ -3699,6 +3819,10 @@ pub enum CooperativeMatrixUse {
     MatrixBKHR = 1u32,
     MatrixAccumulatorKHR = 2u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for CooperativeMatrixUse {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for CooperativeMatrixUse {}
 unsafe impl Operand for CooperativeMatrixUse {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_USE;
 }
@@ -3752,6 +3876,10 @@ pub enum TensorClampMode {
     Repeat = 3u32,
     RepeatMirrored = 4u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for TensorClampMode {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for TensorClampMode {}
 unsafe impl Operand for TensorClampMode {
     const KIND: &OperandKind = &OPERAND_KIND_TENSOR_CLAMP_MODE;
 }
@@ -3804,6 +3932,10 @@ pub enum InitializationModeQualifier {
     InitOnDeviceReprogramALTERA = 0u32,
     InitOnDeviceResetALTERA = 1u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for InitializationModeQualifier {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for InitializationModeQualifier {}
 unsafe impl Operand for InitializationModeQualifier {
     const KIND: &OperandKind = &OPERAND_KIND_INITIALIZATION_MODE_QUALIFIER;
 }
@@ -3836,6 +3968,10 @@ pub enum LoadCacheControl {
     InvalidateAfterReadINTEL = 3u32,
     ConstCachedINTEL = 4u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for LoadCacheControl {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for LoadCacheControl {}
 unsafe impl Operand for LoadCacheControl {
     const KIND: &OperandKind = &OPERAND_KIND_LOAD_CACHE_CONTROL;
 }
@@ -3870,6 +4006,10 @@ pub enum StoreCacheControl {
     WriteBackINTEL = 2u32,
     StreamingINTEL = 3u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for StoreCacheControl {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for StoreCacheControl {}
 unsafe impl Operand for StoreCacheControl {
     const KIND: &OperandKind = &OPERAND_KIND_STORE_CACHE_CONTROL;
 }
@@ -3900,6 +4040,10 @@ unsafe impl OperandEncoding for StoreCacheControl {
 pub enum NamedMaximumNumberOfRegisters {
     AutoINTEL = 0u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for NamedMaximumNumberOfRegisters {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for NamedMaximumNumberOfRegisters {}
 unsafe impl Operand for NamedMaximumNumberOfRegisters {
     const KIND: &OperandKind = &OPERAND_KIND_NAMED_MAXIMUM_NUMBER_OF_REGISTERS;
 }
@@ -3948,6 +4092,10 @@ pub enum FPEncoding {
     Float8E4M3EXT = 4214u32,
     Float8E5M2EXT = 4215u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for FPEncoding {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for FPEncoding {}
 unsafe impl Operand for FPEncoding {
     const KIND: &OperandKind = &OPERAND_KIND_FP_ENCODING;
 }
@@ -3980,6 +4128,10 @@ pub enum CooperativeVectorMatrixLayout {
     InferencingOptimalNV = 2u32,
     TrainingOptimalNV = 3u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for CooperativeVectorMatrixLayout {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for CooperativeVectorMatrixLayout {}
 unsafe impl Operand for CooperativeVectorMatrixLayout {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_VECTOR_MATRIX_LAYOUT;
 }
@@ -4024,6 +4176,10 @@ pub enum ComponentType {
     FloatE4M3NV = 1000491002u32,
     FloatE5M2NV = 1000491003u32,
 }
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for ComponentType {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for ComponentType {}
 unsafe impl Operand for ComponentType {
     const KIND: &OperandKind = &OPERAND_KIND_COMPONENT_TYPE;
 }

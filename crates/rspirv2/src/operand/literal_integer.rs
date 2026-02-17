@@ -5,8 +5,14 @@ use crate::operand::{Operand, OperandEncoding, Word};
 macro_rules! def_literal_integer {
     ($name:ident; $kind:expr; $docs:literal) => {
         #[doc = $docs]
+        #[repr(transparent)]
         #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
         pub struct $name(pub Word);
+
+        #[cfg(feature = "bytemuck")]
+        unsafe impl bytemuck::Zeroable for $name {}
+        #[cfg(feature = "bytemuck")]
+        unsafe impl bytemuck::Pod for $name {}
 
         impl $name {
             pub fn new(value: u32) -> Self {

@@ -10,7 +10,13 @@ use crate::operand::{Operand, OperandEncoding, Word};
 ///
 /// [`LiteralInteger`]: crate::operand::LiteralInteger
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[repr(transparent)]
 pub struct LiteralFloat(pub Word);
+
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for LiteralFloat {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for LiteralFloat {}
 
 impl LiteralFloat {
     pub fn new(value: f32) -> Self {

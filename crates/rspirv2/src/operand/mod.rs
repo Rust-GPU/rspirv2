@@ -14,8 +14,14 @@ pub use literal_string::*;
 use smallvec::SmallVec;
 
 /// A 32bit SPIR-V Word
+#[repr(transparent)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Word(pub u32);
+
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for Word {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for Word {}
 
 impl Word {
     pub fn new_op(op: u16, len: usize) -> Result<Self, EncodeError> {
