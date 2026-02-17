@@ -1,37 +1,25 @@
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
 use crate::meta::OperandKind;
 use crate::operand::{Operand, OperandEncoding, Word};
-use std::ops::{Deref, DerefMut};
 
 /// A SPIR-V String literal. Defined as a sequence of UTF-8, so we can just use an ordinary [`String`].
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct LiteralString(pub String);
 
 impl LiteralString {
+    #[inline]
     pub fn new(str: String) -> Self {
         Self(str)
     }
 
+    #[inline]
     pub fn into_string(self) -> String {
         self.0
     }
 
+    #[inline]
     pub fn as_str(&self) -> &str {
         &self.0
-    }
-}
-
-impl Deref for LiteralString {
-    type Target = String;
-
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-impl DerefMut for LiteralString {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.0
     }
 }
 
@@ -49,7 +37,7 @@ unsafe impl OperandEncoding for LiteralString {
 
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let words = self.word_len();
-        let load = |i, o| *self.as_bytes().get(i * 4 + o).unwrap_or(&0);
+        let load = |i, o| *self.0.as_bytes().get(i * 4 + o).unwrap_or(&0);
         writer.write_iter((0..words).map(|i| {
             Word(u32::from_ne_bytes([
                 load(i, 0),

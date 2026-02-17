@@ -19,18 +19,22 @@ unsafe impl bytemuck::Zeroable for LiteralFloat {}
 unsafe impl bytemuck::Pod for LiteralFloat {}
 
 impl LiteralFloat {
+    #[inline]
     pub fn new(value: f32) -> Self {
         Self(Word(value.to_bits()))
     }
 
+    #[inline]
     pub fn from_word(value: Word) -> Self {
         Self(value)
     }
 
+    #[inline]
     pub fn to_word(&self) -> Word {
         self.0
     }
 
+    #[inline]
     pub fn to_f32(&self) -> f32 {
         f32::from_bits(self.0.0)
     }
@@ -43,11 +47,13 @@ unsafe impl Operand for LiteralFloat {
 unsafe impl OperandEncoding for LiteralFloat {
     const FIXED_LEN: Option<usize> = Some(1);
 
+    #[inline]
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(self.0);
         Ok(())
     }
 
+    #[inline]
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(reader.pull()?))
     }

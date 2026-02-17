@@ -125,6 +125,7 @@ impl From<FromUtf8Error> for DecodeError {
 }
 
 impl DecodeError {
+    #[inline]
     pub fn invalid_bitflags<T: Flags<Bits = u32>>(name: &'static str, bits: u32) -> Self {
         Self::InvalidBitflags {
             name,

@@ -24,11 +24,13 @@ unsafe impl Operand for IdResult {
 unsafe impl OperandEncoding for IdResult {
     const FIXED_LEN: Option<usize> = Some(1);
 
+    #[inline]
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(self.0);
         Ok(())
     }
 
+    #[inline]
     fn validate_optional(opt: &Option<Self>) -> Result<(), EncodeError> {
         match opt {
             None => Err(EncodeError::MissingIdResult),
@@ -36,6 +38,7 @@ unsafe impl OperandEncoding for IdResult {
         }
     }
 
+    #[inline]
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(reader.pull()?))
     }
@@ -57,12 +60,14 @@ macro_rules! id_ref {
         unsafe impl bytemuck::Pod for $name {}
 
         impl From<IdResult> for $name {
+            #[inline]
             fn from(id: IdResult) -> Self {
                 Self(id)
             }
         }
 
         impl From<$name> for IdResult {
+            #[inline]
             fn from(id: $name) -> Self {
                 id.0
             }
@@ -75,11 +80,13 @@ macro_rules! id_ref {
         unsafe impl OperandEncoding for $name {
             const FIXED_LEN: Option<usize> = Some(1);
 
+            #[inline]
             fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
                 writer.write(self.0.0);
                 Ok(())
             }
 
+            #[inline]
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 Ok(Self(IdResult(reader.pull()?)))
             }

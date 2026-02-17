@@ -18,12 +18,14 @@ pub trait IdResultAlloc {
 pub struct IdResultAllocator(u32);
 
 impl IdResultAllocator {
+    #[inline]
     pub fn start_at(start: u32) -> Self {
         Self(start)
     }
 }
 
 impl IdResultAlloc for IdResultAllocator {
+    #[inline]
     fn alloc_id(&mut self) -> Result<IdResult, EncodeError> {
         let id = self.0;
         self.0 += 1;
@@ -40,12 +42,14 @@ impl IdResultAlloc for IdResultAllocator {
 pub struct AtomicIdResultAllocator(Arc<AtomicU32>);
 
 impl AtomicIdResultAllocator {
+    #[inline]
     pub fn start_at(start: u32) -> Self {
         Self(Arc::new(AtomicU32::new(start)))
     }
 }
 
 impl IdResultAlloc for AtomicIdResultAllocator {
+    #[inline]
     fn alloc_id(&mut self) -> Result<IdResult, EncodeError> {
         let id = self.0.fetch_add(1, Relaxed);
         if id <= ID_RESULT_MAX {
@@ -61,6 +65,7 @@ impl IdResultAlloc for AtomicIdResultAllocator {
 pub struct DisallowedIdResultAllocator;
 
 impl IdResultAlloc for DisallowedIdResultAllocator {
+    #[inline]
     fn alloc_id(&mut self) -> Result<IdResult, EncodeError> {
         Err(EncodeError::MissingIdResult)
     }

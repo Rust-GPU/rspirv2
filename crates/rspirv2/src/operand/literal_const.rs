@@ -89,19 +89,23 @@ unsafe impl Operand for LiteralConst {
 unsafe impl OperandEncoding for LiteralConst {
     const FIXED_LEN: Option<usize> = None;
 
+    #[inline]
     fn word_len(&self) -> usize {
         self.0.len()
     }
 
+    #[inline]
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write_iter(self.0.iter().copied());
         Ok(())
     }
 
+    #[inline]
     fn decode(_: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Err(DecodeError::LiteralIntegerNotLastOperand)
     }
 
+    #[inline]
     fn decode_last(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(reader.collect()))
     }

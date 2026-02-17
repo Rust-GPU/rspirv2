@@ -15,17 +15,21 @@ macro_rules! def_literal_integer {
         unsafe impl bytemuck::Pod for $name {}
 
         impl $name {
+            #[inline]
             pub fn new(value: u32) -> Self {
                 Self(Word(value))
             }
 
+            #[inline]
             pub fn from_word(value: Word) -> Self {
                 Self(value)
             }
 
+            #[inline]
             pub fn to_word(&self) -> Word {
                 self.0
             }
+            #[inline]
 
             pub fn to_u32(&self) -> u32 {
                 self.0.0
@@ -39,11 +43,13 @@ macro_rules! def_literal_integer {
         unsafe impl OperandEncoding for $name {
             const FIXED_LEN: Option<usize> = Some(1);
 
+            #[inline]
             fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
                 writer.write(self.0);
                 Ok(())
             }
 
+            #[inline]
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 Ok(Self(reader.pull()?))
             }

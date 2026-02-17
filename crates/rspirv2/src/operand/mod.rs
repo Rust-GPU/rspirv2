@@ -128,6 +128,7 @@ pub unsafe trait OperandEncoding: Sized {
     /// Validate this `Option<Operand>` before encoding.
     ///
     /// May implement special behavior for failing, like [`IdResult`] does to validate it has been initialized.
+    #[inline]
     fn validate_optional(opt: &Option<Self>) -> Result<(), EncodeError> {
         let _ = opt;
         Ok(())
@@ -140,6 +141,7 @@ pub unsafe trait OperandEncoding: Sized {
     /// [`LiteralInteger`] to consume all the remaining [`Word`]s and not have to calculate the exact size of a type.
     ///
     /// See [`LiteralInteger`] for details.
+    #[inline]
     fn decode_last(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let result = Self::decode(reader)?;
         reader.assert_finished()?;
@@ -150,6 +152,7 @@ pub unsafe trait OperandEncoding: Sized {
 unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
     const FIXED_LEN: Option<usize> = None;
 
+    #[inline]
     fn word_len(&self) -> usize {
         match self {
             None => 0,
@@ -157,6 +160,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
         }
     }
 
+    #[inline]
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         T::validate_optional(self)?;
         match self {
@@ -165,6 +169,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
         }
     }
 
+    #[inline]
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         if let Ok(_) = reader.peek() {
             Ok(Some(T::decode(reader)?))
@@ -173,6 +178,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
         }
     }
 
+    #[inline]
     fn decode_last(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         if let Ok(_) = reader.peek() {
             Ok(Some(T::decode_last(reader)?))
@@ -190,10 +196,12 @@ unsafe impl<T: Operand> OperandSpec for Option<T> {
 unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     const FIXED_LEN: Option<usize> = None;
 
+    #[inline]
     fn word_len(&self) -> usize {
         self.iter().map(|e| e.word_len()).sum()
     }
 
+    #[inline]
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         for x in self {
             x.encode(&mut *writer)?;
@@ -213,6 +221,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     /// * `ZeroOrMore` `ZeroOrMore` T: fails, but unrepresentable in the spec, only by using it manually.
     ///
     /// [`Quantifier`]: `crate::meta::Quantifier`
+    #[inline]
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let mut vec = if let Some(fixed_len) = T::FIXED_LEN {
             let remaining = reader.remaining();
@@ -243,10 +252,12 @@ unsafe impl<T: Operand> OperandSpec for Vec<T> {
 unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T; N]> {
     const FIXED_LEN: Option<usize> = None;
 
+    #[inline]
     fn word_len(&self) -> usize {
         self.iter().map(|e| e.word_len()).sum()
     }
 
+    #[inline]
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         for x in self {
             x.encode(&mut *writer)?;
@@ -254,6 +265,7 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
         Ok(())
     }
 
+    #[inline]
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let mut vec = if let Some(fixed_len) = T::FIXED_LEN {
             let remaining = reader.remaining();
@@ -284,10 +296,12 @@ unsafe impl<T: Operand, const N: usize> OperandSpec for SmallVec<[T; N]> {
 pub struct FixedLenComposer(Option<usize>);
 
 impl FixedLenComposer {
+    #[inline]
     pub const fn new() -> Self {
         Self(Some(0))
     }
 
+    #[inline]
     pub const fn append(self, len: Option<usize>) -> Self {
         match (self.0, len) {
             (Some(a), Some(b)) => Self(Some(a + b)),
@@ -295,6 +309,7 @@ impl FixedLenComposer {
         }
     }
 
+    #[inline]
     pub const fn finish(self) -> Option<usize> {
         self.0
     }

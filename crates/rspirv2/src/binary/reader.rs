@@ -104,6 +104,7 @@ impl<'a> OperandReader<'a> {
     ///
     /// Calling this again will yield the same value, advance the [`Self::params_offset`] by [`Self::pull`]ing the
     /// [`Word`].
+    #[inline]
     pub fn peek(&self) -> Result<Word, DecodeError> {
         Ok(*self.params.get(self.params_offset).ok_or(
             DecodeError::InstructionDecodePulledTooManyWords {
@@ -116,41 +117,47 @@ impl<'a> OperandReader<'a> {
     /// Pull a single [`Word`] from the [`InstructionReader`], advancing the [`Self::params_offset`].
     ///
     /// Calling this again will yield the next [`Word`].
+    #[inline]
     pub fn pull(&mut self) -> Result<Word, DecodeError> {
         let result = self.peek();
         self.params_offset += 1;
         result
     }
 
+    #[inline]
     pub fn assert_finished(&self) -> Result<(), DecodeError> {
         let remaining = self.remaining();
-        if remaining != 0 {
+        if remaining == 0 {
+            Ok(())
+        } else {
             Err(DecodeError::InstructionWithAdditionalOperants {
                 inst_offset: self.inst_offset,
                 op_len: self.len(),
                 remaining,
             })
-        } else {
-            Ok(())
         }
     }
 
     /// Offset of the instruction, purely informational, for error reporting
+    #[inline]
     pub fn inst_offset(&self) -> usize {
         self.params_offset
     }
 
     /// len of the params
+    #[inline]
     pub fn len(&self) -> usize {
         self.params.len()
     }
 
     /// current offset of the params, in [`Word`]s
+    #[inline]
     pub fn params_offset(&self) -> usize {
         self.params_offset
     }
 
     /// amount of remaining param [`Word`]s
+    #[inline]
     pub fn remaining(&self) -> usize {
         self.params.len() - self.params_offset
     }
@@ -159,6 +166,7 @@ impl<'a> OperandReader<'a> {
 impl<'a> Iterator for OperandReader<'a> {
     type Item = Word;
 
+    #[inline]
     fn next(&mut self) -> Option<Self::Item> {
         self.pull().ok()
     }

@@ -50,6 +50,7 @@ impl<W: WordWriter, A: IdResultAlloc> WordWriter for InstWriter<W, A> {
 }
 
 impl<W: WordWriter, A: IdResultAlloc> IdResultAlloc for InstWriter<W, A> {
+    #[inline]
     fn alloc_id(&mut self) -> Result<IdResult, EncodeError> {
         self.alloc.alloc_id()
     }
