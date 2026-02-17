@@ -250,4 +250,15 @@ mod tests {
         })?;
         Ok(())
     }
+
+    #[test]
+    fn test_result_type_none() {
+        let err = OpTypeFloat {
+            id_result: None,
+            width: LiteralInteger::new(32),
+            floating_point_encoding: None,
+        }
+        .encode(&mut Vec::default());
+        assert_eq!(err, Err(EncodeError::MissingIdResult));
+    }
 }

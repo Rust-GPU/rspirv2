@@ -29,6 +29,13 @@ unsafe impl OperandEncoding for IdResult {
         Ok(())
     }
 
+    fn validate_optional(opt: &Option<Self>) -> Result<(), EncodeError> {
+        match opt {
+            None => Err(EncodeError::MissingIdResult),
+            Some(_) => Ok(()),
+        }
+    }
+
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(reader.pull()?))
     }
