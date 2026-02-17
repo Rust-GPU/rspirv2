@@ -13,7 +13,7 @@ pub trait Inst: Sized + Debug + Eq {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::binary::{IdResultAlloc, IdResultAllocator, ModuleReader};
+    use crate::binary::{IdResultAlloc, ModuleReader, VecInstWriter};
     use crate::core::inst::{
         OpConstant, OpConvertUToF, OpDecorate, OpIAdd, OpNop, OpStore, OpTypeFloat, OpTypeInt,
         OpTypePointer, OpVariable,
@@ -114,42 +114,42 @@ mod tests {
     /// ```
     #[test]
     fn test_non_trivial_code() -> anyhow::Result<()> {
-        let mut alloc = IdResultAllocator::default();
+        let mut spirv = VecInstWriter::default();
 
         let u32 = OpTypeInt {
-            id_result: alloc.alloc_id()?,
+            id_result: spirv.alloc_id()?,
             width: LiteralInteger::new(32),
             signedness: LiteralInteger::new(0),
         };
         let u32_1 = OpConstant {
             id_result_type: IdResultType(u32.id_result),
-            id_result: alloc.alloc_id()?,
+            id_result: spirv.alloc_id()?,
             value: LiteralConst::from(123u32),
         };
         let add = OpIAdd {
             id_result_type: IdResultType(u32.id_result),
-            id_result: alloc.alloc_id()?,
+            id_result: spirv.alloc_id()?,
             operand_1: IdRef(u32_1.id_result),
             operand_2: IdRef(u32_1.id_result),
         };
         let f32 = OpTypeFloat {
-            id_result: alloc.alloc_id()?,
+            id_result: spirv.alloc_id()?,
             width: LiteralInteger::new(32),
             floating_point_encoding: None,
         };
         let u_to_f = OpConvertUToF {
             id_result_type: IdResultType(f32.id_result),
-            id_result: alloc.alloc_id()?,
+            id_result: spirv.alloc_id()?,
             unsigned_value: IdRef(add.id_result),
         };
         let f32_ptr = OpTypePointer {
-            id_result: alloc.alloc_id()?,
+            id_result: spirv.alloc_id()?,
             storage_class: StorageClass::Output,
             ty: IdRef(f32.id_result),
         };
         let var_out = OpVariable {
             id_result_type: IdResultType(f32_ptr.id_result),
-            id_result: alloc.alloc_id()?,
+            id_result: spirv.alloc_id()?,
             storage_class: StorageClass::Output,
             initializer: None,
         };
@@ -163,7 +163,6 @@ mod tests {
             memory_access: None,
         };
 
-        let mut spirv = Vec::<Word>::new();
         u32.encode(&mut spirv)?;
         u32_1.encode(&mut spirv)?;
         add.encode(&mut spirv)?;
@@ -174,7 +173,7 @@ mod tests {
         var_out_location.encode(&mut spirv)?;
         store.encode(&mut spirv)?;
 
-        let mut mod_reader = ModuleReader::new(spirv.as_slice());
+        let mut mod_reader = ModuleReader::new(spirv.words.as_slice());
         let mut decode = || Ok::<_, anyhow::Error>(mod_reader.next()?.context("No further ops")?);
         assert_eq!(u32, OpTypeInt::decode(&mut decode()?)?);
         assert_eq!(u32_1, OpConstant::decode(&mut decode()?)?);
@@ -186,6 +185,24 @@ mod tests {
         assert_eq!(var_out_location, OpDecorate::decode(&mut decode()?)?);
         assert_eq!(store, OpStore::decode(&mut decode()?)?);
 
+        Ok(())
+    }
+
+    #[test]
+    fn test_result_type_ret() -> anyhow::Result<()> {
+        let mut spirv = VecInstWriter::default();
+        // you have to move the id alloc out, otherwise borrowck fails due to push borrowing it as mutable first
+        let f32 = spirv.alloc_id()?;
+        spirv.push(&OpTypeFloat {
+            id_result: f32,
+            width: LiteralInteger::new(32),
+            floating_point_encoding: None,
+        })?;
+        spirv.push(&OpDecorate {
+            // reuse the `IdResult` in the next Instruction
+            target: IdRef(f32),
+            decoration: Decoration::RelaxedPrecision,
+        })?;
         Ok(())
     }
 }
