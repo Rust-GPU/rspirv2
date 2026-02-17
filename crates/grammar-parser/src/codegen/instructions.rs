@@ -1,4 +1,4 @@
-use crate::codegen::GrammarWriter;
+use crate::codegen::{GrammarWriter, OPERAND_ID_RESULT};
 use crate::parse::{Grammar, InstMeta, Operand, Quantifier};
 use quote::quote;
 
@@ -21,9 +21,20 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Resu
                 Quantifier::ZeroOrMore => quote!(pub #name: SmallVec<[#ty; #SMALLVEC_LEN]>),
             },
         );
+
+        let (maybe_id_result, id_result_ref) = if let Some(op_id_result) = member_operands
+            .iter()
+            .find(|op| op.meta.kind == OPERAND_ID_RESULT)
+        {
+            let name = &op_id_result.name;
+            (quote!(IdResult), quote!(self.#name))
+        } else {
+            (quote!(()), quote!(()))
+        };
+
         let members = member_operands
             .iter()
-            .map(|&Operand { ref name, .. }| quote!(#name))
+            .map(|&Operand { ref name, .. }| name)
             .collect::<Vec<_>>();
         let members_non_last = &members[..members.len().saturating_sub(1)];
         let members_last = members.last().into_iter();
@@ -37,6 +48,12 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Resu
 
             impl Inst for #struct_ident {
                 const META: &InstMeta = &#meta;
+
+                type MaybeIdResult = #maybe_id_result;
+
+                fn id_result(&self) -> Self::MaybeIdResult {
+                    #id_result_ref
+                }
 
                 fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
                     let len = 0 #(+OperandEncoding::word_len(&self.#members))*;

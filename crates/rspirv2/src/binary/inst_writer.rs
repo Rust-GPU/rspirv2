@@ -14,8 +14,9 @@ pub struct InstWriter<W: WordWriter, A: IdResultAlloc> {
 
 impl<W: WordWriter, A: IdResultAlloc> InstWriter<W, A> {
     #[inline]
-    pub fn push<I: Inst>(&mut self, inst: &I) -> Result<(), EncodeError> {
-        inst.encode(self)
+    pub fn push<I: Inst>(&mut self, inst: &I) -> Result<I::MaybeIdResult, EncodeError> {
+        inst.encode(self)?;
+        Ok(inst.id_result())
     }
 }
 

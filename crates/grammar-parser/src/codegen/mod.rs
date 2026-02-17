@@ -8,6 +8,8 @@ pub use emit::*;
 pub use modules::*;
 pub use writer::*;
 
+pub const OPERAND_ID_RESULT: &str = "IdResult";
+
 /// Copied from `proc_macro2::fallback::validate_ident`
 pub fn ident_ok(string: &str) -> bool {
     let mut chars = string.chars();

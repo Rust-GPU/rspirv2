@@ -3,6 +3,10 @@ use super::preamble::*;
 pub struct OpNop {}
 impl Inst for OpNop {
     const META: &InstMeta = &OP_NOP;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -20,6 +24,10 @@ pub struct OpUndef {
 }
 impl Inst for OpUndef {
     const META: &InstMeta = &OP_UNDEF;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -43,6 +51,10 @@ pub struct OpSourceContinued {
 }
 impl Inst for OpSourceContinued {
     const META: &InstMeta = &OP_SOURCE_CONTINUED;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.continued_source);
         writer.write_op(Self::META.opcode, len)?;
@@ -65,6 +77,10 @@ pub struct OpSource {
 }
 impl Inst for OpSource {
     const META: &InstMeta = &OP_SOURCE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.source_language)
@@ -94,6 +110,10 @@ pub struct OpSourceExtension {
 }
 impl Inst for OpSourceExtension {
     const META: &InstMeta = &OP_SOURCE_EXTENSION;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.extension);
         writer.write_op(Self::META.opcode, len)?;
@@ -114,6 +134,10 @@ pub struct OpName {
 }
 impl Inst for OpName {
     const META: &InstMeta = &OP_NAME;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.target) + OperandEncoding::word_len(&self.name);
@@ -138,6 +162,10 @@ pub struct OpMemberName {
 }
 impl Inst for OpMemberName {
     const META: &InstMeta = &OP_MEMBER_NAME;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.ty)
@@ -165,6 +193,10 @@ pub struct OpString {
 }
 impl Inst for OpString {
     const META: &InstMeta = &OP_STRING;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -190,6 +222,10 @@ pub struct OpLine {
 }
 impl Inst for OpLine {
     const META: &InstMeta = &OP_LINE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.file)
@@ -216,6 +252,10 @@ pub struct OpExtension {
 }
 impl Inst for OpExtension {
     const META: &InstMeta = &OP_EXTENSION;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.name);
         writer.write_op(Self::META.opcode, len)?;
@@ -236,6 +276,10 @@ pub struct OpExtInstImport {
 }
 impl Inst for OpExtInstImport {
     const META: &InstMeta = &OP_EXT_INST_IMPORT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.id_result) + OperandEncoding::word_len(&self.name);
@@ -262,6 +306,10 @@ pub struct OpExtInst {
 }
 impl Inst for OpExtInst {
     const META: &InstMeta = &OP_EXT_INST;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -295,6 +343,10 @@ pub struct OpMemoryModel {
 }
 impl Inst for OpMemoryModel {
     const META: &InstMeta = &OP_MEMORY_MODEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.addressing_model)
@@ -321,6 +373,10 @@ pub struct OpEntryPoint {
 }
 impl Inst for OpEntryPoint {
     const META: &InstMeta = &OP_ENTRY_POINT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution_model)
@@ -351,6 +407,10 @@ pub struct OpExecutionMode {
 }
 impl Inst for OpExecutionMode {
     const META: &InstMeta = &OP_EXECUTION_MODE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.entry_point)
@@ -374,6 +434,10 @@ pub struct OpCapability {
 }
 impl Inst for OpCapability {
     const META: &InstMeta = &OP_CAPABILITY;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.capability);
         writer.write_op(Self::META.opcode, len)?;
@@ -393,6 +457,10 @@ pub struct OpTypeVoid {
 }
 impl Inst for OpTypeVoid {
     const META: &InstMeta = &OP_TYPE_VOID;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -412,6 +480,10 @@ pub struct OpTypeBool {
 }
 impl Inst for OpTypeBool {
     const META: &InstMeta = &OP_TYPE_BOOL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -433,6 +505,10 @@ pub struct OpTypeInt {
 }
 impl Inst for OpTypeInt {
     const META: &InstMeta = &OP_TYPE_INT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -461,6 +537,10 @@ pub struct OpTypeFloat {
 }
 impl Inst for OpTypeFloat {
     const META: &InstMeta = &OP_TYPE_FLOAT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -489,6 +569,10 @@ pub struct OpTypeVector {
 }
 impl Inst for OpTypeVector {
     const META: &InstMeta = &OP_TYPE_VECTOR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -517,6 +601,10 @@ pub struct OpTypeMatrix {
 }
 impl Inst for OpTypeMatrix {
     const META: &InstMeta = &OP_TYPE_MATRIX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -551,6 +639,10 @@ pub struct OpTypeImage {
 }
 impl Inst for OpTypeImage {
     const META: &InstMeta = &OP_TYPE_IMAGE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -595,6 +687,10 @@ pub struct OpTypeSampler {
 }
 impl Inst for OpTypeSampler {
     const META: &InstMeta = &OP_TYPE_SAMPLER;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -615,6 +711,10 @@ pub struct OpTypeSampledImage {
 }
 impl Inst for OpTypeSampledImage {
     const META: &InstMeta = &OP_TYPE_SAMPLED_IMAGE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -640,6 +740,10 @@ pub struct OpTypeArray {
 }
 impl Inst for OpTypeArray {
     const META: &InstMeta = &OP_TYPE_ARRAY;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -667,6 +771,10 @@ pub struct OpTypeRuntimeArray {
 }
 impl Inst for OpTypeRuntimeArray {
     const META: &InstMeta = &OP_TYPE_RUNTIME_ARRAY;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -691,6 +799,10 @@ pub struct OpTypeStruct {
 }
 impl Inst for OpTypeStruct {
     const META: &InstMeta = &OP_TYPE_STRUCT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -715,6 +827,10 @@ pub struct OpTypeOpaque {
 }
 impl Inst for OpTypeOpaque {
     const META: &InstMeta = &OP_TYPE_OPAQUE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -740,6 +856,10 @@ pub struct OpTypePointer {
 }
 impl Inst for OpTypePointer {
     const META: &InstMeta = &OP_TYPE_POINTER;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -768,6 +888,10 @@ pub struct OpTypeFunction {
 }
 impl Inst for OpTypeFunction {
     const META: &InstMeta = &OP_TYPE_FUNCTION;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -794,6 +918,10 @@ pub struct OpTypeEvent {
 }
 impl Inst for OpTypeEvent {
     const META: &InstMeta = &OP_TYPE_EVENT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -813,6 +941,10 @@ pub struct OpTypeDeviceEvent {
 }
 impl Inst for OpTypeDeviceEvent {
     const META: &InstMeta = &OP_TYPE_DEVICE_EVENT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -832,6 +964,10 @@ pub struct OpTypeReserveId {
 }
 impl Inst for OpTypeReserveId {
     const META: &InstMeta = &OP_TYPE_RESERVE_ID;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -851,6 +987,10 @@ pub struct OpTypeQueue {
 }
 impl Inst for OpTypeQueue {
     const META: &InstMeta = &OP_TYPE_QUEUE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -871,6 +1011,10 @@ pub struct OpTypePipe {
 }
 impl Inst for OpTypePipe {
     const META: &InstMeta = &OP_TYPE_PIPE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -895,6 +1039,10 @@ pub struct OpTypeForwardPointer {
 }
 impl Inst for OpTypeForwardPointer {
     const META: &InstMeta = &OP_TYPE_FORWARD_POINTER;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer_type)
@@ -919,6 +1067,10 @@ pub struct OpConstantTrue {
 }
 impl Inst for OpConstantTrue {
     const META: &InstMeta = &OP_CONSTANT_TRUE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -943,6 +1095,10 @@ pub struct OpConstantFalse {
 }
 impl Inst for OpConstantFalse {
     const META: &InstMeta = &OP_CONSTANT_FALSE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -968,6 +1124,10 @@ pub struct OpConstant {
 }
 impl Inst for OpConstant {
     const META: &InstMeta = &OP_CONSTANT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -996,6 +1156,10 @@ pub struct OpConstantComposite {
 }
 impl Inst for OpConstantComposite {
     const META: &InstMeta = &OP_CONSTANT_COMPOSITE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1026,6 +1190,10 @@ pub struct OpConstantSampler {
 }
 impl Inst for OpConstantSampler {
     const META: &InstMeta = &OP_CONSTANT_SAMPLER;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1059,6 +1227,10 @@ pub struct OpConstantNull {
 }
 impl Inst for OpConstantNull {
     const META: &InstMeta = &OP_CONSTANT_NULL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1083,6 +1255,10 @@ pub struct OpSpecConstantTrue {
 }
 impl Inst for OpSpecConstantTrue {
     const META: &InstMeta = &OP_SPEC_CONSTANT_TRUE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1107,6 +1283,10 @@ pub struct OpSpecConstantFalse {
 }
 impl Inst for OpSpecConstantFalse {
     const META: &InstMeta = &OP_SPEC_CONSTANT_FALSE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1132,6 +1312,10 @@ pub struct OpSpecConstant {
 }
 impl Inst for OpSpecConstant {
     const META: &InstMeta = &OP_SPEC_CONSTANT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1160,6 +1344,10 @@ pub struct OpSpecConstantComposite {
 }
 impl Inst for OpSpecConstantComposite {
     const META: &InstMeta = &OP_SPEC_CONSTANT_COMPOSITE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1188,6 +1376,10 @@ pub struct OpSpecConstantOp {
 }
 impl Inst for OpSpecConstantOp {
     const META: &InstMeta = &OP_SPEC_CONSTANT_OP;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1217,6 +1409,10 @@ pub struct OpFunction {
 }
 impl Inst for OpFunction {
     const META: &InstMeta = &OP_FUNCTION;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1247,6 +1443,10 @@ pub struct OpFunctionParameter {
 }
 impl Inst for OpFunctionParameter {
     const META: &InstMeta = &OP_FUNCTION_PARAMETER;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1268,6 +1468,10 @@ impl Inst for OpFunctionParameter {
 pub struct OpFunctionEnd {}
 impl Inst for OpFunctionEnd {
     const META: &InstMeta = &OP_FUNCTION_END;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -1287,6 +1491,10 @@ pub struct OpFunctionCall {
 }
 impl Inst for OpFunctionCall {
     const META: &InstMeta = &OP_FUNCTION_CALL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1319,6 +1527,10 @@ pub struct OpVariable {
 }
 impl Inst for OpVariable {
     const META: &InstMeta = &OP_VARIABLE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1352,6 +1564,10 @@ pub struct OpImageTexelPointer {
 }
 impl Inst for OpImageTexelPointer {
     const META: &InstMeta = &OP_IMAGE_TEXEL_POINTER;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1387,6 +1603,10 @@ pub struct OpLoad {
 }
 impl Inst for OpLoad {
     const META: &InstMeta = &OP_LOAD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1418,6 +1638,10 @@ pub struct OpStore {
 }
 impl Inst for OpStore {
     const META: &InstMeta = &OP_STORE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -1447,6 +1671,10 @@ pub struct OpCopyMemory {
 }
 impl Inst for OpCopyMemory {
     const META: &InstMeta = &OP_COPY_MEMORY;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.target)
@@ -1480,6 +1708,10 @@ pub struct OpCopyMemorySized {
 }
 impl Inst for OpCopyMemorySized {
     const META: &InstMeta = &OP_COPY_MEMORY_SIZED;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.target)
@@ -1515,6 +1747,10 @@ pub struct OpAccessChain {
 }
 impl Inst for OpAccessChain {
     const META: &InstMeta = &OP_ACCESS_CHAIN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1547,6 +1783,10 @@ pub struct OpInBoundsAccessChain {
 }
 impl Inst for OpInBoundsAccessChain {
     const META: &InstMeta = &OP_IN_BOUNDS_ACCESS_CHAIN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1580,6 +1820,10 @@ pub struct OpPtrAccessChain {
 }
 impl Inst for OpPtrAccessChain {
     const META: &InstMeta = &OP_PTR_ACCESS_CHAIN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1615,6 +1859,10 @@ pub struct OpArrayLength {
 }
 impl Inst for OpArrayLength {
     const META: &InstMeta = &OP_ARRAY_LENGTH;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1646,6 +1894,10 @@ pub struct OpGenericPtrMemSemantics {
 }
 impl Inst for OpGenericPtrMemSemantics {
     const META: &InstMeta = &OP_GENERIC_PTR_MEM_SEMANTICS;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1676,6 +1928,10 @@ pub struct OpInBoundsPtrAccessChain {
 }
 impl Inst for OpInBoundsPtrAccessChain {
     const META: &InstMeta = &OP_IN_BOUNDS_PTR_ACCESS_CHAIN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1709,6 +1965,10 @@ pub struct OpDecorate {
 }
 impl Inst for OpDecorate {
     const META: &InstMeta = &OP_DECORATE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.target)
@@ -1734,6 +1994,10 @@ pub struct OpMemberDecorate {
 }
 impl Inst for OpMemberDecorate {
     const META: &InstMeta = &OP_MEMBER_DECORATE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.structure_type)
@@ -1760,6 +2024,10 @@ pub struct OpDecorationGroup {
 }
 impl Inst for OpDecorationGroup {
     const META: &InstMeta = &OP_DECORATION_GROUP;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -1780,6 +2048,10 @@ pub struct OpGroupDecorate {
 }
 impl Inst for OpGroupDecorate {
     const META: &InstMeta = &OP_GROUP_DECORATE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.decoration_group)
@@ -1804,6 +2076,10 @@ pub struct OpGroupMemberDecorate {
 }
 impl Inst for OpGroupMemberDecorate {
     const META: &InstMeta = &OP_GROUP_MEMBER_DECORATE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.decoration_group)
@@ -1830,6 +2106,10 @@ pub struct OpVectorExtractDynamic {
 }
 impl Inst for OpVectorExtractDynamic {
     const META: &InstMeta = &OP_VECTOR_EXTRACT_DYNAMIC;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1863,6 +2143,10 @@ pub struct OpVectorInsertDynamic {
 }
 impl Inst for OpVectorInsertDynamic {
     const META: &InstMeta = &OP_VECTOR_INSERT_DYNAMIC;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1899,6 +2183,10 @@ pub struct OpVectorShuffle {
 }
 impl Inst for OpVectorShuffle {
     const META: &InstMeta = &OP_VECTOR_SHUFFLE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1933,6 +2221,10 @@ pub struct OpCompositeConstruct {
 }
 impl Inst for OpCompositeConstruct {
     const META: &InstMeta = &OP_COMPOSITE_CONSTRUCT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1962,6 +2254,10 @@ pub struct OpCompositeExtract {
 }
 impl Inst for OpCompositeExtract {
     const META: &InstMeta = &OP_COMPOSITE_EXTRACT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1995,6 +2291,10 @@ pub struct OpCompositeInsert {
 }
 impl Inst for OpCompositeInsert {
     const META: &InstMeta = &OP_COMPOSITE_INSERT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2029,6 +2329,10 @@ pub struct OpCopyObject {
 }
 impl Inst for OpCopyObject {
     const META: &InstMeta = &OP_COPY_OBJECT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2057,6 +2361,10 @@ pub struct OpTranspose {
 }
 impl Inst for OpTranspose {
     const META: &InstMeta = &OP_TRANSPOSE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2086,6 +2394,10 @@ pub struct OpSampledImage {
 }
 impl Inst for OpSampledImage {
     const META: &InstMeta = &OP_SAMPLED_IMAGE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2119,6 +2431,10 @@ pub struct OpImageSampleImplicitLod {
 }
 impl Inst for OpImageSampleImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_IMPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2155,6 +2471,10 @@ pub struct OpImageSampleExplicitLod {
 }
 impl Inst for OpImageSampleExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_EXPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2192,6 +2512,10 @@ pub struct OpImageSampleDrefImplicitLod {
 }
 impl Inst for OpImageSampleDrefImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_DREF_IMPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2232,6 +2556,10 @@ pub struct OpImageSampleDrefExplicitLod {
 }
 impl Inst for OpImageSampleDrefExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_DREF_EXPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2271,6 +2599,10 @@ pub struct OpImageSampleProjImplicitLod {
 }
 impl Inst for OpImageSampleProjImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_PROJ_IMPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2307,6 +2639,10 @@ pub struct OpImageSampleProjExplicitLod {
 }
 impl Inst for OpImageSampleProjExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_PROJ_EXPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2344,6 +2680,10 @@ pub struct OpImageSampleProjDrefImplicitLod {
 }
 impl Inst for OpImageSampleProjDrefImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_PROJ_DREF_IMPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2384,6 +2724,10 @@ pub struct OpImageSampleProjDrefExplicitLod {
 }
 impl Inst for OpImageSampleProjDrefExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_PROJ_DREF_EXPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2423,6 +2767,10 @@ pub struct OpImageFetch {
 }
 impl Inst for OpImageFetch {
     const META: &InstMeta = &OP_IMAGE_FETCH;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2460,6 +2808,10 @@ pub struct OpImageGather {
 }
 impl Inst for OpImageGather {
     const META: &InstMeta = &OP_IMAGE_GATHER;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2500,6 +2852,10 @@ pub struct OpImageDrefGather {
 }
 impl Inst for OpImageDrefGather {
     const META: &InstMeta = &OP_IMAGE_DREF_GATHER;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2539,6 +2895,10 @@ pub struct OpImageRead {
 }
 impl Inst for OpImageRead {
     const META: &InstMeta = &OP_IMAGE_READ;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2574,6 +2934,10 @@ pub struct OpImageWrite {
 }
 impl Inst for OpImageWrite {
     const META: &InstMeta = &OP_IMAGE_WRITE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.image)
@@ -2605,6 +2969,10 @@ pub struct OpImage {
 }
 impl Inst for OpImage {
     const META: &InstMeta = &OP_IMAGE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2633,6 +3001,10 @@ pub struct OpImageQueryFormat {
 }
 impl Inst for OpImageQueryFormat {
     const META: &InstMeta = &OP_IMAGE_QUERY_FORMAT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2661,6 +3033,10 @@ pub struct OpImageQueryOrder {
 }
 impl Inst for OpImageQueryOrder {
     const META: &InstMeta = &OP_IMAGE_QUERY_ORDER;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2690,6 +3066,10 @@ pub struct OpImageQuerySizeLod {
 }
 impl Inst for OpImageQuerySizeLod {
     const META: &InstMeta = &OP_IMAGE_QUERY_SIZE_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2721,6 +3101,10 @@ pub struct OpImageQuerySize {
 }
 impl Inst for OpImageQuerySize {
     const META: &InstMeta = &OP_IMAGE_QUERY_SIZE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2750,6 +3134,10 @@ pub struct OpImageQueryLod {
 }
 impl Inst for OpImageQueryLod {
     const META: &InstMeta = &OP_IMAGE_QUERY_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2781,6 +3169,10 @@ pub struct OpImageQueryLevels {
 }
 impl Inst for OpImageQueryLevels {
     const META: &InstMeta = &OP_IMAGE_QUERY_LEVELS;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2809,6 +3201,10 @@ pub struct OpImageQuerySamples {
 }
 impl Inst for OpImageQuerySamples {
     const META: &InstMeta = &OP_IMAGE_QUERY_SAMPLES;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2837,6 +3233,10 @@ pub struct OpConvertFToU {
 }
 impl Inst for OpConvertFToU {
     const META: &InstMeta = &OP_CONVERT_F_TO_U;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2865,6 +3265,10 @@ pub struct OpConvertFToS {
 }
 impl Inst for OpConvertFToS {
     const META: &InstMeta = &OP_CONVERT_F_TO_S;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2893,6 +3297,10 @@ pub struct OpConvertSToF {
 }
 impl Inst for OpConvertSToF {
     const META: &InstMeta = &OP_CONVERT_S_TO_F;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2921,6 +3329,10 @@ pub struct OpConvertUToF {
 }
 impl Inst for OpConvertUToF {
     const META: &InstMeta = &OP_CONVERT_U_TO_F;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2949,6 +3361,10 @@ pub struct OpUConvert {
 }
 impl Inst for OpUConvert {
     const META: &InstMeta = &OP_U_CONVERT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2977,6 +3393,10 @@ pub struct OpSConvert {
 }
 impl Inst for OpSConvert {
     const META: &InstMeta = &OP_S_CONVERT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3005,6 +3425,10 @@ pub struct OpFConvert {
 }
 impl Inst for OpFConvert {
     const META: &InstMeta = &OP_F_CONVERT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3033,6 +3457,10 @@ pub struct OpQuantizeToF16 {
 }
 impl Inst for OpQuantizeToF16 {
     const META: &InstMeta = &OP_QUANTIZE_TO_F_16;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3061,6 +3489,10 @@ pub struct OpConvertPtrToU {
 }
 impl Inst for OpConvertPtrToU {
     const META: &InstMeta = &OP_CONVERT_PTR_TO_U;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3089,6 +3521,10 @@ pub struct OpSatConvertSToU {
 }
 impl Inst for OpSatConvertSToU {
     const META: &InstMeta = &OP_SAT_CONVERT_S_TO_U;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3117,6 +3553,10 @@ pub struct OpSatConvertUToS {
 }
 impl Inst for OpSatConvertUToS {
     const META: &InstMeta = &OP_SAT_CONVERT_U_TO_S;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3145,6 +3585,10 @@ pub struct OpConvertUToPtr {
 }
 impl Inst for OpConvertUToPtr {
     const META: &InstMeta = &OP_CONVERT_U_TO_PTR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3173,6 +3617,10 @@ pub struct OpPtrCastToGeneric {
 }
 impl Inst for OpPtrCastToGeneric {
     const META: &InstMeta = &OP_PTR_CAST_TO_GENERIC;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3201,6 +3649,10 @@ pub struct OpGenericCastToPtr {
 }
 impl Inst for OpGenericCastToPtr {
     const META: &InstMeta = &OP_GENERIC_CAST_TO_PTR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3230,6 +3682,10 @@ pub struct OpGenericCastToPtrExplicit {
 }
 impl Inst for OpGenericCastToPtrExplicit {
     const META: &InstMeta = &OP_GENERIC_CAST_TO_PTR_EXPLICIT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3261,6 +3717,10 @@ pub struct OpBitcast {
 }
 impl Inst for OpBitcast {
     const META: &InstMeta = &OP_BITCAST;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3289,6 +3749,10 @@ pub struct OpSNegate {
 }
 impl Inst for OpSNegate {
     const META: &InstMeta = &OP_S_NEGATE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3317,6 +3781,10 @@ pub struct OpFNegate {
 }
 impl Inst for OpFNegate {
     const META: &InstMeta = &OP_F_NEGATE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3346,6 +3814,10 @@ pub struct OpIAdd {
 }
 impl Inst for OpIAdd {
     const META: &InstMeta = &OP_I_ADD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3378,6 +3850,10 @@ pub struct OpFAdd {
 }
 impl Inst for OpFAdd {
     const META: &InstMeta = &OP_F_ADD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3410,6 +3886,10 @@ pub struct OpISub {
 }
 impl Inst for OpISub {
     const META: &InstMeta = &OP_I_SUB;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3442,6 +3922,10 @@ pub struct OpFSub {
 }
 impl Inst for OpFSub {
     const META: &InstMeta = &OP_F_SUB;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3474,6 +3958,10 @@ pub struct OpIMul {
 }
 impl Inst for OpIMul {
     const META: &InstMeta = &OP_I_MUL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3506,6 +3994,10 @@ pub struct OpFMul {
 }
 impl Inst for OpFMul {
     const META: &InstMeta = &OP_F_MUL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3538,6 +4030,10 @@ pub struct OpUDiv {
 }
 impl Inst for OpUDiv {
     const META: &InstMeta = &OP_U_DIV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3570,6 +4066,10 @@ pub struct OpSDiv {
 }
 impl Inst for OpSDiv {
     const META: &InstMeta = &OP_S_DIV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3602,6 +4102,10 @@ pub struct OpFDiv {
 }
 impl Inst for OpFDiv {
     const META: &InstMeta = &OP_F_DIV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3634,6 +4138,10 @@ pub struct OpUMod {
 }
 impl Inst for OpUMod {
     const META: &InstMeta = &OP_U_MOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3666,6 +4174,10 @@ pub struct OpSRem {
 }
 impl Inst for OpSRem {
     const META: &InstMeta = &OP_S_REM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3698,6 +4210,10 @@ pub struct OpSMod {
 }
 impl Inst for OpSMod {
     const META: &InstMeta = &OP_S_MOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3730,6 +4246,10 @@ pub struct OpFRem {
 }
 impl Inst for OpFRem {
     const META: &InstMeta = &OP_F_REM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3762,6 +4282,10 @@ pub struct OpFMod {
 }
 impl Inst for OpFMod {
     const META: &InstMeta = &OP_F_MOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3794,6 +4318,10 @@ pub struct OpVectorTimesScalar {
 }
 impl Inst for OpVectorTimesScalar {
     const META: &InstMeta = &OP_VECTOR_TIMES_SCALAR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3826,6 +4354,10 @@ pub struct OpMatrixTimesScalar {
 }
 impl Inst for OpMatrixTimesScalar {
     const META: &InstMeta = &OP_MATRIX_TIMES_SCALAR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3858,6 +4390,10 @@ pub struct OpVectorTimesMatrix {
 }
 impl Inst for OpVectorTimesMatrix {
     const META: &InstMeta = &OP_VECTOR_TIMES_MATRIX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3890,6 +4426,10 @@ pub struct OpMatrixTimesVector {
 }
 impl Inst for OpMatrixTimesVector {
     const META: &InstMeta = &OP_MATRIX_TIMES_VECTOR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3922,6 +4462,10 @@ pub struct OpMatrixTimesMatrix {
 }
 impl Inst for OpMatrixTimesMatrix {
     const META: &InstMeta = &OP_MATRIX_TIMES_MATRIX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3954,6 +4498,10 @@ pub struct OpOuterProduct {
 }
 impl Inst for OpOuterProduct {
     const META: &InstMeta = &OP_OUTER_PRODUCT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3986,6 +4534,10 @@ pub struct OpDot {
 }
 impl Inst for OpDot {
     const META: &InstMeta = &OP_DOT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4018,6 +4570,10 @@ pub struct OpIAddCarry {
 }
 impl Inst for OpIAddCarry {
     const META: &InstMeta = &OP_I_ADD_CARRY;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4050,6 +4606,10 @@ pub struct OpISubBorrow {
 }
 impl Inst for OpISubBorrow {
     const META: &InstMeta = &OP_I_SUB_BORROW;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4082,6 +4642,10 @@ pub struct OpUMulExtended {
 }
 impl Inst for OpUMulExtended {
     const META: &InstMeta = &OP_U_MUL_EXTENDED;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4114,6 +4678,10 @@ pub struct OpSMulExtended {
 }
 impl Inst for OpSMulExtended {
     const META: &InstMeta = &OP_S_MUL_EXTENDED;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4145,6 +4713,10 @@ pub struct OpAny {
 }
 impl Inst for OpAny {
     const META: &InstMeta = &OP_ANY;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4173,6 +4745,10 @@ pub struct OpAll {
 }
 impl Inst for OpAll {
     const META: &InstMeta = &OP_ALL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4201,6 +4777,10 @@ pub struct OpIsNan {
 }
 impl Inst for OpIsNan {
     const META: &InstMeta = &OP_IS_NAN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4229,6 +4809,10 @@ pub struct OpIsInf {
 }
 impl Inst for OpIsInf {
     const META: &InstMeta = &OP_IS_INF;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4257,6 +4841,10 @@ pub struct OpIsFinite {
 }
 impl Inst for OpIsFinite {
     const META: &InstMeta = &OP_IS_FINITE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4285,6 +4873,10 @@ pub struct OpIsNormal {
 }
 impl Inst for OpIsNormal {
     const META: &InstMeta = &OP_IS_NORMAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4313,6 +4905,10 @@ pub struct OpSignBitSet {
 }
 impl Inst for OpSignBitSet {
     const META: &InstMeta = &OP_SIGN_BIT_SET;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4342,6 +4938,10 @@ pub struct OpLessOrGreater {
 }
 impl Inst for OpLessOrGreater {
     const META: &InstMeta = &OP_LESS_OR_GREATER;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4374,6 +4974,10 @@ pub struct OpOrdered {
 }
 impl Inst for OpOrdered {
     const META: &InstMeta = &OP_ORDERED;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4406,6 +5010,10 @@ pub struct OpUnordered {
 }
 impl Inst for OpUnordered {
     const META: &InstMeta = &OP_UNORDERED;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4438,6 +5046,10 @@ pub struct OpLogicalEqual {
 }
 impl Inst for OpLogicalEqual {
     const META: &InstMeta = &OP_LOGICAL_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4470,6 +5082,10 @@ pub struct OpLogicalNotEqual {
 }
 impl Inst for OpLogicalNotEqual {
     const META: &InstMeta = &OP_LOGICAL_NOT_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4502,6 +5118,10 @@ pub struct OpLogicalOr {
 }
 impl Inst for OpLogicalOr {
     const META: &InstMeta = &OP_LOGICAL_OR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4534,6 +5154,10 @@ pub struct OpLogicalAnd {
 }
 impl Inst for OpLogicalAnd {
     const META: &InstMeta = &OP_LOGICAL_AND;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4565,6 +5189,10 @@ pub struct OpLogicalNot {
 }
 impl Inst for OpLogicalNot {
     const META: &InstMeta = &OP_LOGICAL_NOT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4595,6 +5223,10 @@ pub struct OpSelect {
 }
 impl Inst for OpSelect {
     const META: &InstMeta = &OP_SELECT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4630,6 +5262,10 @@ pub struct OpIEqual {
 }
 impl Inst for OpIEqual {
     const META: &InstMeta = &OP_I_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4662,6 +5298,10 @@ pub struct OpINotEqual {
 }
 impl Inst for OpINotEqual {
     const META: &InstMeta = &OP_I_NOT_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4694,6 +5334,10 @@ pub struct OpUGreaterThan {
 }
 impl Inst for OpUGreaterThan {
     const META: &InstMeta = &OP_U_GREATER_THAN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4726,6 +5370,10 @@ pub struct OpSGreaterThan {
 }
 impl Inst for OpSGreaterThan {
     const META: &InstMeta = &OP_S_GREATER_THAN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4758,6 +5406,10 @@ pub struct OpUGreaterThanEqual {
 }
 impl Inst for OpUGreaterThanEqual {
     const META: &InstMeta = &OP_U_GREATER_THAN_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4790,6 +5442,10 @@ pub struct OpSGreaterThanEqual {
 }
 impl Inst for OpSGreaterThanEqual {
     const META: &InstMeta = &OP_S_GREATER_THAN_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4822,6 +5478,10 @@ pub struct OpULessThan {
 }
 impl Inst for OpULessThan {
     const META: &InstMeta = &OP_U_LESS_THAN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4854,6 +5514,10 @@ pub struct OpSLessThan {
 }
 impl Inst for OpSLessThan {
     const META: &InstMeta = &OP_S_LESS_THAN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4886,6 +5550,10 @@ pub struct OpULessThanEqual {
 }
 impl Inst for OpULessThanEqual {
     const META: &InstMeta = &OP_U_LESS_THAN_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4918,6 +5586,10 @@ pub struct OpSLessThanEqual {
 }
 impl Inst for OpSLessThanEqual {
     const META: &InstMeta = &OP_S_LESS_THAN_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4950,6 +5622,10 @@ pub struct OpFOrdEqual {
 }
 impl Inst for OpFOrdEqual {
     const META: &InstMeta = &OP_F_ORD_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4982,6 +5658,10 @@ pub struct OpFUnordEqual {
 }
 impl Inst for OpFUnordEqual {
     const META: &InstMeta = &OP_F_UNORD_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5014,6 +5694,10 @@ pub struct OpFOrdNotEqual {
 }
 impl Inst for OpFOrdNotEqual {
     const META: &InstMeta = &OP_F_ORD_NOT_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5046,6 +5730,10 @@ pub struct OpFUnordNotEqual {
 }
 impl Inst for OpFUnordNotEqual {
     const META: &InstMeta = &OP_F_UNORD_NOT_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5078,6 +5766,10 @@ pub struct OpFOrdLessThan {
 }
 impl Inst for OpFOrdLessThan {
     const META: &InstMeta = &OP_F_ORD_LESS_THAN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5110,6 +5802,10 @@ pub struct OpFUnordLessThan {
 }
 impl Inst for OpFUnordLessThan {
     const META: &InstMeta = &OP_F_UNORD_LESS_THAN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5142,6 +5838,10 @@ pub struct OpFOrdGreaterThan {
 }
 impl Inst for OpFOrdGreaterThan {
     const META: &InstMeta = &OP_F_ORD_GREATER_THAN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5174,6 +5874,10 @@ pub struct OpFUnordGreaterThan {
 }
 impl Inst for OpFUnordGreaterThan {
     const META: &InstMeta = &OP_F_UNORD_GREATER_THAN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5206,6 +5910,10 @@ pub struct OpFOrdLessThanEqual {
 }
 impl Inst for OpFOrdLessThanEqual {
     const META: &InstMeta = &OP_F_ORD_LESS_THAN_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5238,6 +5946,10 @@ pub struct OpFUnordLessThanEqual {
 }
 impl Inst for OpFUnordLessThanEqual {
     const META: &InstMeta = &OP_F_UNORD_LESS_THAN_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5270,6 +5982,10 @@ pub struct OpFOrdGreaterThanEqual {
 }
 impl Inst for OpFOrdGreaterThanEqual {
     const META: &InstMeta = &OP_F_ORD_GREATER_THAN_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5302,6 +6018,10 @@ pub struct OpFUnordGreaterThanEqual {
 }
 impl Inst for OpFUnordGreaterThanEqual {
     const META: &InstMeta = &OP_F_UNORD_GREATER_THAN_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5334,6 +6054,10 @@ pub struct OpShiftRightLogical {
 }
 impl Inst for OpShiftRightLogical {
     const META: &InstMeta = &OP_SHIFT_RIGHT_LOGICAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5366,6 +6090,10 @@ pub struct OpShiftRightArithmetic {
 }
 impl Inst for OpShiftRightArithmetic {
     const META: &InstMeta = &OP_SHIFT_RIGHT_ARITHMETIC;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5398,6 +6126,10 @@ pub struct OpShiftLeftLogical {
 }
 impl Inst for OpShiftLeftLogical {
     const META: &InstMeta = &OP_SHIFT_LEFT_LOGICAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5430,6 +6162,10 @@ pub struct OpBitwiseOr {
 }
 impl Inst for OpBitwiseOr {
     const META: &InstMeta = &OP_BITWISE_OR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5462,6 +6198,10 @@ pub struct OpBitwiseXor {
 }
 impl Inst for OpBitwiseXor {
     const META: &InstMeta = &OP_BITWISE_XOR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5494,6 +6234,10 @@ pub struct OpBitwiseAnd {
 }
 impl Inst for OpBitwiseAnd {
     const META: &InstMeta = &OP_BITWISE_AND;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5525,6 +6269,10 @@ pub struct OpNot {
 }
 impl Inst for OpNot {
     const META: &InstMeta = &OP_NOT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5556,6 +6304,10 @@ pub struct OpBitFieldInsert {
 }
 impl Inst for OpBitFieldInsert {
     const META: &InstMeta = &OP_BIT_FIELD_INSERT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5595,6 +6347,10 @@ pub struct OpBitFieldSExtract {
 }
 impl Inst for OpBitFieldSExtract {
     const META: &InstMeta = &OP_BIT_FIELD_S_EXTRACT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5631,6 +6387,10 @@ pub struct OpBitFieldUExtract {
 }
 impl Inst for OpBitFieldUExtract {
     const META: &InstMeta = &OP_BIT_FIELD_U_EXTRACT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5665,6 +6425,10 @@ pub struct OpBitReverse {
 }
 impl Inst for OpBitReverse {
     const META: &InstMeta = &OP_BIT_REVERSE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5693,6 +6457,10 @@ pub struct OpBitCount {
 }
 impl Inst for OpBitCount {
     const META: &InstMeta = &OP_BIT_COUNT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5721,6 +6489,10 @@ pub struct OpDPdx {
 }
 impl Inst for OpDPdx {
     const META: &InstMeta = &OP_D_PDX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5749,6 +6521,10 @@ pub struct OpDPdy {
 }
 impl Inst for OpDPdy {
     const META: &InstMeta = &OP_D_PDY;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5777,6 +6553,10 @@ pub struct OpFwidth {
 }
 impl Inst for OpFwidth {
     const META: &InstMeta = &OP_FWIDTH;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5805,6 +6585,10 @@ pub struct OpDPdxFine {
 }
 impl Inst for OpDPdxFine {
     const META: &InstMeta = &OP_D_PDX_FINE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5833,6 +6617,10 @@ pub struct OpDPdyFine {
 }
 impl Inst for OpDPdyFine {
     const META: &InstMeta = &OP_D_PDY_FINE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5861,6 +6649,10 @@ pub struct OpFwidthFine {
 }
 impl Inst for OpFwidthFine {
     const META: &InstMeta = &OP_FWIDTH_FINE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5889,6 +6681,10 @@ pub struct OpDPdxCoarse {
 }
 impl Inst for OpDPdxCoarse {
     const META: &InstMeta = &OP_D_PDX_COARSE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5917,6 +6713,10 @@ pub struct OpDPdyCoarse {
 }
 impl Inst for OpDPdyCoarse {
     const META: &InstMeta = &OP_D_PDY_COARSE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5945,6 +6745,10 @@ pub struct OpFwidthCoarse {
 }
 impl Inst for OpFwidthCoarse {
     const META: &InstMeta = &OP_FWIDTH_COARSE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5969,6 +6773,10 @@ impl Inst for OpFwidthCoarse {
 pub struct OpEmitVertex {}
 impl Inst for OpEmitVertex {
     const META: &InstMeta = &OP_EMIT_VERTEX;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -5983,6 +6791,10 @@ impl Inst for OpEmitVertex {
 pub struct OpEndPrimitive {}
 impl Inst for OpEndPrimitive {
     const META: &InstMeta = &OP_END_PRIMITIVE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -5999,6 +6811,10 @@ pub struct OpEmitStreamVertex {
 }
 impl Inst for OpEmitStreamVertex {
     const META: &InstMeta = &OP_EMIT_STREAM_VERTEX;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.stream);
         writer.write_op(Self::META.opcode, len)?;
@@ -6018,6 +6834,10 @@ pub struct OpEndStreamPrimitive {
 }
 impl Inst for OpEndStreamPrimitive {
     const META: &InstMeta = &OP_END_STREAM_PRIMITIVE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.stream);
         writer.write_op(Self::META.opcode, len)?;
@@ -6039,6 +6859,10 @@ pub struct OpControlBarrier {
 }
 impl Inst for OpControlBarrier {
     const META: &InstMeta = &OP_CONTROL_BARRIER;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
@@ -6066,6 +6890,10 @@ pub struct OpMemoryBarrier {
 }
 impl Inst for OpMemoryBarrier {
     const META: &InstMeta = &OP_MEMORY_BARRIER;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.memory)
@@ -6093,6 +6921,10 @@ pub struct OpAtomicLoad {
 }
 impl Inst for OpAtomicLoad {
     const META: &InstMeta = &OP_ATOMIC_LOAD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6128,6 +6960,10 @@ pub struct OpAtomicStore {
 }
 impl Inst for OpAtomicStore {
     const META: &InstMeta = &OP_ATOMIC_STORE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -6162,6 +6998,10 @@ pub struct OpAtomicExchange {
 }
 impl Inst for OpAtomicExchange {
     const META: &InstMeta = &OP_ATOMIC_EXCHANGE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6204,6 +7044,10 @@ pub struct OpAtomicCompareExchange {
 }
 impl Inst for OpAtomicCompareExchange {
     const META: &InstMeta = &OP_ATOMIC_COMPARE_EXCHANGE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6252,6 +7096,10 @@ pub struct OpAtomicCompareExchangeWeak {
 }
 impl Inst for OpAtomicCompareExchangeWeak {
     const META: &InstMeta = &OP_ATOMIC_COMPARE_EXCHANGE_WEAK;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6297,6 +7145,10 @@ pub struct OpAtomicIIncrement {
 }
 impl Inst for OpAtomicIIncrement {
     const META: &InstMeta = &OP_ATOMIC_I_INCREMENT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6333,6 +7185,10 @@ pub struct OpAtomicIDecrement {
 }
 impl Inst for OpAtomicIDecrement {
     const META: &InstMeta = &OP_ATOMIC_I_DECREMENT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6370,6 +7226,10 @@ pub struct OpAtomicIAdd {
 }
 impl Inst for OpAtomicIAdd {
     const META: &InstMeta = &OP_ATOMIC_I_ADD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6410,6 +7270,10 @@ pub struct OpAtomicISub {
 }
 impl Inst for OpAtomicISub {
     const META: &InstMeta = &OP_ATOMIC_I_SUB;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6450,6 +7314,10 @@ pub struct OpAtomicSMin {
 }
 impl Inst for OpAtomicSMin {
     const META: &InstMeta = &OP_ATOMIC_S_MIN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6490,6 +7358,10 @@ pub struct OpAtomicUMin {
 }
 impl Inst for OpAtomicUMin {
     const META: &InstMeta = &OP_ATOMIC_U_MIN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6530,6 +7402,10 @@ pub struct OpAtomicSMax {
 }
 impl Inst for OpAtomicSMax {
     const META: &InstMeta = &OP_ATOMIC_S_MAX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6570,6 +7446,10 @@ pub struct OpAtomicUMax {
 }
 impl Inst for OpAtomicUMax {
     const META: &InstMeta = &OP_ATOMIC_U_MAX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6610,6 +7490,10 @@ pub struct OpAtomicAnd {
 }
 impl Inst for OpAtomicAnd {
     const META: &InstMeta = &OP_ATOMIC_AND;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6650,6 +7534,10 @@ pub struct OpAtomicOr {
 }
 impl Inst for OpAtomicOr {
     const META: &InstMeta = &OP_ATOMIC_OR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6690,6 +7578,10 @@ pub struct OpAtomicXor {
 }
 impl Inst for OpAtomicXor {
     const META: &InstMeta = &OP_ATOMIC_XOR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6727,6 +7619,10 @@ pub struct OpPhi {
 }
 impl Inst for OpPhi {
     const META: &InstMeta = &OP_PHI;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6755,6 +7651,10 @@ pub struct OpLoopMerge {
 }
 impl Inst for OpLoopMerge {
     const META: &InstMeta = &OP_LOOP_MERGE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.merge_block)
@@ -6782,6 +7682,10 @@ pub struct OpSelectionMerge {
 }
 impl Inst for OpSelectionMerge {
     const META: &InstMeta = &OP_SELECTION_MERGE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.merge_block)
@@ -6805,6 +7709,10 @@ pub struct OpLabel {
 }
 impl Inst for OpLabel {
     const META: &InstMeta = &OP_LABEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -6824,6 +7732,10 @@ pub struct OpBranch {
 }
 impl Inst for OpBranch {
     const META: &InstMeta = &OP_BRANCH;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.target_label);
         writer.write_op(Self::META.opcode, len)?;
@@ -6846,6 +7758,10 @@ pub struct OpBranchConditional {
 }
 impl Inst for OpBranchConditional {
     const META: &InstMeta = &OP_BRANCH_CONDITIONAL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.condition)
@@ -6877,6 +7793,10 @@ pub struct OpSwitch {
 }
 impl Inst for OpSwitch {
     const META: &InstMeta = &OP_SWITCH;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.selector)
@@ -6901,6 +7821,10 @@ impl Inst for OpSwitch {
 pub struct OpKill {}
 impl Inst for OpKill {
     const META: &InstMeta = &OP_KILL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -6915,6 +7839,10 @@ impl Inst for OpKill {
 pub struct OpReturn {}
 impl Inst for OpReturn {
     const META: &InstMeta = &OP_RETURN;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -6931,6 +7859,10 @@ pub struct OpReturnValue {
 }
 impl Inst for OpReturnValue {
     const META: &InstMeta = &OP_RETURN_VALUE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.value);
         writer.write_op(Self::META.opcode, len)?;
@@ -6948,6 +7880,10 @@ impl Inst for OpReturnValue {
 pub struct OpUnreachable {}
 impl Inst for OpUnreachable {
     const META: &InstMeta = &OP_UNREACHABLE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -6965,6 +7901,10 @@ pub struct OpLifetimeStart {
 }
 impl Inst for OpLifetimeStart {
     const META: &InstMeta = &OP_LIFETIME_START;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.pointer) + OperandEncoding::word_len(&self.size);
@@ -6988,6 +7928,10 @@ pub struct OpLifetimeStop {
 }
 impl Inst for OpLifetimeStop {
     const META: &InstMeta = &OP_LIFETIME_STOP;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.pointer) + OperandEncoding::word_len(&self.size);
@@ -7017,6 +7961,10 @@ pub struct OpGroupAsyncCopy {
 }
 impl Inst for OpGroupAsyncCopy {
     const META: &InstMeta = &OP_GROUP_ASYNC_COPY;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7060,6 +8008,10 @@ pub struct OpGroupWaitEvents {
 }
 impl Inst for OpGroupWaitEvents {
     const META: &InstMeta = &OP_GROUP_WAIT_EVENTS;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
@@ -7089,6 +8041,10 @@ pub struct OpGroupAll {
 }
 impl Inst for OpGroupAll {
     const META: &InstMeta = &OP_GROUP_ALL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7121,6 +8077,10 @@ pub struct OpGroupAny {
 }
 impl Inst for OpGroupAny {
     const META: &InstMeta = &OP_GROUP_ANY;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7154,6 +8114,10 @@ pub struct OpGroupBroadcast {
 }
 impl Inst for OpGroupBroadcast {
     const META: &InstMeta = &OP_GROUP_BROADCAST;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7190,6 +8154,10 @@ pub struct OpGroupIAdd {
 }
 impl Inst for OpGroupIAdd {
     const META: &InstMeta = &OP_GROUP_I_ADD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7226,6 +8194,10 @@ pub struct OpGroupFAdd {
 }
 impl Inst for OpGroupFAdd {
     const META: &InstMeta = &OP_GROUP_F_ADD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7262,6 +8234,10 @@ pub struct OpGroupFMin {
 }
 impl Inst for OpGroupFMin {
     const META: &InstMeta = &OP_GROUP_F_MIN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7298,6 +8274,10 @@ pub struct OpGroupUMin {
 }
 impl Inst for OpGroupUMin {
     const META: &InstMeta = &OP_GROUP_U_MIN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7334,6 +8314,10 @@ pub struct OpGroupSMin {
 }
 impl Inst for OpGroupSMin {
     const META: &InstMeta = &OP_GROUP_S_MIN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7370,6 +8354,10 @@ pub struct OpGroupFMax {
 }
 impl Inst for OpGroupFMax {
     const META: &InstMeta = &OP_GROUP_F_MAX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7406,6 +8394,10 @@ pub struct OpGroupUMax {
 }
 impl Inst for OpGroupUMax {
     const META: &InstMeta = &OP_GROUP_U_MAX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7442,6 +8434,10 @@ pub struct OpGroupSMax {
 }
 impl Inst for OpGroupSMax {
     const META: &InstMeta = &OP_GROUP_S_MAX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7479,6 +8475,10 @@ pub struct OpReadPipe {
 }
 impl Inst for OpReadPipe {
     const META: &InstMeta = &OP_READ_PIPE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7519,6 +8519,10 @@ pub struct OpWritePipe {
 }
 impl Inst for OpWritePipe {
     const META: &InstMeta = &OP_WRITE_PIPE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7561,6 +8565,10 @@ pub struct OpReservedReadPipe {
 }
 impl Inst for OpReservedReadPipe {
     const META: &InstMeta = &OP_RESERVED_READ_PIPE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7609,6 +8617,10 @@ pub struct OpReservedWritePipe {
 }
 impl Inst for OpReservedWritePipe {
     const META: &InstMeta = &OP_RESERVED_WRITE_PIPE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7655,6 +8667,10 @@ pub struct OpReserveReadPipePackets {
 }
 impl Inst for OpReserveReadPipePackets {
     const META: &InstMeta = &OP_RESERVE_READ_PIPE_PACKETS;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7695,6 +8711,10 @@ pub struct OpReserveWritePipePackets {
 }
 impl Inst for OpReserveWritePipePackets {
     const META: &InstMeta = &OP_RESERVE_WRITE_PIPE_PACKETS;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7733,6 +8753,10 @@ pub struct OpCommitReadPipe {
 }
 impl Inst for OpCommitReadPipe {
     const META: &InstMeta = &OP_COMMIT_READ_PIPE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pipe)
@@ -7765,6 +8789,10 @@ pub struct OpCommitWritePipe {
 }
 impl Inst for OpCommitWritePipe {
     const META: &InstMeta = &OP_COMMIT_WRITE_PIPE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pipe)
@@ -7796,6 +8824,10 @@ pub struct OpIsValidReserveId {
 }
 impl Inst for OpIsValidReserveId {
     const META: &InstMeta = &OP_IS_VALID_RESERVE_ID;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7826,6 +8858,10 @@ pub struct OpGetNumPipePackets {
 }
 impl Inst for OpGetNumPipePackets {
     const META: &InstMeta = &OP_GET_NUM_PIPE_PACKETS;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7862,6 +8898,10 @@ pub struct OpGetMaxPipePackets {
 }
 impl Inst for OpGetMaxPipePackets {
     const META: &InstMeta = &OP_GET_MAX_PIPE_PACKETS;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7900,6 +8940,10 @@ pub struct OpGroupReserveReadPipePackets {
 }
 impl Inst for OpGroupReserveReadPipePackets {
     const META: &InstMeta = &OP_GROUP_RESERVE_READ_PIPE_PACKETS;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7944,6 +8988,10 @@ pub struct OpGroupReserveWritePipePackets {
 }
 impl Inst for OpGroupReserveWritePipePackets {
     const META: &InstMeta = &OP_GROUP_RESERVE_WRITE_PIPE_PACKETS;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7986,6 +9034,10 @@ pub struct OpGroupCommitReadPipe {
 }
 impl Inst for OpGroupCommitReadPipe {
     const META: &InstMeta = &OP_GROUP_COMMIT_READ_PIPE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
@@ -8022,6 +9074,10 @@ pub struct OpGroupCommitWritePipe {
 }
 impl Inst for OpGroupCommitWritePipe {
     const META: &InstMeta = &OP_GROUP_COMMIT_WRITE_PIPE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
@@ -8059,6 +9115,10 @@ pub struct OpEnqueueMarker {
 }
 impl Inst for OpEnqueueMarker {
     const META: &InstMeta = &OP_ENQUEUE_MARKER;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8106,6 +9166,10 @@ pub struct OpEnqueueKernel {
 }
 impl Inst for OpEnqueueKernel {
     const META: &InstMeta = &OP_ENQUEUE_KERNEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8168,6 +9232,10 @@ pub struct OpGetKernelNDrangeSubGroupCount {
 }
 impl Inst for OpGetKernelNDrangeSubGroupCount {
     const META: &InstMeta = &OP_GET_KERNEL_N_DRANGE_SUB_GROUP_COUNT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8212,6 +9280,10 @@ pub struct OpGetKernelNDrangeMaxSubGroupSize {
 }
 impl Inst for OpGetKernelNDrangeMaxSubGroupSize {
     const META: &InstMeta = &OP_GET_KERNEL_N_DRANGE_MAX_SUB_GROUP_SIZE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8255,6 +9327,10 @@ pub struct OpGetKernelWorkGroupSize {
 }
 impl Inst for OpGetKernelWorkGroupSize {
     const META: &InstMeta = &OP_GET_KERNEL_WORK_GROUP_SIZE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8295,6 +9371,10 @@ pub struct OpGetKernelPreferredWorkGroupSizeMultiple {
 }
 impl Inst for OpGetKernelPreferredWorkGroupSizeMultiple {
     const META: &InstMeta = &OP_GET_KERNEL_PREFERRED_WORK_GROUP_SIZE_MULTIPLE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8330,6 +9410,10 @@ pub struct OpRetainEvent {
 }
 impl Inst for OpRetainEvent {
     const META: &InstMeta = &OP_RETAIN_EVENT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.event);
         writer.write_op(Self::META.opcode, len)?;
@@ -8349,6 +9433,10 @@ pub struct OpReleaseEvent {
 }
 impl Inst for OpReleaseEvent {
     const META: &InstMeta = &OP_RELEASE_EVENT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.event);
         writer.write_op(Self::META.opcode, len)?;
@@ -8369,6 +9457,10 @@ pub struct OpCreateUserEvent {
 }
 impl Inst for OpCreateUserEvent {
     const META: &InstMeta = &OP_CREATE_USER_EVENT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8394,6 +9486,10 @@ pub struct OpIsValidEvent {
 }
 impl Inst for OpIsValidEvent {
     const META: &InstMeta = &OP_IS_VALID_EVENT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8421,6 +9517,10 @@ pub struct OpSetUserEventStatus {
 }
 impl Inst for OpSetUserEventStatus {
     const META: &InstMeta = &OP_SET_USER_EVENT_STATUS;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.event) + OperandEncoding::word_len(&self.status);
@@ -8445,6 +9545,10 @@ pub struct OpCaptureEventProfilingInfo {
 }
 impl Inst for OpCaptureEventProfilingInfo {
     const META: &InstMeta = &OP_CAPTURE_EVENT_PROFILING_INFO;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.event)
@@ -8472,6 +9576,10 @@ pub struct OpGetDefaultQueue {
 }
 impl Inst for OpGetDefaultQueue {
     const META: &InstMeta = &OP_GET_DEFAULT_QUEUE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8499,6 +9607,10 @@ pub struct OpBuildNDRange {
 }
 impl Inst for OpBuildNDRange {
     const META: &InstMeta = &OP_BUILD_ND_RANGE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8535,6 +9647,10 @@ pub struct OpImageSparseSampleImplicitLod {
 }
 impl Inst for OpImageSparseSampleImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_IMPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8571,6 +9687,10 @@ pub struct OpImageSparseSampleExplicitLod {
 }
 impl Inst for OpImageSparseSampleExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_EXPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8608,6 +9728,10 @@ pub struct OpImageSparseSampleDrefImplicitLod {
 }
 impl Inst for OpImageSparseSampleDrefImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_DREF_IMPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8648,6 +9772,10 @@ pub struct OpImageSparseSampleDrefExplicitLod {
 }
 impl Inst for OpImageSparseSampleDrefExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_DREF_EXPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8687,6 +9815,10 @@ pub struct OpImageSparseSampleProjImplicitLod {
 }
 impl Inst for OpImageSparseSampleProjImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_PROJ_IMPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8723,6 +9855,10 @@ pub struct OpImageSparseSampleProjExplicitLod {
 }
 impl Inst for OpImageSparseSampleProjExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_PROJ_EXPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8760,6 +9896,10 @@ pub struct OpImageSparseSampleProjDrefImplicitLod {
 }
 impl Inst for OpImageSparseSampleProjDrefImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_PROJ_DREF_IMPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8800,6 +9940,10 @@ pub struct OpImageSparseSampleProjDrefExplicitLod {
 }
 impl Inst for OpImageSparseSampleProjDrefExplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_PROJ_DREF_EXPLICIT_LOD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8839,6 +9983,10 @@ pub struct OpImageSparseFetch {
 }
 impl Inst for OpImageSparseFetch {
     const META: &InstMeta = &OP_IMAGE_SPARSE_FETCH;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8876,6 +10024,10 @@ pub struct OpImageSparseGather {
 }
 impl Inst for OpImageSparseGather {
     const META: &InstMeta = &OP_IMAGE_SPARSE_GATHER;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8916,6 +10068,10 @@ pub struct OpImageSparseDrefGather {
 }
 impl Inst for OpImageSparseDrefGather {
     const META: &InstMeta = &OP_IMAGE_SPARSE_DREF_GATHER;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8953,6 +10109,10 @@ pub struct OpImageSparseTexelsResident {
 }
 impl Inst for OpImageSparseTexelsResident {
     const META: &InstMeta = &OP_IMAGE_SPARSE_TEXELS_RESIDENT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8977,6 +10137,10 @@ impl Inst for OpImageSparseTexelsResident {
 pub struct OpNoLine {}
 impl Inst for OpNoLine {
     const META: &InstMeta = &OP_NO_LINE;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -8997,6 +10161,10 @@ pub struct OpAtomicFlagTestAndSet {
 }
 impl Inst for OpAtomicFlagTestAndSet {
     const META: &InstMeta = &OP_ATOMIC_FLAG_TEST_AND_SET;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9031,6 +10199,10 @@ pub struct OpAtomicFlagClear {
 }
 impl Inst for OpAtomicFlagClear {
     const META: &InstMeta = &OP_ATOMIC_FLAG_CLEAR;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -9061,6 +10233,10 @@ pub struct OpImageSparseRead {
 }
 impl Inst for OpImageSparseRead {
     const META: &InstMeta = &OP_IMAGE_SPARSE_READ;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9095,6 +10271,10 @@ pub struct OpSizeOf {
 }
 impl Inst for OpSizeOf {
     const META: &InstMeta = &OP_SIZE_OF;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9121,6 +10301,10 @@ pub struct OpTypePipeStorage {
 }
 impl Inst for OpTypePipeStorage {
     const META: &InstMeta = &OP_TYPE_PIPE_STORAGE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -9144,6 +10328,10 @@ pub struct OpConstantPipeStorage {
 }
 impl Inst for OpConstantPipeStorage {
     const META: &InstMeta = &OP_CONSTANT_PIPE_STORAGE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9178,6 +10366,10 @@ pub struct OpCreatePipeFromPipeStorage {
 }
 impl Inst for OpCreatePipeFromPipeStorage {
     const META: &InstMeta = &OP_CREATE_PIPE_FROM_PIPE_STORAGE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9210,6 +10402,10 @@ pub struct OpGetKernelLocalSizeForSubgroupCount {
 }
 impl Inst for OpGetKernelLocalSizeForSubgroupCount {
     const META: &InstMeta = &OP_GET_KERNEL_LOCAL_SIZE_FOR_SUBGROUP_COUNT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9253,6 +10449,10 @@ pub struct OpGetKernelMaxNumSubgroups {
 }
 impl Inst for OpGetKernelMaxNumSubgroups {
     const META: &InstMeta = &OP_GET_KERNEL_MAX_NUM_SUBGROUPS;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9288,6 +10488,10 @@ pub struct OpTypeNamedBarrier {
 }
 impl Inst for OpTypeNamedBarrier {
     const META: &InstMeta = &OP_TYPE_NAMED_BARRIER;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -9309,6 +10513,10 @@ pub struct OpNamedBarrierInitialize {
 }
 impl Inst for OpNamedBarrierInitialize {
     const META: &InstMeta = &OP_NAMED_BARRIER_INITIALIZE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9337,6 +10545,10 @@ pub struct OpMemoryNamedBarrier {
 }
 impl Inst for OpMemoryNamedBarrier {
     const META: &InstMeta = &OP_MEMORY_NAMED_BARRIER;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.named_barrier)
@@ -9363,6 +10575,10 @@ pub struct OpModuleProcessed {
 }
 impl Inst for OpModuleProcessed {
     const META: &InstMeta = &OP_MODULE_PROCESSED;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.process);
         writer.write_op(Self::META.opcode, len)?;
@@ -9383,6 +10599,10 @@ pub struct OpExecutionModeId {
 }
 impl Inst for OpExecutionModeId {
     const META: &InstMeta = &OP_EXECUTION_MODE_ID;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.entry_point)
@@ -9407,6 +10627,10 @@ pub struct OpDecorateId {
 }
 impl Inst for OpDecorateId {
     const META: &InstMeta = &OP_DECORATE_ID;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.target)
@@ -9432,6 +10656,10 @@ pub struct OpGroupNonUniformElect {
 }
 impl Inst for OpGroupNonUniformElect {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_ELECT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9461,6 +10689,10 @@ pub struct OpGroupNonUniformAll {
 }
 impl Inst for OpGroupNonUniformAll {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_ALL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9493,6 +10725,10 @@ pub struct OpGroupNonUniformAny {
 }
 impl Inst for OpGroupNonUniformAny {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_ANY;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9525,6 +10761,10 @@ pub struct OpGroupNonUniformAllEqual {
 }
 impl Inst for OpGroupNonUniformAllEqual {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_ALL_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9558,6 +10798,10 @@ pub struct OpGroupNonUniformBroadcast {
 }
 impl Inst for OpGroupNonUniformBroadcast {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BROADCAST;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9593,6 +10837,10 @@ pub struct OpGroupNonUniformBroadcastFirst {
 }
 impl Inst for OpGroupNonUniformBroadcastFirst {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BROADCAST_FIRST;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9625,6 +10873,10 @@ pub struct OpGroupNonUniformBallot {
 }
 impl Inst for OpGroupNonUniformBallot {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BALLOT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9657,6 +10909,10 @@ pub struct OpGroupNonUniformInverseBallot {
 }
 impl Inst for OpGroupNonUniformInverseBallot {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_INVERSE_BALLOT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9690,6 +10946,10 @@ pub struct OpGroupNonUniformBallotBitExtract {
 }
 impl Inst for OpGroupNonUniformBallotBitExtract {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BALLOT_BIT_EXTRACT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9726,6 +10986,10 @@ pub struct OpGroupNonUniformBallotBitCount {
 }
 impl Inst for OpGroupNonUniformBallotBitCount {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BALLOT_BIT_COUNT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9761,6 +11025,10 @@ pub struct OpGroupNonUniformBallotFindLSB {
 }
 impl Inst for OpGroupNonUniformBallotFindLSB {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BALLOT_FIND_LSB;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9793,6 +11061,10 @@ pub struct OpGroupNonUniformBallotFindMSB {
 }
 impl Inst for OpGroupNonUniformBallotFindMSB {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BALLOT_FIND_MSB;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9826,6 +11098,10 @@ pub struct OpGroupNonUniformShuffle {
 }
 impl Inst for OpGroupNonUniformShuffle {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_SHUFFLE;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9862,6 +11138,10 @@ pub struct OpGroupNonUniformShuffleXor {
 }
 impl Inst for OpGroupNonUniformShuffleXor {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_SHUFFLE_XOR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9898,6 +11178,10 @@ pub struct OpGroupNonUniformShuffleUp {
 }
 impl Inst for OpGroupNonUniformShuffleUp {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_SHUFFLE_UP;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9934,6 +11218,10 @@ pub struct OpGroupNonUniformShuffleDown {
 }
 impl Inst for OpGroupNonUniformShuffleDown {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_SHUFFLE_DOWN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9971,6 +11259,10 @@ pub struct OpGroupNonUniformIAdd {
 }
 impl Inst for OpGroupNonUniformIAdd {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_I_ADD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10011,6 +11303,10 @@ pub struct OpGroupNonUniformFAdd {
 }
 impl Inst for OpGroupNonUniformFAdd {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_F_ADD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10051,6 +11347,10 @@ pub struct OpGroupNonUniformIMul {
 }
 impl Inst for OpGroupNonUniformIMul {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_I_MUL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10091,6 +11391,10 @@ pub struct OpGroupNonUniformFMul {
 }
 impl Inst for OpGroupNonUniformFMul {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_F_MUL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10131,6 +11435,10 @@ pub struct OpGroupNonUniformSMin {
 }
 impl Inst for OpGroupNonUniformSMin {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_S_MIN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10171,6 +11479,10 @@ pub struct OpGroupNonUniformUMin {
 }
 impl Inst for OpGroupNonUniformUMin {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_U_MIN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10211,6 +11523,10 @@ pub struct OpGroupNonUniformFMin {
 }
 impl Inst for OpGroupNonUniformFMin {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_F_MIN;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10251,6 +11567,10 @@ pub struct OpGroupNonUniformSMax {
 }
 impl Inst for OpGroupNonUniformSMax {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_S_MAX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10291,6 +11611,10 @@ pub struct OpGroupNonUniformUMax {
 }
 impl Inst for OpGroupNonUniformUMax {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_U_MAX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10331,6 +11655,10 @@ pub struct OpGroupNonUniformFMax {
 }
 impl Inst for OpGroupNonUniformFMax {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_F_MAX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10371,6 +11699,10 @@ pub struct OpGroupNonUniformBitwiseAnd {
 }
 impl Inst for OpGroupNonUniformBitwiseAnd {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BITWISE_AND;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10411,6 +11743,10 @@ pub struct OpGroupNonUniformBitwiseOr {
 }
 impl Inst for OpGroupNonUniformBitwiseOr {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BITWISE_OR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10451,6 +11787,10 @@ pub struct OpGroupNonUniformBitwiseXor {
 }
 impl Inst for OpGroupNonUniformBitwiseXor {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BITWISE_XOR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10491,6 +11831,10 @@ pub struct OpGroupNonUniformLogicalAnd {
 }
 impl Inst for OpGroupNonUniformLogicalAnd {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_LOGICAL_AND;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10531,6 +11875,10 @@ pub struct OpGroupNonUniformLogicalOr {
 }
 impl Inst for OpGroupNonUniformLogicalOr {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_LOGICAL_OR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10571,6 +11919,10 @@ pub struct OpGroupNonUniformLogicalXor {
 }
 impl Inst for OpGroupNonUniformLogicalXor {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_LOGICAL_XOR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10610,6 +11962,10 @@ pub struct OpGroupNonUniformQuadBroadcast {
 }
 impl Inst for OpGroupNonUniformQuadBroadcast {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_QUAD_BROADCAST;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10646,6 +12002,10 @@ pub struct OpGroupNonUniformQuadSwap {
 }
 impl Inst for OpGroupNonUniformQuadSwap {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_QUAD_SWAP;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10680,6 +12040,10 @@ pub struct OpCopyLogical {
 }
 impl Inst for OpCopyLogical {
     const META: &InstMeta = &OP_COPY_LOGICAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10709,6 +12073,10 @@ pub struct OpPtrEqual {
 }
 impl Inst for OpPtrEqual {
     const META: &InstMeta = &OP_PTR_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10741,6 +12109,10 @@ pub struct OpPtrNotEqual {
 }
 impl Inst for OpPtrNotEqual {
     const META: &InstMeta = &OP_PTR_NOT_EQUAL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10773,6 +12145,10 @@ pub struct OpPtrDiff {
 }
 impl Inst for OpPtrDiff {
     const META: &InstMeta = &OP_PTR_DIFF;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10805,6 +12181,10 @@ pub struct OpColorAttachmentReadEXT {
 }
 impl Inst for OpColorAttachmentReadEXT {
     const META: &InstMeta = &OP_COLOR_ATTACHMENT_READ_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10836,6 +12216,10 @@ pub struct OpDepthAttachmentReadEXT {
 }
 impl Inst for OpDepthAttachmentReadEXT {
     const META: &InstMeta = &OP_DEPTH_ATTACHMENT_READ_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10864,6 +12248,10 @@ pub struct OpStencilAttachmentReadEXT {
 }
 impl Inst for OpStencilAttachmentReadEXT {
     const META: &InstMeta = &OP_STENCIL_ATTACHMENT_READ_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10893,6 +12281,10 @@ pub struct OpTypeTensorARM {
 }
 impl Inst for OpTypeTensorARM {
     const META: &InstMeta = &OP_TYPE_TENSOR_ARM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -10926,6 +12318,10 @@ pub struct OpTensorReadARM {
 }
 impl Inst for OpTensorReadARM {
     const META: &InstMeta = &OP_TENSOR_READ_ARM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10961,6 +12357,10 @@ pub struct OpTensorWriteARM {
 }
 impl Inst for OpTensorWriteARM {
     const META: &InstMeta = &OP_TENSOR_WRITE_ARM;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.tensor)
@@ -10993,6 +12393,10 @@ pub struct OpTensorQuerySizeARM {
 }
 impl Inst for OpTensorQuerySizeARM {
     const META: &InstMeta = &OP_TENSOR_QUERY_SIZE_ARM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11024,6 +12428,10 @@ pub struct OpGraphConstantARM {
 }
 impl Inst for OpGraphConstantARM {
     const META: &InstMeta = &OP_GRAPH_CONSTANT_ARM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11052,6 +12460,10 @@ pub struct OpGraphEntryPointARM {
 }
 impl Inst for OpGraphEntryPointARM {
     const META: &InstMeta = &OP_GRAPH_ENTRY_POINT_ARM;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.graph)
@@ -11079,6 +12491,10 @@ pub struct OpGraphARM {
 }
 impl Inst for OpGraphARM {
     const META: &InstMeta = &OP_GRAPH_ARM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11105,6 +12521,10 @@ pub struct OpGraphInputARM {
 }
 impl Inst for OpGraphInputARM {
     const META: &InstMeta = &OP_GRAPH_INPUT_ARM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11136,6 +12556,10 @@ pub struct OpGraphSetOutputARM {
 }
 impl Inst for OpGraphSetOutputARM {
     const META: &InstMeta = &OP_GRAPH_SET_OUTPUT_ARM;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.value)
@@ -11160,6 +12584,10 @@ impl Inst for OpGraphSetOutputARM {
 pub struct OpGraphEndARM {}
 impl Inst for OpGraphEndARM {
     const META: &InstMeta = &OP_GRAPH_END_ARM;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -11178,6 +12606,10 @@ pub struct OpTypeGraphARM {
 }
 impl Inst for OpTypeGraphARM {
     const META: &InstMeta = &OP_TYPE_GRAPH_ARM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -11202,6 +12634,10 @@ impl Inst for OpTypeGraphARM {
 pub struct OpTerminateInvocation {}
 impl Inst for OpTerminateInvocation {
     const META: &InstMeta = &OP_TERMINATE_INVOCATION;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -11219,6 +12655,10 @@ pub struct OpTypeUntypedPointerKHR {
 }
 impl Inst for OpTypeUntypedPointerKHR {
     const META: &InstMeta = &OP_TYPE_UNTYPED_POINTER_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -11246,6 +12686,10 @@ pub struct OpUntypedVariableKHR {
 }
 impl Inst for OpUntypedVariableKHR {
     const META: &InstMeta = &OP_UNTYPED_VARIABLE_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11282,6 +12726,10 @@ pub struct OpUntypedAccessChainKHR {
 }
 impl Inst for OpUntypedAccessChainKHR {
     const META: &InstMeta = &OP_UNTYPED_ACCESS_CHAIN_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11318,6 +12766,10 @@ pub struct OpUntypedInBoundsAccessChainKHR {
 }
 impl Inst for OpUntypedInBoundsAccessChainKHR {
     const META: &InstMeta = &OP_UNTYPED_IN_BOUNDS_ACCESS_CHAIN_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11352,6 +12804,10 @@ pub struct OpSubgroupBallotKHR {
 }
 impl Inst for OpSubgroupBallotKHR {
     const META: &InstMeta = &OP_SUBGROUP_BALLOT_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11380,6 +12836,10 @@ pub struct OpSubgroupFirstInvocationKHR {
 }
 impl Inst for OpSubgroupFirstInvocationKHR {
     const META: &InstMeta = &OP_SUBGROUP_FIRST_INVOCATION_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11411,6 +12871,10 @@ pub struct OpUntypedPtrAccessChainKHR {
 }
 impl Inst for OpUntypedPtrAccessChainKHR {
     const META: &InstMeta = &OP_UNTYPED_PTR_ACCESS_CHAIN_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11451,6 +12915,10 @@ pub struct OpUntypedInBoundsPtrAccessChainKHR {
 }
 impl Inst for OpUntypedInBoundsPtrAccessChainKHR {
     const META: &InstMeta = &OP_UNTYPED_IN_BOUNDS_PTR_ACCESS_CHAIN_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11490,6 +12958,10 @@ pub struct OpUntypedArrayLengthKHR {
 }
 impl Inst for OpUntypedArrayLengthKHR {
     const META: &InstMeta = &OP_UNTYPED_ARRAY_LENGTH_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11526,6 +12998,10 @@ pub struct OpUntypedPrefetchKHR {
 }
 impl Inst for OpUntypedPrefetchKHR {
     const META: &InstMeta = &OP_UNTYPED_PREFETCH_KHR;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer_type)
@@ -11562,6 +13038,10 @@ pub struct OpFmaKHR {
 }
 impl Inst for OpFmaKHR {
     const META: &InstMeta = &OP_FMA_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11596,6 +13076,10 @@ pub struct OpSubgroupAllKHR {
 }
 impl Inst for OpSubgroupAllKHR {
     const META: &InstMeta = &OP_SUBGROUP_ALL_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11624,6 +13108,10 @@ pub struct OpSubgroupAnyKHR {
 }
 impl Inst for OpSubgroupAnyKHR {
     const META: &InstMeta = &OP_SUBGROUP_ANY_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11652,6 +13140,10 @@ pub struct OpSubgroupAllEqualKHR {
 }
 impl Inst for OpSubgroupAllEqualKHR {
     const META: &InstMeta = &OP_SUBGROUP_ALL_EQUAL_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11683,6 +13175,10 @@ pub struct OpGroupNonUniformRotateKHR {
 }
 impl Inst for OpGroupNonUniformRotateKHR {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_ROTATE_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11721,6 +13217,10 @@ pub struct OpSubgroupReadInvocationKHR {
 }
 impl Inst for OpSubgroupReadInvocationKHR {
     const META: &InstMeta = &OP_SUBGROUP_READ_INVOCATION_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11754,6 +13254,10 @@ pub struct OpExtInstWithForwardRefsKHR {
 }
 impl Inst for OpExtInstWithForwardRefsKHR {
     const META: &InstMeta = &OP_EXT_INST_WITH_FORWARD_REFS_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11796,6 +13300,10 @@ pub struct OpUntypedGroupAsyncCopyKHR {
 }
 impl Inst for OpUntypedGroupAsyncCopyKHR {
     const META: &InstMeta = &OP_UNTYPED_GROUP_ASYNC_COPY_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11856,6 +13364,10 @@ pub struct OpTraceRayKHR {
 }
 impl Inst for OpTraceRayKHR {
     const META: &InstMeta = &OP_TRACE_RAY_KHR;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.accel)
@@ -11907,6 +13419,10 @@ pub struct OpExecuteCallableKHR {
 }
 impl Inst for OpExecuteCallableKHR {
     const META: &InstMeta = &OP_EXECUTE_CALLABLE_KHR;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.sbt_index)
@@ -11932,6 +13448,10 @@ pub struct OpConvertUToAccelerationStructureKHR {
 }
 impl Inst for OpConvertUToAccelerationStructureKHR {
     const META: &InstMeta = &OP_CONVERT_U_TO_ACCELERATION_STRUCTURE_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11956,6 +13476,10 @@ impl Inst for OpConvertUToAccelerationStructureKHR {
 pub struct OpIgnoreIntersectionKHR {}
 impl Inst for OpIgnoreIntersectionKHR {
     const META: &InstMeta = &OP_IGNORE_INTERSECTION_KHR;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -11970,6 +13494,10 @@ impl Inst for OpIgnoreIntersectionKHR {
 pub struct OpTerminateRayKHR {}
 impl Inst for OpTerminateRayKHR {
     const META: &InstMeta = &OP_TERMINATE_RAY_KHR;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -11990,6 +13518,10 @@ pub struct OpSDot {
 }
 impl Inst for OpSDot {
     const META: &InstMeta = &OP_S_DOT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12026,6 +13558,10 @@ pub struct OpUDot {
 }
 impl Inst for OpUDot {
     const META: &InstMeta = &OP_U_DOT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12062,6 +13598,10 @@ pub struct OpSUDot {
 }
 impl Inst for OpSUDot {
     const META: &InstMeta = &OP_SU_DOT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12099,6 +13639,10 @@ pub struct OpSDotAccSat {
 }
 impl Inst for OpSDotAccSat {
     const META: &InstMeta = &OP_S_DOT_ACC_SAT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12139,6 +13683,10 @@ pub struct OpUDotAccSat {
 }
 impl Inst for OpUDotAccSat {
     const META: &InstMeta = &OP_U_DOT_ACC_SAT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12179,6 +13727,10 @@ pub struct OpSUDotAccSat {
 }
 impl Inst for OpSUDotAccSat {
     const META: &InstMeta = &OP_SU_DOT_ACC_SAT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12219,6 +13771,10 @@ pub struct OpTypeCooperativeMatrixKHR {
 }
 impl Inst for OpTypeCooperativeMatrixKHR {
     const META: &InstMeta = &OP_TYPE_COOPERATIVE_MATRIX_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -12259,6 +13815,10 @@ pub struct OpCooperativeMatrixLoadKHR {
 }
 impl Inst for OpCooperativeMatrixLoadKHR {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_LOAD_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12298,6 +13858,10 @@ pub struct OpCooperativeMatrixStoreKHR {
 }
 impl Inst for OpCooperativeMatrixStoreKHR {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_STORE_KHR;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -12335,6 +13899,10 @@ pub struct OpCooperativeMatrixMulAddKHR {
 }
 impl Inst for OpCooperativeMatrixMulAddKHR {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_MUL_ADD_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12372,6 +13940,10 @@ pub struct OpCooperativeMatrixLengthKHR {
 }
 impl Inst for OpCooperativeMatrixLengthKHR {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_LENGTH_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12400,6 +13972,10 @@ pub struct OpConstantCompositeReplicateEXT {
 }
 impl Inst for OpConstantCompositeReplicateEXT {
     const META: &InstMeta = &OP_CONSTANT_COMPOSITE_REPLICATE_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12428,6 +14004,10 @@ pub struct OpSpecConstantCompositeReplicateEXT {
 }
 impl Inst for OpSpecConstantCompositeReplicateEXT {
     const META: &InstMeta = &OP_SPEC_CONSTANT_COMPOSITE_REPLICATE_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12456,6 +14036,10 @@ pub struct OpCompositeConstructReplicateEXT {
 }
 impl Inst for OpCompositeConstructReplicateEXT {
     const META: &InstMeta = &OP_COMPOSITE_CONSTRUCT_REPLICATE_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12482,6 +14066,10 @@ pub struct OpTypeRayQueryKHR {
 }
 impl Inst for OpTypeRayQueryKHR {
     const META: &InstMeta = &OP_TYPE_RAY_QUERY_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -12508,6 +14096,10 @@ pub struct OpRayQueryInitializeKHR {
 }
 impl Inst for OpRayQueryInitializeKHR {
     const META: &InstMeta = &OP_RAY_QUERY_INITIALIZE_KHR;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.ray_query)
@@ -12549,6 +14141,10 @@ pub struct OpRayQueryTerminateKHR {
 }
 impl Inst for OpRayQueryTerminateKHR {
     const META: &InstMeta = &OP_RAY_QUERY_TERMINATE_KHR;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ray_query);
         writer.write_op(Self::META.opcode, len)?;
@@ -12569,6 +14165,10 @@ pub struct OpRayQueryGenerateIntersectionKHR {
 }
 impl Inst for OpRayQueryGenerateIntersectionKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GENERATE_INTERSECTION_KHR;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.ray_query) + OperandEncoding::word_len(&self.hit_t);
@@ -12591,6 +14191,10 @@ pub struct OpRayQueryConfirmIntersectionKHR {
 }
 impl Inst for OpRayQueryConfirmIntersectionKHR {
     const META: &InstMeta = &OP_RAY_QUERY_CONFIRM_INTERSECTION_KHR;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ray_query);
         writer.write_op(Self::META.opcode, len)?;
@@ -12612,6 +14216,10 @@ pub struct OpRayQueryProceedKHR {
 }
 impl Inst for OpRayQueryProceedKHR {
     const META: &InstMeta = &OP_RAY_QUERY_PROCEED_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12641,6 +14249,10 @@ pub struct OpRayQueryGetIntersectionTypeKHR {
 }
 impl Inst for OpRayQueryGetIntersectionTypeKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_TYPE_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12674,6 +14286,10 @@ pub struct OpImageSampleWeightedQCOM {
 }
 impl Inst for OpImageSampleWeightedQCOM {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_WEIGHTED_QCOM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12710,6 +14326,10 @@ pub struct OpImageBoxFilterQCOM {
 }
 impl Inst for OpImageBoxFilterQCOM {
     const META: &InstMeta = &OP_IMAGE_BOX_FILTER_QCOM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12748,6 +14368,10 @@ pub struct OpImageBlockMatchSSDQCOM {
 }
 impl Inst for OpImageBlockMatchSSDQCOM {
     const META: &InstMeta = &OP_IMAGE_BLOCK_MATCH_SSDQCOM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12792,6 +14416,10 @@ pub struct OpImageBlockMatchSADQCOM {
 }
 impl Inst for OpImageBlockMatchSADQCOM {
     const META: &InstMeta = &OP_IMAGE_BLOCK_MATCH_SADQCOM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12832,6 +14460,10 @@ pub struct OpBitCastArrayQCOM {
 }
 impl Inst for OpBitCastArrayQCOM {
     const META: &InstMeta = &OP_BIT_CAST_ARRAY_QCOM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12864,6 +14496,10 @@ pub struct OpImageBlockMatchWindowSSDQCOM {
 }
 impl Inst for OpImageBlockMatchWindowSSDQCOM {
     const META: &InstMeta = &OP_IMAGE_BLOCK_MATCH_WINDOW_SSDQCOM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12908,6 +14544,10 @@ pub struct OpImageBlockMatchWindowSADQCOM {
 }
 impl Inst for OpImageBlockMatchWindowSADQCOM {
     const META: &InstMeta = &OP_IMAGE_BLOCK_MATCH_WINDOW_SADQCOM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12952,6 +14592,10 @@ pub struct OpImageBlockMatchGatherSSDQCOM {
 }
 impl Inst for OpImageBlockMatchGatherSSDQCOM {
     const META: &InstMeta = &OP_IMAGE_BLOCK_MATCH_GATHER_SSDQCOM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12996,6 +14640,10 @@ pub struct OpImageBlockMatchGatherSADQCOM {
 }
 impl Inst for OpImageBlockMatchGatherSADQCOM {
     const META: &InstMeta = &OP_IMAGE_BLOCK_MATCH_GATHER_SADQCOM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13036,6 +14684,10 @@ pub struct OpCompositeConstructCoopMatQCOM {
 }
 impl Inst for OpCompositeConstructCoopMatQCOM {
     const META: &InstMeta = &OP_COMPOSITE_CONSTRUCT_COOP_MAT_QCOM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13064,6 +14716,10 @@ pub struct OpCompositeExtractCoopMatQCOM {
 }
 impl Inst for OpCompositeExtractCoopMatQCOM {
     const META: &InstMeta = &OP_COMPOSITE_EXTRACT_COOP_MAT_QCOM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13093,6 +14749,10 @@ pub struct OpExtractSubArrayQCOM {
 }
 impl Inst for OpExtractSubArrayQCOM {
     const META: &InstMeta = &OP_EXTRACT_SUB_ARRAY_QCOM;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13126,6 +14786,10 @@ pub struct OpGroupIAddNonUniformAMD {
 }
 impl Inst for OpGroupIAddNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_I_ADD_NON_UNIFORM_AMD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13162,6 +14826,10 @@ pub struct OpGroupFAddNonUniformAMD {
 }
 impl Inst for OpGroupFAddNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_F_ADD_NON_UNIFORM_AMD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13198,6 +14866,10 @@ pub struct OpGroupFMinNonUniformAMD {
 }
 impl Inst for OpGroupFMinNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_F_MIN_NON_UNIFORM_AMD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13234,6 +14906,10 @@ pub struct OpGroupUMinNonUniformAMD {
 }
 impl Inst for OpGroupUMinNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_U_MIN_NON_UNIFORM_AMD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13270,6 +14946,10 @@ pub struct OpGroupSMinNonUniformAMD {
 }
 impl Inst for OpGroupSMinNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_S_MIN_NON_UNIFORM_AMD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13306,6 +14986,10 @@ pub struct OpGroupFMaxNonUniformAMD {
 }
 impl Inst for OpGroupFMaxNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_F_MAX_NON_UNIFORM_AMD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13342,6 +15026,10 @@ pub struct OpGroupUMaxNonUniformAMD {
 }
 impl Inst for OpGroupUMaxNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_U_MAX_NON_UNIFORM_AMD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13378,6 +15066,10 @@ pub struct OpGroupSMaxNonUniformAMD {
 }
 impl Inst for OpGroupSMaxNonUniformAMD {
     const META: &InstMeta = &OP_GROUP_S_MAX_NON_UNIFORM_AMD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13413,6 +15105,10 @@ pub struct OpFragmentMaskFetchAMD {
 }
 impl Inst for OpFragmentMaskFetchAMD {
     const META: &InstMeta = &OP_FRAGMENT_MASK_FETCH_AMD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13446,6 +15142,10 @@ pub struct OpFragmentFetchAMD {
 }
 impl Inst for OpFragmentFetchAMD {
     const META: &InstMeta = &OP_FRAGMENT_FETCH_AMD;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13480,6 +15180,10 @@ pub struct OpReadClockKHR {
 }
 impl Inst for OpReadClockKHR {
     const META: &InstMeta = &OP_READ_CLOCK_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13510,6 +15214,10 @@ pub struct OpAllocateNodePayloadsAMDX {
 }
 impl Inst for OpAllocateNodePayloadsAMDX {
     const META: &InstMeta = &OP_ALLOCATE_NODE_PAYLOADS_AMDX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13542,6 +15250,10 @@ pub struct OpEnqueueNodePayloadsAMDX {
 }
 impl Inst for OpEnqueueNodePayloadsAMDX {
     const META: &InstMeta = &OP_ENQUEUE_NODE_PAYLOADS_AMDX;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.payload_array);
         writer.write_op(Self::META.opcode, len)?;
@@ -13562,6 +15274,10 @@ pub struct OpTypeNodePayloadArrayAMDX {
 }
 impl Inst for OpTypeNodePayloadArrayAMDX {
     const META: &InstMeta = &OP_TYPE_NODE_PAYLOAD_ARRAY_AMDX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -13587,6 +15303,10 @@ pub struct OpFinishWritingNodePayloadAMDX {
 }
 impl Inst for OpFinishWritingNodePayloadAMDX {
     const META: &InstMeta = &OP_FINISH_WRITING_NODE_PAYLOAD_AMDX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13615,6 +15335,10 @@ pub struct OpNodePayloadArrayLengthAMDX {
 }
 impl Inst for OpNodePayloadArrayLengthAMDX {
     const META: &InstMeta = &OP_NODE_PAYLOAD_ARRAY_LENGTH_AMDX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13644,6 +15368,10 @@ pub struct OpIsNodePayloadValidAMDX {
 }
 impl Inst for OpIsNodePayloadValidAMDX {
     const META: &InstMeta = &OP_IS_NODE_PAYLOAD_VALID_AMDX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13674,6 +15402,10 @@ pub struct OpConstantStringAMDX {
 }
 impl Inst for OpConstantStringAMDX {
     const META: &InstMeta = &OP_CONSTANT_STRING_AMDX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -13698,6 +15430,10 @@ pub struct OpSpecConstantStringAMDX {
 }
 impl Inst for OpSpecConstantStringAMDX {
     const META: &InstMeta = &OP_SPEC_CONSTANT_STRING_AMDX;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -13723,6 +15459,10 @@ pub struct OpGroupNonUniformQuadAllKHR {
 }
 impl Inst for OpGroupNonUniformQuadAllKHR {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_QUAD_ALL_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13751,6 +15491,10 @@ pub struct OpGroupNonUniformQuadAnyKHR {
 }
 impl Inst for OpGroupNonUniformQuadAnyKHR {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_QUAD_ANY_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13778,6 +15522,10 @@ pub struct OpTypeBufferEXT {
 }
 impl Inst for OpTypeBufferEXT {
     const META: &InstMeta = &OP_TYPE_BUFFER_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -13803,6 +15551,10 @@ pub struct OpBufferPointerEXT {
 }
 impl Inst for OpBufferPointerEXT {
     const META: &InstMeta = &OP_BUFFER_POINTER_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13834,6 +15586,10 @@ pub struct OpUntypedImageTexelPointerEXT {
 }
 impl Inst for OpUntypedImageTexelPointerEXT {
     const META: &InstMeta = &OP_UNTYPED_IMAGE_TEXEL_POINTER_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13871,6 +15627,10 @@ pub struct OpMemberDecorateIdEXT {
 }
 impl Inst for OpMemberDecorateIdEXT {
     const META: &InstMeta = &OP_MEMBER_DECORATE_ID_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.structure_type)
@@ -13899,6 +15659,10 @@ pub struct OpConstantSizeOfEXT {
 }
 impl Inst for OpConstantSizeOfEXT {
     const META: &InstMeta = &OP_CONSTANT_SIZE_OF_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13938,6 +15702,10 @@ pub struct OpHitObjectRecordHitMotionNV {
 }
 impl Inst for OpHitObjectRecordHitMotionNV {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_HIT_MOTION_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -14009,6 +15777,10 @@ pub struct OpHitObjectRecordHitWithIndexMotionNV {
 }
 impl Inst for OpHitObjectRecordHitWithIndexMotionNV {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_HIT_WITH_INDEX_MOTION_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -14071,6 +15843,10 @@ pub struct OpHitObjectRecordMissMotionNV {
 }
 impl Inst for OpHitObjectRecordMissMotionNV {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_MISS_MOTION_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -14111,6 +15887,10 @@ pub struct OpHitObjectGetWorldToObjectNV {
 }
 impl Inst for OpHitObjectGetWorldToObjectNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_WORLD_TO_OBJECT_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14139,6 +15919,10 @@ pub struct OpHitObjectGetObjectToWorldNV {
 }
 impl Inst for OpHitObjectGetObjectToWorldNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_OBJECT_TO_WORLD_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14167,6 +15951,10 @@ pub struct OpHitObjectGetObjectRayDirectionNV {
 }
 impl Inst for OpHitObjectGetObjectRayDirectionNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_OBJECT_RAY_DIRECTION_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14195,6 +15983,10 @@ pub struct OpHitObjectGetObjectRayOriginNV {
 }
 impl Inst for OpHitObjectGetObjectRayOriginNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_OBJECT_RAY_ORIGIN_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14233,6 +16025,10 @@ pub struct OpHitObjectTraceRayMotionNV {
 }
 impl Inst for OpHitObjectTraceRayMotionNV {
     const META: &InstMeta = &OP_HIT_OBJECT_TRACE_RAY_MOTION_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -14291,6 +16087,10 @@ pub struct OpHitObjectGetShaderRecordBufferHandleNV {
 }
 impl Inst for OpHitObjectGetShaderRecordBufferHandleNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_SHADER_RECORD_BUFFER_HANDLE_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14319,6 +16119,10 @@ pub struct OpHitObjectGetShaderBindingTableRecordIndexNV {
 }
 impl Inst for OpHitObjectGetShaderBindingTableRecordIndexNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_SHADER_BINDING_TABLE_RECORD_INDEX_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14345,6 +16149,10 @@ pub struct OpHitObjectRecordEmptyNV {
 }
 impl Inst for OpHitObjectRecordEmptyNV {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_EMPTY_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hit_object);
         writer.write_op(Self::META.opcode, len)?;
@@ -14375,6 +16183,10 @@ pub struct OpHitObjectTraceRayNV {
 }
 impl Inst for OpHitObjectTraceRayNV {
     const META: &InstMeta = &OP_HIT_OBJECT_TRACE_RAY_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -14440,6 +16252,10 @@ pub struct OpHitObjectRecordHitNV {
 }
 impl Inst for OpHitObjectRecordHitNV {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_HIT_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -14507,6 +16323,10 @@ pub struct OpHitObjectRecordHitWithIndexNV {
 }
 impl Inst for OpHitObjectRecordHitWithIndexNV {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_HIT_WITH_INDEX_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -14565,6 +16385,10 @@ pub struct OpHitObjectRecordMissNV {
 }
 impl Inst for OpHitObjectRecordMissNV {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_MISS_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -14601,6 +16425,10 @@ pub struct OpHitObjectExecuteShaderNV {
 }
 impl Inst for OpHitObjectExecuteShaderNV {
     const META: &InstMeta = &OP_HIT_OBJECT_EXECUTE_SHADER_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -14626,6 +16454,10 @@ pub struct OpHitObjectGetCurrentTimeNV {
 }
 impl Inst for OpHitObjectGetCurrentTimeNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_CURRENT_TIME_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14653,6 +16485,10 @@ pub struct OpHitObjectGetAttributesNV {
 }
 impl Inst for OpHitObjectGetAttributesNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_ATTRIBUTES_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -14678,6 +16514,10 @@ pub struct OpHitObjectGetHitKindNV {
 }
 impl Inst for OpHitObjectGetHitKindNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_HIT_KIND_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14706,6 +16546,10 @@ pub struct OpHitObjectGetPrimitiveIndexNV {
 }
 impl Inst for OpHitObjectGetPrimitiveIndexNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_PRIMITIVE_INDEX_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14734,6 +16578,10 @@ pub struct OpHitObjectGetGeometryIndexNV {
 }
 impl Inst for OpHitObjectGetGeometryIndexNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_GEOMETRY_INDEX_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14762,6 +16610,10 @@ pub struct OpHitObjectGetInstanceIdNV {
 }
 impl Inst for OpHitObjectGetInstanceIdNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_INSTANCE_ID_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14790,6 +16642,10 @@ pub struct OpHitObjectGetInstanceCustomIndexNV {
 }
 impl Inst for OpHitObjectGetInstanceCustomIndexNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_INSTANCE_CUSTOM_INDEX_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14818,6 +16674,10 @@ pub struct OpHitObjectGetWorldRayDirectionNV {
 }
 impl Inst for OpHitObjectGetWorldRayDirectionNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_WORLD_RAY_DIRECTION_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14846,6 +16706,10 @@ pub struct OpHitObjectGetWorldRayOriginNV {
 }
 impl Inst for OpHitObjectGetWorldRayOriginNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_WORLD_RAY_ORIGIN_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14874,6 +16738,10 @@ pub struct OpHitObjectGetRayTMaxNV {
 }
 impl Inst for OpHitObjectGetRayTMaxNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_RAY_T_MAX_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14902,6 +16770,10 @@ pub struct OpHitObjectGetRayTMinNV {
 }
 impl Inst for OpHitObjectGetRayTMinNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_RAY_T_MIN_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14930,6 +16802,10 @@ pub struct OpHitObjectIsEmptyNV {
 }
 impl Inst for OpHitObjectIsEmptyNV {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_EMPTY_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14958,6 +16834,10 @@ pub struct OpHitObjectIsHitNV {
 }
 impl Inst for OpHitObjectIsHitNV {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_HIT_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14986,6 +16866,10 @@ pub struct OpHitObjectIsMissNV {
 }
 impl Inst for OpHitObjectIsMissNV {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_MISS_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15014,6 +16898,10 @@ pub struct OpReorderThreadWithHitObjectNV {
 }
 impl Inst for OpReorderThreadWithHitObjectNV {
     const META: &InstMeta = &OP_REORDER_THREAD_WITH_HIT_OBJECT_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -15041,6 +16929,10 @@ pub struct OpReorderThreadWithHintNV {
 }
 impl Inst for OpReorderThreadWithHintNV {
     const META: &InstMeta = &OP_REORDER_THREAD_WITH_HINT_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hint) + OperandEncoding::word_len(&self.bits);
         writer.write_op(Self::META.opcode, len)?;
@@ -15062,6 +16954,10 @@ pub struct OpTypeHitObjectNV {
 }
 impl Inst for OpTypeHitObjectNV {
     const META: &InstMeta = &OP_TYPE_HIT_OBJECT_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -15087,6 +16983,10 @@ pub struct OpImageSampleFootprintNV {
 }
 impl Inst for OpImageSampleFootprintNV {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_FOOTPRINT_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15127,6 +17027,10 @@ pub struct OpTypeVectorIdEXT {
 }
 impl Inst for OpTypeVectorIdEXT {
     const META: &InstMeta = &OP_TYPE_VECTOR_ID_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -15165,6 +17069,10 @@ pub struct OpCooperativeVectorMatrixMulNV {
 }
 impl Inst for OpCooperativeVectorMatrixMulNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_MATRIX_MUL_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15227,6 +17135,10 @@ pub struct OpCooperativeVectorOuterProductAccumulateNV {
 }
 impl Inst for OpCooperativeVectorOuterProductAccumulateNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_OUTER_PRODUCT_ACCUMULATE_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -15267,6 +17179,10 @@ pub struct OpCooperativeVectorReduceSumAccumulateNV {
 }
 impl Inst for OpCooperativeVectorReduceSumAccumulateNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_REDUCE_SUM_ACCUMULATE_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -15308,6 +17224,10 @@ pub struct OpCooperativeVectorMatrixMulAddNV {
 }
 impl Inst for OpCooperativeVectorMatrixMulAddNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_MATRIX_MUL_ADD_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15375,6 +17295,10 @@ pub struct OpCooperativeMatrixConvertNV {
 }
 impl Inst for OpCooperativeMatrixConvertNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_CONVERT_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15404,6 +17328,10 @@ pub struct OpEmitMeshTasksEXT {
 }
 impl Inst for OpEmitMeshTasksEXT {
     const META: &InstMeta = &OP_EMIT_MESH_TASKS_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.group_count_x)
@@ -15434,6 +17362,10 @@ pub struct OpSetMeshOutputsEXT {
 }
 impl Inst for OpSetMeshOutputsEXT {
     const META: &InstMeta = &OP_SET_MESH_OUTPUTS_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.vertex_count)
@@ -15459,6 +17391,10 @@ pub struct OpGroupNonUniformPartitionEXT {
 }
 impl Inst for OpGroupNonUniformPartitionEXT {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_PARTITION_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15486,6 +17422,10 @@ pub struct OpWritePackedPrimitiveIndices4x8NV {
 }
 impl Inst for OpWritePackedPrimitiveIndices4x8NV {
     const META: &InstMeta = &OP_WRITE_PACKED_PRIMITIVE_INDICES_4_X_8_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.index_offset)
@@ -15515,6 +17455,10 @@ pub struct OpFetchMicroTriangleVertexPositionNV {
 }
 impl Inst for OpFetchMicroTriangleVertexPositionNV {
     const META: &InstMeta = &OP_FETCH_MICRO_TRIANGLE_VERTEX_POSITION_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15559,6 +17503,10 @@ pub struct OpFetchMicroTriangleVertexBarycentricNV {
 }
 impl Inst for OpFetchMicroTriangleVertexBarycentricNV {
     const META: &InstMeta = &OP_FETCH_MICRO_TRIANGLE_VERTEX_BARYCENTRIC_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15601,6 +17549,10 @@ pub struct OpCooperativeVectorLoadNV {
 }
 impl Inst for OpCooperativeVectorLoadNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_LOAD_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15636,6 +17588,10 @@ pub struct OpCooperativeVectorStoreNV {
 }
 impl Inst for OpCooperativeVectorStoreNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_STORE_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -15668,6 +17624,10 @@ pub struct OpHitObjectRecordFromQueryEXT {
 }
 impl Inst for OpHitObjectRecordFromQueryEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_FROM_QUERY_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -15703,6 +17663,10 @@ pub struct OpHitObjectRecordMissEXT {
 }
 impl Inst for OpHitObjectRecordMissEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_MISS_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -15748,6 +17712,10 @@ pub struct OpHitObjectRecordMissMotionEXT {
 }
 impl Inst for OpHitObjectRecordMissMotionEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_MISS_MOTION_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -15791,6 +17759,10 @@ pub struct OpHitObjectGetIntersectionTriangleVertexPositionsEXT {
 }
 impl Inst for OpHitObjectGetIntersectionTriangleVertexPositionsEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_INTERSECTION_TRIANGLE_VERTEX_POSITIONS_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15819,6 +17791,10 @@ pub struct OpHitObjectGetRayFlagsEXT {
 }
 impl Inst for OpHitObjectGetRayFlagsEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_RAY_FLAGS_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15846,6 +17822,10 @@ pub struct OpHitObjectSetShaderBindingTableRecordIndexEXT {
 }
 impl Inst for OpHitObjectSetShaderBindingTableRecordIndexEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_SET_SHADER_BINDING_TABLE_RECORD_INDEX_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -15872,6 +17852,10 @@ pub struct OpHitObjectReorderExecuteShaderEXT {
 }
 impl Inst for OpHitObjectReorderExecuteShaderEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_REORDER_EXECUTE_SHADER_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -15914,6 +17898,10 @@ pub struct OpHitObjectTraceReorderExecuteEXT {
 }
 impl Inst for OpHitObjectTraceReorderExecuteEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_TRACE_REORDER_EXECUTE_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -15987,6 +17975,10 @@ pub struct OpHitObjectTraceMotionReorderExecuteEXT {
 }
 impl Inst for OpHitObjectTraceMotionReorderExecuteEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_TRACE_MOTION_REORDER_EXECUTE_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -16049,6 +18041,10 @@ pub struct OpTypeHitObjectEXT {
 }
 impl Inst for OpTypeHitObjectEXT {
     const META: &InstMeta = &OP_TYPE_HIT_OBJECT_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -16069,6 +18065,10 @@ pub struct OpReorderThreadWithHintEXT {
 }
 impl Inst for OpReorderThreadWithHintEXT {
     const META: &InstMeta = &OP_REORDER_THREAD_WITH_HINT_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hint) + OperandEncoding::word_len(&self.bits);
         writer.write_op(Self::META.opcode, len)?;
@@ -16092,6 +18092,10 @@ pub struct OpReorderThreadWithHitObjectEXT {
 }
 impl Inst for OpReorderThreadWithHitObjectEXT {
     const META: &InstMeta = &OP_REORDER_THREAD_WITH_HIT_OBJECT_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -16129,6 +18133,10 @@ pub struct OpHitObjectTraceRayEXT {
 }
 impl Inst for OpHitObjectTraceRayEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_TRACE_RAY_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -16194,6 +18202,10 @@ pub struct OpHitObjectTraceRayMotionEXT {
 }
 impl Inst for OpHitObjectTraceRayMotionEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_TRACE_RAY_MOTION_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -16250,6 +18262,10 @@ pub struct OpHitObjectRecordEmptyEXT {
 }
 impl Inst for OpHitObjectRecordEmptyEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_EMPTY_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hit_object);
         writer.write_op(Self::META.opcode, len)?;
@@ -16270,6 +18286,10 @@ pub struct OpHitObjectExecuteShaderEXT {
 }
 impl Inst for OpHitObjectExecuteShaderEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_EXECUTE_SHADER_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -16295,6 +18315,10 @@ pub struct OpHitObjectGetCurrentTimeEXT {
 }
 impl Inst for OpHitObjectGetCurrentTimeEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_CURRENT_TIME_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16322,6 +18346,10 @@ pub struct OpHitObjectGetAttributesEXT {
 }
 impl Inst for OpHitObjectGetAttributesEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_ATTRIBUTES_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -16347,6 +18375,10 @@ pub struct OpHitObjectGetHitKindEXT {
 }
 impl Inst for OpHitObjectGetHitKindEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_HIT_KIND_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16375,6 +18407,10 @@ pub struct OpHitObjectGetPrimitiveIndexEXT {
 }
 impl Inst for OpHitObjectGetPrimitiveIndexEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_PRIMITIVE_INDEX_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16403,6 +18439,10 @@ pub struct OpHitObjectGetGeometryIndexEXT {
 }
 impl Inst for OpHitObjectGetGeometryIndexEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_GEOMETRY_INDEX_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16431,6 +18471,10 @@ pub struct OpHitObjectGetInstanceIdEXT {
 }
 impl Inst for OpHitObjectGetInstanceIdEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_INSTANCE_ID_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16459,6 +18503,10 @@ pub struct OpHitObjectGetInstanceCustomIndexEXT {
 }
 impl Inst for OpHitObjectGetInstanceCustomIndexEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_INSTANCE_CUSTOM_INDEX_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16487,6 +18535,10 @@ pub struct OpHitObjectGetObjectRayOriginEXT {
 }
 impl Inst for OpHitObjectGetObjectRayOriginEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_OBJECT_RAY_ORIGIN_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16515,6 +18567,10 @@ pub struct OpHitObjectGetObjectRayDirectionEXT {
 }
 impl Inst for OpHitObjectGetObjectRayDirectionEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_OBJECT_RAY_DIRECTION_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16543,6 +18599,10 @@ pub struct OpHitObjectGetWorldRayDirectionEXT {
 }
 impl Inst for OpHitObjectGetWorldRayDirectionEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_WORLD_RAY_DIRECTION_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16571,6 +18631,10 @@ pub struct OpHitObjectGetWorldRayOriginEXT {
 }
 impl Inst for OpHitObjectGetWorldRayOriginEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_WORLD_RAY_ORIGIN_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16599,6 +18663,10 @@ pub struct OpHitObjectGetObjectToWorldEXT {
 }
 impl Inst for OpHitObjectGetObjectToWorldEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_OBJECT_TO_WORLD_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16627,6 +18695,10 @@ pub struct OpHitObjectGetWorldToObjectEXT {
 }
 impl Inst for OpHitObjectGetWorldToObjectEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_WORLD_TO_OBJECT_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16655,6 +18727,10 @@ pub struct OpHitObjectGetRayTMaxEXT {
 }
 impl Inst for OpHitObjectGetRayTMaxEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_RAY_T_MAX_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16684,6 +18760,10 @@ pub struct OpReportIntersectionKHR {
 }
 impl Inst for OpReportIntersectionKHR {
     const META: &InstMeta = &OP_REPORT_INTERSECTION_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16711,6 +18791,10 @@ impl Inst for OpReportIntersectionKHR {
 pub struct OpIgnoreIntersectionNV {}
 impl Inst for OpIgnoreIntersectionNV {
     const META: &InstMeta = &OP_IGNORE_INTERSECTION_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -16725,6 +18809,10 @@ impl Inst for OpIgnoreIntersectionNV {
 pub struct OpTerminateRayNV {}
 impl Inst for OpTerminateRayNV {
     const META: &InstMeta = &OP_TERMINATE_RAY_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -16751,6 +18839,10 @@ pub struct OpTraceNV {
 }
 impl Inst for OpTraceNV {
     const META: &InstMeta = &OP_TRACE_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.accel)
@@ -16812,6 +18904,10 @@ pub struct OpTraceMotionNV {
 }
 impl Inst for OpTraceMotionNV {
     const META: &InstMeta = &OP_TRACE_MOTION_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.accel)
@@ -16876,6 +18972,10 @@ pub struct OpTraceRayMotionNV {
 }
 impl Inst for OpTraceRayMotionNV {
     const META: &InstMeta = &OP_TRACE_RAY_MOTION_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.accel)
@@ -16932,6 +19032,10 @@ pub struct OpRayQueryGetIntersectionTriangleVertexPositionsKHR {
 }
 impl Inst for OpRayQueryGetIntersectionTriangleVertexPositionsKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_TRIANGLE_VERTEX_POSITIONS_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16961,6 +19065,10 @@ pub struct OpTypeAccelerationStructureKHR {
 }
 impl Inst for OpTypeAccelerationStructureKHR {
     const META: &InstMeta = &OP_TYPE_ACCELERATION_STRUCTURE_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -16981,6 +19089,10 @@ pub struct OpExecuteCallableNV {
 }
 impl Inst for OpExecuteCallableNV {
     const META: &InstMeta = &OP_EXECUTE_CALLABLE_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.sbt_index)
@@ -17007,6 +19119,10 @@ pub struct OpRayQueryGetIntersectionClusterIdNV {
 }
 impl Inst for OpRayQueryGetIntersectionClusterIdNV {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_CLUSTER_ID_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17038,6 +19154,10 @@ pub struct OpHitObjectGetClusterIdNV {
 }
 impl Inst for OpHitObjectGetClusterIdNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_CLUSTER_ID_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17066,6 +19186,10 @@ pub struct OpHitObjectGetRayTMinEXT {
 }
 impl Inst for OpHitObjectGetRayTMinEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_RAY_T_MIN_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17094,6 +19218,10 @@ pub struct OpHitObjectGetShaderBindingTableRecordIndexEXT {
 }
 impl Inst for OpHitObjectGetShaderBindingTableRecordIndexEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_SHADER_BINDING_TABLE_RECORD_INDEX_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17122,6 +19250,10 @@ pub struct OpHitObjectGetShaderRecordBufferHandleEXT {
 }
 impl Inst for OpHitObjectGetShaderRecordBufferHandleEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_SHADER_RECORD_BUFFER_HANDLE_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17150,6 +19282,10 @@ pub struct OpHitObjectIsEmptyEXT {
 }
 impl Inst for OpHitObjectIsEmptyEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_EMPTY_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17178,6 +19314,10 @@ pub struct OpHitObjectIsHitEXT {
 }
 impl Inst for OpHitObjectIsHitEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_HIT_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17206,6 +19346,10 @@ pub struct OpHitObjectIsMissEXT {
 }
 impl Inst for OpHitObjectIsMissEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_MISS_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17236,6 +19380,10 @@ pub struct OpTypeCooperativeMatrixNV {
 }
 impl Inst for OpTypeCooperativeMatrixNV {
     const META: &InstMeta = &OP_TYPE_COOPERATIVE_MATRIX_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -17273,6 +19421,10 @@ pub struct OpCooperativeMatrixLoadNV {
 }
 impl Inst for OpCooperativeMatrixLoadNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_LOAD_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17312,6 +19464,10 @@ pub struct OpCooperativeMatrixStoreNV {
 }
 impl Inst for OpCooperativeMatrixStoreNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_STORE_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -17348,6 +19504,10 @@ pub struct OpCooperativeMatrixMulAddNV {
 }
 impl Inst for OpCooperativeMatrixMulAddNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_MUL_ADD_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17382,6 +19542,10 @@ pub struct OpCooperativeMatrixLengthNV {
 }
 impl Inst for OpCooperativeMatrixLengthNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_LENGTH_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17406,6 +19570,10 @@ impl Inst for OpCooperativeMatrixLengthNV {
 pub struct OpBeginInvocationInterlockEXT {}
 impl Inst for OpBeginInvocationInterlockEXT {
     const META: &InstMeta = &OP_BEGIN_INVOCATION_INTERLOCK_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -17420,6 +19588,10 @@ impl Inst for OpBeginInvocationInterlockEXT {
 pub struct OpEndInvocationInterlockEXT {}
 impl Inst for OpEndInvocationInterlockEXT {
     const META: &InstMeta = &OP_END_INVOCATION_INTERLOCK_EXT;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -17440,6 +19612,10 @@ pub struct OpCooperativeMatrixReduceNV {
 }
 impl Inst for OpCooperativeMatrixReduceNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_REDUCE_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17478,6 +19654,10 @@ pub struct OpCooperativeMatrixLoadTensorNV {
 }
 impl Inst for OpCooperativeMatrixLoadTensorNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_LOAD_TENSOR_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17520,6 +19700,10 @@ pub struct OpCooperativeMatrixStoreTensorNV {
 }
 impl Inst for OpCooperativeMatrixStoreTensorNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_STORE_TENSOR_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -17556,6 +19740,10 @@ pub struct OpCooperativeMatrixPerElementOpNV {
 }
 impl Inst for OpCooperativeMatrixPerElementOpNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_PER_ELEMENT_OP_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17590,6 +19778,10 @@ pub struct OpTypeTensorLayoutNV {
 }
 impl Inst for OpTypeTensorLayoutNV {
     const META: &InstMeta = &OP_TYPE_TENSOR_LAYOUT_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -17619,6 +19811,10 @@ pub struct OpTypeTensorViewNV {
 }
 impl Inst for OpTypeTensorViewNV {
     const META: &InstMeta = &OP_TYPE_TENSOR_VIEW_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -17649,6 +19845,10 @@ pub struct OpCreateTensorLayoutNV {
 }
 impl Inst for OpCreateTensorLayoutNV {
     const META: &InstMeta = &OP_CREATE_TENSOR_LAYOUT_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17675,6 +19875,10 @@ pub struct OpTensorLayoutSetDimensionNV {
 }
 impl Inst for OpTensorLayoutSetDimensionNV {
     const META: &InstMeta = &OP_TENSOR_LAYOUT_SET_DIMENSION_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17707,6 +19911,10 @@ pub struct OpTensorLayoutSetStrideNV {
 }
 impl Inst for OpTensorLayoutSetStrideNV {
     const META: &InstMeta = &OP_TENSOR_LAYOUT_SET_STRIDE_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17739,6 +19947,10 @@ pub struct OpTensorLayoutSliceNV {
 }
 impl Inst for OpTensorLayoutSliceNV {
     const META: &InstMeta = &OP_TENSOR_LAYOUT_SLICE_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17771,6 +19983,10 @@ pub struct OpTensorLayoutSetClampValueNV {
 }
 impl Inst for OpTensorLayoutSetClampValueNV {
     const META: &InstMeta = &OP_TENSOR_LAYOUT_SET_CLAMP_VALUE_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17801,6 +20017,10 @@ pub struct OpCreateTensorViewNV {
 }
 impl Inst for OpCreateTensorViewNV {
     const META: &InstMeta = &OP_CREATE_TENSOR_VIEW_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17827,6 +20047,10 @@ pub struct OpTensorViewSetDimensionNV {
 }
 impl Inst for OpTensorViewSetDimensionNV {
     const META: &InstMeta = &OP_TENSOR_VIEW_SET_DIMENSION_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17859,6 +20083,10 @@ pub struct OpTensorViewSetStrideNV {
 }
 impl Inst for OpTensorViewSetStrideNV {
     const META: &InstMeta = &OP_TENSOR_VIEW_SET_STRIDE_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17886,6 +20114,10 @@ impl Inst for OpTensorViewSetStrideNV {
 pub struct OpDemoteToHelperInvocation {}
 impl Inst for OpDemoteToHelperInvocation {
     const META: &InstMeta = &OP_DEMOTE_TO_HELPER_INVOCATION;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -17903,6 +20135,10 @@ pub struct OpIsHelperInvocationEXT {
 }
 impl Inst for OpIsHelperInvocationEXT {
     const META: &InstMeta = &OP_IS_HELPER_INVOCATION_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17932,6 +20168,10 @@ pub struct OpTensorViewSetClipNV {
 }
 impl Inst for OpTensorViewSetClipNV {
     const META: &InstMeta = &OP_TENSOR_VIEW_SET_CLIP_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17973,6 +20213,10 @@ pub struct OpTensorLayoutSetBlockSizeNV {
 }
 impl Inst for OpTensorLayoutSetBlockSizeNV {
     const META: &InstMeta = &OP_TENSOR_LAYOUT_SET_BLOCK_SIZE_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18004,6 +20248,10 @@ pub struct OpCooperativeMatrixTransposeNV {
 }
 impl Inst for OpCooperativeMatrixTransposeNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_TRANSPOSE_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18032,6 +20280,10 @@ pub struct OpConvertUToImageNV {
 }
 impl Inst for OpConvertUToImageNV {
     const META: &InstMeta = &OP_CONVERT_U_TO_IMAGE_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18060,6 +20312,10 @@ pub struct OpConvertUToSamplerNV {
 }
 impl Inst for OpConvertUToSamplerNV {
     const META: &InstMeta = &OP_CONVERT_U_TO_SAMPLER_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18088,6 +20344,10 @@ pub struct OpConvertImageToUNV {
 }
 impl Inst for OpConvertImageToUNV {
     const META: &InstMeta = &OP_CONVERT_IMAGE_TO_UNV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18116,6 +20376,10 @@ pub struct OpConvertSamplerToUNV {
 }
 impl Inst for OpConvertSamplerToUNV {
     const META: &InstMeta = &OP_CONVERT_SAMPLER_TO_UNV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18144,6 +20408,10 @@ pub struct OpConvertUToSampledImageNV {
 }
 impl Inst for OpConvertUToSampledImageNV {
     const META: &InstMeta = &OP_CONVERT_U_TO_SAMPLED_IMAGE_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18172,6 +20440,10 @@ pub struct OpConvertSampledImageToUNV {
 }
 impl Inst for OpConvertSampledImageToUNV {
     const META: &InstMeta = &OP_CONVERT_SAMPLED_IMAGE_TO_UNV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18198,6 +20470,10 @@ pub struct OpSamplerImageAddressingModeNV {
 }
 impl Inst for OpSamplerImageAddressingModeNV {
     const META: &InstMeta = &OP_SAMPLER_IMAGE_ADDRESSING_MODE_NV;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.bit_width);
         writer.write_op(Self::META.opcode, len)?;
@@ -18223,6 +20499,10 @@ pub struct OpRawAccessChainNV {
 }
 impl Inst for OpRawAccessChainNV {
     const META: &InstMeta = &OP_RAW_ACCESS_CHAIN_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18264,6 +20544,10 @@ pub struct OpRayQueryGetIntersectionSpherePositionNV {
 }
 impl Inst for OpRayQueryGetIntersectionSpherePositionNV {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_SPHERE_POSITION_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18296,6 +20580,10 @@ pub struct OpRayQueryGetIntersectionSphereRadiusNV {
 }
 impl Inst for OpRayQueryGetIntersectionSphereRadiusNV {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_SPHERE_RADIUS_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18328,6 +20616,10 @@ pub struct OpRayQueryGetIntersectionLSSPositionsNV {
 }
 impl Inst for OpRayQueryGetIntersectionLSSPositionsNV {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_LSS_POSITIONS_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18360,6 +20652,10 @@ pub struct OpRayQueryGetIntersectionLSSRadiiNV {
 }
 impl Inst for OpRayQueryGetIntersectionLSSRadiiNV {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_LSS_RADII_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18392,6 +20688,10 @@ pub struct OpRayQueryGetIntersectionLSSHitValueNV {
 }
 impl Inst for OpRayQueryGetIntersectionLSSHitValueNV {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_LSS_HIT_VALUE_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18423,6 +20723,10 @@ pub struct OpHitObjectGetSpherePositionNV {
 }
 impl Inst for OpHitObjectGetSpherePositionNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_SPHERE_POSITION_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18451,6 +20755,10 @@ pub struct OpHitObjectGetSphereRadiusNV {
 }
 impl Inst for OpHitObjectGetSphereRadiusNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_SPHERE_RADIUS_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18479,6 +20787,10 @@ pub struct OpHitObjectGetLSSPositionsNV {
 }
 impl Inst for OpHitObjectGetLSSPositionsNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_LSS_POSITIONS_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18507,6 +20819,10 @@ pub struct OpHitObjectGetLSSRadiiNV {
 }
 impl Inst for OpHitObjectGetLSSRadiiNV {
     const META: &InstMeta = &OP_HIT_OBJECT_GET_LSS_RADII_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18535,6 +20851,10 @@ pub struct OpHitObjectIsSphereHitNV {
 }
 impl Inst for OpHitObjectIsSphereHitNV {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_SPHERE_HIT_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18563,6 +20883,10 @@ pub struct OpHitObjectIsLSSHitNV {
 }
 impl Inst for OpHitObjectIsLSSHitNV {
     const META: &InstMeta = &OP_HIT_OBJECT_IS_LSS_HIT_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18592,6 +20916,10 @@ pub struct OpRayQueryIsSphereHitNV {
 }
 impl Inst for OpRayQueryIsSphereHitNV {
     const META: &InstMeta = &OP_RAY_QUERY_IS_SPHERE_HIT_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18624,6 +20952,10 @@ pub struct OpRayQueryIsLSSHitNV {
 }
 impl Inst for OpRayQueryIsLSSHitNV {
     const META: &InstMeta = &OP_RAY_QUERY_IS_LSS_HIT_NV;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18656,6 +20988,10 @@ pub struct OpSubgroupShuffleINTEL {
 }
 impl Inst for OpSubgroupShuffleINTEL {
     const META: &InstMeta = &OP_SUBGROUP_SHUFFLE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18689,6 +21025,10 @@ pub struct OpSubgroupShuffleDownINTEL {
 }
 impl Inst for OpSubgroupShuffleDownINTEL {
     const META: &InstMeta = &OP_SUBGROUP_SHUFFLE_DOWN_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18725,6 +21065,10 @@ pub struct OpSubgroupShuffleUpINTEL {
 }
 impl Inst for OpSubgroupShuffleUpINTEL {
     const META: &InstMeta = &OP_SUBGROUP_SHUFFLE_UP_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18760,6 +21104,10 @@ pub struct OpSubgroupShuffleXorINTEL {
 }
 impl Inst for OpSubgroupShuffleXorINTEL {
     const META: &InstMeta = &OP_SUBGROUP_SHUFFLE_XOR_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18791,6 +21139,10 @@ pub struct OpSubgroupBlockReadINTEL {
 }
 impl Inst for OpSubgroupBlockReadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_BLOCK_READ_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18818,6 +21170,10 @@ pub struct OpSubgroupBlockWriteINTEL {
 }
 impl Inst for OpSubgroupBlockWriteINTEL {
     const META: &InstMeta = &OP_SUBGROUP_BLOCK_WRITE_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ptr) + OperandEncoding::word_len(&self.data);
         writer.write_op(Self::META.opcode, len)?;
@@ -18842,6 +21198,10 @@ pub struct OpSubgroupImageBlockReadINTEL {
 }
 impl Inst for OpSubgroupImageBlockReadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_IMAGE_BLOCK_READ_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18873,6 +21233,10 @@ pub struct OpSubgroupImageBlockWriteINTEL {
 }
 impl Inst for OpSubgroupImageBlockWriteINTEL {
     const META: &InstMeta = &OP_SUBGROUP_IMAGE_BLOCK_WRITE_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.image)
@@ -18904,6 +21268,10 @@ pub struct OpSubgroupImageMediaBlockReadINTEL {
 }
 impl Inst for OpSubgroupImageMediaBlockReadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_IMAGE_MEDIA_BLOCK_READ_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18943,6 +21311,10 @@ pub struct OpSubgroupImageMediaBlockWriteINTEL {
 }
 impl Inst for OpSubgroupImageMediaBlockWriteINTEL {
     const META: &InstMeta = &OP_SUBGROUP_IMAGE_MEDIA_BLOCK_WRITE_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.image)
@@ -18977,6 +21349,10 @@ pub struct OpUCountLeadingZerosINTEL {
 }
 impl Inst for OpUCountLeadingZerosINTEL {
     const META: &InstMeta = &OP_U_COUNT_LEADING_ZEROS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19005,6 +21381,10 @@ pub struct OpUCountTrailingZerosINTEL {
 }
 impl Inst for OpUCountTrailingZerosINTEL {
     const META: &InstMeta = &OP_U_COUNT_TRAILING_ZEROS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19034,6 +21414,10 @@ pub struct OpAbsISubINTEL {
 }
 impl Inst for OpAbsISubINTEL {
     const META: &InstMeta = &OP_ABS_I_SUB_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19066,6 +21450,10 @@ pub struct OpAbsUSubINTEL {
 }
 impl Inst for OpAbsUSubINTEL {
     const META: &InstMeta = &OP_ABS_U_SUB_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19098,6 +21486,10 @@ pub struct OpIAddSatINTEL {
 }
 impl Inst for OpIAddSatINTEL {
     const META: &InstMeta = &OP_I_ADD_SAT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19130,6 +21522,10 @@ pub struct OpUAddSatINTEL {
 }
 impl Inst for OpUAddSatINTEL {
     const META: &InstMeta = &OP_U_ADD_SAT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19162,6 +21558,10 @@ pub struct OpIAverageINTEL {
 }
 impl Inst for OpIAverageINTEL {
     const META: &InstMeta = &OP_I_AVERAGE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19194,6 +21594,10 @@ pub struct OpUAverageINTEL {
 }
 impl Inst for OpUAverageINTEL {
     const META: &InstMeta = &OP_U_AVERAGE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19226,6 +21630,10 @@ pub struct OpIAverageRoundedINTEL {
 }
 impl Inst for OpIAverageRoundedINTEL {
     const META: &InstMeta = &OP_I_AVERAGE_ROUNDED_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19258,6 +21666,10 @@ pub struct OpUAverageRoundedINTEL {
 }
 impl Inst for OpUAverageRoundedINTEL {
     const META: &InstMeta = &OP_U_AVERAGE_ROUNDED_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19290,6 +21702,10 @@ pub struct OpISubSatINTEL {
 }
 impl Inst for OpISubSatINTEL {
     const META: &InstMeta = &OP_I_SUB_SAT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19322,6 +21738,10 @@ pub struct OpUSubSatINTEL {
 }
 impl Inst for OpUSubSatINTEL {
     const META: &InstMeta = &OP_U_SUB_SAT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19354,6 +21774,10 @@ pub struct OpIMul32x16INTEL {
 }
 impl Inst for OpIMul32x16INTEL {
     const META: &InstMeta = &OP_I_MUL_32_X_16_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19386,6 +21810,10 @@ pub struct OpUMul32x16INTEL {
 }
 impl Inst for OpUMul32x16INTEL {
     const META: &InstMeta = &OP_U_MUL_32_X_16_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19417,6 +21845,10 @@ pub struct OpConstantFunctionPointerINTEL {
 }
 impl Inst for OpConstantFunctionPointerINTEL {
     const META: &InstMeta = &OP_CONSTANT_FUNCTION_POINTER_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19445,6 +21877,10 @@ pub struct OpFunctionPointerCallINTEL {
 }
 impl Inst for OpFunctionPointerCallINTEL {
     const META: &InstMeta = &OP_FUNCTION_POINTER_CALL_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19472,6 +21908,10 @@ pub struct OpAsmTargetINTEL {
 }
 impl Inst for OpAsmTargetINTEL {
     const META: &InstMeta = &OP_ASM_TARGET_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -19500,6 +21940,10 @@ pub struct OpAsmINTEL {
 }
 impl Inst for OpAsmINTEL {
     const META: &InstMeta = &OP_ASM_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19538,6 +21982,10 @@ pub struct OpAsmCallINTEL {
 }
 impl Inst for OpAsmCallINTEL {
     const META: &InstMeta = &OP_ASM_CALL_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19572,6 +22020,10 @@ pub struct OpAtomicFMinEXT {
 }
 impl Inst for OpAtomicFMinEXT {
     const META: &InstMeta = &OP_ATOMIC_F_MIN_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19612,6 +22064,10 @@ pub struct OpAtomicFMaxEXT {
 }
 impl Inst for OpAtomicFMaxEXT {
     const META: &InstMeta = &OP_ATOMIC_F_MAX_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19647,6 +22103,10 @@ pub struct OpAssumeTrueKHR {
 }
 impl Inst for OpAssumeTrueKHR {
     const META: &InstMeta = &OP_ASSUME_TRUE_KHR;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.condition);
         writer.write_op(Self::META.opcode, len)?;
@@ -19669,6 +22129,10 @@ pub struct OpExpectKHR {
 }
 impl Inst for OpExpectKHR {
     const META: &InstMeta = &OP_EXPECT_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19699,6 +22163,10 @@ pub struct OpDecorateString {
 }
 impl Inst for OpDecorateString {
     const META: &InstMeta = &OP_DECORATE_STRING;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.target)
@@ -19724,6 +22192,10 @@ pub struct OpMemberDecorateString {
 }
 impl Inst for OpMemberDecorateString {
     const META: &InstMeta = &OP_MEMBER_DECORATE_STRING;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.struct_type)
@@ -19753,6 +22225,10 @@ pub struct OpVmeImageINTEL {
 }
 impl Inst for OpVmeImageINTEL {
     const META: &InstMeta = &OP_VME_IMAGE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19783,6 +22259,10 @@ pub struct OpTypeVmeImageINTEL {
 }
 impl Inst for OpTypeVmeImageINTEL {
     const META: &InstMeta = &OP_TYPE_VME_IMAGE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -19806,6 +22286,10 @@ pub struct OpTypeAvcImePayloadINTEL {
 }
 impl Inst for OpTypeAvcImePayloadINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_PAYLOAD_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -19825,6 +22309,10 @@ pub struct OpTypeAvcRefPayloadINTEL {
 }
 impl Inst for OpTypeAvcRefPayloadINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_REF_PAYLOAD_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -19844,6 +22332,10 @@ pub struct OpTypeAvcSicPayloadINTEL {
 }
 impl Inst for OpTypeAvcSicPayloadINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_SIC_PAYLOAD_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -19863,6 +22355,10 @@ pub struct OpTypeAvcMcePayloadINTEL {
 }
 impl Inst for OpTypeAvcMcePayloadINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_MCE_PAYLOAD_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -19882,6 +22378,10 @@ pub struct OpTypeAvcMceResultINTEL {
 }
 impl Inst for OpTypeAvcMceResultINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_MCE_RESULT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -19901,6 +22401,10 @@ pub struct OpTypeAvcImeResultINTEL {
 }
 impl Inst for OpTypeAvcImeResultINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_RESULT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -19920,6 +22424,10 @@ pub struct OpTypeAvcImeResultSingleReferenceStreamoutINTEL {
 }
 impl Inst for OpTypeAvcImeResultSingleReferenceStreamoutINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_RESULT_SINGLE_REFERENCE_STREAMOUT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -19939,6 +22447,10 @@ pub struct OpTypeAvcImeResultDualReferenceStreamoutINTEL {
 }
 impl Inst for OpTypeAvcImeResultDualReferenceStreamoutINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_RESULT_DUAL_REFERENCE_STREAMOUT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -19958,6 +22470,10 @@ pub struct OpTypeAvcImeSingleReferenceStreaminINTEL {
 }
 impl Inst for OpTypeAvcImeSingleReferenceStreaminINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_SINGLE_REFERENCE_STREAMIN_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -19977,6 +22493,10 @@ pub struct OpTypeAvcImeDualReferenceStreaminINTEL {
 }
 impl Inst for OpTypeAvcImeDualReferenceStreaminINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_IME_DUAL_REFERENCE_STREAMIN_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -19996,6 +22516,10 @@ pub struct OpTypeAvcRefResultINTEL {
 }
 impl Inst for OpTypeAvcRefResultINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_REF_RESULT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -20015,6 +22539,10 @@ pub struct OpTypeAvcSicResultINTEL {
 }
 impl Inst for OpTypeAvcSicResultINTEL {
     const META: &InstMeta = &OP_TYPE_AVC_SIC_RESULT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -20038,6 +22566,10 @@ pub struct OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL {
 impl Inst for OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_BASE_MULTI_REFERENCE_PENALTY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20070,6 +22602,10 @@ pub struct OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_SET_INTER_BASE_MULTI_REFERENCE_PENALTY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20102,6 +22638,10 @@ pub struct OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_SHAPE_PENALTY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20134,6 +22674,10 @@ pub struct OpSubgroupAvcMceSetInterShapePenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceSetInterShapePenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_SET_INTER_SHAPE_PENALTY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20166,6 +22710,10 @@ pub struct OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_DIRECTION_PENALTY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20198,6 +22746,10 @@ pub struct OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_SET_INTER_DIRECTION_PENALTY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20230,6 +22782,10 @@ pub struct OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTRA_LUMA_SHAPE_PENALTY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20262,6 +22818,10 @@ pub struct OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTER_MOTION_VECTOR_COST_TABLE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20292,6 +22852,10 @@ pub struct OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_HIGH_PENALTY_COST_TABLE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20316,6 +22880,10 @@ pub struct OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_MEDIUM_PENALTY_COST_TABLE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20340,6 +22908,10 @@ pub struct OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_LOW_PENALTY_COST_TABLE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20368,6 +22940,10 @@ pub struct OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL {
 }
 impl Inst for OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_SET_MOTION_VECTOR_COST_FUNCTION_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20406,6 +22982,10 @@ pub struct OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTRA_LUMA_MODE_PENALTY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20436,6 +23016,10 @@ pub struct OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_NON_DC_LUMA_INTRA_PENALTY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20460,6 +23044,10 @@ pub struct OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_DEFAULT_INTRA_CHROMA_MODE_BASE_PENALTY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20485,6 +23073,10 @@ pub struct OpSubgroupAvcMceSetAcOnlyHaarINTEL {
 }
 impl Inst for OpSubgroupAvcMceSetAcOnlyHaarINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_SET_AC_ONLY_HAAR_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20514,6 +23106,10 @@ pub struct OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {
 }
 impl Inst for OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_SET_SOURCE_INTERLACED_FIELD_POLARITY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20547,6 +23143,10 @@ pub struct OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {
 impl Inst for OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_MCE_SET_SINGLE_REFERENCE_INTERLACED_FIELD_POLARITY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20581,6 +23181,10 @@ pub struct OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL {
 impl Inst for OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_MCE_SET_DUAL_REFERENCE_INTERLACED_FIELD_POLARITIES_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20615,6 +23219,10 @@ pub struct OpSubgroupAvcMceConvertToImePayloadINTEL {
 }
 impl Inst for OpSubgroupAvcMceConvertToImePayloadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_CONVERT_TO_IME_PAYLOAD_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20643,6 +23251,10 @@ pub struct OpSubgroupAvcMceConvertToImeResultINTEL {
 }
 impl Inst for OpSubgroupAvcMceConvertToImeResultINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_CONVERT_TO_IME_RESULT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20671,6 +23283,10 @@ pub struct OpSubgroupAvcMceConvertToRefPayloadINTEL {
 }
 impl Inst for OpSubgroupAvcMceConvertToRefPayloadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_CONVERT_TO_REF_PAYLOAD_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20699,6 +23315,10 @@ pub struct OpSubgroupAvcMceConvertToRefResultINTEL {
 }
 impl Inst for OpSubgroupAvcMceConvertToRefResultINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_CONVERT_TO_REF_RESULT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20727,6 +23347,10 @@ pub struct OpSubgroupAvcMceConvertToSicPayloadINTEL {
 }
 impl Inst for OpSubgroupAvcMceConvertToSicPayloadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_CONVERT_TO_SIC_PAYLOAD_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20755,6 +23379,10 @@ pub struct OpSubgroupAvcMceConvertToSicResultINTEL {
 }
 impl Inst for OpSubgroupAvcMceConvertToSicResultINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_CONVERT_TO_SIC_RESULT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20783,6 +23411,10 @@ pub struct OpSubgroupAvcMceGetMotionVectorsINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetMotionVectorsINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_MOTION_VECTORS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20811,6 +23443,10 @@ pub struct OpSubgroupAvcMceGetInterDistortionsINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetInterDistortionsINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_INTER_DISTORTIONS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20839,6 +23475,10 @@ pub struct OpSubgroupAvcMceGetBestInterDistortionsINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetBestInterDistortionsINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_BEST_INTER_DISTORTIONS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20867,6 +23507,10 @@ pub struct OpSubgroupAvcMceGetInterMajorShapeINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetInterMajorShapeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_INTER_MAJOR_SHAPE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20895,6 +23539,10 @@ pub struct OpSubgroupAvcMceGetInterMinorShapeINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetInterMinorShapeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_INTER_MINOR_SHAPE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20923,6 +23571,10 @@ pub struct OpSubgroupAvcMceGetInterDirectionsINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetInterDirectionsINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_INTER_DIRECTIONS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20951,6 +23603,10 @@ pub struct OpSubgroupAvcMceGetInterMotionVectorCountINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetInterMotionVectorCountINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_INTER_MOTION_VECTOR_COUNT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20979,6 +23635,10 @@ pub struct OpSubgroupAvcMceGetInterReferenceIdsINTEL {
 }
 impl Inst for OpSubgroupAvcMceGetInterReferenceIdsINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_MCE_GET_INTER_REFERENCE_IDS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21010,6 +23670,10 @@ pub struct OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL {
 impl Inst for OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_MCE_GET_INTER_REFERENCE_INTERLACED_FIELD_POLARITIES_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21049,6 +23713,10 @@ pub struct OpSubgroupAvcImeInitializeINTEL {
 }
 impl Inst for OpSubgroupAvcImeInitializeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_INITIALIZE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21085,6 +23753,10 @@ pub struct OpSubgroupAvcImeSetSingleReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcImeSetSingleReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_SET_SINGLE_REFERENCE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21122,6 +23794,10 @@ pub struct OpSubgroupAvcImeSetDualReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcImeSetDualReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_SET_DUAL_REFERENCE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21160,6 +23836,10 @@ pub struct OpSubgroupAvcImeRefWindowSizeINTEL {
 }
 impl Inst for OpSubgroupAvcImeRefWindowSizeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_REF_WINDOW_SIZE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21194,6 +23874,10 @@ pub struct OpSubgroupAvcImeAdjustRefOffsetINTEL {
 }
 impl Inst for OpSubgroupAvcImeAdjustRefOffsetINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_ADJUST_REF_OFFSET_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21231,6 +23915,10 @@ pub struct OpSubgroupAvcImeConvertToMcePayloadINTEL {
 }
 impl Inst for OpSubgroupAvcImeConvertToMcePayloadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_CONVERT_TO_MCE_PAYLOAD_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21260,6 +23948,10 @@ pub struct OpSubgroupAvcImeSetMaxMotionVectorCountINTEL {
 }
 impl Inst for OpSubgroupAvcImeSetMaxMotionVectorCountINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_SET_MAX_MOTION_VECTOR_COUNT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21291,6 +23983,10 @@ pub struct OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {
 }
 impl Inst for OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_SET_UNIDIRECTIONAL_MIX_DISABLE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21320,6 +24016,10 @@ pub struct OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {
 }
 impl Inst for OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_SET_EARLY_SEARCH_TERMINATION_THRESHOLD_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21352,6 +24052,10 @@ pub struct OpSubgroupAvcImeSetWeightedSadINTEL {
 }
 impl Inst for OpSubgroupAvcImeSetWeightedSadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_SET_WEIGHTED_SAD_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21385,6 +24089,10 @@ pub struct OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21422,6 +24130,10 @@ pub struct OpSubgroupAvcImeEvaluateWithDualReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21462,6 +24174,10 @@ pub struct OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_STREAMIN_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21503,6 +24219,10 @@ pub struct OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_STREAMIN_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21545,6 +24265,10 @@ pub struct OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_STREAMOUT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21582,6 +24306,10 @@ pub struct OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_STREAMOUT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21622,6 +24350,10 @@ pub struct OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_SINGLE_REFERENCE_STREAMINOUT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21663,6 +24395,10 @@ pub struct OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL {
 }
 impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_EVALUATE_WITH_DUAL_REFERENCE_STREAMINOUT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21703,6 +24439,10 @@ pub struct OpSubgroupAvcImeConvertToMceResultINTEL {
 }
 impl Inst for OpSubgroupAvcImeConvertToMceResultINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_CONVERT_TO_MCE_RESULT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21731,6 +24471,10 @@ pub struct OpSubgroupAvcImeGetSingleReferenceStreaminINTEL {
 }
 impl Inst for OpSubgroupAvcImeGetSingleReferenceStreaminINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_GET_SINGLE_REFERENCE_STREAMIN_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21759,6 +24503,10 @@ pub struct OpSubgroupAvcImeGetDualReferenceStreaminINTEL {
 }
 impl Inst for OpSubgroupAvcImeGetDualReferenceStreaminINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_GET_DUAL_REFERENCE_STREAMIN_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21787,6 +24535,10 @@ pub struct OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL {
 }
 impl Inst for OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_STRIP_SINGLE_REFERENCE_STREAMOUT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21815,6 +24567,10 @@ pub struct OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {
 }
 impl Inst for OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_STRIP_DUAL_REFERENCE_STREAMOUT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21845,6 +24601,10 @@ pub struct OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINT
 impl Inst for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_IME_GET_STREAMOUT_SINGLE_REFERENCE_MAJOR_SHAPE_MOTION_VECTORS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21878,6 +24638,10 @@ pub struct OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL
 impl Inst for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_IME_GET_STREAMOUT_SINGLE_REFERENCE_MAJOR_SHAPE_DISTORTIONS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21911,6 +24675,10 @@ pub struct OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTE
 impl Inst for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_IME_GET_STREAMOUT_SINGLE_REFERENCE_MAJOR_SHAPE_REFERENCE_IDS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21945,6 +24713,10 @@ pub struct OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL
 impl Inst for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_IME_GET_STREAMOUT_DUAL_REFERENCE_MAJOR_SHAPE_MOTION_VECTORS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21982,6 +24754,10 @@ pub struct OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL {
 impl Inst for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_IME_GET_STREAMOUT_DUAL_REFERENCE_MAJOR_SHAPE_DISTORTIONS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22019,6 +24795,10 @@ pub struct OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL 
 impl Inst for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL {
     const META: &InstMeta =
         &OP_SUBGROUP_AVC_IME_GET_STREAMOUT_DUAL_REFERENCE_MAJOR_SHAPE_REFERENCE_IDS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22054,6 +24834,10 @@ pub struct OpSubgroupAvcImeGetBorderReachedINTEL {
 }
 impl Inst for OpSubgroupAvcImeGetBorderReachedINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_GET_BORDER_REACHED_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22085,6 +24869,10 @@ pub struct OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {
 }
 impl Inst for OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_GET_TRUNCATED_SEARCH_INDICATION_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22113,6 +24901,10 @@ pub struct OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL {
 }
 impl Inst for OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_GET_UNIDIRECTIONAL_EARLY_SEARCH_TERMINATION_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22141,6 +24933,10 @@ pub struct OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {
 }
 impl Inst for OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_GET_WEIGHTING_PATTERN_MINIMUM_MOTION_VECTOR_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22169,6 +24965,10 @@ pub struct OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {
 }
 impl Inst for OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_IME_GET_WEIGHTING_PATTERN_MINIMUM_DISTORTION_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22203,6 +25003,10 @@ pub struct OpSubgroupAvcFmeInitializeINTEL {
 }
 impl Inst for OpSubgroupAvcFmeInitializeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_FME_INITIALIZE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22256,6 +25060,10 @@ pub struct OpSubgroupAvcBmeInitializeINTEL {
 }
 impl Inst for OpSubgroupAvcBmeInitializeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_BME_INITIALIZE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22305,6 +25113,10 @@ pub struct OpSubgroupAvcRefConvertToMcePayloadINTEL {
 }
 impl Inst for OpSubgroupAvcRefConvertToMcePayloadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_CONVERT_TO_MCE_PAYLOAD_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22333,6 +25145,10 @@ pub struct OpSubgroupAvcRefSetBidirectionalMixDisableINTEL {
 }
 impl Inst for OpSubgroupAvcRefSetBidirectionalMixDisableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_SET_BIDIRECTIONAL_MIX_DISABLE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22361,6 +25177,10 @@ pub struct OpSubgroupAvcRefSetBilinearFilterEnableINTEL {
 }
 impl Inst for OpSubgroupAvcRefSetBilinearFilterEnableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_SET_BILINEAR_FILTER_ENABLE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22391,6 +25211,10 @@ pub struct OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_EVALUATE_WITH_SINGLE_REFERENCE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22428,6 +25252,10 @@ pub struct OpSubgroupAvcRefEvaluateWithDualReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcRefEvaluateWithDualReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_EVALUATE_WITH_DUAL_REFERENCE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22467,6 +25295,10 @@ pub struct OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_EVALUATE_WITH_MULTI_REFERENCE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22504,6 +25336,10 @@ pub struct OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL {
 }
 impl Inst for OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_EVALUATE_WITH_MULTI_REFERENCE_INTERLACED_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22541,6 +25377,10 @@ pub struct OpSubgroupAvcRefConvertToMceResultINTEL {
 }
 impl Inst for OpSubgroupAvcRefConvertToMceResultINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_REF_CONVERT_TO_MCE_RESULT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22569,6 +25409,10 @@ pub struct OpSubgroupAvcSicInitializeINTEL {
 }
 impl Inst for OpSubgroupAvcSicInitializeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_INITIALIZE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22602,6 +25446,10 @@ pub struct OpSubgroupAvcSicConfigureSkcINTEL {
 }
 impl Inst for OpSubgroupAvcSicConfigureSkcINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_CONFIGURE_SKC_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22652,6 +25500,10 @@ pub struct OpSubgroupAvcSicConfigureIpeLumaINTEL {
 }
 impl Inst for OpSubgroupAvcSicConfigureIpeLumaINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_CONFIGURE_IPE_LUMA_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22711,6 +25563,10 @@ pub struct OpSubgroupAvcSicConfigureIpeLumaChromaINTEL {
 }
 impl Inst for OpSubgroupAvcSicConfigureIpeLumaChromaINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_CONFIGURE_IPE_LUMA_CHROMA_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22770,6 +25626,10 @@ pub struct OpSubgroupAvcSicGetMotionVectorMaskINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetMotionVectorMaskINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_MOTION_VECTOR_MASK_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22801,6 +25661,10 @@ pub struct OpSubgroupAvcSicConvertToMcePayloadINTEL {
 }
 impl Inst for OpSubgroupAvcSicConvertToMcePayloadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_CONVERT_TO_MCE_PAYLOAD_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22830,6 +25694,10 @@ pub struct OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL {
 }
 impl Inst for OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_SET_INTRA_LUMA_SHAPE_PENALTY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22864,6 +25732,10 @@ pub struct OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {
 }
 impl Inst for OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_SET_INTRA_LUMA_MODE_COST_FUNCTION_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22902,6 +25774,10 @@ pub struct OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {
 }
 impl Inst for OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_SET_INTRA_CHROMA_MODE_COST_FUNCTION_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22933,6 +25809,10 @@ pub struct OpSubgroupAvcSicSetBilinearFilterEnableINTEL {
 }
 impl Inst for OpSubgroupAvcSicSetBilinearFilterEnableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_SET_BILINEAR_FILTER_ENABLE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22962,6 +25842,10 @@ pub struct OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL {
 }
 impl Inst for OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_SET_SKC_FORWARD_TRANSFORM_ENABLE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22994,6 +25878,10 @@ pub struct OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {
 }
 impl Inst for OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_SET_BLOCK_BASED_RAW_SKIP_SAD_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23026,6 +25914,10 @@ pub struct OpSubgroupAvcSicEvaluateIpeINTEL {
 }
 impl Inst for OpSubgroupAvcSicEvaluateIpeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_EVALUATE_IPE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23059,6 +25951,10 @@ pub struct OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_SINGLE_REFERENCE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23096,6 +25992,10 @@ pub struct OpSubgroupAvcSicEvaluateWithDualReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcSicEvaluateWithDualReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_DUAL_REFERENCE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23135,6 +26035,10 @@ pub struct OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {
 }
 impl Inst for OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_MULTI_REFERENCE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23172,6 +26076,10 @@ pub struct OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL {
 }
 impl Inst for OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_EVALUATE_WITH_MULTI_REFERENCE_INTERLACED_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23209,6 +26117,10 @@ pub struct OpSubgroupAvcSicConvertToMceResultINTEL {
 }
 impl Inst for OpSubgroupAvcSicConvertToMceResultINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_CONVERT_TO_MCE_RESULT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23237,6 +26149,10 @@ pub struct OpSubgroupAvcSicGetIpeLumaShapeINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetIpeLumaShapeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_IPE_LUMA_SHAPE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23265,6 +26181,10 @@ pub struct OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_BEST_IPE_LUMA_DISTORTION_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23293,6 +26213,10 @@ pub struct OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_BEST_IPE_CHROMA_DISTORTION_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23321,6 +26245,10 @@ pub struct OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_PACKED_IPE_LUMA_MODES_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23349,6 +26277,10 @@ pub struct OpSubgroupAvcSicGetIpeChromaModeINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetIpeChromaModeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_IPE_CHROMA_MODE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23377,6 +26309,10 @@ pub struct OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_PACKED_SKC_LUMA_COUNT_THRESHOLD_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23405,6 +26341,10 @@ pub struct OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_PACKED_SKC_LUMA_SUM_THRESHOLD_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23433,6 +26373,10 @@ pub struct OpSubgroupAvcSicGetInterRawSadsINTEL {
 }
 impl Inst for OpSubgroupAvcSicGetInterRawSadsINTEL {
     const META: &InstMeta = &OP_SUBGROUP_AVC_SIC_GET_INTER_RAW_SADS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23461,6 +26405,10 @@ pub struct OpVariableLengthArrayINTEL {
 }
 impl Inst for OpVariableLengthArrayINTEL {
     const META: &InstMeta = &OP_VARIABLE_LENGTH_ARRAY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23488,6 +26436,10 @@ pub struct OpSaveMemoryINTEL {
 }
 impl Inst for OpSaveMemoryINTEL {
     const META: &InstMeta = &OP_SAVE_MEMORY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23511,6 +26463,10 @@ pub struct OpRestoreMemoryINTEL {
 }
 impl Inst for OpRestoreMemoryINTEL {
     const META: &InstMeta = &OP_RESTORE_MEMORY_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ptr);
         writer.write_op(Self::META.opcode, len)?;
@@ -23537,6 +26493,10 @@ pub struct OpArbitraryFloatSinCosPiALTERA {
 }
 impl Inst for OpArbitraryFloatSinCosPiALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_SIN_COS_PI_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23585,6 +26545,10 @@ pub struct OpArbitraryFloatCastALTERA {
 }
 impl Inst for OpArbitraryFloatCastALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_CAST_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23633,6 +26597,10 @@ pub struct OpArbitraryFloatCastFromIntALTERA {
 }
 impl Inst for OpArbitraryFloatCastFromIntALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_CAST_FROM_INT_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23681,6 +26649,10 @@ pub struct OpArbitraryFloatCastToIntALTERA {
 }
 impl Inst for OpArbitraryFloatCastToIntALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_CAST_TO_INT_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23731,6 +26703,10 @@ pub struct OpArbitraryFloatAddALTERA {
 }
 impl Inst for OpArbitraryFloatAddALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_ADD_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23787,6 +26763,10 @@ pub struct OpArbitraryFloatSubALTERA {
 }
 impl Inst for OpArbitraryFloatSubALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_SUB_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23843,6 +26823,10 @@ pub struct OpArbitraryFloatMulALTERA {
 }
 impl Inst for OpArbitraryFloatMulALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_MUL_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23899,6 +26883,10 @@ pub struct OpArbitraryFloatDivALTERA {
 }
 impl Inst for OpArbitraryFloatDivALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_DIV_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23951,6 +26939,10 @@ pub struct OpArbitraryFloatGTALTERA {
 }
 impl Inst for OpArbitraryFloatGTALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_GTALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23991,6 +26983,10 @@ pub struct OpArbitraryFloatGEALTERA {
 }
 impl Inst for OpArbitraryFloatGEALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_GEALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24031,6 +27027,10 @@ pub struct OpArbitraryFloatLTALTERA {
 }
 impl Inst for OpArbitraryFloatLTALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_LTALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24071,6 +27071,10 @@ pub struct OpArbitraryFloatLEALTERA {
 }
 impl Inst for OpArbitraryFloatLEALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_LEALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24111,6 +27115,10 @@ pub struct OpArbitraryFloatEQALTERA {
 }
 impl Inst for OpArbitraryFloatEQALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_EQALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24153,6 +27161,10 @@ pub struct OpArbitraryFloatRecipALTERA {
 }
 impl Inst for OpArbitraryFloatRecipALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_RECIP_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24201,6 +27213,10 @@ pub struct OpArbitraryFloatRSqrtALTERA {
 }
 impl Inst for OpArbitraryFloatRSqrtALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_R_SQRT_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24249,6 +27265,10 @@ pub struct OpArbitraryFloatCbrtALTERA {
 }
 impl Inst for OpArbitraryFloatCbrtALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_CBRT_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24299,6 +27319,10 @@ pub struct OpArbitraryFloatHypotALTERA {
 }
 impl Inst for OpArbitraryFloatHypotALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_HYPOT_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24353,6 +27377,10 @@ pub struct OpArbitraryFloatSqrtALTERA {
 }
 impl Inst for OpArbitraryFloatSqrtALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_SQRT_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24401,6 +27429,10 @@ pub struct OpArbitraryFloatLogINTEL {
 }
 impl Inst for OpArbitraryFloatLogINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_LOG_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24449,6 +27481,10 @@ pub struct OpArbitraryFloatLog2INTEL {
 }
 impl Inst for OpArbitraryFloatLog2INTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_LOG_2_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24497,6 +27533,10 @@ pub struct OpArbitraryFloatLog10INTEL {
 }
 impl Inst for OpArbitraryFloatLog10INTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_LOG_10_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24545,6 +27585,10 @@ pub struct OpArbitraryFloatLog1pINTEL {
 }
 impl Inst for OpArbitraryFloatLog1pINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_LOG_1_P_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24593,6 +27637,10 @@ pub struct OpArbitraryFloatExpINTEL {
 }
 impl Inst for OpArbitraryFloatExpINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_EXP_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24641,6 +27689,10 @@ pub struct OpArbitraryFloatExp2INTEL {
 }
 impl Inst for OpArbitraryFloatExp2INTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_EXP_2_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24689,6 +27741,10 @@ pub struct OpArbitraryFloatExp10INTEL {
 }
 impl Inst for OpArbitraryFloatExp10INTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_EXP_10_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24737,6 +27793,10 @@ pub struct OpArbitraryFloatExpm1INTEL {
 }
 impl Inst for OpArbitraryFloatExpm1INTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_EXPM_1_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24785,6 +27845,10 @@ pub struct OpArbitraryFloatSinINTEL {
 }
 impl Inst for OpArbitraryFloatSinINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_SIN_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24833,6 +27897,10 @@ pub struct OpArbitraryFloatCosINTEL {
 }
 impl Inst for OpArbitraryFloatCosINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_COS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24881,6 +27949,10 @@ pub struct OpArbitraryFloatSinCosINTEL {
 }
 impl Inst for OpArbitraryFloatSinCosINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_SIN_COS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24929,6 +28001,10 @@ pub struct OpArbitraryFloatSinPiINTEL {
 }
 impl Inst for OpArbitraryFloatSinPiINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_SIN_PI_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24977,6 +28053,10 @@ pub struct OpArbitraryFloatCosPiINTEL {
 }
 impl Inst for OpArbitraryFloatCosPiINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_COS_PI_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25025,6 +28105,10 @@ pub struct OpArbitraryFloatASinINTEL {
 }
 impl Inst for OpArbitraryFloatASinINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_A_SIN_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25073,6 +28157,10 @@ pub struct OpArbitraryFloatASinPiINTEL {
 }
 impl Inst for OpArbitraryFloatASinPiINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_A_SIN_PI_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25121,6 +28209,10 @@ pub struct OpArbitraryFloatACosINTEL {
 }
 impl Inst for OpArbitraryFloatACosINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_A_COS_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25169,6 +28261,10 @@ pub struct OpArbitraryFloatACosPiINTEL {
 }
 impl Inst for OpArbitraryFloatACosPiINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_A_COS_PI_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25217,6 +28313,10 @@ pub struct OpArbitraryFloatATanINTEL {
 }
 impl Inst for OpArbitraryFloatATanINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_A_TAN_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25265,6 +28365,10 @@ pub struct OpArbitraryFloatATanPiINTEL {
 }
 impl Inst for OpArbitraryFloatATanPiINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_A_TAN_PI_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25315,6 +28419,10 @@ pub struct OpArbitraryFloatATan2INTEL {
 }
 impl Inst for OpArbitraryFloatATan2INTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_A_TAN_2_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25371,6 +28479,10 @@ pub struct OpArbitraryFloatPowINTEL {
 }
 impl Inst for OpArbitraryFloatPowINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_POW_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25427,6 +28539,10 @@ pub struct OpArbitraryFloatPowRINTEL {
 }
 impl Inst for OpArbitraryFloatPowRINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_POW_RINTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25483,6 +28599,10 @@ pub struct OpArbitraryFloatPowNINTEL {
 }
 impl Inst for OpArbitraryFloatPowNINTEL {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_POW_NINTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25530,6 +28650,10 @@ pub struct OpLoopControlINTEL {
 }
 impl Inst for OpLoopControlINTEL {
     const META: &InstMeta = &OP_LOOP_CONTROL_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.loop_control_parameters);
         writer.write_op(Self::META.opcode, len)?;
@@ -25550,6 +28674,10 @@ pub struct OpAliasDomainDeclINTEL {
 }
 impl Inst for OpAliasDomainDeclINTEL {
     const META: &InstMeta = &OP_ALIAS_DOMAIN_DECL_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.id_result) + OperandEncoding::word_len(&self.name);
@@ -25574,6 +28702,10 @@ pub struct OpAliasScopeDeclINTEL {
 }
 impl Inst for OpAliasScopeDeclINTEL {
     const META: &InstMeta = &OP_ALIAS_SCOPE_DECL_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -25601,6 +28733,10 @@ pub struct OpAliasScopeListDeclINTEL {
 }
 impl Inst for OpAliasScopeListDeclINTEL {
     const META: &InstMeta = &OP_ALIAS_SCOPE_LIST_DECL_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -25631,6 +28767,10 @@ pub struct OpFixedSqrtALTERA {
 }
 impl Inst for OpFixedSqrtALTERA {
     const META: &InstMeta = &OP_FIXED_SQRT_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25679,6 +28819,10 @@ pub struct OpFixedRecipALTERA {
 }
 impl Inst for OpFixedRecipALTERA {
     const META: &InstMeta = &OP_FIXED_RECIP_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25727,6 +28871,10 @@ pub struct OpFixedRsqrtALTERA {
 }
 impl Inst for OpFixedRsqrtALTERA {
     const META: &InstMeta = &OP_FIXED_RSQRT_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25775,6 +28923,10 @@ pub struct OpFixedSinALTERA {
 }
 impl Inst for OpFixedSinALTERA {
     const META: &InstMeta = &OP_FIXED_SIN_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25823,6 +28975,10 @@ pub struct OpFixedCosALTERA {
 }
 impl Inst for OpFixedCosALTERA {
     const META: &InstMeta = &OP_FIXED_COS_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25871,6 +29027,10 @@ pub struct OpFixedSinCosALTERA {
 }
 impl Inst for OpFixedSinCosALTERA {
     const META: &InstMeta = &OP_FIXED_SIN_COS_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25919,6 +29079,10 @@ pub struct OpFixedSinPiALTERA {
 }
 impl Inst for OpFixedSinPiALTERA {
     const META: &InstMeta = &OP_FIXED_SIN_PI_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25967,6 +29131,10 @@ pub struct OpFixedCosPiALTERA {
 }
 impl Inst for OpFixedCosPiALTERA {
     const META: &InstMeta = &OP_FIXED_COS_PI_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26015,6 +29183,10 @@ pub struct OpFixedSinCosPiALTERA {
 }
 impl Inst for OpFixedSinCosPiALTERA {
     const META: &InstMeta = &OP_FIXED_SIN_COS_PI_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26063,6 +29235,10 @@ pub struct OpFixedLogALTERA {
 }
 impl Inst for OpFixedLogALTERA {
     const META: &InstMeta = &OP_FIXED_LOG_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26111,6 +29287,10 @@ pub struct OpFixedExpALTERA {
 }
 impl Inst for OpFixedExpALTERA {
     const META: &InstMeta = &OP_FIXED_EXP_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26154,6 +29334,10 @@ pub struct OpPtrCastToCrossWorkgroupALTERA {
 }
 impl Inst for OpPtrCastToCrossWorkgroupALTERA {
     const META: &InstMeta = &OP_PTR_CAST_TO_CROSS_WORKGROUP_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26182,6 +29366,10 @@ pub struct OpCrossWorkgroupCastToPtrALTERA {
 }
 impl Inst for OpCrossWorkgroupCastToPtrALTERA {
     const META: &InstMeta = &OP_CROSS_WORKGROUP_CAST_TO_PTR_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26211,6 +29399,10 @@ pub struct OpReadPipeBlockingALTERA {
 }
 impl Inst for OpReadPipeBlockingALTERA {
     const META: &InstMeta = &OP_READ_PIPE_BLOCKING_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26243,6 +29435,10 @@ pub struct OpWritePipeBlockingALTERA {
 }
 impl Inst for OpWritePipeBlockingALTERA {
     const META: &InstMeta = &OP_WRITE_PIPE_BLOCKING_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26274,6 +29470,10 @@ pub struct OpFPGARegALTERA {
 }
 impl Inst for OpFPGARegALTERA {
     const META: &InstMeta = &OP_FPGA_REG_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26302,6 +29502,10 @@ pub struct OpRayQueryGetRayTMinKHR {
 }
 impl Inst for OpRayQueryGetRayTMinKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_RAY_T_MIN_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26330,6 +29534,10 @@ pub struct OpRayQueryGetRayFlagsKHR {
 }
 impl Inst for OpRayQueryGetRayFlagsKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_RAY_FLAGS_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26359,6 +29567,10 @@ pub struct OpRayQueryGetIntersectionTKHR {
 }
 impl Inst for OpRayQueryGetIntersectionTKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_TKHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26391,6 +29603,10 @@ pub struct OpRayQueryGetIntersectionInstanceCustomIndexKHR {
 }
 impl Inst for OpRayQueryGetIntersectionInstanceCustomIndexKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_INSTANCE_CUSTOM_INDEX_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26423,6 +29639,10 @@ pub struct OpRayQueryGetIntersectionInstanceIdKHR {
 }
 impl Inst for OpRayQueryGetIntersectionInstanceIdKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_INSTANCE_ID_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26456,6 +29676,10 @@ pub struct OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR {
 impl Inst for OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR {
     const META: &InstMeta =
         &OP_RAY_QUERY_GET_INTERSECTION_INSTANCE_SHADER_BINDING_TABLE_RECORD_OFFSET_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26488,6 +29712,10 @@ pub struct OpRayQueryGetIntersectionGeometryIndexKHR {
 }
 impl Inst for OpRayQueryGetIntersectionGeometryIndexKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_GEOMETRY_INDEX_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26520,6 +29748,10 @@ pub struct OpRayQueryGetIntersectionPrimitiveIndexKHR {
 }
 impl Inst for OpRayQueryGetIntersectionPrimitiveIndexKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_PRIMITIVE_INDEX_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26552,6 +29784,10 @@ pub struct OpRayQueryGetIntersectionBarycentricsKHR {
 }
 impl Inst for OpRayQueryGetIntersectionBarycentricsKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_BARYCENTRICS_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26584,6 +29820,10 @@ pub struct OpRayQueryGetIntersectionFrontFaceKHR {
 }
 impl Inst for OpRayQueryGetIntersectionFrontFaceKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_FRONT_FACE_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26615,6 +29855,10 @@ pub struct OpRayQueryGetIntersectionCandidateAABBOpaqueKHR {
 }
 impl Inst for OpRayQueryGetIntersectionCandidateAABBOpaqueKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_CANDIDATE_AABB_OPAQUE_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26644,6 +29888,10 @@ pub struct OpRayQueryGetIntersectionObjectRayDirectionKHR {
 }
 impl Inst for OpRayQueryGetIntersectionObjectRayDirectionKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_OBJECT_RAY_DIRECTION_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26676,6 +29924,10 @@ pub struct OpRayQueryGetIntersectionObjectRayOriginKHR {
 }
 impl Inst for OpRayQueryGetIntersectionObjectRayOriginKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_OBJECT_RAY_ORIGIN_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26707,6 +29959,10 @@ pub struct OpRayQueryGetWorldRayDirectionKHR {
 }
 impl Inst for OpRayQueryGetWorldRayDirectionKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_WORLD_RAY_DIRECTION_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26735,6 +29991,10 @@ pub struct OpRayQueryGetWorldRayOriginKHR {
 }
 impl Inst for OpRayQueryGetWorldRayOriginKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_WORLD_RAY_ORIGIN_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26764,6 +30024,10 @@ pub struct OpRayQueryGetIntersectionObjectToWorldKHR {
 }
 impl Inst for OpRayQueryGetIntersectionObjectToWorldKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_OBJECT_TO_WORLD_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26796,6 +30060,10 @@ pub struct OpRayQueryGetIntersectionWorldToObjectKHR {
 }
 impl Inst for OpRayQueryGetIntersectionWorldToObjectKHR {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_WORLD_TO_OBJECT_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26830,6 +30098,10 @@ pub struct OpAtomicFAddEXT {
 }
 impl Inst for OpAtomicFAddEXT {
     const META: &InstMeta = &OP_ATOMIC_F_ADD_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26866,6 +30138,10 @@ pub struct OpTypeBufferSurfaceINTEL {
 }
 impl Inst for OpTypeBufferSurfaceINTEL {
     const META: &InstMeta = &OP_TYPE_BUFFER_SURFACE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -26889,6 +30165,10 @@ pub struct OpTypeStructContinuedINTEL {
 }
 impl Inst for OpTypeStructContinuedINTEL {
     const META: &InstMeta = &OP_TYPE_STRUCT_CONTINUED_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_ref);
         writer.write_op(Self::META.opcode, len)?;
@@ -26908,6 +30188,10 @@ pub struct OpConstantCompositeContinuedINTEL {
 }
 impl Inst for OpConstantCompositeContinuedINTEL {
     const META: &InstMeta = &OP_CONSTANT_COMPOSITE_CONTINUED_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.constituents);
         writer.write_op(Self::META.opcode, len)?;
@@ -26927,6 +30211,10 @@ pub struct OpSpecConstantCompositeContinuedINTEL {
 }
 impl Inst for OpSpecConstantCompositeContinuedINTEL {
     const META: &InstMeta = &OP_SPEC_CONSTANT_COMPOSITE_CONTINUED_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.constituents);
         writer.write_op(Self::META.opcode, len)?;
@@ -26948,6 +30236,10 @@ pub struct OpCompositeConstructContinuedINTEL {
 }
 impl Inst for OpCompositeConstructContinuedINTEL {
     const META: &InstMeta = &OP_COMPOSITE_CONSTRUCT_CONTINUED_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26976,6 +30268,10 @@ pub struct OpConvertFToBF16INTEL {
 }
 impl Inst for OpConvertFToBF16INTEL {
     const META: &InstMeta = &OP_CONVERT_F_TO_BF_16_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27004,6 +30300,10 @@ pub struct OpConvertBF16ToFINTEL {
 }
 impl Inst for OpConvertBF16ToFINTEL {
     const META: &InstMeta = &OP_CONVERT_BF_16_TO_FINTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27032,6 +30332,10 @@ pub struct OpControlBarrierArriveINTEL {
 }
 impl Inst for OpControlBarrierArriveINTEL {
     const META: &InstMeta = &OP_CONTROL_BARRIER_ARRIVE_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
@@ -27060,6 +30364,10 @@ pub struct OpControlBarrierWaitINTEL {
 }
 impl Inst for OpControlBarrierWaitINTEL {
     const META: &InstMeta = &OP_CONTROL_BARRIER_WAIT_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
@@ -27088,6 +30396,10 @@ pub struct OpArithmeticFenceEXT {
 }
 impl Inst for OpArithmeticFenceEXT {
     const META: &InstMeta = &OP_ARITHMETIC_FENCE_EXT;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27120,6 +30432,10 @@ pub struct OpTaskSequenceCreateALTERA {
 }
 impl Inst for OpTaskSequenceCreateALTERA {
     const META: &InstMeta = &OP_TASK_SEQUENCE_CREATE_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27159,6 +30475,10 @@ pub struct OpTaskSequenceAsyncALTERA {
 }
 impl Inst for OpTaskSequenceAsyncALTERA {
     const META: &InstMeta = &OP_TASK_SEQUENCE_ASYNC_ALTERA;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.sequence)
@@ -27184,6 +30504,10 @@ pub struct OpTaskSequenceGetALTERA {
 }
 impl Inst for OpTaskSequenceGetALTERA {
     const META: &InstMeta = &OP_TASK_SEQUENCE_GET_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27210,6 +30534,10 @@ pub struct OpTaskSequenceReleaseALTERA {
 }
 impl Inst for OpTaskSequenceReleaseALTERA {
     const META: &InstMeta = &OP_TASK_SEQUENCE_RELEASE_ALTERA;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.sequence);
         writer.write_op(Self::META.opcode, len)?;
@@ -27229,6 +30557,10 @@ pub struct OpTypeTaskSequenceALTERA {
 }
 impl Inst for OpTypeTaskSequenceALTERA {
     const META: &InstMeta = &OP_TYPE_TASK_SEQUENCE_ALTERA;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -27250,6 +30582,10 @@ pub struct OpSubgroupBlockPrefetchINTEL {
 }
 impl Inst for OpSubgroupBlockPrefetchINTEL {
     const META: &InstMeta = &OP_SUBGROUP_BLOCK_PREFETCH_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.ptr)
@@ -27285,6 +30621,10 @@ pub struct OpSubgroup2DBlockLoadINTEL {
 }
 impl Inst for OpSubgroup2DBlockLoadINTEL {
     const META: &InstMeta = &OP_SUBGROUP_2_D_BLOCK_LOAD_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.element_size)
@@ -27341,6 +30681,10 @@ pub struct OpSubgroup2DBlockLoadTransformINTEL {
 }
 impl Inst for OpSubgroup2DBlockLoadTransformINTEL {
     const META: &InstMeta = &OP_SUBGROUP_2_D_BLOCK_LOAD_TRANSFORM_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.element_size)
@@ -27397,6 +30741,10 @@ pub struct OpSubgroup2DBlockLoadTransposeINTEL {
 }
 impl Inst for OpSubgroup2DBlockLoadTransposeINTEL {
     const META: &InstMeta = &OP_SUBGROUP_2_D_BLOCK_LOAD_TRANSPOSE_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.element_size)
@@ -27452,6 +30800,10 @@ pub struct OpSubgroup2DBlockPrefetchINTEL {
 }
 impl Inst for OpSubgroup2DBlockPrefetchINTEL {
     const META: &InstMeta = &OP_SUBGROUP_2_D_BLOCK_PREFETCH_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.element_size)
@@ -27505,6 +30857,10 @@ pub struct OpSubgroup2DBlockStoreINTEL {
 }
 impl Inst for OpSubgroup2DBlockStoreINTEL {
     const META: &InstMeta = &OP_SUBGROUP_2_D_BLOCK_STORE_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.element_size)
@@ -27558,6 +30914,10 @@ pub struct OpSubgroupMatrixMultiplyAccumulateINTEL {
 }
 impl Inst for OpSubgroupMatrixMultiplyAccumulateINTEL {
     const META: &InstMeta = &OP_SUBGROUP_MATRIX_MULTIPLY_ACCUMULATE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27601,6 +30961,10 @@ pub struct OpBitwiseFunctionINTEL {
 }
 impl Inst for OpBitwiseFunctionINTEL {
     const META: &InstMeta = &OP_BITWISE_FUNCTION_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27639,6 +31003,10 @@ pub struct OpUntypedVariableLengthArrayINTEL {
 }
 impl Inst for OpUntypedVariableLengthArrayINTEL {
     const META: &InstMeta = &OP_UNTYPED_VARIABLE_LENGTH_ARRAY_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27669,6 +31037,10 @@ pub struct OpConditionalExtensionINTEL {
 }
 impl Inst for OpConditionalExtensionINTEL {
     const META: &InstMeta = &OP_CONDITIONAL_EXTENSION_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.condition) + OperandEncoding::word_len(&self.name);
@@ -27695,6 +31067,10 @@ pub struct OpConditionalEntryPointINTEL {
 }
 impl Inst for OpConditionalEntryPointINTEL {
     const META: &InstMeta = &OP_CONDITIONAL_ENTRY_POINT_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.condition)
@@ -27728,6 +31104,10 @@ pub struct OpConditionalCapabilityINTEL {
 }
 impl Inst for OpConditionalCapabilityINTEL {
     const META: &InstMeta = &OP_CONDITIONAL_CAPABILITY_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.condition)
@@ -27754,6 +31134,10 @@ pub struct OpSpecConstantTargetINTEL {
 }
 impl Inst for OpSpecConstantTargetINTEL {
     const META: &InstMeta = &OP_SPEC_CONSTANT_TARGET_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27788,6 +31172,10 @@ pub struct OpSpecConstantArchitectureINTEL {
 }
 impl Inst for OpSpecConstantArchitectureINTEL {
     const META: &InstMeta = &OP_SPEC_CONSTANT_ARCHITECTURE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27825,6 +31213,10 @@ pub struct OpSpecConstantCapabilitiesINTEL {
 }
 impl Inst for OpSpecConstantCapabilitiesINTEL {
     const META: &InstMeta = &OP_SPEC_CONSTANT_CAPABILITIES_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27853,6 +31245,10 @@ pub struct OpConditionalCopyObjectINTEL {
 }
 impl Inst for OpConditionalCopyObjectINTEL {
     const META: &InstMeta = &OP_CONDITIONAL_COPY_OBJECT_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27883,6 +31279,10 @@ pub struct OpGroupIMulKHR {
 }
 impl Inst for OpGroupIMulKHR {
     const META: &InstMeta = &OP_GROUP_I_MUL_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27919,6 +31319,10 @@ pub struct OpGroupFMulKHR {
 }
 impl Inst for OpGroupFMulKHR {
     const META: &InstMeta = &OP_GROUP_F_MUL_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27955,6 +31359,10 @@ pub struct OpGroupBitwiseAndKHR {
 }
 impl Inst for OpGroupBitwiseAndKHR {
     const META: &InstMeta = &OP_GROUP_BITWISE_AND_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27991,6 +31399,10 @@ pub struct OpGroupBitwiseOrKHR {
 }
 impl Inst for OpGroupBitwiseOrKHR {
     const META: &InstMeta = &OP_GROUP_BITWISE_OR_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28027,6 +31439,10 @@ pub struct OpGroupBitwiseXorKHR {
 }
 impl Inst for OpGroupBitwiseXorKHR {
     const META: &InstMeta = &OP_GROUP_BITWISE_XOR_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28063,6 +31479,10 @@ pub struct OpGroupLogicalAndKHR {
 }
 impl Inst for OpGroupLogicalAndKHR {
     const META: &InstMeta = &OP_GROUP_LOGICAL_AND_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28099,6 +31519,10 @@ pub struct OpGroupLogicalOrKHR {
 }
 impl Inst for OpGroupLogicalOrKHR {
     const META: &InstMeta = &OP_GROUP_LOGICAL_OR_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28135,6 +31559,10 @@ pub struct OpGroupLogicalXorKHR {
 }
 impl Inst for OpGroupLogicalXorKHR {
     const META: &InstMeta = &OP_GROUP_LOGICAL_XOR_KHR;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28169,6 +31597,10 @@ pub struct OpRoundFToTF32INTEL {
 }
 impl Inst for OpRoundFToTF32INTEL {
     const META: &InstMeta = &OP_ROUND_F_TO_TF_32_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28200,6 +31632,10 @@ pub struct OpMaskedGatherINTEL {
 }
 impl Inst for OpMaskedGatherINTEL {
     const META: &InstMeta = &OP_MASKED_GATHER_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28238,6 +31674,10 @@ pub struct OpMaskedScatterINTEL {
 }
 impl Inst for OpMaskedScatterINTEL {
     const META: &InstMeta = &OP_MASKED_SCATTER_INTEL;
+    type MaybeIdResult = ();
+    fn id_result(&self) -> Self::MaybeIdResult {
+        ()
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.input_vector)
@@ -28269,6 +31709,10 @@ pub struct OpConvertHandleToImageINTEL {
 }
 impl Inst for OpConvertHandleToImageINTEL {
     const META: &InstMeta = &OP_CONVERT_HANDLE_TO_IMAGE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28297,6 +31741,10 @@ pub struct OpConvertHandleToSamplerINTEL {
 }
 impl Inst for OpConvertHandleToSamplerINTEL {
     const META: &InstMeta = &OP_CONVERT_HANDLE_TO_SAMPLER_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28325,6 +31773,10 @@ pub struct OpConvertHandleToSampledImageINTEL {
 }
 impl Inst for OpConvertHandleToSampledImageINTEL {
     const META: &InstMeta = &OP_CONVERT_HANDLE_TO_SAMPLED_IMAGE_INTEL;
+    type MaybeIdResult = IdResult;
+    fn id_result(&self) -> Self::MaybeIdResult {
+        self.id_result
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
