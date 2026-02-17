@@ -34,6 +34,8 @@ unsafe impl OperandEncoding for IdResult {
     }
 }
 
+pub type OptionIdResult = Option<IdResult>;
+
 macro_rules! id_ref {
     ($name:ident; $kind:expr; $docs:literal) => {
         #[doc = concat!("A `", stringify!($name), "` is a reference to a [`ResultId`] of another operation.")]

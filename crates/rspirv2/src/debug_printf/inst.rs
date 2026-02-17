@@ -7,8 +7,8 @@ pub struct DebugPrintf {
 impl Inst for DebugPrintf {
     const META: &InstMeta = &DEBUG_PRINTF;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
+    fn id_result(&mut self) -> &mut Self::MaybeIdResult {
+        make_mut_ref_unit()
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =

@@ -63,7 +63,7 @@ pub struct Enumerant<'a> {
 #[cfg(feature = "codegen")]
 mod codegen {
     use super::*;
-    use crate::codegen::{EmitRef, make_const_ident, ref_ident};
+    use crate::codegen::{EmitRef, OPERAND_ID_RESULT, make_const_ident, ref_ident};
     use proc_macro2::{Ident, TokenStream};
     use quote::{format_ident, quote};
 
@@ -73,7 +73,11 @@ mod codegen {
         }
 
         pub fn type_ident(name: &str) -> Ident {
-            format_ident!("{}", name)
+            if name == OPERAND_ID_RESULT {
+                format_ident!("OptionIdResult")
+            } else {
+                format_ident!("{}", name)
+            }
         }
 
         pub fn emit_def(&self) -> TokenStream {

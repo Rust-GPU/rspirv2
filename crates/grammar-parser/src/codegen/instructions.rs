@@ -27,9 +27,9 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Resu
             .find(|op| op.meta.kind == OPERAND_ID_RESULT)
         {
             let name = &op_id_result.name;
-            (quote!(IdResult), quote!(self.#name))
+            (quote!(OptionIdResult), quote!(&mut self.#name))
         } else {
-            (quote!(()), quote!(()))
+            (quote!(()), quote!(make_mut_ref_unit()))
         };
 
         let members = member_operands
@@ -51,7 +51,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Resu
 
                 type MaybeIdResult = #maybe_id_result;
 
-                fn id_result(&self) -> Self::MaybeIdResult {
+                fn id_result(&mut self) -> &mut Self::MaybeIdResult {
                     #id_result_ref
                 }
 

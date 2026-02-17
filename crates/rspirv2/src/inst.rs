@@ -1,6 +1,6 @@
-use crate::binary::{DecodeError, EncodeError, InstReader, WordWriter};
+use crate::binary::{DecodeError, EncodeError, IdResultAlloc, InstReader, WordWriter};
 use crate::meta::InstMeta;
-use crate::operand::IdResult;
+use crate::operand::{IdResult, OptionIdResult};
 use std::fmt::Debug;
 
 pub trait Inst: Sized + Debug + Eq {
@@ -10,7 +10,7 @@ pub trait Inst: Sized + Debug + Eq {
     type MaybeIdResult: MaybeIdResult;
 
     /// Query the potential [`IdResult`] of this Instruction, or `()` if it has none.
-    fn id_result(&self) -> Self::MaybeIdResult;
+    fn id_result(&mut self) -> &mut Self::MaybeIdResult;
 
     /// Encode this instruction to an [`InstWriter`]
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError>;
@@ -20,16 +20,46 @@ pub trait Inst: Sized + Debug + Eq {
 }
 
 /// A type that may be an [`IdResult`] or `()`.
-pub trait MaybeIdResult: Copy {}
+pub trait MaybeIdResult: Copy {
+    type IdResult;
+    fn alloc(&mut self, alloc: &mut impl IdResultAlloc) -> Result<Self::IdResult, EncodeError>;
+}
 
-impl MaybeIdResult for () {}
+impl MaybeIdResult for () {
+    type IdResult = ();
 
-impl MaybeIdResult for IdResult {}
+    #[inline]
+    fn alloc(&mut self, _: &mut impl IdResultAlloc) -> Result<Self::IdResult, EncodeError> {
+        Ok(())
+    }
+}
+
+impl MaybeIdResult for OptionIdResult {
+    type IdResult = IdResult;
+
+    #[inline]
+    fn alloc(&mut self, alloc: &mut impl IdResultAlloc) -> Result<Self::IdResult, EncodeError> {
+        Ok(match self {
+            None => {
+                let id = alloc.alloc_id()?;
+                *self = Some(id);
+                id
+            }
+            Some(id) => *id,
+        })
+    }
+}
+
+/// as `()` is a ZST, this should optimize away into `ptr::dangling()`
+#[inline]
+pub fn make_mut_ref_unit() -> &'static mut () {
+    Box::leak(Box::new(()))
+}
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::binary::{IdResultAlloc, ModuleReader, VecInstWriter};
+    use crate::binary::{ModuleReader, VecInstWriter};
     use crate::core::inst::{
         OpConstant, OpConvertUToF, OpDecorate, OpIAdd, OpNop, OpStore, OpTypeFloat, OpTypeInt,
         OpTypePointer, OpVariable,
@@ -59,12 +89,12 @@ mod tests {
     fn test_op_constant() {
         roundtrip(OpConstant {
             id_result_type: IdResultType(IdResult(Word(42))),
-            id_result: IdResult(Word(69)),
+            id_result: Some(IdResult(Word(69))),
             value: LiteralConst::from(123u32),
         });
         roundtrip(OpConstant {
             id_result_type: IdResultType(IdResult(Word(42))),
-            id_result: IdResult(Word(69)),
+            id_result: Some(IdResult(Word(69))),
             value: LiteralConst::from(123u64),
         });
     }
@@ -74,7 +104,7 @@ mod tests {
         let test = |indexes: &[u32]| {
             roundtrip(OpAccessChain {
                 id_result_type: IdResultType(IdResult(Word(42))),
-                id_result: IdResult(Word(69)),
+                id_result: Some(IdResult(Word(69))),
                 base: IdRef(IdResult(Word(123))),
                 indexes: SmallVec::from_iter(indexes.iter().map(|i| IdRef(IdResult(Word(*i))))),
             });
@@ -88,17 +118,17 @@ mod tests {
     fn test_op_constant_sequence() -> anyhow::Result<()> {
         let c1 = OpConstant {
             id_result_type: IdResultType(IdResult(Word(42))),
-            id_result: IdResult(Word(69)),
+            id_result: Some(IdResult(Word(69))),
             value: LiteralConst::from(123u32),
         };
         let c2 = OpConstant {
             id_result_type: IdResultType(IdResult(Word(42))),
-            id_result: IdResult(Word(69)),
+            id_result: Some(IdResult(Word(69))),
             value: LiteralConst::from(123u64),
         };
         let c3 = OpConstant {
             id_result_type: IdResultType(IdResult(Word(42))),
-            id_result: IdResult(Word(69)),
+            id_result: Some(IdResult(Word(69))),
             value: LiteralConst::from(123u32),
         };
 
@@ -131,61 +161,61 @@ mod tests {
     #[test]
     fn test_non_trivial_code() -> anyhow::Result<()> {
         let mut spirv = VecInstWriter::default();
-        let u32_op = OpTypeInt {
-            id_result: spirv.alloc_id()?,
+        let mut u32_op = OpTypeInt {
+            id_result: None,
             width: LiteralInteger::new(32),
             signedness: LiteralInteger::new(0),
         };
-        let u32 = spirv.push(&u32_op)?;
-        let u32_1_op = OpConstant {
+        let u32 = spirv.push_mut(&mut u32_op)?;
+        let mut u32_1_op = OpConstant {
             id_result_type: IdResultType(u32),
-            id_result: spirv.alloc_id()?,
+            id_result: None,
             value: LiteralConst::from(123u32),
         };
-        let u32_1 = spirv.push(&u32_1_op)?;
-        let add_op = OpIAdd {
+        let u32_1 = spirv.push_mut(&mut u32_1_op)?;
+        let mut add_op = OpIAdd {
             id_result_type: IdResultType(u32),
-            id_result: spirv.alloc_id()?,
+            id_result: None,
             operand_1: IdRef(u32_1),
             operand_2: IdRef(u32_1),
         };
-        let add = spirv.push(&add_op)?;
-        let f32_op = OpTypeFloat {
-            id_result: spirv.alloc_id()?,
+        let add = spirv.push_mut(&mut add_op)?;
+        let mut f32_op = OpTypeFloat {
+            id_result: None,
             width: LiteralInteger::new(32),
             floating_point_encoding: None,
         };
-        let f32 = spirv.push(&f32_op)?;
-        let u_to_f_op = OpConvertUToF {
+        let f32 = spirv.push_mut(&mut f32_op)?;
+        let mut u_to_f_op = OpConvertUToF {
             id_result_type: IdResultType(f32),
-            id_result: spirv.alloc_id()?,
+            id_result: None,
             unsigned_value: IdRef(add),
         };
-        let u_to_f = spirv.push(&u_to_f_op)?;
-        let f32_ptr_op = OpTypePointer {
-            id_result: spirv.alloc_id()?,
+        let u_to_f = spirv.push_mut(&mut u_to_f_op)?;
+        let mut f32_ptr_op = OpTypePointer {
+            id_result: None,
             storage_class: StorageClass::Output,
             ty: IdRef(f32),
         };
-        let f32_ptr = spirv.push(&f32_ptr_op)?;
-        let var_out_op = OpVariable {
+        let f32_ptr = spirv.push_mut(&mut f32_ptr_op)?;
+        let mut var_out_op = OpVariable {
             id_result_type: IdResultType(f32_ptr),
-            id_result: spirv.alloc_id()?,
+            id_result: None,
             storage_class: StorageClass::Output,
             initializer: None,
         };
-        let var_out = spirv.push(&var_out_op)?;
-        let var_out_location_op = OpDecorate {
+        let var_out = spirv.push_mut(&mut var_out_op)?;
+        let mut var_out_location_op = OpDecorate {
             target: IdRef(var_out),
             decoration: Decoration::Location(LiteralInteger::new(69)),
         };
-        spirv.push(&var_out_location_op)?;
-        let store_op = OpStore {
+        spirv.push_mut(&mut var_out_location_op)?;
+        let mut store_op = OpStore {
             pointer: IdRef(var_out),
             object: IdRef(u_to_f),
             memory_access: None,
         };
-        spirv.push(&store_op)?;
+        spirv.push_mut(&mut store_op)?;
 
         let mut mod_reader = ModuleReader::new(spirv.words.as_slice());
         let mut decode = || Ok::<_, anyhow::Error>(mod_reader.next()?.context("No further ops")?);
@@ -206,16 +236,14 @@ mod tests {
     fn test_result_type_ret() -> anyhow::Result<()> {
         let mut spirv = VecInstWriter::default();
         // push an Instruction, get the `IdResult` out
-        // you have to move the id alloc out, otherwise borrowck fails due to push borrowing it as mutable first
-        let f32 = spirv.alloc_id()?;
-        let f32: IdResult = spirv.push(&OpTypeFloat {
+        let f32: IdResult = spirv.push(OpTypeFloat {
             // will alloc an `IdResult` using an atomic counter in `InstWriter`
-            id_result: f32,
+            id_result: None,
             width: LiteralInteger::new(32),
             floating_point_encoding: None,
         })?;
         // `OpDecorate` doesn't have an `IdResult`, so this returns `()`
-        let _: () = spirv.push(&OpDecorate {
+        let _: () = spirv.push(OpDecorate {
             // reuse the `IdResult` in the next Instruction
             target: IdRef(f32),
             decoration: Decoration::RelaxedPrecision,

@@ -1,5 +1,5 @@
 use crate::binary::{EncodeError, IdResultAlloc, IdResultAllocator, WordWriter};
-use crate::inst::Inst;
+use crate::inst::{Inst, MaybeIdResult};
 use crate::operand::{IdResult, Word};
 
 /// On an [`InstWriter`] you can directly [`push`] SPIR-V [`Inst`]ructions to encode them and allocate required
@@ -14,9 +14,21 @@ pub struct InstWriter<W: WordWriter, A: IdResultAlloc> {
 
 impl<W: WordWriter, A: IdResultAlloc> InstWriter<W, A> {
     #[inline]
-    pub fn push<I: Inst>(&mut self, inst: &I) -> Result<I::MaybeIdResult, EncodeError> {
+    pub fn push<I: Inst>(
+        &mut self,
+        mut inst: I,
+    ) -> Result<<I::MaybeIdResult as MaybeIdResult>::IdResult, EncodeError> {
+        self.push_mut(&mut inst)
+    }
+
+    #[inline]
+    pub fn push_mut<I: Inst>(
+        &mut self,
+        inst: &mut I,
+    ) -> Result<<I::MaybeIdResult as MaybeIdResult>::IdResult, EncodeError> {
+        let id_result = inst.id_result().alloc(self)?;
         inst.encode(self)?;
-        Ok(inst.id_result())
+        Ok(id_result)
     }
 }
 
