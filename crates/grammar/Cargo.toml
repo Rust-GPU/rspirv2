@@ -1,9 +1,9 @@
 [package]
-name = "spirv-grammar"
+name = "rspirv2-grammar"
 version.workspace = true
 edition.workspace = true
 publish = false
 
 [dependencies]
-spirv-grammar-parser = { workspace = true }
+rspirv2-grammar-parser = { workspace = true }
 anyhow.workspace = true

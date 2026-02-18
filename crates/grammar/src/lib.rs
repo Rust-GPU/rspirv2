@@ -1,4 +1,4 @@
-use spirv_grammar_parser::parse::{CoreGrammar, ExtInstSetGrammar, GrammarFile};
+use rspirv2_grammar_parser::parse::{CoreGrammar, ExtInstSetGrammar, GrammarFile};
 
 macro_rules! folder_path {
     () => {

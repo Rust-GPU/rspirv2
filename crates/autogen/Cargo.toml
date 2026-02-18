@@ -5,6 +5,6 @@ edition.workspace = true
 publish = false
 
 [dependencies]
-spirv-grammar = { workspace = true }
-spirv-grammar-parser = { workspace = true, features = ["codegen", "prettyplease"] }
+rspirv2-grammar = { workspace = true }
+rspirv2-grammar-parser = { workspace = true, features = ["codegen", "prettyplease"] }
 anyhow.workspace = true

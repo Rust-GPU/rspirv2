@@ -14,9 +14,9 @@ edition = "2024"
 license = "MIT OR Apache-2.0"
 
 [workspace.dependencies]
-spirv-grammar = { path = "crates/grammar" }
-spirv-grammar-parser = { path = "crates/grammar-parser" }
 rspirv2 = { path = "crates/rspirv2" }
+rspirv2-grammar = { path = "crates/grammar" }
+rspirv2-grammar-parser = { path = "crates/grammar-parser" }
 
 anyhow = "1.0.100"
 serde = { version = "1.0.228", features = ["derive"] }

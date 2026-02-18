@@ -1,5 +1,5 @@
 [package]
-name = "spirv-grammar-parser"
+name = "rspirv2-grammar-parser"
 version.workspace = true
 edition.workspace = true
 
