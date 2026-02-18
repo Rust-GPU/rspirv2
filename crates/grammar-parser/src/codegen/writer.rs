@@ -55,7 +55,16 @@ impl GrammarWriter {
             #use_super
             #content
         };
-        self.write_module_str(submodule, &content.to_string())
+        let content_str;
+        #[cfg(feature = "prettyplease")]
+        {
+            content_str = prettyplease::unparse(&syn::parse2(content)?);
+        }
+        #[cfg(not(feature = "prettyplease"))]
+        {
+            content_str = content.to_string();
+        }
+        self.write_module_str(submodule, &content_str)
     }
 
     /// Finish writing the grammar
