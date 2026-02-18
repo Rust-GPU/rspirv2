@@ -72,7 +72,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Resu
             }
         }
     });
-    writer.write_const_module(
+    writer.write_module(
         "inst",
         quote! {
             #(#insts)*

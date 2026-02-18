@@ -19,7 +19,7 @@ pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::
             }
         }
     });
-    writer.write_const_module(
+    writer.write_module(
         "operands",
         quote! {
             #(#operands)*

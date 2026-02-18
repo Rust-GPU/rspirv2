@@ -43,7 +43,7 @@ pub fn write_grammar<'a>(
 }
 
 fn write_operand_kinds(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
-    writer.write_const_module(
+    writer.write_module(
         "operand_kinds",
         grammar
             .operand_kinds
@@ -54,14 +54,14 @@ fn write_operand_kinds(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow:
 }
 
 fn write_inst_class(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
-    writer.write_const_module(
+    writer.write_module(
         "inst_class",
         grammar.inst_class.iter().map(InstClass::emit_def).collect(),
     )
 }
 
 fn write_inst_meta(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
-    writer.write_const_module(
+    writer.write_module(
         "inst_meta",
         grammar.insts.iter().map(InstMeta::emit_def).collect(),
     )
@@ -84,7 +84,7 @@ fn write_extensions(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Re
         .into_iter()
         .collect::<Vec<_>>();
     extensions.sort_by_key(|e| e.name());
-    writer.write_const_module(
+    writer.write_module(
         "extensions",
         extensions
             .iter()
@@ -100,7 +100,7 @@ fn write_grammar_mod<'a>(
 ) -> anyhow::Result<()> {
     let grammar_def = grammar.emit_grammar_def();
     let other_def = Grammar::emit_def(grammar);
-    writer.write_const_module(
+    writer.write_module(
         "grammar",
         quote! {
             #grammar_def

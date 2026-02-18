@@ -39,29 +39,23 @@ impl GrammarWriter {
     /// Write a module file and "link" it from `mod.rs`.
     ///
     /// The contents must contain the tokens that [`use_super`] returned.
-    pub fn write_module(&mut self, submodule: &str, content: TokenStream) -> anyhow::Result<()> {
-        fs::write(self.submodule_file(submodule), content.to_string())?;
+    pub fn write_module_str(&mut self, submodule: &str, content: &str) -> anyhow::Result<()> {
+        fs::write(self.submodule_file(submodule), content)?;
         self.submodules.push(submodule.to_string());
         Ok(())
     }
 
     /// Write the definitions ([`EmitRef::emit_def`]) of some emittable struct to a module
-    pub fn write_const_module(
-        &mut self,
-        submodule: &str,
-        content: TokenStream,
-    ) -> anyhow::Result<()> {
+    pub fn write_module(&mut self, submodule: &str, content: TokenStream) -> anyhow::Result<()> {
         if content.is_empty() {
             return Ok(());
         }
         let use_super = use_super();
-        self.write_module(
-            submodule,
-            quote! {
-                #use_super
-                #content
-            },
-        )
+        let content = quote! {
+            #use_super
+            #content
+        };
+        self.write_module_str(submodule, &content.to_string())
     }
 
     /// Finish writing the grammar
