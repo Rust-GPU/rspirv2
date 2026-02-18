@@ -67,6 +67,23 @@ impl<const N: usize> WordWriter for SmallVec<[Word; N]> {
     }
 }
 
+impl<T: WordWriter> WordWriter for &mut T {
+    #[inline]
+    fn write(&mut self, word: Word) {
+        T::write(*self, word);
+    }
+
+    #[inline]
+    fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) {
+        T::write_iter(*self, iter);
+    }
+
+    #[inline]
+    fn inst_reserve(&mut self, len: usize) {
+        T::inst_reserve(*self, len);
+    }
+}
+
 /// Counts the amount of [`Word`]s that were written, discarding the words itself
 #[derive(Clone, Debug, Default)]
 pub struct WordCounter(pub usize);
