@@ -6,5 +6,5 @@ publish = false
 
 [dependencies]
 spirv-grammar = { workspace = true }
-spirv-grammar-parser = { workspace = true, features = ["codegen"] }
+spirv-grammar-parser = { workspace = true, features = ["codegen", "prettyplease"] }
 anyhow.workspace = true

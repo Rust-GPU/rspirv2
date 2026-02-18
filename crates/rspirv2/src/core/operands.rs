@@ -1,5 +1,15 @@
 use super::preamble::*;
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct ImageOperands : u32 { const None = 0u32 ; const Bias = 1u32 ; const Lod = 2u32 ; const Grad = 4u32 ; const ConstOffset = 8u32 ; const Offset = 16u32 ; const ConstOffsets = 32u32 ; const Sample = 64u32 ; const MinLod = 128u32 ; # [doc = "Since SPIR-V 1.5"] const MakeTexelAvailable = 256u32 ; # [doc = "Since SPIR-V 1.5"] const MakeTexelVisible = 512u32 ; # [doc = "Since SPIR-V 1.5"] const NonPrivateTexel = 1024u32 ; # [doc = "Since SPIR-V 1.5"] const VolatileTexel = 2048u32 ; # [doc = "Since SPIR-V 1.4"] const SignExtend = 4096u32 ; # [doc = "Since SPIR-V 1.4"] const ZeroExtend = 8192u32 ; # [doc = "Since SPIR-V 1.6"] const Nontemporal = 16384u32 ; const Offsets = 65536u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct ImageOperands : u32 {
+    const None = 0u32; const Bias = 1u32; const Lod = 2u32; const Grad = 4u32; const
+    ConstOffset = 8u32; const Offset = 16u32; const ConstOffsets = 32u32; const Sample =
+    64u32; const MinLod = 128u32; #[doc = "Since SPIR-V 1.5"] const MakeTexelAvailable =
+    256u32; #[doc = "Since SPIR-V 1.5"] const MakeTexelVisible = 512u32; #[doc =
+    "Since SPIR-V 1.5"] const NonPrivateTexel = 1024u32; #[doc = "Since SPIR-V 1.5"]
+    const VolatileTexel = 2048u32; #[doc = "Since SPIR-V 1.4"] const SignExtend =
+    4096u32; #[doc = "Since SPIR-V 1.4"] const ZeroExtend = 8192u32; #[doc =
+    "Since SPIR-V 1.6"] const Nontemporal = 16384u32; const Offsets = 65536u32; }
+}
 unsafe impl Operand for ImageOperands {
     const KIND: &OperandKind = &OPERAND_KIND_IMAGE_OPERANDS;
 }
@@ -19,7 +29,12 @@ unsafe impl OperandEncoding for ImageOperands {
         )
     }
 }
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct FPFastMathMode : u32 { const None = 0u32 ; const NotNaN = 1u32 ; const NotInf = 2u32 ; const NSZ = 4u32 ; const AllowRecip = 8u32 ; const Fast = 16u32 ; const AllowContract = 65536u32 ; const AllowReassoc = 131072u32 ; const AllowTransform = 262144u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct FPFastMathMode : u32 {
+    const None = 0u32; const NotNaN = 1u32; const NotInf = 2u32; const NSZ = 4u32; const
+    AllowRecip = 8u32; const Fast = 16u32; const AllowContract = 65536u32; const
+    AllowReassoc = 131072u32; const AllowTransform = 262144u32; }
+}
 unsafe impl Operand for FPFastMathMode {
     const KIND: &OperandKind = &OPERAND_KIND_FP_FAST_MATH_MODE;
 }
@@ -39,7 +54,10 @@ unsafe impl OperandEncoding for FPFastMathMode {
         )
     }
 }
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct SelectionControl : u32 { const None = 0u32 ; const Flatten = 1u32 ; const DontFlatten = 2u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct SelectionControl : u32
+    { const None = 0u32; const Flatten = 1u32; const DontFlatten = 2u32; }
+}
 unsafe impl Operand for SelectionControl {
     const KIND: &OperandKind = &OPERAND_KIND_SELECTION_CONTROL;
 }
@@ -59,7 +77,21 @@ unsafe impl OperandEncoding for SelectionControl {
         )
     }
 }
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct LoopControl : u32 { const None = 0u32 ; const Unroll = 1u32 ; const DontUnroll = 2u32 ; # [doc = "Since SPIR-V 1.1"] const DependencyInfinite = 4u32 ; # [doc = "Since SPIR-V 1.1"] const DependencyLength = 8u32 ; # [doc = "Since SPIR-V 1.4"] const MinIterations = 16u32 ; # [doc = "Since SPIR-V 1.4"] const MaxIterations = 32u32 ; # [doc = "Since SPIR-V 1.4"] const IterationMultiple = 64u32 ; # [doc = "Since SPIR-V 1.4"] const PeelCount = 128u32 ; # [doc = "Since SPIR-V 1.4"] const PartialCount = 256u32 ; const InitiationIntervalALTERA = 65536u32 ; const MaxConcurrencyALTERA = 131072u32 ; const DependencyArrayALTERA = 262144u32 ; const PipelineEnableALTERA = 524288u32 ; const LoopCoalesceALTERA = 1048576u32 ; const MaxInterleavingALTERA = 2097152u32 ; const SpeculatedIterationsALTERA = 4194304u32 ; const NoFusionALTERA = 8388608u32 ; const LoopCountALTERA = 16777216u32 ; const MaxReinvocationDelayALTERA = 33554432u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct LoopControl : u32 {
+    const None = 0u32; const Unroll = 1u32; const DontUnroll = 2u32; #[doc =
+    "Since SPIR-V 1.1"] const DependencyInfinite = 4u32; #[doc = "Since SPIR-V 1.1"]
+    const DependencyLength = 8u32; #[doc = "Since SPIR-V 1.4"] const MinIterations =
+    16u32; #[doc = "Since SPIR-V 1.4"] const MaxIterations = 32u32; #[doc =
+    "Since SPIR-V 1.4"] const IterationMultiple = 64u32; #[doc = "Since SPIR-V 1.4"]
+    const PeelCount = 128u32; #[doc = "Since SPIR-V 1.4"] const PartialCount = 256u32;
+    const InitiationIntervalALTERA = 65536u32; const MaxConcurrencyALTERA = 131072u32;
+    const DependencyArrayALTERA = 262144u32; const PipelineEnableALTERA = 524288u32;
+    const LoopCoalesceALTERA = 1048576u32; const MaxInterleavingALTERA = 2097152u32;
+    const SpeculatedIterationsALTERA = 4194304u32; const NoFusionALTERA = 8388608u32;
+    const LoopCountALTERA = 16777216u32; const MaxReinvocationDelayALTERA = 33554432u32;
+    }
+}
 unsafe impl Operand for LoopControl {
     const KIND: &OperandKind = &OPERAND_KIND_LOOP_CONTROL;
 }
@@ -79,7 +111,11 @@ unsafe impl OperandEncoding for LoopControl {
         )
     }
 }
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct FunctionControl : u32 { const None = 0u32 ; const Inline = 1u32 ; const DontInline = 2u32 ; const Pure = 4u32 ; const Const = 8u32 ; const OptNoneEXT = 65536u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct FunctionControl : u32 {
+    const None = 0u32; const Inline = 1u32; const DontInline = 2u32; const Pure = 4u32;
+    const Const = 8u32; const OptNoneEXT = 65536u32; }
+}
 unsafe impl Operand for FunctionControl {
     const KIND: &OperandKind = &OPERAND_KIND_FUNCTION_CONTROL;
 }
@@ -99,7 +135,16 @@ unsafe impl OperandEncoding for FunctionControl {
         )
     }
 }
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MemorySemantics : u32 { const Relaxed = 0u32 ; const Acquire = 2u32 ; const Release = 4u32 ; const AcquireRelease = 8u32 ; const SequentiallyConsistent = 16u32 ; const UniformMemory = 64u32 ; const SubgroupMemory = 128u32 ; const WorkgroupMemory = 256u32 ; const CrossWorkgroupMemory = 512u32 ; const AtomicCounterMemory = 1024u32 ; const ImageMemory = 2048u32 ; # [doc = "Since SPIR-V 1.5"] const OutputMemory = 4096u32 ; # [doc = "Since SPIR-V 1.5"] const MakeAvailable = 8192u32 ; # [doc = "Since SPIR-V 1.5"] const MakeVisible = 16384u32 ; # [doc = "Since SPIR-V 1.5"] const Volatile = 32768u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct MemorySemantics : u32 {
+    const Relaxed = 0u32; const Acquire = 2u32; const Release = 4u32; const
+    AcquireRelease = 8u32; const SequentiallyConsistent = 16u32; const UniformMemory =
+    64u32; const SubgroupMemory = 128u32; const WorkgroupMemory = 256u32; const
+    CrossWorkgroupMemory = 512u32; const AtomicCounterMemory = 1024u32; const ImageMemory
+    = 2048u32; #[doc = "Since SPIR-V 1.5"] const OutputMemory = 4096u32; #[doc =
+    "Since SPIR-V 1.5"] const MakeAvailable = 8192u32; #[doc = "Since SPIR-V 1.5"] const
+    MakeVisible = 16384u32; #[doc = "Since SPIR-V 1.5"] const Volatile = 32768u32; }
+}
 unsafe impl Operand for MemorySemantics {
     const KIND: &OperandKind = &OPERAND_KIND_MEMORY_SEMANTICS;
 }
@@ -119,7 +164,14 @@ unsafe impl OperandEncoding for MemorySemantics {
         )
     }
 }
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MemoryAccess : u32 { const None = 0u32 ; const Volatile = 1u32 ; const Aligned = 2u32 ; const Nontemporal = 4u32 ; # [doc = "Since SPIR-V 1.5"] const MakePointerAvailable = 8u32 ; # [doc = "Since SPIR-V 1.5"] const MakePointerVisible = 16u32 ; # [doc = "Since SPIR-V 1.5"] const NonPrivatePointer = 32u32 ; const AliasScopeINTELMask = 65536u32 ; const NoAliasINTELMask = 131072u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct MemoryAccess : u32 {
+    const None = 0u32; const Volatile = 1u32; const Aligned = 2u32; const Nontemporal =
+    4u32; #[doc = "Since SPIR-V 1.5"] const MakePointerAvailable = 8u32; #[doc =
+    "Since SPIR-V 1.5"] const MakePointerVisible = 16u32; #[doc = "Since SPIR-V 1.5"]
+    const NonPrivatePointer = 32u32; const AliasScopeINTELMask = 65536u32; const
+    NoAliasINTELMask = 131072u32; }
+}
 unsafe impl Operand for MemoryAccess {
     const KIND: &OperandKind = &OPERAND_KIND_MEMORY_ACCESS;
 }
@@ -139,7 +191,10 @@ unsafe impl OperandEncoding for MemoryAccess {
         )
     }
 }
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct KernelProfilingInfo : u32 { const None = 0u32 ; const CmdExecTime = 1u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct KernelProfilingInfo :
+    u32 { const None = 0u32; const CmdExecTime = 1u32; }
+}
 unsafe impl Operand for KernelProfilingInfo {
     const KIND: &OperandKind = &OPERAND_KIND_KERNEL_PROFILING_INFO;
 }
@@ -159,7 +214,14 @@ unsafe impl OperandEncoding for KernelProfilingInfo {
         )
     }
 }
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct RayFlags : u32 { const NoneKHR = 0u32 ; const OpaqueKHR = 1u32 ; const NoOpaqueKHR = 2u32 ; const TerminateOnFirstHitKHR = 4u32 ; const SkipClosestHitShaderKHR = 8u32 ; const CullBackFacingTrianglesKHR = 16u32 ; const CullFrontFacingTrianglesKHR = 32u32 ; const CullOpaqueKHR = 64u32 ; const CullNoOpaqueKHR = 128u32 ; const SkipTrianglesKHR = 256u32 ; const SkipAABBsKHR = 512u32 ; const ForceOpacityMicromap2StateEXT = 1024u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct RayFlags : u32 { const
+    NoneKHR = 0u32; const OpaqueKHR = 1u32; const NoOpaqueKHR = 2u32; const
+    TerminateOnFirstHitKHR = 4u32; const SkipClosestHitShaderKHR = 8u32; const
+    CullBackFacingTrianglesKHR = 16u32; const CullFrontFacingTrianglesKHR = 32u32; const
+    CullOpaqueKHR = 64u32; const CullNoOpaqueKHR = 128u32; const SkipTrianglesKHR =
+    256u32; const SkipAABBsKHR = 512u32; const ForceOpacityMicromap2StateEXT = 1024u32; }
+}
 unsafe impl Operand for RayFlags {
     const KIND: &OperandKind = &OPERAND_KIND_RAY_FLAGS;
 }
@@ -179,7 +241,11 @@ unsafe impl OperandEncoding for RayFlags {
         )
     }
 }
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct FragmentShadingRate : u32 { const Vertical2Pixels = 1u32 ; const Vertical4Pixels = 2u32 ; const Horizontal2Pixels = 4u32 ; const Horizontal4Pixels = 8u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct FragmentShadingRate :
+    u32 { const Vertical2Pixels = 1u32; const Vertical4Pixels = 2u32; const
+    Horizontal2Pixels = 4u32; const Horizontal4Pixels = 8u32; }
+}
 unsafe impl Operand for FragmentShadingRate {
     const KIND: &OperandKind = &OPERAND_KIND_FRAGMENT_SHADING_RATE;
 }
@@ -199,7 +265,11 @@ unsafe impl OperandEncoding for FragmentShadingRate {
         )
     }
 }
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct RawAccessChainOperands : u32 { const None = 0u32 ; const RobustnessPerComponentNV = 1u32 ; const RobustnessPerElementNV = 2u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct RawAccessChainOperands
+    : u32 { const None = 0u32; const RobustnessPerComponentNV = 1u32; const
+    RobustnessPerElementNV = 2u32; }
+}
 unsafe impl Operand for RawAccessChainOperands {
     const KIND: &OperandKind = &OPERAND_KIND_RAW_ACCESS_CHAIN_OPERANDS;
 }
@@ -347,7 +417,7 @@ pub enum AddressingModel {
     Logical = 0u32,
     Physical32 = 1u32,
     Physical64 = 2u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     PhysicalStorageBuffer64 = 5348u32,
 }
 #[cfg(feature = "bytemuck")]
@@ -385,7 +455,7 @@ pub enum MemoryModel {
     Simple = 0u32,
     GLSL450 = 1u32,
     OpenCL = 2u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     Vulkan = 3u32,
 }
 #[cfg(feature = "bytemuck")]
@@ -419,7 +489,10 @@ unsafe impl OperandEncoding for MemoryModel {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub enum ExecutionMode {
-    Invocations(#[doc = "Number of <<Invocation,invocations>>"] LiteralInteger),
+    Invocations(
+        ///Number of <<Invocation,invocations>>
+        LiteralInteger,
+    ),
     SpacingEqual,
     SpacingFractionalEven,
     SpacingFractionalOdd,
@@ -436,14 +509,20 @@ pub enum ExecutionMode {
     DepthLess,
     DepthUnchanged,
     LocalSize(
-        #[doc = "x size"] LiteralInteger,
-        #[doc = "y size"] LiteralInteger,
-        #[doc = "z size"] LiteralInteger,
+        ///x size
+        LiteralInteger,
+        ///y size
+        LiteralInteger,
+        ///z size
+        LiteralInteger,
     ),
     LocalSizeHint(
-        #[doc = "x size"] LiteralInteger,
-        #[doc = "y size"] LiteralInteger,
-        #[doc = "z size"] LiteralInteger,
+        ///x size
+        LiteralInteger,
+        ///y size
+        LiteralInteger,
+        ///z size
+        LiteralInteger,
     ),
     InputPoints,
     InputLines,
@@ -452,70 +531,124 @@ pub enum ExecutionMode {
     InputTrianglesAdjacency,
     Quads,
     Isolines,
-    OutputVertices(#[doc = "Vertex count"] LiteralInteger),
+    OutputVertices(
+        ///Vertex count
+        LiteralInteger,
+    ),
     OutputPoints,
     OutputLineStrip,
     OutputTriangleStrip,
-    VecTypeHint(#[doc = "Vector type"] LiteralInteger),
-    ContractionOff,
-    #[doc = "Since SPIR-V 1.1"]
-    Initializer,
-    #[doc = "Since SPIR-V 1.1"]
-    Finalizer,
-    #[doc = "Since SPIR-V 1.1"]
-    SubgroupSize(#[doc = "Subgroup Size"] LiteralInteger),
-    #[doc = "Since SPIR-V 1.1"]
-    SubgroupsPerWorkgroup(#[doc = "Subgroups Per Workgroup"] LiteralInteger),
-    #[doc = "Since SPIR-V 1.2"]
-    SubgroupsPerWorkgroupId(#[doc = "Subgroups Per Workgroup"] IdRef),
-    #[doc = "Since SPIR-V 1.2"]
-    LocalSizeId(
-        #[doc = "x size"] IdRef,
-        #[doc = "y size"] IdRef,
-        #[doc = "z size"] IdRef,
+    VecTypeHint(
+        ///Vector type
+        LiteralInteger,
     ),
-    #[doc = "Since SPIR-V 1.2"]
+    ContractionOff,
+    ///Since SPIR-V 1.1
+    Initializer,
+    ///Since SPIR-V 1.1
+    Finalizer,
+    ///Since SPIR-V 1.1
+    SubgroupSize(
+        ///Subgroup Size
+        LiteralInteger,
+    ),
+    ///Since SPIR-V 1.1
+    SubgroupsPerWorkgroup(
+        ///Subgroups Per Workgroup
+        LiteralInteger,
+    ),
+    ///Since SPIR-V 1.2
+    SubgroupsPerWorkgroupId(
+        ///Subgroups Per Workgroup
+        IdRef,
+    ),
+    ///Since SPIR-V 1.2
+    LocalSizeId(
+        ///x size
+        IdRef,
+        ///y size
+        IdRef,
+        ///z size
+        IdRef,
+    ),
+    ///Since SPIR-V 1.2
     LocalSizeHintId(
-        #[doc = "x size hint"] IdRef,
-        #[doc = "y size hint"] IdRef,
-        #[doc = "z size hint"] IdRef,
+        ///x size hint
+        IdRef,
+        ///y size hint
+        IdRef,
+        ///z size hint
+        IdRef,
     ),
     NonCoherentColorAttachmentReadEXT,
     NonCoherentDepthAttachmentReadEXT,
     NonCoherentStencilAttachmentReadEXT,
     SubgroupUniformControlFlowKHR,
     PostDepthCoverage,
-    #[doc = "Since SPIR-V 1.4"]
-    DenormPreserve(#[doc = "Target Width"] LiteralInteger),
-    #[doc = "Since SPIR-V 1.4"]
-    DenormFlushToZero(#[doc = "Target Width"] LiteralInteger),
-    #[doc = "Since SPIR-V 1.4"]
-    SignedZeroInfNanPreserve(#[doc = "Target Width"] LiteralInteger),
-    #[doc = "Since SPIR-V 1.4"]
-    RoundingModeRTE(#[doc = "Target Width"] LiteralInteger),
-    #[doc = "Since SPIR-V 1.4"]
-    RoundingModeRTZ(#[doc = "Target Width"] LiteralInteger),
+    ///Since SPIR-V 1.4
+    DenormPreserve(
+        ///Target Width
+        LiteralInteger,
+    ),
+    ///Since SPIR-V 1.4
+    DenormFlushToZero(
+        ///Target Width
+        LiteralInteger,
+    ),
+    ///Since SPIR-V 1.4
+    SignedZeroInfNanPreserve(
+        ///Target Width
+        LiteralInteger,
+    ),
+    ///Since SPIR-V 1.4
+    RoundingModeRTE(
+        ///Target Width
+        LiteralInteger,
+    ),
+    ///Since SPIR-V 1.4
+    RoundingModeRTZ(
+        ///Target Width
+        LiteralInteger,
+    ),
     NonCoherentTileAttachmentReadQCOM,
     TileShadingRateQCOM(
-        #[doc = "x rate"] LiteralInteger,
-        #[doc = "y rate"] LiteralInteger,
-        #[doc = "z rate"] LiteralInteger,
+        ///x rate
+        LiteralInteger,
+        ///y rate
+        LiteralInteger,
+        ///z rate
+        LiteralInteger,
     ),
     EarlyAndLateFragmentTestsAMD,
     StencilRefReplacingEXT,
     CoalescingAMDX,
-    IsApiEntryAMDX(#[doc = "Is Entry"] IdRef),
-    MaxNodeRecursionAMDX(#[doc = "Number of recursions"] IdRef),
-    StaticNumWorkgroupsAMDX(
-        #[doc = "x size"] IdRef,
-        #[doc = "y size"] IdRef,
-        #[doc = "z size"] IdRef,
+    IsApiEntryAMDX(
+        ///Is Entry
+        IdRef,
     ),
-    ShaderIndexAMDX(#[doc = "Shader Index"] IdRef),
+    MaxNodeRecursionAMDX(
+        ///Number of recursions
+        IdRef,
+    ),
+    StaticNumWorkgroupsAMDX(
+        ///x size
+        IdRef,
+        ///y size
+        IdRef,
+        ///z size
+        IdRef,
+    ),
+    ShaderIndexAMDX(
+        ///Shader Index
+        IdRef,
+    ),
     MaxNumWorkgroupsAMDX(
-        #[doc = "x size"] IdRef,
-        #[doc = "y size"] IdRef,
-        #[doc = "z size"] IdRef,
+        ///x size
+        IdRef,
+        ///y size
+        IdRef,
+        ///z size
+        IdRef,
     ),
     StencilRefUnchangedFrontAMD,
     StencilRefGreaterFrontAMD,
@@ -525,9 +658,17 @@ pub enum ExecutionMode {
     StencilRefLessBackAMD,
     QuadDerivativesKHR,
     RequireFullQuadsKHR,
-    SharesInputWithAMDX(#[doc = "Node Name"] IdRef, #[doc = "Shader Index"] IdRef),
+    SharesInputWithAMDX(
+        ///Node Name
+        IdRef,
+        ///Shader Index
+        IdRef,
+    ),
     OutputLinesEXT,
-    OutputPrimitivesEXT(#[doc = "Primitive count"] LiteralInteger),
+    OutputPrimitivesEXT(
+        ///Primitive count
+        LiteralInteger,
+    ),
     DerivativeGroupQuadsKHR,
     DerivativeGroupLinearKHR,
     OutputTrianglesEXT,
@@ -538,32 +679,77 @@ pub enum ExecutionMode {
     ShadingRateInterlockOrderedEXT,
     ShadingRateInterlockUnorderedEXT,
     Shader64BitIndexingEXT,
-    SharedLocalMemorySizeINTEL(#[doc = "Size"] LiteralInteger),
-    RoundingModeRTPINTEL(#[doc = "Target Width"] LiteralInteger),
-    RoundingModeRTNINTEL(#[doc = "Target Width"] LiteralInteger),
-    FloatingPointModeALTINTEL(#[doc = "Target Width"] LiteralInteger),
-    FloatingPointModeIEEEINTEL(#[doc = "Target Width"] LiteralInteger),
-    MaxWorkgroupSizeINTEL(
-        #[doc = "max_x_size"] LiteralInteger,
-        #[doc = "max_y_size"] LiteralInteger,
-        #[doc = "max_z_size"] LiteralInteger,
+    SharedLocalMemorySizeINTEL(
+        ///Size
+        LiteralInteger,
     ),
-    MaxWorkDimINTEL(#[doc = "max_dimensions"] LiteralInteger),
+    RoundingModeRTPINTEL(
+        ///Target Width
+        LiteralInteger,
+    ),
+    RoundingModeRTNINTEL(
+        ///Target Width
+        LiteralInteger,
+    ),
+    FloatingPointModeALTINTEL(
+        ///Target Width
+        LiteralInteger,
+    ),
+    FloatingPointModeIEEEINTEL(
+        ///Target Width
+        LiteralInteger,
+    ),
+    MaxWorkgroupSizeINTEL(
+        ///max_x_size
+        LiteralInteger,
+        ///max_y_size
+        LiteralInteger,
+        ///max_z_size
+        LiteralInteger,
+    ),
+    MaxWorkDimINTEL(
+        ///max_dimensions
+        LiteralInteger,
+    ),
     NoGlobalOffsetINTEL,
-    NumSIMDWorkitemsINTEL(#[doc = "vector_width"] LiteralInteger),
-    SchedulerTargetFmaxMhzINTEL(#[doc = "target_fmax"] LiteralInteger),
+    NumSIMDWorkitemsINTEL(
+        ///vector_width
+        LiteralInteger,
+    ),
+    SchedulerTargetFmaxMhzINTEL(
+        ///target_fmax
+        LiteralInteger,
+    ),
     MaximallyReconvergesKHR,
     FPFastMathDefault(
-        #[doc = "Target Type"] IdRef,
-        #[doc = "Fast-Math Mode"] IdRef,
+        ///Target Type
+        IdRef,
+        ///Fast-Math Mode
+        IdRef,
     ),
-    StreamingInterfaceINTEL(#[doc = "StallFreeReturn"] LiteralInteger),
-    RegisterMapInterfaceINTEL(#[doc = "WaitForDoneWrite"] LiteralInteger),
-    NamedBarrierCountINTEL(#[doc = "Barrier Count"] LiteralInteger),
-    MaximumRegistersINTEL(#[doc = "Number of Registers"] LiteralInteger),
-    MaximumRegistersIdINTEL(#[doc = "Number of Registers"] IdRef),
+    StreamingInterfaceINTEL(
+        ///StallFreeReturn
+        LiteralInteger,
+    ),
+    RegisterMapInterfaceINTEL(
+        ///WaitForDoneWrite
+        LiteralInteger,
+    ),
+    NamedBarrierCountINTEL(
+        ///Barrier Count
+        LiteralInteger,
+    ),
+    MaximumRegistersINTEL(
+        ///Number of Registers
+        LiteralInteger,
+    ),
+    MaximumRegistersIdINTEL(
+        ///Number of Registers
+        IdRef,
+    ),
     NamedMaximumRegistersINTEL(
-        #[doc = "Named Maximum Number of Registers"] NamedMaximumNumberOfRegisters,
+        ///Named Maximum Number of Registers
+        NamedMaximumNumberOfRegisters,
     ),
 }
 unsafe impl Operand for ExecutionMode {
@@ -970,7 +1156,7 @@ pub enum StorageClass {
     PushConstant = 9u32,
     AtomicCounter = 10u32,
     Image = 11u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     StorageBuffer = 12u32,
     TileImageEXT = 4172u32,
     TileAttachmentQCOM = 4491u32,
@@ -981,10 +1167,10 @@ pub enum StorageClass {
     HitAttributeKHR = 5339u32,
     IncomingRayPayloadKHR = 5342u32,
     ShaderRecordBufferKHR = 5343u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     PhysicalStorageBuffer = 5349u32,
     HitObjectAttributeNV = 5385u32,
-    #[doc = "Since SPIR-V 1.4"]
+    ///Since SPIR-V 1.4
     TaskPayloadWorkgroupEXT = 5402u32,
     HitObjectAttributeEXT = 5411u32,
     CodeSectionINTEL = 5605u32,
@@ -1767,15 +1953,24 @@ unsafe impl OperandEncoding for FunctionParameterAttribute {
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub enum Decoration {
     RelaxedPrecision,
-    SpecId(#[doc = "Specialization Constant ID"] LiteralInteger),
+    SpecId(
+        ///Specialization Constant ID
+        LiteralInteger,
+    ),
     Block,
-    #[doc = "Deprecated in SPIR-V 1.3"]
+    ///Deprecated in SPIR-V 1.3
     #[deprecated]
     BufferBlock,
     RowMajor,
     ColMajor,
-    ArrayStride(#[doc = "Array Stride"] LiteralInteger),
-    MatrixStride(#[doc = "Matrix Stride"] LiteralInteger),
+    ArrayStride(
+        ///Array Stride
+        LiteralInteger,
+    ),
+    MatrixStride(
+        ///Matrix Stride
+        LiteralInteger,
+    ),
     GLSLShared,
     GLSLPacked,
     CPacked,
@@ -1794,170 +1989,383 @@ pub enum Decoration {
     NonWritable,
     NonReadable,
     Uniform,
-    #[doc = "Since SPIR-V 1.4"]
-    UniformId(#[doc = "Execution"] IdScope),
+    ///Since SPIR-V 1.4
+    UniformId(
+        ///Execution
+        IdScope,
+    ),
     SaturatedConversion,
-    Stream(#[doc = "Stream Number"] LiteralInteger),
-    Location(#[doc = "Location"] LiteralInteger),
-    Component(#[doc = "Component"] LiteralInteger),
-    Index(#[doc = "Index"] LiteralInteger),
-    Binding(#[doc = "Binding Point"] LiteralInteger),
-    DescriptorSet(#[doc = "Descriptor Set"] LiteralInteger),
-    Offset(#[doc = "Byte Offset"] LiteralInteger),
-    XfbBuffer(#[doc = "XFB Buffer Number"] LiteralInteger),
-    XfbStride(#[doc = "XFB Stride"] LiteralInteger),
-    FuncParamAttr(#[doc = "Function Parameter Attribute"] FunctionParameterAttribute),
-    FPRoundingMode(#[doc = "Floating-Point Rounding Mode"] FPRoundingMode),
-    FPFastMathMode(#[doc = "Fast-Math Mode"] FPFastMathMode),
+    Stream(
+        ///Stream Number
+        LiteralInteger,
+    ),
+    Location(
+        ///Location
+        LiteralInteger,
+    ),
+    Component(
+        ///Component
+        LiteralInteger,
+    ),
+    Index(
+        ///Index
+        LiteralInteger,
+    ),
+    Binding(
+        ///Binding Point
+        LiteralInteger,
+    ),
+    DescriptorSet(
+        ///Descriptor Set
+        LiteralInteger,
+    ),
+    Offset(
+        ///Byte Offset
+        LiteralInteger,
+    ),
+    XfbBuffer(
+        ///XFB Buffer Number
+        LiteralInteger,
+    ),
+    XfbStride(
+        ///XFB Stride
+        LiteralInteger,
+    ),
+    FuncParamAttr(
+        ///Function Parameter Attribute
+        FunctionParameterAttribute,
+    ),
+    FPRoundingMode(
+        ///Floating-Point Rounding Mode
+        FPRoundingMode,
+    ),
+    FPFastMathMode(
+        ///Fast-Math Mode
+        FPFastMathMode,
+    ),
     LinkageAttributes(
-        #[doc = "Name"] LiteralString,
-        #[doc = "Linkage Type"] LinkageType,
+        ///Name
+        LiteralString,
+        ///Linkage Type
+        LinkageType,
     ),
     NoContraction,
-    InputAttachmentIndex(#[doc = "Attachment Index"] LiteralInteger),
-    Alignment(#[doc = "Alignment"] LiteralInteger),
-    #[doc = "Since SPIR-V 1.1"]
-    MaxByteOffset(#[doc = "Max Byte Offset"] LiteralInteger),
-    #[doc = "Since SPIR-V 1.2"]
-    AlignmentId(#[doc = "Alignment"] IdRef),
-    #[doc = "Since SPIR-V 1.2"]
-    MaxByteOffsetId(#[doc = "Max Byte Offset"] IdRef),
+    InputAttachmentIndex(
+        ///Attachment Index
+        LiteralInteger,
+    ),
+    Alignment(
+        ///Alignment
+        LiteralInteger,
+    ),
+    ///Since SPIR-V 1.1
+    MaxByteOffset(
+        ///Max Byte Offset
+        LiteralInteger,
+    ),
+    ///Since SPIR-V 1.2
+    AlignmentId(
+        ///Alignment
+        IdRef,
+    ),
+    ///Since SPIR-V 1.2
+    MaxByteOffsetId(
+        ///Max Byte Offset
+        IdRef,
+    ),
     SaturatedToLargestFloat8NormalConversionEXT,
-    #[doc = "Since SPIR-V 1.4"]
+    ///Since SPIR-V 1.4
     NoSignedWrap,
-    #[doc = "Since SPIR-V 1.4"]
+    ///Since SPIR-V 1.4
     NoUnsignedWrap,
     WeightTextureQCOM,
     BlockMatchTextureQCOM,
     BlockMatchSamplerQCOM,
     ExplicitInterpAMD,
-    NodeSharesPayloadLimitsWithAMDX(#[doc = "Payload Type"] IdRef),
-    NodeMaxPayloadsAMDX(#[doc = "Max number of payloads"] IdRef),
+    NodeSharesPayloadLimitsWithAMDX(
+        ///Payload Type
+        IdRef,
+    ),
+    NodeMaxPayloadsAMDX(
+        ///Max number of payloads
+        IdRef,
+    ),
     TrackFinishWritingAMDX,
-    PayloadNodeNameAMDX(#[doc = "Node Name"] IdRef),
-    PayloadNodeBaseIndexAMDX(#[doc = "Base Index"] IdRef),
+    PayloadNodeNameAMDX(
+        ///Node Name
+        IdRef,
+    ),
+    PayloadNodeBaseIndexAMDX(
+        ///Base Index
+        IdRef,
+    ),
     PayloadNodeSparseArrayAMDX,
-    PayloadNodeArraySizeAMDX(#[doc = "Array Size"] IdRef),
+    PayloadNodeArraySizeAMDX(
+        ///Array Size
+        IdRef,
+    ),
     PayloadDispatchIndirectAMDX,
-    ArrayStrideIdEXT(#[doc = "Array Stride"] IdRef),
-    OffsetIdEXT(#[doc = "Byte Offset"] IdRef),
+    ArrayStrideIdEXT(
+        ///Array Stride
+        IdRef,
+    ),
+    OffsetIdEXT(
+        ///Byte Offset
+        IdRef,
+    ),
     OverrideCoverageNV,
     PassthroughNV,
     ViewportRelativeNV,
-    SecondaryViewportRelativeNV(#[doc = "Offset"] LiteralInteger),
+    SecondaryViewportRelativeNV(
+        ///Offset
+        LiteralInteger,
+    ),
     PerPrimitiveEXT,
     PerViewNV,
     PerTaskNV,
     PerVertexKHR,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     NonUniform,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     RestrictPointer,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     AliasedPointer,
-    MemberOffsetNV(#[doc = "memberOffset"] LiteralInteger),
+    MemberOffsetNV(
+        ///memberOffset
+        LiteralInteger,
+    ),
     HitObjectShaderRecordBufferNV,
     HitObjectShaderRecordBufferEXT,
-    BankNV(#[doc = "Bank"] LiteralInteger),
+    BankNV(
+        ///Bank
+        LiteralInteger,
+    ),
     BindlessSamplerNV,
     BindlessImageNV,
     BoundSamplerNV,
     BoundImageNV,
-    SIMTCallINTEL(#[doc = "N"] LiteralInteger),
+    SIMTCallINTEL(
+        ///N
+        LiteralInteger,
+    ),
     ReferencedIndirectlyINTEL,
-    ClobberINTEL(#[doc = "Register"] LiteralString),
+    ClobberINTEL(
+        ///Register
+        LiteralString,
+    ),
     SideEffectsINTEL,
     VectorComputeVariableINTEL,
-    FuncParamIOKindINTEL(#[doc = "Kind"] LiteralInteger),
+    FuncParamIOKindINTEL(
+        ///Kind
+        LiteralInteger,
+    ),
     VectorComputeFunctionINTEL,
     StackCallINTEL,
-    GlobalVariableOffsetINTEL(#[doc = "Offset"] LiteralInteger),
-    #[doc = "Since SPIR-V 1.4"]
-    CounterBuffer(#[doc = "Counter Buffer"] IdRef),
-    #[doc = "Since SPIR-V 1.4"]
-    UserSemantic(#[doc = "Semantic"] LiteralString),
-    UserTypeGOOGLE(#[doc = "User Type"] LiteralString),
+    GlobalVariableOffsetINTEL(
+        ///Offset
+        LiteralInteger,
+    ),
+    ///Since SPIR-V 1.4
+    CounterBuffer(
+        ///Counter Buffer
+        IdRef,
+    ),
+    ///Since SPIR-V 1.4
+    UserSemantic(
+        ///Semantic
+        LiteralString,
+    ),
+    UserTypeGOOGLE(
+        ///User Type
+        LiteralString,
+    ),
     FunctionRoundingModeINTEL(
-        #[doc = "Target Width"] LiteralInteger,
-        #[doc = "FP Rounding Mode"] FPRoundingMode,
+        ///Target Width
+        LiteralInteger,
+        ///FP Rounding Mode
+        FPRoundingMode,
     ),
     FunctionDenormModeINTEL(
-        #[doc = "Target Width"] LiteralInteger,
-        #[doc = "FP Denorm Mode"] FPDenormMode,
+        ///Target Width
+        LiteralInteger,
+        ///FP Denorm Mode
+        FPDenormMode,
     ),
     RegisterALTERA,
-    MemoryALTERA(#[doc = "Memory Type"] LiteralString),
-    NumbanksALTERA(#[doc = "Banks"] LiteralInteger),
-    BankwidthALTERA(#[doc = "Bank Width"] LiteralInteger),
-    MaxPrivateCopiesALTERA(#[doc = "Maximum Copies"] LiteralInteger),
+    MemoryALTERA(
+        ///Memory Type
+        LiteralString,
+    ),
+    NumbanksALTERA(
+        ///Banks
+        LiteralInteger,
+    ),
+    BankwidthALTERA(
+        ///Bank Width
+        LiteralInteger,
+    ),
+    MaxPrivateCopiesALTERA(
+        ///Maximum Copies
+        LiteralInteger,
+    ),
     SinglepumpALTERA,
     DoublepumpALTERA,
-    MaxReplicatesALTERA(#[doc = "Maximum Replicates"] LiteralInteger),
+    MaxReplicatesALTERA(
+        ///Maximum Replicates
+        LiteralInteger,
+    ),
     SimpleDualPortALTERA,
     MergeALTERA(
-        #[doc = "Merge Key"] LiteralString,
-        #[doc = "Merge Type"] LiteralString,
+        ///Merge Key
+        LiteralString,
+        ///Merge Type
+        LiteralString,
     ),
-    BankBitsALTERA(#[doc = "Bank Bits"] Vec<LiteralInteger>),
-    ForcePow2DepthALTERA(#[doc = "Force Key"] LiteralInteger),
-    StridesizeALTERA(#[doc = "Stride Size"] LiteralInteger),
-    WordsizeALTERA(#[doc = "Word Size"] LiteralInteger),
+    BankBitsALTERA(
+        ///Bank Bits
+        Vec<LiteralInteger>,
+    ),
+    ForcePow2DepthALTERA(
+        ///Force Key
+        LiteralInteger,
+    ),
+    StridesizeALTERA(
+        ///Stride Size
+        LiteralInteger,
+    ),
+    WordsizeALTERA(
+        ///Word Size
+        LiteralInteger,
+    ),
     TrueDualPortALTERA,
     BurstCoalesceALTERA,
-    CacheSizeALTERA(#[doc = "Cache Size in bytes"] LiteralInteger),
+    CacheSizeALTERA(
+        ///Cache Size in bytes
+        LiteralInteger,
+    ),
     DontStaticallyCoalesceALTERA,
-    PrefetchALTERA(#[doc = "Prefetcher Size in bytes"] LiteralInteger),
+    PrefetchALTERA(
+        ///Prefetcher Size in bytes
+        LiteralInteger,
+    ),
     StallEnableALTERA,
     FuseLoopsInFunctionALTERA,
     MathOpDSPModeALTERA(
-        #[doc = "Mode"] LiteralInteger,
-        #[doc = "Propagate"] LiteralInteger,
+        ///Mode
+        LiteralInteger,
+        ///Propagate
+        LiteralInteger,
     ),
-    AliasScopeINTEL(#[doc = "Aliasing Scopes List"] IdRef),
-    NoAliasINTEL(#[doc = "Aliasing Scopes List"] IdRef),
-    InitiationIntervalALTERA(#[doc = "Cycles"] LiteralInteger),
-    MaxConcurrencyALTERA(#[doc = "Invocations"] LiteralInteger),
-    PipelineEnableALTERA(#[doc = "Enable"] LiteralInteger),
-    BufferLocationALTERA(#[doc = "Buffer Location ID"] LiteralInteger),
-    IOPipeStorageALTERA(#[doc = "IO Pipe ID"] LiteralInteger),
+    AliasScopeINTEL(
+        ///Aliasing Scopes List
+        IdRef,
+    ),
+    NoAliasINTEL(
+        ///Aliasing Scopes List
+        IdRef,
+    ),
+    InitiationIntervalALTERA(
+        ///Cycles
+        LiteralInteger,
+    ),
+    MaxConcurrencyALTERA(
+        ///Invocations
+        LiteralInteger,
+    ),
+    PipelineEnableALTERA(
+        ///Enable
+        LiteralInteger,
+    ),
+    BufferLocationALTERA(
+        ///Buffer Location ID
+        LiteralInteger,
+    ),
+    IOPipeStorageALTERA(
+        ///IO Pipe ID
+        LiteralInteger,
+    ),
     FunctionFloatingPointModeINTEL(
-        #[doc = "Target Width"] LiteralInteger,
-        #[doc = "FP Operation Mode"] FPOperationMode,
+        ///Target Width
+        LiteralInteger,
+        ///FP Operation Mode
+        FPOperationMode,
     ),
     SingleElementVectorINTEL,
     VectorComputeCallableFunctionINTEL,
     MediaBlockIOINTEL,
     StallFreeALTERA,
-    FPMaxErrorDecorationINTEL(#[doc = "Max Error"] LiteralFloat),
-    LatencyControlLabelALTERA(#[doc = "Latency Label"] LiteralInteger),
+    FPMaxErrorDecorationINTEL(
+        ///Max Error
+        LiteralFloat,
+    ),
+    LatencyControlLabelALTERA(
+        ///Latency Label
+        LiteralInteger,
+    ),
     LatencyControlConstraintALTERA(
-        #[doc = "Relative To"] LiteralInteger,
-        #[doc = "Control Type"] LiteralInteger,
-        #[doc = "Relative Cycle"] LiteralInteger,
+        ///Relative To
+        LiteralInteger,
+        ///Control Type
+        LiteralInteger,
+        ///Relative Cycle
+        LiteralInteger,
     ),
     ConduitKernelArgumentALTERA,
     RegisterMapKernelArgumentALTERA,
-    MMHostInterfaceAddressWidthALTERA(#[doc = "AddressWidth"] LiteralInteger),
-    MMHostInterfaceDataWidthALTERA(#[doc = "DataWidth"] LiteralInteger),
-    MMHostInterfaceLatencyALTERA(#[doc = "Latency"] LiteralInteger),
-    MMHostInterfaceReadWriteModeALTERA(#[doc = "ReadWriteMode"] AccessQualifier),
-    MMHostInterfaceMaxBurstALTERA(#[doc = "MaxBurstCount"] LiteralInteger),
-    MMHostInterfaceWaitRequestALTERA(#[doc = "Waitrequest"] LiteralInteger),
+    MMHostInterfaceAddressWidthALTERA(
+        ///AddressWidth
+        LiteralInteger,
+    ),
+    MMHostInterfaceDataWidthALTERA(
+        ///DataWidth
+        LiteralInteger,
+    ),
+    MMHostInterfaceLatencyALTERA(
+        ///Latency
+        LiteralInteger,
+    ),
+    MMHostInterfaceReadWriteModeALTERA(
+        ///ReadWriteMode
+        AccessQualifier,
+    ),
+    MMHostInterfaceMaxBurstALTERA(
+        ///MaxBurstCount
+        LiteralInteger,
+    ),
+    MMHostInterfaceWaitRequestALTERA(
+        ///Waitrequest
+        LiteralInteger,
+    ),
     StableKernelArgumentALTERA,
     HostAccessINTEL(
-        #[doc = "Access"] HostAccessQualifier,
-        #[doc = "Name"] LiteralString,
+        ///Access
+        HostAccessQualifier,
+        ///Name
+        LiteralString,
     ),
-    InitModeALTERA(#[doc = "Trigger"] InitializationModeQualifier),
-    ImplementInRegisterMapALTERA(#[doc = "Value"] LiteralInteger),
-    ConditionalINTEL(#[doc = "Condition"] IdRef),
+    InitModeALTERA(
+        ///Trigger
+        InitializationModeQualifier,
+    ),
+    ImplementInRegisterMapALTERA(
+        ///Value
+        LiteralInteger,
+    ),
+    ConditionalINTEL(
+        ///Condition
+        IdRef,
+    ),
     CacheControlLoadINTEL(
-        #[doc = "Cache Level"] LiteralInteger,
-        #[doc = "Cache Control"] LoadCacheControl,
+        ///Cache Level
+        LiteralInteger,
+        ///Cache Control
+        LoadCacheControl,
     ),
     CacheControlStoreINTEL(
-        #[doc = "Cache Level"] LiteralInteger,
-        #[doc = "Cache Control"] StoreCacheControl,
+        ///Cache Level
+        LiteralInteger,
+        ///Cache Control
+        StoreCacheControl,
     ),
 }
 unsafe impl Operand for Decoration {
@@ -2613,26 +3021,26 @@ pub enum BuiltIn {
     CoreMaxIDARM = 4162u32,
     WarpIDARM = 4163u32,
     WarpMaxIDARM = 4164u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     SubgroupEqMask = 4416u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     SubgroupGeMask = 4417u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     SubgroupGtMask = 4418u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     SubgroupLeMask = 4419u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     SubgroupLtMask = 4420u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     BaseVertex = 4424u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     BaseInstance = 4425u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     DrawIndex = 4426u32,
     PrimitiveShadingRateKHR = 4432u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     DeviceIndex = 4438u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     ViewIndex = 4440u32,
     ShadingRateKHR = 4444u32,
     TileOffsetQCOM = 4492u32,
@@ -2867,7 +3275,7 @@ pub enum Scope {
     Workgroup = 2u32,
     Subgroup = 3u32,
     Invocation = 4u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     QueueFamily = 5u32,
     ShaderCallKHR = 6u32,
 }
@@ -2909,7 +3317,7 @@ pub enum GroupOperation {
     Reduce = 0u32,
     InclusiveScan = 1u32,
     ExclusiveScan = 2u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     ClusteredReduce = 3u32,
     PartitionedReduceEXT = 6u32,
     PartitionedInclusiveScanEXT = 7u32,
@@ -3041,33 +3449,33 @@ pub enum Capability {
     StorageImageReadWithoutFormat = 55u32,
     StorageImageWriteWithoutFormat = 56u32,
     MultiViewport = 57u32,
-    #[doc = "Since SPIR-V 1.1"]
+    ///Since SPIR-V 1.1
     SubgroupDispatch = 58u32,
-    #[doc = "Since SPIR-V 1.1"]
+    ///Since SPIR-V 1.1
     NamedBarrier = 59u32,
-    #[doc = "Since SPIR-V 1.1"]
+    ///Since SPIR-V 1.1
     PipeStorage = 60u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     GroupNonUniform = 61u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     GroupNonUniformVote = 62u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     GroupNonUniformArithmetic = 63u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     GroupNonUniformBallot = 64u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     GroupNonUniformShuffle = 65u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     GroupNonUniformShuffleRelative = 66u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     GroupNonUniformClustered = 67u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     GroupNonUniformQuad = 68u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     ShaderLayer = 69u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     ShaderViewportIndex = 70u32,
-    #[doc = "Since SPIR-V 1.6"]
+    ///Since SPIR-V 1.6
     UniformDecoration = 71u32,
     CoreBuiltinsARM = 4165u32,
     TileImageColorReadAccessEXT = 4166u32,
@@ -3082,45 +3490,45 @@ pub enum Capability {
     Float8CooperativeMatrixEXT = 4213u32,
     FragmentShadingRateKHR = 4422u32,
     SubgroupBallotKHR = 4423u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     DrawParameters = 4427u32,
     WorkgroupMemoryExplicitLayoutKHR = 4428u32,
     WorkgroupMemoryExplicitLayout8BitAccessKHR = 4429u32,
     WorkgroupMemoryExplicitLayout16BitAccessKHR = 4430u32,
     SubgroupVoteKHR = 4431u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     StorageBuffer16BitAccess = 4433u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     UniformAndStorageBuffer16BitAccess = 4434u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     StoragePushConstant16 = 4435u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     StorageInputOutput16 = 4436u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     DeviceGroup = 4437u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     MultiView = 4439u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     VariablePointersStorageBuffer = 4441u32,
-    #[doc = "Since SPIR-V 1.3"]
+    ///Since SPIR-V 1.3
     VariablePointers = 4442u32,
     AtomicStorageOps = 4445u32,
     SampleMaskPostDepthCoverage = 4447u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     StorageBuffer8BitAccess = 4448u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     UniformAndStorageBuffer8BitAccess = 4449u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     StoragePushConstant8 = 4450u32,
-    #[doc = "Since SPIR-V 1.4"]
+    ///Since SPIR-V 1.4
     DenormPreserve = 4464u32,
-    #[doc = "Since SPIR-V 1.4"]
+    ///Since SPIR-V 1.4
     DenormFlushToZero = 4465u32,
-    #[doc = "Since SPIR-V 1.4"]
+    ///Since SPIR-V 1.4
     SignedZeroInfNanPreserve = 4466u32,
-    #[doc = "Since SPIR-V 1.4"]
+    ///Since SPIR-V 1.4
     RoundingModeRTE = 4467u32,
-    #[doc = "Since SPIR-V 1.4"]
+    ///Since SPIR-V 1.4
     RoundingModeRTZ = 4468u32,
     RayQueryProvisionalKHR = 4471u32,
     RayQueryKHR = 4472u32,
@@ -3162,38 +3570,38 @@ pub enum Capability {
     ComputeDerivativeGroupQuadsKHR = 5288u32,
     FragmentDensityEXT = 5291u32,
     GroupNonUniformPartitionedEXT = 5297u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     ShaderNonUniform = 5301u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     RuntimeDescriptorArray = 5302u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     InputAttachmentArrayDynamicIndexing = 5303u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     UniformTexelBufferArrayDynamicIndexing = 5304u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     StorageTexelBufferArrayDynamicIndexing = 5305u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     UniformBufferArrayNonUniformIndexing = 5306u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     SampledImageArrayNonUniformIndexing = 5307u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     StorageBufferArrayNonUniformIndexing = 5308u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     StorageImageArrayNonUniformIndexing = 5309u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     InputAttachmentArrayNonUniformIndexing = 5310u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     UniformTexelBufferArrayNonUniformIndexing = 5311u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     StorageTexelBufferArrayNonUniformIndexing = 5312u32,
     RayTracingPositionFetchKHR = 5336u32,
     RayTracingNV = 5340u32,
     RayTracingMotionBlurNV = 5341u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     VulkanMemoryModel = 5345u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     VulkanMemoryModelDeviceScope = 5346u32,
-    #[doc = "Since SPIR-V 1.5"]
+    ///Since SPIR-V 1.5
     PhysicalStorageBufferAddresses = 5347u32,
     ComputeDerivativeGroupLinearKHR = 5350u32,
     RayTracingProvisionalKHR = 5353u32,
@@ -3202,7 +3610,7 @@ pub enum Capability {
     FragmentShaderShadingRateInterlockEXT = 5372u32,
     ShaderSMBuiltinsNV = 5373u32,
     FragmentShaderPixelInterlockEXT = 5378u32,
-    #[doc = "Since SPIR-V 1.6"]
+    ///Since SPIR-V 1.6
     DemoteToHelperInvocation = 5379u32,
     DisplacementMicromapNV = 5380u32,
     RayTracingOpacityMicromapEXT = 5381u32,
@@ -3269,13 +3677,13 @@ pub enum Capability {
     IOPipesALTERA = 5943u32,
     BlockingPipesALTERA = 5945u32,
     FPGARegALTERA = 5948u32,
-    #[doc = "Since SPIR-V 1.6"]
+    ///Since SPIR-V 1.6
     DotProductInputAll = 6016u32,
-    #[doc = "Since SPIR-V 1.6"]
+    ///Since SPIR-V 1.6
     DotProductInput4x8Bit = 6017u32,
-    #[doc = "Since SPIR-V 1.6"]
+    ///Since SPIR-V 1.6
     DotProductInput4x8BitPacked = 6018u32,
-    #[doc = "Since SPIR-V 1.6"]
+    ///Since SPIR-V 1.6
     DotProduct = 6019u32,
     RayCullMaskKHR = 6020u32,
     CooperativeMatrixKHR = 6022u32,
@@ -3726,7 +4134,7 @@ unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum PackedVectorFormat {
-    #[doc = "Since SPIR-V 1.6"]
+    ///Since SPIR-V 1.6
     PackedVectorFormat4x8Bit = 0u32,
 }
 #[cfg(feature = "bytemuck")]
@@ -3755,7 +4163,13 @@ unsafe impl OperandEncoding for PackedVectorFormat {
         })
     }
 }
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct CooperativeMatrixOperands : u32 { const NoneKHR = 0u32 ; const MatrixASignedComponentsKHR = 1u32 ; const MatrixBSignedComponentsKHR = 2u32 ; const MatrixCSignedComponentsKHR = 4u32 ; const MatrixResultSignedComponentsKHR = 8u32 ; const SaturatingAccumulationKHR = 16u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct
+    CooperativeMatrixOperands : u32 { const NoneKHR = 0u32; const
+    MatrixASignedComponentsKHR = 1u32; const MatrixBSignedComponentsKHR = 2u32; const
+    MatrixCSignedComponentsKHR = 4u32; const MatrixResultSignedComponentsKHR = 8u32;
+    const SaturatingAccumulationKHR = 16u32; }
+}
 unsafe impl Operand for CooperativeMatrixOperands {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_OPERANDS;
 }
@@ -3847,7 +4261,10 @@ unsafe impl OperandEncoding for CooperativeMatrixUse {
         })
     }
 }
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct CooperativeMatrixReduce : u32 { const Row = 1u32 ; const Column = 2u32 ; const TwoByTwo = 4u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct CooperativeMatrixReduce
+    : u32 { const Row = 1u32; const Column = 2u32; const TwoByTwo = 4u32; }
+}
 unsafe impl Operand for CooperativeMatrixReduce {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_REDUCE;
 }
@@ -3906,7 +4323,11 @@ unsafe impl OperandEncoding for TensorClampMode {
         })
     }
 }
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct TensorAddressingOperands : u32 { const None = 0u32 ; const TensorView = 1u32 ; const DecodeFunc = 2u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct
+    TensorAddressingOperands : u32 { const None = 0u32; const TensorView = 1u32; const
+    DecodeFunc = 2u32; }
+}
 unsafe impl Operand for TensorAddressingOperands {
     const KIND: &OperandKind = &OPERAND_KIND_TENSOR_ADDRESSING_OPERANDS;
 }
@@ -4066,7 +4487,17 @@ unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
         })
     }
 }
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct MatrixMultiplyAccumulateOperands : u32 { const None = 0u32 ; const MatrixASignedComponentsINTEL = 1u32 ; const MatrixBSignedComponentsINTEL = 2u32 ; const MatrixCBFloat16INTEL = 4u32 ; const MatrixResultBFloat16INTEL = 8u32 ; const MatrixAPackedInt8INTEL = 16u32 ; const MatrixBPackedInt8INTEL = 32u32 ; const MatrixAPackedInt4INTEL = 64u32 ; const MatrixBPackedInt4INTEL = 128u32 ; const MatrixATF32INTEL = 256u32 ; const MatrixBTF32INTEL = 512u32 ; const MatrixAPackedFloat16INTEL = 1024u32 ; const MatrixBPackedFloat16INTEL = 2048u32 ; const MatrixAPackedBFloat16INTEL = 4096u32 ; const MatrixBPackedBFloat16INTEL = 8192u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct
+    MatrixMultiplyAccumulateOperands : u32 { const None = 0u32; const
+    MatrixASignedComponentsINTEL = 1u32; const MatrixBSignedComponentsINTEL = 2u32; const
+    MatrixCBFloat16INTEL = 4u32; const MatrixResultBFloat16INTEL = 8u32; const
+    MatrixAPackedInt8INTEL = 16u32; const MatrixBPackedInt8INTEL = 32u32; const
+    MatrixAPackedInt4INTEL = 64u32; const MatrixBPackedInt4INTEL = 128u32; const
+    MatrixATF32INTEL = 256u32; const MatrixBTF32INTEL = 512u32; const
+    MatrixAPackedFloat16INTEL = 1024u32; const MatrixBPackedFloat16INTEL = 2048u32; const
+    MatrixAPackedBFloat16INTEL = 4096u32; const MatrixBPackedBFloat16INTEL = 8192u32; }
+}
 unsafe impl Operand for MatrixMultiplyAccumulateOperands {
     const KIND: &OperandKind = &OPERAND_KIND_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS;
 }
@@ -4282,7 +4713,12 @@ unsafe impl OperandEncoding for PairIdRefIdRef {
         ))
     }
 }
-bitflags! { # [derive (Copy , Clone , Debug , Eq , PartialEq , Hash)] pub struct TensorOperands : u32 { const NoneARM = 0u32 ; const NontemporalARM = 1u32 ; const OutOfBoundsValueARM = 2u32 ; const MakeElementAvailableARM = 4u32 ; const MakeElementVisibleARM = 8u32 ; const NonPrivateElementARM = 16u32 ; } }
+bitflags! {
+    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct TensorOperands : u32 {
+    const NoneARM = 0u32; const NontemporalARM = 1u32; const OutOfBoundsValueARM = 2u32;
+    const MakeElementAvailableARM = 4u32; const MakeElementVisibleARM = 8u32; const
+    NonPrivateElementARM = 16u32; }
+}
 unsafe impl Operand for TensorOperands {
     const KIND: &OperandKind = &OPERAND_KIND_TENSOR_OPERANDS;
 }
