@@ -8,6 +8,13 @@ use std::path::Path;
 pub const PATH_GRAMMAR_CRATE_SRC: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/../rspirv2/src/");
 
 pub fn main() -> anyhow::Result<()> {
+    let mod_attr = quote! {
+        #![allow(unused_imports)]
+        #![allow(non_camel_case_types)]
+        #![allow(deprecated)]
+        #![allow(clippy::identity_op)]
+    };
+
     write_grammar(
         GrammarWriter::new(Path::new(PATH_GRAMMAR_CRATE_SRC).join("core"))?,
         &PATH_GRAMMAR_CORE.read()?.parse_grammar()?,
@@ -20,12 +27,7 @@ pub fn main() -> anyhow::Result<()> {
                 pub use bitflags::bitflags;
                 pub use smallvec::SmallVec;
             },
-            mod_attr: quote! {
-                #![allow(unused_imports)]
-                #![allow(non_camel_case_types)]
-                #![allow(deprecated)]
-            },
-            ..Default::default()
+            mod_attr: mod_attr.clone(),
         },
     )?;
     write_grammar(
@@ -35,7 +37,7 @@ pub fn main() -> anyhow::Result<()> {
             preamble: quote! {
                 pub use crate::core::preamble::*;
             },
-            ..Default::default()
+            mod_attr: mod_attr.clone(),
         },
     )?;
     write_grammar(
@@ -45,7 +47,7 @@ pub fn main() -> anyhow::Result<()> {
             preamble: quote! {
                 pub use crate::core::preamble::*;
             },
-            ..Default::default()
+            mod_attr: mod_attr.clone(),
         },
     )?;
     Ok(())

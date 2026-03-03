@@ -34,7 +34,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Resu
 
         let members = member_operands
             .iter()
-            .map(|&Operand { ref name, .. }| name)
+            .map(|Operand { name, .. }| name)
             .collect::<Vec<_>>();
         let members_non_last = &members[..members.len().saturating_sub(1)];
         let members_last = members.last().into_iter();

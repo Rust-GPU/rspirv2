@@ -8,7 +8,7 @@ pub const GRAMMAR_EXTINST: ExtInstSetGrammar = ExtInstSetGrammar {
     version: Some(100u32),
     revision: Some(2u32),
 };
-const ALL_INSTS: &'static [&'static InstMeta] = &[
+const ALL_INSTS: &[&InstMeta] = &[
     &ROUND,
     &ROUND_EVEN,
     &TRUNC,
@@ -91,5 +91,5 @@ const ALL_INSTS: &'static [&'static InstMeta] = &[
     &N_MAX,
     &N_CLAMP,
 ];
-const ALL_OPERAND_KINDS: &'static [&'static OperandKind] = &[];
-const ALL_INST_CLASSES: &'static [&'static InstClass] = &[];
+const ALL_OPERAND_KINDS: &[&OperandKind] = &[];
+const ALL_INST_CLASSES: &[&InstClass] = &[];

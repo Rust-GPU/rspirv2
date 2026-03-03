@@ -75,7 +75,7 @@ mod codegen {
     use std::collections::HashMap;
 
     impl InstMeta<'_> {
-        pub fn type_ident(opname: &Cow<str>) -> Ident {
+        pub fn type_ident(opname: &str) -> Ident {
             format_ident!("{}", opname)
         }
 
@@ -190,6 +190,7 @@ mod codegen {
         /// leading to this function returning equivalent Idents for those members. So we need a post pass that ensures
         /// the Idents are unique, to put them in a struct. This makes member naming depend on other members within
         /// the Instruction, making it not trivial to query member names.
+        #[allow(clippy::let_and_return)]
         pub fn member_name_proposal(&self) -> String {
             // try to use `name`, but some names are nonsense Idents
             let name = if let Some(name) = &self.name {
@@ -237,7 +238,7 @@ mod codegen {
 
     impl InstClass<'_> {
         pub fn const_ident(tag: &str) -> Ident {
-            make_const_ident("PRINTING_CLASS_", &tag)
+            make_const_ident("PRINTING_CLASS_", tag)
         }
 
         pub fn emit_def(&self) -> TokenStream {

@@ -10,7 +10,7 @@ pub const GRAMMAR_CORE: CoreGrammar = CoreGrammar {
     minor_version: 6u8,
     revision: 4u32,
 };
-const ALL_INSTS: &'static [&'static InstMeta] = &[
+const ALL_INSTS: &[&InstMeta] = &[
     &OP_NOP,
     &OP_UNDEF,
     &OP_SOURCE_CONTINUED,
@@ -875,7 +875,7 @@ const ALL_INSTS: &'static [&'static InstMeta] = &[
     &OP_CONVERT_HANDLE_TO_SAMPLER_INTEL,
     &OP_CONVERT_HANDLE_TO_SAMPLED_IMAGE_INTEL,
 ];
-const ALL_OPERAND_KINDS: &'static [&'static OperandKind] = &[
+const ALL_OPERAND_KINDS: &[&OperandKind] = &[
     &OPERAND_KIND_IMAGE_OPERANDS,
     &OPERAND_KIND_FP_FAST_MATH_MODE,
     &OPERAND_KIND_SELECTION_CONTROL,
@@ -948,7 +948,7 @@ const ALL_OPERAND_KINDS: &'static [&'static OperandKind] = &[
     &OPERAND_KIND_PAIR_ID_REF_ID_REF,
     &OPERAND_KIND_TENSOR_OPERANDS,
 ];
-const ALL_INST_CLASSES: &'static [&'static InstClass] = &[
+const ALL_INST_CLASSES: &[&InstClass] = &[
     &PRINTING_CLASS_EXCLUDE,
     &PRINTING_CLASS_MISCELLANEOUS,
     &PRINTING_CLASS_DEBUG,

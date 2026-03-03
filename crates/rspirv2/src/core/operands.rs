@@ -21,12 +21,10 @@ unsafe impl OperandEncoding for ImageOperands {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(
-            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<ImageOperands>(
-                stringify!(ImageOperands),
-                bits,
-            ))?,
-        )
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<ImageOperands>(
+            stringify!(ImageOperands),
+            bits,
+        ))
     }
 }
 bitflags! {
@@ -46,12 +44,10 @@ unsafe impl OperandEncoding for FPFastMathMode {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(
-            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FPFastMathMode>(
-                stringify!(FPFastMathMode),
-                bits,
-            ))?,
-        )
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FPFastMathMode>(
+            stringify!(FPFastMathMode),
+            bits,
+        ))
     }
 }
 bitflags! {
@@ -69,12 +65,10 @@ unsafe impl OperandEncoding for SelectionControl {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(
-            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<SelectionControl>(
-                stringify!(SelectionControl),
-                bits,
-            ))?,
-        )
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<SelectionControl>(
+            stringify!(SelectionControl),
+            bits,
+        ))
     }
 }
 bitflags! {
@@ -103,12 +97,10 @@ unsafe impl OperandEncoding for LoopControl {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(
-            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<LoopControl>(
-                stringify!(LoopControl),
-                bits,
-            ))?,
-        )
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<LoopControl>(
+            stringify!(LoopControl),
+            bits,
+        ))
     }
 }
 bitflags! {
@@ -127,12 +119,10 @@ unsafe impl OperandEncoding for FunctionControl {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(
-            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FunctionControl>(
-                stringify!(FunctionControl),
-                bits,
-            ))?,
-        )
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FunctionControl>(
+            stringify!(FunctionControl),
+            bits,
+        ))
     }
 }
 bitflags! {
@@ -156,12 +146,10 @@ unsafe impl OperandEncoding for MemorySemantics {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(
-            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<MemorySemantics>(
-                stringify!(MemorySemantics),
-                bits,
-            ))?,
-        )
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<MemorySemantics>(
+            stringify!(MemorySemantics),
+            bits,
+        ))
     }
 }
 bitflags! {
@@ -183,12 +171,10 @@ unsafe impl OperandEncoding for MemoryAccess {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(
-            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<MemoryAccess>(
-                stringify!(MemoryAccess),
-                bits,
-            ))?,
-        )
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<MemoryAccess>(
+            stringify!(MemoryAccess),
+            bits,
+        ))
     }
 }
 bitflags! {
@@ -206,12 +192,10 @@ unsafe impl OperandEncoding for KernelProfilingInfo {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(
-            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<KernelProfilingInfo>(
-                stringify!(KernelProfilingInfo),
-                bits,
-            ))?,
-        )
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<KernelProfilingInfo>(
+            stringify!(KernelProfilingInfo),
+            bits,
+        ))
     }
 }
 bitflags! {
@@ -233,12 +217,10 @@ unsafe impl OperandEncoding for RayFlags {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(
-            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<RayFlags>(
-                stringify!(RayFlags),
-                bits,
-            ))?,
-        )
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<RayFlags>(
+            stringify!(RayFlags),
+            bits,
+        ))
     }
 }
 bitflags! {
@@ -257,12 +239,10 @@ unsafe impl OperandEncoding for FragmentShadingRate {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(
-            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FragmentShadingRate>(
-                stringify!(FragmentShadingRate),
-                bits,
-            ))?,
-        )
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FragmentShadingRate>(
+            stringify!(FragmentShadingRate),
+            bits,
+        ))
     }
 }
 bitflags! {
@@ -281,14 +261,10 @@ unsafe impl OperandEncoding for RawAccessChainOperands {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(
-            Self::from_bits(bits).ok_or(
-                DecodeError::invalid_bitflags::<RawAccessChainOperands>(
-                    stringify!(RawAccessChainOperands),
-                    bits,
-                ),
-            )?,
-        )
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<RawAccessChainOperands>(
+            stringify!(RawAccessChainOperands),
+            bits,
+        ))
     }
 }
 #[repr(u32)]
@@ -4181,12 +4157,10 @@ unsafe impl OperandEncoding for CooperativeMatrixOperands {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(Self::from_bits(bits).ok_or(
-            DecodeError::invalid_bitflags::<CooperativeMatrixOperands>(
-                stringify!(CooperativeMatrixOperands),
-                bits,
-            ),
-        )?)
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<CooperativeMatrixOperands>(
+            stringify!(CooperativeMatrixOperands),
+            bits,
+        ))
     }
 }
 #[repr(u32)]
@@ -4276,12 +4250,10 @@ unsafe impl OperandEncoding for CooperativeMatrixReduce {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(Self::from_bits(bits).ok_or(
-            DecodeError::invalid_bitflags::<CooperativeMatrixReduce>(
-                stringify!(CooperativeMatrixReduce),
-                bits,
-            ),
-        )?)
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<CooperativeMatrixReduce>(
+            stringify!(CooperativeMatrixReduce),
+            bits,
+        ))
     }
 }
 #[repr(u32)]
@@ -4339,12 +4311,10 @@ unsafe impl OperandEncoding for TensorAddressingOperands {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(Self::from_bits(bits).ok_or(
-            DecodeError::invalid_bitflags::<TensorAddressingOperands>(
-                stringify!(TensorAddressingOperands),
-                bits,
-            ),
-        )?)
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<TensorAddressingOperands>(
+            stringify!(TensorAddressingOperands),
+            bits,
+        ))
     }
 }
 #[repr(u32)]
@@ -4509,11 +4479,9 @@ unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<
             MatrixMultiplyAccumulateOperands,
-        >(
-            stringify!(MatrixMultiplyAccumulateOperands), bits
-        ))?)
+        >(stringify!(MatrixMultiplyAccumulateOperands), bits))
     }
 }
 #[repr(u32)]
@@ -4730,11 +4698,9 @@ unsafe impl OperandEncoding for TensorOperands {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Ok(
-            Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<TensorOperands>(
-                stringify!(TensorOperands),
-                bits,
-            ))?,
-        )
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<TensorOperands>(
+            stringify!(TensorOperands),
+            bits,
+        ))
     }
 }

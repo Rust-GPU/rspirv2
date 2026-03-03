@@ -94,9 +94,9 @@ mod codegen {
             let all_inst_classes_ident = Self::all_inst_classes_ident();
             let all_inst_classes = self.inst_class.iter().map(|i| i.emit_ref());
             quote! {
-                const #all_insts_ident: &'static [&'static InstMeta] = &[#(#all_insts),*];
-                const #all_operand_kinds_ident: &'static [&'static OperandKind] = &[#(#all_operand_kinds),*];
-                const #all_inst_classes_ident: &'static [&'static InstClass] = &[#(#all_inst_classes),*];
+                const #all_insts_ident: &[&InstMeta] = &[#(#all_insts),*];
+                const #all_operand_kinds_ident: &[&OperandKind] = &[#(#all_operand_kinds),*];
+                const #all_inst_classes_ident: &[&InstClass] = &[#(#all_inst_classes),*];
             }
         }
     }

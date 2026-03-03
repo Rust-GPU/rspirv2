@@ -23,7 +23,7 @@ pub struct GrammarWriter {
 }
 
 impl GrammarWriter {
-    pub fn new<'a>(folder: PathBuf) -> anyhow::Result<Self> {
+    pub fn new(folder: PathBuf) -> anyhow::Result<Self> {
         fs::create_dir_all(&folder)?;
         Ok(Self {
             folder,

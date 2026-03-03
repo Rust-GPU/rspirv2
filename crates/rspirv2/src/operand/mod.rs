@@ -171,7 +171,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
 
     #[inline]
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
-        if let Ok(_) = reader.peek() {
+        if reader.peek().is_ok() {
             Ok(Some(T::decode(reader)?))
         } else {
             Ok(None)
@@ -180,7 +180,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
 
     #[inline]
     fn decode_last(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
-        if let Ok(_) = reader.peek() {
+        if reader.peek().is_ok() {
             Ok(Some(T::decode_last(reader)?))
         } else {
             Ok(None)
@@ -225,7 +225,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let mut vec = if let Some(fixed_len) = T::FIXED_LEN {
             let remaining = reader.remaining();
-            if remaining % fixed_len != 0 {
+            if !remaining.is_multiple_of(fixed_len) {
                 return Err(DecodeError::InstructionWithMismatchedVariableOperants {
                     inst_offset: reader.inst_offset(),
                     op_len: reader.remaining(),
@@ -236,7 +236,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
         } else {
             Vec::new()
         };
-        while let Ok(_) = reader.peek() {
+        while reader.peek().is_ok() {
             vec.push(T::decode(reader)?);
         }
         Ok(vec)
@@ -269,7 +269,7 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let mut vec = if let Some(fixed_len) = T::FIXED_LEN {
             let remaining = reader.remaining();
-            if remaining % fixed_len != 0 {
+            if !remaining.is_multiple_of(fixed_len) {
                 return Err(DecodeError::InstructionWithMismatchedVariableOperants {
                     inst_offset: reader.inst_offset(),
                     op_len: reader.remaining(),
@@ -280,7 +280,7 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
         } else {
             SmallVec::new()
         };
-        while let Ok(_) = reader.peek() {
+        while reader.peek().is_ok() {
             vec.push(T::decode(reader)?);
         }
         Ok(vec)
@@ -312,5 +312,11 @@ impl FixedLenComposer {
     #[inline]
     pub const fn finish(self) -> Option<usize> {
         self.0
+    }
+}
+
+impl Default for FixedLenComposer {
+    fn default() -> Self {
+        Self::new()
     }
 }

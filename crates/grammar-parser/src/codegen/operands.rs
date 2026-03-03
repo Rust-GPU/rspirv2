@@ -249,7 +249,7 @@ fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> T
 
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 let bits = reader.pull()?.0;
-                Ok(Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<#name>(stringify!(#name), bits))?)
+                Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<#name>(stringify!(#name), bits))
             }
         }
     }

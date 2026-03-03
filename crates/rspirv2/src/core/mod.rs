@@ -1,6 +1,7 @@
 #![allow(unused_imports)]
 #![allow(non_camel_case_types)]
 #![allow(deprecated)]
+#![allow(clippy::identity_op)]
 pub mod extensions;
 pub mod grammar;
 pub mod inst;

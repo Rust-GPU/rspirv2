@@ -14,6 +14,7 @@ impl<'a> ModuleReader<'a> {
         Self { data, offset: 0 }
     }
 
+    #[allow(clippy::should_implement_trait)]
     pub fn next(&mut self) -> Result<Option<InstReader<'a>>, DecodeError> {
         let inst_offset = self.offset;
         let first = match self.data.get(inst_offset) {
@@ -146,6 +147,7 @@ impl<'a> OperandReader<'a> {
 
     /// len of the params
     #[inline]
+    #[allow(clippy::len_without_is_empty)]
     pub fn len(&self) -> usize {
         self.params.len()
     }
