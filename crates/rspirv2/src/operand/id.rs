@@ -1,8 +1,34 @@
 //! All Operands with `Category::Id`
 
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
-use crate::meta::OperandKind;
+use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandEncoding, Word};
+
+pub const OPERAND_KIND_ID_RESULT_TYPE: OperandKind = OperandKind {
+    name: "IdResultType",
+    category: Category::Id,
+    doc: "Reference to an <id> representing the result's type of the enclosing instruction",
+};
+pub const OPERAND_KIND_ID_RESULT: OperandKind = OperandKind {
+    name: "IdResult",
+    category: Category::Id,
+    doc: "Definition of an <id> representing the result of the enclosing instruction",
+};
+pub const OPERAND_KIND_ID_MEMORY_SEMANTICS: OperandKind = OperandKind {
+    name: "IdMemorySemantics",
+    category: Category::Id,
+    doc: "Reference to an <id> representing a 32-bit integer that is a mask from the MemorySemantics operand kind",
+};
+pub const OPERAND_KIND_ID_SCOPE: OperandKind = OperandKind {
+    name: "IdScope",
+    category: Category::Id,
+    doc: "Reference to an <id> representing a 32-bit integer that is a mask from the Scope operand kind",
+};
+pub const OPERAND_KIND_ID_REF: OperandKind = OperandKind {
+    name: "IdRef",
+    category: Category::Id,
+    doc: "Reference to an <id>",
+};
 
 /// A SPIR-V "Result ID".
 ///
@@ -18,7 +44,7 @@ unsafe impl bytemuck::Zeroable for IdResult {}
 unsafe impl bytemuck::Pod for IdResult {}
 
 unsafe impl Operand for IdResult {
-    const KIND: &OperandKind = &crate::core::operand_kinds::OPERAND_KIND_ID_RESULT;
+    const KIND: &OperandKind = &OPERAND_KIND_ID_RESULT;
 }
 
 unsafe impl OperandEncoding for IdResult {
@@ -94,7 +120,7 @@ macro_rules! id_ref {
     };
 }
 
-id_ref!(IdResultType; crate::core::operand_kinds::OPERAND_KIND_ID_RESULT_TYPE; "");
-id_ref!(IdMemorySemantics; crate::core::operand_kinds::OPERAND_KIND_ID_MEMORY_SEMANTICS; "");
-id_ref!(IdScope; crate::core::operand_kinds::OPERAND_KIND_ID_SCOPE; "");
-id_ref!(IdRef; crate::core::operand_kinds::OPERAND_KIND_ID_REF; "");
+id_ref!(IdResultType; OPERAND_KIND_ID_RESULT_TYPE; "");
+id_ref!(IdMemorySemantics; OPERAND_KIND_ID_MEMORY_SEMANTICS; "");
+id_ref!(IdScope; OPERAND_KIND_ID_SCOPE; "");
+id_ref!(IdRef; OPERAND_KIND_ID_REF; "");

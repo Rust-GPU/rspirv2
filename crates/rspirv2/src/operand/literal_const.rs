@@ -1,7 +1,13 @@
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
-use crate::meta::OperandKind;
+use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandEncoding, Word};
 use smallvec::SmallVec;
+
+pub const OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER: OperandKind = OperandKind {
+    name: "LiteralContextDependentNumber",
+    category: Category::Literal,
+    doc: "A literal number whose size and format are determined by a previous operand in the enclosing instruction",
+};
 
 /// A `LiteralContextDependentNumber`, or `LiteralConst` for short since it's only used by `OpConstant` (and
 /// `OpSpecConstant`) instructions.
@@ -82,8 +88,7 @@ impl_float!(f32);
 impl_float!(f64);
 
 unsafe impl Operand for LiteralConst {
-    const KIND: &OperandKind =
-        &crate::core::operand_kinds::OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER;
+    const KIND: &OperandKind = &OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER;
 }
 
 unsafe impl OperandEncoding for LiteralConst {

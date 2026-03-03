@@ -13135,61 +13135,6 @@ pub const OPERAND_KIND_COMPONENT_TYPE: OperandKind = OperandKind {
     },
     doc: "",
 };
-pub const OPERAND_KIND_ID_RESULT_TYPE: OperandKind = OperandKind {
-    name: "IdResultType",
-    category: Category::Id,
-    doc: "Reference to an <id> representing the result's type of the enclosing instruction",
-};
-pub const OPERAND_KIND_ID_RESULT: OperandKind = OperandKind {
-    name: "IdResult",
-    category: Category::Id,
-    doc: "Definition of an <id> representing the result of the enclosing instruction",
-};
-pub const OPERAND_KIND_ID_MEMORY_SEMANTICS: OperandKind = OperandKind {
-    name: "IdMemorySemantics",
-    category: Category::Id,
-    doc: "Reference to an <id> representing a 32-bit integer that is a mask from the MemorySemantics operand kind",
-};
-pub const OPERAND_KIND_ID_SCOPE: OperandKind = OperandKind {
-    name: "IdScope",
-    category: Category::Id,
-    doc: "Reference to an <id> representing a 32-bit integer that is a mask from the Scope operand kind",
-};
-pub const OPERAND_KIND_ID_REF: OperandKind = OperandKind {
-    name: "IdRef",
-    category: Category::Id,
-    doc: "Reference to an <id>",
-};
-pub const OPERAND_KIND_LITERAL_INTEGER: OperandKind = OperandKind {
-    name: "LiteralInteger",
-    category: Category::Literal,
-    doc: "An integer consuming one or more words",
-};
-pub const OPERAND_KIND_LITERAL_STRING: OperandKind = OperandKind {
-    name: "LiteralString",
-    category: Category::Literal,
-    doc: "A null-terminated stream of characters consuming an integral number of words",
-};
-pub const OPERAND_KIND_LITERAL_FLOAT: OperandKind = OperandKind {
-    name: "LiteralFloat",
-    category: Category::Literal,
-    doc: "A float consuming one word",
-};
-pub const OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER: OperandKind = OperandKind {
-    name: "LiteralContextDependentNumber",
-    category: Category::Literal,
-    doc: "A literal number whose size and format are determined by a previous operand in the enclosing instruction",
-};
-pub const OPERAND_KIND_LITERAL_EXT_INST_INTEGER: OperandKind = OperandKind {
-    name: "LiteralExtInstInteger",
-    category: Category::Literal,
-    doc: "A 32-bit unsigned integer indicating which instruction to use and determining the layout of following operands (for OpExtInst)",
-};
-pub const OPERAND_KIND_LITERAL_SPEC_CONSTANT_OP_INTEGER: OperandKind = OperandKind {
-    name: "LiteralSpecConstantOpInteger",
-    category: Category::Literal,
-    doc: "An opcode indicating the operation to be performed and determining the layout of following operands (for OpSpecConstantOp)",
-};
 pub const OPERAND_KIND_PAIR_LITERAL_INTEGER_ID_REF: OperandKind = OperandKind {
     name: "PairLiteralIntegerIdRef",
     category: Category::Composite {

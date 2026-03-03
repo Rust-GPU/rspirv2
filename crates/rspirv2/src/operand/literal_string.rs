@@ -1,6 +1,12 @@
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
-use crate::meta::OperandKind;
+use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandEncoding, Word};
+
+pub const OPERAND_KIND_LITERAL_STRING: OperandKind = OperandKind {
+    name: "LiteralString",
+    category: Category::Literal,
+    doc: "A null-terminated stream of characters consuming an integral number of words",
+};
 
 /// A SPIR-V String literal. Defined as a sequence of UTF-8, so we can just use an ordinary [`String`].
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -24,7 +30,7 @@ impl LiteralString {
 }
 
 unsafe impl Operand for LiteralString {
-    const KIND: &OperandKind = &crate::core::operand_kinds::OPERAND_KIND_LITERAL_STRING;
+    const KIND: &OperandKind = &OPERAND_KIND_LITERAL_STRING;
 }
 
 unsafe impl OperandEncoding for LiteralString {

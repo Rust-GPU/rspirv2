@@ -81,16 +81,21 @@ mod codegen {
         }
 
         pub fn emit_def(&self) -> TokenStream {
-            let ident = Self::const_ident(&self.name);
-            let name = self.name.emit_ref();
-            let category = self.category.emit_ref();
-            let doc = self.doc.emit_ref();
-            quote! {
-                pub const #ident: OperandKind = OperandKind {
-                    name: #name,
-                    category: #category,
-                    doc: #doc,
-                };
+            match self.category {
+                Category::Id | Category::Literal => quote!(),
+                _ => {
+                    let ident = Self::const_ident(&self.name);
+                    let name = self.name.emit_ref();
+                    let category = self.category.emit_ref();
+                    let doc = self.doc.emit_ref();
+                    quote! {
+                        pub const #ident: OperandKind = OperandKind {
+                            name: #name,
+                            category: #category,
+                            doc: #doc,
+                        };
+                    }
+                }
             }
         }
     }

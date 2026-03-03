@@ -1,6 +1,22 @@
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
-use crate::meta::OperandKind;
+use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandEncoding, Word};
+
+pub const OPERAND_KIND_LITERAL_INTEGER: OperandKind = OperandKind {
+    name: "LiteralInteger",
+    category: Category::Literal,
+    doc: "An integer consuming one or more words",
+};
+pub const OPERAND_KIND_LITERAL_EXT_INST_INTEGER: OperandKind = OperandKind {
+    name: "LiteralExtInstInteger",
+    category: Category::Literal,
+    doc: "A 32-bit unsigned integer indicating which instruction to use and determining the layout of following operands (for OpExtInst)",
+};
+pub const OPERAND_KIND_LITERAL_SPEC_CONSTANT_OP_INTEGER: OperandKind = OperandKind {
+    name: "LiteralSpecConstantOpInteger",
+    category: Category::Literal,
+    doc: "An opcode indicating the operation to be performed and determining the layout of following operands (for OpSpecConstantOp)",
+};
 
 macro_rules! def_literal_integer {
     ($name:ident; $kind:expr; $docs:literal) => {
@@ -59,7 +75,7 @@ macro_rules! def_literal_integer {
 
 def_literal_integer!(
     LiteralInteger;
-    crate::core::operand_kinds::OPERAND_KIND_LITERAL_INTEGER;
+    OPERAND_KIND_LITERAL_INTEGER;
     r#"An integer literal as defined by SPIR-V spec: a 32bit integer.
 
 Technically, the spec doesn't actually say that it's a 32bit integer. But every use of `LiteralInteger` defines the
@@ -70,12 +86,12 @@ integer as an "unsigned 32bit integer", so most tooling has resorted to defining
 
 def_literal_integer!(
     LiteralExtInstInteger;
-    crate::core::operand_kinds::OPERAND_KIND_LITERAL_EXT_INST_INTEGER;
+    OPERAND_KIND_LITERAL_EXT_INST_INTEGER;
     "The Instruction ID from an extended instruction set, backed by a 32bit integer."
 );
 
 def_literal_integer!(
     LiteralSpecConstantOpInteger;
-    crate::core::operand_kinds::OPERAND_KIND_LITERAL_SPEC_CONSTANT_OP_INTEGER;
+    OPERAND_KIND_LITERAL_SPEC_CONSTANT_OP_INTEGER;
     "The Instruction ID for an `OpSpecConstantOp`, backed by a 32bit integer."
 );
