@@ -1,6 +1,6 @@
 use crate::meta::{AnyCapability, Extension, OperandSpecMeta};
 
-/// Specifies possible [`Operand`] values, see [`Category`] variants.
+/// Specifies possible Operand values, see [`Category`] variants.
 #[derive(Copy, Clone, Debug)]
 pub struct OperandKind {
     /// The name and primary key of the `OperandKind` (called `kind` in the JSON)
@@ -19,7 +19,7 @@ pub enum Category {
         /// The possible values of the enum
         enumerants: &'static [Enumerant],
     },
-    /// A composite out of 2 or more [`Operand`]s
+    /// A composite out of 2 or more Operands
     Composite {
         /// describes the [`OperandKind`]s this [`OperandKind`] is made out of
         bases: &'static [&'static OperandKind],

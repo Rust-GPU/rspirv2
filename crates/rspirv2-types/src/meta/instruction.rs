@@ -4,7 +4,7 @@ use crate::meta::{AnyCapability, Extension, OperandKind};
 pub struct InstMeta {
     /// The name of the instruction
     pub opname: &'static str,
-    /// The [`Class`] of this instruction, more informational than anything
+    /// The [`InstClass`] of this instruction, more informational than anything
     pub class: Option<&'static InstClass>,
     /// The u16 opcode for this instruction
     pub opcode: u16,
@@ -28,6 +28,8 @@ pub struct InstMeta {
 #[derive(Copy, Clone, Debug)]
 pub struct OperandSpecMeta {
     /// The kind of operand, referencing the [`OperandKind`]s defined in [`Grammar`]
+    ///
+    /// [`Grammar`]: `crate::meta::Grammar`
     pub kind: &'static OperandKind,
     /// Operand name
     pub name: Option<&'static str>,

@@ -12,7 +12,7 @@ pub trait Inst: Sized + Debug + Eq {
     /// Query the potential [`IdResult`] of this Instruction, or `()` if it has none.
     fn id_result(&mut self) -> &mut Self::MaybeIdResult;
 
-    /// Encode this instruction to an [`InstWriter`]
+    /// Encode this instruction to a [`WordWriter`]
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError>;
 
     /// Decode this instruction from an [`InstReader`]

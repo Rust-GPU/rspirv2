@@ -8,6 +8,7 @@ codegen = ["quote", "proc-macro2", "convert_case", "unicode-ident"]
 prettyplease = ["dep:prettyplease", "dep:syn"]
 
 [dependencies]
+rspirv2-types.workspace = true
 anyhow.workspace = true
 serde.workspace = true
 serde_json.workspace = true

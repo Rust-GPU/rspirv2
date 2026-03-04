@@ -79,7 +79,7 @@ unsafe impl<T: Operand> OperandSpec for T {
 /// [`Quantifier::ZeroOrMore`] (`Vec`).
 ///
 /// # Safety
-/// * [`Self::encode`] must [`InstructionWriter::write`] exactly [`Self::word_len`] many [`Word`]s.
+/// * [`Self::encode`] must [`WordWriter::write`] exactly [`Self::word_len`] many [`Word`]s.
 /// * [`Self::decode`] must [`OperandReader::pull`] (or [`Iterator::next`]) exactly [`Self::word_len`] many
 ///   [`Word`]s.
 /// * If [`Self::FIXED_LEN`] is `Some`, it must equal the computed [`Self::word_len`].
