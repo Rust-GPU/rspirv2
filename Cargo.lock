@@ -108,7 +108,6 @@ dependencies = [
  "prettyplease",
  "proc-macro2",
  "quote",
- "rspirv2-types",
  "serde",
  "serde_json",
  "smallvec",

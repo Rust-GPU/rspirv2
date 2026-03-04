@@ -3,7 +3,7 @@ use crate::parse::{Capability, Extension, OperandSpecMeta};
 use smallvec::SmallVec;
 use std::borrow::Cow;
 
-/// See [`rspirv2_types::meta::OperandKind`]
+/// See `rspirv2_types::meta::OperandKind`
 #[derive(Clone, Debug, serde::Deserialize)]
 pub struct OperandKind<'a> {
     #[serde(borrow, rename = "kind")]
@@ -14,7 +14,7 @@ pub struct OperandKind<'a> {
     pub doc: Cow<'a, str>,
 }
 
-/// See [`rspirv2_types::meta::Category`]
+/// See `rspirv2_types::meta::Category`
 #[derive(Clone, Debug, serde::Deserialize)]
 #[serde(tag = "category")]
 pub enum Category<'a> {
@@ -36,7 +36,7 @@ pub enum Category<'a> {
     },
 }
 
-/// See [`rspirv2_types::meta::Enumerant`]
+/// See `rspirv2_types::meta::Enumerant`
 #[derive(Clone, Debug, Default, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Enumerant<'a> {

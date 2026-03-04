@@ -1,4 +1,4 @@
-//! Closely follows the struct definitions in [`rspirv2_types::meta`], but represents the SPIR-V JSON much more closely:
+//! Closely follows the struct definitions in `rspirv2_types::meta`, but represents the SPIR-V JSON much more closely:
 //! * no `'static` lifetimes
 //!   * strings use a `'a` lifetime to borrow string from the JSON
 //!   * slices use [`Vec`] and [`SmallVec`]
