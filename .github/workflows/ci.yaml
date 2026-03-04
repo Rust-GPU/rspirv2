@@ -31,6 +31,8 @@ jobs:
       - name: install rust-toolchain
         run: echo "TARGET=$(rustc --print host-tuple)" >> "$GITHUB_ENV"
       - run: cargo binstall cargo-nextest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # Fetch dependencies in a separate step to clearly show how long each part
       # of the testing takes
       - name: cargo fetch --locked
