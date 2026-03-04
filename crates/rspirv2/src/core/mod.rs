@@ -7,6 +7,7 @@ pub mod grammar;
 pub mod inst;
 pub mod inst_class;
 pub mod inst_meta;
+pub mod inst_set;
 pub mod operand_kinds;
 pub mod operands;
 impl preamble::AnyCapability for preamble::Capability {}
@@ -16,6 +17,7 @@ pub mod preamble {
     pub use super::inst::*;
     pub use super::inst_class::*;
     pub use super::inst_meta::*;
+    pub use super::inst_set::*;
     pub use super::operand_kinds::*;
     pub use super::operands::*;
     pub use crate::binary::*;

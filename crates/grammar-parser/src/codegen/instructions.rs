@@ -1,6 +1,7 @@
+use crate::codegen::options::CodegenOptions;
 use crate::codegen::{GrammarWriter, OPERAND_ID_RESULT};
 use crate::parse::{Grammar, InstMeta, Operand, Quantifier};
-use quote::quote;
+use quote::{format_ident, quote};
 
 pub const SMALLVEC_LEN: usize = 4;
 
@@ -78,6 +79,42 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Resu
         "inst",
         quote! {
             #(#insts)*
+        },
+    )
+}
+
+pub fn write_inst_enum(
+    writer: &mut GrammarWriter,
+    grammar: &Grammar,
+    opt: &CodegenOptions,
+) -> anyhow::Result<()> {
+    let name = format_ident!("{}InstSet", opt.name_suffix_type);
+    let enum_variants = grammar.insts.iter().map(|inst| {
+        let type_ident = InstMeta::type_ident(&inst.opname);
+        let enum_ident = InstMeta::enum_ident(&inst.opname);
+        quote! {
+            #enum_ident(#type_ident),
+        }
+    });
+    let from_impls = grammar.insts.iter().map(|inst| {
+        let type_ident = InstMeta::type_ident(&inst.opname);
+        let enum_ident = InstMeta::enum_ident(&inst.opname);
+        quote! {
+            impl From<#type_ident> for #name {
+                fn from(inst: #type_ident) -> Self {
+                    Self::#enum_ident(inst)
+                }
+            }
+        }
+    });
+    writer.write_module(
+        "inst_set",
+        quote! {
+            #[derive(Clone, Debug, Eq, PartialEq, Hash)]
+            pub enum #name {
+                #(#enum_variants)*
+            }
+            #(#from_impls)*
         },
     )
 }

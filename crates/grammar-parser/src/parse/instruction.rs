@@ -79,6 +79,10 @@ mod codegen {
             format_ident!("{}", opname)
         }
 
+        pub fn enum_ident(opname: &str) -> Ident {
+            format_ident!("{}", opname.strip_prefix("Op").unwrap_or(opname))
+        }
+
         pub fn const_ident(opname: &str) -> Ident {
             make_const_ident("", opname)
         }

@@ -1,3 +1,4 @@
+use crate::codegen::options::CodegenOptions;
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use std::fs;
@@ -8,51 +9,6 @@ use std::process::Command;
 pub fn use_super() -> TokenStream {
     quote! {
         use super::preamble::*;
-    }
-}
-
-#[derive(Clone, Debug, Default)]
-pub struct ModOptions {
-    pub mod_attr: TokenStream,
-    pub mod_extra: TokenStream,
-    pub preamble: TokenStream,
-}
-
-impl ModOptions {
-    pub fn mod_lints() -> TokenStream {
-        quote! {
-            #![allow(unused_imports)]
-            #![allow(non_camel_case_types)]
-            #![allow(deprecated)]
-            #![allow(clippy::identity_op)]
-        }
-    }
-
-    pub fn new_core() -> Self {
-        Self {
-            preamble: quote! {
-                pub use crate::binary::*;
-                pub use crate::inst::*;
-                pub use crate::meta::*;
-                pub use crate::operand::*;
-                pub use bitflags::bitflags;
-                pub use smallvec::SmallVec;
-            },
-            mod_attr: Self::mod_lints(),
-            mod_extra: quote! {
-                impl preamble::AnyCapability for preamble::Capability {}
-            },
-        }
-    }
-
-    pub fn new_ext_inst_set(path_to_core: &TokenStream) -> Self {
-        ModOptions {
-            preamble: quote! {
-                pub use #path_to_core::preamble::*;
-            },
-            mod_attr: Self::mod_lints(),
-            ..Default::default()
-        }
     }
 }
 
@@ -107,14 +63,14 @@ impl GrammarWriter {
     }
 
     /// Finish writing the grammar
-    pub fn finish(self, mod_options: ModOptions) -> anyhow::Result<()> {
+    pub fn finish(self, mod_options: &CodegenOptions) -> anyhow::Result<()> {
         self.write_mod_rs(mod_options)?;
         self.format_submodules()?;
         Ok(())
     }
 
     /// always write mod.rs and don't add to `submodules`
-    fn write_mod_rs(&self, mod_options: ModOptions) -> anyhow::Result<()> {
+    fn write_mod_rs(&self, mod_options: &CodegenOptions) -> anyhow::Result<()> {
         fs::write(
             self.submodule_file("mod"),
             self.codegen_mod_rs(mod_options)?.to_string(),
@@ -123,17 +79,18 @@ impl GrammarWriter {
     }
 
     /// see [`use_super`]
-    fn codegen_mod_rs(&self, mod_options: ModOptions) -> anyhow::Result<TokenStream> {
+    fn codegen_mod_rs(&self, mod_options: &CodegenOptions) -> anyhow::Result<TokenStream> {
         let (mods, imports): (Vec<_>, Vec<_>) = self
             .submodules
             .iter()
             .map(|s| format_ident!("{}", s))
             .map(|s| (quote!(pub mod #s;), quote!(pub use super::#s::*;)))
             .unzip();
-        let ModOptions {
+        let CodegenOptions {
             mod_attr,
             mod_extra,
             preamble,
+            ..
         } = mod_options;
         Ok(quote! {
             #mod_attr
