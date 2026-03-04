@@ -84,7 +84,7 @@ impl GrammarWriter {
         Ok(())
     }
 
-    /// Write the definitions ([`EmitRef::emit_def`]) of some emittable struct to a module
+    /// Write some `content` to a module file called `submodule`
     pub fn write_module(&mut self, submodule: &str, content: TokenStream) -> anyhow::Result<()> {
         if content.is_empty() {
             return Ok(());

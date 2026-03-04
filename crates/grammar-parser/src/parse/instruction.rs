@@ -2,7 +2,7 @@ use crate::parse::{Capability, Extension};
 use smallvec::SmallVec;
 use std::borrow::Cow;
 
-/// See [`spirv_grammar::meta::InstMeta`]
+/// See [`rspirv2_types::meta::InstMeta`]
 #[derive(Clone, Debug, Default, serde::Deserialize)]
 pub struct InstMeta<'a> {
     #[serde(borrow)]
@@ -27,10 +27,10 @@ pub struct InstMeta<'a> {
     pub provisional: bool,
 }
 
-/// See [`spirv_grammar::meta::OperandSpecMeta`]
+/// See [`rspirv2_types::meta::OperandSpecMeta`]
 #[derive(Clone, Debug, Default, serde::Deserialize)]
 pub struct OperandSpecMeta<'a> {
-    /// The name of the [`OperandKind`], references `Grammar.operand_kinds`
+    /// The name of the [`crate::parse::OperandKind`], references `Grammar.operand_kinds`
     #[serde(borrow)]
     pub kind: Cow<'a, str>,
     #[serde(borrow, default)]
@@ -52,7 +52,7 @@ pub enum Quantifier {
     ZeroOrMore,
 }
 
-/// See [`spirv_grammar::meta::InstClass`]
+/// See [`rspirv2_types::meta::InstClass`]
 #[derive(Clone, Debug, serde::Deserialize)]
 pub struct InstClass<'a> {
     #[serde(borrow)]

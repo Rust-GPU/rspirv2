@@ -21,7 +21,7 @@ pub fn ref_ident(ident: Ident) -> TokenStream {
 ///
 /// There are two possible ways to implement this trait:
 /// 1. [`Self::emit_ref`] emits the value as-is.
-/// 2. [`Self::emit_ref`] emits a reference to a constant, and they have a function [`Self::emit_def`] that emits said
+/// 2. [`Self::emit_ref`] emits a reference to a constant, and they have a function `emit_def` that emits said
 ///    constant, defined outside of this trait.
 ///
 /// The first should be used for trivial types such as `str`, integers and any kind of slice. The second allows user
@@ -32,8 +32,8 @@ pub fn ref_ident(ident: Ident) -> TokenStream {
 /// You should assume that any constants you use are present within the same module, or the appropriate glob use
 /// statements have imported it.
 ///
-/// [`Instructions`]: `crate::meta::InstructionMeta`
-/// [`OperandKind`]: `crate::meta::OperandKind`
+/// [`Instructions`]: `crate::parse::InstMeta`
+/// [`OperandKind`]: `crate::parse::OperandKind`
 pub trait EmitRef {
     /// Emit a reference to this type, to be used within other `quote!`s.
     fn emit_ref(&self) -> TokenStream;

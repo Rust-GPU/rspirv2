@@ -9,18 +9,18 @@ pub const OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER: OperandKind = OperandKi
     doc: "A literal number whose size and format are determined by a previous operand in the enclosing instruction",
 };
 
-/// A `LiteralContextDependentNumber`, or `LiteralConst` for short since it's only used by `OpConstant` (and
+/// A `LiteralContextDependentNumber`, or [`LiteralConst`] for short since it's only used by `OpConstant` (and
 /// `OpSpecConstant`) instructions.
 ///
 /// A number of content dependent length, as defined by SPIR-V spec. May represent any number of [`Word`]s, depending on
 /// the type of the constant.
 ///
 /// # Parsing Assumption
-/// > We assume that `LiteralInteger` is always the last [`Operand`] in an [`Instruction`] and never has a quantity of
+/// > We assume that [`LiteralConst`] is always the last [`Operand`] in an [`Instruction`] and never has a quantity of
 /// > [`Quantifier::ZeroOrMore`].
 ///
 /// The current spec satisfies this requirement. `OpConstant` / `OpSpecConstant` are the only instructions to consume
-/// a `LiteralInteger` as the last operant and expect exactly one operant.
+/// a [`LiteralConst`] as the last operant and expect exactly one operant.
 ///
 /// This greatly simplifies parsing, as we can simply assume the remaining words of this instruction all contribute to
 /// the constant operand. The "correct" way to handle this would be to parse the "result type id", resolve its type
@@ -28,10 +28,10 @@ pub const OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER: OperandKind = OperandKi
 /// implementation vastly more complex and likely have a negative impact on decoding performance, which is why we
 /// decided to make this assumption about SPIR-V grammars.
 ///
-/// A `LiteralInteger` can only be decoded with [`Operand::decode_last`]. Decoding an `LiteralInteger` not as the last
-/// operand, aka. calling [`Operand::decode`], will always return an Error.
+/// A [`LiteralConst`] can only be decoded with [`OperandEncoding::decode_last`]. Decoding an `LiteralInteger` not as
+/// the last operand, aka. calling [`OperandEncoding::decode`], will always return an Error.
 ///
-/// [`Instruction`]: `crate::instruction::Instruction`
+/// [`Instruction`]: crate::meta::InstMeta
 /// [`Quantifier::ZeroOrMore`]: `crate::meta::Quantifier`
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct LiteralConst(SmallVec<[Word; 2]>);

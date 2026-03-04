@@ -101,7 +101,7 @@ impl<'a> Deref for OperandReader<'a> {
 }
 
 impl<'a> OperandReader<'a> {
-    /// Peek at the next [`Word`] in the [`InstructionReader`] without advancing the [`Self::params_offset`].
+    /// Peek at the next [`Word`] in the [`InstReader`] without advancing the [`Self::params_offset`].
     ///
     /// Calling this again will yield the same value, advance the [`Self::params_offset`] by [`Self::pull`]ing the
     /// [`Word`].
@@ -115,7 +115,7 @@ impl<'a> OperandReader<'a> {
         )?)
     }
 
-    /// Pull a single [`Word`] from the [`InstructionReader`], advancing the [`Self::params_offset`].
+    /// Pull a single [`Word`] from the [`InstReader`], advancing the [`Self::params_offset`].
     ///
     /// Calling this again will yield the next [`Word`].
     #[inline]

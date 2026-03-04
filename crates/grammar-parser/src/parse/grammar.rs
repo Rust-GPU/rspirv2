@@ -2,7 +2,7 @@ use crate::parse::serde_helper::num_or_hex;
 use crate::parse::{InstClass, InstMeta, OperandKind};
 use std::ops::Deref;
 
-/// See [`spirv_grammar::meta::Grammar`]
+/// See [`rspirv2_types::meta::Grammar`]
 #[derive(Clone, Debug, Default, serde::Deserialize)]
 pub struct Grammar<'a> {
     // ignore the copyright
@@ -16,7 +16,7 @@ pub struct Grammar<'a> {
     pub inst_class: Vec<InstClass<'a>>,
 }
 
-/// See [`spirv_grammar::meta::CoreGrammar`]
+/// See [`rspirv2_types::meta::CoreGrammar`]
 #[derive(Clone, Debug, serde::Deserialize)]
 pub struct CoreGrammar<'a> {
     #[serde(borrow, flatten)]
@@ -36,7 +36,7 @@ impl<'a> Deref for CoreGrammar<'a> {
     }
 }
 
-/// See [`spirv_grammar::meta::ExtInstSetGrammar`]
+/// See [`rspirv2_types::meta::ExtInstSetGrammar`]
 #[derive(Clone, Debug, serde::Deserialize)]
 pub struct ExtInstSetGrammar<'a> {
     #[serde(borrow, flatten)]
