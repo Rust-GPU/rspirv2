@@ -159,7 +159,7 @@ fn test_non_trivial_code() -> anyhow::Result<()> {
     spirv.push_mut(&mut store_op)?;
 
     let mut mod_reader = ModuleReader::new(spirv.words.as_slice());
-    let mut decode = || Ok::<_, anyhow::Error>(mod_reader.next()?.context("No further ops")?);
+    let mut decode = || mod_reader.next()?.context("No further ops");
     assert_eq!(u32_op, OpTypeInt::decode(&mut decode()?)?);
     assert_eq!(u32_1_op, OpConstant::decode(&mut decode()?)?);
     assert_eq!(add_op, OpIAdd::decode(&mut decode()?)?);
