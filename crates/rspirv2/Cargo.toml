@@ -4,11 +4,10 @@ version.workspace = true
 edition.workspace = true
 
 [features]
-bytemuck = ["dep:bytemuck", "bitflags/bytemuck"]
+bytemuck = ["rspirv2-types/bytemuck"]
 
 [dependencies]
-# bytemuck without derive feature to not require syn and slow compilation
-bytemuck = { workspace = true, optional = true }
+rspirv2-types.workspace = true
 bitflags.workspace = true
 smallvec.workspace = true
 

@@ -4,6 +4,7 @@ members = [
 	"crates/grammar",
 	"crates/grammar-parser",
 	"crates/rspirv2",
+	"crates/rspirv2-types",
 ]
 resolver = "3"
 
@@ -15,6 +16,7 @@ license = "MIT OR Apache-2.0"
 
 [workspace.dependencies]
 rspirv2 = { path = "crates/rspirv2" }
+rspirv2-types = { path = "crates/rspirv2-types" }
 rspirv2-grammar = { path = "crates/grammar" }
 rspirv2-grammar-parser = { path = "crates/grammar-parser" }
 

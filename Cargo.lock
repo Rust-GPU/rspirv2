@@ -87,7 +87,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "bitflags",
- "bytemuck",
+ "rspirv2-types",
  "smallvec",
 ]
 
@@ -113,6 +113,16 @@ dependencies = [
  "smallvec",
  "syn",
  "unicode-ident",
+]
+
+[[package]]
+name = "rspirv2-types"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bitflags",
+ "bytemuck",
+ "smallvec",
 ]
 
 [[package]]
