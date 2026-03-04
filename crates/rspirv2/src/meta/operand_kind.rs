@@ -1,4 +1,4 @@
-use crate::meta::{Capability, Extension, OperandSpecMeta};
+use crate::meta::{AnyCapability, Extension, OperandSpecMeta};
 
 /// Specifies possible [`Operand`] values, see [`Category`] variants.
 #[derive(Copy, Clone, Debug)]
@@ -46,7 +46,7 @@ pub struct Enumerant {
     /// Usually 0-sized, often 1 and sometimes a 3D vector.
     pub parameters: &'static [OperandSpecMeta],
     /// required capabilities.
-    pub capabilities: &'static [Capability],
+    pub capabilities: &'static [&'static dyn AnyCapability],
     /// required extensions.
     pub extensions: &'static [Extension],
     /// The SPIR-V version this enumerant was introduced in

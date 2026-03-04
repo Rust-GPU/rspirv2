@@ -14,6 +14,7 @@ pub fn use_super() -> TokenStream {
 #[derive(Clone, Debug, Default)]
 pub struct ModOptions {
     pub mod_attr: TokenStream,
+    pub mod_extra: TokenStream,
     pub preamble: TokenStream,
 }
 
@@ -92,14 +93,16 @@ impl GrammarWriter {
             .map(|s| (quote!(pub mod #s;), quote!(pub use super::#s::*;)))
             .unzip();
         let ModOptions {
-            mod_attr: lints_extra,
-            preamble: preamble_extra,
+            mod_attr,
+            mod_extra,
+            preamble,
         } = mod_options;
         Ok(quote! {
-            #lints_extra
+            #mod_attr
             #(#mods)*
+            #mod_extra
             pub mod preamble {
-                #preamble_extra
+                #preamble
                 #(#imports)*
             }
         })

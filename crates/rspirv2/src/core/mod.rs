@@ -9,6 +9,7 @@ pub mod inst_class;
 pub mod inst_meta;
 pub mod operand_kinds;
 pub mod operands;
+impl preamble::AnyCapability for preamble::Capability {}
 pub mod preamble {
     pub use super::extensions::*;
     pub use super::grammar::*;

@@ -12,6 +12,7 @@ pub use literal_float::*;
 pub use literal_integer::*;
 pub use literal_string::*;
 use smallvec::SmallVec;
+use std::fmt::Debug;
 
 /// A 32bit SPIR-V Word
 #[repr(transparent)]
@@ -48,7 +49,7 @@ impl Word {
 ///
 /// # Safety
 /// * [`Self::KIND`] must match this implementation
-pub unsafe trait Operand: OperandEncoding {
+pub unsafe trait Operand: OperandEncoding + Debug {
     const KIND: &OperandKind;
 }
 
@@ -59,7 +60,7 @@ pub unsafe trait Operand: OperandEncoding {
 ///
 /// # Safety
 /// * should not be implemented outside of this file
-pub unsafe trait OperandSpec: OperandEncoding {
+pub unsafe trait OperandSpec: OperandEncoding + Debug {
     /// The [`Operand`]
     type Operand: Operand;
     /// The [`Quantifier`] or repetition factor of the [`Self::Operand`]
@@ -87,7 +88,7 @@ unsafe impl<T: Operand> OperandSpec for T {
 /// builds.
 ///
 /// [`OperandSpecMeta`]: `crate::meta::OperandSpecMeta`
-pub unsafe trait OperandEncoding: Sized {
+pub unsafe trait OperandEncoding: Sized + Debug {
     /// The fixed length of the Operand, or `None` if it's variable length. Specifying this is an optimization for
     /// operand length calculation. See the safety contract in [`OperandEncoding`].
     const FIXED_LEN: Option<usize>;

@@ -52,7 +52,7 @@ mod codegen {
     impl EmitRef for Capability<'_> {
         fn emit_ref(&self) -> TokenStream {
             let variant = Enumerant::variant_ident(&self.0);
-            quote!(Capability::#variant)
+            quote!(&Capability::#variant)
         }
     }
 }

@@ -1,4 +1,5 @@
 #![doc = include_str!("../README.md")]
+#![allow(clippy::needless_update)]
 
 use rspirv2_grammar::{PATH_GRAMMAR_CORE, PATH_GRAMMAR_DEBUG_PRINTF, PATH_GRAMMAR_GLSL_STD_450};
 use rspirv2_grammar_parser::codegen::{GrammarWriter, ModOptions, write_grammar};
@@ -28,6 +29,10 @@ pub fn main() -> anyhow::Result<()> {
                 pub use smallvec::SmallVec;
             },
             mod_attr: mod_attr.clone(),
+            mod_extra: quote! {
+                impl preamble::AnyCapability for preamble::Capability {}
+            },
+            ..Default::default()
         },
     )?;
     write_grammar(
@@ -38,6 +43,7 @@ pub fn main() -> anyhow::Result<()> {
                 pub use crate::core::preamble::*;
             },
             mod_attr: mod_attr.clone(),
+            ..Default::default()
         },
     )?;
     write_grammar(
@@ -48,6 +54,7 @@ pub fn main() -> anyhow::Result<()> {
                 pub use crate::core::preamble::*;
             },
             mod_attr: mod_attr.clone(),
+            ..Default::default()
         },
     )?;
     Ok(())

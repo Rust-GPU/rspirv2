@@ -1,4 +1,4 @@
-use crate::meta::{Capability, Extension, OperandKind};
+use crate::meta::{AnyCapability, Extension, OperandKind};
 
 #[derive(Copy, Clone, Debug)]
 pub struct InstMeta {
@@ -11,7 +11,7 @@ pub struct InstMeta {
     /// The operands of this instruction
     pub operands: &'static [OperandSpecMeta],
     /// required capabilities
-    pub capabilities: &'static [Capability],
+    pub capabilities: &'static [&'static dyn AnyCapability],
     /// required extensions
     pub extensions: &'static [Extension],
     /// The SPIR-V version this instruction was introduced in
