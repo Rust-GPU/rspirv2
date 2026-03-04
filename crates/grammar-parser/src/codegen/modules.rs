@@ -1,6 +1,7 @@
-use crate::codegen::instructions::write_inst;
+use crate::codegen::instructions::{write_inst, write_inst_enum};
 use crate::codegen::operands::write_operands;
-use crate::codegen::{EmitRef, GrammarWriter, ModOptions};
+use crate::codegen::options::CodegenOptions;
+use crate::codegen::{EmitRef, GrammarWriter};
 use crate::parse::{
     Category, CoreGrammar, ExtInstSetGrammar, Extension, Grammar, InstClass, InstMeta, OperandKind,
 };
@@ -29,7 +30,7 @@ impl<'a> WriteableGrammar<'a> for ExtInstSetGrammar<'a> {
 pub fn write_grammar<'a>(
     mut writer: GrammarWriter,
     grammar: &impl WriteableGrammar<'a>,
-    mod_options: ModOptions,
+    opt: &CodegenOptions,
 ) -> anyhow::Result<()> {
     write_extensions(&mut writer, grammar)?;
     write_operand_kinds(&mut writer, grammar)?;
@@ -37,8 +38,9 @@ pub fn write_grammar<'a>(
     write_inst_class(&mut writer, grammar)?;
     write_inst_meta(&mut writer, grammar)?;
     write_inst(&mut writer, grammar)?;
+    write_inst_enum(&mut writer, grammar, opt)?;
     write_grammar_mod(&mut writer, grammar)?;
-    writer.finish(mod_options)?;
+    writer.finish(opt)?;
     Ok(())
 }
 

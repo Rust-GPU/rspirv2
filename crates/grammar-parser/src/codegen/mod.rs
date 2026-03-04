@@ -2,10 +2,12 @@ mod emit;
 mod instructions;
 mod modules;
 mod operands;
+mod options;
 mod writer;
 
 pub use emit::*;
 pub use modules::*;
+pub use options::*;
 pub use writer::*;
 
 pub const OPERAND_ID_RESULT: &str = "IdResult";
