@@ -18,6 +18,44 @@ pub struct ModOptions {
     pub preamble: TokenStream,
 }
 
+impl ModOptions {
+    pub fn mod_lints() -> TokenStream {
+        quote! {
+            #![allow(unused_imports)]
+            #![allow(non_camel_case_types)]
+            #![allow(deprecated)]
+            #![allow(clippy::identity_op)]
+        }
+    }
+
+    pub fn new_core() -> Self {
+        Self {
+            preamble: quote! {
+                pub use crate::binary::*;
+                pub use crate::inst::*;
+                pub use crate::meta::*;
+                pub use crate::operand::*;
+                pub use bitflags::bitflags;
+                pub use smallvec::SmallVec;
+            },
+            mod_attr: Self::mod_lints(),
+            mod_extra: quote! {
+                impl preamble::AnyCapability for preamble::Capability {}
+            },
+        }
+    }
+
+    pub fn new_ext_inst_set(path_to_core: &TokenStream) -> Self {
+        ModOptions {
+            preamble: quote! {
+                pub use #path_to_core::preamble::*;
+            },
+            mod_attr: Self::mod_lints(),
+            ..Default::default()
+        }
+    }
+}
+
 pub struct GrammarWriter {
     folder: PathBuf,
     submodules: Vec<String>,
