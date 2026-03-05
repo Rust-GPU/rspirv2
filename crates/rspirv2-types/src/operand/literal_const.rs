@@ -1,7 +1,10 @@
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
+use crate::dis::DisContext;
 use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandEncoding, Word};
+use anstyle::AnsiColor;
 use smallvec::SmallVec;
+use std::fmt::Formatter;
 
 pub const OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER: OperandKind = OperandKind {
     name: "LiteralContextDependentNumber",
@@ -172,5 +175,15 @@ unsafe impl OperandEncoding for LiteralConst {
     #[inline]
     fn decode_last(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(reader.collect()))
+    }
+
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        let color = AnsiColor::Red.on_default();
+        match self.0.len() {
+            1 => write!(f, "{color}{}{color:#}", self.as_u32().unwrap()),
+            2 => write!(f, "{color}{}{color:#}", self.as_u64().unwrap()),
+            _ => write!(f, "{color}{:?}{color:#}", self.0.as_slice()),
+        }
     }
 }

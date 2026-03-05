@@ -1,8 +1,11 @@
 //! All Operands with `Category::Id`
 
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
+use crate::dis::DisContext;
 use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandEncoding, Word};
+use anstyle::AnsiColor;
+use std::fmt::Formatter;
 
 pub const OPERAND_KIND_ID_RESULT_TYPE: OperandKind = OperandKind {
     name: "IdResultType",
@@ -68,6 +71,12 @@ unsafe impl OperandEncoding for IdResult {
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(reader.pull()?))
     }
+
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        let color = AnsiColor::Blue.on_default();
+        write!(f, "{color}%{}{color:#}", self.0.0)
+    }
 }
 
 pub type OptionIdResult = Option<IdResult>;
@@ -115,6 +124,12 @@ macro_rules! id_ref {
             #[inline]
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 Ok(Self(IdResult(reader.pull()?)))
+            }
+
+            #[inline]
+            fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+                let color = AnsiColor::Yellow.on_default();
+                write!(f, "{color}%{}{color:#}", self.0.0.0)
             }
         }
     };

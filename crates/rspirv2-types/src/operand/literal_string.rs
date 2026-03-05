@@ -1,6 +1,9 @@
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
+use crate::dis::DisContext;
 use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandEncoding, Word};
+use anstyle::AnsiColor;
+use std::fmt::Formatter;
 
 pub const OPERAND_KIND_LITERAL_STRING: OperandKind = OperandKind {
     name: "LiteralString",
@@ -57,6 +60,12 @@ unsafe impl OperandEncoding for LiteralString {
             .take_while(|p| *p != 0)
             .collect::<Vec<_>>();
         Ok(Self(String::from_utf8(bytes)?))
+    }
+
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        let color = AnsiColor::Green.on_default();
+        write!(f, "{color}\"{}\"{color:#}", self.0)
     }
 }
 
