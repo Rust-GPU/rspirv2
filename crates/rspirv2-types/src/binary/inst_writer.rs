@@ -1,4 +1,6 @@
-use crate::binary::{EncodeError, IdResultAlloc, IdResultAllocator, WordWriter};
+use crate::binary::{
+    DisallowedIdResultAllocator, EncodeError, IdResultAlloc, IdResultAllocator, WordWriter,
+};
 use crate::inst::{Inst, MaybeIdResult};
 use crate::operand::{IdResult, Word};
 
@@ -13,6 +15,10 @@ pub struct InstWriter<W: WordWriter, A: IdResultAlloc> {
 }
 
 impl<W: WordWriter, A: IdResultAlloc> InstWriter<W, A> {
+    pub fn new(words: W, alloc: A) -> Self {
+        Self { words, alloc }
+    }
+
     #[inline]
     pub fn push<I: Inst>(
         &mut self,
@@ -29,6 +35,15 @@ impl<W: WordWriter, A: IdResultAlloc> InstWriter<W, A> {
         let id_result = inst.id_result().alloc(self)?;
         inst.encode(self)?;
         Ok(id_result)
+    }
+}
+
+impl<W: WordWriter> InstWriter<W, DisallowedIdResultAllocator> {
+    pub fn new_no_alloc(words: W) -> Self {
+        Self {
+            words,
+            alloc: DisallowedIdResultAllocator,
+        }
     }
 }
 
