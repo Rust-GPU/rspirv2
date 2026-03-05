@@ -8,7 +8,7 @@ use rspirv2::core::operands::{Decoration, StorageClass};
 use rspirv2::core::preamble::OpAccessChain;
 use rspirv2::operand::{IdRef, IdResult, IdResultType, LiteralConst, LiteralInteger, Word};
 use rspirv2_types::binary::EncodeError;
-use rspirv2_types::inst::Inst;
+use rspirv2_types::inst::{Inst, InstEncoding};
 use smallvec::SmallVec;
 
 fn roundtrip<T: Inst>(inst: T) {

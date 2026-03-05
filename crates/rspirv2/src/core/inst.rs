@@ -7,6 +7,8 @@ impl Inst for OpNop {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpNop {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -28,6 +30,8 @@ impl Inst for OpUndef {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUndef {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -55,6 +59,8 @@ impl Inst for OpSourceContinued {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSourceContinued {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.continued_source);
         writer.write_op(Self::META.opcode, len)?;
@@ -81,6 +87,8 @@ impl Inst for OpSource {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSource {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.source_language)
@@ -114,6 +122,8 @@ impl Inst for OpSourceExtension {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSourceExtension {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.extension);
         writer.write_op(Self::META.opcode, len)?;
@@ -138,6 +148,8 @@ impl Inst for OpName {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpName {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.target) + OperandEncoding::word_len(&self.name);
@@ -166,6 +178,8 @@ impl Inst for OpMemberName {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpMemberName {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.ty)
@@ -197,6 +211,8 @@ impl Inst for OpString {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpString {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -226,6 +242,8 @@ impl Inst for OpLine {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpLine {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.file)
@@ -256,6 +274,8 @@ impl Inst for OpExtension {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpExtension {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.name);
         writer.write_op(Self::META.opcode, len)?;
@@ -280,6 +300,8 @@ impl Inst for OpExtInstImport {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpExtInstImport {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.id_result) + OperandEncoding::word_len(&self.name);
@@ -310,6 +332,8 @@ impl Inst for OpExtInst {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpExtInst {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -347,6 +371,8 @@ impl Inst for OpMemoryModel {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpMemoryModel {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.addressing_model)
@@ -377,6 +403,8 @@ impl Inst for OpEntryPoint {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpEntryPoint {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution_model)
@@ -411,6 +439,8 @@ impl Inst for OpExecutionMode {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpExecutionMode {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.entry_point)
@@ -438,6 +468,8 @@ impl Inst for OpCapability {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpCapability {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.capability);
         writer.write_op(Self::META.opcode, len)?;
@@ -461,6 +493,8 @@ impl Inst for OpTypeVoid {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeVoid {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -484,6 +518,8 @@ impl Inst for OpTypeBool {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeBool {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -509,6 +545,8 @@ impl Inst for OpTypeInt {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeInt {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -541,6 +579,8 @@ impl Inst for OpTypeFloat {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeFloat {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -573,6 +613,8 @@ impl Inst for OpTypeVector {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeVector {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -605,6 +647,8 @@ impl Inst for OpTypeMatrix {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeMatrix {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -643,6 +687,8 @@ impl Inst for OpTypeImage {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeImage {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -691,6 +737,8 @@ impl Inst for OpTypeSampler {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeSampler {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -715,6 +763,8 @@ impl Inst for OpTypeSampledImage {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeSampledImage {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -744,6 +794,8 @@ impl Inst for OpTypeArray {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeArray {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -775,6 +827,8 @@ impl Inst for OpTypeRuntimeArray {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeRuntimeArray {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -803,6 +857,8 @@ impl Inst for OpTypeStruct {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeStruct {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -831,6 +887,8 @@ impl Inst for OpTypeOpaque {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeOpaque {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -860,6 +918,8 @@ impl Inst for OpTypePointer {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypePointer {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -892,6 +952,8 @@ impl Inst for OpTypeFunction {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeFunction {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -922,6 +984,8 @@ impl Inst for OpTypeEvent {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeEvent {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -945,6 +1009,8 @@ impl Inst for OpTypeDeviceEvent {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeDeviceEvent {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -968,6 +1034,8 @@ impl Inst for OpTypeReserveId {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeReserveId {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -991,6 +1059,8 @@ impl Inst for OpTypeQueue {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeQueue {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -1015,6 +1085,8 @@ impl Inst for OpTypePipe {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypePipe {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -1043,6 +1115,8 @@ impl Inst for OpTypeForwardPointer {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpTypeForwardPointer {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer_type)
@@ -1071,6 +1145,8 @@ impl Inst for OpConstantTrue {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConstantTrue {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1099,6 +1175,8 @@ impl Inst for OpConstantFalse {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConstantFalse {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1128,6 +1206,8 @@ impl Inst for OpConstant {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConstant {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1160,6 +1240,8 @@ impl Inst for OpConstantComposite {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConstantComposite {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1194,6 +1276,8 @@ impl Inst for OpConstantSampler {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConstantSampler {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1231,6 +1315,8 @@ impl Inst for OpConstantNull {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConstantNull {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1259,6 +1345,8 @@ impl Inst for OpSpecConstantTrue {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSpecConstantTrue {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1287,6 +1375,8 @@ impl Inst for OpSpecConstantFalse {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSpecConstantFalse {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1316,6 +1406,8 @@ impl Inst for OpSpecConstant {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSpecConstant {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1348,6 +1440,8 @@ impl Inst for OpSpecConstantComposite {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSpecConstantComposite {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1380,6 +1474,8 @@ impl Inst for OpSpecConstantOp {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSpecConstantOp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1413,6 +1509,8 @@ impl Inst for OpFunction {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFunction {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1447,6 +1545,8 @@ impl Inst for OpFunctionParameter {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFunctionParameter {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1472,6 +1572,8 @@ impl Inst for OpFunctionEnd {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpFunctionEnd {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -1495,6 +1597,8 @@ impl Inst for OpFunctionCall {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFunctionCall {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1531,6 +1635,8 @@ impl Inst for OpVariable {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpVariable {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1568,6 +1674,8 @@ impl Inst for OpImageTexelPointer {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageTexelPointer {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1607,6 +1715,8 @@ impl Inst for OpLoad {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpLoad {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1642,6 +1752,8 @@ impl Inst for OpStore {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpStore {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -1675,6 +1787,8 @@ impl Inst for OpCopyMemory {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpCopyMemory {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.target)
@@ -1712,6 +1826,8 @@ impl Inst for OpCopyMemorySized {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpCopyMemorySized {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.target)
@@ -1751,6 +1867,8 @@ impl Inst for OpAccessChain {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAccessChain {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1787,6 +1905,8 @@ impl Inst for OpInBoundsAccessChain {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpInBoundsAccessChain {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1824,6 +1944,8 @@ impl Inst for OpPtrAccessChain {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpPtrAccessChain {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1863,6 +1985,8 @@ impl Inst for OpArrayLength {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArrayLength {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1898,6 +2022,8 @@ impl Inst for OpGenericPtrMemSemantics {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGenericPtrMemSemantics {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1932,6 +2058,8 @@ impl Inst for OpInBoundsPtrAccessChain {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpInBoundsPtrAccessChain {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -1969,6 +2097,8 @@ impl Inst for OpDecorate {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpDecorate {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.target)
@@ -1998,6 +2128,8 @@ impl Inst for OpMemberDecorate {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpMemberDecorate {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.structure_type)
@@ -2028,6 +2160,8 @@ impl Inst for OpDecorationGroup {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpDecorationGroup {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -2052,6 +2186,8 @@ impl Inst for OpGroupDecorate {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpGroupDecorate {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.decoration_group)
@@ -2080,6 +2216,8 @@ impl Inst for OpGroupMemberDecorate {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpGroupMemberDecorate {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.decoration_group)
@@ -2110,6 +2248,8 @@ impl Inst for OpVectorExtractDynamic {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpVectorExtractDynamic {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2147,6 +2287,8 @@ impl Inst for OpVectorInsertDynamic {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpVectorInsertDynamic {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2187,6 +2329,8 @@ impl Inst for OpVectorShuffle {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpVectorShuffle {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2225,6 +2369,8 @@ impl Inst for OpCompositeConstruct {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCompositeConstruct {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2258,6 +2404,8 @@ impl Inst for OpCompositeExtract {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCompositeExtract {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2295,6 +2443,8 @@ impl Inst for OpCompositeInsert {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCompositeInsert {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2333,6 +2483,8 @@ impl Inst for OpCopyObject {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCopyObject {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2365,6 +2517,8 @@ impl Inst for OpTranspose {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTranspose {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2398,6 +2552,8 @@ impl Inst for OpSampledImage {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSampledImage {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2435,6 +2591,8 @@ impl Inst for OpImageSampleImplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSampleImplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2475,6 +2633,8 @@ impl Inst for OpImageSampleExplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSampleExplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2516,6 +2676,8 @@ impl Inst for OpImageSampleDrefImplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSampleDrefImplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2560,6 +2722,8 @@ impl Inst for OpImageSampleDrefExplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSampleDrefExplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2603,6 +2767,8 @@ impl Inst for OpImageSampleProjImplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSampleProjImplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2643,6 +2809,8 @@ impl Inst for OpImageSampleProjExplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSampleProjExplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2684,6 +2852,8 @@ impl Inst for OpImageSampleProjDrefImplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSampleProjDrefImplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2728,6 +2898,8 @@ impl Inst for OpImageSampleProjDrefExplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSampleProjDrefExplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2771,6 +2943,8 @@ impl Inst for OpImageFetch {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageFetch {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2812,6 +2986,8 @@ impl Inst for OpImageGather {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageGather {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2856,6 +3032,8 @@ impl Inst for OpImageDrefGather {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageDrefGather {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2899,6 +3077,8 @@ impl Inst for OpImageRead {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageRead {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -2938,6 +3118,8 @@ impl Inst for OpImageWrite {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpImageWrite {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.image)
@@ -2973,6 +3155,8 @@ impl Inst for OpImage {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImage {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3005,6 +3189,8 @@ impl Inst for OpImageQueryFormat {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageQueryFormat {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3037,6 +3223,8 @@ impl Inst for OpImageQueryOrder {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageQueryOrder {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3070,6 +3258,8 @@ impl Inst for OpImageQuerySizeLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageQuerySizeLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3105,6 +3295,8 @@ impl Inst for OpImageQuerySize {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageQuerySize {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3138,6 +3330,8 @@ impl Inst for OpImageQueryLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageQueryLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3173,6 +3367,8 @@ impl Inst for OpImageQueryLevels {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageQueryLevels {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3205,6 +3401,8 @@ impl Inst for OpImageQuerySamples {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageQuerySamples {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3237,6 +3435,8 @@ impl Inst for OpConvertFToU {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertFToU {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3269,6 +3469,8 @@ impl Inst for OpConvertFToS {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertFToS {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3301,6 +3503,8 @@ impl Inst for OpConvertSToF {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertSToF {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3333,6 +3537,8 @@ impl Inst for OpConvertUToF {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertUToF {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3365,6 +3571,8 @@ impl Inst for OpUConvert {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUConvert {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3397,6 +3605,8 @@ impl Inst for OpSConvert {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSConvert {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3429,6 +3639,8 @@ impl Inst for OpFConvert {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFConvert {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3461,6 +3673,8 @@ impl Inst for OpQuantizeToF16 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpQuantizeToF16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3493,6 +3707,8 @@ impl Inst for OpConvertPtrToU {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertPtrToU {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3525,6 +3741,8 @@ impl Inst for OpSatConvertSToU {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSatConvertSToU {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3557,6 +3775,8 @@ impl Inst for OpSatConvertUToS {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSatConvertUToS {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3589,6 +3809,8 @@ impl Inst for OpConvertUToPtr {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertUToPtr {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3621,6 +3843,8 @@ impl Inst for OpPtrCastToGeneric {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpPtrCastToGeneric {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3653,6 +3877,8 @@ impl Inst for OpGenericCastToPtr {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGenericCastToPtr {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3686,6 +3912,8 @@ impl Inst for OpGenericCastToPtrExplicit {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGenericCastToPtrExplicit {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3721,6 +3949,8 @@ impl Inst for OpBitcast {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpBitcast {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3753,6 +3983,8 @@ impl Inst for OpSNegate {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSNegate {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3785,6 +4017,8 @@ impl Inst for OpFNegate {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFNegate {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3818,6 +4052,8 @@ impl Inst for OpIAdd {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIAdd {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3854,6 +4090,8 @@ impl Inst for OpFAdd {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFAdd {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3890,6 +4128,8 @@ impl Inst for OpISub {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpISub {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3926,6 +4166,8 @@ impl Inst for OpFSub {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFSub {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3962,6 +4204,8 @@ impl Inst for OpIMul {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIMul {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -3998,6 +4242,8 @@ impl Inst for OpFMul {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFMul {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4034,6 +4280,8 @@ impl Inst for OpUDiv {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUDiv {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4070,6 +4318,8 @@ impl Inst for OpSDiv {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSDiv {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4106,6 +4356,8 @@ impl Inst for OpFDiv {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFDiv {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4142,6 +4394,8 @@ impl Inst for OpUMod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUMod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4178,6 +4432,8 @@ impl Inst for OpSRem {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSRem {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4214,6 +4470,8 @@ impl Inst for OpSMod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSMod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4250,6 +4508,8 @@ impl Inst for OpFRem {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFRem {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4286,6 +4546,8 @@ impl Inst for OpFMod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFMod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4322,6 +4584,8 @@ impl Inst for OpVectorTimesScalar {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpVectorTimesScalar {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4358,6 +4622,8 @@ impl Inst for OpMatrixTimesScalar {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpMatrixTimesScalar {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4394,6 +4660,8 @@ impl Inst for OpVectorTimesMatrix {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpVectorTimesMatrix {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4430,6 +4698,8 @@ impl Inst for OpMatrixTimesVector {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpMatrixTimesVector {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4466,6 +4736,8 @@ impl Inst for OpMatrixTimesMatrix {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpMatrixTimesMatrix {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4502,6 +4774,8 @@ impl Inst for OpOuterProduct {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpOuterProduct {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4538,6 +4812,8 @@ impl Inst for OpDot {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpDot {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4574,6 +4850,8 @@ impl Inst for OpIAddCarry {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIAddCarry {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4610,6 +4888,8 @@ impl Inst for OpISubBorrow {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpISubBorrow {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4646,6 +4926,8 @@ impl Inst for OpUMulExtended {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUMulExtended {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4682,6 +4964,8 @@ impl Inst for OpSMulExtended {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSMulExtended {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4717,6 +5001,8 @@ impl Inst for OpAny {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAny {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4749,6 +5035,8 @@ impl Inst for OpAll {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAll {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4781,6 +5069,8 @@ impl Inst for OpIsNan {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIsNan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4813,6 +5103,8 @@ impl Inst for OpIsInf {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIsInf {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4845,6 +5137,8 @@ impl Inst for OpIsFinite {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIsFinite {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4877,6 +5171,8 @@ impl Inst for OpIsNormal {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIsNormal {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4909,6 +5205,8 @@ impl Inst for OpSignBitSet {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSignBitSet {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4942,6 +5240,8 @@ impl Inst for OpLessOrGreater {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpLessOrGreater {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -4978,6 +5278,8 @@ impl Inst for OpOrdered {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpOrdered {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5014,6 +5316,8 @@ impl Inst for OpUnordered {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUnordered {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5050,6 +5354,8 @@ impl Inst for OpLogicalEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpLogicalEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5086,6 +5392,8 @@ impl Inst for OpLogicalNotEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpLogicalNotEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5122,6 +5430,8 @@ impl Inst for OpLogicalOr {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpLogicalOr {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5158,6 +5468,8 @@ impl Inst for OpLogicalAnd {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpLogicalAnd {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5193,6 +5505,8 @@ impl Inst for OpLogicalNot {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpLogicalNot {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5227,6 +5541,8 @@ impl Inst for OpSelect {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSelect {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5266,6 +5582,8 @@ impl Inst for OpIEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5302,6 +5620,8 @@ impl Inst for OpINotEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpINotEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5338,6 +5658,8 @@ impl Inst for OpUGreaterThan {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUGreaterThan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5374,6 +5696,8 @@ impl Inst for OpSGreaterThan {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSGreaterThan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5410,6 +5734,8 @@ impl Inst for OpUGreaterThanEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUGreaterThanEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5446,6 +5772,8 @@ impl Inst for OpSGreaterThanEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSGreaterThanEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5482,6 +5810,8 @@ impl Inst for OpULessThan {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpULessThan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5518,6 +5848,8 @@ impl Inst for OpSLessThan {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSLessThan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5554,6 +5886,8 @@ impl Inst for OpULessThanEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpULessThanEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5590,6 +5924,8 @@ impl Inst for OpSLessThanEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSLessThanEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5626,6 +5962,8 @@ impl Inst for OpFOrdEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFOrdEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5662,6 +6000,8 @@ impl Inst for OpFUnordEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFUnordEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5698,6 +6038,8 @@ impl Inst for OpFOrdNotEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFOrdNotEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5734,6 +6076,8 @@ impl Inst for OpFUnordNotEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFUnordNotEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5770,6 +6114,8 @@ impl Inst for OpFOrdLessThan {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFOrdLessThan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5806,6 +6152,8 @@ impl Inst for OpFUnordLessThan {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFUnordLessThan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5842,6 +6190,8 @@ impl Inst for OpFOrdGreaterThan {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFOrdGreaterThan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5878,6 +6228,8 @@ impl Inst for OpFUnordGreaterThan {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFUnordGreaterThan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5914,6 +6266,8 @@ impl Inst for OpFOrdLessThanEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFOrdLessThanEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5950,6 +6304,8 @@ impl Inst for OpFUnordLessThanEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFUnordLessThanEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -5986,6 +6342,8 @@ impl Inst for OpFOrdGreaterThanEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFOrdGreaterThanEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6022,6 +6380,8 @@ impl Inst for OpFUnordGreaterThanEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFUnordGreaterThanEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6058,6 +6418,8 @@ impl Inst for OpShiftRightLogical {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpShiftRightLogical {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6094,6 +6456,8 @@ impl Inst for OpShiftRightArithmetic {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpShiftRightArithmetic {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6130,6 +6494,8 @@ impl Inst for OpShiftLeftLogical {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpShiftLeftLogical {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6166,6 +6532,8 @@ impl Inst for OpBitwiseOr {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpBitwiseOr {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6202,6 +6570,8 @@ impl Inst for OpBitwiseXor {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpBitwiseXor {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6238,6 +6608,8 @@ impl Inst for OpBitwiseAnd {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpBitwiseAnd {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6273,6 +6645,8 @@ impl Inst for OpNot {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpNot {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6308,6 +6682,8 @@ impl Inst for OpBitFieldInsert {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpBitFieldInsert {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6351,6 +6727,8 @@ impl Inst for OpBitFieldSExtract {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpBitFieldSExtract {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6391,6 +6769,8 @@ impl Inst for OpBitFieldUExtract {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpBitFieldUExtract {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6429,6 +6809,8 @@ impl Inst for OpBitReverse {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpBitReverse {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6461,6 +6843,8 @@ impl Inst for OpBitCount {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpBitCount {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6493,6 +6877,8 @@ impl Inst for OpDPdx {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpDPdx {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6525,6 +6911,8 @@ impl Inst for OpDPdy {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpDPdy {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6557,6 +6945,8 @@ impl Inst for OpFwidth {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFwidth {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6589,6 +6979,8 @@ impl Inst for OpDPdxFine {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpDPdxFine {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6621,6 +7013,8 @@ impl Inst for OpDPdyFine {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpDPdyFine {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6653,6 +7047,8 @@ impl Inst for OpFwidthFine {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFwidthFine {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6685,6 +7081,8 @@ impl Inst for OpDPdxCoarse {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpDPdxCoarse {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6717,6 +7115,8 @@ impl Inst for OpDPdyCoarse {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpDPdyCoarse {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6749,6 +7149,8 @@ impl Inst for OpFwidthCoarse {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFwidthCoarse {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6777,6 +7179,8 @@ impl Inst for OpEmitVertex {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpEmitVertex {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -6795,6 +7199,8 @@ impl Inst for OpEndPrimitive {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpEndPrimitive {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -6815,6 +7221,8 @@ impl Inst for OpEmitStreamVertex {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpEmitStreamVertex {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.stream);
         writer.write_op(Self::META.opcode, len)?;
@@ -6838,6 +7246,8 @@ impl Inst for OpEndStreamPrimitive {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpEndStreamPrimitive {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.stream);
         writer.write_op(Self::META.opcode, len)?;
@@ -6863,6 +7273,8 @@ impl Inst for OpControlBarrier {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpControlBarrier {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
@@ -6894,6 +7306,8 @@ impl Inst for OpMemoryBarrier {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpMemoryBarrier {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.memory)
@@ -6925,6 +7339,8 @@ impl Inst for OpAtomicLoad {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicLoad {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -6964,6 +7380,8 @@ impl Inst for OpAtomicStore {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpAtomicStore {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -7002,6 +7420,8 @@ impl Inst for OpAtomicExchange {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicExchange {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7048,6 +7468,8 @@ impl Inst for OpAtomicCompareExchange {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicCompareExchange {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7100,6 +7522,8 @@ impl Inst for OpAtomicCompareExchangeWeak {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicCompareExchangeWeak {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7149,6 +7573,8 @@ impl Inst for OpAtomicIIncrement {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicIIncrement {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7189,6 +7615,8 @@ impl Inst for OpAtomicIDecrement {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicIDecrement {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7230,6 +7658,8 @@ impl Inst for OpAtomicIAdd {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicIAdd {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7274,6 +7704,8 @@ impl Inst for OpAtomicISub {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicISub {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7318,6 +7750,8 @@ impl Inst for OpAtomicSMin {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicSMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7362,6 +7796,8 @@ impl Inst for OpAtomicUMin {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicUMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7406,6 +7842,8 @@ impl Inst for OpAtomicSMax {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicSMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7450,6 +7888,8 @@ impl Inst for OpAtomicUMax {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicUMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7494,6 +7934,8 @@ impl Inst for OpAtomicAnd {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicAnd {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7538,6 +7980,8 @@ impl Inst for OpAtomicOr {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicOr {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7582,6 +8026,8 @@ impl Inst for OpAtomicXor {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicXor {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7623,6 +8069,8 @@ impl Inst for OpPhi {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpPhi {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -7655,6 +8103,8 @@ impl Inst for OpLoopMerge {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpLoopMerge {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.merge_block)
@@ -7686,6 +8136,8 @@ impl Inst for OpSelectionMerge {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSelectionMerge {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.merge_block)
@@ -7713,6 +8165,8 @@ impl Inst for OpLabel {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpLabel {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -7736,6 +8190,8 @@ impl Inst for OpBranch {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpBranch {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.target_label);
         writer.write_op(Self::META.opcode, len)?;
@@ -7762,6 +8218,8 @@ impl Inst for OpBranchConditional {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpBranchConditional {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.condition)
@@ -7797,6 +8255,8 @@ impl Inst for OpSwitch {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSwitch {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.selector)
@@ -7825,6 +8285,8 @@ impl Inst for OpKill {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpKill {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -7843,6 +8305,8 @@ impl Inst for OpReturn {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpReturn {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -7863,6 +8327,8 @@ impl Inst for OpReturnValue {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpReturnValue {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.value);
         writer.write_op(Self::META.opcode, len)?;
@@ -7884,6 +8350,8 @@ impl Inst for OpUnreachable {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpUnreachable {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -7905,6 +8373,8 @@ impl Inst for OpLifetimeStart {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpLifetimeStart {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.pointer) + OperandEncoding::word_len(&self.size);
@@ -7932,6 +8402,8 @@ impl Inst for OpLifetimeStop {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpLifetimeStop {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.pointer) + OperandEncoding::word_len(&self.size);
@@ -7965,6 +8437,8 @@ impl Inst for OpGroupAsyncCopy {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupAsyncCopy {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8012,6 +8486,8 @@ impl Inst for OpGroupWaitEvents {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpGroupWaitEvents {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
@@ -8045,6 +8521,8 @@ impl Inst for OpGroupAll {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupAll {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8081,6 +8559,8 @@ impl Inst for OpGroupAny {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupAny {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8118,6 +8598,8 @@ impl Inst for OpGroupBroadcast {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupBroadcast {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8158,6 +8640,8 @@ impl Inst for OpGroupIAdd {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupIAdd {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8198,6 +8682,8 @@ impl Inst for OpGroupFAdd {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupFAdd {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8238,6 +8724,8 @@ impl Inst for OpGroupFMin {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupFMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8278,6 +8766,8 @@ impl Inst for OpGroupUMin {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupUMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8318,6 +8808,8 @@ impl Inst for OpGroupSMin {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupSMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8358,6 +8850,8 @@ impl Inst for OpGroupFMax {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupFMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8398,6 +8892,8 @@ impl Inst for OpGroupUMax {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupUMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8438,6 +8934,8 @@ impl Inst for OpGroupSMax {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupSMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8479,6 +8977,8 @@ impl Inst for OpReadPipe {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpReadPipe {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8523,6 +9023,8 @@ impl Inst for OpWritePipe {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpWritePipe {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8569,6 +9071,8 @@ impl Inst for OpReservedReadPipe {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpReservedReadPipe {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8621,6 +9125,8 @@ impl Inst for OpReservedWritePipe {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpReservedWritePipe {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8671,6 +9177,8 @@ impl Inst for OpReserveReadPipePackets {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpReserveReadPipePackets {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8715,6 +9223,8 @@ impl Inst for OpReserveWritePipePackets {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpReserveWritePipePackets {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8757,6 +9267,8 @@ impl Inst for OpCommitReadPipe {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpCommitReadPipe {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pipe)
@@ -8793,6 +9305,8 @@ impl Inst for OpCommitWritePipe {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpCommitWritePipe {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pipe)
@@ -8828,6 +9342,8 @@ impl Inst for OpIsValidReserveId {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIsValidReserveId {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8862,6 +9378,8 @@ impl Inst for OpGetNumPipePackets {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGetNumPipePackets {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8902,6 +9420,8 @@ impl Inst for OpGetMaxPipePackets {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGetMaxPipePackets {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8944,6 +9464,8 @@ impl Inst for OpGroupReserveReadPipePackets {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupReserveReadPipePackets {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -8992,6 +9514,8 @@ impl Inst for OpGroupReserveWritePipePackets {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupReserveWritePipePackets {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9038,6 +9562,8 @@ impl Inst for OpGroupCommitReadPipe {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpGroupCommitReadPipe {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
@@ -9078,6 +9604,8 @@ impl Inst for OpGroupCommitWritePipe {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpGroupCommitWritePipe {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
@@ -9119,6 +9647,8 @@ impl Inst for OpEnqueueMarker {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpEnqueueMarker {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9170,6 +9700,8 @@ impl Inst for OpEnqueueKernel {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpEnqueueKernel {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9236,6 +9768,8 @@ impl Inst for OpGetKernelNDrangeSubGroupCount {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGetKernelNDrangeSubGroupCount {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9284,6 +9818,8 @@ impl Inst for OpGetKernelNDrangeMaxSubGroupSize {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGetKernelNDrangeMaxSubGroupSize {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9331,6 +9867,8 @@ impl Inst for OpGetKernelWorkGroupSize {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGetKernelWorkGroupSize {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9375,6 +9913,8 @@ impl Inst for OpGetKernelPreferredWorkGroupSizeMultiple {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGetKernelPreferredWorkGroupSizeMultiple {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9414,6 +9954,8 @@ impl Inst for OpRetainEvent {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpRetainEvent {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.event);
         writer.write_op(Self::META.opcode, len)?;
@@ -9437,6 +9979,8 @@ impl Inst for OpReleaseEvent {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpReleaseEvent {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.event);
         writer.write_op(Self::META.opcode, len)?;
@@ -9461,6 +10005,8 @@ impl Inst for OpCreateUserEvent {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCreateUserEvent {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9490,6 +10036,8 @@ impl Inst for OpIsValidEvent {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIsValidEvent {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9521,6 +10069,8 @@ impl Inst for OpSetUserEventStatus {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSetUserEventStatus {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.event) + OperandEncoding::word_len(&self.status);
@@ -9549,6 +10099,8 @@ impl Inst for OpCaptureEventProfilingInfo {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpCaptureEventProfilingInfo {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.event)
@@ -9580,6 +10132,8 @@ impl Inst for OpGetDefaultQueue {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGetDefaultQueue {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9611,6 +10165,8 @@ impl Inst for OpBuildNDRange {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpBuildNDRange {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9651,6 +10207,8 @@ impl Inst for OpImageSparseSampleImplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSparseSampleImplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9691,6 +10249,8 @@ impl Inst for OpImageSparseSampleExplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSparseSampleExplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9732,6 +10292,8 @@ impl Inst for OpImageSparseSampleDrefImplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSparseSampleDrefImplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9776,6 +10338,8 @@ impl Inst for OpImageSparseSampleDrefExplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSparseSampleDrefExplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9819,6 +10383,8 @@ impl Inst for OpImageSparseSampleProjImplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSparseSampleProjImplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9859,6 +10425,8 @@ impl Inst for OpImageSparseSampleProjExplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSparseSampleProjExplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9900,6 +10468,8 @@ impl Inst for OpImageSparseSampleProjDrefImplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSparseSampleProjDrefImplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9944,6 +10514,8 @@ impl Inst for OpImageSparseSampleProjDrefExplicitLod {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSparseSampleProjDrefExplicitLod {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -9987,6 +10559,8 @@ impl Inst for OpImageSparseFetch {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSparseFetch {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10028,6 +10602,8 @@ impl Inst for OpImageSparseGather {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSparseGather {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10072,6 +10648,8 @@ impl Inst for OpImageSparseDrefGather {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSparseDrefGather {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10113,6 +10691,8 @@ impl Inst for OpImageSparseTexelsResident {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSparseTexelsResident {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10141,6 +10721,8 @@ impl Inst for OpNoLine {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpNoLine {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -10165,6 +10747,8 @@ impl Inst for OpAtomicFlagTestAndSet {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicFlagTestAndSet {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10203,6 +10787,8 @@ impl Inst for OpAtomicFlagClear {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpAtomicFlagClear {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -10237,6 +10823,8 @@ impl Inst for OpImageSparseRead {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSparseRead {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10275,6 +10863,8 @@ impl Inst for OpSizeOf {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSizeOf {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10305,6 +10895,8 @@ impl Inst for OpTypePipeStorage {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypePipeStorage {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -10332,6 +10924,8 @@ impl Inst for OpConstantPipeStorage {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConstantPipeStorage {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10370,6 +10964,8 @@ impl Inst for OpCreatePipeFromPipeStorage {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCreatePipeFromPipeStorage {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10406,6 +11002,8 @@ impl Inst for OpGetKernelLocalSizeForSubgroupCount {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGetKernelLocalSizeForSubgroupCount {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10453,6 +11051,8 @@ impl Inst for OpGetKernelMaxNumSubgroups {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGetKernelMaxNumSubgroups {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10492,6 +11092,8 @@ impl Inst for OpTypeNamedBarrier {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeNamedBarrier {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -10517,6 +11119,8 @@ impl Inst for OpNamedBarrierInitialize {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpNamedBarrierInitialize {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10549,6 +11153,8 @@ impl Inst for OpMemoryNamedBarrier {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpMemoryNamedBarrier {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.named_barrier)
@@ -10579,6 +11185,8 @@ impl Inst for OpModuleProcessed {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpModuleProcessed {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.process);
         writer.write_op(Self::META.opcode, len)?;
@@ -10603,6 +11211,8 @@ impl Inst for OpExecutionModeId {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpExecutionModeId {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.entry_point)
@@ -10631,6 +11241,8 @@ impl Inst for OpDecorateId {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpDecorateId {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.target)
@@ -10660,6 +11272,8 @@ impl Inst for OpGroupNonUniformElect {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformElect {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10693,6 +11307,8 @@ impl Inst for OpGroupNonUniformAll {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformAll {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10729,6 +11345,8 @@ impl Inst for OpGroupNonUniformAny {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformAny {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10765,6 +11383,8 @@ impl Inst for OpGroupNonUniformAllEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformAllEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10802,6 +11422,8 @@ impl Inst for OpGroupNonUniformBroadcast {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformBroadcast {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10841,6 +11463,8 @@ impl Inst for OpGroupNonUniformBroadcastFirst {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformBroadcastFirst {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10877,6 +11501,8 @@ impl Inst for OpGroupNonUniformBallot {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformBallot {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10913,6 +11539,8 @@ impl Inst for OpGroupNonUniformInverseBallot {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformInverseBallot {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10950,6 +11578,8 @@ impl Inst for OpGroupNonUniformBallotBitExtract {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformBallotBitExtract {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -10990,6 +11620,8 @@ impl Inst for OpGroupNonUniformBallotBitCount {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformBallotBitCount {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11029,6 +11661,8 @@ impl Inst for OpGroupNonUniformBallotFindLSB {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformBallotFindLSB {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11065,6 +11699,8 @@ impl Inst for OpGroupNonUniformBallotFindMSB {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformBallotFindMSB {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11102,6 +11738,8 @@ impl Inst for OpGroupNonUniformShuffle {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformShuffle {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11142,6 +11780,8 @@ impl Inst for OpGroupNonUniformShuffleXor {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformShuffleXor {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11182,6 +11822,8 @@ impl Inst for OpGroupNonUniformShuffleUp {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformShuffleUp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11222,6 +11864,8 @@ impl Inst for OpGroupNonUniformShuffleDown {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformShuffleDown {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11263,6 +11907,8 @@ impl Inst for OpGroupNonUniformIAdd {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformIAdd {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11307,6 +11953,8 @@ impl Inst for OpGroupNonUniformFAdd {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformFAdd {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11351,6 +11999,8 @@ impl Inst for OpGroupNonUniformIMul {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformIMul {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11395,6 +12045,8 @@ impl Inst for OpGroupNonUniformFMul {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformFMul {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11439,6 +12091,8 @@ impl Inst for OpGroupNonUniformSMin {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformSMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11483,6 +12137,8 @@ impl Inst for OpGroupNonUniformUMin {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformUMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11527,6 +12183,8 @@ impl Inst for OpGroupNonUniformFMin {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformFMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11571,6 +12229,8 @@ impl Inst for OpGroupNonUniformSMax {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformSMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11615,6 +12275,8 @@ impl Inst for OpGroupNonUniformUMax {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformUMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11659,6 +12321,8 @@ impl Inst for OpGroupNonUniformFMax {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformFMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11703,6 +12367,8 @@ impl Inst for OpGroupNonUniformBitwiseAnd {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformBitwiseAnd {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11747,6 +12413,8 @@ impl Inst for OpGroupNonUniformBitwiseOr {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformBitwiseOr {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11791,6 +12459,8 @@ impl Inst for OpGroupNonUniformBitwiseXor {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformBitwiseXor {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11835,6 +12505,8 @@ impl Inst for OpGroupNonUniformLogicalAnd {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformLogicalAnd {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11879,6 +12551,8 @@ impl Inst for OpGroupNonUniformLogicalOr {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformLogicalOr {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11923,6 +12597,8 @@ impl Inst for OpGroupNonUniformLogicalXor {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformLogicalXor {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -11966,6 +12642,8 @@ impl Inst for OpGroupNonUniformQuadBroadcast {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformQuadBroadcast {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12006,6 +12684,8 @@ impl Inst for OpGroupNonUniformQuadSwap {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformQuadSwap {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12044,6 +12724,8 @@ impl Inst for OpCopyLogical {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCopyLogical {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12077,6 +12759,8 @@ impl Inst for OpPtrEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpPtrEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12113,6 +12797,8 @@ impl Inst for OpPtrNotEqual {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpPtrNotEqual {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12149,6 +12835,8 @@ impl Inst for OpPtrDiff {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpPtrDiff {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12185,6 +12873,8 @@ impl Inst for OpColorAttachmentReadEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpColorAttachmentReadEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12220,6 +12910,8 @@ impl Inst for OpDepthAttachmentReadEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpDepthAttachmentReadEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12252,6 +12944,8 @@ impl Inst for OpStencilAttachmentReadEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpStencilAttachmentReadEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12285,6 +12979,8 @@ impl Inst for OpTypeTensorARM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeTensorARM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -12322,6 +13018,8 @@ impl Inst for OpTensorReadARM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTensorReadARM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12361,6 +13059,8 @@ impl Inst for OpTensorWriteARM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpTensorWriteARM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.tensor)
@@ -12397,6 +13097,8 @@ impl Inst for OpTensorQuerySizeARM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTensorQuerySizeARM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12432,6 +13134,8 @@ impl Inst for OpGraphConstantARM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGraphConstantARM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12464,6 +13168,8 @@ impl Inst for OpGraphEntryPointARM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpGraphEntryPointARM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.graph)
@@ -12495,6 +13201,8 @@ impl Inst for OpGraphARM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGraphARM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12525,6 +13233,8 @@ impl Inst for OpGraphInputARM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGraphInputARM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12560,6 +13270,8 @@ impl Inst for OpGraphSetOutputARM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpGraphSetOutputARM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.value)
@@ -12588,6 +13300,8 @@ impl Inst for OpGraphEndARM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpGraphEndARM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -12610,6 +13324,8 @@ impl Inst for OpTypeGraphARM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeGraphARM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -12638,6 +13354,8 @@ impl Inst for OpTerminateInvocation {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpTerminateInvocation {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -12659,6 +13377,8 @@ impl Inst for OpTypeUntypedPointerKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeUntypedPointerKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -12690,6 +13410,8 @@ impl Inst for OpUntypedVariableKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUntypedVariableKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12730,6 +13452,8 @@ impl Inst for OpUntypedAccessChainKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUntypedAccessChainKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12770,6 +13494,8 @@ impl Inst for OpUntypedInBoundsAccessChainKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUntypedInBoundsAccessChainKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12808,6 +13534,8 @@ impl Inst for OpSubgroupBallotKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupBallotKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12840,6 +13568,8 @@ impl Inst for OpSubgroupFirstInvocationKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupFirstInvocationKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12875,6 +13605,8 @@ impl Inst for OpUntypedPtrAccessChainKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUntypedPtrAccessChainKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12919,6 +13651,8 @@ impl Inst for OpUntypedInBoundsPtrAccessChainKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUntypedInBoundsPtrAccessChainKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -12962,6 +13696,8 @@ impl Inst for OpUntypedArrayLengthKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUntypedArrayLengthKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13002,6 +13738,8 @@ impl Inst for OpUntypedPrefetchKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpUntypedPrefetchKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer_type)
@@ -13042,6 +13780,8 @@ impl Inst for OpFmaKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFmaKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13080,6 +13820,8 @@ impl Inst for OpSubgroupAllKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAllKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13112,6 +13854,8 @@ impl Inst for OpSubgroupAnyKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAnyKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13144,6 +13888,8 @@ impl Inst for OpSubgroupAllEqualKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAllEqualKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13179,6 +13925,8 @@ impl Inst for OpGroupNonUniformRotateKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformRotateKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13221,6 +13969,8 @@ impl Inst for OpSubgroupReadInvocationKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupReadInvocationKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13258,6 +14008,8 @@ impl Inst for OpExtInstWithForwardRefsKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpExtInstWithForwardRefsKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13304,6 +14056,8 @@ impl Inst for OpUntypedGroupAsyncCopyKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUntypedGroupAsyncCopyKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13368,6 +14122,8 @@ impl Inst for OpTraceRayKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpTraceRayKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.accel)
@@ -13423,6 +14179,8 @@ impl Inst for OpExecuteCallableKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpExecuteCallableKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.sbt_index)
@@ -13452,6 +14210,8 @@ impl Inst for OpConvertUToAccelerationStructureKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertUToAccelerationStructureKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13480,6 +14240,8 @@ impl Inst for OpIgnoreIntersectionKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpIgnoreIntersectionKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -13498,6 +14260,8 @@ impl Inst for OpTerminateRayKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpTerminateRayKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -13522,6 +14286,8 @@ impl Inst for OpSDot {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSDot {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13562,6 +14328,8 @@ impl Inst for OpUDot {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUDot {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13602,6 +14370,8 @@ impl Inst for OpSUDot {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSUDot {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13643,6 +14413,8 @@ impl Inst for OpSDotAccSat {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSDotAccSat {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13687,6 +14459,8 @@ impl Inst for OpUDotAccSat {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUDotAccSat {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13731,6 +14505,8 @@ impl Inst for OpSUDotAccSat {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSUDotAccSat {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13775,6 +14551,8 @@ impl Inst for OpTypeCooperativeMatrixKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeCooperativeMatrixKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -13819,6 +14597,8 @@ impl Inst for OpCooperativeMatrixLoadKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCooperativeMatrixLoadKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13862,6 +14642,8 @@ impl Inst for OpCooperativeMatrixStoreKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpCooperativeMatrixStoreKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -13903,6 +14685,8 @@ impl Inst for OpCooperativeMatrixMulAddKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCooperativeMatrixMulAddKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13944,6 +14728,8 @@ impl Inst for OpCooperativeMatrixLengthKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCooperativeMatrixLengthKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -13976,6 +14762,8 @@ impl Inst for OpConstantCompositeReplicateEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConstantCompositeReplicateEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14008,6 +14796,8 @@ impl Inst for OpSpecConstantCompositeReplicateEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSpecConstantCompositeReplicateEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14040,6 +14830,8 @@ impl Inst for OpCompositeConstructReplicateEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCompositeConstructReplicateEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14070,6 +14862,8 @@ impl Inst for OpTypeRayQueryKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeRayQueryKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -14100,6 +14894,8 @@ impl Inst for OpRayQueryInitializeKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpRayQueryInitializeKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.ray_query)
@@ -14145,6 +14941,8 @@ impl Inst for OpRayQueryTerminateKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpRayQueryTerminateKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ray_query);
         writer.write_op(Self::META.opcode, len)?;
@@ -14169,6 +14967,8 @@ impl Inst for OpRayQueryGenerateIntersectionKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpRayQueryGenerateIntersectionKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.ray_query) + OperandEncoding::word_len(&self.hit_t);
@@ -14195,6 +14995,8 @@ impl Inst for OpRayQueryConfirmIntersectionKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpRayQueryConfirmIntersectionKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ray_query);
         writer.write_op(Self::META.opcode, len)?;
@@ -14220,6 +15022,8 @@ impl Inst for OpRayQueryProceedKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryProceedKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14253,6 +15057,8 @@ impl Inst for OpRayQueryGetIntersectionTypeKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionTypeKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14290,6 +15096,8 @@ impl Inst for OpImageSampleWeightedQCOM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSampleWeightedQCOM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14330,6 +15138,8 @@ impl Inst for OpImageBoxFilterQCOM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageBoxFilterQCOM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14372,6 +15182,8 @@ impl Inst for OpImageBlockMatchSSDQCOM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageBlockMatchSSDQCOM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14420,6 +15232,8 @@ impl Inst for OpImageBlockMatchSADQCOM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageBlockMatchSADQCOM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14464,6 +15278,8 @@ impl Inst for OpBitCastArrayQCOM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpBitCastArrayQCOM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14500,6 +15316,8 @@ impl Inst for OpImageBlockMatchWindowSSDQCOM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageBlockMatchWindowSSDQCOM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14548,6 +15366,8 @@ impl Inst for OpImageBlockMatchWindowSADQCOM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageBlockMatchWindowSADQCOM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14596,6 +15416,8 @@ impl Inst for OpImageBlockMatchGatherSSDQCOM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageBlockMatchGatherSSDQCOM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14644,6 +15466,8 @@ impl Inst for OpImageBlockMatchGatherSADQCOM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageBlockMatchGatherSADQCOM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14688,6 +15512,8 @@ impl Inst for OpCompositeConstructCoopMatQCOM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCompositeConstructCoopMatQCOM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14720,6 +15546,8 @@ impl Inst for OpCompositeExtractCoopMatQCOM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCompositeExtractCoopMatQCOM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14753,6 +15581,8 @@ impl Inst for OpExtractSubArrayQCOM {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpExtractSubArrayQCOM {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14790,6 +15620,8 @@ impl Inst for OpGroupIAddNonUniformAMD {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupIAddNonUniformAMD {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14830,6 +15662,8 @@ impl Inst for OpGroupFAddNonUniformAMD {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupFAddNonUniformAMD {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14870,6 +15704,8 @@ impl Inst for OpGroupFMinNonUniformAMD {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupFMinNonUniformAMD {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14910,6 +15746,8 @@ impl Inst for OpGroupUMinNonUniformAMD {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupUMinNonUniformAMD {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14950,6 +15788,8 @@ impl Inst for OpGroupSMinNonUniformAMD {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupSMinNonUniformAMD {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -14990,6 +15830,8 @@ impl Inst for OpGroupFMaxNonUniformAMD {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupFMaxNonUniformAMD {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15030,6 +15872,8 @@ impl Inst for OpGroupUMaxNonUniformAMD {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupUMaxNonUniformAMD {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15070,6 +15914,8 @@ impl Inst for OpGroupSMaxNonUniformAMD {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupSMaxNonUniformAMD {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15109,6 +15955,8 @@ impl Inst for OpFragmentMaskFetchAMD {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFragmentMaskFetchAMD {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15146,6 +15994,8 @@ impl Inst for OpFragmentFetchAMD {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFragmentFetchAMD {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15184,6 +16034,8 @@ impl Inst for OpReadClockKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpReadClockKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15218,6 +16070,8 @@ impl Inst for OpAllocateNodePayloadsAMDX {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAllocateNodePayloadsAMDX {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15254,6 +16108,8 @@ impl Inst for OpEnqueueNodePayloadsAMDX {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpEnqueueNodePayloadsAMDX {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.payload_array);
         writer.write_op(Self::META.opcode, len)?;
@@ -15278,6 +16134,8 @@ impl Inst for OpTypeNodePayloadArrayAMDX {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeNodePayloadArrayAMDX {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -15307,6 +16165,8 @@ impl Inst for OpFinishWritingNodePayloadAMDX {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFinishWritingNodePayloadAMDX {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15339,6 +16199,8 @@ impl Inst for OpNodePayloadArrayLengthAMDX {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpNodePayloadArrayLengthAMDX {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15372,6 +16234,8 @@ impl Inst for OpIsNodePayloadValidAMDX {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIsNodePayloadValidAMDX {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15406,6 +16270,8 @@ impl Inst for OpConstantStringAMDX {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConstantStringAMDX {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -15434,6 +16300,8 @@ impl Inst for OpSpecConstantStringAMDX {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSpecConstantStringAMDX {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -15463,6 +16331,8 @@ impl Inst for OpGroupNonUniformQuadAllKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformQuadAllKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15495,6 +16365,8 @@ impl Inst for OpGroupNonUniformQuadAnyKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformQuadAnyKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15526,6 +16398,8 @@ impl Inst for OpTypeBufferEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeBufferEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -15555,6 +16429,8 @@ impl Inst for OpBufferPointerEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpBufferPointerEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15590,6 +16466,8 @@ impl Inst for OpUntypedImageTexelPointerEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUntypedImageTexelPointerEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15631,6 +16509,8 @@ impl Inst for OpMemberDecorateIdEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpMemberDecorateIdEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.structure_type)
@@ -15663,6 +16543,8 @@ impl Inst for OpConstantSizeOfEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConstantSizeOfEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15706,6 +16588,8 @@ impl Inst for OpHitObjectRecordHitMotionNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectRecordHitMotionNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -15781,6 +16665,8 @@ impl Inst for OpHitObjectRecordHitWithIndexMotionNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectRecordHitWithIndexMotionNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -15847,6 +16733,8 @@ impl Inst for OpHitObjectRecordMissMotionNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectRecordMissMotionNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -15891,6 +16779,8 @@ impl Inst for OpHitObjectGetWorldToObjectNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetWorldToObjectNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15923,6 +16813,8 @@ impl Inst for OpHitObjectGetObjectToWorldNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetObjectToWorldNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15955,6 +16847,8 @@ impl Inst for OpHitObjectGetObjectRayDirectionNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetObjectRayDirectionNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -15987,6 +16881,8 @@ impl Inst for OpHitObjectGetObjectRayOriginNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetObjectRayOriginNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16029,6 +16925,8 @@ impl Inst for OpHitObjectTraceRayMotionNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectTraceRayMotionNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -16091,6 +16989,8 @@ impl Inst for OpHitObjectGetShaderRecordBufferHandleNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetShaderRecordBufferHandleNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16123,6 +17023,8 @@ impl Inst for OpHitObjectGetShaderBindingTableRecordIndexNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetShaderBindingTableRecordIndexNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16153,6 +17055,8 @@ impl Inst for OpHitObjectRecordEmptyNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectRecordEmptyNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hit_object);
         writer.write_op(Self::META.opcode, len)?;
@@ -16187,6 +17091,8 @@ impl Inst for OpHitObjectTraceRayNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectTraceRayNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -16256,6 +17162,8 @@ impl Inst for OpHitObjectRecordHitNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectRecordHitNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -16327,6 +17235,8 @@ impl Inst for OpHitObjectRecordHitWithIndexNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectRecordHitWithIndexNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -16389,6 +17299,8 @@ impl Inst for OpHitObjectRecordMissNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectRecordMissNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -16429,6 +17341,8 @@ impl Inst for OpHitObjectExecuteShaderNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectExecuteShaderNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -16458,6 +17372,8 @@ impl Inst for OpHitObjectGetCurrentTimeNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetCurrentTimeNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16489,6 +17405,8 @@ impl Inst for OpHitObjectGetAttributesNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectGetAttributesNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -16518,6 +17436,8 @@ impl Inst for OpHitObjectGetHitKindNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetHitKindNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16550,6 +17470,8 @@ impl Inst for OpHitObjectGetPrimitiveIndexNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetPrimitiveIndexNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16582,6 +17504,8 @@ impl Inst for OpHitObjectGetGeometryIndexNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetGeometryIndexNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16614,6 +17538,8 @@ impl Inst for OpHitObjectGetInstanceIdNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetInstanceIdNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16646,6 +17572,8 @@ impl Inst for OpHitObjectGetInstanceCustomIndexNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetInstanceCustomIndexNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16678,6 +17606,8 @@ impl Inst for OpHitObjectGetWorldRayDirectionNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetWorldRayDirectionNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16710,6 +17640,8 @@ impl Inst for OpHitObjectGetWorldRayOriginNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetWorldRayOriginNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16742,6 +17674,8 @@ impl Inst for OpHitObjectGetRayTMaxNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetRayTMaxNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16774,6 +17708,8 @@ impl Inst for OpHitObjectGetRayTMinNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetRayTMinNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16806,6 +17742,8 @@ impl Inst for OpHitObjectIsEmptyNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectIsEmptyNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16838,6 +17776,8 @@ impl Inst for OpHitObjectIsHitNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectIsHitNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16870,6 +17810,8 @@ impl Inst for OpHitObjectIsMissNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectIsMissNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -16902,6 +17844,8 @@ impl Inst for OpReorderThreadWithHitObjectNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpReorderThreadWithHitObjectNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -16933,6 +17877,8 @@ impl Inst for OpReorderThreadWithHintNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpReorderThreadWithHintNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hint) + OperandEncoding::word_len(&self.bits);
         writer.write_op(Self::META.opcode, len)?;
@@ -16958,6 +17904,8 @@ impl Inst for OpTypeHitObjectNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeHitObjectNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -16987,6 +17935,8 @@ impl Inst for OpImageSampleFootprintNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpImageSampleFootprintNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17031,6 +17981,8 @@ impl Inst for OpTypeVectorIdEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeVectorIdEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -17073,6 +18025,8 @@ impl Inst for OpCooperativeVectorMatrixMulNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCooperativeVectorMatrixMulNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17139,6 +18093,8 @@ impl Inst for OpCooperativeVectorOuterProductAccumulateNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpCooperativeVectorOuterProductAccumulateNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -17183,6 +18139,8 @@ impl Inst for OpCooperativeVectorReduceSumAccumulateNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpCooperativeVectorReduceSumAccumulateNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -17228,6 +18186,8 @@ impl Inst for OpCooperativeVectorMatrixMulAddNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCooperativeVectorMatrixMulAddNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17299,6 +18259,8 @@ impl Inst for OpCooperativeMatrixConvertNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCooperativeMatrixConvertNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17332,6 +18294,8 @@ impl Inst for OpEmitMeshTasksEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpEmitMeshTasksEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.group_count_x)
@@ -17366,6 +18330,8 @@ impl Inst for OpSetMeshOutputsEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSetMeshOutputsEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.vertex_count)
@@ -17395,6 +18361,8 @@ impl Inst for OpGroupNonUniformPartitionEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupNonUniformPartitionEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17426,6 +18394,8 @@ impl Inst for OpWritePackedPrimitiveIndices4x8NV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpWritePackedPrimitiveIndices4x8NV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.index_offset)
@@ -17459,6 +18429,8 @@ impl Inst for OpFetchMicroTriangleVertexPositionNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFetchMicroTriangleVertexPositionNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17507,6 +18479,8 @@ impl Inst for OpFetchMicroTriangleVertexBarycentricNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFetchMicroTriangleVertexBarycentricNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17553,6 +18527,8 @@ impl Inst for OpCooperativeVectorLoadNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCooperativeVectorLoadNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17592,6 +18568,8 @@ impl Inst for OpCooperativeVectorStoreNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpCooperativeVectorStoreNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -17628,6 +18606,8 @@ impl Inst for OpHitObjectRecordFromQueryEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectRecordFromQueryEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -17667,6 +18647,8 @@ impl Inst for OpHitObjectRecordMissEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectRecordMissEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -17716,6 +18698,8 @@ impl Inst for OpHitObjectRecordMissMotionEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectRecordMissMotionEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -17763,6 +18747,8 @@ impl Inst for OpHitObjectGetIntersectionTriangleVertexPositionsEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetIntersectionTriangleVertexPositionsEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17795,6 +18781,8 @@ impl Inst for OpHitObjectGetRayFlagsEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetRayFlagsEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -17826,6 +18814,8 @@ impl Inst for OpHitObjectSetShaderBindingTableRecordIndexEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectSetShaderBindingTableRecordIndexEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -17856,6 +18846,8 @@ impl Inst for OpHitObjectReorderExecuteShaderEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectReorderExecuteShaderEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -17902,6 +18894,8 @@ impl Inst for OpHitObjectTraceReorderExecuteEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectTraceReorderExecuteEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -17979,6 +18973,8 @@ impl Inst for OpHitObjectTraceMotionReorderExecuteEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectTraceMotionReorderExecuteEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -18045,6 +19041,8 @@ impl Inst for OpTypeHitObjectEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeHitObjectEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -18069,6 +19067,8 @@ impl Inst for OpReorderThreadWithHintEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpReorderThreadWithHintEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hint) + OperandEncoding::word_len(&self.bits);
         writer.write_op(Self::META.opcode, len)?;
@@ -18096,6 +19096,8 @@ impl Inst for OpReorderThreadWithHitObjectEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpReorderThreadWithHitObjectEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -18137,6 +19139,8 @@ impl Inst for OpHitObjectTraceRayEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectTraceRayEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -18206,6 +19210,8 @@ impl Inst for OpHitObjectTraceRayMotionEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectTraceRayMotionEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -18266,6 +19272,8 @@ impl Inst for OpHitObjectRecordEmptyEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectRecordEmptyEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.hit_object);
         writer.write_op(Self::META.opcode, len)?;
@@ -18290,6 +19298,8 @@ impl Inst for OpHitObjectExecuteShaderEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectExecuteShaderEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -18319,6 +19329,8 @@ impl Inst for OpHitObjectGetCurrentTimeEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetCurrentTimeEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18350,6 +19362,8 @@ impl Inst for OpHitObjectGetAttributesEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpHitObjectGetAttributesEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.hit_object)
@@ -18379,6 +19393,8 @@ impl Inst for OpHitObjectGetHitKindEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetHitKindEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18411,6 +19427,8 @@ impl Inst for OpHitObjectGetPrimitiveIndexEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetPrimitiveIndexEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18443,6 +19461,8 @@ impl Inst for OpHitObjectGetGeometryIndexEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetGeometryIndexEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18475,6 +19495,8 @@ impl Inst for OpHitObjectGetInstanceIdEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetInstanceIdEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18507,6 +19529,8 @@ impl Inst for OpHitObjectGetInstanceCustomIndexEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetInstanceCustomIndexEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18539,6 +19563,8 @@ impl Inst for OpHitObjectGetObjectRayOriginEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetObjectRayOriginEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18571,6 +19597,8 @@ impl Inst for OpHitObjectGetObjectRayDirectionEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetObjectRayDirectionEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18603,6 +19631,8 @@ impl Inst for OpHitObjectGetWorldRayDirectionEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetWorldRayDirectionEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18635,6 +19665,8 @@ impl Inst for OpHitObjectGetWorldRayOriginEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetWorldRayOriginEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18667,6 +19699,8 @@ impl Inst for OpHitObjectGetObjectToWorldEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetObjectToWorldEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18699,6 +19733,8 @@ impl Inst for OpHitObjectGetWorldToObjectEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetWorldToObjectEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18731,6 +19767,8 @@ impl Inst for OpHitObjectGetRayTMaxEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetRayTMaxEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18764,6 +19802,8 @@ impl Inst for OpReportIntersectionKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpReportIntersectionKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -18795,6 +19835,8 @@ impl Inst for OpIgnoreIntersectionNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpIgnoreIntersectionNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -18813,6 +19855,8 @@ impl Inst for OpTerminateRayNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpTerminateRayNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -18843,6 +19887,8 @@ impl Inst for OpTraceNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpTraceNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.accel)
@@ -18908,6 +19954,8 @@ impl Inst for OpTraceMotionNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpTraceMotionNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.accel)
@@ -18976,6 +20024,8 @@ impl Inst for OpTraceRayMotionNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpTraceRayMotionNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.accel)
@@ -19036,6 +20086,8 @@ impl Inst for OpRayQueryGetIntersectionTriangleVertexPositionsKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionTriangleVertexPositionsKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19069,6 +20121,8 @@ impl Inst for OpTypeAccelerationStructureKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeAccelerationStructureKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -19093,6 +20147,8 @@ impl Inst for OpExecuteCallableNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpExecuteCallableNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.sbt_index)
@@ -19123,6 +20179,8 @@ impl Inst for OpRayQueryGetIntersectionClusterIdNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionClusterIdNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19158,6 +20216,8 @@ impl Inst for OpHitObjectGetClusterIdNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetClusterIdNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19190,6 +20250,8 @@ impl Inst for OpHitObjectGetRayTMinEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetRayTMinEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19222,6 +20284,8 @@ impl Inst for OpHitObjectGetShaderBindingTableRecordIndexEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetShaderBindingTableRecordIndexEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19254,6 +20318,8 @@ impl Inst for OpHitObjectGetShaderRecordBufferHandleEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetShaderRecordBufferHandleEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19286,6 +20352,8 @@ impl Inst for OpHitObjectIsEmptyEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectIsEmptyEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19318,6 +20386,8 @@ impl Inst for OpHitObjectIsHitEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectIsHitEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19350,6 +20420,8 @@ impl Inst for OpHitObjectIsMissEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectIsMissEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19384,6 +20456,8 @@ impl Inst for OpTypeCooperativeMatrixNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeCooperativeMatrixNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -19425,6 +20499,8 @@ impl Inst for OpCooperativeMatrixLoadNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCooperativeMatrixLoadNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19468,6 +20544,8 @@ impl Inst for OpCooperativeMatrixStoreNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpCooperativeMatrixStoreNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -19508,6 +20586,8 @@ impl Inst for OpCooperativeMatrixMulAddNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCooperativeMatrixMulAddNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19546,6 +20626,8 @@ impl Inst for OpCooperativeMatrixLengthNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCooperativeMatrixLengthNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19574,6 +20656,8 @@ impl Inst for OpBeginInvocationInterlockEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpBeginInvocationInterlockEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -19592,6 +20676,8 @@ impl Inst for OpEndInvocationInterlockEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpEndInvocationInterlockEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -19616,6 +20702,8 @@ impl Inst for OpCooperativeMatrixReduceNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCooperativeMatrixReduceNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19658,6 +20746,8 @@ impl Inst for OpCooperativeMatrixLoadTensorNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCooperativeMatrixLoadTensorNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19704,6 +20794,8 @@ impl Inst for OpCooperativeMatrixStoreTensorNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpCooperativeMatrixStoreTensorNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.pointer)
@@ -19744,6 +20836,8 @@ impl Inst for OpCooperativeMatrixPerElementOpNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCooperativeMatrixPerElementOpNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19782,6 +20876,8 @@ impl Inst for OpTypeTensorLayoutNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeTensorLayoutNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -19815,6 +20911,8 @@ impl Inst for OpTypeTensorViewNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeTensorViewNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -19849,6 +20947,8 @@ impl Inst for OpCreateTensorLayoutNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCreateTensorLayoutNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19879,6 +20979,8 @@ impl Inst for OpTensorLayoutSetDimensionNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTensorLayoutSetDimensionNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19915,6 +21017,8 @@ impl Inst for OpTensorLayoutSetStrideNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTensorLayoutSetStrideNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19951,6 +21055,8 @@ impl Inst for OpTensorLayoutSliceNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTensorLayoutSliceNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -19987,6 +21093,8 @@ impl Inst for OpTensorLayoutSetClampValueNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTensorLayoutSetClampValueNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20021,6 +21129,8 @@ impl Inst for OpCreateTensorViewNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCreateTensorViewNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20051,6 +21161,8 @@ impl Inst for OpTensorViewSetDimensionNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTensorViewSetDimensionNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20087,6 +21199,8 @@ impl Inst for OpTensorViewSetStrideNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTensorViewSetStrideNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20118,6 +21232,8 @@ impl Inst for OpDemoteToHelperInvocation {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpDemoteToHelperInvocation {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0;
         writer.write_op(Self::META.opcode, len)?;
@@ -20139,6 +21255,8 @@ impl Inst for OpIsHelperInvocationEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIsHelperInvocationEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20172,6 +21290,8 @@ impl Inst for OpTensorViewSetClipNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTensorViewSetClipNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20217,6 +21337,8 @@ impl Inst for OpTensorLayoutSetBlockSizeNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTensorLayoutSetBlockSizeNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20252,6 +21374,8 @@ impl Inst for OpCooperativeMatrixTransposeNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCooperativeMatrixTransposeNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20284,6 +21408,8 @@ impl Inst for OpConvertUToImageNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertUToImageNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20316,6 +21442,8 @@ impl Inst for OpConvertUToSamplerNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertUToSamplerNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20348,6 +21476,8 @@ impl Inst for OpConvertImageToUNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertImageToUNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20380,6 +21510,8 @@ impl Inst for OpConvertSamplerToUNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertSamplerToUNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20412,6 +21544,8 @@ impl Inst for OpConvertUToSampledImageNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertUToSampledImageNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20444,6 +21578,8 @@ impl Inst for OpConvertSampledImageToUNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertSampledImageToUNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20474,6 +21610,8 @@ impl Inst for OpSamplerImageAddressingModeNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSamplerImageAddressingModeNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.bit_width);
         writer.write_op(Self::META.opcode, len)?;
@@ -20503,6 +21641,8 @@ impl Inst for OpRawAccessChainNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRawAccessChainNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20548,6 +21688,8 @@ impl Inst for OpRayQueryGetIntersectionSpherePositionNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionSpherePositionNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20584,6 +21726,8 @@ impl Inst for OpRayQueryGetIntersectionSphereRadiusNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionSphereRadiusNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20620,6 +21764,8 @@ impl Inst for OpRayQueryGetIntersectionLSSPositionsNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionLSSPositionsNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20656,6 +21802,8 @@ impl Inst for OpRayQueryGetIntersectionLSSRadiiNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionLSSRadiiNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20692,6 +21840,8 @@ impl Inst for OpRayQueryGetIntersectionLSSHitValueNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionLSSHitValueNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20727,6 +21877,8 @@ impl Inst for OpHitObjectGetSpherePositionNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetSpherePositionNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20759,6 +21911,8 @@ impl Inst for OpHitObjectGetSphereRadiusNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetSphereRadiusNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20791,6 +21945,8 @@ impl Inst for OpHitObjectGetLSSPositionsNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetLSSPositionsNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20823,6 +21979,8 @@ impl Inst for OpHitObjectGetLSSRadiiNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectGetLSSRadiiNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20855,6 +22013,8 @@ impl Inst for OpHitObjectIsSphereHitNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectIsSphereHitNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20887,6 +22047,8 @@ impl Inst for OpHitObjectIsLSSHitNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpHitObjectIsLSSHitNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20920,6 +22082,8 @@ impl Inst for OpRayQueryIsSphereHitNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryIsSphereHitNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20956,6 +22120,8 @@ impl Inst for OpRayQueryIsLSSHitNV {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryIsLSSHitNV {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -20992,6 +22158,8 @@ impl Inst for OpSubgroupShuffleINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupShuffleINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21029,6 +22197,8 @@ impl Inst for OpSubgroupShuffleDownINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupShuffleDownINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21069,6 +22239,8 @@ impl Inst for OpSubgroupShuffleUpINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupShuffleUpINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21108,6 +22280,8 @@ impl Inst for OpSubgroupShuffleXorINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupShuffleXorINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21143,6 +22317,8 @@ impl Inst for OpSubgroupBlockReadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupBlockReadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21174,6 +22350,8 @@ impl Inst for OpSubgroupBlockWriteINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSubgroupBlockWriteINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ptr) + OperandEncoding::word_len(&self.data);
         writer.write_op(Self::META.opcode, len)?;
@@ -21202,6 +22380,8 @@ impl Inst for OpSubgroupImageBlockReadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupImageBlockReadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21237,6 +22417,8 @@ impl Inst for OpSubgroupImageBlockWriteINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSubgroupImageBlockWriteINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.image)
@@ -21272,6 +22454,8 @@ impl Inst for OpSubgroupImageMediaBlockReadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupImageMediaBlockReadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21315,6 +22499,8 @@ impl Inst for OpSubgroupImageMediaBlockWriteINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSubgroupImageMediaBlockWriteINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.image)
@@ -21353,6 +22539,8 @@ impl Inst for OpUCountLeadingZerosINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUCountLeadingZerosINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21385,6 +22573,8 @@ impl Inst for OpUCountTrailingZerosINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUCountTrailingZerosINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21418,6 +22608,8 @@ impl Inst for OpAbsISubINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAbsISubINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21454,6 +22646,8 @@ impl Inst for OpAbsUSubINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAbsUSubINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21490,6 +22684,8 @@ impl Inst for OpIAddSatINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIAddSatINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21526,6 +22722,8 @@ impl Inst for OpUAddSatINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUAddSatINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21562,6 +22760,8 @@ impl Inst for OpIAverageINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIAverageINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21598,6 +22798,8 @@ impl Inst for OpUAverageINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUAverageINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21634,6 +22836,8 @@ impl Inst for OpIAverageRoundedINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIAverageRoundedINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21670,6 +22874,8 @@ impl Inst for OpUAverageRoundedINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUAverageRoundedINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21706,6 +22912,8 @@ impl Inst for OpISubSatINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpISubSatINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21742,6 +22950,8 @@ impl Inst for OpUSubSatINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUSubSatINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21778,6 +22988,8 @@ impl Inst for OpIMul32x16INTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpIMul32x16INTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21814,6 +23026,8 @@ impl Inst for OpUMul32x16INTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUMul32x16INTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21849,6 +23063,8 @@ impl Inst for OpConstantFunctionPointerINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConstantFunctionPointerINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21881,6 +23097,8 @@ impl Inst for OpFunctionPointerCallINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFunctionPointerCallINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21912,6 +23130,8 @@ impl Inst for OpAsmTargetINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAsmTargetINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -21944,6 +23164,8 @@ impl Inst for OpAsmINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAsmINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -21986,6 +23208,8 @@ impl Inst for OpAsmCallINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAsmCallINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22024,6 +23248,8 @@ impl Inst for OpAtomicFMinEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicFMinEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22068,6 +23294,8 @@ impl Inst for OpAtomicFMaxEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicFMaxEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22107,6 +23335,8 @@ impl Inst for OpAssumeTrueKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpAssumeTrueKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.condition);
         writer.write_op(Self::META.opcode, len)?;
@@ -22133,6 +23363,8 @@ impl Inst for OpExpectKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpExpectKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22167,6 +23399,8 @@ impl Inst for OpDecorateString {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpDecorateString {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.target)
@@ -22196,6 +23430,8 @@ impl Inst for OpMemberDecorateString {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpMemberDecorateString {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.struct_type)
@@ -22229,6 +23465,8 @@ impl Inst for OpVmeImageINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpVmeImageINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22263,6 +23501,8 @@ impl Inst for OpTypeVmeImageINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeVmeImageINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -22290,6 +23530,8 @@ impl Inst for OpTypeAvcImePayloadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeAvcImePayloadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -22313,6 +23555,8 @@ impl Inst for OpTypeAvcRefPayloadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeAvcRefPayloadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -22336,6 +23580,8 @@ impl Inst for OpTypeAvcSicPayloadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeAvcSicPayloadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -22359,6 +23605,8 @@ impl Inst for OpTypeAvcMcePayloadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeAvcMcePayloadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -22382,6 +23630,8 @@ impl Inst for OpTypeAvcMceResultINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeAvcMceResultINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -22405,6 +23655,8 @@ impl Inst for OpTypeAvcImeResultINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeAvcImeResultINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -22428,6 +23680,8 @@ impl Inst for OpTypeAvcImeResultSingleReferenceStreamoutINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeAvcImeResultSingleReferenceStreamoutINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -22451,6 +23705,8 @@ impl Inst for OpTypeAvcImeResultDualReferenceStreamoutINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeAvcImeResultDualReferenceStreamoutINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -22474,6 +23730,8 @@ impl Inst for OpTypeAvcImeSingleReferenceStreaminINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeAvcImeSingleReferenceStreaminINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -22497,6 +23755,8 @@ impl Inst for OpTypeAvcImeDualReferenceStreaminINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeAvcImeDualReferenceStreaminINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -22520,6 +23780,8 @@ impl Inst for OpTypeAvcRefResultINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeAvcRefResultINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -22543,6 +23805,8 @@ impl Inst for OpTypeAvcSicResultINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeAvcSicResultINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -22570,6 +23834,8 @@ impl Inst for OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22606,6 +23872,8 @@ impl Inst for OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22642,6 +23910,8 @@ impl Inst for OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22678,6 +23948,8 @@ impl Inst for OpSubgroupAvcMceSetInterShapePenaltyINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceSetInterShapePenaltyINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22714,6 +23986,8 @@ impl Inst for OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22750,6 +24024,8 @@ impl Inst for OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22786,6 +24062,8 @@ impl Inst for OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22822,6 +24100,8 @@ impl Inst for OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22856,6 +24136,8 @@ impl Inst for OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22884,6 +24166,8 @@ impl Inst for OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22912,6 +24196,8 @@ impl Inst for OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22944,6 +24230,8 @@ impl Inst for OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -22986,6 +24274,8 @@ impl Inst for OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23020,6 +24310,8 @@ impl Inst for OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23048,6 +24340,8 @@ impl Inst for OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23077,6 +24371,8 @@ impl Inst for OpSubgroupAvcMceSetAcOnlyHaarINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceSetAcOnlyHaarINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23110,6 +24406,8 @@ impl Inst for OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23147,6 +24445,8 @@ impl Inst for OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23185,6 +24485,8 @@ impl Inst for OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23223,6 +24525,8 @@ impl Inst for OpSubgroupAvcMceConvertToImePayloadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceConvertToImePayloadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23255,6 +24559,8 @@ impl Inst for OpSubgroupAvcMceConvertToImeResultINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceConvertToImeResultINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23287,6 +24593,8 @@ impl Inst for OpSubgroupAvcMceConvertToRefPayloadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceConvertToRefPayloadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23319,6 +24627,8 @@ impl Inst for OpSubgroupAvcMceConvertToRefResultINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceConvertToRefResultINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23351,6 +24661,8 @@ impl Inst for OpSubgroupAvcMceConvertToSicPayloadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceConvertToSicPayloadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23383,6 +24695,8 @@ impl Inst for OpSubgroupAvcMceConvertToSicResultINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceConvertToSicResultINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23415,6 +24729,8 @@ impl Inst for OpSubgroupAvcMceGetMotionVectorsINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetMotionVectorsINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23447,6 +24763,8 @@ impl Inst for OpSubgroupAvcMceGetInterDistortionsINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetInterDistortionsINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23479,6 +24797,8 @@ impl Inst for OpSubgroupAvcMceGetBestInterDistortionsINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetBestInterDistortionsINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23511,6 +24831,8 @@ impl Inst for OpSubgroupAvcMceGetInterMajorShapeINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetInterMajorShapeINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23543,6 +24865,8 @@ impl Inst for OpSubgroupAvcMceGetInterMinorShapeINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetInterMinorShapeINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23575,6 +24899,8 @@ impl Inst for OpSubgroupAvcMceGetInterDirectionsINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetInterDirectionsINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23607,6 +24933,8 @@ impl Inst for OpSubgroupAvcMceGetInterMotionVectorCountINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetInterMotionVectorCountINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23639,6 +24967,8 @@ impl Inst for OpSubgroupAvcMceGetInterReferenceIdsINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetInterReferenceIdsINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23674,6 +25004,8 @@ impl Inst for OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23717,6 +25049,8 @@ impl Inst for OpSubgroupAvcImeInitializeINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeInitializeINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23757,6 +25091,8 @@ impl Inst for OpSubgroupAvcImeSetSingleReferenceINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeSetSingleReferenceINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23798,6 +25134,8 @@ impl Inst for OpSubgroupAvcImeSetDualReferenceINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeSetDualReferenceINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23840,6 +25178,8 @@ impl Inst for OpSubgroupAvcImeRefWindowSizeINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeRefWindowSizeINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23878,6 +25218,8 @@ impl Inst for OpSubgroupAvcImeAdjustRefOffsetINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeAdjustRefOffsetINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23919,6 +25261,8 @@ impl Inst for OpSubgroupAvcImeConvertToMcePayloadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeConvertToMcePayloadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23952,6 +25296,8 @@ impl Inst for OpSubgroupAvcImeSetMaxMotionVectorCountINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeSetMaxMotionVectorCountINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -23987,6 +25333,8 @@ impl Inst for OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24020,6 +25368,8 @@ impl Inst for OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24056,6 +25406,8 @@ impl Inst for OpSubgroupAvcImeSetWeightedSadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeSetWeightedSadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24093,6 +25445,8 @@ impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24134,6 +25488,8 @@ impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24178,6 +25534,8 @@ impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24223,6 +25581,8 @@ impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24269,6 +25629,8 @@ impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24310,6 +25672,8 @@ impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24354,6 +25718,8 @@ impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24399,6 +25765,8 @@ impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24443,6 +25811,8 @@ impl Inst for OpSubgroupAvcImeConvertToMceResultINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeConvertToMceResultINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24475,6 +25845,8 @@ impl Inst for OpSubgroupAvcImeGetSingleReferenceStreaminINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeGetSingleReferenceStreaminINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24507,6 +25879,8 @@ impl Inst for OpSubgroupAvcImeGetDualReferenceStreaminINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeGetDualReferenceStreaminINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24539,6 +25913,8 @@ impl Inst for OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24571,6 +25947,8 @@ impl Inst for OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24605,6 +25983,8 @@ impl Inst for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectors
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24642,6 +26022,8 @@ impl Inst for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsIN
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24679,6 +26061,8 @@ impl Inst for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsI
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24717,6 +26101,8 @@ impl Inst for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsIN
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24758,6 +26144,8 @@ impl Inst for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTE
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24799,6 +26187,8 @@ impl Inst for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINT
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24838,6 +26228,8 @@ impl Inst for OpSubgroupAvcImeGetBorderReachedINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeGetBorderReachedINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24873,6 +26265,8 @@ impl Inst for OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24905,6 +26299,8 @@ impl Inst for OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24937,6 +26333,8 @@ impl Inst for OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -24969,6 +26367,8 @@ impl Inst for OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25007,6 +26407,8 @@ impl Inst for OpSubgroupAvcFmeInitializeINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcFmeInitializeINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25064,6 +26466,8 @@ impl Inst for OpSubgroupAvcBmeInitializeINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcBmeInitializeINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25117,6 +26521,8 @@ impl Inst for OpSubgroupAvcRefConvertToMcePayloadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcRefConvertToMcePayloadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25149,6 +26555,8 @@ impl Inst for OpSubgroupAvcRefSetBidirectionalMixDisableINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcRefSetBidirectionalMixDisableINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25181,6 +26589,8 @@ impl Inst for OpSubgroupAvcRefSetBilinearFilterEnableINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcRefSetBilinearFilterEnableINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25215,6 +26625,8 @@ impl Inst for OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25256,6 +26668,8 @@ impl Inst for OpSubgroupAvcRefEvaluateWithDualReferenceINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcRefEvaluateWithDualReferenceINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25299,6 +26713,8 @@ impl Inst for OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25340,6 +26756,8 @@ impl Inst for OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25381,6 +26799,8 @@ impl Inst for OpSubgroupAvcRefConvertToMceResultINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcRefConvertToMceResultINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25413,6 +26833,8 @@ impl Inst for OpSubgroupAvcSicInitializeINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicInitializeINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25450,6 +26872,8 @@ impl Inst for OpSubgroupAvcSicConfigureSkcINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicConfigureSkcINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25504,6 +26928,8 @@ impl Inst for OpSubgroupAvcSicConfigureIpeLumaINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicConfigureIpeLumaINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25567,6 +26993,8 @@ impl Inst for OpSubgroupAvcSicConfigureIpeLumaChromaINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicConfigureIpeLumaChromaINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25630,6 +27058,8 @@ impl Inst for OpSubgroupAvcSicGetMotionVectorMaskINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicGetMotionVectorMaskINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25665,6 +27095,8 @@ impl Inst for OpSubgroupAvcSicConvertToMcePayloadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicConvertToMcePayloadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25698,6 +27130,8 @@ impl Inst for OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25736,6 +27170,8 @@ impl Inst for OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25778,6 +27214,8 @@ impl Inst for OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25813,6 +27251,8 @@ impl Inst for OpSubgroupAvcSicSetBilinearFilterEnableINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicSetBilinearFilterEnableINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25846,6 +27286,8 @@ impl Inst for OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25882,6 +27324,8 @@ impl Inst for OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25918,6 +27362,8 @@ impl Inst for OpSubgroupAvcSicEvaluateIpeINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicEvaluateIpeINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25955,6 +27401,8 @@ impl Inst for OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -25996,6 +27444,8 @@ impl Inst for OpSubgroupAvcSicEvaluateWithDualReferenceINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicEvaluateWithDualReferenceINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26039,6 +27489,8 @@ impl Inst for OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26080,6 +27532,8 @@ impl Inst for OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26121,6 +27575,8 @@ impl Inst for OpSubgroupAvcSicConvertToMceResultINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicConvertToMceResultINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26153,6 +27609,8 @@ impl Inst for OpSubgroupAvcSicGetIpeLumaShapeINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicGetIpeLumaShapeINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26185,6 +27643,8 @@ impl Inst for OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26217,6 +27677,8 @@ impl Inst for OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26249,6 +27711,8 @@ impl Inst for OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26281,6 +27745,8 @@ impl Inst for OpSubgroupAvcSicGetIpeChromaModeINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicGetIpeChromaModeINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26313,6 +27779,8 @@ impl Inst for OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26345,6 +27813,8 @@ impl Inst for OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26377,6 +27847,8 @@ impl Inst for OpSubgroupAvcSicGetInterRawSadsINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupAvcSicGetInterRawSadsINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26409,6 +27881,8 @@ impl Inst for OpVariableLengthArrayINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpVariableLengthArrayINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26440,6 +27914,8 @@ impl Inst for OpSaveMemoryINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSaveMemoryINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26467,6 +27943,8 @@ impl Inst for OpRestoreMemoryINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpRestoreMemoryINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.ptr);
         writer.write_op(Self::META.opcode, len)?;
@@ -26497,6 +27975,8 @@ impl Inst for OpArbitraryFloatSinCosPiALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatSinCosPiALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26549,6 +28029,8 @@ impl Inst for OpArbitraryFloatCastALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatCastALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26601,6 +28083,8 @@ impl Inst for OpArbitraryFloatCastFromIntALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatCastFromIntALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26653,6 +28137,8 @@ impl Inst for OpArbitraryFloatCastToIntALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatCastToIntALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26707,6 +28193,8 @@ impl Inst for OpArbitraryFloatAddALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatAddALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26767,6 +28255,8 @@ impl Inst for OpArbitraryFloatSubALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatSubALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26827,6 +28317,8 @@ impl Inst for OpArbitraryFloatMulALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatMulALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26887,6 +28379,8 @@ impl Inst for OpArbitraryFloatDivALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatDivALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26943,6 +28437,8 @@ impl Inst for OpArbitraryFloatGTALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatGTALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -26987,6 +28483,8 @@ impl Inst for OpArbitraryFloatGEALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatGEALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27031,6 +28529,8 @@ impl Inst for OpArbitraryFloatLTALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatLTALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27075,6 +28575,8 @@ impl Inst for OpArbitraryFloatLEALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatLEALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27119,6 +28621,8 @@ impl Inst for OpArbitraryFloatEQALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatEQALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27165,6 +28669,8 @@ impl Inst for OpArbitraryFloatRecipALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatRecipALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27217,6 +28723,8 @@ impl Inst for OpArbitraryFloatRSqrtALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatRSqrtALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27269,6 +28777,8 @@ impl Inst for OpArbitraryFloatCbrtALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatCbrtALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27323,6 +28833,8 @@ impl Inst for OpArbitraryFloatHypotALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatHypotALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27381,6 +28893,8 @@ impl Inst for OpArbitraryFloatSqrtALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatSqrtALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27433,6 +28947,8 @@ impl Inst for OpArbitraryFloatLogINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatLogINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27485,6 +29001,8 @@ impl Inst for OpArbitraryFloatLog2INTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatLog2INTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27537,6 +29055,8 @@ impl Inst for OpArbitraryFloatLog10INTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatLog10INTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27589,6 +29109,8 @@ impl Inst for OpArbitraryFloatLog1pINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatLog1pINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27641,6 +29163,8 @@ impl Inst for OpArbitraryFloatExpINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatExpINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27693,6 +29217,8 @@ impl Inst for OpArbitraryFloatExp2INTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatExp2INTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27745,6 +29271,8 @@ impl Inst for OpArbitraryFloatExp10INTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatExp10INTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27797,6 +29325,8 @@ impl Inst for OpArbitraryFloatExpm1INTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatExpm1INTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27849,6 +29379,8 @@ impl Inst for OpArbitraryFloatSinINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatSinINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27901,6 +29433,8 @@ impl Inst for OpArbitraryFloatCosINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatCosINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -27953,6 +29487,8 @@ impl Inst for OpArbitraryFloatSinCosINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatSinCosINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28005,6 +29541,8 @@ impl Inst for OpArbitraryFloatSinPiINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatSinPiINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28057,6 +29595,8 @@ impl Inst for OpArbitraryFloatCosPiINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatCosPiINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28109,6 +29649,8 @@ impl Inst for OpArbitraryFloatASinINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatASinINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28161,6 +29703,8 @@ impl Inst for OpArbitraryFloatASinPiINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatASinPiINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28213,6 +29757,8 @@ impl Inst for OpArbitraryFloatACosINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatACosINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28265,6 +29811,8 @@ impl Inst for OpArbitraryFloatACosPiINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatACosPiINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28317,6 +29865,8 @@ impl Inst for OpArbitraryFloatATanINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatATanINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28369,6 +29919,8 @@ impl Inst for OpArbitraryFloatATanPiINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatATanPiINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28423,6 +29975,8 @@ impl Inst for OpArbitraryFloatATan2INTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatATan2INTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28483,6 +30037,8 @@ impl Inst for OpArbitraryFloatPowINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatPowINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28543,6 +30099,8 @@ impl Inst for OpArbitraryFloatPowRINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatPowRINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28603,6 +30161,8 @@ impl Inst for OpArbitraryFloatPowNINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArbitraryFloatPowNINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28654,6 +30214,8 @@ impl Inst for OpLoopControlINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpLoopControlINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.loop_control_parameters);
         writer.write_op(Self::META.opcode, len)?;
@@ -28678,6 +30240,8 @@ impl Inst for OpAliasDomainDeclINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAliasDomainDeclINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.id_result) + OperandEncoding::word_len(&self.name);
@@ -28706,6 +30270,8 @@ impl Inst for OpAliasScopeDeclINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAliasScopeDeclINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -28737,6 +30303,8 @@ impl Inst for OpAliasScopeListDeclINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAliasScopeListDeclINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -28771,6 +30339,8 @@ impl Inst for OpFixedSqrtALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFixedSqrtALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28823,6 +30393,8 @@ impl Inst for OpFixedRecipALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFixedRecipALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28875,6 +30447,8 @@ impl Inst for OpFixedRsqrtALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFixedRsqrtALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28927,6 +30501,8 @@ impl Inst for OpFixedSinALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFixedSinALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -28979,6 +30555,8 @@ impl Inst for OpFixedCosALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFixedCosALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29031,6 +30609,8 @@ impl Inst for OpFixedSinCosALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFixedSinCosALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29083,6 +30663,8 @@ impl Inst for OpFixedSinPiALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFixedSinPiALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29135,6 +30717,8 @@ impl Inst for OpFixedCosPiALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFixedCosPiALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29187,6 +30771,8 @@ impl Inst for OpFixedSinCosPiALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFixedSinCosPiALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29239,6 +30825,8 @@ impl Inst for OpFixedLogALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFixedLogALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29291,6 +30879,8 @@ impl Inst for OpFixedExpALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFixedExpALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29338,6 +30928,8 @@ impl Inst for OpPtrCastToCrossWorkgroupALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpPtrCastToCrossWorkgroupALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29370,6 +30962,8 @@ impl Inst for OpCrossWorkgroupCastToPtrALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCrossWorkgroupCastToPtrALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29403,6 +30997,8 @@ impl Inst for OpReadPipeBlockingALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpReadPipeBlockingALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29439,6 +31035,8 @@ impl Inst for OpWritePipeBlockingALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpWritePipeBlockingALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29474,6 +31072,8 @@ impl Inst for OpFPGARegALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpFPGARegALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29506,6 +31106,8 @@ impl Inst for OpRayQueryGetRayTMinKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetRayTMinKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29538,6 +31140,8 @@ impl Inst for OpRayQueryGetRayFlagsKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetRayFlagsKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29571,6 +31175,8 @@ impl Inst for OpRayQueryGetIntersectionTKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionTKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29607,6 +31213,8 @@ impl Inst for OpRayQueryGetIntersectionInstanceCustomIndexKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionInstanceCustomIndexKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29643,6 +31251,8 @@ impl Inst for OpRayQueryGetIntersectionInstanceIdKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionInstanceIdKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29680,6 +31290,8 @@ impl Inst for OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29716,6 +31328,8 @@ impl Inst for OpRayQueryGetIntersectionGeometryIndexKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionGeometryIndexKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29752,6 +31366,8 @@ impl Inst for OpRayQueryGetIntersectionPrimitiveIndexKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionPrimitiveIndexKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29788,6 +31404,8 @@ impl Inst for OpRayQueryGetIntersectionBarycentricsKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionBarycentricsKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29824,6 +31442,8 @@ impl Inst for OpRayQueryGetIntersectionFrontFaceKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionFrontFaceKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29859,6 +31479,8 @@ impl Inst for OpRayQueryGetIntersectionCandidateAABBOpaqueKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionCandidateAABBOpaqueKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29892,6 +31514,8 @@ impl Inst for OpRayQueryGetIntersectionObjectRayDirectionKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionObjectRayDirectionKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29928,6 +31552,8 @@ impl Inst for OpRayQueryGetIntersectionObjectRayOriginKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionObjectRayOriginKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29963,6 +31589,8 @@ impl Inst for OpRayQueryGetWorldRayDirectionKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetWorldRayDirectionKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -29995,6 +31623,8 @@ impl Inst for OpRayQueryGetWorldRayOriginKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetWorldRayOriginKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -30028,6 +31658,8 @@ impl Inst for OpRayQueryGetIntersectionObjectToWorldKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionObjectToWorldKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -30064,6 +31696,8 @@ impl Inst for OpRayQueryGetIntersectionWorldToObjectKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRayQueryGetIntersectionWorldToObjectKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -30102,6 +31736,8 @@ impl Inst for OpAtomicFAddEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpAtomicFAddEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -30142,6 +31778,8 @@ impl Inst for OpTypeBufferSurfaceINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeBufferSurfaceINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result)
@@ -30169,6 +31807,8 @@ impl Inst for OpTypeStructContinuedINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpTypeStructContinuedINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_ref);
         writer.write_op(Self::META.opcode, len)?;
@@ -30192,6 +31832,8 @@ impl Inst for OpConstantCompositeContinuedINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpConstantCompositeContinuedINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.constituents);
         writer.write_op(Self::META.opcode, len)?;
@@ -30215,6 +31857,8 @@ impl Inst for OpSpecConstantCompositeContinuedINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSpecConstantCompositeContinuedINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.constituents);
         writer.write_op(Self::META.opcode, len)?;
@@ -30240,6 +31884,8 @@ impl Inst for OpCompositeConstructContinuedINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpCompositeConstructContinuedINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -30272,6 +31918,8 @@ impl Inst for OpConvertFToBF16INTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertFToBF16INTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -30304,6 +31952,8 @@ impl Inst for OpConvertBF16ToFINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertBF16ToFINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -30336,6 +31986,8 @@ impl Inst for OpControlBarrierArriveINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpControlBarrierArriveINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
@@ -30368,6 +32020,8 @@ impl Inst for OpControlBarrierWaitINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpControlBarrierWaitINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.execution)
@@ -30400,6 +32054,8 @@ impl Inst for OpArithmeticFenceEXT {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpArithmeticFenceEXT {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -30436,6 +32092,8 @@ impl Inst for OpTaskSequenceCreateALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTaskSequenceCreateALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -30479,6 +32137,8 @@ impl Inst for OpTaskSequenceAsyncALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpTaskSequenceAsyncALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.sequence)
@@ -30508,6 +32168,8 @@ impl Inst for OpTaskSequenceGetALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTaskSequenceGetALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -30538,6 +32200,8 @@ impl Inst for OpTaskSequenceReleaseALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpTaskSequenceReleaseALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.sequence);
         writer.write_op(Self::META.opcode, len)?;
@@ -30561,6 +32225,8 @@ impl Inst for OpTypeTaskSequenceALTERA {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpTypeTaskSequenceALTERA {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.id_result);
         writer.write_op(Self::META.opcode, len)?;
@@ -30586,6 +32252,8 @@ impl Inst for OpSubgroupBlockPrefetchINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSubgroupBlockPrefetchINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.ptr)
@@ -30625,6 +32293,8 @@ impl Inst for OpSubgroup2DBlockLoadINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSubgroup2DBlockLoadINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.element_size)
@@ -30685,6 +32355,8 @@ impl Inst for OpSubgroup2DBlockLoadTransformINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSubgroup2DBlockLoadTransformINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.element_size)
@@ -30745,6 +32417,8 @@ impl Inst for OpSubgroup2DBlockLoadTransposeINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSubgroup2DBlockLoadTransposeINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.element_size)
@@ -30804,6 +32478,8 @@ impl Inst for OpSubgroup2DBlockPrefetchINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSubgroup2DBlockPrefetchINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.element_size)
@@ -30861,6 +32537,8 @@ impl Inst for OpSubgroup2DBlockStoreINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpSubgroup2DBlockStoreINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.element_size)
@@ -30918,6 +32596,8 @@ impl Inst for OpSubgroupMatrixMultiplyAccumulateINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSubgroupMatrixMultiplyAccumulateINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -30965,6 +32645,8 @@ impl Inst for OpBitwiseFunctionINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpBitwiseFunctionINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31007,6 +32689,8 @@ impl Inst for OpUntypedVariableLengthArrayINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpUntypedVariableLengthArrayINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31041,6 +32725,8 @@ impl Inst for OpConditionalExtensionINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpConditionalExtensionINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.condition) + OperandEncoding::word_len(&self.name);
@@ -31071,6 +32757,8 @@ impl Inst for OpConditionalEntryPointINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpConditionalEntryPointINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.condition)
@@ -31108,6 +32796,8 @@ impl Inst for OpConditionalCapabilityINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpConditionalCapabilityINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.condition)
@@ -31138,6 +32828,8 @@ impl Inst for OpSpecConstantTargetINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSpecConstantTargetINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31176,6 +32868,8 @@ impl Inst for OpSpecConstantArchitectureINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSpecConstantArchitectureINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31217,6 +32911,8 @@ impl Inst for OpSpecConstantCapabilitiesINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpSpecConstantCapabilitiesINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31249,6 +32945,8 @@ impl Inst for OpConditionalCopyObjectINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConditionalCopyObjectINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31283,6 +32981,8 @@ impl Inst for OpGroupIMulKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupIMulKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31323,6 +33023,8 @@ impl Inst for OpGroupFMulKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupFMulKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31363,6 +33065,8 @@ impl Inst for OpGroupBitwiseAndKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupBitwiseAndKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31403,6 +33107,8 @@ impl Inst for OpGroupBitwiseOrKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupBitwiseOrKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31443,6 +33149,8 @@ impl Inst for OpGroupBitwiseXorKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupBitwiseXorKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31483,6 +33191,8 @@ impl Inst for OpGroupLogicalAndKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupLogicalAndKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31523,6 +33233,8 @@ impl Inst for OpGroupLogicalOrKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupLogicalOrKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31563,6 +33275,8 @@ impl Inst for OpGroupLogicalXorKHR {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpGroupLogicalXorKHR {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31601,6 +33315,8 @@ impl Inst for OpRoundFToTF32INTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpRoundFToTF32INTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31636,6 +33352,8 @@ impl Inst for OpMaskedGatherINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpMaskedGatherINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31678,6 +33396,8 @@ impl Inst for OpMaskedScatterINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for OpMaskedScatterINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.input_vector)
@@ -31713,6 +33433,8 @@ impl Inst for OpConvertHandleToImageINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertHandleToImageINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31745,6 +33467,8 @@ impl Inst for OpConvertHandleToSamplerINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertHandleToSamplerINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)
@@ -31777,6 +33501,8 @@ impl Inst for OpConvertHandleToSampledImageINTEL {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         &mut self.id_result
     }
+}
+impl InstEncoding for OpConvertHandleToSampledImageINTEL {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.id_result_type)

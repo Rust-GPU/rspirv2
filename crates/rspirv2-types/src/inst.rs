@@ -3,7 +3,7 @@ use crate::meta::InstMeta;
 use crate::operand::{IdResult, OptionIdResult};
 use std::fmt::Debug;
 
-pub trait Inst: Sized + Debug + Eq {
+pub trait Inst: InstEncoding {
     const META: &InstMeta;
 
     /// `MaybeIdResult` is either an [`IdResult`] or `()`, depending on whether this Instruction has an [`IdResult`].
@@ -11,7 +11,9 @@ pub trait Inst: Sized + Debug + Eq {
 
     /// Query the potential [`IdResult`] of this Instruction, or `()` if it has none.
     fn id_result(&mut self) -> &mut Self::MaybeIdResult;
+}
 
+pub trait InstEncoding: Sized + Debug + Eq {
     /// Encode this instruction to a [`WordWriter`]
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError>;
 
