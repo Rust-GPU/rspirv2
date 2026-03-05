@@ -9,6 +9,8 @@ impl Inst for Round {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Round {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -32,6 +34,8 @@ impl Inst for RoundEven {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for RoundEven {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -55,6 +59,8 @@ impl Inst for Trunc {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Trunc {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -78,6 +84,8 @@ impl Inst for FAbs {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for FAbs {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -101,6 +109,8 @@ impl Inst for SAbs {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for SAbs {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -124,6 +134,8 @@ impl Inst for FSign {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for FSign {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -147,6 +159,8 @@ impl Inst for SSign {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for SSign {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -170,6 +184,8 @@ impl Inst for Floor {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Floor {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -193,6 +209,8 @@ impl Inst for Ceil {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Ceil {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -216,6 +234,8 @@ impl Inst for Fract {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Fract {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -239,6 +259,8 @@ impl Inst for Radians {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Radians {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.degrees);
         writer.write_op(Self::META.opcode, len)?;
@@ -262,6 +284,8 @@ impl Inst for Degrees {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Degrees {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.radians);
         writer.write_op(Self::META.opcode, len)?;
@@ -285,6 +309,8 @@ impl Inst for Sin {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Sin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -308,6 +334,8 @@ impl Inst for Cos {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Cos {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -331,6 +359,8 @@ impl Inst for Tan {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Tan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -354,6 +384,8 @@ impl Inst for Asin {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Asin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -377,6 +409,8 @@ impl Inst for Acos {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Acos {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -400,6 +434,8 @@ impl Inst for Atan {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Atan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.y_over_x);
         writer.write_op(Self::META.opcode, len)?;
@@ -423,6 +459,8 @@ impl Inst for Sinh {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Sinh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -446,6 +484,8 @@ impl Inst for Cosh {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Cosh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -469,6 +509,8 @@ impl Inst for Tanh {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Tanh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -492,6 +534,8 @@ impl Inst for Asinh {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Asinh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -515,6 +559,8 @@ impl Inst for Acosh {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Acosh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -538,6 +584,8 @@ impl Inst for Atanh {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Atanh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -562,6 +610,8 @@ impl Inst for Atan2 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Atan2 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.y) + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -588,6 +638,8 @@ impl Inst for Pow {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Pow {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -613,6 +665,8 @@ impl Inst for Exp {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Exp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -636,6 +690,8 @@ impl Inst for Log {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Log {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -659,6 +715,8 @@ impl Inst for Exp2 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Exp2 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -682,6 +740,8 @@ impl Inst for Log2 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Log2 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -705,6 +765,8 @@ impl Inst for Sqrt {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Sqrt {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -728,6 +790,8 @@ impl Inst for InverseSqrt {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for InverseSqrt {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -751,6 +815,8 @@ impl Inst for Determinant {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Determinant {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -774,6 +840,8 @@ impl Inst for MatrixInverse {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for MatrixInverse {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -798,6 +866,8 @@ impl Inst for Modf {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Modf {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.i);
         writer.write_op(Self::META.opcode, len)?;
@@ -823,6 +893,8 @@ impl Inst for ModfStruct {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for ModfStruct {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -847,6 +919,8 @@ impl Inst for FMin {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for FMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -873,6 +947,8 @@ impl Inst for UMin {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for UMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -899,6 +975,8 @@ impl Inst for SMin {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for SMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -925,6 +1003,8 @@ impl Inst for FMax {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for FMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -951,6 +1031,8 @@ impl Inst for UMax {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for UMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -977,6 +1059,8 @@ impl Inst for SMax {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for SMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -1004,6 +1088,8 @@ impl Inst for FClamp {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for FClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.x)
@@ -1036,6 +1122,8 @@ impl Inst for UClamp {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for UClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.x)
@@ -1068,6 +1156,8 @@ impl Inst for SClamp {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for SClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.x)
@@ -1100,6 +1190,8 @@ impl Inst for FMix {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for FMix {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.x)
@@ -1132,6 +1224,8 @@ impl Inst for IMix {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for IMix {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.x)
@@ -1163,6 +1257,8 @@ impl Inst for Step {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Step {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.edge) + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -1190,6 +1286,8 @@ impl Inst for SmoothStep {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for SmoothStep {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.edge_0)
@@ -1222,6 +1320,8 @@ impl Inst for Fma {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Fma {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.a)
@@ -1253,6 +1353,8 @@ impl Inst for Frexp {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Frexp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.exp);
         writer.write_op(Self::META.opcode, len)?;
@@ -1278,6 +1380,8 @@ impl Inst for FrexpStruct {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for FrexpStruct {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -1302,6 +1406,8 @@ impl Inst for Ldexp {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Ldexp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.exp);
         writer.write_op(Self::META.opcode, len)?;
@@ -1327,6 +1433,8 @@ impl Inst for PackSnorm4x8 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for PackSnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
@@ -1350,6 +1458,8 @@ impl Inst for PackUnorm4x8 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for PackUnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
@@ -1373,6 +1483,8 @@ impl Inst for PackSnorm2x16 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for PackSnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
@@ -1396,6 +1508,8 @@ impl Inst for PackUnorm2x16 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for PackUnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
@@ -1419,6 +1533,8 @@ impl Inst for PackHalf2x16 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for PackHalf2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
@@ -1442,6 +1558,8 @@ impl Inst for PackDouble2x32 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for PackDouble2x32 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
@@ -1465,6 +1583,8 @@ impl Inst for UnpackSnorm2x16 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for UnpackSnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
@@ -1488,6 +1608,8 @@ impl Inst for UnpackUnorm2x16 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for UnpackUnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
@@ -1511,6 +1633,8 @@ impl Inst for UnpackHalf2x16 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for UnpackHalf2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
@@ -1534,6 +1658,8 @@ impl Inst for UnpackSnorm4x8 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for UnpackSnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
@@ -1557,6 +1683,8 @@ impl Inst for UnpackUnorm4x8 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for UnpackUnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
@@ -1580,6 +1708,8 @@ impl Inst for UnpackDouble2x32 {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for UnpackDouble2x32 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
@@ -1603,6 +1733,8 @@ impl Inst for Length {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Length {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -1627,6 +1759,8 @@ impl Inst for Distance {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Distance {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.p_0) + OperandEncoding::word_len(&self.p_1);
         writer.write_op(Self::META.opcode, len)?;
@@ -1653,6 +1787,8 @@ impl Inst for Cross {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Cross {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -1678,6 +1814,8 @@ impl Inst for Normalize {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Normalize {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -1703,6 +1841,8 @@ impl Inst for FaceForward {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for FaceForward {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.n)
@@ -1734,6 +1874,8 @@ impl Inst for Reflect {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Reflect {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.i) + OperandEncoding::word_len(&self.n);
         writer.write_op(Self::META.opcode, len)?;
@@ -1761,6 +1903,8 @@ impl Inst for Refract {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for Refract {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.i)
@@ -1791,6 +1935,8 @@ impl Inst for FindILsb {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for FindILsb {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.value);
         writer.write_op(Self::META.opcode, len)?;
@@ -1814,6 +1960,8 @@ impl Inst for FindSMsb {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for FindSMsb {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.value);
         writer.write_op(Self::META.opcode, len)?;
@@ -1837,6 +1985,8 @@ impl Inst for FindUMsb {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for FindUMsb {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.value);
         writer.write_op(Self::META.opcode, len)?;
@@ -1860,6 +2010,8 @@ impl Inst for InterpolateAtCentroid {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for InterpolateAtCentroid {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.interpolant);
         writer.write_op(Self::META.opcode, len)?;
@@ -1884,6 +2036,8 @@ impl Inst for InterpolateAtSample {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for InterpolateAtSample {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.interpolant)
@@ -1912,6 +2066,8 @@ impl Inst for InterpolateAtOffset {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for InterpolateAtOffset {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.interpolant)
@@ -1940,6 +2096,8 @@ impl Inst for NMin {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for NMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -1966,6 +2124,8 @@ impl Inst for NMax {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for NMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -1993,6 +2153,8 @@ impl Inst for NClamp {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for NClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 0
             + OperandEncoding::word_len(&self.x)

@@ -10,6 +10,8 @@ impl Inst for DebugPrintf {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
+}
+impl InstEncoding for DebugPrintf {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             0 + OperandEncoding::word_len(&self.format) + OperandEncoding::word_len(&self.id_ref);
