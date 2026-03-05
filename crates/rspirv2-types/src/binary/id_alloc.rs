@@ -19,6 +19,10 @@ pub struct IdResultAllocator(u32);
 
 impl IdResultAllocator {
     #[inline]
+    pub fn new() -> Self {
+        Self::default()
+    }
+    #[inline]
     pub fn start_at(start: u32) -> Self {
         Self(start)
     }
@@ -43,6 +47,10 @@ pub struct AtomicIdResultAllocator(Arc<AtomicU32>);
 
 impl AtomicIdResultAllocator {
     #[inline]
+    pub fn new() -> Self {
+        Self::default()
+    }
+    #[inline]
     pub fn start_at(start: u32) -> Self {
         Self(Arc::new(AtomicU32::new(start)))
     }
@@ -63,6 +71,13 @@ impl IdResultAlloc for AtomicIdResultAllocator {
 /// An [`IdResultAlloc`] that always fails to allocate
 #[derive(Clone, Debug, Default)]
 pub struct DisallowedIdResultAllocator;
+
+impl DisallowedIdResultAllocator {
+    #[inline]
+    pub fn new() -> Self {
+        Self
+    }
+}
 
 impl IdResultAlloc for DisallowedIdResultAllocator {
     #[inline]
