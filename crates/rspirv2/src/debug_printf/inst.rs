@@ -14,7 +14,7 @@ impl Inst for DebugPrintf {
 impl InstEncoding for DebugPrintf {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
-            0 + OperandEncoding::word_len(&self.format) + OperandEncoding::word_len(&self.id_ref);
+            1 + OperandEncoding::word_len(&self.format) + OperandEncoding::word_len(&self.id_ref);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.format, &mut *writer)?;
         OperandEncoding::encode(&self.id_ref, &mut *writer)?;
