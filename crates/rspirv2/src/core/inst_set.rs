@@ -965,6 +965,5216 @@ pub enum CoreInstSet {
     ConvertHandleToSamplerINTEL(OpConvertHandleToSamplerINTEL),
     ConvertHandleToSampledImageINTEL(OpConvertHandleToSampledImageINTEL),
 }
+impl InstEncoding for CoreInstSet {
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        match self {
+            Self::Nop(inst) => InstEncoding::encode(inst, writer),
+            Self::Undef(inst) => InstEncoding::encode(inst, writer),
+            Self::SourceContinued(inst) => InstEncoding::encode(inst, writer),
+            Self::Source(inst) => InstEncoding::encode(inst, writer),
+            Self::SourceExtension(inst) => InstEncoding::encode(inst, writer),
+            Self::Name(inst) => InstEncoding::encode(inst, writer),
+            Self::MemberName(inst) => InstEncoding::encode(inst, writer),
+            Self::String(inst) => InstEncoding::encode(inst, writer),
+            Self::Line(inst) => InstEncoding::encode(inst, writer),
+            Self::Extension(inst) => InstEncoding::encode(inst, writer),
+            Self::ExtInstImport(inst) => InstEncoding::encode(inst, writer),
+            Self::ExtInst(inst) => InstEncoding::encode(inst, writer),
+            Self::MemoryModel(inst) => InstEncoding::encode(inst, writer),
+            Self::EntryPoint(inst) => InstEncoding::encode(inst, writer),
+            Self::ExecutionMode(inst) => InstEncoding::encode(inst, writer),
+            Self::Capability(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeVoid(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeBool(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeInt(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeFloat(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeVector(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeMatrix(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeImage(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeSampler(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeSampledImage(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeArray(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeRuntimeArray(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeStruct(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeOpaque(inst) => InstEncoding::encode(inst, writer),
+            Self::TypePointer(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeFunction(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeEvent(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeDeviceEvent(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeReserveId(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeQueue(inst) => InstEncoding::encode(inst, writer),
+            Self::TypePipe(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeForwardPointer(inst) => InstEncoding::encode(inst, writer),
+            Self::ConstantTrue(inst) => InstEncoding::encode(inst, writer),
+            Self::ConstantFalse(inst) => InstEncoding::encode(inst, writer),
+            Self::Constant(inst) => InstEncoding::encode(inst, writer),
+            Self::ConstantComposite(inst) => InstEncoding::encode(inst, writer),
+            Self::ConstantSampler(inst) => InstEncoding::encode(inst, writer),
+            Self::ConstantNull(inst) => InstEncoding::encode(inst, writer),
+            Self::SpecConstantTrue(inst) => InstEncoding::encode(inst, writer),
+            Self::SpecConstantFalse(inst) => InstEncoding::encode(inst, writer),
+            Self::SpecConstant(inst) => InstEncoding::encode(inst, writer),
+            Self::SpecConstantComposite(inst) => InstEncoding::encode(inst, writer),
+            Self::SpecConstantOp(inst) => InstEncoding::encode(inst, writer),
+            Self::Function(inst) => InstEncoding::encode(inst, writer),
+            Self::FunctionParameter(inst) => InstEncoding::encode(inst, writer),
+            Self::FunctionEnd(inst) => InstEncoding::encode(inst, writer),
+            Self::FunctionCall(inst) => InstEncoding::encode(inst, writer),
+            Self::Variable(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageTexelPointer(inst) => InstEncoding::encode(inst, writer),
+            Self::Load(inst) => InstEncoding::encode(inst, writer),
+            Self::Store(inst) => InstEncoding::encode(inst, writer),
+            Self::CopyMemory(inst) => InstEncoding::encode(inst, writer),
+            Self::CopyMemorySized(inst) => InstEncoding::encode(inst, writer),
+            Self::AccessChain(inst) => InstEncoding::encode(inst, writer),
+            Self::InBoundsAccessChain(inst) => InstEncoding::encode(inst, writer),
+            Self::PtrAccessChain(inst) => InstEncoding::encode(inst, writer),
+            Self::ArrayLength(inst) => InstEncoding::encode(inst, writer),
+            Self::GenericPtrMemSemantics(inst) => InstEncoding::encode(inst, writer),
+            Self::InBoundsPtrAccessChain(inst) => InstEncoding::encode(inst, writer),
+            Self::Decorate(inst) => InstEncoding::encode(inst, writer),
+            Self::MemberDecorate(inst) => InstEncoding::encode(inst, writer),
+            Self::DecorationGroup(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupDecorate(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupMemberDecorate(inst) => InstEncoding::encode(inst, writer),
+            Self::VectorExtractDynamic(inst) => InstEncoding::encode(inst, writer),
+            Self::VectorInsertDynamic(inst) => InstEncoding::encode(inst, writer),
+            Self::VectorShuffle(inst) => InstEncoding::encode(inst, writer),
+            Self::CompositeConstruct(inst) => InstEncoding::encode(inst, writer),
+            Self::CompositeExtract(inst) => InstEncoding::encode(inst, writer),
+            Self::CompositeInsert(inst) => InstEncoding::encode(inst, writer),
+            Self::CopyObject(inst) => InstEncoding::encode(inst, writer),
+            Self::Transpose(inst) => InstEncoding::encode(inst, writer),
+            Self::SampledImage(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSampleImplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSampleExplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSampleDrefImplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSampleDrefExplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSampleProjImplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSampleProjExplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSampleProjDrefImplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSampleProjDrefExplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageFetch(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageGather(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageDrefGather(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageRead(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageWrite(inst) => InstEncoding::encode(inst, writer),
+            Self::Image(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageQueryFormat(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageQueryOrder(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageQuerySizeLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageQuerySize(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageQueryLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageQueryLevels(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageQuerySamples(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertFToU(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertFToS(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertSToF(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertUToF(inst) => InstEncoding::encode(inst, writer),
+            Self::UConvert(inst) => InstEncoding::encode(inst, writer),
+            Self::SConvert(inst) => InstEncoding::encode(inst, writer),
+            Self::FConvert(inst) => InstEncoding::encode(inst, writer),
+            Self::QuantizeToF16(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertPtrToU(inst) => InstEncoding::encode(inst, writer),
+            Self::SatConvertSToU(inst) => InstEncoding::encode(inst, writer),
+            Self::SatConvertUToS(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertUToPtr(inst) => InstEncoding::encode(inst, writer),
+            Self::PtrCastToGeneric(inst) => InstEncoding::encode(inst, writer),
+            Self::GenericCastToPtr(inst) => InstEncoding::encode(inst, writer),
+            Self::GenericCastToPtrExplicit(inst) => InstEncoding::encode(inst, writer),
+            Self::Bitcast(inst) => InstEncoding::encode(inst, writer),
+            Self::SNegate(inst) => InstEncoding::encode(inst, writer),
+            Self::FNegate(inst) => InstEncoding::encode(inst, writer),
+            Self::IAdd(inst) => InstEncoding::encode(inst, writer),
+            Self::FAdd(inst) => InstEncoding::encode(inst, writer),
+            Self::ISub(inst) => InstEncoding::encode(inst, writer),
+            Self::FSub(inst) => InstEncoding::encode(inst, writer),
+            Self::IMul(inst) => InstEncoding::encode(inst, writer),
+            Self::FMul(inst) => InstEncoding::encode(inst, writer),
+            Self::UDiv(inst) => InstEncoding::encode(inst, writer),
+            Self::SDiv(inst) => InstEncoding::encode(inst, writer),
+            Self::FDiv(inst) => InstEncoding::encode(inst, writer),
+            Self::UMod(inst) => InstEncoding::encode(inst, writer),
+            Self::SRem(inst) => InstEncoding::encode(inst, writer),
+            Self::SMod(inst) => InstEncoding::encode(inst, writer),
+            Self::FRem(inst) => InstEncoding::encode(inst, writer),
+            Self::FMod(inst) => InstEncoding::encode(inst, writer),
+            Self::VectorTimesScalar(inst) => InstEncoding::encode(inst, writer),
+            Self::MatrixTimesScalar(inst) => InstEncoding::encode(inst, writer),
+            Self::VectorTimesMatrix(inst) => InstEncoding::encode(inst, writer),
+            Self::MatrixTimesVector(inst) => InstEncoding::encode(inst, writer),
+            Self::MatrixTimesMatrix(inst) => InstEncoding::encode(inst, writer),
+            Self::OuterProduct(inst) => InstEncoding::encode(inst, writer),
+            Self::Dot(inst) => InstEncoding::encode(inst, writer),
+            Self::IAddCarry(inst) => InstEncoding::encode(inst, writer),
+            Self::ISubBorrow(inst) => InstEncoding::encode(inst, writer),
+            Self::UMulExtended(inst) => InstEncoding::encode(inst, writer),
+            Self::SMulExtended(inst) => InstEncoding::encode(inst, writer),
+            Self::Any(inst) => InstEncoding::encode(inst, writer),
+            Self::All(inst) => InstEncoding::encode(inst, writer),
+            Self::IsNan(inst) => InstEncoding::encode(inst, writer),
+            Self::IsInf(inst) => InstEncoding::encode(inst, writer),
+            Self::IsFinite(inst) => InstEncoding::encode(inst, writer),
+            Self::IsNormal(inst) => InstEncoding::encode(inst, writer),
+            Self::SignBitSet(inst) => InstEncoding::encode(inst, writer),
+            Self::LessOrGreater(inst) => InstEncoding::encode(inst, writer),
+            Self::Ordered(inst) => InstEncoding::encode(inst, writer),
+            Self::Unordered(inst) => InstEncoding::encode(inst, writer),
+            Self::LogicalEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::LogicalNotEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::LogicalOr(inst) => InstEncoding::encode(inst, writer),
+            Self::LogicalAnd(inst) => InstEncoding::encode(inst, writer),
+            Self::LogicalNot(inst) => InstEncoding::encode(inst, writer),
+            Self::Select(inst) => InstEncoding::encode(inst, writer),
+            Self::IEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::INotEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::UGreaterThan(inst) => InstEncoding::encode(inst, writer),
+            Self::SGreaterThan(inst) => InstEncoding::encode(inst, writer),
+            Self::UGreaterThanEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::SGreaterThanEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::ULessThan(inst) => InstEncoding::encode(inst, writer),
+            Self::SLessThan(inst) => InstEncoding::encode(inst, writer),
+            Self::ULessThanEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::SLessThanEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::FOrdEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::FUnordEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::FOrdNotEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::FUnordNotEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::FOrdLessThan(inst) => InstEncoding::encode(inst, writer),
+            Self::FUnordLessThan(inst) => InstEncoding::encode(inst, writer),
+            Self::FOrdGreaterThan(inst) => InstEncoding::encode(inst, writer),
+            Self::FUnordGreaterThan(inst) => InstEncoding::encode(inst, writer),
+            Self::FOrdLessThanEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::FUnordLessThanEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::FOrdGreaterThanEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::FUnordGreaterThanEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::ShiftRightLogical(inst) => InstEncoding::encode(inst, writer),
+            Self::ShiftRightArithmetic(inst) => InstEncoding::encode(inst, writer),
+            Self::ShiftLeftLogical(inst) => InstEncoding::encode(inst, writer),
+            Self::BitwiseOr(inst) => InstEncoding::encode(inst, writer),
+            Self::BitwiseXor(inst) => InstEncoding::encode(inst, writer),
+            Self::BitwiseAnd(inst) => InstEncoding::encode(inst, writer),
+            Self::Not(inst) => InstEncoding::encode(inst, writer),
+            Self::BitFieldInsert(inst) => InstEncoding::encode(inst, writer),
+            Self::BitFieldSExtract(inst) => InstEncoding::encode(inst, writer),
+            Self::BitFieldUExtract(inst) => InstEncoding::encode(inst, writer),
+            Self::BitReverse(inst) => InstEncoding::encode(inst, writer),
+            Self::BitCount(inst) => InstEncoding::encode(inst, writer),
+            Self::DPdx(inst) => InstEncoding::encode(inst, writer),
+            Self::DPdy(inst) => InstEncoding::encode(inst, writer),
+            Self::Fwidth(inst) => InstEncoding::encode(inst, writer),
+            Self::DPdxFine(inst) => InstEncoding::encode(inst, writer),
+            Self::DPdyFine(inst) => InstEncoding::encode(inst, writer),
+            Self::FwidthFine(inst) => InstEncoding::encode(inst, writer),
+            Self::DPdxCoarse(inst) => InstEncoding::encode(inst, writer),
+            Self::DPdyCoarse(inst) => InstEncoding::encode(inst, writer),
+            Self::FwidthCoarse(inst) => InstEncoding::encode(inst, writer),
+            Self::EmitVertex(inst) => InstEncoding::encode(inst, writer),
+            Self::EndPrimitive(inst) => InstEncoding::encode(inst, writer),
+            Self::EmitStreamVertex(inst) => InstEncoding::encode(inst, writer),
+            Self::EndStreamPrimitive(inst) => InstEncoding::encode(inst, writer),
+            Self::ControlBarrier(inst) => InstEncoding::encode(inst, writer),
+            Self::MemoryBarrier(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicLoad(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicStore(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicExchange(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicCompareExchange(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicCompareExchangeWeak(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicIIncrement(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicIDecrement(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicIAdd(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicISub(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicSMin(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicUMin(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicSMax(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicUMax(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicAnd(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicOr(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicXor(inst) => InstEncoding::encode(inst, writer),
+            Self::Phi(inst) => InstEncoding::encode(inst, writer),
+            Self::LoopMerge(inst) => InstEncoding::encode(inst, writer),
+            Self::SelectionMerge(inst) => InstEncoding::encode(inst, writer),
+            Self::Label(inst) => InstEncoding::encode(inst, writer),
+            Self::Branch(inst) => InstEncoding::encode(inst, writer),
+            Self::BranchConditional(inst) => InstEncoding::encode(inst, writer),
+            Self::Switch(inst) => InstEncoding::encode(inst, writer),
+            Self::Kill(inst) => InstEncoding::encode(inst, writer),
+            Self::Return(inst) => InstEncoding::encode(inst, writer),
+            Self::ReturnValue(inst) => InstEncoding::encode(inst, writer),
+            Self::Unreachable(inst) => InstEncoding::encode(inst, writer),
+            Self::LifetimeStart(inst) => InstEncoding::encode(inst, writer),
+            Self::LifetimeStop(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupAsyncCopy(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupWaitEvents(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupAll(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupAny(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupBroadcast(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupIAdd(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupFAdd(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupFMin(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupUMin(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupSMin(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupFMax(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupUMax(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupSMax(inst) => InstEncoding::encode(inst, writer),
+            Self::ReadPipe(inst) => InstEncoding::encode(inst, writer),
+            Self::WritePipe(inst) => InstEncoding::encode(inst, writer),
+            Self::ReservedReadPipe(inst) => InstEncoding::encode(inst, writer),
+            Self::ReservedWritePipe(inst) => InstEncoding::encode(inst, writer),
+            Self::ReserveReadPipePackets(inst) => InstEncoding::encode(inst, writer),
+            Self::ReserveWritePipePackets(inst) => InstEncoding::encode(inst, writer),
+            Self::CommitReadPipe(inst) => InstEncoding::encode(inst, writer),
+            Self::CommitWritePipe(inst) => InstEncoding::encode(inst, writer),
+            Self::IsValidReserveId(inst) => InstEncoding::encode(inst, writer),
+            Self::GetNumPipePackets(inst) => InstEncoding::encode(inst, writer),
+            Self::GetMaxPipePackets(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupReserveReadPipePackets(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupReserveWritePipePackets(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupCommitReadPipe(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupCommitWritePipe(inst) => InstEncoding::encode(inst, writer),
+            Self::EnqueueMarker(inst) => InstEncoding::encode(inst, writer),
+            Self::EnqueueKernel(inst) => InstEncoding::encode(inst, writer),
+            Self::GetKernelNDrangeSubGroupCount(inst) => InstEncoding::encode(inst, writer),
+            Self::GetKernelNDrangeMaxSubGroupSize(inst) => InstEncoding::encode(inst, writer),
+            Self::GetKernelWorkGroupSize(inst) => InstEncoding::encode(inst, writer),
+            Self::GetKernelPreferredWorkGroupSizeMultiple(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::RetainEvent(inst) => InstEncoding::encode(inst, writer),
+            Self::ReleaseEvent(inst) => InstEncoding::encode(inst, writer),
+            Self::CreateUserEvent(inst) => InstEncoding::encode(inst, writer),
+            Self::IsValidEvent(inst) => InstEncoding::encode(inst, writer),
+            Self::SetUserEventStatus(inst) => InstEncoding::encode(inst, writer),
+            Self::CaptureEventProfilingInfo(inst) => InstEncoding::encode(inst, writer),
+            Self::GetDefaultQueue(inst) => InstEncoding::encode(inst, writer),
+            Self::BuildNDRange(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSparseSampleImplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSparseSampleExplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSparseSampleDrefImplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSparseSampleDrefExplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSparseSampleProjImplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSparseSampleProjExplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSparseSampleProjDrefImplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSparseSampleProjDrefExplicitLod(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSparseFetch(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSparseGather(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSparseDrefGather(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSparseTexelsResident(inst) => InstEncoding::encode(inst, writer),
+            Self::NoLine(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicFlagTestAndSet(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicFlagClear(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSparseRead(inst) => InstEncoding::encode(inst, writer),
+            Self::SizeOf(inst) => InstEncoding::encode(inst, writer),
+            Self::TypePipeStorage(inst) => InstEncoding::encode(inst, writer),
+            Self::ConstantPipeStorage(inst) => InstEncoding::encode(inst, writer),
+            Self::CreatePipeFromPipeStorage(inst) => InstEncoding::encode(inst, writer),
+            Self::GetKernelLocalSizeForSubgroupCount(inst) => InstEncoding::encode(inst, writer),
+            Self::GetKernelMaxNumSubgroups(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeNamedBarrier(inst) => InstEncoding::encode(inst, writer),
+            Self::NamedBarrierInitialize(inst) => InstEncoding::encode(inst, writer),
+            Self::MemoryNamedBarrier(inst) => InstEncoding::encode(inst, writer),
+            Self::ModuleProcessed(inst) => InstEncoding::encode(inst, writer),
+            Self::ExecutionModeId(inst) => InstEncoding::encode(inst, writer),
+            Self::DecorateId(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformElect(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformAll(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformAny(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformAllEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBroadcast(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBroadcastFirst(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBallot(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformInverseBallot(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBallotBitExtract(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBallotBitCount(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBallotFindLSB(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBallotFindMSB(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformShuffle(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformShuffleXor(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformShuffleUp(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformShuffleDown(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformIAdd(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformFAdd(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformIMul(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformFMul(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformSMin(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformUMin(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformFMin(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformSMax(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformUMax(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformFMax(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBitwiseAnd(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBitwiseOr(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBitwiseXor(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformLogicalAnd(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformLogicalOr(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformLogicalXor(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformQuadBroadcast(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformQuadSwap(inst) => InstEncoding::encode(inst, writer),
+            Self::CopyLogical(inst) => InstEncoding::encode(inst, writer),
+            Self::PtrEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::PtrNotEqual(inst) => InstEncoding::encode(inst, writer),
+            Self::PtrDiff(inst) => InstEncoding::encode(inst, writer),
+            Self::ColorAttachmentReadEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::DepthAttachmentReadEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::StencilAttachmentReadEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeTensorARM(inst) => InstEncoding::encode(inst, writer),
+            Self::TensorReadARM(inst) => InstEncoding::encode(inst, writer),
+            Self::TensorWriteARM(inst) => InstEncoding::encode(inst, writer),
+            Self::TensorQuerySizeARM(inst) => InstEncoding::encode(inst, writer),
+            Self::GraphConstantARM(inst) => InstEncoding::encode(inst, writer),
+            Self::GraphEntryPointARM(inst) => InstEncoding::encode(inst, writer),
+            Self::GraphARM(inst) => InstEncoding::encode(inst, writer),
+            Self::GraphInputARM(inst) => InstEncoding::encode(inst, writer),
+            Self::GraphSetOutputARM(inst) => InstEncoding::encode(inst, writer),
+            Self::GraphEndARM(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeGraphARM(inst) => InstEncoding::encode(inst, writer),
+            Self::TerminateInvocation(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeUntypedPointerKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::UntypedVariableKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::UntypedAccessChainKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::UntypedInBoundsAccessChainKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupBallotKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupFirstInvocationKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::UntypedPtrAccessChainKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::UntypedInBoundsPtrAccessChainKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::UntypedArrayLengthKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::UntypedPrefetchKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::FmaKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAllKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAnyKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAllEqualKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformRotateKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupReadInvocationKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::ExtInstWithForwardRefsKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::UntypedGroupAsyncCopyKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::TraceRayKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::ExecuteCallableKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertUToAccelerationStructureKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::IgnoreIntersectionKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::TerminateRayKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::SDot(inst) => InstEncoding::encode(inst, writer),
+            Self::UDot(inst) => InstEncoding::encode(inst, writer),
+            Self::SUDot(inst) => InstEncoding::encode(inst, writer),
+            Self::SDotAccSat(inst) => InstEncoding::encode(inst, writer),
+            Self::UDotAccSat(inst) => InstEncoding::encode(inst, writer),
+            Self::SUDotAccSat(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeCooperativeMatrixKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixLoadKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixStoreKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixMulAddKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixLengthKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::ConstantCompositeReplicateEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::SpecConstantCompositeReplicateEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::CompositeConstructReplicateEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeRayQueryKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryInitializeKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryTerminateKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGenerateIntersectionKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryConfirmIntersectionKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryProceedKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionTypeKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSampleWeightedQCOM(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageBoxFilterQCOM(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageBlockMatchSSDQCOM(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageBlockMatchSADQCOM(inst) => InstEncoding::encode(inst, writer),
+            Self::BitCastArrayQCOM(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageBlockMatchWindowSSDQCOM(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageBlockMatchWindowSADQCOM(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageBlockMatchGatherSSDQCOM(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageBlockMatchGatherSADQCOM(inst) => InstEncoding::encode(inst, writer),
+            Self::CompositeConstructCoopMatQCOM(inst) => InstEncoding::encode(inst, writer),
+            Self::CompositeExtractCoopMatQCOM(inst) => InstEncoding::encode(inst, writer),
+            Self::ExtractSubArrayQCOM(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupIAddNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupFAddNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupFMinNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupUMinNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupSMinNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupFMaxNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupUMaxNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupSMaxNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
+            Self::FragmentMaskFetchAMD(inst) => InstEncoding::encode(inst, writer),
+            Self::FragmentFetchAMD(inst) => InstEncoding::encode(inst, writer),
+            Self::ReadClockKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::AllocateNodePayloadsAMDX(inst) => InstEncoding::encode(inst, writer),
+            Self::EnqueueNodePayloadsAMDX(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeNodePayloadArrayAMDX(inst) => InstEncoding::encode(inst, writer),
+            Self::FinishWritingNodePayloadAMDX(inst) => InstEncoding::encode(inst, writer),
+            Self::NodePayloadArrayLengthAMDX(inst) => InstEncoding::encode(inst, writer),
+            Self::IsNodePayloadValidAMDX(inst) => InstEncoding::encode(inst, writer),
+            Self::ConstantStringAMDX(inst) => InstEncoding::encode(inst, writer),
+            Self::SpecConstantStringAMDX(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformQuadAllKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformQuadAnyKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeBufferEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::BufferPointerEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::UntypedImageTexelPointerEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::MemberDecorateIdEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::ConstantSizeOfEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectRecordHitMotionNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectRecordHitWithIndexMotionNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectRecordMissMotionNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetWorldToObjectNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetObjectToWorldNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetObjectRayDirectionNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetObjectRayOriginNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectTraceRayMotionNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetShaderRecordBufferHandleNV(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::HitObjectGetShaderBindingTableRecordIndexNV(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::HitObjectRecordEmptyNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectTraceRayNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectRecordHitNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectRecordHitWithIndexNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectRecordMissNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectExecuteShaderNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetCurrentTimeNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetAttributesNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetHitKindNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetPrimitiveIndexNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetGeometryIndexNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetInstanceIdNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetInstanceCustomIndexNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetWorldRayDirectionNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetWorldRayOriginNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetRayTMaxNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetRayTMinNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectIsEmptyNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectIsHitNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectIsMissNV(inst) => InstEncoding::encode(inst, writer),
+            Self::ReorderThreadWithHitObjectNV(inst) => InstEncoding::encode(inst, writer),
+            Self::ReorderThreadWithHintNV(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeHitObjectNV(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageSampleFootprintNV(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeVectorIdEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeVectorMatrixMulNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeVectorOuterProductAccumulateNV(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::CooperativeVectorReduceSumAccumulateNV(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::CooperativeVectorMatrixMulAddNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixConvertNV(inst) => InstEncoding::encode(inst, writer),
+            Self::EmitMeshTasksEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::SetMeshOutputsEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupNonUniformPartitionEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::WritePackedPrimitiveIndices4x8NV(inst) => InstEncoding::encode(inst, writer),
+            Self::FetchMicroTriangleVertexPositionNV(inst) => InstEncoding::encode(inst, writer),
+            Self::FetchMicroTriangleVertexBarycentricNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeVectorLoadNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeVectorStoreNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectRecordFromQueryEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectRecordMissEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectRecordMissMotionEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetIntersectionTriangleVertexPositionsEXT(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::HitObjectGetRayFlagsEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectSetShaderBindingTableRecordIndexEXT(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::HitObjectReorderExecuteShaderEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectTraceReorderExecuteEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectTraceMotionReorderExecuteEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeHitObjectEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::ReorderThreadWithHintEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::ReorderThreadWithHitObjectEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectTraceRayEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectTraceRayMotionEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectRecordEmptyEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectExecuteShaderEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetCurrentTimeEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetAttributesEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetHitKindEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetPrimitiveIndexEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetGeometryIndexEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetInstanceIdEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetInstanceCustomIndexEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetObjectRayOriginEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetObjectRayDirectionEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetWorldRayDirectionEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetWorldRayOriginEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetObjectToWorldEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetWorldToObjectEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetRayTMaxEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::ReportIntersectionKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::IgnoreIntersectionNV(inst) => InstEncoding::encode(inst, writer),
+            Self::TerminateRayNV(inst) => InstEncoding::encode(inst, writer),
+            Self::TraceNV(inst) => InstEncoding::encode(inst, writer),
+            Self::TraceMotionNV(inst) => InstEncoding::encode(inst, writer),
+            Self::TraceRayMotionNV(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionTriangleVertexPositionsKHR(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::TypeAccelerationStructureKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::ExecuteCallableNV(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionClusterIdNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetClusterIdNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetRayTMinEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetShaderBindingTableRecordIndexEXT(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::HitObjectGetShaderRecordBufferHandleEXT(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::HitObjectIsEmptyEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectIsHitEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectIsMissEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeCooperativeMatrixNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixLoadNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixStoreNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixMulAddNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixLengthNV(inst) => InstEncoding::encode(inst, writer),
+            Self::BeginInvocationInterlockEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::EndInvocationInterlockEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixReduceNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixLoadTensorNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixStoreTensorNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixPerElementOpNV(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeTensorLayoutNV(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeTensorViewNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CreateTensorLayoutNV(inst) => InstEncoding::encode(inst, writer),
+            Self::TensorLayoutSetDimensionNV(inst) => InstEncoding::encode(inst, writer),
+            Self::TensorLayoutSetStrideNV(inst) => InstEncoding::encode(inst, writer),
+            Self::TensorLayoutSliceNV(inst) => InstEncoding::encode(inst, writer),
+            Self::TensorLayoutSetClampValueNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CreateTensorViewNV(inst) => InstEncoding::encode(inst, writer),
+            Self::TensorViewSetDimensionNV(inst) => InstEncoding::encode(inst, writer),
+            Self::TensorViewSetStrideNV(inst) => InstEncoding::encode(inst, writer),
+            Self::DemoteToHelperInvocation(inst) => InstEncoding::encode(inst, writer),
+            Self::IsHelperInvocationEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::TensorViewSetClipNV(inst) => InstEncoding::encode(inst, writer),
+            Self::TensorLayoutSetBlockSizeNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixTransposeNV(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertUToImageNV(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertUToSamplerNV(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertImageToUNV(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertSamplerToUNV(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertUToSampledImageNV(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertSampledImageToUNV(inst) => InstEncoding::encode(inst, writer),
+            Self::SamplerImageAddressingModeNV(inst) => InstEncoding::encode(inst, writer),
+            Self::RawAccessChainNV(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionSpherePositionNV(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::RayQueryGetIntersectionSphereRadiusNV(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionLSSPositionsNV(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionLSSRadiiNV(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionLSSHitValueNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetSpherePositionNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetSphereRadiusNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetLSSPositionsNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetLSSRadiiNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectIsSphereHitNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectIsLSSHitNV(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryIsSphereHitNV(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryIsLSSHitNV(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupShuffleINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupShuffleDownINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupShuffleUpINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupShuffleXorINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupBlockReadINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupBlockWriteINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupImageBlockReadINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupImageBlockWriteINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupImageMediaBlockReadINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupImageMediaBlockWriteINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::UCountLeadingZerosINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::UCountTrailingZerosINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::AbsISubINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::AbsUSubINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::IAddSatINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::UAddSatINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::IAverageINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::UAverageINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::IAverageRoundedINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::UAverageRoundedINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ISubSatINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::USubSatINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::IMul32x16INTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::UMul32x16INTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ConstantFunctionPointerINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::FunctionPointerCallINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::AsmTargetINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::AsmINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::AsmCallINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicFMinEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicFMaxEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::AssumeTrueKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::ExpectKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::DecorateString(inst) => InstEncoding::encode(inst, writer),
+            Self::MemberDecorateString(inst) => InstEncoding::encode(inst, writer),
+            Self::VmeImageINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeVmeImageINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeAvcImePayloadINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeAvcRefPayloadINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeAvcSicPayloadINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeAvcMcePayloadINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeAvcMceResultINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeAvcImeResultINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeAvcImeResultSingleReferenceStreamoutINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::TypeAvcImeResultDualReferenceStreamoutINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::TypeAvcImeSingleReferenceStreaminINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::TypeAvcImeDualReferenceStreaminINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeAvcRefResultINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeAvcSicResultINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetDefaultInterShapePenaltyINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceSetInterShapePenaltyINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceSetInterDirectionPenaltyINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceSetMotionVectorCostFunctionINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceSetAcOnlyHaarINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceConvertToImePayloadINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceConvertToImeResultINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcMceConvertToRefPayloadINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceConvertToRefResultINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcMceConvertToSicPayloadINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceConvertToSicResultINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcMceGetMotionVectorsINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcMceGetInterDistortionsINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetBestInterDistortionsINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetInterMajorShapeINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcMceGetInterMinorShapeINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcMceGetInterDirectionsINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcMceGetInterMotionVectorCountINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetInterReferenceIdsINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeInitializeINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcImeSetSingleReferenceINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcImeSetDualReferenceINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcImeRefWindowSizeINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcImeAdjustRefOffsetINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcImeConvertToMcePayloadINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeSetMaxMotionVectorCountINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeSetUnidirectionalMixDisableINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeSetWeightedSadINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcImeEvaluateWithSingleReferenceINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeEvaluateWithDualReferenceINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeConvertToMceResultINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcImeGetSingleReferenceStreaminINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeGetDualReferenceStreaminINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeStripSingleReferenceStreamoutINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeStripDualReferenceStreamoutINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeGetBorderReachedINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcImeGetTruncatedSearchIndicationINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcFmeInitializeINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcBmeInitializeINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcRefConvertToMcePayloadINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcRefSetBidirectionalMixDisableINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcRefSetBilinearFilterEnableINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcRefEvaluateWithSingleReferenceINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcRefEvaluateWithDualReferenceINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcRefEvaluateWithMultiReferenceINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcRefConvertToMceResultINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcSicInitializeINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcSicConfigureSkcINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcSicConfigureIpeLumaINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcSicConfigureIpeLumaChromaINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicGetMotionVectorMaskINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicConvertToMcePayloadINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicSetIntraLumaShapePenaltyINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicSetBilinearFilterEnableINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicSetSkcForwardTransformEnableINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicSetBlockBasedRawSkipSadINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicEvaluateIpeINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcSicEvaluateWithSingleReferenceINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicEvaluateWithDualReferenceINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicEvaluateWithMultiReferenceINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicConvertToMceResultINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcSicGetIpeLumaShapeINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcSicGetBestIpeLumaDistortionINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicGetBestIpeChromaDistortionINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicGetPackedIpeLumaModesINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicGetIpeChromaModeINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicGetInterRawSadsINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::VariableLengthArrayINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SaveMemoryINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::RestoreMemoryINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatSinCosPiALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatCastALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatCastFromIntALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatCastToIntALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatAddALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatSubALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatMulALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatDivALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatGTALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatGEALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatLTALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatLEALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatEQALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatRecipALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatRSqrtALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatCbrtALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatHypotALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatSqrtALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatLogINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatLog2INTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatLog10INTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatLog1pINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatExpINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatExp2INTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatExp10INTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatExpm1INTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatSinINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatCosINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatSinCosINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatSinPiINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatCosPiINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatASinINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatASinPiINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatACosINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatACosPiINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatATanINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatATanPiINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatATan2INTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatPowINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatPowRINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatPowNINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::LoopControlINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::AliasDomainDeclINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::AliasScopeDeclINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::AliasScopeListDeclINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::FixedSqrtALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::FixedRecipALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::FixedRsqrtALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::FixedSinALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::FixedCosALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::FixedSinCosALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::FixedSinPiALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::FixedCosPiALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::FixedSinCosPiALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::FixedLogALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::FixedExpALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::PtrCastToCrossWorkgroupALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::CrossWorkgroupCastToPtrALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::ReadPipeBlockingALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::WritePipeBlockingALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::FPGARegALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetRayTMinKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetRayFlagsKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionTKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionInstanceCustomIndexKHR(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::RayQueryGetIntersectionInstanceIdKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::RayQueryGetIntersectionGeometryIndexKHR(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::RayQueryGetIntersectionPrimitiveIndexKHR(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::RayQueryGetIntersectionBarycentricsKHR(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::RayQueryGetIntersectionFrontFaceKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionCandidateAABBOpaqueKHR(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::RayQueryGetIntersectionObjectRayDirectionKHR(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::RayQueryGetIntersectionObjectRayOriginKHR(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::RayQueryGetWorldRayDirectionKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetWorldRayOriginKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionObjectToWorldKHR(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::RayQueryGetIntersectionWorldToObjectKHR(inst) => {
+                InstEncoding::encode(inst, writer)
+            }
+            Self::AtomicFAddEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeBufferSurfaceINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeStructContinuedINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ConstantCompositeContinuedINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SpecConstantCompositeContinuedINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::CompositeConstructContinuedINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertFToBF16INTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertBF16ToFINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ControlBarrierArriveINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ControlBarrierWaitINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ArithmeticFenceEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::TaskSequenceCreateALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::TaskSequenceAsyncALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::TaskSequenceGetALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::TaskSequenceReleaseALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeTaskSequenceALTERA(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupBlockPrefetchINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::Subgroup2DBlockLoadINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::Subgroup2DBlockLoadTransformINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::Subgroup2DBlockLoadTransposeINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::Subgroup2DBlockPrefetchINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::Subgroup2DBlockStoreINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupMatrixMultiplyAccumulateINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::BitwiseFunctionINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::UntypedVariableLengthArrayINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ConditionalExtensionINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ConditionalEntryPointINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ConditionalCapabilityINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SpecConstantTargetINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SpecConstantArchitectureINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SpecConstantCapabilitiesINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ConditionalCopyObjectINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupIMulKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupFMulKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupBitwiseAndKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupBitwiseOrKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupBitwiseXorKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupLogicalAndKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupLogicalOrKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::GroupLogicalXorKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RoundFToTF32INTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::MaskedGatherINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::MaskedScatterINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertHandleToImageINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertHandleToSamplerINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ConvertHandleToSampledImageINTEL(inst) => InstEncoding::encode(inst, writer),
+        }
+    }
+    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+        let opcode = reader.opcode();
+        Ok(
+            match opcode {
+                0u16 => Self::Nop(<OpNop as InstEncoding>::decode(reader)?),
+                1u16 => Self::Undef(<OpUndef as InstEncoding>::decode(reader)?),
+                2u16 => {
+                    Self::SourceContinued(
+                        <OpSourceContinued as InstEncoding>::decode(reader)?,
+                    )
+                }
+                3u16 => Self::Source(<OpSource as InstEncoding>::decode(reader)?),
+                4u16 => {
+                    Self::SourceExtension(
+                        <OpSourceExtension as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5u16 => Self::Name(<OpName as InstEncoding>::decode(reader)?),
+                6u16 => Self::MemberName(<OpMemberName as InstEncoding>::decode(reader)?),
+                7u16 => Self::String(<OpString as InstEncoding>::decode(reader)?),
+                8u16 => Self::Line(<OpLine as InstEncoding>::decode(reader)?),
+                10u16 => Self::Extension(<OpExtension as InstEncoding>::decode(reader)?),
+                11u16 => {
+                    Self::ExtInstImport(
+                        <OpExtInstImport as InstEncoding>::decode(reader)?,
+                    )
+                }
+                12u16 => Self::ExtInst(<OpExtInst as InstEncoding>::decode(reader)?),
+                14u16 => {
+                    Self::MemoryModel(<OpMemoryModel as InstEncoding>::decode(reader)?)
+                }
+                15u16 => {
+                    Self::EntryPoint(<OpEntryPoint as InstEncoding>::decode(reader)?)
+                }
+                16u16 => {
+                    Self::ExecutionMode(
+                        <OpExecutionMode as InstEncoding>::decode(reader)?,
+                    )
+                }
+                17u16 => {
+                    Self::Capability(<OpCapability as InstEncoding>::decode(reader)?)
+                }
+                19u16 => Self::TypeVoid(<OpTypeVoid as InstEncoding>::decode(reader)?),
+                20u16 => Self::TypeBool(<OpTypeBool as InstEncoding>::decode(reader)?),
+                21u16 => Self::TypeInt(<OpTypeInt as InstEncoding>::decode(reader)?),
+                22u16 => Self::TypeFloat(<OpTypeFloat as InstEncoding>::decode(reader)?),
+                23u16 => {
+                    Self::TypeVector(<OpTypeVector as InstEncoding>::decode(reader)?)
+                }
+                24u16 => {
+                    Self::TypeMatrix(<OpTypeMatrix as InstEncoding>::decode(reader)?)
+                }
+                25u16 => Self::TypeImage(<OpTypeImage as InstEncoding>::decode(reader)?),
+                26u16 => {
+                    Self::TypeSampler(<OpTypeSampler as InstEncoding>::decode(reader)?)
+                }
+                27u16 => {
+                    Self::TypeSampledImage(
+                        <OpTypeSampledImage as InstEncoding>::decode(reader)?,
+                    )
+                }
+                28u16 => Self::TypeArray(<OpTypeArray as InstEncoding>::decode(reader)?),
+                29u16 => {
+                    Self::TypeRuntimeArray(
+                        <OpTypeRuntimeArray as InstEncoding>::decode(reader)?,
+                    )
+                }
+                30u16 => {
+                    Self::TypeStruct(<OpTypeStruct as InstEncoding>::decode(reader)?)
+                }
+                31u16 => {
+                    Self::TypeOpaque(<OpTypeOpaque as InstEncoding>::decode(reader)?)
+                }
+                32u16 => {
+                    Self::TypePointer(<OpTypePointer as InstEncoding>::decode(reader)?)
+                }
+                33u16 => {
+                    Self::TypeFunction(<OpTypeFunction as InstEncoding>::decode(reader)?)
+                }
+                34u16 => Self::TypeEvent(<OpTypeEvent as InstEncoding>::decode(reader)?),
+                35u16 => {
+                    Self::TypeDeviceEvent(
+                        <OpTypeDeviceEvent as InstEncoding>::decode(reader)?,
+                    )
+                }
+                36u16 => {
+                    Self::TypeReserveId(
+                        <OpTypeReserveId as InstEncoding>::decode(reader)?,
+                    )
+                }
+                37u16 => Self::TypeQueue(<OpTypeQueue as InstEncoding>::decode(reader)?),
+                38u16 => Self::TypePipe(<OpTypePipe as InstEncoding>::decode(reader)?),
+                39u16 => {
+                    Self::TypeForwardPointer(
+                        <OpTypeForwardPointer as InstEncoding>::decode(reader)?,
+                    )
+                }
+                41u16 => {
+                    Self::ConstantTrue(<OpConstantTrue as InstEncoding>::decode(reader)?)
+                }
+                42u16 => {
+                    Self::ConstantFalse(
+                        <OpConstantFalse as InstEncoding>::decode(reader)?,
+                    )
+                }
+                43u16 => Self::Constant(<OpConstant as InstEncoding>::decode(reader)?),
+                44u16 => {
+                    Self::ConstantComposite(
+                        <OpConstantComposite as InstEncoding>::decode(reader)?,
+                    )
+                }
+                45u16 => {
+                    Self::ConstantSampler(
+                        <OpConstantSampler as InstEncoding>::decode(reader)?,
+                    )
+                }
+                46u16 => {
+                    Self::ConstantNull(<OpConstantNull as InstEncoding>::decode(reader)?)
+                }
+                48u16 => {
+                    Self::SpecConstantTrue(
+                        <OpSpecConstantTrue as InstEncoding>::decode(reader)?,
+                    )
+                }
+                49u16 => {
+                    Self::SpecConstantFalse(
+                        <OpSpecConstantFalse as InstEncoding>::decode(reader)?,
+                    )
+                }
+                50u16 => {
+                    Self::SpecConstant(<OpSpecConstant as InstEncoding>::decode(reader)?)
+                }
+                51u16 => {
+                    Self::SpecConstantComposite(
+                        <OpSpecConstantComposite as InstEncoding>::decode(reader)?,
+                    )
+                }
+                52u16 => {
+                    Self::SpecConstantOp(
+                        <OpSpecConstantOp as InstEncoding>::decode(reader)?,
+                    )
+                }
+                54u16 => Self::Function(<OpFunction as InstEncoding>::decode(reader)?),
+                55u16 => {
+                    Self::FunctionParameter(
+                        <OpFunctionParameter as InstEncoding>::decode(reader)?,
+                    )
+                }
+                56u16 => {
+                    Self::FunctionEnd(<OpFunctionEnd as InstEncoding>::decode(reader)?)
+                }
+                57u16 => {
+                    Self::FunctionCall(<OpFunctionCall as InstEncoding>::decode(reader)?)
+                }
+                59u16 => Self::Variable(<OpVariable as InstEncoding>::decode(reader)?),
+                60u16 => {
+                    Self::ImageTexelPointer(
+                        <OpImageTexelPointer as InstEncoding>::decode(reader)?,
+                    )
+                }
+                61u16 => Self::Load(<OpLoad as InstEncoding>::decode(reader)?),
+                62u16 => Self::Store(<OpStore as InstEncoding>::decode(reader)?),
+                63u16 => {
+                    Self::CopyMemory(<OpCopyMemory as InstEncoding>::decode(reader)?)
+                }
+                64u16 => {
+                    Self::CopyMemorySized(
+                        <OpCopyMemorySized as InstEncoding>::decode(reader)?,
+                    )
+                }
+                65u16 => {
+                    Self::AccessChain(<OpAccessChain as InstEncoding>::decode(reader)?)
+                }
+                66u16 => {
+                    Self::InBoundsAccessChain(
+                        <OpInBoundsAccessChain as InstEncoding>::decode(reader)?,
+                    )
+                }
+                67u16 => {
+                    Self::PtrAccessChain(
+                        <OpPtrAccessChain as InstEncoding>::decode(reader)?,
+                    )
+                }
+                68u16 => {
+                    Self::ArrayLength(<OpArrayLength as InstEncoding>::decode(reader)?)
+                }
+                69u16 => {
+                    Self::GenericPtrMemSemantics(
+                        <OpGenericPtrMemSemantics as InstEncoding>::decode(reader)?,
+                    )
+                }
+                70u16 => {
+                    Self::InBoundsPtrAccessChain(
+                        <OpInBoundsPtrAccessChain as InstEncoding>::decode(reader)?,
+                    )
+                }
+                71u16 => Self::Decorate(<OpDecorate as InstEncoding>::decode(reader)?),
+                72u16 => {
+                    Self::MemberDecorate(
+                        <OpMemberDecorate as InstEncoding>::decode(reader)?,
+                    )
+                }
+                73u16 => {
+                    Self::DecorationGroup(
+                        <OpDecorationGroup as InstEncoding>::decode(reader)?,
+                    )
+                }
+                74u16 => {
+                    Self::GroupDecorate(
+                        <OpGroupDecorate as InstEncoding>::decode(reader)?,
+                    )
+                }
+                75u16 => {
+                    Self::GroupMemberDecorate(
+                        <OpGroupMemberDecorate as InstEncoding>::decode(reader)?,
+                    )
+                }
+                77u16 => {
+                    Self::VectorExtractDynamic(
+                        <OpVectorExtractDynamic as InstEncoding>::decode(reader)?,
+                    )
+                }
+                78u16 => {
+                    Self::VectorInsertDynamic(
+                        <OpVectorInsertDynamic as InstEncoding>::decode(reader)?,
+                    )
+                }
+                79u16 => {
+                    Self::VectorShuffle(
+                        <OpVectorShuffle as InstEncoding>::decode(reader)?,
+                    )
+                }
+                80u16 => {
+                    Self::CompositeConstruct(
+                        <OpCompositeConstruct as InstEncoding>::decode(reader)?,
+                    )
+                }
+                81u16 => {
+                    Self::CompositeExtract(
+                        <OpCompositeExtract as InstEncoding>::decode(reader)?,
+                    )
+                }
+                82u16 => {
+                    Self::CompositeInsert(
+                        <OpCompositeInsert as InstEncoding>::decode(reader)?,
+                    )
+                }
+                83u16 => {
+                    Self::CopyObject(<OpCopyObject as InstEncoding>::decode(reader)?)
+                }
+                84u16 => Self::Transpose(<OpTranspose as InstEncoding>::decode(reader)?),
+                86u16 => {
+                    Self::SampledImage(<OpSampledImage as InstEncoding>::decode(reader)?)
+                }
+                87u16 => {
+                    Self::ImageSampleImplicitLod(
+                        <OpImageSampleImplicitLod as InstEncoding>::decode(reader)?,
+                    )
+                }
+                88u16 => {
+                    Self::ImageSampleExplicitLod(
+                        <OpImageSampleExplicitLod as InstEncoding>::decode(reader)?,
+                    )
+                }
+                89u16 => {
+                    Self::ImageSampleDrefImplicitLod(
+                        <OpImageSampleDrefImplicitLod as InstEncoding>::decode(reader)?,
+                    )
+                }
+                90u16 => {
+                    Self::ImageSampleDrefExplicitLod(
+                        <OpImageSampleDrefExplicitLod as InstEncoding>::decode(reader)?,
+                    )
+                }
+                91u16 => {
+                    Self::ImageSampleProjImplicitLod(
+                        <OpImageSampleProjImplicitLod as InstEncoding>::decode(reader)?,
+                    )
+                }
+                92u16 => {
+                    Self::ImageSampleProjExplicitLod(
+                        <OpImageSampleProjExplicitLod as InstEncoding>::decode(reader)?,
+                    )
+                }
+                93u16 => {
+                    Self::ImageSampleProjDrefImplicitLod(
+                        <OpImageSampleProjDrefImplicitLod as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                94u16 => {
+                    Self::ImageSampleProjDrefExplicitLod(
+                        <OpImageSampleProjDrefExplicitLod as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                95u16 => {
+                    Self::ImageFetch(<OpImageFetch as InstEncoding>::decode(reader)?)
+                }
+                96u16 => {
+                    Self::ImageGather(<OpImageGather as InstEncoding>::decode(reader)?)
+                }
+                97u16 => {
+                    Self::ImageDrefGather(
+                        <OpImageDrefGather as InstEncoding>::decode(reader)?,
+                    )
+                }
+                98u16 => Self::ImageRead(<OpImageRead as InstEncoding>::decode(reader)?),
+                99u16 => {
+                    Self::ImageWrite(<OpImageWrite as InstEncoding>::decode(reader)?)
+                }
+                100u16 => Self::Image(<OpImage as InstEncoding>::decode(reader)?),
+                101u16 => {
+                    Self::ImageQueryFormat(
+                        <OpImageQueryFormat as InstEncoding>::decode(reader)?,
+                    )
+                }
+                102u16 => {
+                    Self::ImageQueryOrder(
+                        <OpImageQueryOrder as InstEncoding>::decode(reader)?,
+                    )
+                }
+                103u16 => {
+                    Self::ImageQuerySizeLod(
+                        <OpImageQuerySizeLod as InstEncoding>::decode(reader)?,
+                    )
+                }
+                104u16 => {
+                    Self::ImageQuerySize(
+                        <OpImageQuerySize as InstEncoding>::decode(reader)?,
+                    )
+                }
+                105u16 => {
+                    Self::ImageQueryLod(
+                        <OpImageQueryLod as InstEncoding>::decode(reader)?,
+                    )
+                }
+                106u16 => {
+                    Self::ImageQueryLevels(
+                        <OpImageQueryLevels as InstEncoding>::decode(reader)?,
+                    )
+                }
+                107u16 => {
+                    Self::ImageQuerySamples(
+                        <OpImageQuerySamples as InstEncoding>::decode(reader)?,
+                    )
+                }
+                109u16 => {
+                    Self::ConvertFToU(<OpConvertFToU as InstEncoding>::decode(reader)?)
+                }
+                110u16 => {
+                    Self::ConvertFToS(<OpConvertFToS as InstEncoding>::decode(reader)?)
+                }
+                111u16 => {
+                    Self::ConvertSToF(<OpConvertSToF as InstEncoding>::decode(reader)?)
+                }
+                112u16 => {
+                    Self::ConvertUToF(<OpConvertUToF as InstEncoding>::decode(reader)?)
+                }
+                113u16 => Self::UConvert(<OpUConvert as InstEncoding>::decode(reader)?),
+                114u16 => Self::SConvert(<OpSConvert as InstEncoding>::decode(reader)?),
+                115u16 => Self::FConvert(<OpFConvert as InstEncoding>::decode(reader)?),
+                116u16 => {
+                    Self::QuantizeToF16(
+                        <OpQuantizeToF16 as InstEncoding>::decode(reader)?,
+                    )
+                }
+                117u16 => {
+                    Self::ConvertPtrToU(
+                        <OpConvertPtrToU as InstEncoding>::decode(reader)?,
+                    )
+                }
+                118u16 => {
+                    Self::SatConvertSToU(
+                        <OpSatConvertSToU as InstEncoding>::decode(reader)?,
+                    )
+                }
+                119u16 => {
+                    Self::SatConvertUToS(
+                        <OpSatConvertUToS as InstEncoding>::decode(reader)?,
+                    )
+                }
+                120u16 => {
+                    Self::ConvertUToPtr(
+                        <OpConvertUToPtr as InstEncoding>::decode(reader)?,
+                    )
+                }
+                121u16 => {
+                    Self::PtrCastToGeneric(
+                        <OpPtrCastToGeneric as InstEncoding>::decode(reader)?,
+                    )
+                }
+                122u16 => {
+                    Self::GenericCastToPtr(
+                        <OpGenericCastToPtr as InstEncoding>::decode(reader)?,
+                    )
+                }
+                123u16 => {
+                    Self::GenericCastToPtrExplicit(
+                        <OpGenericCastToPtrExplicit as InstEncoding>::decode(reader)?,
+                    )
+                }
+                124u16 => Self::Bitcast(<OpBitcast as InstEncoding>::decode(reader)?),
+                126u16 => Self::SNegate(<OpSNegate as InstEncoding>::decode(reader)?),
+                127u16 => Self::FNegate(<OpFNegate as InstEncoding>::decode(reader)?),
+                128u16 => Self::IAdd(<OpIAdd as InstEncoding>::decode(reader)?),
+                129u16 => Self::FAdd(<OpFAdd as InstEncoding>::decode(reader)?),
+                130u16 => Self::ISub(<OpISub as InstEncoding>::decode(reader)?),
+                131u16 => Self::FSub(<OpFSub as InstEncoding>::decode(reader)?),
+                132u16 => Self::IMul(<OpIMul as InstEncoding>::decode(reader)?),
+                133u16 => Self::FMul(<OpFMul as InstEncoding>::decode(reader)?),
+                134u16 => Self::UDiv(<OpUDiv as InstEncoding>::decode(reader)?),
+                135u16 => Self::SDiv(<OpSDiv as InstEncoding>::decode(reader)?),
+                136u16 => Self::FDiv(<OpFDiv as InstEncoding>::decode(reader)?),
+                137u16 => Self::UMod(<OpUMod as InstEncoding>::decode(reader)?),
+                138u16 => Self::SRem(<OpSRem as InstEncoding>::decode(reader)?),
+                139u16 => Self::SMod(<OpSMod as InstEncoding>::decode(reader)?),
+                140u16 => Self::FRem(<OpFRem as InstEncoding>::decode(reader)?),
+                141u16 => Self::FMod(<OpFMod as InstEncoding>::decode(reader)?),
+                142u16 => {
+                    Self::VectorTimesScalar(
+                        <OpVectorTimesScalar as InstEncoding>::decode(reader)?,
+                    )
+                }
+                143u16 => {
+                    Self::MatrixTimesScalar(
+                        <OpMatrixTimesScalar as InstEncoding>::decode(reader)?,
+                    )
+                }
+                144u16 => {
+                    Self::VectorTimesMatrix(
+                        <OpVectorTimesMatrix as InstEncoding>::decode(reader)?,
+                    )
+                }
+                145u16 => {
+                    Self::MatrixTimesVector(
+                        <OpMatrixTimesVector as InstEncoding>::decode(reader)?,
+                    )
+                }
+                146u16 => {
+                    Self::MatrixTimesMatrix(
+                        <OpMatrixTimesMatrix as InstEncoding>::decode(reader)?,
+                    )
+                }
+                147u16 => {
+                    Self::OuterProduct(<OpOuterProduct as InstEncoding>::decode(reader)?)
+                }
+                148u16 => Self::Dot(<OpDot as InstEncoding>::decode(reader)?),
+                149u16 => Self::IAddCarry(<OpIAddCarry as InstEncoding>::decode(reader)?),
+                150u16 => {
+                    Self::ISubBorrow(<OpISubBorrow as InstEncoding>::decode(reader)?)
+                }
+                151u16 => {
+                    Self::UMulExtended(<OpUMulExtended as InstEncoding>::decode(reader)?)
+                }
+                152u16 => {
+                    Self::SMulExtended(<OpSMulExtended as InstEncoding>::decode(reader)?)
+                }
+                154u16 => Self::Any(<OpAny as InstEncoding>::decode(reader)?),
+                155u16 => Self::All(<OpAll as InstEncoding>::decode(reader)?),
+                156u16 => Self::IsNan(<OpIsNan as InstEncoding>::decode(reader)?),
+                157u16 => Self::IsInf(<OpIsInf as InstEncoding>::decode(reader)?),
+                158u16 => Self::IsFinite(<OpIsFinite as InstEncoding>::decode(reader)?),
+                159u16 => Self::IsNormal(<OpIsNormal as InstEncoding>::decode(reader)?),
+                160u16 => {
+                    Self::SignBitSet(<OpSignBitSet as InstEncoding>::decode(reader)?)
+                }
+                161u16 => {
+                    Self::LessOrGreater(
+                        <OpLessOrGreater as InstEncoding>::decode(reader)?,
+                    )
+                }
+                162u16 => Self::Ordered(<OpOrdered as InstEncoding>::decode(reader)?),
+                163u16 => Self::Unordered(<OpUnordered as InstEncoding>::decode(reader)?),
+                164u16 => {
+                    Self::LogicalEqual(<OpLogicalEqual as InstEncoding>::decode(reader)?)
+                }
+                165u16 => {
+                    Self::LogicalNotEqual(
+                        <OpLogicalNotEqual as InstEncoding>::decode(reader)?,
+                    )
+                }
+                166u16 => Self::LogicalOr(<OpLogicalOr as InstEncoding>::decode(reader)?),
+                167u16 => {
+                    Self::LogicalAnd(<OpLogicalAnd as InstEncoding>::decode(reader)?)
+                }
+                168u16 => {
+                    Self::LogicalNot(<OpLogicalNot as InstEncoding>::decode(reader)?)
+                }
+                169u16 => Self::Select(<OpSelect as InstEncoding>::decode(reader)?),
+                170u16 => Self::IEqual(<OpIEqual as InstEncoding>::decode(reader)?),
+                171u16 => Self::INotEqual(<OpINotEqual as InstEncoding>::decode(reader)?),
+                172u16 => {
+                    Self::UGreaterThan(<OpUGreaterThan as InstEncoding>::decode(reader)?)
+                }
+                173u16 => {
+                    Self::SGreaterThan(<OpSGreaterThan as InstEncoding>::decode(reader)?)
+                }
+                174u16 => {
+                    Self::UGreaterThanEqual(
+                        <OpUGreaterThanEqual as InstEncoding>::decode(reader)?,
+                    )
+                }
+                175u16 => {
+                    Self::SGreaterThanEqual(
+                        <OpSGreaterThanEqual as InstEncoding>::decode(reader)?,
+                    )
+                }
+                176u16 => Self::ULessThan(<OpULessThan as InstEncoding>::decode(reader)?),
+                177u16 => Self::SLessThan(<OpSLessThan as InstEncoding>::decode(reader)?),
+                178u16 => {
+                    Self::ULessThanEqual(
+                        <OpULessThanEqual as InstEncoding>::decode(reader)?,
+                    )
+                }
+                179u16 => {
+                    Self::SLessThanEqual(
+                        <OpSLessThanEqual as InstEncoding>::decode(reader)?,
+                    )
+                }
+                180u16 => Self::FOrdEqual(<OpFOrdEqual as InstEncoding>::decode(reader)?),
+                181u16 => {
+                    Self::FUnordEqual(<OpFUnordEqual as InstEncoding>::decode(reader)?)
+                }
+                182u16 => {
+                    Self::FOrdNotEqual(<OpFOrdNotEqual as InstEncoding>::decode(reader)?)
+                }
+                183u16 => {
+                    Self::FUnordNotEqual(
+                        <OpFUnordNotEqual as InstEncoding>::decode(reader)?,
+                    )
+                }
+                184u16 => {
+                    Self::FOrdLessThan(<OpFOrdLessThan as InstEncoding>::decode(reader)?)
+                }
+                185u16 => {
+                    Self::FUnordLessThan(
+                        <OpFUnordLessThan as InstEncoding>::decode(reader)?,
+                    )
+                }
+                186u16 => {
+                    Self::FOrdGreaterThan(
+                        <OpFOrdGreaterThan as InstEncoding>::decode(reader)?,
+                    )
+                }
+                187u16 => {
+                    Self::FUnordGreaterThan(
+                        <OpFUnordGreaterThan as InstEncoding>::decode(reader)?,
+                    )
+                }
+                188u16 => {
+                    Self::FOrdLessThanEqual(
+                        <OpFOrdLessThanEqual as InstEncoding>::decode(reader)?,
+                    )
+                }
+                189u16 => {
+                    Self::FUnordLessThanEqual(
+                        <OpFUnordLessThanEqual as InstEncoding>::decode(reader)?,
+                    )
+                }
+                190u16 => {
+                    Self::FOrdGreaterThanEqual(
+                        <OpFOrdGreaterThanEqual as InstEncoding>::decode(reader)?,
+                    )
+                }
+                191u16 => {
+                    Self::FUnordGreaterThanEqual(
+                        <OpFUnordGreaterThanEqual as InstEncoding>::decode(reader)?,
+                    )
+                }
+                194u16 => {
+                    Self::ShiftRightLogical(
+                        <OpShiftRightLogical as InstEncoding>::decode(reader)?,
+                    )
+                }
+                195u16 => {
+                    Self::ShiftRightArithmetic(
+                        <OpShiftRightArithmetic as InstEncoding>::decode(reader)?,
+                    )
+                }
+                196u16 => {
+                    Self::ShiftLeftLogical(
+                        <OpShiftLeftLogical as InstEncoding>::decode(reader)?,
+                    )
+                }
+                197u16 => Self::BitwiseOr(<OpBitwiseOr as InstEncoding>::decode(reader)?),
+                198u16 => {
+                    Self::BitwiseXor(<OpBitwiseXor as InstEncoding>::decode(reader)?)
+                }
+                199u16 => {
+                    Self::BitwiseAnd(<OpBitwiseAnd as InstEncoding>::decode(reader)?)
+                }
+                200u16 => Self::Not(<OpNot as InstEncoding>::decode(reader)?),
+                201u16 => {
+                    Self::BitFieldInsert(
+                        <OpBitFieldInsert as InstEncoding>::decode(reader)?,
+                    )
+                }
+                202u16 => {
+                    Self::BitFieldSExtract(
+                        <OpBitFieldSExtract as InstEncoding>::decode(reader)?,
+                    )
+                }
+                203u16 => {
+                    Self::BitFieldUExtract(
+                        <OpBitFieldUExtract as InstEncoding>::decode(reader)?,
+                    )
+                }
+                204u16 => {
+                    Self::BitReverse(<OpBitReverse as InstEncoding>::decode(reader)?)
+                }
+                205u16 => Self::BitCount(<OpBitCount as InstEncoding>::decode(reader)?),
+                207u16 => Self::DPdx(<OpDPdx as InstEncoding>::decode(reader)?),
+                208u16 => Self::DPdy(<OpDPdy as InstEncoding>::decode(reader)?),
+                209u16 => Self::Fwidth(<OpFwidth as InstEncoding>::decode(reader)?),
+                210u16 => Self::DPdxFine(<OpDPdxFine as InstEncoding>::decode(reader)?),
+                211u16 => Self::DPdyFine(<OpDPdyFine as InstEncoding>::decode(reader)?),
+                212u16 => {
+                    Self::FwidthFine(<OpFwidthFine as InstEncoding>::decode(reader)?)
+                }
+                213u16 => {
+                    Self::DPdxCoarse(<OpDPdxCoarse as InstEncoding>::decode(reader)?)
+                }
+                214u16 => {
+                    Self::DPdyCoarse(<OpDPdyCoarse as InstEncoding>::decode(reader)?)
+                }
+                215u16 => {
+                    Self::FwidthCoarse(<OpFwidthCoarse as InstEncoding>::decode(reader)?)
+                }
+                218u16 => {
+                    Self::EmitVertex(<OpEmitVertex as InstEncoding>::decode(reader)?)
+                }
+                219u16 => {
+                    Self::EndPrimitive(<OpEndPrimitive as InstEncoding>::decode(reader)?)
+                }
+                220u16 => {
+                    Self::EmitStreamVertex(
+                        <OpEmitStreamVertex as InstEncoding>::decode(reader)?,
+                    )
+                }
+                221u16 => {
+                    Self::EndStreamPrimitive(
+                        <OpEndStreamPrimitive as InstEncoding>::decode(reader)?,
+                    )
+                }
+                224u16 => {
+                    Self::ControlBarrier(
+                        <OpControlBarrier as InstEncoding>::decode(reader)?,
+                    )
+                }
+                225u16 => {
+                    Self::MemoryBarrier(
+                        <OpMemoryBarrier as InstEncoding>::decode(reader)?,
+                    )
+                }
+                227u16 => {
+                    Self::AtomicLoad(<OpAtomicLoad as InstEncoding>::decode(reader)?)
+                }
+                228u16 => {
+                    Self::AtomicStore(<OpAtomicStore as InstEncoding>::decode(reader)?)
+                }
+                229u16 => {
+                    Self::AtomicExchange(
+                        <OpAtomicExchange as InstEncoding>::decode(reader)?,
+                    )
+                }
+                230u16 => {
+                    Self::AtomicCompareExchange(
+                        <OpAtomicCompareExchange as InstEncoding>::decode(reader)?,
+                    )
+                }
+                231u16 => {
+                    Self::AtomicCompareExchangeWeak(
+                        <OpAtomicCompareExchangeWeak as InstEncoding>::decode(reader)?,
+                    )
+                }
+                232u16 => {
+                    Self::AtomicIIncrement(
+                        <OpAtomicIIncrement as InstEncoding>::decode(reader)?,
+                    )
+                }
+                233u16 => {
+                    Self::AtomicIDecrement(
+                        <OpAtomicIDecrement as InstEncoding>::decode(reader)?,
+                    )
+                }
+                234u16 => {
+                    Self::AtomicIAdd(<OpAtomicIAdd as InstEncoding>::decode(reader)?)
+                }
+                235u16 => {
+                    Self::AtomicISub(<OpAtomicISub as InstEncoding>::decode(reader)?)
+                }
+                236u16 => {
+                    Self::AtomicSMin(<OpAtomicSMin as InstEncoding>::decode(reader)?)
+                }
+                237u16 => {
+                    Self::AtomicUMin(<OpAtomicUMin as InstEncoding>::decode(reader)?)
+                }
+                238u16 => {
+                    Self::AtomicSMax(<OpAtomicSMax as InstEncoding>::decode(reader)?)
+                }
+                239u16 => {
+                    Self::AtomicUMax(<OpAtomicUMax as InstEncoding>::decode(reader)?)
+                }
+                240u16 => Self::AtomicAnd(<OpAtomicAnd as InstEncoding>::decode(reader)?),
+                241u16 => Self::AtomicOr(<OpAtomicOr as InstEncoding>::decode(reader)?),
+                242u16 => Self::AtomicXor(<OpAtomicXor as InstEncoding>::decode(reader)?),
+                245u16 => Self::Phi(<OpPhi as InstEncoding>::decode(reader)?),
+                246u16 => Self::LoopMerge(<OpLoopMerge as InstEncoding>::decode(reader)?),
+                247u16 => {
+                    Self::SelectionMerge(
+                        <OpSelectionMerge as InstEncoding>::decode(reader)?,
+                    )
+                }
+                248u16 => Self::Label(<OpLabel as InstEncoding>::decode(reader)?),
+                249u16 => Self::Branch(<OpBranch as InstEncoding>::decode(reader)?),
+                250u16 => {
+                    Self::BranchConditional(
+                        <OpBranchConditional as InstEncoding>::decode(reader)?,
+                    )
+                }
+                251u16 => Self::Switch(<OpSwitch as InstEncoding>::decode(reader)?),
+                252u16 => Self::Kill(<OpKill as InstEncoding>::decode(reader)?),
+                253u16 => Self::Return(<OpReturn as InstEncoding>::decode(reader)?),
+                254u16 => {
+                    Self::ReturnValue(<OpReturnValue as InstEncoding>::decode(reader)?)
+                }
+                255u16 => {
+                    Self::Unreachable(<OpUnreachable as InstEncoding>::decode(reader)?)
+                }
+                256u16 => {
+                    Self::LifetimeStart(
+                        <OpLifetimeStart as InstEncoding>::decode(reader)?,
+                    )
+                }
+                257u16 => {
+                    Self::LifetimeStop(<OpLifetimeStop as InstEncoding>::decode(reader)?)
+                }
+                259u16 => {
+                    Self::GroupAsyncCopy(
+                        <OpGroupAsyncCopy as InstEncoding>::decode(reader)?,
+                    )
+                }
+                260u16 => {
+                    Self::GroupWaitEvents(
+                        <OpGroupWaitEvents as InstEncoding>::decode(reader)?,
+                    )
+                }
+                261u16 => Self::GroupAll(<OpGroupAll as InstEncoding>::decode(reader)?),
+                262u16 => Self::GroupAny(<OpGroupAny as InstEncoding>::decode(reader)?),
+                263u16 => {
+                    Self::GroupBroadcast(
+                        <OpGroupBroadcast as InstEncoding>::decode(reader)?,
+                    )
+                }
+                264u16 => Self::GroupIAdd(<OpGroupIAdd as InstEncoding>::decode(reader)?),
+                265u16 => Self::GroupFAdd(<OpGroupFAdd as InstEncoding>::decode(reader)?),
+                266u16 => Self::GroupFMin(<OpGroupFMin as InstEncoding>::decode(reader)?),
+                267u16 => Self::GroupUMin(<OpGroupUMin as InstEncoding>::decode(reader)?),
+                268u16 => Self::GroupSMin(<OpGroupSMin as InstEncoding>::decode(reader)?),
+                269u16 => Self::GroupFMax(<OpGroupFMax as InstEncoding>::decode(reader)?),
+                270u16 => Self::GroupUMax(<OpGroupUMax as InstEncoding>::decode(reader)?),
+                271u16 => Self::GroupSMax(<OpGroupSMax as InstEncoding>::decode(reader)?),
+                274u16 => Self::ReadPipe(<OpReadPipe as InstEncoding>::decode(reader)?),
+                275u16 => Self::WritePipe(<OpWritePipe as InstEncoding>::decode(reader)?),
+                276u16 => {
+                    Self::ReservedReadPipe(
+                        <OpReservedReadPipe as InstEncoding>::decode(reader)?,
+                    )
+                }
+                277u16 => {
+                    Self::ReservedWritePipe(
+                        <OpReservedWritePipe as InstEncoding>::decode(reader)?,
+                    )
+                }
+                278u16 => {
+                    Self::ReserveReadPipePackets(
+                        <OpReserveReadPipePackets as InstEncoding>::decode(reader)?,
+                    )
+                }
+                279u16 => {
+                    Self::ReserveWritePipePackets(
+                        <OpReserveWritePipePackets as InstEncoding>::decode(reader)?,
+                    )
+                }
+                280u16 => {
+                    Self::CommitReadPipe(
+                        <OpCommitReadPipe as InstEncoding>::decode(reader)?,
+                    )
+                }
+                281u16 => {
+                    Self::CommitWritePipe(
+                        <OpCommitWritePipe as InstEncoding>::decode(reader)?,
+                    )
+                }
+                282u16 => {
+                    Self::IsValidReserveId(
+                        <OpIsValidReserveId as InstEncoding>::decode(reader)?,
+                    )
+                }
+                283u16 => {
+                    Self::GetNumPipePackets(
+                        <OpGetNumPipePackets as InstEncoding>::decode(reader)?,
+                    )
+                }
+                284u16 => {
+                    Self::GetMaxPipePackets(
+                        <OpGetMaxPipePackets as InstEncoding>::decode(reader)?,
+                    )
+                }
+                285u16 => {
+                    Self::GroupReserveReadPipePackets(
+                        <OpGroupReserveReadPipePackets as InstEncoding>::decode(reader)?,
+                    )
+                }
+                286u16 => {
+                    Self::GroupReserveWritePipePackets(
+                        <OpGroupReserveWritePipePackets as InstEncoding>::decode(reader)?,
+                    )
+                }
+                287u16 => {
+                    Self::GroupCommitReadPipe(
+                        <OpGroupCommitReadPipe as InstEncoding>::decode(reader)?,
+                    )
+                }
+                288u16 => {
+                    Self::GroupCommitWritePipe(
+                        <OpGroupCommitWritePipe as InstEncoding>::decode(reader)?,
+                    )
+                }
+                291u16 => {
+                    Self::EnqueueMarker(
+                        <OpEnqueueMarker as InstEncoding>::decode(reader)?,
+                    )
+                }
+                292u16 => {
+                    Self::EnqueueKernel(
+                        <OpEnqueueKernel as InstEncoding>::decode(reader)?,
+                    )
+                }
+                293u16 => {
+                    Self::GetKernelNDrangeSubGroupCount(
+                        <OpGetKernelNDrangeSubGroupCount as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                294u16 => {
+                    Self::GetKernelNDrangeMaxSubGroupSize(
+                        <OpGetKernelNDrangeMaxSubGroupSize as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                295u16 => {
+                    Self::GetKernelWorkGroupSize(
+                        <OpGetKernelWorkGroupSize as InstEncoding>::decode(reader)?,
+                    )
+                }
+                296u16 => {
+                    Self::GetKernelPreferredWorkGroupSizeMultiple(
+                        <OpGetKernelPreferredWorkGroupSizeMultiple as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                297u16 => {
+                    Self::RetainEvent(<OpRetainEvent as InstEncoding>::decode(reader)?)
+                }
+                298u16 => {
+                    Self::ReleaseEvent(<OpReleaseEvent as InstEncoding>::decode(reader)?)
+                }
+                299u16 => {
+                    Self::CreateUserEvent(
+                        <OpCreateUserEvent as InstEncoding>::decode(reader)?,
+                    )
+                }
+                300u16 => {
+                    Self::IsValidEvent(<OpIsValidEvent as InstEncoding>::decode(reader)?)
+                }
+                301u16 => {
+                    Self::SetUserEventStatus(
+                        <OpSetUserEventStatus as InstEncoding>::decode(reader)?,
+                    )
+                }
+                302u16 => {
+                    Self::CaptureEventProfilingInfo(
+                        <OpCaptureEventProfilingInfo as InstEncoding>::decode(reader)?,
+                    )
+                }
+                303u16 => {
+                    Self::GetDefaultQueue(
+                        <OpGetDefaultQueue as InstEncoding>::decode(reader)?,
+                    )
+                }
+                304u16 => {
+                    Self::BuildNDRange(<OpBuildNDRange as InstEncoding>::decode(reader)?)
+                }
+                305u16 => {
+                    Self::ImageSparseSampleImplicitLod(
+                        <OpImageSparseSampleImplicitLod as InstEncoding>::decode(reader)?,
+                    )
+                }
+                306u16 => {
+                    Self::ImageSparseSampleExplicitLod(
+                        <OpImageSparseSampleExplicitLod as InstEncoding>::decode(reader)?,
+                    )
+                }
+                307u16 => {
+                    Self::ImageSparseSampleDrefImplicitLod(
+                        <OpImageSparseSampleDrefImplicitLod as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                308u16 => {
+                    Self::ImageSparseSampleDrefExplicitLod(
+                        <OpImageSparseSampleDrefExplicitLod as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                309u16 => {
+                    Self::ImageSparseSampleProjImplicitLod(
+                        <OpImageSparseSampleProjImplicitLod as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                310u16 => {
+                    Self::ImageSparseSampleProjExplicitLod(
+                        <OpImageSparseSampleProjExplicitLod as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                311u16 => {
+                    Self::ImageSparseSampleProjDrefImplicitLod(
+                        <OpImageSparseSampleProjDrefImplicitLod as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                312u16 => {
+                    Self::ImageSparseSampleProjDrefExplicitLod(
+                        <OpImageSparseSampleProjDrefExplicitLod as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                313u16 => {
+                    Self::ImageSparseFetch(
+                        <OpImageSparseFetch as InstEncoding>::decode(reader)?,
+                    )
+                }
+                314u16 => {
+                    Self::ImageSparseGather(
+                        <OpImageSparseGather as InstEncoding>::decode(reader)?,
+                    )
+                }
+                315u16 => {
+                    Self::ImageSparseDrefGather(
+                        <OpImageSparseDrefGather as InstEncoding>::decode(reader)?,
+                    )
+                }
+                316u16 => {
+                    Self::ImageSparseTexelsResident(
+                        <OpImageSparseTexelsResident as InstEncoding>::decode(reader)?,
+                    )
+                }
+                317u16 => Self::NoLine(<OpNoLine as InstEncoding>::decode(reader)?),
+                318u16 => {
+                    Self::AtomicFlagTestAndSet(
+                        <OpAtomicFlagTestAndSet as InstEncoding>::decode(reader)?,
+                    )
+                }
+                319u16 => {
+                    Self::AtomicFlagClear(
+                        <OpAtomicFlagClear as InstEncoding>::decode(reader)?,
+                    )
+                }
+                320u16 => {
+                    Self::ImageSparseRead(
+                        <OpImageSparseRead as InstEncoding>::decode(reader)?,
+                    )
+                }
+                321u16 => Self::SizeOf(<OpSizeOf as InstEncoding>::decode(reader)?),
+                322u16 => {
+                    Self::TypePipeStorage(
+                        <OpTypePipeStorage as InstEncoding>::decode(reader)?,
+                    )
+                }
+                323u16 => {
+                    Self::ConstantPipeStorage(
+                        <OpConstantPipeStorage as InstEncoding>::decode(reader)?,
+                    )
+                }
+                324u16 => {
+                    Self::CreatePipeFromPipeStorage(
+                        <OpCreatePipeFromPipeStorage as InstEncoding>::decode(reader)?,
+                    )
+                }
+                325u16 => {
+                    Self::GetKernelLocalSizeForSubgroupCount(
+                        <OpGetKernelLocalSizeForSubgroupCount as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                326u16 => {
+                    Self::GetKernelMaxNumSubgroups(
+                        <OpGetKernelMaxNumSubgroups as InstEncoding>::decode(reader)?,
+                    )
+                }
+                327u16 => {
+                    Self::TypeNamedBarrier(
+                        <OpTypeNamedBarrier as InstEncoding>::decode(reader)?,
+                    )
+                }
+                328u16 => {
+                    Self::NamedBarrierInitialize(
+                        <OpNamedBarrierInitialize as InstEncoding>::decode(reader)?,
+                    )
+                }
+                329u16 => {
+                    Self::MemoryNamedBarrier(
+                        <OpMemoryNamedBarrier as InstEncoding>::decode(reader)?,
+                    )
+                }
+                330u16 => {
+                    Self::ModuleProcessed(
+                        <OpModuleProcessed as InstEncoding>::decode(reader)?,
+                    )
+                }
+                331u16 => {
+                    Self::ExecutionModeId(
+                        <OpExecutionModeId as InstEncoding>::decode(reader)?,
+                    )
+                }
+                332u16 => {
+                    Self::DecorateId(<OpDecorateId as InstEncoding>::decode(reader)?)
+                }
+                333u16 => {
+                    Self::GroupNonUniformElect(
+                        <OpGroupNonUniformElect as InstEncoding>::decode(reader)?,
+                    )
+                }
+                334u16 => {
+                    Self::GroupNonUniformAll(
+                        <OpGroupNonUniformAll as InstEncoding>::decode(reader)?,
+                    )
+                }
+                335u16 => {
+                    Self::GroupNonUniformAny(
+                        <OpGroupNonUniformAny as InstEncoding>::decode(reader)?,
+                    )
+                }
+                336u16 => {
+                    Self::GroupNonUniformAllEqual(
+                        <OpGroupNonUniformAllEqual as InstEncoding>::decode(reader)?,
+                    )
+                }
+                337u16 => {
+                    Self::GroupNonUniformBroadcast(
+                        <OpGroupNonUniformBroadcast as InstEncoding>::decode(reader)?,
+                    )
+                }
+                338u16 => {
+                    Self::GroupNonUniformBroadcastFirst(
+                        <OpGroupNonUniformBroadcastFirst as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                339u16 => {
+                    Self::GroupNonUniformBallot(
+                        <OpGroupNonUniformBallot as InstEncoding>::decode(reader)?,
+                    )
+                }
+                340u16 => {
+                    Self::GroupNonUniformInverseBallot(
+                        <OpGroupNonUniformInverseBallot as InstEncoding>::decode(reader)?,
+                    )
+                }
+                341u16 => {
+                    Self::GroupNonUniformBallotBitExtract(
+                        <OpGroupNonUniformBallotBitExtract as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                342u16 => {
+                    Self::GroupNonUniformBallotBitCount(
+                        <OpGroupNonUniformBallotBitCount as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                343u16 => {
+                    Self::GroupNonUniformBallotFindLSB(
+                        <OpGroupNonUniformBallotFindLSB as InstEncoding>::decode(reader)?,
+                    )
+                }
+                344u16 => {
+                    Self::GroupNonUniformBallotFindMSB(
+                        <OpGroupNonUniformBallotFindMSB as InstEncoding>::decode(reader)?,
+                    )
+                }
+                345u16 => {
+                    Self::GroupNonUniformShuffle(
+                        <OpGroupNonUniformShuffle as InstEncoding>::decode(reader)?,
+                    )
+                }
+                346u16 => {
+                    Self::GroupNonUniformShuffleXor(
+                        <OpGroupNonUniformShuffleXor as InstEncoding>::decode(reader)?,
+                    )
+                }
+                347u16 => {
+                    Self::GroupNonUniformShuffleUp(
+                        <OpGroupNonUniformShuffleUp as InstEncoding>::decode(reader)?,
+                    )
+                }
+                348u16 => {
+                    Self::GroupNonUniformShuffleDown(
+                        <OpGroupNonUniformShuffleDown as InstEncoding>::decode(reader)?,
+                    )
+                }
+                349u16 => {
+                    Self::GroupNonUniformIAdd(
+                        <OpGroupNonUniformIAdd as InstEncoding>::decode(reader)?,
+                    )
+                }
+                350u16 => {
+                    Self::GroupNonUniformFAdd(
+                        <OpGroupNonUniformFAdd as InstEncoding>::decode(reader)?,
+                    )
+                }
+                351u16 => {
+                    Self::GroupNonUniformIMul(
+                        <OpGroupNonUniformIMul as InstEncoding>::decode(reader)?,
+                    )
+                }
+                352u16 => {
+                    Self::GroupNonUniformFMul(
+                        <OpGroupNonUniformFMul as InstEncoding>::decode(reader)?,
+                    )
+                }
+                353u16 => {
+                    Self::GroupNonUniformSMin(
+                        <OpGroupNonUniformSMin as InstEncoding>::decode(reader)?,
+                    )
+                }
+                354u16 => {
+                    Self::GroupNonUniformUMin(
+                        <OpGroupNonUniformUMin as InstEncoding>::decode(reader)?,
+                    )
+                }
+                355u16 => {
+                    Self::GroupNonUniformFMin(
+                        <OpGroupNonUniformFMin as InstEncoding>::decode(reader)?,
+                    )
+                }
+                356u16 => {
+                    Self::GroupNonUniformSMax(
+                        <OpGroupNonUniformSMax as InstEncoding>::decode(reader)?,
+                    )
+                }
+                357u16 => {
+                    Self::GroupNonUniformUMax(
+                        <OpGroupNonUniformUMax as InstEncoding>::decode(reader)?,
+                    )
+                }
+                358u16 => {
+                    Self::GroupNonUniformFMax(
+                        <OpGroupNonUniformFMax as InstEncoding>::decode(reader)?,
+                    )
+                }
+                359u16 => {
+                    Self::GroupNonUniformBitwiseAnd(
+                        <OpGroupNonUniformBitwiseAnd as InstEncoding>::decode(reader)?,
+                    )
+                }
+                360u16 => {
+                    Self::GroupNonUniformBitwiseOr(
+                        <OpGroupNonUniformBitwiseOr as InstEncoding>::decode(reader)?,
+                    )
+                }
+                361u16 => {
+                    Self::GroupNonUniformBitwiseXor(
+                        <OpGroupNonUniformBitwiseXor as InstEncoding>::decode(reader)?,
+                    )
+                }
+                362u16 => {
+                    Self::GroupNonUniformLogicalAnd(
+                        <OpGroupNonUniformLogicalAnd as InstEncoding>::decode(reader)?,
+                    )
+                }
+                363u16 => {
+                    Self::GroupNonUniformLogicalOr(
+                        <OpGroupNonUniformLogicalOr as InstEncoding>::decode(reader)?,
+                    )
+                }
+                364u16 => {
+                    Self::GroupNonUniformLogicalXor(
+                        <OpGroupNonUniformLogicalXor as InstEncoding>::decode(reader)?,
+                    )
+                }
+                365u16 => {
+                    Self::GroupNonUniformQuadBroadcast(
+                        <OpGroupNonUniformQuadBroadcast as InstEncoding>::decode(reader)?,
+                    )
+                }
+                366u16 => {
+                    Self::GroupNonUniformQuadSwap(
+                        <OpGroupNonUniformQuadSwap as InstEncoding>::decode(reader)?,
+                    )
+                }
+                400u16 => {
+                    Self::CopyLogical(<OpCopyLogical as InstEncoding>::decode(reader)?)
+                }
+                401u16 => Self::PtrEqual(<OpPtrEqual as InstEncoding>::decode(reader)?),
+                402u16 => {
+                    Self::PtrNotEqual(<OpPtrNotEqual as InstEncoding>::decode(reader)?)
+                }
+                403u16 => Self::PtrDiff(<OpPtrDiff as InstEncoding>::decode(reader)?),
+                4160u16 => {
+                    Self::ColorAttachmentReadEXT(
+                        <OpColorAttachmentReadEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4161u16 => {
+                    Self::DepthAttachmentReadEXT(
+                        <OpDepthAttachmentReadEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4162u16 => {
+                    Self::StencilAttachmentReadEXT(
+                        <OpStencilAttachmentReadEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4163u16 => {
+                    Self::TypeTensorARM(
+                        <OpTypeTensorARM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4164u16 => {
+                    Self::TensorReadARM(
+                        <OpTensorReadARM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4165u16 => {
+                    Self::TensorWriteARM(
+                        <OpTensorWriteARM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4166u16 => {
+                    Self::TensorQuerySizeARM(
+                        <OpTensorQuerySizeARM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4181u16 => {
+                    Self::GraphConstantARM(
+                        <OpGraphConstantARM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4182u16 => {
+                    Self::GraphEntryPointARM(
+                        <OpGraphEntryPointARM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4183u16 => Self::GraphARM(<OpGraphARM as InstEncoding>::decode(reader)?),
+                4184u16 => {
+                    Self::GraphInputARM(
+                        <OpGraphInputARM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4185u16 => {
+                    Self::GraphSetOutputARM(
+                        <OpGraphSetOutputARM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4186u16 => {
+                    Self::GraphEndARM(<OpGraphEndARM as InstEncoding>::decode(reader)?)
+                }
+                4190u16 => {
+                    Self::TypeGraphARM(<OpTypeGraphARM as InstEncoding>::decode(reader)?)
+                }
+                4416u16 => {
+                    Self::TerminateInvocation(
+                        <OpTerminateInvocation as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4417u16 => {
+                    Self::TypeUntypedPointerKHR(
+                        <OpTypeUntypedPointerKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4418u16 => {
+                    Self::UntypedVariableKHR(
+                        <OpUntypedVariableKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4419u16 => {
+                    Self::UntypedAccessChainKHR(
+                        <OpUntypedAccessChainKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4420u16 => {
+                    Self::UntypedInBoundsAccessChainKHR(
+                        <OpUntypedInBoundsAccessChainKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                4421u16 => {
+                    Self::SubgroupBallotKHR(
+                        <OpSubgroupBallotKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4422u16 => {
+                    Self::SubgroupFirstInvocationKHR(
+                        <OpSubgroupFirstInvocationKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4423u16 => {
+                    Self::UntypedPtrAccessChainKHR(
+                        <OpUntypedPtrAccessChainKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4424u16 => {
+                    Self::UntypedInBoundsPtrAccessChainKHR(
+                        <OpUntypedInBoundsPtrAccessChainKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                4425u16 => {
+                    Self::UntypedArrayLengthKHR(
+                        <OpUntypedArrayLengthKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4426u16 => {
+                    Self::UntypedPrefetchKHR(
+                        <OpUntypedPrefetchKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4427u16 => Self::FmaKHR(<OpFmaKHR as InstEncoding>::decode(reader)?),
+                4428u16 => {
+                    Self::SubgroupAllKHR(
+                        <OpSubgroupAllKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4429u16 => {
+                    Self::SubgroupAnyKHR(
+                        <OpSubgroupAnyKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4430u16 => {
+                    Self::SubgroupAllEqualKHR(
+                        <OpSubgroupAllEqualKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4431u16 => {
+                    Self::GroupNonUniformRotateKHR(
+                        <OpGroupNonUniformRotateKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4432u16 => {
+                    Self::SubgroupReadInvocationKHR(
+                        <OpSubgroupReadInvocationKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4433u16 => {
+                    Self::ExtInstWithForwardRefsKHR(
+                        <OpExtInstWithForwardRefsKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4434u16 => {
+                    Self::UntypedGroupAsyncCopyKHR(
+                        <OpUntypedGroupAsyncCopyKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4445u16 => {
+                    Self::TraceRayKHR(<OpTraceRayKHR as InstEncoding>::decode(reader)?)
+                }
+                4446u16 => {
+                    Self::ExecuteCallableKHR(
+                        <OpExecuteCallableKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4447u16 => {
+                    Self::ConvertUToAccelerationStructureKHR(
+                        <OpConvertUToAccelerationStructureKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                4448u16 => {
+                    Self::IgnoreIntersectionKHR(
+                        <OpIgnoreIntersectionKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4449u16 => {
+                    Self::TerminateRayKHR(
+                        <OpTerminateRayKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4450u16 => Self::SDot(<OpSDot as InstEncoding>::decode(reader)?),
+                4451u16 => Self::UDot(<OpUDot as InstEncoding>::decode(reader)?),
+                4452u16 => Self::SUDot(<OpSUDot as InstEncoding>::decode(reader)?),
+                4453u16 => {
+                    Self::SDotAccSat(<OpSDotAccSat as InstEncoding>::decode(reader)?)
+                }
+                4454u16 => {
+                    Self::UDotAccSat(<OpUDotAccSat as InstEncoding>::decode(reader)?)
+                }
+                4455u16 => {
+                    Self::SUDotAccSat(<OpSUDotAccSat as InstEncoding>::decode(reader)?)
+                }
+                4456u16 => {
+                    Self::TypeCooperativeMatrixKHR(
+                        <OpTypeCooperativeMatrixKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4457u16 => {
+                    Self::CooperativeMatrixLoadKHR(
+                        <OpCooperativeMatrixLoadKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4458u16 => {
+                    Self::CooperativeMatrixStoreKHR(
+                        <OpCooperativeMatrixStoreKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4459u16 => {
+                    Self::CooperativeMatrixMulAddKHR(
+                        <OpCooperativeMatrixMulAddKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4460u16 => {
+                    Self::CooperativeMatrixLengthKHR(
+                        <OpCooperativeMatrixLengthKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4461u16 => {
+                    Self::ConstantCompositeReplicateEXT(
+                        <OpConstantCompositeReplicateEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                4462u16 => {
+                    Self::SpecConstantCompositeReplicateEXT(
+                        <OpSpecConstantCompositeReplicateEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                4463u16 => {
+                    Self::CompositeConstructReplicateEXT(
+                        <OpCompositeConstructReplicateEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                4472u16 => {
+                    Self::TypeRayQueryKHR(
+                        <OpTypeRayQueryKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4473u16 => {
+                    Self::RayQueryInitializeKHR(
+                        <OpRayQueryInitializeKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4474u16 => {
+                    Self::RayQueryTerminateKHR(
+                        <OpRayQueryTerminateKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4475u16 => {
+                    Self::RayQueryGenerateIntersectionKHR(
+                        <OpRayQueryGenerateIntersectionKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                4476u16 => {
+                    Self::RayQueryConfirmIntersectionKHR(
+                        <OpRayQueryConfirmIntersectionKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                4477u16 => {
+                    Self::RayQueryProceedKHR(
+                        <OpRayQueryProceedKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4479u16 => {
+                    Self::RayQueryGetIntersectionTypeKHR(
+                        <OpRayQueryGetIntersectionTypeKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                4480u16 => {
+                    Self::ImageSampleWeightedQCOM(
+                        <OpImageSampleWeightedQCOM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4481u16 => {
+                    Self::ImageBoxFilterQCOM(
+                        <OpImageBoxFilterQCOM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4482u16 => {
+                    Self::ImageBlockMatchSSDQCOM(
+                        <OpImageBlockMatchSSDQCOM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4483u16 => {
+                    Self::ImageBlockMatchSADQCOM(
+                        <OpImageBlockMatchSADQCOM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4497u16 => {
+                    Self::BitCastArrayQCOM(
+                        <OpBitCastArrayQCOM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4500u16 => {
+                    Self::ImageBlockMatchWindowSSDQCOM(
+                        <OpImageBlockMatchWindowSSDQCOM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4501u16 => {
+                    Self::ImageBlockMatchWindowSADQCOM(
+                        <OpImageBlockMatchWindowSADQCOM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4502u16 => {
+                    Self::ImageBlockMatchGatherSSDQCOM(
+                        <OpImageBlockMatchGatherSSDQCOM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4503u16 => {
+                    Self::ImageBlockMatchGatherSADQCOM(
+                        <OpImageBlockMatchGatherSADQCOM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4540u16 => {
+                    Self::CompositeConstructCoopMatQCOM(
+                        <OpCompositeConstructCoopMatQCOM as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                4541u16 => {
+                    Self::CompositeExtractCoopMatQCOM(
+                        <OpCompositeExtractCoopMatQCOM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                4542u16 => {
+                    Self::ExtractSubArrayQCOM(
+                        <OpExtractSubArrayQCOM as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5000u16 => {
+                    Self::GroupIAddNonUniformAMD(
+                        <OpGroupIAddNonUniformAMD as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5001u16 => {
+                    Self::GroupFAddNonUniformAMD(
+                        <OpGroupFAddNonUniformAMD as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5002u16 => {
+                    Self::GroupFMinNonUniformAMD(
+                        <OpGroupFMinNonUniformAMD as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5003u16 => {
+                    Self::GroupUMinNonUniformAMD(
+                        <OpGroupUMinNonUniformAMD as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5004u16 => {
+                    Self::GroupSMinNonUniformAMD(
+                        <OpGroupSMinNonUniformAMD as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5005u16 => {
+                    Self::GroupFMaxNonUniformAMD(
+                        <OpGroupFMaxNonUniformAMD as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5006u16 => {
+                    Self::GroupUMaxNonUniformAMD(
+                        <OpGroupUMaxNonUniformAMD as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5007u16 => {
+                    Self::GroupSMaxNonUniformAMD(
+                        <OpGroupSMaxNonUniformAMD as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5011u16 => {
+                    Self::FragmentMaskFetchAMD(
+                        <OpFragmentMaskFetchAMD as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5012u16 => {
+                    Self::FragmentFetchAMD(
+                        <OpFragmentFetchAMD as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5056u16 => {
+                    Self::ReadClockKHR(<OpReadClockKHR as InstEncoding>::decode(reader)?)
+                }
+                5074u16 => {
+                    Self::AllocateNodePayloadsAMDX(
+                        <OpAllocateNodePayloadsAMDX as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5075u16 => {
+                    Self::EnqueueNodePayloadsAMDX(
+                        <OpEnqueueNodePayloadsAMDX as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5076u16 => {
+                    Self::TypeNodePayloadArrayAMDX(
+                        <OpTypeNodePayloadArrayAMDX as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5078u16 => {
+                    Self::FinishWritingNodePayloadAMDX(
+                        <OpFinishWritingNodePayloadAMDX as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5090u16 => {
+                    Self::NodePayloadArrayLengthAMDX(
+                        <OpNodePayloadArrayLengthAMDX as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5101u16 => {
+                    Self::IsNodePayloadValidAMDX(
+                        <OpIsNodePayloadValidAMDX as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5103u16 => {
+                    Self::ConstantStringAMDX(
+                        <OpConstantStringAMDX as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5104u16 => {
+                    Self::SpecConstantStringAMDX(
+                        <OpSpecConstantStringAMDX as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5110u16 => {
+                    Self::GroupNonUniformQuadAllKHR(
+                        <OpGroupNonUniformQuadAllKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5111u16 => {
+                    Self::GroupNonUniformQuadAnyKHR(
+                        <OpGroupNonUniformQuadAnyKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5115u16 => {
+                    Self::TypeBufferEXT(
+                        <OpTypeBufferEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5119u16 => {
+                    Self::BufferPointerEXT(
+                        <OpBufferPointerEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5126u16 => {
+                    Self::UntypedImageTexelPointerEXT(
+                        <OpUntypedImageTexelPointerEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5127u16 => {
+                    Self::MemberDecorateIdEXT(
+                        <OpMemberDecorateIdEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5129u16 => {
+                    Self::ConstantSizeOfEXT(
+                        <OpConstantSizeOfEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5249u16 => {
+                    Self::HitObjectRecordHitMotionNV(
+                        <OpHitObjectRecordHitMotionNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5250u16 => {
+                    Self::HitObjectRecordHitWithIndexMotionNV(
+                        <OpHitObjectRecordHitWithIndexMotionNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5251u16 => {
+                    Self::HitObjectRecordMissMotionNV(
+                        <OpHitObjectRecordMissMotionNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5252u16 => {
+                    Self::HitObjectGetWorldToObjectNV(
+                        <OpHitObjectGetWorldToObjectNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5253u16 => {
+                    Self::HitObjectGetObjectToWorldNV(
+                        <OpHitObjectGetObjectToWorldNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5254u16 => {
+                    Self::HitObjectGetObjectRayDirectionNV(
+                        <OpHitObjectGetObjectRayDirectionNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5255u16 => {
+                    Self::HitObjectGetObjectRayOriginNV(
+                        <OpHitObjectGetObjectRayOriginNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5256u16 => {
+                    Self::HitObjectTraceRayMotionNV(
+                        <OpHitObjectTraceRayMotionNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5257u16 => {
+                    Self::HitObjectGetShaderRecordBufferHandleNV(
+                        <OpHitObjectGetShaderRecordBufferHandleNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5258u16 => {
+                    Self::HitObjectGetShaderBindingTableRecordIndexNV(
+                        <OpHitObjectGetShaderBindingTableRecordIndexNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5259u16 => {
+                    Self::HitObjectRecordEmptyNV(
+                        <OpHitObjectRecordEmptyNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5260u16 => {
+                    Self::HitObjectTraceRayNV(
+                        <OpHitObjectTraceRayNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5261u16 => {
+                    Self::HitObjectRecordHitNV(
+                        <OpHitObjectRecordHitNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5262u16 => {
+                    Self::HitObjectRecordHitWithIndexNV(
+                        <OpHitObjectRecordHitWithIndexNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5263u16 => {
+                    Self::HitObjectRecordMissNV(
+                        <OpHitObjectRecordMissNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5264u16 => {
+                    Self::HitObjectExecuteShaderNV(
+                        <OpHitObjectExecuteShaderNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5265u16 => {
+                    Self::HitObjectGetCurrentTimeNV(
+                        <OpHitObjectGetCurrentTimeNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5266u16 => {
+                    Self::HitObjectGetAttributesNV(
+                        <OpHitObjectGetAttributesNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5267u16 => {
+                    Self::HitObjectGetHitKindNV(
+                        <OpHitObjectGetHitKindNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5268u16 => {
+                    Self::HitObjectGetPrimitiveIndexNV(
+                        <OpHitObjectGetPrimitiveIndexNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5269u16 => {
+                    Self::HitObjectGetGeometryIndexNV(
+                        <OpHitObjectGetGeometryIndexNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5270u16 => {
+                    Self::HitObjectGetInstanceIdNV(
+                        <OpHitObjectGetInstanceIdNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5271u16 => {
+                    Self::HitObjectGetInstanceCustomIndexNV(
+                        <OpHitObjectGetInstanceCustomIndexNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5272u16 => {
+                    Self::HitObjectGetWorldRayDirectionNV(
+                        <OpHitObjectGetWorldRayDirectionNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5273u16 => {
+                    Self::HitObjectGetWorldRayOriginNV(
+                        <OpHitObjectGetWorldRayOriginNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5274u16 => {
+                    Self::HitObjectGetRayTMaxNV(
+                        <OpHitObjectGetRayTMaxNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5275u16 => {
+                    Self::HitObjectGetRayTMinNV(
+                        <OpHitObjectGetRayTMinNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5276u16 => {
+                    Self::HitObjectIsEmptyNV(
+                        <OpHitObjectIsEmptyNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5277u16 => {
+                    Self::HitObjectIsHitNV(
+                        <OpHitObjectIsHitNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5278u16 => {
+                    Self::HitObjectIsMissNV(
+                        <OpHitObjectIsMissNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5279u16 => {
+                    Self::ReorderThreadWithHitObjectNV(
+                        <OpReorderThreadWithHitObjectNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5280u16 => {
+                    Self::ReorderThreadWithHintNV(
+                        <OpReorderThreadWithHintNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5281u16 => {
+                    Self::TypeHitObjectNV(
+                        <OpTypeHitObjectNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5283u16 => {
+                    Self::ImageSampleFootprintNV(
+                        <OpImageSampleFootprintNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5288u16 => {
+                    Self::TypeVectorIdEXT(
+                        <OpTypeVectorIdEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5289u16 => {
+                    Self::CooperativeVectorMatrixMulNV(
+                        <OpCooperativeVectorMatrixMulNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5290u16 => {
+                    Self::CooperativeVectorOuterProductAccumulateNV(
+                        <OpCooperativeVectorOuterProductAccumulateNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5291u16 => {
+                    Self::CooperativeVectorReduceSumAccumulateNV(
+                        <OpCooperativeVectorReduceSumAccumulateNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5292u16 => {
+                    Self::CooperativeVectorMatrixMulAddNV(
+                        <OpCooperativeVectorMatrixMulAddNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5293u16 => {
+                    Self::CooperativeMatrixConvertNV(
+                        <OpCooperativeMatrixConvertNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5294u16 => {
+                    Self::EmitMeshTasksEXT(
+                        <OpEmitMeshTasksEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5295u16 => {
+                    Self::SetMeshOutputsEXT(
+                        <OpSetMeshOutputsEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5296u16 => {
+                    Self::GroupNonUniformPartitionEXT(
+                        <OpGroupNonUniformPartitionEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5299u16 => {
+                    Self::WritePackedPrimitiveIndices4x8NV(
+                        <OpWritePackedPrimitiveIndices4x8NV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5300u16 => {
+                    Self::FetchMicroTriangleVertexPositionNV(
+                        <OpFetchMicroTriangleVertexPositionNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5301u16 => {
+                    Self::FetchMicroTriangleVertexBarycentricNV(
+                        <OpFetchMicroTriangleVertexBarycentricNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5302u16 => {
+                    Self::CooperativeVectorLoadNV(
+                        <OpCooperativeVectorLoadNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5303u16 => {
+                    Self::CooperativeVectorStoreNV(
+                        <OpCooperativeVectorStoreNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5304u16 => {
+                    Self::HitObjectRecordFromQueryEXT(
+                        <OpHitObjectRecordFromQueryEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5305u16 => {
+                    Self::HitObjectRecordMissEXT(
+                        <OpHitObjectRecordMissEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5306u16 => {
+                    Self::HitObjectRecordMissMotionEXT(
+                        <OpHitObjectRecordMissMotionEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5307u16 => {
+                    Self::HitObjectGetIntersectionTriangleVertexPositionsEXT(
+                        <OpHitObjectGetIntersectionTriangleVertexPositionsEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5308u16 => {
+                    Self::HitObjectGetRayFlagsEXT(
+                        <OpHitObjectGetRayFlagsEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5309u16 => {
+                    Self::HitObjectSetShaderBindingTableRecordIndexEXT(
+                        <OpHitObjectSetShaderBindingTableRecordIndexEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5310u16 => {
+                    Self::HitObjectReorderExecuteShaderEXT(
+                        <OpHitObjectReorderExecuteShaderEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5311u16 => {
+                    Self::HitObjectTraceReorderExecuteEXT(
+                        <OpHitObjectTraceReorderExecuteEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5312u16 => {
+                    Self::HitObjectTraceMotionReorderExecuteEXT(
+                        <OpHitObjectTraceMotionReorderExecuteEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5313u16 => {
+                    Self::TypeHitObjectEXT(
+                        <OpTypeHitObjectEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5314u16 => {
+                    Self::ReorderThreadWithHintEXT(
+                        <OpReorderThreadWithHintEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5315u16 => {
+                    Self::ReorderThreadWithHitObjectEXT(
+                        <OpReorderThreadWithHitObjectEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5316u16 => {
+                    Self::HitObjectTraceRayEXT(
+                        <OpHitObjectTraceRayEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5317u16 => {
+                    Self::HitObjectTraceRayMotionEXT(
+                        <OpHitObjectTraceRayMotionEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5318u16 => {
+                    Self::HitObjectRecordEmptyEXT(
+                        <OpHitObjectRecordEmptyEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5319u16 => {
+                    Self::HitObjectExecuteShaderEXT(
+                        <OpHitObjectExecuteShaderEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5320u16 => {
+                    Self::HitObjectGetCurrentTimeEXT(
+                        <OpHitObjectGetCurrentTimeEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5321u16 => {
+                    Self::HitObjectGetAttributesEXT(
+                        <OpHitObjectGetAttributesEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5322u16 => {
+                    Self::HitObjectGetHitKindEXT(
+                        <OpHitObjectGetHitKindEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5323u16 => {
+                    Self::HitObjectGetPrimitiveIndexEXT(
+                        <OpHitObjectGetPrimitiveIndexEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5324u16 => {
+                    Self::HitObjectGetGeometryIndexEXT(
+                        <OpHitObjectGetGeometryIndexEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5325u16 => {
+                    Self::HitObjectGetInstanceIdEXT(
+                        <OpHitObjectGetInstanceIdEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5326u16 => {
+                    Self::HitObjectGetInstanceCustomIndexEXT(
+                        <OpHitObjectGetInstanceCustomIndexEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5327u16 => {
+                    Self::HitObjectGetObjectRayOriginEXT(
+                        <OpHitObjectGetObjectRayOriginEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5328u16 => {
+                    Self::HitObjectGetObjectRayDirectionEXT(
+                        <OpHitObjectGetObjectRayDirectionEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5329u16 => {
+                    Self::HitObjectGetWorldRayDirectionEXT(
+                        <OpHitObjectGetWorldRayDirectionEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5330u16 => {
+                    Self::HitObjectGetWorldRayOriginEXT(
+                        <OpHitObjectGetWorldRayOriginEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5331u16 => {
+                    Self::HitObjectGetObjectToWorldEXT(
+                        <OpHitObjectGetObjectToWorldEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5332u16 => {
+                    Self::HitObjectGetWorldToObjectEXT(
+                        <OpHitObjectGetWorldToObjectEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5333u16 => {
+                    Self::HitObjectGetRayTMaxEXT(
+                        <OpHitObjectGetRayTMaxEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5334u16 => {
+                    Self::ReportIntersectionKHR(
+                        <OpReportIntersectionKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5335u16 => {
+                    Self::IgnoreIntersectionNV(
+                        <OpIgnoreIntersectionNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5336u16 => {
+                    Self::TerminateRayNV(
+                        <OpTerminateRayNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5337u16 => Self::TraceNV(<OpTraceNV as InstEncoding>::decode(reader)?),
+                5338u16 => {
+                    Self::TraceMotionNV(
+                        <OpTraceMotionNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5339u16 => {
+                    Self::TraceRayMotionNV(
+                        <OpTraceRayMotionNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5340u16 => {
+                    Self::RayQueryGetIntersectionTriangleVertexPositionsKHR(
+                        <OpRayQueryGetIntersectionTriangleVertexPositionsKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5341u16 => {
+                    Self::TypeAccelerationStructureKHR(
+                        <OpTypeAccelerationStructureKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5344u16 => {
+                    Self::ExecuteCallableNV(
+                        <OpExecuteCallableNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5345u16 => {
+                    Self::RayQueryGetIntersectionClusterIdNV(
+                        <OpRayQueryGetIntersectionClusterIdNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5346u16 => {
+                    Self::HitObjectGetClusterIdNV(
+                        <OpHitObjectGetClusterIdNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5347u16 => {
+                    Self::HitObjectGetRayTMinEXT(
+                        <OpHitObjectGetRayTMinEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5348u16 => {
+                    Self::HitObjectGetShaderBindingTableRecordIndexEXT(
+                        <OpHitObjectGetShaderBindingTableRecordIndexEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5349u16 => {
+                    Self::HitObjectGetShaderRecordBufferHandleEXT(
+                        <OpHitObjectGetShaderRecordBufferHandleEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5350u16 => {
+                    Self::HitObjectIsEmptyEXT(
+                        <OpHitObjectIsEmptyEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5351u16 => {
+                    Self::HitObjectIsHitEXT(
+                        <OpHitObjectIsHitEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5352u16 => {
+                    Self::HitObjectIsMissEXT(
+                        <OpHitObjectIsMissEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5358u16 => {
+                    Self::TypeCooperativeMatrixNV(
+                        <OpTypeCooperativeMatrixNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5359u16 => {
+                    Self::CooperativeMatrixLoadNV(
+                        <OpCooperativeMatrixLoadNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5360u16 => {
+                    Self::CooperativeMatrixStoreNV(
+                        <OpCooperativeMatrixStoreNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5361u16 => {
+                    Self::CooperativeMatrixMulAddNV(
+                        <OpCooperativeMatrixMulAddNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5362u16 => {
+                    Self::CooperativeMatrixLengthNV(
+                        <OpCooperativeMatrixLengthNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5364u16 => {
+                    Self::BeginInvocationInterlockEXT(
+                        <OpBeginInvocationInterlockEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5365u16 => {
+                    Self::EndInvocationInterlockEXT(
+                        <OpEndInvocationInterlockEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5366u16 => {
+                    Self::CooperativeMatrixReduceNV(
+                        <OpCooperativeMatrixReduceNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5367u16 => {
+                    Self::CooperativeMatrixLoadTensorNV(
+                        <OpCooperativeMatrixLoadTensorNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5368u16 => {
+                    Self::CooperativeMatrixStoreTensorNV(
+                        <OpCooperativeMatrixStoreTensorNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5369u16 => {
+                    Self::CooperativeMatrixPerElementOpNV(
+                        <OpCooperativeMatrixPerElementOpNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5370u16 => {
+                    Self::TypeTensorLayoutNV(
+                        <OpTypeTensorLayoutNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5371u16 => {
+                    Self::TypeTensorViewNV(
+                        <OpTypeTensorViewNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5372u16 => {
+                    Self::CreateTensorLayoutNV(
+                        <OpCreateTensorLayoutNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5373u16 => {
+                    Self::TensorLayoutSetDimensionNV(
+                        <OpTensorLayoutSetDimensionNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5374u16 => {
+                    Self::TensorLayoutSetStrideNV(
+                        <OpTensorLayoutSetStrideNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5375u16 => {
+                    Self::TensorLayoutSliceNV(
+                        <OpTensorLayoutSliceNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5376u16 => {
+                    Self::TensorLayoutSetClampValueNV(
+                        <OpTensorLayoutSetClampValueNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5377u16 => {
+                    Self::CreateTensorViewNV(
+                        <OpCreateTensorViewNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5378u16 => {
+                    Self::TensorViewSetDimensionNV(
+                        <OpTensorViewSetDimensionNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5379u16 => {
+                    Self::TensorViewSetStrideNV(
+                        <OpTensorViewSetStrideNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5380u16 => {
+                    Self::DemoteToHelperInvocation(
+                        <OpDemoteToHelperInvocation as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5381u16 => {
+                    Self::IsHelperInvocationEXT(
+                        <OpIsHelperInvocationEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5382u16 => {
+                    Self::TensorViewSetClipNV(
+                        <OpTensorViewSetClipNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5384u16 => {
+                    Self::TensorLayoutSetBlockSizeNV(
+                        <OpTensorLayoutSetBlockSizeNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5390u16 => {
+                    Self::CooperativeMatrixTransposeNV(
+                        <OpCooperativeMatrixTransposeNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5391u16 => {
+                    Self::ConvertUToImageNV(
+                        <OpConvertUToImageNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5392u16 => {
+                    Self::ConvertUToSamplerNV(
+                        <OpConvertUToSamplerNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5393u16 => {
+                    Self::ConvertImageToUNV(
+                        <OpConvertImageToUNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5394u16 => {
+                    Self::ConvertSamplerToUNV(
+                        <OpConvertSamplerToUNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5395u16 => {
+                    Self::ConvertUToSampledImageNV(
+                        <OpConvertUToSampledImageNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5396u16 => {
+                    Self::ConvertSampledImageToUNV(
+                        <OpConvertSampledImageToUNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5397u16 => {
+                    Self::SamplerImageAddressingModeNV(
+                        <OpSamplerImageAddressingModeNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5398u16 => {
+                    Self::RawAccessChainNV(
+                        <OpRawAccessChainNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5427u16 => {
+                    Self::RayQueryGetIntersectionSpherePositionNV(
+                        <OpRayQueryGetIntersectionSpherePositionNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5428u16 => {
+                    Self::RayQueryGetIntersectionSphereRadiusNV(
+                        <OpRayQueryGetIntersectionSphereRadiusNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5429u16 => {
+                    Self::RayQueryGetIntersectionLSSPositionsNV(
+                        <OpRayQueryGetIntersectionLSSPositionsNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5430u16 => {
+                    Self::RayQueryGetIntersectionLSSRadiiNV(
+                        <OpRayQueryGetIntersectionLSSRadiiNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5431u16 => {
+                    Self::RayQueryGetIntersectionLSSHitValueNV(
+                        <OpRayQueryGetIntersectionLSSHitValueNV as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5432u16 => {
+                    Self::HitObjectGetSpherePositionNV(
+                        <OpHitObjectGetSpherePositionNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5433u16 => {
+                    Self::HitObjectGetSphereRadiusNV(
+                        <OpHitObjectGetSphereRadiusNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5434u16 => {
+                    Self::HitObjectGetLSSPositionsNV(
+                        <OpHitObjectGetLSSPositionsNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5435u16 => {
+                    Self::HitObjectGetLSSRadiiNV(
+                        <OpHitObjectGetLSSRadiiNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5436u16 => {
+                    Self::HitObjectIsSphereHitNV(
+                        <OpHitObjectIsSphereHitNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5437u16 => {
+                    Self::HitObjectIsLSSHitNV(
+                        <OpHitObjectIsLSSHitNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5438u16 => {
+                    Self::RayQueryIsSphereHitNV(
+                        <OpRayQueryIsSphereHitNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5439u16 => {
+                    Self::RayQueryIsLSSHitNV(
+                        <OpRayQueryIsLSSHitNV as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5571u16 => {
+                    Self::SubgroupShuffleINTEL(
+                        <OpSubgroupShuffleINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5572u16 => {
+                    Self::SubgroupShuffleDownINTEL(
+                        <OpSubgroupShuffleDownINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5573u16 => {
+                    Self::SubgroupShuffleUpINTEL(
+                        <OpSubgroupShuffleUpINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5574u16 => {
+                    Self::SubgroupShuffleXorINTEL(
+                        <OpSubgroupShuffleXorINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5575u16 => {
+                    Self::SubgroupBlockReadINTEL(
+                        <OpSubgroupBlockReadINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5576u16 => {
+                    Self::SubgroupBlockWriteINTEL(
+                        <OpSubgroupBlockWriteINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5577u16 => {
+                    Self::SubgroupImageBlockReadINTEL(
+                        <OpSubgroupImageBlockReadINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5578u16 => {
+                    Self::SubgroupImageBlockWriteINTEL(
+                        <OpSubgroupImageBlockWriteINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5580u16 => {
+                    Self::SubgroupImageMediaBlockReadINTEL(
+                        <OpSubgroupImageMediaBlockReadINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5581u16 => {
+                    Self::SubgroupImageMediaBlockWriteINTEL(
+                        <OpSubgroupImageMediaBlockWriteINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5585u16 => {
+                    Self::UCountLeadingZerosINTEL(
+                        <OpUCountLeadingZerosINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5586u16 => {
+                    Self::UCountTrailingZerosINTEL(
+                        <OpUCountTrailingZerosINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5587u16 => {
+                    Self::AbsISubINTEL(<OpAbsISubINTEL as InstEncoding>::decode(reader)?)
+                }
+                5588u16 => {
+                    Self::AbsUSubINTEL(<OpAbsUSubINTEL as InstEncoding>::decode(reader)?)
+                }
+                5589u16 => {
+                    Self::IAddSatINTEL(<OpIAddSatINTEL as InstEncoding>::decode(reader)?)
+                }
+                5590u16 => {
+                    Self::UAddSatINTEL(<OpUAddSatINTEL as InstEncoding>::decode(reader)?)
+                }
+                5591u16 => {
+                    Self::IAverageINTEL(
+                        <OpIAverageINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5592u16 => {
+                    Self::UAverageINTEL(
+                        <OpUAverageINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5593u16 => {
+                    Self::IAverageRoundedINTEL(
+                        <OpIAverageRoundedINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5594u16 => {
+                    Self::UAverageRoundedINTEL(
+                        <OpUAverageRoundedINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5595u16 => {
+                    Self::ISubSatINTEL(<OpISubSatINTEL as InstEncoding>::decode(reader)?)
+                }
+                5596u16 => {
+                    Self::USubSatINTEL(<OpUSubSatINTEL as InstEncoding>::decode(reader)?)
+                }
+                5597u16 => {
+                    Self::IMul32x16INTEL(
+                        <OpIMul32x16INTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5598u16 => {
+                    Self::UMul32x16INTEL(
+                        <OpUMul32x16INTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5600u16 => {
+                    Self::ConstantFunctionPointerINTEL(
+                        <OpConstantFunctionPointerINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5601u16 => {
+                    Self::FunctionPointerCallINTEL(
+                        <OpFunctionPointerCallINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5609u16 => {
+                    Self::AsmTargetINTEL(
+                        <OpAsmTargetINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5610u16 => Self::AsmINTEL(<OpAsmINTEL as InstEncoding>::decode(reader)?),
+                5611u16 => {
+                    Self::AsmCallINTEL(<OpAsmCallINTEL as InstEncoding>::decode(reader)?)
+                }
+                5614u16 => {
+                    Self::AtomicFMinEXT(
+                        <OpAtomicFMinEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5615u16 => {
+                    Self::AtomicFMaxEXT(
+                        <OpAtomicFMaxEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5630u16 => {
+                    Self::AssumeTrueKHR(
+                        <OpAssumeTrueKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5631u16 => {
+                    Self::ExpectKHR(<OpExpectKHR as InstEncoding>::decode(reader)?)
+                }
+                5632u16 => {
+                    Self::DecorateString(
+                        <OpDecorateString as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5633u16 => {
+                    Self::MemberDecorateString(
+                        <OpMemberDecorateString as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5699u16 => {
+                    Self::VmeImageINTEL(
+                        <OpVmeImageINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5700u16 => {
+                    Self::TypeVmeImageINTEL(
+                        <OpTypeVmeImageINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5701u16 => {
+                    Self::TypeAvcImePayloadINTEL(
+                        <OpTypeAvcImePayloadINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5702u16 => {
+                    Self::TypeAvcRefPayloadINTEL(
+                        <OpTypeAvcRefPayloadINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5703u16 => {
+                    Self::TypeAvcSicPayloadINTEL(
+                        <OpTypeAvcSicPayloadINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5704u16 => {
+                    Self::TypeAvcMcePayloadINTEL(
+                        <OpTypeAvcMcePayloadINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5705u16 => {
+                    Self::TypeAvcMceResultINTEL(
+                        <OpTypeAvcMceResultINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5706u16 => {
+                    Self::TypeAvcImeResultINTEL(
+                        <OpTypeAvcImeResultINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5707u16 => {
+                    Self::TypeAvcImeResultSingleReferenceStreamoutINTEL(
+                        <OpTypeAvcImeResultSingleReferenceStreamoutINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5708u16 => {
+                    Self::TypeAvcImeResultDualReferenceStreamoutINTEL(
+                        <OpTypeAvcImeResultDualReferenceStreamoutINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5709u16 => {
+                    Self::TypeAvcImeSingleReferenceStreaminINTEL(
+                        <OpTypeAvcImeSingleReferenceStreaminINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5710u16 => {
+                    Self::TypeAvcImeDualReferenceStreaminINTEL(
+                        <OpTypeAvcImeDualReferenceStreaminINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5711u16 => {
+                    Self::TypeAvcRefResultINTEL(
+                        <OpTypeAvcRefResultINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5712u16 => {
+                    Self::TypeAvcSicResultINTEL(
+                        <OpTypeAvcSicResultINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5713u16 => {
+                    Self::SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(
+                        <OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5714u16 => {
+                    Self::SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(
+                        <OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5715u16 => {
+                    Self::SubgroupAvcMceGetDefaultInterShapePenaltyINTEL(
+                        <OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5716u16 => {
+                    Self::SubgroupAvcMceSetInterShapePenaltyINTEL(
+                        <OpSubgroupAvcMceSetInterShapePenaltyINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5717u16 => {
+                    Self::SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(
+                        <OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5718u16 => {
+                    Self::SubgroupAvcMceSetInterDirectionPenaltyINTEL(
+                        <OpSubgroupAvcMceSetInterDirectionPenaltyINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5719u16 => {
+                    Self::SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(
+                        <OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5720u16 => {
+                    Self::SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(
+                        <OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5721u16 => {
+                    Self::SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(
+                        <OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5722u16 => {
+                    Self::SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(
+                        <OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5723u16 => {
+                    Self::SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(
+                        <OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5724u16 => {
+                    Self::SubgroupAvcMceSetMotionVectorCostFunctionINTEL(
+                        <OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5725u16 => {
+                    Self::SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(
+                        <OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5726u16 => {
+                    Self::SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(
+                        <OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5727u16 => {
+                    Self::SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(
+                        <OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5728u16 => {
+                    Self::SubgroupAvcMceSetAcOnlyHaarINTEL(
+                        <OpSubgroupAvcMceSetAcOnlyHaarINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5729u16 => {
+                    Self::SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL(
+                        <OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5730u16 => {
+                    Self::SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(
+                        <OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5731u16 => {
+                    Self::SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(
+                        <OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5732u16 => {
+                    Self::SubgroupAvcMceConvertToImePayloadINTEL(
+                        <OpSubgroupAvcMceConvertToImePayloadINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5733u16 => {
+                    Self::SubgroupAvcMceConvertToImeResultINTEL(
+                        <OpSubgroupAvcMceConvertToImeResultINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5734u16 => {
+                    Self::SubgroupAvcMceConvertToRefPayloadINTEL(
+                        <OpSubgroupAvcMceConvertToRefPayloadINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5735u16 => {
+                    Self::SubgroupAvcMceConvertToRefResultINTEL(
+                        <OpSubgroupAvcMceConvertToRefResultINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5736u16 => {
+                    Self::SubgroupAvcMceConvertToSicPayloadINTEL(
+                        <OpSubgroupAvcMceConvertToSicPayloadINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5737u16 => {
+                    Self::SubgroupAvcMceConvertToSicResultINTEL(
+                        <OpSubgroupAvcMceConvertToSicResultINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5738u16 => {
+                    Self::SubgroupAvcMceGetMotionVectorsINTEL(
+                        <OpSubgroupAvcMceGetMotionVectorsINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5739u16 => {
+                    Self::SubgroupAvcMceGetInterDistortionsINTEL(
+                        <OpSubgroupAvcMceGetInterDistortionsINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5740u16 => {
+                    Self::SubgroupAvcMceGetBestInterDistortionsINTEL(
+                        <OpSubgroupAvcMceGetBestInterDistortionsINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5741u16 => {
+                    Self::SubgroupAvcMceGetInterMajorShapeINTEL(
+                        <OpSubgroupAvcMceGetInterMajorShapeINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5742u16 => {
+                    Self::SubgroupAvcMceGetInterMinorShapeINTEL(
+                        <OpSubgroupAvcMceGetInterMinorShapeINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5743u16 => {
+                    Self::SubgroupAvcMceGetInterDirectionsINTEL(
+                        <OpSubgroupAvcMceGetInterDirectionsINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5744u16 => {
+                    Self::SubgroupAvcMceGetInterMotionVectorCountINTEL(
+                        <OpSubgroupAvcMceGetInterMotionVectorCountINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5745u16 => {
+                    Self::SubgroupAvcMceGetInterReferenceIdsINTEL(
+                        <OpSubgroupAvcMceGetInterReferenceIdsINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5746u16 => {
+                    Self::SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL(
+                        <OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5747u16 => {
+                    Self::SubgroupAvcImeInitializeINTEL(
+                        <OpSubgroupAvcImeInitializeINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5748u16 => {
+                    Self::SubgroupAvcImeSetSingleReferenceINTEL(
+                        <OpSubgroupAvcImeSetSingleReferenceINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5749u16 => {
+                    Self::SubgroupAvcImeSetDualReferenceINTEL(
+                        <OpSubgroupAvcImeSetDualReferenceINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5750u16 => {
+                    Self::SubgroupAvcImeRefWindowSizeINTEL(
+                        <OpSubgroupAvcImeRefWindowSizeINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5751u16 => {
+                    Self::SubgroupAvcImeAdjustRefOffsetINTEL(
+                        <OpSubgroupAvcImeAdjustRefOffsetINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5752u16 => {
+                    Self::SubgroupAvcImeConvertToMcePayloadINTEL(
+                        <OpSubgroupAvcImeConvertToMcePayloadINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5753u16 => {
+                    Self::SubgroupAvcImeSetMaxMotionVectorCountINTEL(
+                        <OpSubgroupAvcImeSetMaxMotionVectorCountINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5754u16 => {
+                    Self::SubgroupAvcImeSetUnidirectionalMixDisableINTEL(
+                        <OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5755u16 => {
+                    Self::SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(
+                        <OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5756u16 => {
+                    Self::SubgroupAvcImeSetWeightedSadINTEL(
+                        <OpSubgroupAvcImeSetWeightedSadINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5757u16 => {
+                    Self::SubgroupAvcImeEvaluateWithSingleReferenceINTEL(
+                        <OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5758u16 => {
+                    Self::SubgroupAvcImeEvaluateWithDualReferenceINTEL(
+                        <OpSubgroupAvcImeEvaluateWithDualReferenceINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5759u16 => {
+                    Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(
+                        <OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5760u16 => {
+                    Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(
+                        <OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5761u16 => {
+                    Self::SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(
+                        <OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5762u16 => {
+                    Self::SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(
+                        <OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5763u16 => {
+                    Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(
+                        <OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5764u16 => {
+                    Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(
+                        <OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5765u16 => {
+                    Self::SubgroupAvcImeConvertToMceResultINTEL(
+                        <OpSubgroupAvcImeConvertToMceResultINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5766u16 => {
+                    Self::SubgroupAvcImeGetSingleReferenceStreaminINTEL(
+                        <OpSubgroupAvcImeGetSingleReferenceStreaminINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5767u16 => {
+                    Self::SubgroupAvcImeGetDualReferenceStreaminINTEL(
+                        <OpSubgroupAvcImeGetDualReferenceStreaminINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5768u16 => {
+                    Self::SubgroupAvcImeStripSingleReferenceStreamoutINTEL(
+                        <OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5769u16 => {
+                    Self::SubgroupAvcImeStripDualReferenceStreamoutINTEL(
+                        <OpSubgroupAvcImeStripDualReferenceStreamoutINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5770u16 => {
+                    Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL(
+                        <OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5771u16 => {
+                    Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL(
+                        <OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5772u16 => {
+                    Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL(
+                        <OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5773u16 => {
+                    Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL(
+                        <OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5774u16 => {
+                    Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(
+                        <OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5775u16 => {
+                    Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(
+                        <OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5776u16 => {
+                    Self::SubgroupAvcImeGetBorderReachedINTEL(
+                        <OpSubgroupAvcImeGetBorderReachedINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5777u16 => {
+                    Self::SubgroupAvcImeGetTruncatedSearchIndicationINTEL(
+                        <OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5778u16 => {
+                    Self::SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(
+                        <OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5779u16 => {
+                    Self::SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(
+                        <OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5780u16 => {
+                    Self::SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(
+                        <OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5781u16 => {
+                    Self::SubgroupAvcFmeInitializeINTEL(
+                        <OpSubgroupAvcFmeInitializeINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5782u16 => {
+                    Self::SubgroupAvcBmeInitializeINTEL(
+                        <OpSubgroupAvcBmeInitializeINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5783u16 => {
+                    Self::SubgroupAvcRefConvertToMcePayloadINTEL(
+                        <OpSubgroupAvcRefConvertToMcePayloadINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5784u16 => {
+                    Self::SubgroupAvcRefSetBidirectionalMixDisableINTEL(
+                        <OpSubgroupAvcRefSetBidirectionalMixDisableINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5785u16 => {
+                    Self::SubgroupAvcRefSetBilinearFilterEnableINTEL(
+                        <OpSubgroupAvcRefSetBilinearFilterEnableINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5786u16 => {
+                    Self::SubgroupAvcRefEvaluateWithSingleReferenceINTEL(
+                        <OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5787u16 => {
+                    Self::SubgroupAvcRefEvaluateWithDualReferenceINTEL(
+                        <OpSubgroupAvcRefEvaluateWithDualReferenceINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5788u16 => {
+                    Self::SubgroupAvcRefEvaluateWithMultiReferenceINTEL(
+                        <OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5789u16 => {
+                    Self::SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(
+                        <OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5790u16 => {
+                    Self::SubgroupAvcRefConvertToMceResultINTEL(
+                        <OpSubgroupAvcRefConvertToMceResultINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5791u16 => {
+                    Self::SubgroupAvcSicInitializeINTEL(
+                        <OpSubgroupAvcSicInitializeINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5792u16 => {
+                    Self::SubgroupAvcSicConfigureSkcINTEL(
+                        <OpSubgroupAvcSicConfigureSkcINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5793u16 => {
+                    Self::SubgroupAvcSicConfigureIpeLumaINTEL(
+                        <OpSubgroupAvcSicConfigureIpeLumaINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5794u16 => {
+                    Self::SubgroupAvcSicConfigureIpeLumaChromaINTEL(
+                        <OpSubgroupAvcSicConfigureIpeLumaChromaINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5795u16 => {
+                    Self::SubgroupAvcSicGetMotionVectorMaskINTEL(
+                        <OpSubgroupAvcSicGetMotionVectorMaskINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5796u16 => {
+                    Self::SubgroupAvcSicConvertToMcePayloadINTEL(
+                        <OpSubgroupAvcSicConvertToMcePayloadINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5797u16 => {
+                    Self::SubgroupAvcSicSetIntraLumaShapePenaltyINTEL(
+                        <OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5798u16 => {
+                    Self::SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(
+                        <OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5799u16 => {
+                    Self::SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(
+                        <OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5800u16 => {
+                    Self::SubgroupAvcSicSetBilinearFilterEnableINTEL(
+                        <OpSubgroupAvcSicSetBilinearFilterEnableINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5801u16 => {
+                    Self::SubgroupAvcSicSetSkcForwardTransformEnableINTEL(
+                        <OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5802u16 => {
+                    Self::SubgroupAvcSicSetBlockBasedRawSkipSadINTEL(
+                        <OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5803u16 => {
+                    Self::SubgroupAvcSicEvaluateIpeINTEL(
+                        <OpSubgroupAvcSicEvaluateIpeINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5804u16 => {
+                    Self::SubgroupAvcSicEvaluateWithSingleReferenceINTEL(
+                        <OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5805u16 => {
+                    Self::SubgroupAvcSicEvaluateWithDualReferenceINTEL(
+                        <OpSubgroupAvcSicEvaluateWithDualReferenceINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5806u16 => {
+                    Self::SubgroupAvcSicEvaluateWithMultiReferenceINTEL(
+                        <OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5807u16 => {
+                    Self::SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(
+                        <OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5808u16 => {
+                    Self::SubgroupAvcSicConvertToMceResultINTEL(
+                        <OpSubgroupAvcSicConvertToMceResultINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5809u16 => {
+                    Self::SubgroupAvcSicGetIpeLumaShapeINTEL(
+                        <OpSubgroupAvcSicGetIpeLumaShapeINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5810u16 => {
+                    Self::SubgroupAvcSicGetBestIpeLumaDistortionINTEL(
+                        <OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5811u16 => {
+                    Self::SubgroupAvcSicGetBestIpeChromaDistortionINTEL(
+                        <OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5812u16 => {
+                    Self::SubgroupAvcSicGetPackedIpeLumaModesINTEL(
+                        <OpSubgroupAvcSicGetPackedIpeLumaModesINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5813u16 => {
+                    Self::SubgroupAvcSicGetIpeChromaModeINTEL(
+                        <OpSubgroupAvcSicGetIpeChromaModeINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5814u16 => {
+                    Self::SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(
+                        <OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5815u16 => {
+                    Self::SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(
+                        <OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5816u16 => {
+                    Self::SubgroupAvcSicGetInterRawSadsINTEL(
+                        <OpSubgroupAvcSicGetInterRawSadsINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5818u16 => {
+                    Self::VariableLengthArrayINTEL(
+                        <OpVariableLengthArrayINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5819u16 => {
+                    Self::SaveMemoryINTEL(
+                        <OpSaveMemoryINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5820u16 => {
+                    Self::RestoreMemoryINTEL(
+                        <OpRestoreMemoryINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5840u16 => {
+                    Self::ArbitraryFloatSinCosPiALTERA(
+                        <OpArbitraryFloatSinCosPiALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5841u16 => {
+                    Self::ArbitraryFloatCastALTERA(
+                        <OpArbitraryFloatCastALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5842u16 => {
+                    Self::ArbitraryFloatCastFromIntALTERA(
+                        <OpArbitraryFloatCastFromIntALTERA as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5843u16 => {
+                    Self::ArbitraryFloatCastToIntALTERA(
+                        <OpArbitraryFloatCastToIntALTERA as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5846u16 => {
+                    Self::ArbitraryFloatAddALTERA(
+                        <OpArbitraryFloatAddALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5847u16 => {
+                    Self::ArbitraryFloatSubALTERA(
+                        <OpArbitraryFloatSubALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5848u16 => {
+                    Self::ArbitraryFloatMulALTERA(
+                        <OpArbitraryFloatMulALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5849u16 => {
+                    Self::ArbitraryFloatDivALTERA(
+                        <OpArbitraryFloatDivALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5850u16 => {
+                    Self::ArbitraryFloatGTALTERA(
+                        <OpArbitraryFloatGTALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5851u16 => {
+                    Self::ArbitraryFloatGEALTERA(
+                        <OpArbitraryFloatGEALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5852u16 => {
+                    Self::ArbitraryFloatLTALTERA(
+                        <OpArbitraryFloatLTALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5853u16 => {
+                    Self::ArbitraryFloatLEALTERA(
+                        <OpArbitraryFloatLEALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5854u16 => {
+                    Self::ArbitraryFloatEQALTERA(
+                        <OpArbitraryFloatEQALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5855u16 => {
+                    Self::ArbitraryFloatRecipALTERA(
+                        <OpArbitraryFloatRecipALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5856u16 => {
+                    Self::ArbitraryFloatRSqrtALTERA(
+                        <OpArbitraryFloatRSqrtALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5857u16 => {
+                    Self::ArbitraryFloatCbrtALTERA(
+                        <OpArbitraryFloatCbrtALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5858u16 => {
+                    Self::ArbitraryFloatHypotALTERA(
+                        <OpArbitraryFloatHypotALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5859u16 => {
+                    Self::ArbitraryFloatSqrtALTERA(
+                        <OpArbitraryFloatSqrtALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5860u16 => {
+                    Self::ArbitraryFloatLogINTEL(
+                        <OpArbitraryFloatLogINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5861u16 => {
+                    Self::ArbitraryFloatLog2INTEL(
+                        <OpArbitraryFloatLog2INTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5862u16 => {
+                    Self::ArbitraryFloatLog10INTEL(
+                        <OpArbitraryFloatLog10INTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5863u16 => {
+                    Self::ArbitraryFloatLog1pINTEL(
+                        <OpArbitraryFloatLog1pINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5864u16 => {
+                    Self::ArbitraryFloatExpINTEL(
+                        <OpArbitraryFloatExpINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5865u16 => {
+                    Self::ArbitraryFloatExp2INTEL(
+                        <OpArbitraryFloatExp2INTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5866u16 => {
+                    Self::ArbitraryFloatExp10INTEL(
+                        <OpArbitraryFloatExp10INTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5867u16 => {
+                    Self::ArbitraryFloatExpm1INTEL(
+                        <OpArbitraryFloatExpm1INTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5868u16 => {
+                    Self::ArbitraryFloatSinINTEL(
+                        <OpArbitraryFloatSinINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5869u16 => {
+                    Self::ArbitraryFloatCosINTEL(
+                        <OpArbitraryFloatCosINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5870u16 => {
+                    Self::ArbitraryFloatSinCosINTEL(
+                        <OpArbitraryFloatSinCosINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5871u16 => {
+                    Self::ArbitraryFloatSinPiINTEL(
+                        <OpArbitraryFloatSinPiINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5872u16 => {
+                    Self::ArbitraryFloatCosPiINTEL(
+                        <OpArbitraryFloatCosPiINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5873u16 => {
+                    Self::ArbitraryFloatASinINTEL(
+                        <OpArbitraryFloatASinINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5874u16 => {
+                    Self::ArbitraryFloatASinPiINTEL(
+                        <OpArbitraryFloatASinPiINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5875u16 => {
+                    Self::ArbitraryFloatACosINTEL(
+                        <OpArbitraryFloatACosINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5876u16 => {
+                    Self::ArbitraryFloatACosPiINTEL(
+                        <OpArbitraryFloatACosPiINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5877u16 => {
+                    Self::ArbitraryFloatATanINTEL(
+                        <OpArbitraryFloatATanINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5878u16 => {
+                    Self::ArbitraryFloatATanPiINTEL(
+                        <OpArbitraryFloatATanPiINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5879u16 => {
+                    Self::ArbitraryFloatATan2INTEL(
+                        <OpArbitraryFloatATan2INTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5880u16 => {
+                    Self::ArbitraryFloatPowINTEL(
+                        <OpArbitraryFloatPowINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5881u16 => {
+                    Self::ArbitraryFloatPowRINTEL(
+                        <OpArbitraryFloatPowRINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5882u16 => {
+                    Self::ArbitraryFloatPowNINTEL(
+                        <OpArbitraryFloatPowNINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5887u16 => {
+                    Self::LoopControlINTEL(
+                        <OpLoopControlINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5911u16 => {
+                    Self::AliasDomainDeclINTEL(
+                        <OpAliasDomainDeclINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5912u16 => {
+                    Self::AliasScopeDeclINTEL(
+                        <OpAliasScopeDeclINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5913u16 => {
+                    Self::AliasScopeListDeclINTEL(
+                        <OpAliasScopeListDeclINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5923u16 => {
+                    Self::FixedSqrtALTERA(
+                        <OpFixedSqrtALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5924u16 => {
+                    Self::FixedRecipALTERA(
+                        <OpFixedRecipALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5925u16 => {
+                    Self::FixedRsqrtALTERA(
+                        <OpFixedRsqrtALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5926u16 => {
+                    Self::FixedSinALTERA(
+                        <OpFixedSinALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5927u16 => {
+                    Self::FixedCosALTERA(
+                        <OpFixedCosALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5928u16 => {
+                    Self::FixedSinCosALTERA(
+                        <OpFixedSinCosALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5929u16 => {
+                    Self::FixedSinPiALTERA(
+                        <OpFixedSinPiALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5930u16 => {
+                    Self::FixedCosPiALTERA(
+                        <OpFixedCosPiALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5931u16 => {
+                    Self::FixedSinCosPiALTERA(
+                        <OpFixedSinCosPiALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5932u16 => {
+                    Self::FixedLogALTERA(
+                        <OpFixedLogALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5933u16 => {
+                    Self::FixedExpALTERA(
+                        <OpFixedExpALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5934u16 => {
+                    Self::PtrCastToCrossWorkgroupALTERA(
+                        <OpPtrCastToCrossWorkgroupALTERA as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5938u16 => {
+                    Self::CrossWorkgroupCastToPtrALTERA(
+                        <OpCrossWorkgroupCastToPtrALTERA as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                5946u16 => {
+                    Self::ReadPipeBlockingALTERA(
+                        <OpReadPipeBlockingALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5947u16 => {
+                    Self::WritePipeBlockingALTERA(
+                        <OpWritePipeBlockingALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5949u16 => {
+                    Self::FPGARegALTERA(
+                        <OpFPGARegALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6016u16 => {
+                    Self::RayQueryGetRayTMinKHR(
+                        <OpRayQueryGetRayTMinKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6017u16 => {
+                    Self::RayQueryGetRayFlagsKHR(
+                        <OpRayQueryGetRayFlagsKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6018u16 => {
+                    Self::RayQueryGetIntersectionTKHR(
+                        <OpRayQueryGetIntersectionTKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6019u16 => {
+                    Self::RayQueryGetIntersectionInstanceCustomIndexKHR(
+                        <OpRayQueryGetIntersectionInstanceCustomIndexKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6020u16 => {
+                    Self::RayQueryGetIntersectionInstanceIdKHR(
+                        <OpRayQueryGetIntersectionInstanceIdKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6021u16 => {
+                    Self::RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR(
+                        <OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6022u16 => {
+                    Self::RayQueryGetIntersectionGeometryIndexKHR(
+                        <OpRayQueryGetIntersectionGeometryIndexKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6023u16 => {
+                    Self::RayQueryGetIntersectionPrimitiveIndexKHR(
+                        <OpRayQueryGetIntersectionPrimitiveIndexKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6024u16 => {
+                    Self::RayQueryGetIntersectionBarycentricsKHR(
+                        <OpRayQueryGetIntersectionBarycentricsKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6025u16 => {
+                    Self::RayQueryGetIntersectionFrontFaceKHR(
+                        <OpRayQueryGetIntersectionFrontFaceKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6026u16 => {
+                    Self::RayQueryGetIntersectionCandidateAABBOpaqueKHR(
+                        <OpRayQueryGetIntersectionCandidateAABBOpaqueKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6027u16 => {
+                    Self::RayQueryGetIntersectionObjectRayDirectionKHR(
+                        <OpRayQueryGetIntersectionObjectRayDirectionKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6028u16 => {
+                    Self::RayQueryGetIntersectionObjectRayOriginKHR(
+                        <OpRayQueryGetIntersectionObjectRayOriginKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6029u16 => {
+                    Self::RayQueryGetWorldRayDirectionKHR(
+                        <OpRayQueryGetWorldRayDirectionKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6030u16 => {
+                    Self::RayQueryGetWorldRayOriginKHR(
+                        <OpRayQueryGetWorldRayOriginKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6031u16 => {
+                    Self::RayQueryGetIntersectionObjectToWorldKHR(
+                        <OpRayQueryGetIntersectionObjectToWorldKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6032u16 => {
+                    Self::RayQueryGetIntersectionWorldToObjectKHR(
+                        <OpRayQueryGetIntersectionWorldToObjectKHR as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6035u16 => {
+                    Self::AtomicFAddEXT(
+                        <OpAtomicFAddEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6086u16 => {
+                    Self::TypeBufferSurfaceINTEL(
+                        <OpTypeBufferSurfaceINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6090u16 => {
+                    Self::TypeStructContinuedINTEL(
+                        <OpTypeStructContinuedINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6091u16 => {
+                    Self::ConstantCompositeContinuedINTEL(
+                        <OpConstantCompositeContinuedINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6092u16 => {
+                    Self::SpecConstantCompositeContinuedINTEL(
+                        <OpSpecConstantCompositeContinuedINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6096u16 => {
+                    Self::CompositeConstructContinuedINTEL(
+                        <OpCompositeConstructContinuedINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6116u16 => {
+                    Self::ConvertFToBF16INTEL(
+                        <OpConvertFToBF16INTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6117u16 => {
+                    Self::ConvertBF16ToFINTEL(
+                        <OpConvertBF16ToFINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6142u16 => {
+                    Self::ControlBarrierArriveINTEL(
+                        <OpControlBarrierArriveINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6143u16 => {
+                    Self::ControlBarrierWaitINTEL(
+                        <OpControlBarrierWaitINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6145u16 => {
+                    Self::ArithmeticFenceEXT(
+                        <OpArithmeticFenceEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6163u16 => {
+                    Self::TaskSequenceCreateALTERA(
+                        <OpTaskSequenceCreateALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6164u16 => {
+                    Self::TaskSequenceAsyncALTERA(
+                        <OpTaskSequenceAsyncALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6165u16 => {
+                    Self::TaskSequenceGetALTERA(
+                        <OpTaskSequenceGetALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6166u16 => {
+                    Self::TaskSequenceReleaseALTERA(
+                        <OpTaskSequenceReleaseALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6199u16 => {
+                    Self::TypeTaskSequenceALTERA(
+                        <OpTypeTaskSequenceALTERA as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6221u16 => {
+                    Self::SubgroupBlockPrefetchINTEL(
+                        <OpSubgroupBlockPrefetchINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6231u16 => {
+                    Self::Subgroup2DBlockLoadINTEL(
+                        <OpSubgroup2DBlockLoadINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6232u16 => {
+                    Self::Subgroup2DBlockLoadTransformINTEL(
+                        <OpSubgroup2DBlockLoadTransformINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6233u16 => {
+                    Self::Subgroup2DBlockLoadTransposeINTEL(
+                        <OpSubgroup2DBlockLoadTransposeINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6234u16 => {
+                    Self::Subgroup2DBlockPrefetchINTEL(
+                        <OpSubgroup2DBlockPrefetchINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6235u16 => {
+                    Self::Subgroup2DBlockStoreINTEL(
+                        <OpSubgroup2DBlockStoreINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6237u16 => {
+                    Self::SubgroupMatrixMultiplyAccumulateINTEL(
+                        <OpSubgroupMatrixMultiplyAccumulateINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6242u16 => {
+                    Self::BitwiseFunctionINTEL(
+                        <OpBitwiseFunctionINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6244u16 => {
+                    Self::UntypedVariableLengthArrayINTEL(
+                        <OpUntypedVariableLengthArrayINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6248u16 => {
+                    Self::ConditionalExtensionINTEL(
+                        <OpConditionalExtensionINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6249u16 => {
+                    Self::ConditionalEntryPointINTEL(
+                        <OpConditionalEntryPointINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6250u16 => {
+                    Self::ConditionalCapabilityINTEL(
+                        <OpConditionalCapabilityINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6251u16 => {
+                    Self::SpecConstantTargetINTEL(
+                        <OpSpecConstantTargetINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6252u16 => {
+                    Self::SpecConstantArchitectureINTEL(
+                        <OpSpecConstantArchitectureINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6253u16 => {
+                    Self::SpecConstantCapabilitiesINTEL(
+                        <OpSpecConstantCapabilitiesINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                6254u16 => {
+                    Self::ConditionalCopyObjectINTEL(
+                        <OpConditionalCopyObjectINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6401u16 => {
+                    Self::GroupIMulKHR(<OpGroupIMulKHR as InstEncoding>::decode(reader)?)
+                }
+                6402u16 => {
+                    Self::GroupFMulKHR(<OpGroupFMulKHR as InstEncoding>::decode(reader)?)
+                }
+                6403u16 => {
+                    Self::GroupBitwiseAndKHR(
+                        <OpGroupBitwiseAndKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6404u16 => {
+                    Self::GroupBitwiseOrKHR(
+                        <OpGroupBitwiseOrKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6405u16 => {
+                    Self::GroupBitwiseXorKHR(
+                        <OpGroupBitwiseXorKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6406u16 => {
+                    Self::GroupLogicalAndKHR(
+                        <OpGroupLogicalAndKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6407u16 => {
+                    Self::GroupLogicalOrKHR(
+                        <OpGroupLogicalOrKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6408u16 => {
+                    Self::GroupLogicalXorKHR(
+                        <OpGroupLogicalXorKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6426u16 => {
+                    Self::RoundFToTF32INTEL(
+                        <OpRoundFToTF32INTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6428u16 => {
+                    Self::MaskedGatherINTEL(
+                        <OpMaskedGatherINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6429u16 => {
+                    Self::MaskedScatterINTEL(
+                        <OpMaskedScatterINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6529u16 => {
+                    Self::ConvertHandleToImageINTEL(
+                        <OpConvertHandleToImageINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6530u16 => {
+                    Self::ConvertHandleToSamplerINTEL(
+                        <OpConvertHandleToSamplerINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6531u16 => {
+                    Self::ConvertHandleToSampledImageINTEL(
+                        <OpConvertHandleToSampledImageINTEL as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
+                _ => {
+                    return Err(DecodeError::UnknownOpCode {
+                        opcode,
+                    });
+                }
+            },
+        )
+    }
+}
 impl From<OpNop> for CoreInstSet {
     fn from(inst: OpNop) -> Self {
         Self::Nop(inst)
