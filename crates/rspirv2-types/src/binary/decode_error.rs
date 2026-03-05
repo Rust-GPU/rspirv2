@@ -13,7 +13,15 @@ pub enum DecodeError {
         expected: u16,
         actual: u16,
     },
-    LiteralIntegerNotLastOperand,
+    LiteralConstNotLastOperand,
+    LiteralConstOfWrongWordSize {
+        expected_size: usize,
+        actual_size: usize,
+    },
+    LiteralConstTooLarge {
+        value: u32,
+        bits: usize,
+    },
     /// This error must be cheap to crate, it will be discarded when iterating an `InstructionReader`.
     InstructionDecodePulledTooManyWords {
         inst_offset: usize,
@@ -64,10 +72,23 @@ impl Display for DecodeError {
                 f,
                 "Op {name} with opcode {expected} got InstructionReader with differing opcode {actual}."
             ),
-            DecodeError::LiteralIntegerNotLastOperand => write!(
+            DecodeError::LiteralConstNotLastOperand => write!(
                 f,
                 "Implementation Limitation: The `LiteralConst` must be the last operand of an Instruction for parsing \
                  to function properly. See documentation of `LiteralConst` for details."
+            ),
+            DecodeError::LiteralConstOfWrongWordSize {
+                expected_size,
+                actual_size,
+            } => write!(
+                f,
+                "Tried to read value from LiteralConst that expects {expected_size} Word(s) but \
+                LiteralConst has {actual_size} Word(s)"
+            ),
+            DecodeError::LiteralConstTooLarge { value, bits } => write!(
+                f,
+                "LiteralConst's value `{value:x}` is too large for {} bits",
+                bits
             ),
             DecodeError::InstructionDecodePulledTooManyWords {
                 inst_offset,
