@@ -18,6 +18,9 @@ impl InstEncoding for OpNop {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpNop")
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUndef {
@@ -48,6 +51,14 @@ impl InstEncoding for OpUndef {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUndef {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSourceContinued {
@@ -72,6 +83,9 @@ impl InstEncoding for OpSourceContinued {
         Ok(Self {
             continued_source: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpSourceContinued {}", self.continued_source.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -111,6 +125,16 @@ impl InstEncoding for OpSource {
             source: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSource {} {} {} {}",
+            self.source_language.dis(_ctx),
+            self.version.dis(_ctx),
+            self.file.dis(_ctx),
+            self.source.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSourceExtension {
@@ -135,6 +159,9 @@ impl InstEncoding for OpSourceExtension {
         Ok(Self {
             extension: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpSourceExtension {}", self.extension.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -164,6 +191,14 @@ impl InstEncoding for OpName {
             target: OperandEncoding::decode(&mut op_reader)?,
             name: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpName {} {}",
+            self.target.dis(_ctx),
+            self.name.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -199,6 +234,15 @@ impl InstEncoding for OpMemberName {
             name: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpMemberName {} {} {}",
+            self.ty.dis(_ctx),
+            self.member.dis(_ctx),
+            self.name.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpString {
@@ -228,6 +272,14 @@ impl InstEncoding for OpString {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             string: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpString {}",
+            self.id_result.dis(_ctx),
+            self.string.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -263,6 +315,15 @@ impl InstEncoding for OpLine {
             column: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpLine {} {} {}",
+            self.file.dis(_ctx),
+            self.line.dis(_ctx),
+            self.column.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpExtension {
@@ -287,6 +348,9 @@ impl InstEncoding for OpExtension {
         Ok(Self {
             name: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpExtension {}", self.name.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -316,6 +380,14 @@ impl InstEncoding for OpExtInstImport {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             name: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpExtInstImport {}",
+            self.id_result.dis(_ctx),
+            self.name.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -359,6 +431,17 @@ impl InstEncoding for OpExtInst {
             id_ref: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpExtInst {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.set.dis(_ctx),
+            self.instruction.dis(_ctx),
+            self.id_ref.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpMemoryModel {
@@ -388,6 +471,14 @@ impl InstEncoding for OpMemoryModel {
             addressing_model: OperandEncoding::decode(&mut op_reader)?,
             memory_model: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpMemoryModel {} {}",
+            self.addressing_model.dis(_ctx),
+            self.memory_model.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -427,6 +518,16 @@ impl InstEncoding for OpEntryPoint {
             interface: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpEntryPoint {} {} {} {}",
+            self.execution_model.dis(_ctx),
+            self.entry_point.dis(_ctx),
+            self.name.dis(_ctx),
+            self.interface.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpExecutionMode {
@@ -457,6 +558,14 @@ impl InstEncoding for OpExecutionMode {
             mode: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpExecutionMode {} {}",
+            self.entry_point.dis(_ctx),
+            self.mode.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCapability {
@@ -481,6 +590,9 @@ impl InstEncoding for OpCapability {
         Ok(Self {
             capability: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpCapability {}", self.capability.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -507,6 +619,9 @@ impl InstEncoding for OpTypeVoid {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeVoid", self.id_result.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeBool {
@@ -531,6 +646,9 @@ impl InstEncoding for OpTypeBool {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeBool", self.id_result.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -566,6 +684,15 @@ impl InstEncoding for OpTypeInt {
             signedness: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeInt {} {}",
+            self.id_result.dis(_ctx),
+            self.width.dis(_ctx),
+            self.signedness.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeFloat {
@@ -599,6 +726,15 @@ impl InstEncoding for OpTypeFloat {
             width: OperandEncoding::decode(&mut op_reader)?,
             floating_point_encoding: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeFloat {} {}",
+            self.id_result.dis(_ctx),
+            self.width.dis(_ctx),
+            self.floating_point_encoding.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -634,6 +770,15 @@ impl InstEncoding for OpTypeVector {
             component_count: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeVector {} {}",
+            self.id_result.dis(_ctx),
+            self.component_type.dis(_ctx),
+            self.component_count.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeMatrix {
@@ -667,6 +812,15 @@ impl InstEncoding for OpTypeMatrix {
             column_type: OperandEncoding::decode(&mut op_reader)?,
             column_count: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeMatrix {} {}",
+            self.id_result.dis(_ctx),
+            self.column_type.dis(_ctx),
+            self.column_count.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -726,6 +880,21 @@ impl InstEncoding for OpTypeImage {
             access_qualifier: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeImage {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.sampled_type.dis(_ctx),
+            self.dim.dis(_ctx),
+            self.depth.dis(_ctx),
+            self.arrayed.dis(_ctx),
+            self.ms.dis(_ctx),
+            self.sampled.dis(_ctx),
+            self.image_format.dis(_ctx),
+            self.access_qualifier.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeSampler {
@@ -750,6 +919,9 @@ impl InstEncoding for OpTypeSampler {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeSampler", self.id_result.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -780,6 +952,14 @@ impl InstEncoding for OpTypeSampledImage {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             image_type: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeSampledImage {}",
+            self.id_result.dis(_ctx),
+            self.image_type.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -815,6 +995,15 @@ impl InstEncoding for OpTypeArray {
             length: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeArray {} {}",
+            self.id_result.dis(_ctx),
+            self.element_type.dis(_ctx),
+            self.length.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeRuntimeArray {
@@ -844,6 +1033,14 @@ impl InstEncoding for OpTypeRuntimeArray {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             element_type: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeRuntimeArray {}",
+            self.id_result.dis(_ctx),
+            self.element_type.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -875,6 +1072,14 @@ impl InstEncoding for OpTypeStruct {
             id_ref: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeStruct {}",
+            self.id_result.dis(_ctx),
+            self.id_ref.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeOpaque {
@@ -904,6 +1109,14 @@ impl InstEncoding for OpTypeOpaque {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             literal_string: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeOpaque {}",
+            self.id_result.dis(_ctx),
+            self.literal_string.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -939,6 +1152,15 @@ impl InstEncoding for OpTypePointer {
             ty: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypePointer {} {}",
+            self.id_result.dis(_ctx),
+            self.storage_class.dis(_ctx),
+            self.ty.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeFunction {
@@ -973,6 +1195,15 @@ impl InstEncoding for OpTypeFunction {
             id_ref: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeFunction {} {}",
+            self.id_result.dis(_ctx),
+            self.return_type.dis(_ctx),
+            self.id_ref.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeEvent {
@@ -997,6 +1228,9 @@ impl InstEncoding for OpTypeEvent {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeEvent", self.id_result.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1023,6 +1257,9 @@ impl InstEncoding for OpTypeDeviceEvent {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeDeviceEvent", self.id_result.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeReserveId {
@@ -1048,6 +1285,9 @@ impl InstEncoding for OpTypeReserveId {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeReserveId", self.id_result.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeQueue {
@@ -1072,6 +1312,9 @@ impl InstEncoding for OpTypeQueue {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeQueue", self.id_result.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1103,6 +1346,14 @@ impl InstEncoding for OpTypePipe {
             qualifier: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypePipe {}",
+            self.id_result.dis(_ctx),
+            self.qualifier.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeForwardPointer {
@@ -1132,6 +1383,14 @@ impl InstEncoding for OpTypeForwardPointer {
             pointer_type: OperandEncoding::decode(&mut op_reader)?,
             storage_class: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpTypeForwardPointer {} {}",
+            self.pointer_type.dis(_ctx),
+            self.storage_class.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1163,6 +1422,14 @@ impl InstEncoding for OpConstantTrue {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConstantTrue {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConstantFalse {
@@ -1192,6 +1459,14 @@ impl InstEncoding for OpConstantFalse {
             id_result_type: OperandEncoding::decode(&mut op_reader)?,
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConstantFalse {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1227,6 +1502,15 @@ impl InstEncoding for OpConstant {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConstant {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConstantComposite {
@@ -1260,6 +1544,15 @@ impl InstEncoding for OpConstantComposite {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             constituents: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConstantComposite {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.constituents.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1303,6 +1596,17 @@ impl InstEncoding for OpConstantSampler {
             sampler_filter_mode: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConstantSampler {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampler_addressing_mode.dis(_ctx),
+            self.param.dis(_ctx),
+            self.sampler_filter_mode.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConstantNull {
@@ -1332,6 +1636,14 @@ impl InstEncoding for OpConstantNull {
             id_result_type: OperandEncoding::decode(&mut op_reader)?,
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConstantNull {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1363,6 +1675,14 @@ impl InstEncoding for OpSpecConstantTrue {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSpecConstantTrue {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSpecConstantFalse {
@@ -1392,6 +1712,14 @@ impl InstEncoding for OpSpecConstantFalse {
             id_result_type: OperandEncoding::decode(&mut op_reader)?,
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSpecConstantFalse {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1427,6 +1755,15 @@ impl InstEncoding for OpSpecConstant {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSpecConstant {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSpecConstantComposite {
@@ -1461,6 +1798,15 @@ impl InstEncoding for OpSpecConstantComposite {
             constituents: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSpecConstantComposite {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.constituents.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSpecConstantOp {
@@ -1494,6 +1840,15 @@ impl InstEncoding for OpSpecConstantOp {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             opcode: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSpecConstantOp {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.opcode.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1533,6 +1888,16 @@ impl InstEncoding for OpFunction {
             function_type: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFunction {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.function_control.dis(_ctx),
+            self.function_type.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFunctionParameter {
@@ -1563,6 +1928,14 @@ impl InstEncoding for OpFunctionParameter {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFunctionParameter {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFunctionEnd {}
@@ -1582,6 +1955,9 @@ impl InstEncoding for OpFunctionEnd {
     fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpFunctionEnd")
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1621,6 +1997,16 @@ impl InstEncoding for OpFunctionCall {
             id_ref: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFunctionCall {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.function.dis(_ctx),
+            self.id_ref.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpVariable {
@@ -1658,6 +2044,16 @@ impl InstEncoding for OpVariable {
             storage_class: OperandEncoding::decode(&mut op_reader)?,
             initializer: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpVariable {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.storage_class.dis(_ctx),
+            self.initializer.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1701,6 +2097,17 @@ impl InstEncoding for OpImageTexelPointer {
             sample: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageTexelPointer {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.sample.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpLoad {
@@ -1739,6 +2146,16 @@ impl InstEncoding for OpLoad {
             memory_access: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpLoad {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory_access.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpStore {
@@ -1772,6 +2189,15 @@ impl InstEncoding for OpStore {
             object: OperandEncoding::decode(&mut op_reader)?,
             memory_access: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpStore {} {} {}",
+            self.pointer.dis(_ctx),
+            self.object.dis(_ctx),
+            self.memory_access.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1810,6 +2236,16 @@ impl InstEncoding for OpCopyMemory {
             memory_access_0: OperandEncoding::decode(&mut op_reader)?,
             memory_access_1: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpCopyMemory {} {} {} {}",
+            self.target.dis(_ctx),
+            self.source.dis(_ctx),
+            self.memory_access_0.dis(_ctx),
+            self.memory_access_1.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1853,6 +2289,17 @@ impl InstEncoding for OpCopyMemorySized {
             memory_access_1: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpCopyMemorySized {} {} {} {} {}",
+            self.target.dis(_ctx),
+            self.source.dis(_ctx),
+            self.size.dis(_ctx),
+            self.memory_access_0.dis(_ctx),
+            self.memory_access_1.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAccessChain {
@@ -1891,6 +2338,16 @@ impl InstEncoding for OpAccessChain {
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAccessChain {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base.dis(_ctx),
+            self.indexes.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpInBoundsAccessChain {
@@ -1928,6 +2385,16 @@ impl InstEncoding for OpInBoundsAccessChain {
             base: OperandEncoding::decode(&mut op_reader)?,
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpInBoundsAccessChain {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base.dis(_ctx),
+            self.indexes.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1971,6 +2438,17 @@ impl InstEncoding for OpPtrAccessChain {
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpPtrAccessChain {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base.dis(_ctx),
+            self.element.dis(_ctx),
+            self.indexes.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArrayLength {
@@ -2009,6 +2487,16 @@ impl InstEncoding for OpArrayLength {
             array_member: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArrayLength {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.structure.dis(_ctx),
+            self.array_member.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGenericPtrMemSemantics {
@@ -2042,6 +2530,15 @@ impl InstEncoding for OpGenericPtrMemSemantics {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             pointer: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGenericPtrMemSemantics {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2085,6 +2582,17 @@ impl InstEncoding for OpInBoundsPtrAccessChain {
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpInBoundsPtrAccessChain {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base.dis(_ctx),
+            self.element.dis(_ctx),
+            self.indexes.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpDecorate {
@@ -2114,6 +2622,14 @@ impl InstEncoding for OpDecorate {
             target: OperandEncoding::decode(&mut op_reader)?,
             decoration: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpDecorate {} {}",
+            self.target.dis(_ctx),
+            self.decoration.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2149,6 +2665,15 @@ impl InstEncoding for OpMemberDecorate {
             decoration: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpMemberDecorate {} {} {}",
+            self.structure_type.dis(_ctx),
+            self.member.dis(_ctx),
+            self.decoration.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpDecorationGroup {
@@ -2173,6 +2698,9 @@ impl InstEncoding for OpDecorationGroup {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpDecorationGroup", self.id_result.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2204,6 +2732,14 @@ impl InstEncoding for OpGroupDecorate {
             targets: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpGroupDecorate {} {}",
+            self.decoration_group.dis(_ctx),
+            self.targets.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupMemberDecorate {
@@ -2233,6 +2769,14 @@ impl InstEncoding for OpGroupMemberDecorate {
             decoration_group: OperandEncoding::decode(&mut op_reader)?,
             targets: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpGroupMemberDecorate {} {}",
+            self.decoration_group.dis(_ctx),
+            self.targets.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2271,6 +2815,16 @@ impl InstEncoding for OpVectorExtractDynamic {
             vector: OperandEncoding::decode(&mut op_reader)?,
             index: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpVectorExtractDynamic {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.vector.dis(_ctx),
+            self.index.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2314,6 +2868,17 @@ impl InstEncoding for OpVectorInsertDynamic {
             index: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpVectorInsertDynamic {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.vector.dis(_ctx),
+            self.component.dis(_ctx),
+            self.index.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpVectorShuffle {
@@ -2356,6 +2921,17 @@ impl InstEncoding for OpVectorShuffle {
             components: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpVectorShuffle {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.vector_1.dis(_ctx),
+            self.vector_2.dis(_ctx),
+            self.components.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCompositeConstruct {
@@ -2389,6 +2965,15 @@ impl InstEncoding for OpCompositeConstruct {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             constituents: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCompositeConstruct {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.constituents.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2427,6 +3012,16 @@ impl InstEncoding for OpCompositeExtract {
             composite: OperandEncoding::decode(&mut op_reader)?,
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCompositeExtract {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.composite.dis(_ctx),
+            self.indexes.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2470,6 +3065,17 @@ impl InstEncoding for OpCompositeInsert {
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCompositeInsert {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.object.dis(_ctx),
+            self.composite.dis(_ctx),
+            self.indexes.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCopyObject {
@@ -2504,6 +3110,15 @@ impl InstEncoding for OpCopyObject {
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCopyObject {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTranspose {
@@ -2537,6 +3152,15 @@ impl InstEncoding for OpTranspose {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             matrix: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTranspose {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.matrix.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2575,6 +3199,16 @@ impl InstEncoding for OpSampledImage {
             image: OperandEncoding::decode(&mut op_reader)?,
             sampler: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSampledImage {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx),
+            self.sampler.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2618,6 +3252,17 @@ impl InstEncoding for OpImageSampleImplicitLod {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSampleImplicitLod {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageSampleExplicitLod {
@@ -2659,6 +3304,17 @@ impl InstEncoding for OpImageSampleExplicitLod {
             coordinate: OperandEncoding::decode(&mut op_reader)?,
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSampleExplicitLod {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2706,6 +3362,18 @@ impl InstEncoding for OpImageSampleDrefImplicitLod {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSampleDrefImplicitLod {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.id_ref.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageSampleDrefExplicitLod {
@@ -2752,6 +3420,18 @@ impl InstEncoding for OpImageSampleDrefExplicitLod {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSampleDrefExplicitLod {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.id_ref.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageSampleProjImplicitLod {
@@ -2794,6 +3474,17 @@ impl InstEncoding for OpImageSampleProjImplicitLod {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSampleProjImplicitLod {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageSampleProjExplicitLod {
@@ -2835,6 +3526,17 @@ impl InstEncoding for OpImageSampleProjExplicitLod {
             coordinate: OperandEncoding::decode(&mut op_reader)?,
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSampleProjExplicitLod {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2882,6 +3584,18 @@ impl InstEncoding for OpImageSampleProjDrefImplicitLod {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSampleProjDrefImplicitLod {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.id_ref.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageSampleProjDrefExplicitLod {
@@ -2928,6 +3642,18 @@ impl InstEncoding for OpImageSampleProjDrefExplicitLod {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSampleProjDrefExplicitLod {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.id_ref.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageFetch {
@@ -2969,6 +3695,17 @@ impl InstEncoding for OpImageFetch {
             coordinate: OperandEncoding::decode(&mut op_reader)?,
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageFetch {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3016,6 +3753,18 @@ impl InstEncoding for OpImageGather {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageGather {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.component.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageDrefGather {
@@ -3062,6 +3811,18 @@ impl InstEncoding for OpImageDrefGather {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageDrefGather {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.id_ref.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageRead {
@@ -3104,6 +3865,17 @@ impl InstEncoding for OpImageRead {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageRead {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageWrite {
@@ -3142,6 +3914,16 @@ impl InstEncoding for OpImageWrite {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpImageWrite {} {} {} {}",
+            self.image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.texel.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImage {
@@ -3175,6 +3957,15 @@ impl InstEncoding for OpImage {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             sampled_image: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImage {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3210,6 +4001,15 @@ impl InstEncoding for OpImageQueryFormat {
             image: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageQueryFormat {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageQueryOrder {
@@ -3243,6 +4043,15 @@ impl InstEncoding for OpImageQueryOrder {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             image: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageQueryOrder {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3282,6 +4091,16 @@ impl InstEncoding for OpImageQuerySizeLod {
             level_of_detail: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageQuerySizeLod {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx),
+            self.level_of_detail.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageQuerySize {
@@ -3315,6 +4134,15 @@ impl InstEncoding for OpImageQuerySize {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             image: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageQuerySize {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3354,6 +4182,16 @@ impl InstEncoding for OpImageQueryLod {
             coordinate: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageQueryLod {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageQueryLevels {
@@ -3387,6 +4225,15 @@ impl InstEncoding for OpImageQueryLevels {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             image: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageQueryLevels {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3422,6 +4269,15 @@ impl InstEncoding for OpImageQuerySamples {
             image: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageQuerySamples {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConvertFToU {
@@ -3455,6 +4311,15 @@ impl InstEncoding for OpConvertFToU {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             float_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertFToU {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.float_value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3490,6 +4355,15 @@ impl InstEncoding for OpConvertFToS {
             float_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertFToS {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.float_value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConvertSToF {
@@ -3523,6 +4397,15 @@ impl InstEncoding for OpConvertSToF {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             signed_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertSToF {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.signed_value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3558,6 +4441,15 @@ impl InstEncoding for OpConvertUToF {
             unsigned_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertUToF {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.unsigned_value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUConvert {
@@ -3591,6 +4483,15 @@ impl InstEncoding for OpUConvert {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             unsigned_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUConvert {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.unsigned_value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3626,6 +4527,15 @@ impl InstEncoding for OpSConvert {
             signed_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSConvert {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.signed_value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFConvert {
@@ -3659,6 +4569,15 @@ impl InstEncoding for OpFConvert {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             float_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFConvert {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.float_value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3694,6 +4613,15 @@ impl InstEncoding for OpQuantizeToF16 {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpQuantizeToF16 {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConvertPtrToU {
@@ -3727,6 +4655,15 @@ impl InstEncoding for OpConvertPtrToU {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             pointer: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertPtrToU {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3762,6 +4699,15 @@ impl InstEncoding for OpSatConvertSToU {
             signed_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSatConvertSToU {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.signed_value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSatConvertUToS {
@@ -3795,6 +4741,15 @@ impl InstEncoding for OpSatConvertUToS {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             unsigned_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSatConvertUToS {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.unsigned_value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3830,6 +4785,15 @@ impl InstEncoding for OpConvertUToPtr {
             integer_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertUToPtr {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.integer_value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpPtrCastToGeneric {
@@ -3864,6 +4828,15 @@ impl InstEncoding for OpPtrCastToGeneric {
             pointer: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpPtrCastToGeneric {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGenericCastToPtr {
@@ -3897,6 +4870,15 @@ impl InstEncoding for OpGenericCastToPtr {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             pointer: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGenericCastToPtr {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3936,6 +4918,16 @@ impl InstEncoding for OpGenericCastToPtrExplicit {
             storage: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGenericCastToPtrExplicit {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.storage.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpBitcast {
@@ -3969,6 +4961,15 @@ impl InstEncoding for OpBitcast {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpBitcast {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4004,6 +5005,15 @@ impl InstEncoding for OpSNegate {
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSNegate {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFNegate {
@@ -4037,6 +5047,15 @@ impl InstEncoding for OpFNegate {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFNegate {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4076,6 +5095,16 @@ impl InstEncoding for OpIAdd {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIAdd {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFAdd {
@@ -4113,6 +5142,16 @@ impl InstEncoding for OpFAdd {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFAdd {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4152,6 +5191,16 @@ impl InstEncoding for OpISub {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpISub {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFSub {
@@ -4189,6 +5238,16 @@ impl InstEncoding for OpFSub {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFSub {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4228,6 +5287,16 @@ impl InstEncoding for OpIMul {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIMul {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFMul {
@@ -4265,6 +5334,16 @@ impl InstEncoding for OpFMul {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFMul {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4304,6 +5383,16 @@ impl InstEncoding for OpUDiv {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUDiv {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSDiv {
@@ -4341,6 +5430,16 @@ impl InstEncoding for OpSDiv {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSDiv {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4380,6 +5479,16 @@ impl InstEncoding for OpFDiv {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFDiv {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUMod {
@@ -4417,6 +5526,16 @@ impl InstEncoding for OpUMod {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUMod {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4456,6 +5575,16 @@ impl InstEncoding for OpSRem {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSRem {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSMod {
@@ -4493,6 +5622,16 @@ impl InstEncoding for OpSMod {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSMod {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4532,6 +5671,16 @@ impl InstEncoding for OpFRem {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFRem {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFMod {
@@ -4569,6 +5718,16 @@ impl InstEncoding for OpFMod {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFMod {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4608,6 +5767,16 @@ impl InstEncoding for OpVectorTimesScalar {
             scalar: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpVectorTimesScalar {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.vector.dis(_ctx),
+            self.scalar.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpMatrixTimesScalar {
@@ -4645,6 +5814,16 @@ impl InstEncoding for OpMatrixTimesScalar {
             matrix: OperandEncoding::decode(&mut op_reader)?,
             scalar: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpMatrixTimesScalar {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.matrix.dis(_ctx),
+            self.scalar.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4684,6 +5863,16 @@ impl InstEncoding for OpVectorTimesMatrix {
             matrix: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpVectorTimesMatrix {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.vector.dis(_ctx),
+            self.matrix.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpMatrixTimesVector {
@@ -4721,6 +5910,16 @@ impl InstEncoding for OpMatrixTimesVector {
             matrix: OperandEncoding::decode(&mut op_reader)?,
             vector: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpMatrixTimesVector {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.matrix.dis(_ctx),
+            self.vector.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4760,6 +5959,16 @@ impl InstEncoding for OpMatrixTimesMatrix {
             right_matrix: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpMatrixTimesMatrix {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.left_matrix.dis(_ctx),
+            self.right_matrix.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpOuterProduct {
@@ -4797,6 +6006,16 @@ impl InstEncoding for OpOuterProduct {
             vector_1: OperandEncoding::decode(&mut op_reader)?,
             vector_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpOuterProduct {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.vector_1.dis(_ctx),
+            self.vector_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4836,6 +6055,16 @@ impl InstEncoding for OpDot {
             vector_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpDot {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.vector_1.dis(_ctx),
+            self.vector_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpIAddCarry {
@@ -4873,6 +6102,16 @@ impl InstEncoding for OpIAddCarry {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIAddCarry {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4912,6 +6151,16 @@ impl InstEncoding for OpISubBorrow {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpISubBorrow {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUMulExtended {
@@ -4949,6 +6198,16 @@ impl InstEncoding for OpUMulExtended {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUMulExtended {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4988,6 +6247,16 @@ impl InstEncoding for OpSMulExtended {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSMulExtended {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAny {
@@ -5021,6 +6290,15 @@ impl InstEncoding for OpAny {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             vector: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAny {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.vector.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5056,6 +6334,15 @@ impl InstEncoding for OpAll {
             vector: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAll {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.vector.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpIsNan {
@@ -5089,6 +6376,15 @@ impl InstEncoding for OpIsNan {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIsNan {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.x.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5124,6 +6420,15 @@ impl InstEncoding for OpIsInf {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIsInf {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpIsFinite {
@@ -5157,6 +6462,15 @@ impl InstEncoding for OpIsFinite {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIsFinite {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.x.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5192,6 +6506,15 @@ impl InstEncoding for OpIsNormal {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIsNormal {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSignBitSet {
@@ -5225,6 +6548,15 @@ impl InstEncoding for OpSignBitSet {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSignBitSet {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.x.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5264,6 +6596,16 @@ impl InstEncoding for OpLessOrGreater {
             y: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpLessOrGreater {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.x.dis(_ctx),
+            self.y.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpOrdered {
@@ -5301,6 +6643,16 @@ impl InstEncoding for OpOrdered {
             x: OperandEncoding::decode(&mut op_reader)?,
             y: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpOrdered {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.x.dis(_ctx),
+            self.y.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5340,6 +6692,16 @@ impl InstEncoding for OpUnordered {
             y: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUnordered {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.x.dis(_ctx),
+            self.y.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpLogicalEqual {
@@ -5377,6 +6739,16 @@ impl InstEncoding for OpLogicalEqual {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpLogicalEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5416,6 +6788,16 @@ impl InstEncoding for OpLogicalNotEqual {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpLogicalNotEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpLogicalOr {
@@ -5453,6 +6835,16 @@ impl InstEncoding for OpLogicalOr {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpLogicalOr {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5492,6 +6884,16 @@ impl InstEncoding for OpLogicalAnd {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpLogicalAnd {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpLogicalNot {
@@ -5525,6 +6927,15 @@ impl InstEncoding for OpLogicalNot {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpLogicalNot {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5568,6 +6979,17 @@ impl InstEncoding for OpSelect {
             object_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSelect {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.condition.dis(_ctx),
+            self.object_1.dis(_ctx),
+            self.object_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpIEqual {
@@ -5605,6 +7027,16 @@ impl InstEncoding for OpIEqual {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5644,6 +7076,16 @@ impl InstEncoding for OpINotEqual {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpINotEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUGreaterThan {
@@ -5681,6 +7123,16 @@ impl InstEncoding for OpUGreaterThan {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUGreaterThan {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5720,6 +7172,16 @@ impl InstEncoding for OpSGreaterThan {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSGreaterThan {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUGreaterThanEqual {
@@ -5757,6 +7219,16 @@ impl InstEncoding for OpUGreaterThanEqual {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUGreaterThanEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5796,6 +7268,16 @@ impl InstEncoding for OpSGreaterThanEqual {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSGreaterThanEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpULessThan {
@@ -5833,6 +7315,16 @@ impl InstEncoding for OpULessThan {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpULessThan {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5872,6 +7364,16 @@ impl InstEncoding for OpSLessThan {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSLessThan {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpULessThanEqual {
@@ -5909,6 +7411,16 @@ impl InstEncoding for OpULessThanEqual {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpULessThanEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5948,6 +7460,16 @@ impl InstEncoding for OpSLessThanEqual {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSLessThanEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFOrdEqual {
@@ -5985,6 +7507,16 @@ impl InstEncoding for OpFOrdEqual {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFOrdEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6024,6 +7556,16 @@ impl InstEncoding for OpFUnordEqual {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFUnordEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFOrdNotEqual {
@@ -6061,6 +7603,16 @@ impl InstEncoding for OpFOrdNotEqual {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFOrdNotEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6100,6 +7652,16 @@ impl InstEncoding for OpFUnordNotEqual {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFUnordNotEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFOrdLessThan {
@@ -6137,6 +7699,16 @@ impl InstEncoding for OpFOrdLessThan {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFOrdLessThan {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6176,6 +7748,16 @@ impl InstEncoding for OpFUnordLessThan {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFUnordLessThan {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFOrdGreaterThan {
@@ -6213,6 +7795,16 @@ impl InstEncoding for OpFOrdGreaterThan {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFOrdGreaterThan {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6252,6 +7844,16 @@ impl InstEncoding for OpFUnordGreaterThan {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFUnordGreaterThan {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFOrdLessThanEqual {
@@ -6289,6 +7891,16 @@ impl InstEncoding for OpFOrdLessThanEqual {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFOrdLessThanEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6328,6 +7940,16 @@ impl InstEncoding for OpFUnordLessThanEqual {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFUnordLessThanEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFOrdGreaterThanEqual {
@@ -6365,6 +7987,16 @@ impl InstEncoding for OpFOrdGreaterThanEqual {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFOrdGreaterThanEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6404,6 +8036,16 @@ impl InstEncoding for OpFUnordGreaterThanEqual {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFUnordGreaterThanEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpShiftRightLogical {
@@ -6441,6 +8083,16 @@ impl InstEncoding for OpShiftRightLogical {
             base: OperandEncoding::decode(&mut op_reader)?,
             shift: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpShiftRightLogical {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base.dis(_ctx),
+            self.shift.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6480,6 +8132,16 @@ impl InstEncoding for OpShiftRightArithmetic {
             shift: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpShiftRightArithmetic {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base.dis(_ctx),
+            self.shift.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpShiftLeftLogical {
@@ -6517,6 +8179,16 @@ impl InstEncoding for OpShiftLeftLogical {
             base: OperandEncoding::decode(&mut op_reader)?,
             shift: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpShiftLeftLogical {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base.dis(_ctx),
+            self.shift.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6556,6 +8228,16 @@ impl InstEncoding for OpBitwiseOr {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpBitwiseOr {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpBitwiseXor {
@@ -6593,6 +8275,16 @@ impl InstEncoding for OpBitwiseXor {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpBitwiseXor {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6632,6 +8324,16 @@ impl InstEncoding for OpBitwiseAnd {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpBitwiseAnd {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpNot {
@@ -6665,6 +8367,15 @@ impl InstEncoding for OpNot {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpNot {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6712,6 +8423,18 @@ impl InstEncoding for OpBitFieldInsert {
             count: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpBitFieldInsert {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base.dis(_ctx),
+            self.insert.dis(_ctx),
+            self.offset.dis(_ctx),
+            self.count.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpBitFieldSExtract {
@@ -6753,6 +8476,17 @@ impl InstEncoding for OpBitFieldSExtract {
             offset: OperandEncoding::decode(&mut op_reader)?,
             count: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpBitFieldSExtract {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base.dis(_ctx),
+            self.offset.dis(_ctx),
+            self.count.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6796,6 +8530,17 @@ impl InstEncoding for OpBitFieldUExtract {
             count: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpBitFieldUExtract {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base.dis(_ctx),
+            self.offset.dis(_ctx),
+            self.count.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpBitReverse {
@@ -6829,6 +8574,15 @@ impl InstEncoding for OpBitReverse {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             base: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpBitReverse {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6864,6 +8618,15 @@ impl InstEncoding for OpBitCount {
             base: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpBitCount {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpDPdx {
@@ -6897,6 +8660,15 @@ impl InstEncoding for OpDPdx {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpDPdx {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.p.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6932,6 +8704,15 @@ impl InstEncoding for OpDPdy {
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpDPdy {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.p.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFwidth {
@@ -6965,6 +8746,15 @@ impl InstEncoding for OpFwidth {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFwidth {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.p.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7000,6 +8790,15 @@ impl InstEncoding for OpDPdxFine {
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpDPdxFine {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.p.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpDPdyFine {
@@ -7033,6 +8832,15 @@ impl InstEncoding for OpDPdyFine {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpDPdyFine {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.p.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7068,6 +8876,15 @@ impl InstEncoding for OpFwidthFine {
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFwidthFine {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.p.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpDPdxCoarse {
@@ -7101,6 +8918,15 @@ impl InstEncoding for OpDPdxCoarse {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpDPdxCoarse {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.p.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7136,6 +8962,15 @@ impl InstEncoding for OpDPdyCoarse {
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpDPdyCoarse {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.p.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFwidthCoarse {
@@ -7170,6 +9005,15 @@ impl InstEncoding for OpFwidthCoarse {
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFwidthCoarse {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.p.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpEmitVertex {}
@@ -7190,6 +9034,9 @@ impl InstEncoding for OpEmitVertex {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpEmitVertex")
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpEndPrimitive {}
@@ -7209,6 +9056,9 @@ impl InstEncoding for OpEndPrimitive {
     fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpEndPrimitive")
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7235,6 +9085,9 @@ impl InstEncoding for OpEmitStreamVertex {
             stream: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpEmitStreamVertex {}", self.stream.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpEndStreamPrimitive {
@@ -7259,6 +9112,9 @@ impl InstEncoding for OpEndStreamPrimitive {
         Ok(Self {
             stream: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpEndStreamPrimitive {}", self.stream.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7294,6 +9150,15 @@ impl InstEncoding for OpControlBarrier {
             semantics: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpControlBarrier {} {} {}",
+            self.execution.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpMemoryBarrier {
@@ -7323,6 +9188,14 @@ impl InstEncoding for OpMemoryBarrier {
             memory: OperandEncoding::decode(&mut op_reader)?,
             semantics: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpMemoryBarrier {} {}",
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7366,6 +9239,17 @@ impl InstEncoding for OpAtomicLoad {
             semantics: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicLoad {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAtomicStore {
@@ -7403,6 +9287,16 @@ impl InstEncoding for OpAtomicStore {
             semantics: OperandEncoding::decode(&mut op_reader)?,
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpAtomicStore {} {} {} {}",
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx),
+            self.value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7449,6 +9343,18 @@ impl InstEncoding for OpAtomicExchange {
             semantics: OperandEncoding::decode(&mut op_reader)?,
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicExchange {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx),
+            self.value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7504,6 +9410,20 @@ impl InstEncoding for OpAtomicCompareExchange {
             comparator: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicCompareExchange {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.equal.dis(_ctx),
+            self.unequal.dis(_ctx),
+            self.value.dis(_ctx),
+            self.comparator.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAtomicCompareExchangeWeak {
@@ -7558,6 +9478,20 @@ impl InstEncoding for OpAtomicCompareExchangeWeak {
             comparator: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicCompareExchangeWeak {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.equal.dis(_ctx),
+            self.unequal.dis(_ctx),
+            self.value.dis(_ctx),
+            self.comparator.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAtomicIIncrement {
@@ -7600,6 +9534,17 @@ impl InstEncoding for OpAtomicIIncrement {
             semantics: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicIIncrement {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAtomicIDecrement {
@@ -7641,6 +9586,17 @@ impl InstEncoding for OpAtomicIDecrement {
             memory: OperandEncoding::decode(&mut op_reader)?,
             semantics: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicIDecrement {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7688,6 +9644,18 @@ impl InstEncoding for OpAtomicIAdd {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicIAdd {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAtomicISub {
@@ -7733,6 +9701,18 @@ impl InstEncoding for OpAtomicISub {
             semantics: OperandEncoding::decode(&mut op_reader)?,
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicISub {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx),
+            self.value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7780,6 +9760,18 @@ impl InstEncoding for OpAtomicSMin {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicSMin {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAtomicUMin {
@@ -7825,6 +9817,18 @@ impl InstEncoding for OpAtomicUMin {
             semantics: OperandEncoding::decode(&mut op_reader)?,
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicUMin {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx),
+            self.value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7872,6 +9876,18 @@ impl InstEncoding for OpAtomicSMax {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicSMax {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAtomicUMax {
@@ -7917,6 +9933,18 @@ impl InstEncoding for OpAtomicUMax {
             semantics: OperandEncoding::decode(&mut op_reader)?,
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicUMax {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx),
+            self.value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7964,6 +9992,18 @@ impl InstEncoding for OpAtomicAnd {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicAnd {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAtomicOr {
@@ -8009,6 +10049,18 @@ impl InstEncoding for OpAtomicOr {
             semantics: OperandEncoding::decode(&mut op_reader)?,
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicOr {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx),
+            self.value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -8056,6 +10108,18 @@ impl InstEncoding for OpAtomicXor {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicXor {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpPhi {
@@ -8089,6 +10153,15 @@ impl InstEncoding for OpPhi {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             pair_id_ref_id_ref: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpPhi {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pair_id_ref_id_ref.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -8124,6 +10197,15 @@ impl InstEncoding for OpLoopMerge {
             loop_control: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpLoopMerge {} {} {}",
+            self.merge_block.dis(_ctx),
+            self.continue_target.dis(_ctx),
+            self.loop_control.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSelectionMerge {
@@ -8154,6 +10236,14 @@ impl InstEncoding for OpSelectionMerge {
             selection_control: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSelectionMerge {} {}",
+            self.merge_block.dis(_ctx),
+            self.selection_control.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpLabel {
@@ -8179,6 +10269,9 @@ impl InstEncoding for OpLabel {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpLabel", self.id_result.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpBranch {
@@ -8203,6 +10296,9 @@ impl InstEncoding for OpBranch {
         Ok(Self {
             target_label: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpBranch {}", self.target_label.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -8242,6 +10338,16 @@ impl InstEncoding for OpBranchConditional {
             branch_weights: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpBranchConditional {} {} {} {}",
+            self.condition.dis(_ctx),
+            self.true_label.dis(_ctx),
+            self.false_label.dis(_ctx),
+            self.branch_weights.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSwitch {
@@ -8276,6 +10382,15 @@ impl InstEncoding for OpSwitch {
             target: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSwitch {} {} {}",
+            self.selector.dis(_ctx),
+            self.default.dis(_ctx),
+            self.target.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpKill {}
@@ -8296,6 +10411,9 @@ impl InstEncoding for OpKill {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpKill")
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpReturn {}
@@ -8315,6 +10433,9 @@ impl InstEncoding for OpReturn {
     fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpReturn")
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -8341,6 +10462,9 @@ impl InstEncoding for OpReturnValue {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpReturnValue {}", self.value.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUnreachable {}
@@ -8360,6 +10484,9 @@ impl InstEncoding for OpUnreachable {
     fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpUnreachable")
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -8390,6 +10517,14 @@ impl InstEncoding for OpLifetimeStart {
             size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpLifetimeStart {} {}",
+            self.pointer.dis(_ctx),
+            self.size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpLifetimeStop {
@@ -8418,6 +10553,14 @@ impl InstEncoding for OpLifetimeStop {
             pointer: OperandEncoding::decode(&mut op_reader)?,
             size: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpLifetimeStop {} {}",
+            self.pointer.dis(_ctx),
+            self.size.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -8473,6 +10616,20 @@ impl InstEncoding for OpGroupAsyncCopy {
             event: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupAsyncCopy {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.destination.dis(_ctx),
+            self.source.dis(_ctx),
+            self.num_elements.dis(_ctx),
+            self.stride.dis(_ctx),
+            self.event.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupWaitEvents {
@@ -8506,6 +10663,15 @@ impl InstEncoding for OpGroupWaitEvents {
             num_events: OperandEncoding::decode(&mut op_reader)?,
             events_list: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpGroupWaitEvents {} {} {}",
+            self.execution.dis(_ctx),
+            self.num_events.dis(_ctx),
+            self.events_list.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -8545,6 +10711,16 @@ impl InstEncoding for OpGroupAll {
             predicate: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupAll {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.predicate.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupAny {
@@ -8582,6 +10758,16 @@ impl InstEncoding for OpGroupAny {
             execution: OperandEncoding::decode(&mut op_reader)?,
             predicate: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupAny {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.predicate.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -8625,6 +10811,17 @@ impl InstEncoding for OpGroupBroadcast {
             local_id: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupBroadcast {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.value.dis(_ctx),
+            self.local_id.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupIAdd {
@@ -8666,6 +10863,17 @@ impl InstEncoding for OpGroupIAdd {
             operation: OperandEncoding::decode(&mut op_reader)?,
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupIAdd {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -8709,6 +10917,17 @@ impl InstEncoding for OpGroupFAdd {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupFAdd {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupFMin {
@@ -8750,6 +10969,17 @@ impl InstEncoding for OpGroupFMin {
             operation: OperandEncoding::decode(&mut op_reader)?,
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupFMin {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -8793,6 +11023,17 @@ impl InstEncoding for OpGroupUMin {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupUMin {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupSMin {
@@ -8834,6 +11075,17 @@ impl InstEncoding for OpGroupSMin {
             operation: OperandEncoding::decode(&mut op_reader)?,
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupSMin {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -8877,6 +11129,17 @@ impl InstEncoding for OpGroupFMax {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupFMax {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupUMax {
@@ -8919,6 +11182,17 @@ impl InstEncoding for OpGroupUMax {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupUMax {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupSMax {
@@ -8960,6 +11234,17 @@ impl InstEncoding for OpGroupSMax {
             operation: OperandEncoding::decode(&mut op_reader)?,
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupSMax {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9007,6 +11292,18 @@ impl InstEncoding for OpReadPipe {
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpReadPipe {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pipe.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpWritePipe {
@@ -9052,6 +11349,18 @@ impl InstEncoding for OpWritePipe {
             packet_size: OperandEncoding::decode(&mut op_reader)?,
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpWritePipe {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pipe.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9107,6 +11416,20 @@ impl InstEncoding for OpReservedReadPipe {
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpReservedReadPipe {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pipe.dis(_ctx),
+            self.reserve_id.dis(_ctx),
+            self.index.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpReservedWritePipe {
@@ -9161,6 +11484,20 @@ impl InstEncoding for OpReservedWritePipe {
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpReservedWritePipe {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pipe.dis(_ctx),
+            self.reserve_id.dis(_ctx),
+            self.index.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpReserveReadPipePackets {
@@ -9206,6 +11543,18 @@ impl InstEncoding for OpReserveReadPipePackets {
             packet_size: OperandEncoding::decode(&mut op_reader)?,
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpReserveReadPipePackets {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pipe.dis(_ctx),
+            self.num_packets.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9253,6 +11602,18 @@ impl InstEncoding for OpReserveWritePipePackets {
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpReserveWritePipePackets {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pipe.dis(_ctx),
+            self.num_packets.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCommitReadPipe {
@@ -9290,6 +11651,16 @@ impl InstEncoding for OpCommitReadPipe {
             packet_size: OperandEncoding::decode(&mut op_reader)?,
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpCommitReadPipe {} {} {} {}",
+            self.pipe.dis(_ctx),
+            self.reserve_id.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9329,6 +11700,16 @@ impl InstEncoding for OpCommitWritePipe {
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpCommitWritePipe {} {} {} {}",
+            self.pipe.dis(_ctx),
+            self.reserve_id.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpIsValidReserveId {
@@ -9362,6 +11743,15 @@ impl InstEncoding for OpIsValidReserveId {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             reserve_id: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIsValidReserveId {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.reserve_id.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9405,6 +11795,17 @@ impl InstEncoding for OpGetNumPipePackets {
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGetNumPipePackets {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pipe.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGetMaxPipePackets {
@@ -9446,6 +11847,17 @@ impl InstEncoding for OpGetMaxPipePackets {
             packet_size: OperandEncoding::decode(&mut op_reader)?,
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGetMaxPipePackets {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pipe.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9497,6 +11909,19 @@ impl InstEncoding for OpGroupReserveReadPipePackets {
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupReserveReadPipePackets {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.pipe.dis(_ctx),
+            self.num_packets.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupReserveWritePipePackets {
@@ -9547,6 +11972,19 @@ impl InstEncoding for OpGroupReserveWritePipePackets {
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupReserveWritePipePackets {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.pipe.dis(_ctx),
+            self.num_packets.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupCommitReadPipe {
@@ -9589,6 +12027,17 @@ impl InstEncoding for OpGroupCommitReadPipe {
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpGroupCommitReadPipe {} {} {} {} {}",
+            self.execution.dis(_ctx),
+            self.pipe.dis(_ctx),
+            self.reserve_id.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupCommitWritePipe {
@@ -9630,6 +12079,17 @@ impl InstEncoding for OpGroupCommitWritePipe {
             packet_size: OperandEncoding::decode(&mut op_reader)?,
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpGroupCommitWritePipe {} {} {} {} {}",
+            self.execution.dis(_ctx),
+            self.pipe.dis(_ctx),
+            self.reserve_id.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9676,6 +12136,18 @@ impl InstEncoding for OpEnqueueMarker {
             wait_events: OperandEncoding::decode(&mut op_reader)?,
             ret_event: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpEnqueueMarker {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.queue.dis(_ctx),
+            self.num_events.dis(_ctx),
+            self.wait_events.dis(_ctx),
+            self.ret_event.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9751,6 +12223,25 @@ impl InstEncoding for OpEnqueueKernel {
             local_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpEnqueueKernel {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.queue.dis(_ctx),
+            self.flags.dis(_ctx),
+            self.nd_range.dis(_ctx),
+            self.num_events.dis(_ctx),
+            self.wait_events.dis(_ctx),
+            self.ret_event.dis(_ctx),
+            self.invoke.dis(_ctx),
+            self.param.dis(_ctx),
+            self.param_size.dis(_ctx),
+            self.param_align.dis(_ctx),
+            self.local_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGetKernelNDrangeSubGroupCount {
@@ -9800,6 +12291,19 @@ impl InstEncoding for OpGetKernelNDrangeSubGroupCount {
             param_size: OperandEncoding::decode(&mut op_reader)?,
             param_align: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGetKernelNDrangeSubGroupCount {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.nd_range.dis(_ctx),
+            self.invoke.dis(_ctx),
+            self.param.dis(_ctx),
+            self.param_size.dis(_ctx),
+            self.param_align.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9851,6 +12355,19 @@ impl InstEncoding for OpGetKernelNDrangeMaxSubGroupSize {
             param_align: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGetKernelNDrangeMaxSubGroupSize {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.nd_range.dis(_ctx),
+            self.invoke.dis(_ctx),
+            self.param.dis(_ctx),
+            self.param_size.dis(_ctx),
+            self.param_align.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGetKernelWorkGroupSize {
@@ -9896,6 +12413,18 @@ impl InstEncoding for OpGetKernelWorkGroupSize {
             param_size: OperandEncoding::decode(&mut op_reader)?,
             param_align: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGetKernelWorkGroupSize {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.invoke.dis(_ctx),
+            self.param.dis(_ctx),
+            self.param_size.dis(_ctx),
+            self.param_align.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9943,6 +12472,18 @@ impl InstEncoding for OpGetKernelPreferredWorkGroupSizeMultiple {
             param_align: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGetKernelPreferredWorkGroupSizeMultiple {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.invoke.dis(_ctx),
+            self.param.dis(_ctx),
+            self.param_size.dis(_ctx),
+            self.param_align.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRetainEvent {
@@ -9968,6 +12509,9 @@ impl InstEncoding for OpRetainEvent {
             event: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpRetainEvent {}", self.event.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpReleaseEvent {
@@ -9992,6 +12536,9 @@ impl InstEncoding for OpReleaseEvent {
         Ok(Self {
             event: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpReleaseEvent {}", self.event.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10022,6 +12569,14 @@ impl InstEncoding for OpCreateUserEvent {
             id_result_type: OperandEncoding::decode(&mut op_reader)?,
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCreateUserEvent {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10057,6 +12612,15 @@ impl InstEncoding for OpIsValidEvent {
             event: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIsValidEvent {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.event.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSetUserEventStatus {
@@ -10085,6 +12649,14 @@ impl InstEncoding for OpSetUserEventStatus {
             event: OperandEncoding::decode(&mut op_reader)?,
             status: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSetUserEventStatus {} {}",
+            self.event.dis(_ctx),
+            self.status.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10120,6 +12692,15 @@ impl InstEncoding for OpCaptureEventProfilingInfo {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpCaptureEventProfilingInfo {} {} {}",
+            self.event.dis(_ctx),
+            self.profiling_info.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGetDefaultQueue {
@@ -10149,6 +12730,14 @@ impl InstEncoding for OpGetDefaultQueue {
             id_result_type: OperandEncoding::decode(&mut op_reader)?,
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGetDefaultQueue {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10192,6 +12781,17 @@ impl InstEncoding for OpBuildNDRange {
             global_work_offset: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpBuildNDRange {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.global_work_size.dis(_ctx),
+            self.local_work_size.dis(_ctx),
+            self.global_work_offset.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageSparseSampleImplicitLod {
@@ -10234,6 +12834,17 @@ impl InstEncoding for OpImageSparseSampleImplicitLod {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSparseSampleImplicitLod {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageSparseSampleExplicitLod {
@@ -10275,6 +12886,17 @@ impl InstEncoding for OpImageSparseSampleExplicitLod {
             coordinate: OperandEncoding::decode(&mut op_reader)?,
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSparseSampleExplicitLod {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10322,6 +12944,18 @@ impl InstEncoding for OpImageSparseSampleDrefImplicitLod {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSparseSampleDrefImplicitLod {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.id_ref.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageSparseSampleDrefExplicitLod {
@@ -10368,6 +13002,18 @@ impl InstEncoding for OpImageSparseSampleDrefExplicitLod {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSparseSampleDrefExplicitLod {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.id_ref.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageSparseSampleProjImplicitLod {
@@ -10410,6 +13056,17 @@ impl InstEncoding for OpImageSparseSampleProjImplicitLod {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSparseSampleProjImplicitLod {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageSparseSampleProjExplicitLod {
@@ -10451,6 +13108,17 @@ impl InstEncoding for OpImageSparseSampleProjExplicitLod {
             coordinate: OperandEncoding::decode(&mut op_reader)?,
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSparseSampleProjExplicitLod {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10498,6 +13166,18 @@ impl InstEncoding for OpImageSparseSampleProjDrefImplicitLod {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSparseSampleProjDrefImplicitLod {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.id_ref.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageSparseSampleProjDrefExplicitLod {
@@ -10544,6 +13224,18 @@ impl InstEncoding for OpImageSparseSampleProjDrefExplicitLod {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSparseSampleProjDrefExplicitLod {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.id_ref.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageSparseFetch {
@@ -10585,6 +13277,17 @@ impl InstEncoding for OpImageSparseFetch {
             coordinate: OperandEncoding::decode(&mut op_reader)?,
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSparseFetch {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10632,6 +13335,18 @@ impl InstEncoding for OpImageSparseGather {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSparseGather {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.component.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageSparseDrefGather {
@@ -10678,6 +13393,18 @@ impl InstEncoding for OpImageSparseDrefGather {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSparseDrefGather {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.id_ref.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageSparseTexelsResident {
@@ -10712,6 +13439,15 @@ impl InstEncoding for OpImageSparseTexelsResident {
             resident_code: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSparseTexelsResident {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.resident_code.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpNoLine {}
@@ -10731,6 +13467,9 @@ impl InstEncoding for OpNoLine {
     fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpNoLine")
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10774,6 +13513,17 @@ impl InstEncoding for OpAtomicFlagTestAndSet {
             semantics: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicFlagTestAndSet {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAtomicFlagClear {
@@ -10807,6 +13557,15 @@ impl InstEncoding for OpAtomicFlagClear {
             memory: OperandEncoding::decode(&mut op_reader)?,
             semantics: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpAtomicFlagClear {} {} {}",
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10850,6 +13609,17 @@ impl InstEncoding for OpImageSparseRead {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSparseRead {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSizeOf {
@@ -10884,6 +13654,15 @@ impl InstEncoding for OpSizeOf {
             pointer: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSizeOf {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypePipeStorage {
@@ -10908,6 +13687,9 @@ impl InstEncoding for OpTypePipeStorage {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypePipeStorage", self.id_result.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10951,6 +13733,17 @@ impl InstEncoding for OpConstantPipeStorage {
             capacity: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConstantPipeStorage {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx),
+            self.capacity.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCreatePipeFromPipeStorage {
@@ -10984,6 +13777,15 @@ impl InstEncoding for OpCreatePipeFromPipeStorage {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             pipe_storage: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCreatePipeFromPipeStorage {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pipe_storage.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -11035,6 +13837,19 @@ impl InstEncoding for OpGetKernelLocalSizeForSubgroupCount {
             param_align: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGetKernelLocalSizeForSubgroupCount {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.subgroup_count.dis(_ctx),
+            self.invoke.dis(_ctx),
+            self.param.dis(_ctx),
+            self.param_size.dis(_ctx),
+            self.param_align.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGetKernelMaxNumSubgroups {
@@ -11081,6 +13896,18 @@ impl InstEncoding for OpGetKernelMaxNumSubgroups {
             param_align: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGetKernelMaxNumSubgroups {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.invoke.dis(_ctx),
+            self.param.dis(_ctx),
+            self.param_size.dis(_ctx),
+            self.param_align.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeNamedBarrier {
@@ -11105,6 +13932,9 @@ impl InstEncoding for OpTypeNamedBarrier {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeNamedBarrier", self.id_result.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -11140,6 +13970,15 @@ impl InstEncoding for OpNamedBarrierInitialize {
             subgroup_count: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpNamedBarrierInitialize {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.subgroup_count.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpMemoryNamedBarrier {
@@ -11174,6 +14013,15 @@ impl InstEncoding for OpMemoryNamedBarrier {
             semantics: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpMemoryNamedBarrier {} {} {}",
+            self.named_barrier.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpModuleProcessed {
@@ -11198,6 +14046,9 @@ impl InstEncoding for OpModuleProcessed {
         Ok(Self {
             process: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpModuleProcessed {}", self.process.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -11229,6 +14080,14 @@ impl InstEncoding for OpExecutionModeId {
             mode: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpExecutionModeId {} {}",
+            self.entry_point.dis(_ctx),
+            self.mode.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpDecorateId {
@@ -11258,6 +14117,14 @@ impl InstEncoding for OpDecorateId {
             target: OperandEncoding::decode(&mut op_reader)?,
             decoration: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpDecorateId {} {}",
+            self.target.dis(_ctx),
+            self.decoration.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -11292,6 +14159,15 @@ impl InstEncoding for OpGroupNonUniformElect {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             execution: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformElect {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -11331,6 +14207,16 @@ impl InstEncoding for OpGroupNonUniformAll {
             predicate: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformAll {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.predicate.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformAny {
@@ -11369,6 +14255,16 @@ impl InstEncoding for OpGroupNonUniformAny {
             predicate: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformAny {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.predicate.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformAllEqual {
@@ -11406,6 +14302,16 @@ impl InstEncoding for OpGroupNonUniformAllEqual {
             execution: OperandEncoding::decode(&mut op_reader)?,
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformAllEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -11449,6 +14355,17 @@ impl InstEncoding for OpGroupNonUniformBroadcast {
             invocation_id: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformBroadcast {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.value.dis(_ctx),
+            self.invocation_id.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformBroadcastFirst {
@@ -11486,6 +14403,16 @@ impl InstEncoding for OpGroupNonUniformBroadcastFirst {
             execution: OperandEncoding::decode(&mut op_reader)?,
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformBroadcastFirst {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -11525,6 +14452,16 @@ impl InstEncoding for OpGroupNonUniformBallot {
             predicate: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformBallot {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.predicate.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformInverseBallot {
@@ -11562,6 +14499,16 @@ impl InstEncoding for OpGroupNonUniformInverseBallot {
             execution: OperandEncoding::decode(&mut op_reader)?,
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformInverseBallot {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -11605,6 +14552,17 @@ impl InstEncoding for OpGroupNonUniformBallotBitExtract {
             index: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformBallotBitExtract {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.value.dis(_ctx),
+            self.index.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformBallotBitCount {
@@ -11647,6 +14605,17 @@ impl InstEncoding for OpGroupNonUniformBallotBitCount {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformBallotBitCount {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformBallotFindLSB {
@@ -11685,6 +14654,16 @@ impl InstEncoding for OpGroupNonUniformBallotFindLSB {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformBallotFindLSB {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformBallotFindMSB {
@@ -11722,6 +14701,16 @@ impl InstEncoding for OpGroupNonUniformBallotFindMSB {
             execution: OperandEncoding::decode(&mut op_reader)?,
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformBallotFindMSB {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -11765,6 +14754,17 @@ impl InstEncoding for OpGroupNonUniformShuffle {
             invocation_id: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformShuffle {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.value.dis(_ctx),
+            self.invocation_id.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformShuffleXor {
@@ -11806,6 +14806,17 @@ impl InstEncoding for OpGroupNonUniformShuffleXor {
             value: OperandEncoding::decode(&mut op_reader)?,
             mask: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformShuffleXor {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.value.dis(_ctx),
+            self.mask.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -11849,6 +14860,17 @@ impl InstEncoding for OpGroupNonUniformShuffleUp {
             delta: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformShuffleUp {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.value.dis(_ctx),
+            self.delta.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformShuffleDown {
@@ -11890,6 +14912,17 @@ impl InstEncoding for OpGroupNonUniformShuffleDown {
             value: OperandEncoding::decode(&mut op_reader)?,
             delta: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformShuffleDown {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.value.dis(_ctx),
+            self.delta.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -11937,6 +14970,18 @@ impl InstEncoding for OpGroupNonUniformIAdd {
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformIAdd {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformFAdd {
@@ -11982,6 +15027,18 @@ impl InstEncoding for OpGroupNonUniformFAdd {
             value: OperandEncoding::decode(&mut op_reader)?,
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformFAdd {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -12029,6 +15086,18 @@ impl InstEncoding for OpGroupNonUniformIMul {
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformIMul {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformFMul {
@@ -12074,6 +15143,18 @@ impl InstEncoding for OpGroupNonUniformFMul {
             value: OperandEncoding::decode(&mut op_reader)?,
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformFMul {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -12121,6 +15202,18 @@ impl InstEncoding for OpGroupNonUniformSMin {
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformSMin {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformUMin {
@@ -12166,6 +15259,18 @@ impl InstEncoding for OpGroupNonUniformUMin {
             value: OperandEncoding::decode(&mut op_reader)?,
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformUMin {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -12213,6 +15318,18 @@ impl InstEncoding for OpGroupNonUniformFMin {
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformFMin {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformSMax {
@@ -12258,6 +15375,18 @@ impl InstEncoding for OpGroupNonUniformSMax {
             value: OperandEncoding::decode(&mut op_reader)?,
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformSMax {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -12305,6 +15434,18 @@ impl InstEncoding for OpGroupNonUniformUMax {
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformUMax {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformFMax {
@@ -12350,6 +15491,18 @@ impl InstEncoding for OpGroupNonUniformFMax {
             value: OperandEncoding::decode(&mut op_reader)?,
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformFMax {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -12397,6 +15550,18 @@ impl InstEncoding for OpGroupNonUniformBitwiseAnd {
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformBitwiseAnd {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformBitwiseOr {
@@ -12442,6 +15607,18 @@ impl InstEncoding for OpGroupNonUniformBitwiseOr {
             value: OperandEncoding::decode(&mut op_reader)?,
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformBitwiseOr {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -12489,6 +15666,18 @@ impl InstEncoding for OpGroupNonUniformBitwiseXor {
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformBitwiseXor {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformLogicalAnd {
@@ -12534,6 +15723,18 @@ impl InstEncoding for OpGroupNonUniformLogicalAnd {
             value: OperandEncoding::decode(&mut op_reader)?,
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformLogicalAnd {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -12581,6 +15782,18 @@ impl InstEncoding for OpGroupNonUniformLogicalOr {
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformLogicalOr {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformLogicalXor {
@@ -12627,6 +15840,18 @@ impl InstEncoding for OpGroupNonUniformLogicalXor {
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformLogicalXor {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.value.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformQuadBroadcast {
@@ -12668,6 +15893,17 @@ impl InstEncoding for OpGroupNonUniformQuadBroadcast {
             value: OperandEncoding::decode(&mut op_reader)?,
             index: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformQuadBroadcast {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.value.dis(_ctx),
+            self.index.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -12711,6 +15947,17 @@ impl InstEncoding for OpGroupNonUniformQuadSwap {
             direction: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformQuadSwap {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.value.dis(_ctx),
+            self.direction.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCopyLogical {
@@ -12744,6 +15991,15 @@ impl InstEncoding for OpCopyLogical {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCopyLogical {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -12783,6 +16039,16 @@ impl InstEncoding for OpPtrEqual {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpPtrEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpPtrNotEqual {
@@ -12820,6 +16086,16 @@ impl InstEncoding for OpPtrNotEqual {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpPtrNotEqual {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -12859,6 +16135,16 @@ impl InstEncoding for OpPtrDiff {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpPtrDiff {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpColorAttachmentReadEXT {
@@ -12897,6 +16183,16 @@ impl InstEncoding for OpColorAttachmentReadEXT {
             sample: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpColorAttachmentReadEXT {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.attachment.dis(_ctx),
+            self.sample.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpDepthAttachmentReadEXT {
@@ -12931,6 +16227,15 @@ impl InstEncoding for OpDepthAttachmentReadEXT {
             sample: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpDepthAttachmentReadEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sample.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpStencilAttachmentReadEXT {
@@ -12964,6 +16269,15 @@ impl InstEncoding for OpStencilAttachmentReadEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             sample: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpStencilAttachmentReadEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sample.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -13002,6 +16316,16 @@ impl InstEncoding for OpTypeTensorARM {
             rank: OperandEncoding::decode(&mut op_reader)?,
             shape: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeTensorARM {} {} {}",
+            self.id_result.dis(_ctx),
+            self.element_type.dis(_ctx),
+            self.rank.dis(_ctx),
+            self.shape.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -13045,6 +16369,17 @@ impl InstEncoding for OpTensorReadARM {
             tensor_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTensorReadARM {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.tensor.dis(_ctx),
+            self.coordinates.dis(_ctx),
+            self.tensor_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTensorWriteARM {
@@ -13082,6 +16417,16 @@ impl InstEncoding for OpTensorWriteARM {
             object: OperandEncoding::decode(&mut op_reader)?,
             tensor_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpTensorWriteARM {} {} {} {}",
+            self.tensor.dis(_ctx),
+            self.coordinates.dis(_ctx),
+            self.object.dis(_ctx),
+            self.tensor_operands.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -13121,6 +16466,16 @@ impl InstEncoding for OpTensorQuerySizeARM {
             dimension: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTensorQuerySizeARM {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.tensor.dis(_ctx),
+            self.dimension.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGraphConstantARM {
@@ -13154,6 +16509,15 @@ impl InstEncoding for OpGraphConstantARM {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             graph_constant_id: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGraphConstantARM {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.graph_constant_id.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -13189,6 +16553,15 @@ impl InstEncoding for OpGraphEntryPointARM {
             interface: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpGraphEntryPointARM {} {} {}",
+            self.graph.dis(_ctx),
+            self.name.dis(_ctx),
+            self.interface.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGraphARM {
@@ -13218,6 +16591,14 @@ impl InstEncoding for OpGraphARM {
             id_result_type: OperandEncoding::decode(&mut op_reader)?,
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGraphARM {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -13257,6 +16638,16 @@ impl InstEncoding for OpGraphInputARM {
             element_index: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGraphInputARM {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.input_index.dis(_ctx),
+            self.element_index.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGraphSetOutputARM {
@@ -13291,6 +16682,15 @@ impl InstEncoding for OpGraphSetOutputARM {
             element_index: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpGraphSetOutputARM {} {} {}",
+            self.value.dis(_ctx),
+            self.output_index.dis(_ctx),
+            self.element_index.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGraphEndARM {}
@@ -13310,6 +16710,9 @@ impl InstEncoding for OpGraphEndARM {
     fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpGraphEndARM")
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -13345,6 +16748,15 @@ impl InstEncoding for OpTypeGraphARM {
             in_out_types: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeGraphARM {} {}",
+            self.id_result.dis(_ctx),
+            self.num_inputs.dis(_ctx),
+            self.in_out_types.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTerminateInvocation {}
@@ -13364,6 +16776,9 @@ impl InstEncoding for OpTerminateInvocation {
     fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpTerminateInvocation")
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -13394,6 +16809,14 @@ impl InstEncoding for OpTypeUntypedPointerKHR {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             storage_class: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeUntypedPointerKHR {}",
+            self.id_result.dis(_ctx),
+            self.storage_class.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -13437,6 +16860,17 @@ impl InstEncoding for OpUntypedVariableKHR {
             initializer: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUntypedVariableKHR {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.storage_class.dis(_ctx),
+            self.data_type.dis(_ctx),
+            self.initializer.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUntypedAccessChainKHR {
@@ -13478,6 +16912,17 @@ impl InstEncoding for OpUntypedAccessChainKHR {
             base: OperandEncoding::decode(&mut op_reader)?,
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUntypedAccessChainKHR {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base_type.dis(_ctx),
+            self.base.dis(_ctx),
+            self.indexes.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -13521,6 +16966,17 @@ impl InstEncoding for OpUntypedInBoundsAccessChainKHR {
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUntypedInBoundsAccessChainKHR {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base_type.dis(_ctx),
+            self.base.dis(_ctx),
+            self.indexes.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupBallotKHR {
@@ -13555,6 +17011,15 @@ impl InstEncoding for OpSubgroupBallotKHR {
             predicate: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupBallotKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.predicate.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupFirstInvocationKHR {
@@ -13588,6 +17053,15 @@ impl InstEncoding for OpSubgroupFirstInvocationKHR {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupFirstInvocationKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -13635,6 +17109,18 @@ impl InstEncoding for OpUntypedPtrAccessChainKHR {
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUntypedPtrAccessChainKHR {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base_type.dis(_ctx),
+            self.base.dis(_ctx),
+            self.element.dis(_ctx),
+            self.indexes.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUntypedInBoundsPtrAccessChainKHR {
@@ -13681,6 +17167,18 @@ impl InstEncoding for OpUntypedInBoundsPtrAccessChainKHR {
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUntypedInBoundsPtrAccessChainKHR {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base_type.dis(_ctx),
+            self.base.dis(_ctx),
+            self.element.dis(_ctx),
+            self.indexes.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUntypedArrayLengthKHR {
@@ -13722,6 +17220,17 @@ impl InstEncoding for OpUntypedArrayLengthKHR {
             pointer: OperandEncoding::decode(&mut op_reader)?,
             array_member: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUntypedArrayLengthKHR {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.structure.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.array_member.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -13765,6 +17274,17 @@ impl InstEncoding for OpUntypedPrefetchKHR {
             cache_type: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpUntypedPrefetchKHR {} {} {} {} {}",
+            self.pointer_type.dis(_ctx),
+            self.num_bytes.dis(_ctx),
+            self.rw.dis(_ctx),
+            self.locality.dis(_ctx),
+            self.cache_type.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFmaKHR {
@@ -13807,6 +17327,17 @@ impl InstEncoding for OpFmaKHR {
             operand_3: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFmaKHR {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx),
+            self.operand_3.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAllKHR {
@@ -13840,6 +17371,15 @@ impl InstEncoding for OpSubgroupAllKHR {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             predicate: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAllKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.predicate.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -13875,6 +17415,15 @@ impl InstEncoding for OpSubgroupAnyKHR {
             predicate: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAnyKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.predicate.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAllEqualKHR {
@@ -13908,6 +17457,15 @@ impl InstEncoding for OpSubgroupAllEqualKHR {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             predicate: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAllEqualKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.predicate.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -13955,6 +17513,18 @@ impl InstEncoding for OpGroupNonUniformRotateKHR {
             cluster_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformRotateKHR {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.value.dis(_ctx),
+            self.delta.dis(_ctx),
+            self.cluster_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupReadInvocationKHR {
@@ -13992,6 +17562,16 @@ impl InstEncoding for OpSubgroupReadInvocationKHR {
             value: OperandEncoding::decode(&mut op_reader)?,
             index: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupReadInvocationKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.value.dis(_ctx),
+            self.index.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -14034,6 +17614,17 @@ impl InstEncoding for OpExtInstWithForwardRefsKHR {
             instruction: OperandEncoding::decode(&mut op_reader)?,
             id_ref: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpExtInstWithForwardRefsKHR {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.set.dis(_ctx),
+            self.instruction.dis(_ctx),
+            self.id_ref.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -14101,6 +17692,23 @@ impl InstEncoding for OpUntypedGroupAsyncCopyKHR {
             source_memory_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUntypedGroupAsyncCopyKHR {} {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.destination.dis(_ctx),
+            self.source.dis(_ctx),
+            self.element_num_bytes.dis(_ctx),
+            self.num_elements.dis(_ctx),
+            self.stride.dis(_ctx),
+            self.event.dis(_ctx),
+            self.destination_memory_operands.dis(_ctx),
+            self.source_memory_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTraceRayKHR {
@@ -14167,6 +17775,23 @@ impl InstEncoding for OpTraceRayKHR {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpTraceRayKHR {} {} {} {} {} {} {} {} {} {} {}",
+            self.accel.dis(_ctx),
+            self.ray_flags.dis(_ctx),
+            self.cull_mask.dis(_ctx),
+            self.sbt_offset.dis(_ctx),
+            self.sbt_stride.dis(_ctx),
+            self.miss_index.dis(_ctx),
+            self.ray_origin.dis(_ctx),
+            self.ray_tmin.dis(_ctx),
+            self.ray_direction.dis(_ctx),
+            self.ray_tmax.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpExecuteCallableKHR {
@@ -14196,6 +17821,14 @@ impl InstEncoding for OpExecuteCallableKHR {
             sbt_index: OperandEncoding::decode(&mut op_reader)?,
             callable_data: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpExecuteCallableKHR {} {}",
+            self.sbt_index.dis(_ctx),
+            self.callable_data.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -14231,6 +17864,15 @@ impl InstEncoding for OpConvertUToAccelerationStructureKHR {
             accel: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertUToAccelerationStructureKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.accel.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpIgnoreIntersectionKHR {}
@@ -14251,6 +17893,9 @@ impl InstEncoding for OpIgnoreIntersectionKHR {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpIgnoreIntersectionKHR")
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTerminateRayKHR {}
@@ -14270,6 +17915,9 @@ impl InstEncoding for OpTerminateRayKHR {
     fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpTerminateRayKHR")
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -14313,6 +17961,17 @@ impl InstEncoding for OpSDot {
             packed_vector_format: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSDot {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.vector_1.dis(_ctx),
+            self.vector_2.dis(_ctx),
+            self.packed_vector_format.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUDot {
@@ -14355,6 +18014,17 @@ impl InstEncoding for OpUDot {
             packed_vector_format: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUDot {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.vector_1.dis(_ctx),
+            self.vector_2.dis(_ctx),
+            self.packed_vector_format.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSUDot {
@@ -14396,6 +18066,17 @@ impl InstEncoding for OpSUDot {
             vector_2: OperandEncoding::decode(&mut op_reader)?,
             packed_vector_format: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSUDot {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.vector_1.dis(_ctx),
+            self.vector_2.dis(_ctx),
+            self.packed_vector_format.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -14443,6 +18124,18 @@ impl InstEncoding for OpSDotAccSat {
             packed_vector_format: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSDotAccSat {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.vector_1.dis(_ctx),
+            self.vector_2.dis(_ctx),
+            self.accumulator.dis(_ctx),
+            self.packed_vector_format.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUDotAccSat {
@@ -14488,6 +18181,18 @@ impl InstEncoding for OpUDotAccSat {
             accumulator: OperandEncoding::decode(&mut op_reader)?,
             packed_vector_format: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUDotAccSat {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.vector_1.dis(_ctx),
+            self.vector_2.dis(_ctx),
+            self.accumulator.dis(_ctx),
+            self.packed_vector_format.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -14535,6 +18240,18 @@ impl InstEncoding for OpSUDotAccSat {
             packed_vector_format: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSUDotAccSat {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.vector_1.dis(_ctx),
+            self.vector_2.dis(_ctx),
+            self.accumulator.dis(_ctx),
+            self.packed_vector_format.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeCooperativeMatrixKHR {
@@ -14580,6 +18297,18 @@ impl InstEncoding for OpTypeCooperativeMatrixKHR {
             columns: OperandEncoding::decode(&mut op_reader)?,
             usage: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeCooperativeMatrixKHR {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.component_type.dis(_ctx),
+            self.scope.dis(_ctx),
+            self.rows.dis(_ctx),
+            self.columns.dis(_ctx),
+            self.usage.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -14627,6 +18356,18 @@ impl InstEncoding for OpCooperativeMatrixLoadKHR {
             memory_operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCooperativeMatrixLoadKHR {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory_layout.dis(_ctx),
+            self.stride.dis(_ctx),
+            self.memory_operand.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCooperativeMatrixStoreKHR {
@@ -14668,6 +18409,17 @@ impl InstEncoding for OpCooperativeMatrixStoreKHR {
             stride: OperandEncoding::decode(&mut op_reader)?,
             memory_operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpCooperativeMatrixStoreKHR {} {} {} {} {}",
+            self.pointer.dis(_ctx),
+            self.object.dis(_ctx),
+            self.memory_layout.dis(_ctx),
+            self.stride.dis(_ctx),
+            self.memory_operand.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -14715,6 +18467,18 @@ impl InstEncoding for OpCooperativeMatrixMulAddKHR {
             cooperative_matrix_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCooperativeMatrixMulAddKHR {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.b.dis(_ctx),
+            self.c.dis(_ctx),
+            self.cooperative_matrix_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCooperativeMatrixLengthKHR {
@@ -14748,6 +18512,15 @@ impl InstEncoding for OpCooperativeMatrixLengthKHR {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             ty: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCooperativeMatrixLengthKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ty.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -14783,6 +18556,15 @@ impl InstEncoding for OpConstantCompositeReplicateEXT {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConstantCompositeReplicateEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSpecConstantCompositeReplicateEXT {
@@ -14816,6 +18598,15 @@ impl InstEncoding for OpSpecConstantCompositeReplicateEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSpecConstantCompositeReplicateEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -14851,6 +18642,15 @@ impl InstEncoding for OpCompositeConstructReplicateEXT {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCompositeConstructReplicateEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeRayQueryKHR {
@@ -14875,6 +18675,9 @@ impl InstEncoding for OpTypeRayQueryKHR {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeRayQueryKHR", self.id_result.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -14930,6 +18733,20 @@ impl InstEncoding for OpRayQueryInitializeKHR {
             ray_t_max: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpRayQueryInitializeKHR {} {} {} {} {} {} {} {}",
+            self.ray_query.dis(_ctx),
+            self.accel.dis(_ctx),
+            self.ray_flags.dis(_ctx),
+            self.cull_mask.dis(_ctx),
+            self.ray_origin.dis(_ctx),
+            self.ray_t_min.dis(_ctx),
+            self.ray_direction.dis(_ctx),
+            self.ray_t_max.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryTerminateKHR {
@@ -14954,6 +18771,9 @@ impl InstEncoding for OpRayQueryTerminateKHR {
         Ok(Self {
             ray_query: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpRayQueryTerminateKHR {}", self.ray_query.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -14984,6 +18804,14 @@ impl InstEncoding for OpRayQueryGenerateIntersectionKHR {
             hit_t: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpRayQueryGenerateIntersectionKHR {} {}",
+            self.ray_query.dis(_ctx),
+            self.hit_t.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryConfirmIntersectionKHR {
@@ -15008,6 +18836,13 @@ impl InstEncoding for OpRayQueryConfirmIntersectionKHR {
         Ok(Self {
             ray_query: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpRayQueryConfirmIntersectionKHR {}",
+            self.ray_query.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -15042,6 +18877,15 @@ impl InstEncoding for OpRayQueryProceedKHR {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             ray_query: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryProceedKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -15080,6 +18924,16 @@ impl InstEncoding for OpRayQueryGetIntersectionTypeKHR {
             ray_query: OperandEncoding::decode(&mut op_reader)?,
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionTypeKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -15123,6 +18977,17 @@ impl InstEncoding for OpImageSampleWeightedQCOM {
             weights: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSampleWeightedQCOM {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.texture.dis(_ctx),
+            self.coordinates.dis(_ctx),
+            self.weights.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageBoxFilterQCOM {
@@ -15164,6 +19029,17 @@ impl InstEncoding for OpImageBoxFilterQCOM {
             coordinates: OperandEncoding::decode(&mut op_reader)?,
             box_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageBoxFilterQCOM {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.texture.dis(_ctx),
+            self.coordinates.dis(_ctx),
+            self.box_size.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -15215,6 +19091,19 @@ impl InstEncoding for OpImageBlockMatchSSDQCOM {
             block_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageBlockMatchSSDQCOM {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.target.dis(_ctx),
+            self.target_coordinates.dis(_ctx),
+            self.reference.dis(_ctx),
+            self.reference_coordinates.dis(_ctx),
+            self.block_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageBlockMatchSADQCOM {
@@ -15265,6 +19154,19 @@ impl InstEncoding for OpImageBlockMatchSADQCOM {
             block_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageBlockMatchSADQCOM {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.target.dis(_ctx),
+            self.target_coordinates.dis(_ctx),
+            self.reference.dis(_ctx),
+            self.reference_coordinates.dis(_ctx),
+            self.block_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpBitCastArrayQCOM {
@@ -15298,6 +19200,15 @@ impl InstEncoding for OpBitCastArrayQCOM {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             source_array: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpBitCastArrayQCOM {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.source_array.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -15349,6 +19260,19 @@ impl InstEncoding for OpImageBlockMatchWindowSSDQCOM {
             block_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageBlockMatchWindowSSDQCOM {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.target_sampled_image.dis(_ctx),
+            self.target_coordinates.dis(_ctx),
+            self.reference_sampled_image.dis(_ctx),
+            self.reference_coordinates.dis(_ctx),
+            self.block_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageBlockMatchWindowSADQCOM {
@@ -15398,6 +19322,19 @@ impl InstEncoding for OpImageBlockMatchWindowSADQCOM {
             reference_coordinates: OperandEncoding::decode(&mut op_reader)?,
             block_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageBlockMatchWindowSADQCOM {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.target_sampled_image.dis(_ctx),
+            self.target_coordinates.dis(_ctx),
+            self.reference_sampled_image.dis(_ctx),
+            self.reference_coordinates.dis(_ctx),
+            self.block_size.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -15449,6 +19386,19 @@ impl InstEncoding for OpImageBlockMatchGatherSSDQCOM {
             block_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageBlockMatchGatherSSDQCOM {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.target_sampled_image.dis(_ctx),
+            self.target_coordinates.dis(_ctx),
+            self.reference_sampled_image.dis(_ctx),
+            self.reference_coordinates.dis(_ctx),
+            self.block_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpImageBlockMatchGatherSADQCOM {
@@ -15499,6 +19449,19 @@ impl InstEncoding for OpImageBlockMatchGatherSADQCOM {
             block_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageBlockMatchGatherSADQCOM {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.target_sampled_image.dis(_ctx),
+            self.target_coordinates.dis(_ctx),
+            self.reference_sampled_image.dis(_ctx),
+            self.reference_coordinates.dis(_ctx),
+            self.block_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCompositeConstructCoopMatQCOM {
@@ -15533,6 +19496,15 @@ impl InstEncoding for OpCompositeConstructCoopMatQCOM {
             source_array: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCompositeConstructCoopMatQCOM {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.source_array.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCompositeExtractCoopMatQCOM {
@@ -15566,6 +19538,15 @@ impl InstEncoding for OpCompositeExtractCoopMatQCOM {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             source_cooperative_matrix: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCompositeExtractCoopMatQCOM {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.source_cooperative_matrix.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -15604,6 +19585,16 @@ impl InstEncoding for OpExtractSubArrayQCOM {
             source_array: OperandEncoding::decode(&mut op_reader)?,
             index: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpExtractSubArrayQCOM {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.source_array.dis(_ctx),
+            self.index.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -15647,6 +19638,17 @@ impl InstEncoding for OpGroupIAddNonUniformAMD {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupIAddNonUniformAMD {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupFAddNonUniformAMD {
@@ -15688,6 +19690,17 @@ impl InstEncoding for OpGroupFAddNonUniformAMD {
             operation: OperandEncoding::decode(&mut op_reader)?,
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupFAddNonUniformAMD {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -15731,6 +19744,17 @@ impl InstEncoding for OpGroupFMinNonUniformAMD {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupFMinNonUniformAMD {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupUMinNonUniformAMD {
@@ -15772,6 +19796,17 @@ impl InstEncoding for OpGroupUMinNonUniformAMD {
             operation: OperandEncoding::decode(&mut op_reader)?,
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupUMinNonUniformAMD {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -15815,6 +19850,17 @@ impl InstEncoding for OpGroupSMinNonUniformAMD {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupSMinNonUniformAMD {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupFMaxNonUniformAMD {
@@ -15856,6 +19902,17 @@ impl InstEncoding for OpGroupFMaxNonUniformAMD {
             operation: OperandEncoding::decode(&mut op_reader)?,
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupFMaxNonUniformAMD {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -15899,6 +19956,17 @@ impl InstEncoding for OpGroupUMaxNonUniformAMD {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupUMaxNonUniformAMD {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupSMaxNonUniformAMD {
@@ -15941,6 +20009,17 @@ impl InstEncoding for OpGroupSMaxNonUniformAMD {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupSMaxNonUniformAMD {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFragmentMaskFetchAMD {
@@ -15978,6 +20057,16 @@ impl InstEncoding for OpFragmentMaskFetchAMD {
             image: OperandEncoding::decode(&mut op_reader)?,
             coordinate: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFragmentMaskFetchAMD {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx),
+            self.coordinate.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -16021,6 +20110,17 @@ impl InstEncoding for OpFragmentFetchAMD {
             fragment_index: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFragmentFetchAMD {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.fragment_index.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpReadClockKHR {
@@ -16054,6 +20154,15 @@ impl InstEncoding for OpReadClockKHR {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             scope: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpReadClockKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.scope.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -16097,6 +20206,17 @@ impl InstEncoding for OpAllocateNodePayloadsAMDX {
             node_index: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAllocateNodePayloadsAMDX {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.visibility.dis(_ctx),
+            self.payload_count.dis(_ctx),
+            self.node_index.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpEnqueueNodePayloadsAMDX {
@@ -16121,6 +20241,13 @@ impl InstEncoding for OpEnqueueNodePayloadsAMDX {
         Ok(Self {
             payload_array: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpEnqueueNodePayloadsAMDX {}",
+            self.payload_array.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -16151,6 +20278,14 @@ impl InstEncoding for OpTypeNodePayloadArrayAMDX {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload_type: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeNodePayloadArrayAMDX {}",
+            self.id_result.dis(_ctx),
+            self.payload_type.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -16186,6 +20321,15 @@ impl InstEncoding for OpFinishWritingNodePayloadAMDX {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFinishWritingNodePayloadAMDX {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpNodePayloadArrayLengthAMDX {
@@ -16219,6 +20363,15 @@ impl InstEncoding for OpNodePayloadArrayLengthAMDX {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload_array: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpNodePayloadArrayLengthAMDX {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload_array.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -16258,6 +20411,16 @@ impl InstEncoding for OpIsNodePayloadValidAMDX {
             node_index: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIsNodePayloadValidAMDX {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload_type.dis(_ctx),
+            self.node_index.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConstantStringAMDX {
@@ -16288,6 +20451,14 @@ impl InstEncoding for OpConstantStringAMDX {
             literal_string: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConstantStringAMDX {}",
+            self.id_result.dis(_ctx),
+            self.literal_string.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSpecConstantStringAMDX {
@@ -16317,6 +20488,14 @@ impl InstEncoding for OpSpecConstantStringAMDX {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             literal_string: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSpecConstantStringAMDX {}",
+            self.id_result.dis(_ctx),
+            self.literal_string.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -16352,6 +20531,15 @@ impl InstEncoding for OpGroupNonUniformQuadAllKHR {
             predicate: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformQuadAllKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.predicate.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupNonUniformQuadAnyKHR {
@@ -16386,6 +20574,15 @@ impl InstEncoding for OpGroupNonUniformQuadAnyKHR {
             predicate: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformQuadAnyKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.predicate.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeBufferEXT {
@@ -16415,6 +20612,14 @@ impl InstEncoding for OpTypeBufferEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             storage_class: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeBufferEXT {}",
+            self.id_result.dis(_ctx),
+            self.storage_class.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -16449,6 +20654,15 @@ impl InstEncoding for OpBufferPointerEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             buffer: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpBufferPointerEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.buffer.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -16496,6 +20710,18 @@ impl InstEncoding for OpUntypedImageTexelPointerEXT {
             sample: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUntypedImageTexelPointerEXT {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image_type.dis(_ctx),
+            self.image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.sample.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpMemberDecorateIdEXT {
@@ -16530,6 +20756,15 @@ impl InstEncoding for OpMemberDecorateIdEXT {
             decoration: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpMemberDecorateIdEXT {} {} {}",
+            self.structure_type.dis(_ctx),
+            self.member.dis(_ctx),
+            self.decoration.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConstantSizeOfEXT {
@@ -16563,6 +20798,15 @@ impl InstEncoding for OpConstantSizeOfEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             ty: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConstantSizeOfEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ty.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -16642,6 +20886,26 @@ impl InstEncoding for OpHitObjectRecordHitMotionNV {
             hit_object_attributes: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectRecordHitMotionNV {} {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.acceleration_structure.dis(_ctx),
+            self.instance_id.dis(_ctx),
+            self.primitive_id.dis(_ctx),
+            self.geometry_index.dis(_ctx),
+            self.hit_kind.dis(_ctx),
+            self.sbt_record_offset.dis(_ctx),
+            self.sbt_record_stride.dis(_ctx),
+            self.origin.dis(_ctx),
+            self.t_min.dis(_ctx),
+            self.direction.dis(_ctx),
+            self.t_max.dis(_ctx),
+            self.current_time.dis(_ctx),
+            self.hit_object_attributes.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectRecordHitWithIndexMotionNV {
@@ -16716,6 +20980,25 @@ impl InstEncoding for OpHitObjectRecordHitWithIndexMotionNV {
             hit_object_attributes: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectRecordHitWithIndexMotionNV {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.acceleration_structure.dis(_ctx),
+            self.instance_id.dis(_ctx),
+            self.primitive_id.dis(_ctx),
+            self.geometry_index.dis(_ctx),
+            self.hit_kind.dis(_ctx),
+            self.sbt_record_index.dis(_ctx),
+            self.origin.dis(_ctx),
+            self.t_min.dis(_ctx),
+            self.direction.dis(_ctx),
+            self.t_max.dis(_ctx),
+            self.current_time.dis(_ctx),
+            self.hit_object_attributes.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectRecordMissMotionNV {
@@ -16766,6 +21049,19 @@ impl InstEncoding for OpHitObjectRecordMissMotionNV {
             current_time: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectRecordMissMotionNV {} {} {} {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.sbt_index.dis(_ctx),
+            self.origin.dis(_ctx),
+            self.t_min.dis(_ctx),
+            self.direction.dis(_ctx),
+            self.t_max.dis(_ctx),
+            self.current_time.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetWorldToObjectNV {
@@ -16799,6 +21095,15 @@ impl InstEncoding for OpHitObjectGetWorldToObjectNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetWorldToObjectNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -16834,6 +21139,15 @@ impl InstEncoding for OpHitObjectGetObjectToWorldNV {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetObjectToWorldNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetObjectRayDirectionNV {
@@ -16868,6 +21182,15 @@ impl InstEncoding for OpHitObjectGetObjectRayDirectionNV {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetObjectRayDirectionNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetObjectRayOriginNV {
@@ -16901,6 +21224,15 @@ impl InstEncoding for OpHitObjectGetObjectRayOriginNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetObjectRayOriginNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -16976,6 +21308,25 @@ impl InstEncoding for OpHitObjectTraceRayMotionNV {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectTraceRayMotionNV {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.acceleration_structure.dis(_ctx),
+            self.ray_flags.dis(_ctx),
+            self.cullmask.dis(_ctx),
+            self.sbt_record_offset.dis(_ctx),
+            self.sbt_record_stride.dis(_ctx),
+            self.miss_index.dis(_ctx),
+            self.origin.dis(_ctx),
+            self.t_min.dis(_ctx),
+            self.direction.dis(_ctx),
+            self.t_max.dis(_ctx),
+            self.time.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetShaderRecordBufferHandleNV {
@@ -17009,6 +21360,15 @@ impl InstEncoding for OpHitObjectGetShaderRecordBufferHandleNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetShaderRecordBufferHandleNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -17044,6 +21404,15 @@ impl InstEncoding for OpHitObjectGetShaderBindingTableRecordIndexNV {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetShaderBindingTableRecordIndexNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectRecordEmptyNV {
@@ -17068,6 +21437,9 @@ impl InstEncoding for OpHitObjectRecordEmptyNV {
         Ok(Self {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpHitObjectRecordEmptyNV {}", self.hit_object.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -17138,6 +21510,24 @@ impl InstEncoding for OpHitObjectTraceRayNV {
             t_max: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectTraceRayNV {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.acceleration_structure.dis(_ctx),
+            self.ray_flags.dis(_ctx),
+            self.cullmask.dis(_ctx),
+            self.sbt_record_offset.dis(_ctx),
+            self.sbt_record_stride.dis(_ctx),
+            self.miss_index.dis(_ctx),
+            self.origin.dis(_ctx),
+            self.t_min.dis(_ctx),
+            self.direction.dis(_ctx),
+            self.t_max.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -17213,6 +21603,25 @@ impl InstEncoding for OpHitObjectRecordHitNV {
             hit_object_attributes: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectRecordHitNV {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.acceleration_structure.dis(_ctx),
+            self.instance_id.dis(_ctx),
+            self.primitive_id.dis(_ctx),
+            self.geometry_index.dis(_ctx),
+            self.hit_kind.dis(_ctx),
+            self.sbt_record_offset.dis(_ctx),
+            self.sbt_record_stride.dis(_ctx),
+            self.origin.dis(_ctx),
+            self.t_min.dis(_ctx),
+            self.direction.dis(_ctx),
+            self.t_max.dis(_ctx),
+            self.hit_object_attributes.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectRecordHitWithIndexNV {
@@ -17283,6 +21692,24 @@ impl InstEncoding for OpHitObjectRecordHitWithIndexNV {
             hit_object_attributes: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectRecordHitWithIndexNV {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.acceleration_structure.dis(_ctx),
+            self.instance_id.dis(_ctx),
+            self.primitive_id.dis(_ctx),
+            self.geometry_index.dis(_ctx),
+            self.hit_kind.dis(_ctx),
+            self.sbt_record_index.dis(_ctx),
+            self.origin.dis(_ctx),
+            self.t_min.dis(_ctx),
+            self.direction.dis(_ctx),
+            self.t_max.dis(_ctx),
+            self.hit_object_attributes.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectRecordMissNV {
@@ -17329,6 +21756,18 @@ impl InstEncoding for OpHitObjectRecordMissNV {
             t_max: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectRecordMissNV {} {} {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.sbt_index.dis(_ctx),
+            self.origin.dis(_ctx),
+            self.t_min.dis(_ctx),
+            self.direction.dis(_ctx),
+            self.t_max.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectExecuteShaderNV {
@@ -17358,6 +21797,14 @@ impl InstEncoding for OpHitObjectExecuteShaderNV {
             hit_object: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectExecuteShaderNV {} {}",
+            self.hit_object.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -17393,6 +21840,15 @@ impl InstEncoding for OpHitObjectGetCurrentTimeNV {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetCurrentTimeNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetAttributesNV {
@@ -17422,6 +21878,14 @@ impl InstEncoding for OpHitObjectGetAttributesNV {
             hit_object: OperandEncoding::decode(&mut op_reader)?,
             hit_object_attribute: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectGetAttributesNV {} {}",
+            self.hit_object.dis(_ctx),
+            self.hit_object_attribute.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -17457,6 +21921,15 @@ impl InstEncoding for OpHitObjectGetHitKindNV {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetHitKindNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetPrimitiveIndexNV {
@@ -17490,6 +21963,15 @@ impl InstEncoding for OpHitObjectGetPrimitiveIndexNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetPrimitiveIndexNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -17525,6 +22007,15 @@ impl InstEncoding for OpHitObjectGetGeometryIndexNV {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetGeometryIndexNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetInstanceIdNV {
@@ -17558,6 +22049,15 @@ impl InstEncoding for OpHitObjectGetInstanceIdNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetInstanceIdNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -17593,6 +22093,15 @@ impl InstEncoding for OpHitObjectGetInstanceCustomIndexNV {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetInstanceCustomIndexNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetWorldRayDirectionNV {
@@ -17626,6 +22135,15 @@ impl InstEncoding for OpHitObjectGetWorldRayDirectionNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetWorldRayDirectionNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -17661,6 +22179,15 @@ impl InstEncoding for OpHitObjectGetWorldRayOriginNV {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetWorldRayOriginNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetRayTMaxNV {
@@ -17694,6 +22221,15 @@ impl InstEncoding for OpHitObjectGetRayTMaxNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetRayTMaxNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -17729,6 +22265,15 @@ impl InstEncoding for OpHitObjectGetRayTMinNV {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetRayTMinNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectIsEmptyNV {
@@ -17762,6 +22307,15 @@ impl InstEncoding for OpHitObjectIsEmptyNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectIsEmptyNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -17797,6 +22351,15 @@ impl InstEncoding for OpHitObjectIsHitNV {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectIsHitNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectIsMissNV {
@@ -17830,6 +22393,15 @@ impl InstEncoding for OpHitObjectIsMissNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectIsMissNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -17865,6 +22437,15 @@ impl InstEncoding for OpReorderThreadWithHitObjectNV {
             bits: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpReorderThreadWithHitObjectNV {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.hint.dis(_ctx),
+            self.bits.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpReorderThreadWithHintNV {
@@ -17893,6 +22474,14 @@ impl InstEncoding for OpReorderThreadWithHintNV {
             bits: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpReorderThreadWithHintNV {} {}",
+            self.hint.dis(_ctx),
+            self.bits.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeHitObjectNV {
@@ -17917,6 +22506,9 @@ impl InstEncoding for OpTypeHitObjectNV {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeHitObjectNV", self.id_result.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -17968,6 +22560,19 @@ impl InstEncoding for OpImageSampleFootprintNV {
             image_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpImageSampleFootprintNV {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sampled_image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.granularity.dis(_ctx),
+            self.coarse.dis(_ctx),
+            self.image_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeVectorIdEXT {
@@ -18001,6 +22606,15 @@ impl InstEncoding for OpTypeVectorIdEXT {
             component_type: OperandEncoding::decode(&mut op_reader)?,
             component_count: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeVectorIdEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.component_type.dis(_ctx),
+            self.component_count.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -18076,6 +22690,25 @@ impl InstEncoding for OpCooperativeVectorMatrixMulNV {
             cooperative_matrix_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCooperativeVectorMatrixMulNV {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.input.dis(_ctx),
+            self.input_interpretation.dis(_ctx),
+            self.matrix.dis(_ctx),
+            self.matrix_offset.dis(_ctx),
+            self.matrix_interpretation.dis(_ctx),
+            self.m.dis(_ctx),
+            self.k.dis(_ctx),
+            self.memory_layout.dis(_ctx),
+            self.transpose.dis(_ctx),
+            self.matrix_stride.dis(_ctx),
+            self.cooperative_matrix_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCooperativeVectorOuterProductAccumulateNV {
@@ -18126,6 +22759,19 @@ impl InstEncoding for OpCooperativeVectorOuterProductAccumulateNV {
             matrix_stride: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpCooperativeVectorOuterProductAccumulateNV {} {} {} {} {} {} {}",
+            self.pointer.dis(_ctx),
+            self.offset.dis(_ctx),
+            self.a.dis(_ctx),
+            self.b.dis(_ctx),
+            self.memory_layout.dis(_ctx),
+            self.matrix_interpretation.dis(_ctx),
+            self.matrix_stride.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCooperativeVectorReduceSumAccumulateNV {
@@ -18159,6 +22805,15 @@ impl InstEncoding for OpCooperativeVectorReduceSumAccumulateNV {
             offset: OperandEncoding::decode(&mut op_reader)?,
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpCooperativeVectorReduceSumAccumulateNV {} {} {}",
+            self.pointer.dis(_ctx),
+            self.offset.dis(_ctx),
+            self.v.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -18246,6 +22901,28 @@ impl InstEncoding for OpCooperativeVectorMatrixMulAddNV {
             cooperative_matrix_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCooperativeVectorMatrixMulAddNV {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.input.dis(_ctx),
+            self.input_interpretation.dis(_ctx),
+            self.matrix.dis(_ctx),
+            self.matrix_offset.dis(_ctx),
+            self.matrix_interpretation.dis(_ctx),
+            self.bias.dis(_ctx),
+            self.bias_offset.dis(_ctx),
+            self.bias_interpretation.dis(_ctx),
+            self.m.dis(_ctx),
+            self.k.dis(_ctx),
+            self.memory_layout.dis(_ctx),
+            self.transpose.dis(_ctx),
+            self.matrix_stride.dis(_ctx),
+            self.cooperative_matrix_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCooperativeMatrixConvertNV {
@@ -18279,6 +22956,15 @@ impl InstEncoding for OpCooperativeMatrixConvertNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             matrix: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCooperativeMatrixConvertNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.matrix.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -18318,6 +23004,16 @@ impl InstEncoding for OpEmitMeshTasksEXT {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpEmitMeshTasksEXT {} {} {} {}",
+            self.group_count_x.dis(_ctx),
+            self.group_count_y.dis(_ctx),
+            self.group_count_z.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSetMeshOutputsEXT {
@@ -18347,6 +23043,14 @@ impl InstEncoding for OpSetMeshOutputsEXT {
             vertex_count: OperandEncoding::decode(&mut op_reader)?,
             primitive_count: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSetMeshOutputsEXT {} {}",
+            self.vertex_count.dis(_ctx),
+            self.primitive_count.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -18382,6 +23086,15 @@ impl InstEncoding for OpGroupNonUniformPartitionEXT {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupNonUniformPartitionEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpWritePackedPrimitiveIndices4x8NV {
@@ -18411,6 +23124,14 @@ impl InstEncoding for OpWritePackedPrimitiveIndices4x8NV {
             index_offset: OperandEncoding::decode(&mut op_reader)?,
             packed_indices: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpWritePackedPrimitiveIndices4x8NV {} {}",
+            self.index_offset.dis(_ctx),
+            self.packed_indices.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -18462,6 +23183,19 @@ impl InstEncoding for OpFetchMicroTriangleVertexPositionNV {
             barycentric: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFetchMicroTriangleVertexPositionNV {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.accel.dis(_ctx),
+            self.instance_id.dis(_ctx),
+            self.geometry_index.dis(_ctx),
+            self.primitive_index.dis(_ctx),
+            self.barycentric.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFetchMicroTriangleVertexBarycentricNV {
@@ -18512,6 +23246,19 @@ impl InstEncoding for OpFetchMicroTriangleVertexBarycentricNV {
             barycentric: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFetchMicroTriangleVertexBarycentricNV {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.accel.dis(_ctx),
+            self.instance_id.dis(_ctx),
+            self.geometry_index.dis(_ctx),
+            self.primitive_index.dis(_ctx),
+            self.barycentric.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCooperativeVectorLoadNV {
@@ -18554,6 +23301,17 @@ impl InstEncoding for OpCooperativeVectorLoadNV {
             memory_access: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCooperativeVectorLoadNV {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.offset.dis(_ctx),
+            self.memory_access.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCooperativeVectorStoreNV {
@@ -18592,6 +23350,16 @@ impl InstEncoding for OpCooperativeVectorStoreNV {
             memory_access: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpCooperativeVectorStoreNV {} {} {} {}",
+            self.pointer.dis(_ctx),
+            self.offset.dis(_ctx),
+            self.object.dis(_ctx),
+            self.memory_access.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectRecordFromQueryEXT {
@@ -18629,6 +23397,16 @@ impl InstEncoding for OpHitObjectRecordFromQueryEXT {
             sbt_record_index: OperandEncoding::decode(&mut op_reader)?,
             hit_object_attributes: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectRecordFromQueryEXT {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.sbt_record_index.dis(_ctx),
+            self.hit_object_attributes.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -18679,6 +23457,19 @@ impl InstEncoding for OpHitObjectRecordMissEXT {
             ray_direction: OperandEncoding::decode(&mut op_reader)?,
             ray_tmax: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectRecordMissEXT {} {} {} {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.ray_flags.dis(_ctx),
+            self.miss_index.dis(_ctx),
+            self.ray_origin.dis(_ctx),
+            self.ray_tmin.dis(_ctx),
+            self.ray_direction.dis(_ctx),
+            self.ray_tmax.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -18734,6 +23525,20 @@ impl InstEncoding for OpHitObjectRecordMissMotionEXT {
             current_time: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectRecordMissMotionEXT {} {} {} {} {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.ray_flags.dis(_ctx),
+            self.miss_index.dis(_ctx),
+            self.ray_origin.dis(_ctx),
+            self.ray_tmin.dis(_ctx),
+            self.ray_direction.dis(_ctx),
+            self.ray_tmax.dis(_ctx),
+            self.current_time.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetIntersectionTriangleVertexPositionsEXT {
@@ -18767,6 +23572,15 @@ impl InstEncoding for OpHitObjectGetIntersectionTriangleVertexPositionsEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetIntersectionTriangleVertexPositionsEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -18802,6 +23616,15 @@ impl InstEncoding for OpHitObjectGetRayFlagsEXT {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetRayFlagsEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectSetShaderBindingTableRecordIndexEXT {
@@ -18831,6 +23654,14 @@ impl InstEncoding for OpHitObjectSetShaderBindingTableRecordIndexEXT {
             hit_object: OperandEncoding::decode(&mut op_reader)?,
             sbt_record_index: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectSetShaderBindingTableRecordIndexEXT {} {}",
+            self.hit_object.dis(_ctx),
+            self.sbt_record_index.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -18869,6 +23700,16 @@ impl InstEncoding for OpHitObjectReorderExecuteShaderEXT {
             hint: OperandEncoding::decode(&mut op_reader)?,
             bits: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectReorderExecuteShaderEXT {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.payload.dis(_ctx),
+            self.hint.dis(_ctx),
+            self.bits.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -18947,6 +23788,26 @@ impl InstEncoding for OpHitObjectTraceReorderExecuteEXT {
             hint: OperandEncoding::decode(&mut op_reader)?,
             bits: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectTraceReorderExecuteEXT {} {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.acceleration_structure.dis(_ctx),
+            self.ray_flags.dis(_ctx),
+            self.cull_mask.dis(_ctx),
+            self.sbt_offset.dis(_ctx),
+            self.sbt_stride.dis(_ctx),
+            self.miss_index.dis(_ctx),
+            self.ray_origin.dis(_ctx),
+            self.ray_tmin.dis(_ctx),
+            self.ray_direction.dis(_ctx),
+            self.ray_tmax.dis(_ctx),
+            self.payload.dis(_ctx),
+            self.hint.dis(_ctx),
+            self.bits.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -19030,6 +23891,27 @@ impl InstEncoding for OpHitObjectTraceMotionReorderExecuteEXT {
             bits: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectTraceMotionReorderExecuteEXT {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.acceleration_structure.dis(_ctx),
+            self.ray_flags.dis(_ctx),
+            self.cull_mask.dis(_ctx),
+            self.sbt_offset.dis(_ctx),
+            self.sbt_stride.dis(_ctx),
+            self.miss_index.dis(_ctx),
+            self.ray_origin.dis(_ctx),
+            self.ray_tmin.dis(_ctx),
+            self.ray_direction.dis(_ctx),
+            self.ray_tmax.dis(_ctx),
+            self.current_time.dis(_ctx),
+            self.payload.dis(_ctx),
+            self.hint.dis(_ctx),
+            self.bits.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeHitObjectEXT {
@@ -19054,6 +23936,9 @@ impl InstEncoding for OpTypeHitObjectEXT {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeHitObjectEXT", self.id_result.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -19082,6 +23967,14 @@ impl InstEncoding for OpReorderThreadWithHintEXT {
             hint: OperandEncoding::decode(&mut op_reader)?,
             bits: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpReorderThreadWithHintEXT {} {}",
+            self.hint.dis(_ctx),
+            self.bits.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -19116,6 +24009,15 @@ impl InstEncoding for OpReorderThreadWithHitObjectEXT {
             hint: OperandEncoding::decode(&mut op_reader)?,
             bits: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpReorderThreadWithHitObjectEXT {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.hint.dis(_ctx),
+            self.bits.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -19186,6 +24088,24 @@ impl InstEncoding for OpHitObjectTraceRayEXT {
             ray_tmax: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectTraceRayEXT {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.acceleration_structure.dis(_ctx),
+            self.ray_flags.dis(_ctx),
+            self.cull_mask.dis(_ctx),
+            self.sbt_offset.dis(_ctx),
+            self.sbt_stride.dis(_ctx),
+            self.miss_index.dis(_ctx),
+            self.ray_origin.dis(_ctx),
+            self.ray_tmin.dis(_ctx),
+            self.ray_direction.dis(_ctx),
+            self.ray_tmax.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -19261,6 +24181,25 @@ impl InstEncoding for OpHitObjectTraceRayMotionEXT {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectTraceRayMotionEXT {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.hit_object.dis(_ctx),
+            self.acceleration_structure.dis(_ctx),
+            self.ray_flags.dis(_ctx),
+            self.cull_mask.dis(_ctx),
+            self.sbt_offset.dis(_ctx),
+            self.sbt_stride.dis(_ctx),
+            self.miss_index.dis(_ctx),
+            self.ray_origin.dis(_ctx),
+            self.ray_tmin.dis(_ctx),
+            self.ray_direction.dis(_ctx),
+            self.ray_tmax.dis(_ctx),
+            self.current_time.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectRecordEmptyEXT {
@@ -19285,6 +24224,9 @@ impl InstEncoding for OpHitObjectRecordEmptyEXT {
         Ok(Self {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpHitObjectRecordEmptyEXT {}", self.hit_object.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -19315,6 +24257,14 @@ impl InstEncoding for OpHitObjectExecuteShaderEXT {
             hit_object: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectExecuteShaderEXT {} {}",
+            self.hit_object.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -19350,6 +24300,15 @@ impl InstEncoding for OpHitObjectGetCurrentTimeEXT {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetCurrentTimeEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetAttributesEXT {
@@ -19379,6 +24338,14 @@ impl InstEncoding for OpHitObjectGetAttributesEXT {
             hit_object: OperandEncoding::decode(&mut op_reader)?,
             hit_object_attribute: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpHitObjectGetAttributesEXT {} {}",
+            self.hit_object.dis(_ctx),
+            self.hit_object_attribute.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -19414,6 +24381,15 @@ impl InstEncoding for OpHitObjectGetHitKindEXT {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetHitKindEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetPrimitiveIndexEXT {
@@ -19447,6 +24423,15 @@ impl InstEncoding for OpHitObjectGetPrimitiveIndexEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetPrimitiveIndexEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -19482,6 +24467,15 @@ impl InstEncoding for OpHitObjectGetGeometryIndexEXT {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetGeometryIndexEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetInstanceIdEXT {
@@ -19515,6 +24509,15 @@ impl InstEncoding for OpHitObjectGetInstanceIdEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetInstanceIdEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -19550,6 +24553,15 @@ impl InstEncoding for OpHitObjectGetInstanceCustomIndexEXT {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetInstanceCustomIndexEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetObjectRayOriginEXT {
@@ -19583,6 +24595,15 @@ impl InstEncoding for OpHitObjectGetObjectRayOriginEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetObjectRayOriginEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -19618,6 +24639,15 @@ impl InstEncoding for OpHitObjectGetObjectRayDirectionEXT {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetObjectRayDirectionEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetWorldRayDirectionEXT {
@@ -19651,6 +24681,15 @@ impl InstEncoding for OpHitObjectGetWorldRayDirectionEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetWorldRayDirectionEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -19686,6 +24725,15 @@ impl InstEncoding for OpHitObjectGetWorldRayOriginEXT {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetWorldRayOriginEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetObjectToWorldEXT {
@@ -19719,6 +24767,15 @@ impl InstEncoding for OpHitObjectGetObjectToWorldEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetObjectToWorldEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -19754,6 +24811,15 @@ impl InstEncoding for OpHitObjectGetWorldToObjectEXT {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetWorldToObjectEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetRayTMaxEXT {
@@ -19787,6 +24853,15 @@ impl InstEncoding for OpHitObjectGetRayTMaxEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetRayTMaxEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -19826,6 +24901,16 @@ impl InstEncoding for OpReportIntersectionKHR {
             hit_kind: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpReportIntersectionKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit.dis(_ctx),
+            self.hit_kind.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpIgnoreIntersectionNV {}
@@ -19846,6 +24931,9 @@ impl InstEncoding for OpIgnoreIntersectionNV {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpIgnoreIntersectionNV")
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTerminateRayNV {}
@@ -19865,6 +24953,9 @@ impl InstEncoding for OpTerminateRayNV {
     fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpTerminateRayNV")
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -19931,6 +25022,23 @@ impl InstEncoding for OpTraceNV {
             ray_tmax: OperandEncoding::decode(&mut op_reader)?,
             payload_id: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpTraceNV {} {} {} {} {} {} {} {} {} {} {}",
+            self.accel.dis(_ctx),
+            self.ray_flags.dis(_ctx),
+            self.cull_mask.dis(_ctx),
+            self.sbt_offset.dis(_ctx),
+            self.sbt_stride.dis(_ctx),
+            self.miss_index.dis(_ctx),
+            self.ray_origin.dis(_ctx),
+            self.ray_tmin.dis(_ctx),
+            self.ray_direction.dis(_ctx),
+            self.ray_tmax.dis(_ctx),
+            self.payload_id.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -20002,6 +25110,24 @@ impl InstEncoding for OpTraceMotionNV {
             payload_id: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpTraceMotionNV {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.accel.dis(_ctx),
+            self.ray_flags.dis(_ctx),
+            self.cull_mask.dis(_ctx),
+            self.sbt_offset.dis(_ctx),
+            self.sbt_stride.dis(_ctx),
+            self.miss_index.dis(_ctx),
+            self.ray_origin.dis(_ctx),
+            self.ray_tmin.dis(_ctx),
+            self.ray_direction.dis(_ctx),
+            self.ray_tmax.dis(_ctx),
+            self.time.dis(_ctx),
+            self.payload_id.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTraceRayMotionNV {
@@ -20072,6 +25198,24 @@ impl InstEncoding for OpTraceRayMotionNV {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpTraceRayMotionNV {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.accel.dis(_ctx),
+            self.ray_flags.dis(_ctx),
+            self.cull_mask.dis(_ctx),
+            self.sbt_offset.dis(_ctx),
+            self.sbt_stride.dis(_ctx),
+            self.miss_index.dis(_ctx),
+            self.ray_origin.dis(_ctx),
+            self.ray_tmin.dis(_ctx),
+            self.ray_direction.dis(_ctx),
+            self.ray_tmax.dis(_ctx),
+            self.time.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryGetIntersectionTriangleVertexPositionsKHR {
@@ -20110,6 +25254,16 @@ impl InstEncoding for OpRayQueryGetIntersectionTriangleVertexPositionsKHR {
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionTriangleVertexPositionsKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeAccelerationStructureKHR {
@@ -20134,6 +25288,13 @@ impl InstEncoding for OpTypeAccelerationStructureKHR {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeAccelerationStructureKHR",
+            self.id_result.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -20164,6 +25325,14 @@ impl InstEncoding for OpExecuteCallableNV {
             sbt_index: OperandEncoding::decode(&mut op_reader)?,
             callable_data_id: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpExecuteCallableNV {} {}",
+            self.sbt_index.dis(_ctx),
+            self.callable_data_id.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -20203,6 +25372,16 @@ impl InstEncoding for OpRayQueryGetIntersectionClusterIdNV {
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionClusterIdNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetClusterIdNV {
@@ -20236,6 +25415,15 @@ impl InstEncoding for OpHitObjectGetClusterIdNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetClusterIdNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -20271,6 +25459,15 @@ impl InstEncoding for OpHitObjectGetRayTMinEXT {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetRayTMinEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetShaderBindingTableRecordIndexEXT {
@@ -20304,6 +25501,15 @@ impl InstEncoding for OpHitObjectGetShaderBindingTableRecordIndexEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetShaderBindingTableRecordIndexEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -20339,6 +25545,15 @@ impl InstEncoding for OpHitObjectGetShaderRecordBufferHandleEXT {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetShaderRecordBufferHandleEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectIsEmptyEXT {
@@ -20372,6 +25587,15 @@ impl InstEncoding for OpHitObjectIsEmptyEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectIsEmptyEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -20407,6 +25631,15 @@ impl InstEncoding for OpHitObjectIsHitEXT {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectIsHitEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectIsMissEXT {
@@ -20440,6 +25673,15 @@ impl InstEncoding for OpHitObjectIsMissEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectIsMissEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -20482,6 +25724,17 @@ impl InstEncoding for OpTypeCooperativeMatrixNV {
             rows: OperandEncoding::decode(&mut op_reader)?,
             columns: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeCooperativeMatrixNV {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.component_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.rows.dis(_ctx),
+            self.columns.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -20529,6 +25782,18 @@ impl InstEncoding for OpCooperativeMatrixLoadNV {
             memory_access: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCooperativeMatrixLoadNV {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.stride.dis(_ctx),
+            self.column_major.dis(_ctx),
+            self.memory_access.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCooperativeMatrixStoreNV {
@@ -20570,6 +25835,17 @@ impl InstEncoding for OpCooperativeMatrixStoreNV {
             column_major: OperandEncoding::decode(&mut op_reader)?,
             memory_access: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpCooperativeMatrixStoreNV {} {} {} {} {}",
+            self.pointer.dis(_ctx),
+            self.object.dis(_ctx),
+            self.stride.dis(_ctx),
+            self.column_major.dis(_ctx),
+            self.memory_access.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -20613,6 +25889,17 @@ impl InstEncoding for OpCooperativeMatrixMulAddNV {
             c: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCooperativeMatrixMulAddNV {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.b.dis(_ctx),
+            self.c.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCooperativeMatrixLengthNV {
@@ -20647,6 +25934,15 @@ impl InstEncoding for OpCooperativeMatrixLengthNV {
             ty: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCooperativeMatrixLengthNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ty.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpBeginInvocationInterlockEXT {}
@@ -20667,6 +25963,9 @@ impl InstEncoding for OpBeginInvocationInterlockEXT {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpBeginInvocationInterlockEXT")
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpEndInvocationInterlockEXT {}
@@ -20686,6 +25985,9 @@ impl InstEncoding for OpEndInvocationInterlockEXT {
     fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpEndInvocationInterlockEXT")
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -20728,6 +26030,17 @@ impl InstEncoding for OpCooperativeMatrixReduceNV {
             reduce: OperandEncoding::decode(&mut op_reader)?,
             combine_func: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCooperativeMatrixReduceNV {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.matrix.dis(_ctx),
+            self.reduce.dis(_ctx),
+            self.combine_func.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -20779,6 +26092,19 @@ impl InstEncoding for OpCooperativeMatrixLoadTensorNV {
             tensor_addressing_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCooperativeMatrixLoadTensorNV {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.object.dis(_ctx),
+            self.tensor_layout.dis(_ctx),
+            self.memory_operand.dis(_ctx),
+            self.tensor_addressing_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCooperativeMatrixStoreTensorNV {
@@ -20820,6 +26146,17 @@ impl InstEncoding for OpCooperativeMatrixStoreTensorNV {
             memory_operand: OperandEncoding::decode(&mut op_reader)?,
             tensor_addressing_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpCooperativeMatrixStoreTensorNV {} {} {} {} {}",
+            self.pointer.dis(_ctx),
+            self.object.dis(_ctx),
+            self.tensor_layout.dis(_ctx),
+            self.memory_operand.dis(_ctx),
+            self.tensor_addressing_operands.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -20863,6 +26200,17 @@ impl InstEncoding for OpCooperativeMatrixPerElementOpNV {
             operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCooperativeMatrixPerElementOpNV {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.matrix.dis(_ctx),
+            self.func.dis(_ctx),
+            self.operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeTensorLayoutNV {
@@ -20896,6 +26244,15 @@ impl InstEncoding for OpTypeTensorLayoutNV {
             dim: OperandEncoding::decode(&mut op_reader)?,
             clamp_mode: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeTensorLayoutNV {} {}",
+            self.id_result.dis(_ctx),
+            self.dim.dis(_ctx),
+            self.clamp_mode.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -20935,6 +26292,16 @@ impl InstEncoding for OpTypeTensorViewNV {
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeTensorViewNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.dim.dis(_ctx),
+            self.has_dimensions.dis(_ctx),
+            self.p.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCreateTensorLayoutNV {
@@ -20964,6 +26331,14 @@ impl InstEncoding for OpCreateTensorLayoutNV {
             id_result_type: OperandEncoding::decode(&mut op_reader)?,
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCreateTensorLayoutNV {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -21003,6 +26378,16 @@ impl InstEncoding for OpTensorLayoutSetDimensionNV {
             dim: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTensorLayoutSetDimensionNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.tensor_layout.dis(_ctx),
+            self.dim.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTensorLayoutSetStrideNV {
@@ -21040,6 +26425,16 @@ impl InstEncoding for OpTensorLayoutSetStrideNV {
             tensor_layout: OperandEncoding::decode(&mut op_reader)?,
             stride: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTensorLayoutSetStrideNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.tensor_layout.dis(_ctx),
+            self.stride.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -21079,6 +26474,16 @@ impl InstEncoding for OpTensorLayoutSliceNV {
             operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTensorLayoutSliceNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.tensor_layout.dis(_ctx),
+            self.operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTensorLayoutSetClampValueNV {
@@ -21117,6 +26522,16 @@ impl InstEncoding for OpTensorLayoutSetClampValueNV {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTensorLayoutSetClampValueNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.tensor_layout.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCreateTensorViewNV {
@@ -21146,6 +26561,14 @@ impl InstEncoding for OpCreateTensorViewNV {
             id_result_type: OperandEncoding::decode(&mut op_reader)?,
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCreateTensorViewNV {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -21185,6 +26608,16 @@ impl InstEncoding for OpTensorViewSetDimensionNV {
             dim: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTensorViewSetDimensionNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.tensor_view.dis(_ctx),
+            self.dim.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTensorViewSetStrideNV {
@@ -21223,6 +26656,16 @@ impl InstEncoding for OpTensorViewSetStrideNV {
             stride: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTensorViewSetStrideNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.tensor_view.dis(_ctx),
+            self.stride.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpDemoteToHelperInvocation {}
@@ -21242,6 +26685,9 @@ impl InstEncoding for OpDemoteToHelperInvocation {
     fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         reader.check_opcode(Self::META)?;
         Ok(Self {})
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpDemoteToHelperInvocation")
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -21272,6 +26718,14 @@ impl InstEncoding for OpIsHelperInvocationEXT {
             id_result_type: OperandEncoding::decode(&mut op_reader)?,
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIsHelperInvocationEXT {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -21323,6 +26777,19 @@ impl InstEncoding for OpTensorViewSetClipNV {
             clip_col_span: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTensorViewSetClipNV {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.tensor_view.dis(_ctx),
+            self.clip_row_offset.dis(_ctx),
+            self.clip_row_span.dis(_ctx),
+            self.clip_col_offset.dis(_ctx),
+            self.clip_col_span.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTensorLayoutSetBlockSizeNV {
@@ -21361,6 +26828,16 @@ impl InstEncoding for OpTensorLayoutSetBlockSizeNV {
             block_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTensorLayoutSetBlockSizeNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.tensor_layout.dis(_ctx),
+            self.block_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCooperativeMatrixTransposeNV {
@@ -21394,6 +26871,15 @@ impl InstEncoding for OpCooperativeMatrixTransposeNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             matrix: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCooperativeMatrixTransposeNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.matrix.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -21429,6 +26915,15 @@ impl InstEncoding for OpConvertUToImageNV {
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertUToImageNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConvertUToSamplerNV {
@@ -21462,6 +26957,15 @@ impl InstEncoding for OpConvertUToSamplerNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertUToSamplerNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -21497,6 +27001,15 @@ impl InstEncoding for OpConvertImageToUNV {
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertImageToUNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConvertSamplerToUNV {
@@ -21530,6 +27043,15 @@ impl InstEncoding for OpConvertSamplerToUNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertSamplerToUNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -21565,6 +27087,15 @@ impl InstEncoding for OpConvertUToSampledImageNV {
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertUToSampledImageNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConvertSampledImageToUNV {
@@ -21599,6 +27130,15 @@ impl InstEncoding for OpConvertSampledImageToUNV {
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertSampledImageToUNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSamplerImageAddressingModeNV {
@@ -21623,6 +27163,13 @@ impl InstEncoding for OpSamplerImageAddressingModeNV {
         Ok(Self {
             bit_width: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSamplerImageAddressingModeNV {}",
+            self.bit_width.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -21674,6 +27221,19 @@ impl InstEncoding for OpRawAccessChainNV {
             raw_access_chain_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRawAccessChainNV {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.base.dis(_ctx),
+            self.byte_stride.dis(_ctx),
+            self.element_index.dis(_ctx),
+            self.byte_offset.dis(_ctx),
+            self.raw_access_chain_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryGetIntersectionSpherePositionNV {
@@ -21711,6 +27271,16 @@ impl InstEncoding for OpRayQueryGetIntersectionSpherePositionNV {
             ray_query: OperandEncoding::decode(&mut op_reader)?,
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionSpherePositionNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -21750,6 +27320,16 @@ impl InstEncoding for OpRayQueryGetIntersectionSphereRadiusNV {
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionSphereRadiusNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryGetIntersectionLSSPositionsNV {
@@ -21787,6 +27367,16 @@ impl InstEncoding for OpRayQueryGetIntersectionLSSPositionsNV {
             ray_query: OperandEncoding::decode(&mut op_reader)?,
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionLSSPositionsNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -21826,6 +27416,16 @@ impl InstEncoding for OpRayQueryGetIntersectionLSSRadiiNV {
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionLSSRadiiNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryGetIntersectionLSSHitValueNV {
@@ -21864,6 +27464,16 @@ impl InstEncoding for OpRayQueryGetIntersectionLSSHitValueNV {
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionLSSHitValueNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetSpherePositionNV {
@@ -21897,6 +27507,15 @@ impl InstEncoding for OpHitObjectGetSpherePositionNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetSpherePositionNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -21932,6 +27551,15 @@ impl InstEncoding for OpHitObjectGetSphereRadiusNV {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetSphereRadiusNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectGetLSSPositionsNV {
@@ -21965,6 +27593,15 @@ impl InstEncoding for OpHitObjectGetLSSPositionsNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetLSSPositionsNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -22000,6 +27637,15 @@ impl InstEncoding for OpHitObjectGetLSSRadiiNV {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectGetLSSRadiiNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectIsSphereHitNV {
@@ -22034,6 +27680,15 @@ impl InstEncoding for OpHitObjectIsSphereHitNV {
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectIsSphereHitNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpHitObjectIsLSSHitNV {
@@ -22067,6 +27722,15 @@ impl InstEncoding for OpHitObjectIsLSSHitNV {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             hit_object: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpHitObjectIsLSSHitNV {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.hit_object.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -22106,6 +27770,16 @@ impl InstEncoding for OpRayQueryIsSphereHitNV {
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryIsSphereHitNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryIsLSSHitNV {
@@ -22144,6 +27818,16 @@ impl InstEncoding for OpRayQueryIsLSSHitNV {
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryIsLSSHitNV {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupShuffleINTEL {
@@ -22181,6 +27865,16 @@ impl InstEncoding for OpSubgroupShuffleINTEL {
             data: OperandEncoding::decode(&mut op_reader)?,
             invocation_id: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupShuffleINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.data.dis(_ctx),
+            self.invocation_id.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -22224,6 +27918,17 @@ impl InstEncoding for OpSubgroupShuffleDownINTEL {
             delta: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupShuffleDownINTEL {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.current.dis(_ctx),
+            self.next.dis(_ctx),
+            self.delta.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupShuffleUpINTEL {
@@ -22266,6 +27971,17 @@ impl InstEncoding for OpSubgroupShuffleUpINTEL {
             delta: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupShuffleUpINTEL {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.previous.dis(_ctx),
+            self.current.dis(_ctx),
+            self.delta.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupShuffleXorINTEL {
@@ -22304,6 +28020,16 @@ impl InstEncoding for OpSubgroupShuffleXorINTEL {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupShuffleXorINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.data.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupBlockReadINTEL {
@@ -22338,6 +28064,15 @@ impl InstEncoding for OpSubgroupBlockReadINTEL {
             ptr: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupBlockReadINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ptr.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupBlockWriteINTEL {
@@ -22365,6 +28100,14 @@ impl InstEncoding for OpSubgroupBlockWriteINTEL {
             ptr: OperandEncoding::decode(&mut op_reader)?,
             data: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSubgroupBlockWriteINTEL {} {}",
+            self.ptr.dis(_ctx),
+            self.data.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -22404,6 +28147,16 @@ impl InstEncoding for OpSubgroupImageBlockReadINTEL {
             coordinate: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupImageBlockReadINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx),
+            self.coordinate.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupImageBlockWriteINTEL {
@@ -22437,6 +28190,15 @@ impl InstEncoding for OpSubgroupImageBlockWriteINTEL {
             coordinate: OperandEncoding::decode(&mut op_reader)?,
             data: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSubgroupImageBlockWriteINTEL {} {} {}",
+            self.image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.data.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -22484,6 +28246,18 @@ impl InstEncoding for OpSubgroupImageMediaBlockReadINTEL {
             height: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupImageMediaBlockReadINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.width.dis(_ctx),
+            self.height.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupImageMediaBlockWriteINTEL {
@@ -22526,6 +28300,17 @@ impl InstEncoding for OpSubgroupImageMediaBlockWriteINTEL {
             data: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSubgroupImageMediaBlockWriteINTEL {} {} {} {} {}",
+            self.image.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.width.dis(_ctx),
+            self.height.dis(_ctx),
+            self.data.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUCountLeadingZerosINTEL {
@@ -22560,6 +28345,15 @@ impl InstEncoding for OpUCountLeadingZerosINTEL {
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUCountLeadingZerosINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUCountTrailingZerosINTEL {
@@ -22593,6 +28387,15 @@ impl InstEncoding for OpUCountTrailingZerosINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUCountTrailingZerosINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -22632,6 +28435,16 @@ impl InstEncoding for OpAbsISubINTEL {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAbsISubINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAbsUSubINTEL {
@@ -22669,6 +28482,16 @@ impl InstEncoding for OpAbsUSubINTEL {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAbsUSubINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -22708,6 +28531,16 @@ impl InstEncoding for OpIAddSatINTEL {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIAddSatINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUAddSatINTEL {
@@ -22745,6 +28578,16 @@ impl InstEncoding for OpUAddSatINTEL {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUAddSatINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -22784,6 +28627,16 @@ impl InstEncoding for OpIAverageINTEL {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIAverageINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUAverageINTEL {
@@ -22821,6 +28674,16 @@ impl InstEncoding for OpUAverageINTEL {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUAverageINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -22860,6 +28723,16 @@ impl InstEncoding for OpIAverageRoundedINTEL {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIAverageRoundedINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUAverageRoundedINTEL {
@@ -22897,6 +28770,16 @@ impl InstEncoding for OpUAverageRoundedINTEL {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUAverageRoundedINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -22936,6 +28819,16 @@ impl InstEncoding for OpISubSatINTEL {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpISubSatINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUSubSatINTEL {
@@ -22973,6 +28866,16 @@ impl InstEncoding for OpUSubSatINTEL {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUSubSatINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -23012,6 +28915,16 @@ impl InstEncoding for OpIMul32x16INTEL {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpIMul32x16INTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUMul32x16INTEL {
@@ -23050,6 +28963,16 @@ impl InstEncoding for OpUMul32x16INTEL {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUMul32x16INTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx),
+            self.operand_2.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConstantFunctionPointerINTEL {
@@ -23083,6 +29006,15 @@ impl InstEncoding for OpConstantFunctionPointerINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             function: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConstantFunctionPointerINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.function.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -23118,6 +29050,15 @@ impl InstEncoding for OpFunctionPointerCallINTEL {
             operand_1: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFunctionPointerCallINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand_1.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAsmTargetINTEL {
@@ -23147,6 +29088,14 @@ impl InstEncoding for OpAsmTargetINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             asm_target: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAsmTargetINTEL {}",
+            self.id_result.dis(_ctx),
+            self.asm_target.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -23194,6 +29143,18 @@ impl InstEncoding for OpAsmINTEL {
             constraints: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAsmINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.asm_type.dis(_ctx),
+            self.target.dis(_ctx),
+            self.asm_instructions.dis(_ctx),
+            self.constraints.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAsmCallINTEL {
@@ -23231,6 +29192,16 @@ impl InstEncoding for OpAsmCallINTEL {
             asm: OperandEncoding::decode(&mut op_reader)?,
             argument: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAsmCallINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.asm.dis(_ctx),
+            self.argument.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -23278,6 +29249,18 @@ impl InstEncoding for OpAtomicFMinEXT {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicFMinEXT {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAtomicFMaxEXT {
@@ -23324,6 +29307,18 @@ impl InstEncoding for OpAtomicFMaxEXT {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicFMaxEXT {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAssumeTrueKHR {
@@ -23348,6 +29343,9 @@ impl InstEncoding for OpAssumeTrueKHR {
         Ok(Self {
             condition: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpAssumeTrueKHR {}", self.condition.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -23387,6 +29385,16 @@ impl InstEncoding for OpExpectKHR {
             expected_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpExpectKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.value.dis(_ctx),
+            self.expected_value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpDecorateString {
@@ -23416,6 +29424,14 @@ impl InstEncoding for OpDecorateString {
             target: OperandEncoding::decode(&mut op_reader)?,
             decoration: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpDecorateString {} {}",
+            self.target.dis(_ctx),
+            self.decoration.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -23450,6 +29466,15 @@ impl InstEncoding for OpMemberDecorateString {
             member: OperandEncoding::decode(&mut op_reader)?,
             decoration: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpMemberDecorateString {} {} {}",
+            self.struct_type.dis(_ctx),
+            self.member.dis(_ctx),
+            self.decoration.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -23489,6 +29514,16 @@ impl InstEncoding for OpVmeImageINTEL {
             sampler: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpVmeImageINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image_type.dis(_ctx),
+            self.sampler.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeVmeImageINTEL {
@@ -23519,6 +29554,14 @@ impl InstEncoding for OpTypeVmeImageINTEL {
             image_type: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeVmeImageINTEL {}",
+            self.id_result.dis(_ctx),
+            self.image_type.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeAvcImePayloadINTEL {
@@ -23543,6 +29586,9 @@ impl InstEncoding for OpTypeAvcImePayloadINTEL {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeAvcImePayloadINTEL", self.id_result.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -23569,6 +29615,9 @@ impl InstEncoding for OpTypeAvcRefPayloadINTEL {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeAvcRefPayloadINTEL", self.id_result.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeAvcSicPayloadINTEL {
@@ -23593,6 +29642,9 @@ impl InstEncoding for OpTypeAvcSicPayloadINTEL {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeAvcSicPayloadINTEL", self.id_result.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -23619,6 +29671,9 @@ impl InstEncoding for OpTypeAvcMcePayloadINTEL {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeAvcMcePayloadINTEL", self.id_result.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeAvcMceResultINTEL {
@@ -23643,6 +29698,9 @@ impl InstEncoding for OpTypeAvcMceResultINTEL {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeAvcMceResultINTEL", self.id_result.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -23669,6 +29727,9 @@ impl InstEncoding for OpTypeAvcImeResultINTEL {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeAvcImeResultINTEL", self.id_result.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeAvcImeResultSingleReferenceStreamoutINTEL {
@@ -23693,6 +29754,13 @@ impl InstEncoding for OpTypeAvcImeResultSingleReferenceStreamoutINTEL {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeAvcImeResultSingleReferenceStreamoutINTEL",
+            self.id_result.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -23719,6 +29787,13 @@ impl InstEncoding for OpTypeAvcImeResultDualReferenceStreamoutINTEL {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeAvcImeResultDualReferenceStreamoutINTEL",
+            self.id_result.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeAvcImeSingleReferenceStreaminINTEL {
@@ -23743,6 +29818,13 @@ impl InstEncoding for OpTypeAvcImeSingleReferenceStreaminINTEL {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeAvcImeSingleReferenceStreaminINTEL",
+            self.id_result.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -23769,6 +29851,13 @@ impl InstEncoding for OpTypeAvcImeDualReferenceStreaminINTEL {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeAvcImeDualReferenceStreaminINTEL",
+            self.id_result.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeAvcRefResultINTEL {
@@ -23794,6 +29883,9 @@ impl InstEncoding for OpTypeAvcRefResultINTEL {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeAvcRefResultINTEL", self.id_result.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeAvcSicResultINTEL {
@@ -23818,6 +29910,9 @@ impl InstEncoding for OpTypeAvcSicResultINTEL {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeAvcSicResultINTEL", self.id_result.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -23858,6 +29953,16 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyIN
             qp: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.slice_type.dis(_ctx),
+            self.qp.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {
@@ -23895,6 +30000,16 @@ impl InstEncoding for OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {
             reference_base_penalty: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.reference_base_penalty.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -23934,6 +30049,16 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL {
             qp: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.slice_type.dis(_ctx),
+            self.qp.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceSetInterShapePenaltyINTEL {
@@ -23971,6 +30096,16 @@ impl InstEncoding for OpSubgroupAvcMceSetInterShapePenaltyINTEL {
             packed_shape_penalty: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceSetInterShapePenaltyINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.packed_shape_penalty.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -24010,6 +30145,16 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {
             qp: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.slice_type.dis(_ctx),
+            self.qp.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {
@@ -24047,6 +30192,16 @@ impl InstEncoding for OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {
             direction_cost: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.direction_cost.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -24086,6 +30241,16 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {
             qp: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.slice_type.dis(_ctx),
+            self.qp.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {
@@ -24124,6 +30289,16 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL 
             qp: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.slice_type.dis(_ctx),
+            self.qp.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {
@@ -24153,6 +30328,14 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {
             id_result_type: OperandEncoding::decode(&mut op_reader)?,
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -24184,6 +30367,14 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {
@@ -24213,6 +30404,14 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {
             id_result_type: OperandEncoding::decode(&mut op_reader)?,
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -24260,6 +30459,18 @@ impl InstEncoding for OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.packed_cost_center_delta.dis(_ctx),
+            self.packed_cost_table.dis(_ctx),
+            self.cost_precision.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {
@@ -24298,6 +30509,16 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {
             qp: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.slice_type.dis(_ctx),
+            self.qp.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {
@@ -24328,6 +30549,14 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL {
@@ -24357,6 +30586,14 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL 
             id_result_type: OperandEncoding::decode(&mut op_reader)?,
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -24391,6 +30628,15 @@ impl InstEncoding for OpSubgroupAvcMceSetAcOnlyHaarINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceSetAcOnlyHaarINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -24430,6 +30676,16 @@ impl InstEncoding for OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.source_field_polarity.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {
@@ -24468,6 +30724,16 @@ impl InstEncoding for OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityI
             reference_field_polarity: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.reference_field_polarity.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -24512,6 +30778,17 @@ impl InstEncoding for OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesI
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.forward_reference_field_polarity.dis(_ctx),
+            self.backward_reference_field_polarity.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceConvertToImePayloadINTEL {
@@ -24545,6 +30822,15 @@ impl InstEncoding for OpSubgroupAvcMceConvertToImePayloadINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceConvertToImePayloadINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -24580,6 +30866,15 @@ impl InstEncoding for OpSubgroupAvcMceConvertToImeResultINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceConvertToImeResultINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceConvertToRefPayloadINTEL {
@@ -24613,6 +30908,15 @@ impl InstEncoding for OpSubgroupAvcMceConvertToRefPayloadINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceConvertToRefPayloadINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -24648,6 +30952,15 @@ impl InstEncoding for OpSubgroupAvcMceConvertToRefResultINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceConvertToRefResultINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceConvertToSicPayloadINTEL {
@@ -24681,6 +30994,15 @@ impl InstEncoding for OpSubgroupAvcMceConvertToSicPayloadINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceConvertToSicPayloadINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -24716,6 +31038,15 @@ impl InstEncoding for OpSubgroupAvcMceConvertToSicResultINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceConvertToSicResultINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceGetMotionVectorsINTEL {
@@ -24749,6 +31080,15 @@ impl InstEncoding for OpSubgroupAvcMceGetMotionVectorsINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetMotionVectorsINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -24784,6 +31124,15 @@ impl InstEncoding for OpSubgroupAvcMceGetInterDistortionsINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetInterDistortionsINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceGetBestInterDistortionsINTEL {
@@ -24817,6 +31166,15 @@ impl InstEncoding for OpSubgroupAvcMceGetBestInterDistortionsINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetBestInterDistortionsINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -24852,6 +31210,15 @@ impl InstEncoding for OpSubgroupAvcMceGetInterMajorShapeINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetInterMajorShapeINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceGetInterMinorShapeINTEL {
@@ -24885,6 +31252,15 @@ impl InstEncoding for OpSubgroupAvcMceGetInterMinorShapeINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetInterMinorShapeINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -24920,6 +31296,15 @@ impl InstEncoding for OpSubgroupAvcMceGetInterDirectionsINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetInterDirectionsINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceGetInterMotionVectorCountINTEL {
@@ -24954,6 +31339,15 @@ impl InstEncoding for OpSubgroupAvcMceGetInterMotionVectorCountINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetInterMotionVectorCountINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcMceGetInterReferenceIdsINTEL {
@@ -24987,6 +31381,15 @@ impl InstEncoding for OpSubgroupAvcMceGetInterReferenceIdsINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetInterReferenceIdsINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -25034,6 +31437,17 @@ impl InstEncoding for OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolarities
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.packed_reference_ids.dis(_ctx),
+            self.packed_reference_parameter_field_polarities.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeInitializeINTEL {
@@ -25076,6 +31490,17 @@ impl InstEncoding for OpSubgroupAvcImeInitializeINTEL {
             sad_adjustment: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeInitializeINTEL {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_coord.dis(_ctx),
+            self.partition_mask.dis(_ctx),
+            self.sad_adjustment.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeSetSingleReferenceINTEL {
@@ -25117,6 +31542,17 @@ impl InstEncoding for OpSubgroupAvcImeSetSingleReferenceINTEL {
             search_window_config: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeSetSingleReferenceINTEL {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ref_offset.dis(_ctx),
+            self.search_window_config.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -25164,6 +31600,18 @@ impl InstEncoding for OpSubgroupAvcImeSetDualReferenceINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeSetDualReferenceINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.fwd_ref_offset.dis(_ctx),
+            self.bwd_ref_offset.dis(_ctx),
+            self.search_window_config.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeRefWindowSizeINTEL {
@@ -25201,6 +31649,16 @@ impl InstEncoding for OpSubgroupAvcImeRefWindowSizeINTEL {
             search_window_config: OperandEncoding::decode(&mut op_reader)?,
             dual_ref: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeRefWindowSizeINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.search_window_config.dis(_ctx),
+            self.dual_ref.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -25248,6 +31706,18 @@ impl InstEncoding for OpSubgroupAvcImeAdjustRefOffsetINTEL {
             image_size: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeAdjustRefOffsetINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ref_offset.dis(_ctx),
+            self.src_coord.dis(_ctx),
+            self.ref_window_size.dis(_ctx),
+            self.image_size.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeConvertToMcePayloadINTEL {
@@ -25281,6 +31751,15 @@ impl InstEncoding for OpSubgroupAvcImeConvertToMcePayloadINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeConvertToMcePayloadINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -25320,6 +31799,16 @@ impl InstEncoding for OpSubgroupAvcImeSetMaxMotionVectorCountINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeSetMaxMotionVectorCountINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.max_motion_vector_count.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {
@@ -25353,6 +31842,15 @@ impl InstEncoding for OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -25392,6 +31890,16 @@ impl InstEncoding for OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.threshold.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeSetWeightedSadINTEL {
@@ -25429,6 +31937,16 @@ impl InstEncoding for OpSubgroupAvcImeSetWeightedSadINTEL {
             packed_sad_weights: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeSetWeightedSadINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.packed_sad_weights.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -25471,6 +31989,17 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL {
             ref_image: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.ref_image.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -25518,6 +32047,18 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeEvaluateWithDualReferenceINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.fwd_ref_image.dis(_ctx),
+            self.bwd_ref_image.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {
@@ -25563,6 +32104,18 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {
             payload: OperandEncoding::decode(&mut op_reader)?,
             streamin_components: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.ref_image.dis(_ctx),
+            self.payload.dis(_ctx),
+            self.streamin_components.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -25614,6 +32167,19 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {
             streamin_components: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.fwd_ref_image.dis(_ctx),
+            self.bwd_ref_image.dis(_ctx),
+            self.payload.dis(_ctx),
+            self.streamin_components.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {
@@ -25655,6 +32221,17 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL 
             ref_image: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.ref_image.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -25702,6 +32279,18 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.fwd_ref_image.dis(_ctx),
+            self.bwd_ref_image.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {
@@ -25747,6 +32336,18 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTE
             payload: OperandEncoding::decode(&mut op_reader)?,
             streamin_components: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.ref_image.dis(_ctx),
+            self.payload.dis(_ctx),
+            self.streamin_components.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -25798,6 +32399,19 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL 
             streamin_components: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.fwd_ref_image.dis(_ctx),
+            self.bwd_ref_image.dis(_ctx),
+            self.payload.dis(_ctx),
+            self.streamin_components.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeConvertToMceResultINTEL {
@@ -25831,6 +32445,15 @@ impl InstEncoding for OpSubgroupAvcImeConvertToMceResultINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeConvertToMceResultINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -25866,6 +32489,15 @@ impl InstEncoding for OpSubgroupAvcImeGetSingleReferenceStreaminINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeGetSingleReferenceStreaminINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeGetDualReferenceStreaminINTEL {
@@ -25899,6 +32531,15 @@ impl InstEncoding for OpSubgroupAvcImeGetDualReferenceStreaminINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeGetDualReferenceStreaminINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -25934,6 +32575,15 @@ impl InstEncoding for OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {
@@ -25967,6 +32617,15 @@ impl InstEncoding for OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -26007,6 +32666,16 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotio
             major_shape: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx),
+            self.major_shape.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL {
@@ -26046,6 +32715,16 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDisto
             major_shape: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx),
+            self.major_shape.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL {
@@ -26084,6 +32763,16 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeRefer
             payload: OperandEncoding::decode(&mut op_reader)?,
             major_shape: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx),
+            self.major_shape.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -26128,6 +32817,17 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionV
             direction: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx),
+            self.major_shape.dis(_ctx),
+            self.direction.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL {
@@ -26170,6 +32870,17 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistort
             major_shape: OperandEncoding::decode(&mut op_reader)?,
             direction: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx),
+            self.major_shape.dis(_ctx),
+            self.direction.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -26214,6 +32925,17 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferen
             direction: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx),
+            self.major_shape.dis(_ctx),
+            self.direction.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeGetBorderReachedINTEL {
@@ -26252,6 +32974,16 @@ impl InstEncoding for OpSubgroupAvcImeGetBorderReachedINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeGetBorderReachedINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.image_select.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {
@@ -26285,6 +33017,15 @@ impl InstEncoding for OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -26320,6 +33061,15 @@ impl InstEncoding for OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINT
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {
@@ -26354,6 +33104,15 @@ impl InstEncoding for OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTE
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {
@@ -26387,6 +33146,15 @@ impl InstEncoding for OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL 
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -26445,6 +33213,21 @@ impl InstEncoding for OpSubgroupAvcFmeInitializeINTEL {
             pixel_resolution: OperandEncoding::decode(&mut op_reader)?,
             sad_adjustment: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcFmeInitializeINTEL {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_coord.dis(_ctx),
+            self.motion_vectors.dis(_ctx),
+            self.major_shapes.dis(_ctx),
+            self.minor_shapes.dis(_ctx),
+            self.direction.dis(_ctx),
+            self.pixel_resolution.dis(_ctx),
+            self.sad_adjustment.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -26508,6 +33291,22 @@ impl InstEncoding for OpSubgroupAvcBmeInitializeINTEL {
             sad_adjustment: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcBmeInitializeINTEL {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_coord.dis(_ctx),
+            self.motion_vectors.dis(_ctx),
+            self.major_shapes.dis(_ctx),
+            self.minor_shapes.dis(_ctx),
+            self.direction.dis(_ctx),
+            self.pixel_resolution.dis(_ctx),
+            self.bidirectional_weight.dis(_ctx),
+            self.sad_adjustment.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcRefConvertToMcePayloadINTEL {
@@ -26541,6 +33340,15 @@ impl InstEncoding for OpSubgroupAvcRefConvertToMcePayloadINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcRefConvertToMcePayloadINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -26576,6 +33384,15 @@ impl InstEncoding for OpSubgroupAvcRefSetBidirectionalMixDisableINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcRefSetBidirectionalMixDisableINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcRefSetBilinearFilterEnableINTEL {
@@ -26609,6 +33426,15 @@ impl InstEncoding for OpSubgroupAvcRefSetBilinearFilterEnableINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcRefSetBilinearFilterEnableINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -26651,6 +33477,17 @@ impl InstEncoding for OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL {
             ref_image: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.ref_image.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -26698,6 +33535,18 @@ impl InstEncoding for OpSubgroupAvcRefEvaluateWithDualReferenceINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcRefEvaluateWithDualReferenceINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.fwd_ref_image.dis(_ctx),
+            self.bwd_ref_image.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {
@@ -26739,6 +33588,17 @@ impl InstEncoding for OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {
             packed_reference_ids: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.packed_reference_ids.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -26786,6 +33646,18 @@ impl InstEncoding for OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL 
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.packed_reference_ids.dis(_ctx),
+            self.packed_reference_field_polarities.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcRefConvertToMceResultINTEL {
@@ -26820,6 +33692,15 @@ impl InstEncoding for OpSubgroupAvcRefConvertToMceResultINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcRefConvertToMceResultINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcSicInitializeINTEL {
@@ -26853,6 +33734,15 @@ impl InstEncoding for OpSubgroupAvcSicInitializeINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             src_coord: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicInitializeINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_coord.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -26907,6 +33797,20 @@ impl InstEncoding for OpSubgroupAvcSicConfigureSkcINTEL {
             sad_adjustment: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicConfigureSkcINTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.skip_block_partition_type.dis(_ctx),
+            self.skip_motion_vector_mask.dis(_ctx),
+            self.motion_vectors.dis(_ctx),
+            self.bidirectional_weight.dis(_ctx),
+            self.sad_adjustment.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -26969,6 +33873,22 @@ impl InstEncoding for OpSubgroupAvcSicConfigureIpeLumaINTEL {
             sad_adjustment: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicConfigureIpeLumaINTEL {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.luma_intra_partition_mask.dis(_ctx),
+            self.intra_neighbour_availabilty.dis(_ctx),
+            self.left_edge_luma_pixels.dis(_ctx),
+            self.upper_left_corner_luma_pixel.dis(_ctx),
+            self.upper_edge_luma_pixels.dis(_ctx),
+            self.upper_right_edge_luma_pixels.dis(_ctx),
+            self.sad_adjustment.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -27044,6 +33964,25 @@ impl InstEncoding for OpSubgroupAvcSicConfigureIpeLumaChromaINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicConfigureIpeLumaChromaINTEL {} {} {} {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.luma_intra_partition_mask.dis(_ctx),
+            self.intra_neighbour_availabilty.dis(_ctx),
+            self.left_edge_luma_pixels.dis(_ctx),
+            self.upper_left_corner_luma_pixel.dis(_ctx),
+            self.upper_edge_luma_pixels.dis(_ctx),
+            self.upper_right_edge_luma_pixels.dis(_ctx),
+            self.left_edge_chroma_pixels.dis(_ctx),
+            self.upper_left_corner_chroma_pixel.dis(_ctx),
+            self.upper_edge_chroma_pixels.dis(_ctx),
+            self.sad_adjustment.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcSicGetMotionVectorMaskINTEL {
@@ -27082,6 +34021,16 @@ impl InstEncoding for OpSubgroupAvcSicGetMotionVectorMaskINTEL {
             direction: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicGetMotionVectorMaskINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.skip_block_partition_type.dis(_ctx),
+            self.direction.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcSicConvertToMcePayloadINTEL {
@@ -27115,6 +34064,15 @@ impl InstEncoding for OpSubgroupAvcSicConvertToMcePayloadINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicConvertToMcePayloadINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -27153,6 +34111,16 @@ impl InstEncoding for OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL {
             packed_shape_penalty: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.packed_shape_penalty.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -27200,6 +34168,18 @@ impl InstEncoding for OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.luma_mode_penalty.dis(_ctx),
+            self.luma_packed_neighbor_modes.dis(_ctx),
+            self.luma_packed_non_dc_penalty.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {
@@ -27238,6 +34218,16 @@ impl InstEncoding for OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.chroma_mode_base_penalty.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcSicSetBilinearFilterEnableINTEL {
@@ -27271,6 +34261,15 @@ impl InstEncoding for OpSubgroupAvcSicSetBilinearFilterEnableINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicSetBilinearFilterEnableINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -27310,6 +34309,16 @@ impl InstEncoding for OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.packed_sad_coefficients.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {
@@ -27348,6 +34357,16 @@ impl InstEncoding for OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.block_based_skip_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcSicEvaluateIpeINTEL {
@@ -27385,6 +34404,16 @@ impl InstEncoding for OpSubgroupAvcSicEvaluateIpeINTEL {
             src_image: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicEvaluateIpeINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -27427,6 +34456,17 @@ impl InstEncoding for OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL {
             ref_image: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.ref_image.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -27474,6 +34514,18 @@ impl InstEncoding for OpSubgroupAvcSicEvaluateWithDualReferenceINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicEvaluateWithDualReferenceINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.fwd_ref_image.dis(_ctx),
+            self.bwd_ref_image.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {
@@ -27515,6 +34567,17 @@ impl InstEncoding for OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {
             packed_reference_ids: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.packed_reference_ids.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -27562,6 +34625,18 @@ impl InstEncoding for OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL 
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.src_image.dis(_ctx),
+            self.packed_reference_ids.dis(_ctx),
+            self.packed_reference_field_polarities.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcSicConvertToMceResultINTEL {
@@ -27595,6 +34670,15 @@ impl InstEncoding for OpSubgroupAvcSicConvertToMceResultINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicConvertToMceResultINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -27630,6 +34714,15 @@ impl InstEncoding for OpSubgroupAvcSicGetIpeLumaShapeINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicGetIpeLumaShapeINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {
@@ -27663,6 +34756,15 @@ impl InstEncoding for OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -27698,6 +34800,15 @@ impl InstEncoding for OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {
@@ -27731,6 +34842,15 @@ impl InstEncoding for OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -27766,6 +34886,15 @@ impl InstEncoding for OpSubgroupAvcSicGetIpeChromaModeINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicGetIpeChromaModeINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {
@@ -27799,6 +34928,15 @@ impl InstEncoding for OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -27834,6 +34972,15 @@ impl InstEncoding for OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupAvcSicGetInterRawSadsINTEL {
@@ -27867,6 +35014,15 @@ impl InstEncoding for OpSubgroupAvcSicGetInterRawSadsINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             payload: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupAvcSicGetInterRawSadsINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.payload.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -27902,6 +35058,15 @@ impl InstEncoding for OpVariableLengthArrayINTEL {
             length: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpVariableLengthArrayINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.length.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSaveMemoryINTEL {
@@ -27932,6 +35097,14 @@ impl InstEncoding for OpSaveMemoryINTEL {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSaveMemoryINTEL {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRestoreMemoryINTEL {
@@ -27956,6 +35129,9 @@ impl InstEncoding for OpRestoreMemoryINTEL {
         Ok(Self {
             ptr: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpRestoreMemoryINTEL {}", self.ptr.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -28011,6 +35187,20 @@ impl InstEncoding for OpArbitraryFloatSinCosPiALTERA {
             rounding_accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatSinCosPiALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.m_result.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.rounding_accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatCastALTERA {
@@ -28064,6 +35254,20 @@ impl InstEncoding for OpArbitraryFloatCastALTERA {
             rounding: OperandEncoding::decode(&mut op_reader)?,
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatCastALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -28119,6 +35323,20 @@ impl InstEncoding for OpArbitraryFloatCastFromIntALTERA {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatCastFromIntALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.from_sign.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatCastToIntALTERA {
@@ -28172,6 +35390,20 @@ impl InstEncoding for OpArbitraryFloatCastToIntALTERA {
             rounding: OperandEncoding::decode(&mut op_reader)?,
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatCastToIntALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.to_sign.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -28235,6 +35467,22 @@ impl InstEncoding for OpArbitraryFloatAddALTERA {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatAddALTERA {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.b.dis(_ctx),
+            self.mb.dis(_ctx),
+            self.m_result.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatSubALTERA {
@@ -28296,6 +35544,22 @@ impl InstEncoding for OpArbitraryFloatSubALTERA {
             rounding: OperandEncoding::decode(&mut op_reader)?,
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatSubALTERA {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.b.dis(_ctx),
+            self.mb.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -28359,6 +35623,22 @@ impl InstEncoding for OpArbitraryFloatMulALTERA {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatMulALTERA {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.b.dis(_ctx),
+            self.mb.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatDivALTERA {
@@ -28421,6 +35701,22 @@ impl InstEncoding for OpArbitraryFloatDivALTERA {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatDivALTERA {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.b.dis(_ctx),
+            self.mb.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatGTALTERA {
@@ -28466,6 +35762,18 @@ impl InstEncoding for OpArbitraryFloatGTALTERA {
             b: OperandEncoding::decode(&mut op_reader)?,
             mb: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatGTALTERA {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.b.dis(_ctx),
+            self.mb.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -28513,6 +35821,18 @@ impl InstEncoding for OpArbitraryFloatGEALTERA {
             mb: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatGEALTERA {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.b.dis(_ctx),
+            self.mb.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatLTALTERA {
@@ -28558,6 +35878,18 @@ impl InstEncoding for OpArbitraryFloatLTALTERA {
             b: OperandEncoding::decode(&mut op_reader)?,
             mb: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatLTALTERA {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.b.dis(_ctx),
+            self.mb.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -28605,6 +35937,18 @@ impl InstEncoding for OpArbitraryFloatLEALTERA {
             mb: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatLEALTERA {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.b.dis(_ctx),
+            self.mb.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatEQALTERA {
@@ -28650,6 +35994,18 @@ impl InstEncoding for OpArbitraryFloatEQALTERA {
             b: OperandEncoding::decode(&mut op_reader)?,
             mb: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatEQALTERA {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.b.dis(_ctx),
+            self.mb.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -28705,6 +36061,20 @@ impl InstEncoding for OpArbitraryFloatRecipALTERA {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatRecipALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatRSqrtALTERA {
@@ -28759,6 +36129,20 @@ impl InstEncoding for OpArbitraryFloatRSqrtALTERA {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatRSqrtALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatCbrtALTERA {
@@ -28812,6 +36196,20 @@ impl InstEncoding for OpArbitraryFloatCbrtALTERA {
             rounding: OperandEncoding::decode(&mut op_reader)?,
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatCbrtALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -28875,6 +36273,22 @@ impl InstEncoding for OpArbitraryFloatHypotALTERA {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatHypotALTERA {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.b.dis(_ctx),
+            self.mb.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatSqrtALTERA {
@@ -28928,6 +36342,20 @@ impl InstEncoding for OpArbitraryFloatSqrtALTERA {
             rounding: OperandEncoding::decode(&mut op_reader)?,
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatSqrtALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -28983,6 +36411,20 @@ impl InstEncoding for OpArbitraryFloatLogINTEL {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatLogINTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatLog2INTEL {
@@ -29036,6 +36478,20 @@ impl InstEncoding for OpArbitraryFloatLog2INTEL {
             rounding: OperandEncoding::decode(&mut op_reader)?,
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatLog2INTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -29091,6 +36547,20 @@ impl InstEncoding for OpArbitraryFloatLog10INTEL {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatLog10INTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatLog1pINTEL {
@@ -29144,6 +36614,20 @@ impl InstEncoding for OpArbitraryFloatLog1pINTEL {
             rounding: OperandEncoding::decode(&mut op_reader)?,
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatLog1pINTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -29199,6 +36683,20 @@ impl InstEncoding for OpArbitraryFloatExpINTEL {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatExpINTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatExp2INTEL {
@@ -29252,6 +36750,20 @@ impl InstEncoding for OpArbitraryFloatExp2INTEL {
             rounding: OperandEncoding::decode(&mut op_reader)?,
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatExp2INTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -29307,6 +36819,20 @@ impl InstEncoding for OpArbitraryFloatExp10INTEL {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatExp10INTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatExpm1INTEL {
@@ -29360,6 +36886,20 @@ impl InstEncoding for OpArbitraryFloatExpm1INTEL {
             rounding: OperandEncoding::decode(&mut op_reader)?,
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatExpm1INTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -29415,6 +36955,20 @@ impl InstEncoding for OpArbitraryFloatSinINTEL {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatSinINTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatCosINTEL {
@@ -29468,6 +37022,20 @@ impl InstEncoding for OpArbitraryFloatCosINTEL {
             rounding: OperandEncoding::decode(&mut op_reader)?,
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatCosINTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -29523,6 +37091,20 @@ impl InstEncoding for OpArbitraryFloatSinCosINTEL {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatSinCosINTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatSinPiINTEL {
@@ -29576,6 +37158,20 @@ impl InstEncoding for OpArbitraryFloatSinPiINTEL {
             rounding: OperandEncoding::decode(&mut op_reader)?,
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatSinPiINTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -29631,6 +37227,20 @@ impl InstEncoding for OpArbitraryFloatCosPiINTEL {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatCosPiINTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatASinINTEL {
@@ -29684,6 +37294,20 @@ impl InstEncoding for OpArbitraryFloatASinINTEL {
             rounding: OperandEncoding::decode(&mut op_reader)?,
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatASinINTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -29739,6 +37363,20 @@ impl InstEncoding for OpArbitraryFloatASinPiINTEL {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatASinPiINTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatACosINTEL {
@@ -29792,6 +37430,20 @@ impl InstEncoding for OpArbitraryFloatACosINTEL {
             rounding_mode: OperandEncoding::decode(&mut op_reader)?,
             rounding_accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatACosINTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.m_1.dis(_ctx),
+            self.mout.dis(_ctx),
+            self.enable_subnormals.dis(_ctx),
+            self.rounding_mode.dis(_ctx),
+            self.rounding_accuracy.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -29847,6 +37499,20 @@ impl InstEncoding for OpArbitraryFloatACosPiINTEL {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatACosPiINTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatATanINTEL {
@@ -29901,6 +37567,20 @@ impl InstEncoding for OpArbitraryFloatATanINTEL {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatATanINTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatATanPiINTEL {
@@ -29954,6 +37634,20 @@ impl InstEncoding for OpArbitraryFloatATanPiINTEL {
             rounding: OperandEncoding::decode(&mut op_reader)?,
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatATanPiINTEL {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -30017,6 +37711,22 @@ impl InstEncoding for OpArbitraryFloatATan2INTEL {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatATan2INTEL {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.b.dis(_ctx),
+            self.mb.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatPowINTEL {
@@ -30078,6 +37788,22 @@ impl InstEncoding for OpArbitraryFloatPowINTEL {
             rounding: OperandEncoding::decode(&mut op_reader)?,
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatPowINTEL {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.b.dis(_ctx),
+            self.mb.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -30141,6 +37867,22 @@ impl InstEncoding for OpArbitraryFloatPowRINTEL {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatPowRINTEL {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.b.dis(_ctx),
+            self.mb.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArbitraryFloatPowNINTEL {
@@ -30203,6 +37945,22 @@ impl InstEncoding for OpArbitraryFloatPowNINTEL {
             accuracy: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArbitraryFloatPowNINTEL {} {} {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.ma.dis(_ctx),
+            self.b.dis(_ctx),
+            self.sign_of_b.dis(_ctx),
+            self.mresult.dis(_ctx),
+            self.subnormal.dis(_ctx),
+            self.rounding.dis(_ctx),
+            self.accuracy.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpLoopControlINTEL {
@@ -30227,6 +37985,13 @@ impl InstEncoding for OpLoopControlINTEL {
         Ok(Self {
             loop_control_parameters: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpLoopControlINTEL {}",
+            self.loop_control_parameters.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -30256,6 +38021,14 @@ impl InstEncoding for OpAliasDomainDeclINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             name: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAliasDomainDeclINTEL {}",
+            self.id_result.dis(_ctx),
+            self.name.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -30291,6 +38064,15 @@ impl InstEncoding for OpAliasScopeDeclINTEL {
             name: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAliasScopeDeclINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.alias_domain.dis(_ctx),
+            self.name.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAliasScopeListDeclINTEL {
@@ -30320,6 +38102,14 @@ impl InstEncoding for OpAliasScopeListDeclINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             id_ref: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAliasScopeListDeclINTEL {}",
+            self.id_result.dis(_ctx),
+            self.id_ref.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -30375,6 +38165,20 @@ impl InstEncoding for OpFixedSqrtALTERA {
             o: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFixedSqrtALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.input.dis(_ctx),
+            self.s.dis(_ctx),
+            self.i.dis(_ctx),
+            self.r_i.dis(_ctx),
+            self.q.dis(_ctx),
+            self.o.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFixedRecipALTERA {
@@ -30428,6 +38232,20 @@ impl InstEncoding for OpFixedRecipALTERA {
             q: OperandEncoding::decode(&mut op_reader)?,
             o: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFixedRecipALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.input.dis(_ctx),
+            self.s.dis(_ctx),
+            self.i.dis(_ctx),
+            self.r_i.dis(_ctx),
+            self.q.dis(_ctx),
+            self.o.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -30483,6 +38301,20 @@ impl InstEncoding for OpFixedRsqrtALTERA {
             o: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFixedRsqrtALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.input.dis(_ctx),
+            self.s.dis(_ctx),
+            self.i.dis(_ctx),
+            self.r_i.dis(_ctx),
+            self.q.dis(_ctx),
+            self.o.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFixedSinALTERA {
@@ -30536,6 +38368,20 @@ impl InstEncoding for OpFixedSinALTERA {
             q: OperandEncoding::decode(&mut op_reader)?,
             o: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFixedSinALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.input.dis(_ctx),
+            self.s.dis(_ctx),
+            self.i.dis(_ctx),
+            self.r_i.dis(_ctx),
+            self.q.dis(_ctx),
+            self.o.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -30591,6 +38437,20 @@ impl InstEncoding for OpFixedCosALTERA {
             o: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFixedCosALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.input.dis(_ctx),
+            self.s.dis(_ctx),
+            self.i.dis(_ctx),
+            self.r_i.dis(_ctx),
+            self.q.dis(_ctx),
+            self.o.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFixedSinCosALTERA {
@@ -30644,6 +38504,20 @@ impl InstEncoding for OpFixedSinCosALTERA {
             q: OperandEncoding::decode(&mut op_reader)?,
             o: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFixedSinCosALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.input.dis(_ctx),
+            self.s.dis(_ctx),
+            self.i.dis(_ctx),
+            self.r_i.dis(_ctx),
+            self.q.dis(_ctx),
+            self.o.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -30699,6 +38573,20 @@ impl InstEncoding for OpFixedSinPiALTERA {
             o: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFixedSinPiALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.input.dis(_ctx),
+            self.s.dis(_ctx),
+            self.i.dis(_ctx),
+            self.r_i.dis(_ctx),
+            self.q.dis(_ctx),
+            self.o.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFixedCosPiALTERA {
@@ -30752,6 +38640,20 @@ impl InstEncoding for OpFixedCosPiALTERA {
             q: OperandEncoding::decode(&mut op_reader)?,
             o: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFixedCosPiALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.input.dis(_ctx),
+            self.s.dis(_ctx),
+            self.i.dis(_ctx),
+            self.r_i.dis(_ctx),
+            self.q.dis(_ctx),
+            self.o.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -30807,6 +38709,20 @@ impl InstEncoding for OpFixedSinCosPiALTERA {
             o: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFixedSinCosPiALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.input.dis(_ctx),
+            self.s.dis(_ctx),
+            self.i.dis(_ctx),
+            self.r_i.dis(_ctx),
+            self.q.dis(_ctx),
+            self.o.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFixedLogALTERA {
@@ -30860,6 +38776,20 @@ impl InstEncoding for OpFixedLogALTERA {
             q: OperandEncoding::decode(&mut op_reader)?,
             o: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFixedLogALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.input.dis(_ctx),
+            self.s.dis(_ctx),
+            self.i.dis(_ctx),
+            self.r_i.dis(_ctx),
+            self.q.dis(_ctx),
+            self.o.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -30915,6 +38845,20 @@ impl InstEncoding for OpFixedExpALTERA {
             o: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFixedExpALTERA {} {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.input.dis(_ctx),
+            self.s.dis(_ctx),
+            self.i.dis(_ctx),
+            self.r_i.dis(_ctx),
+            self.q.dis(_ctx),
+            self.o.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpPtrCastToCrossWorkgroupALTERA {
@@ -30949,6 +38893,15 @@ impl InstEncoding for OpPtrCastToCrossWorkgroupALTERA {
             pointer: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpPtrCastToCrossWorkgroupALTERA {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCrossWorkgroupCastToPtrALTERA {
@@ -30982,6 +38935,15 @@ impl InstEncoding for OpCrossWorkgroupCastToPtrALTERA {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             pointer: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCrossWorkgroupCastToPtrALTERA {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -31021,6 +38983,16 @@ impl InstEncoding for OpReadPipeBlockingALTERA {
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpReadPipeBlockingALTERA {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpWritePipeBlockingALTERA {
@@ -31059,6 +39031,16 @@ impl InstEncoding for OpWritePipeBlockingALTERA {
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpWritePipeBlockingALTERA {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.packet_size.dis(_ctx),
+            self.packet_alignment.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFPGARegALTERA {
@@ -31092,6 +39074,15 @@ impl InstEncoding for OpFPGARegALTERA {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             input: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpFPGARegALTERA {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.input.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -31127,6 +39118,15 @@ impl InstEncoding for OpRayQueryGetRayTMinKHR {
             ray_query: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetRayTMinKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryGetRayFlagsKHR {
@@ -31160,6 +39160,15 @@ impl InstEncoding for OpRayQueryGetRayFlagsKHR {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             ray_query: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetRayFlagsKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -31199,6 +39208,16 @@ impl InstEncoding for OpRayQueryGetIntersectionTKHR {
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionTKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryGetIntersectionInstanceCustomIndexKHR {
@@ -31237,6 +39256,16 @@ impl InstEncoding for OpRayQueryGetIntersectionInstanceCustomIndexKHR {
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionInstanceCustomIndexKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryGetIntersectionInstanceIdKHR {
@@ -31274,6 +39303,16 @@ impl InstEncoding for OpRayQueryGetIntersectionInstanceIdKHR {
             ray_query: OperandEncoding::decode(&mut op_reader)?,
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionInstanceIdKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -31314,6 +39353,16 @@ impl InstEncoding for OpRayQueryGetIntersectionInstanceShaderBindingTableRecordO
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryGetIntersectionGeometryIndexKHR {
@@ -31351,6 +39400,16 @@ impl InstEncoding for OpRayQueryGetIntersectionGeometryIndexKHR {
             ray_query: OperandEncoding::decode(&mut op_reader)?,
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionGeometryIndexKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -31390,6 +39449,16 @@ impl InstEncoding for OpRayQueryGetIntersectionPrimitiveIndexKHR {
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionPrimitiveIndexKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryGetIntersectionBarycentricsKHR {
@@ -31427,6 +39496,16 @@ impl InstEncoding for OpRayQueryGetIntersectionBarycentricsKHR {
             ray_query: OperandEncoding::decode(&mut op_reader)?,
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionBarycentricsKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -31466,6 +39545,16 @@ impl InstEncoding for OpRayQueryGetIntersectionFrontFaceKHR {
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionFrontFaceKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryGetIntersectionCandidateAABBOpaqueKHR {
@@ -31499,6 +39588,15 @@ impl InstEncoding for OpRayQueryGetIntersectionCandidateAABBOpaqueKHR {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             ray_query: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionCandidateAABBOpaqueKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -31538,6 +39636,16 @@ impl InstEncoding for OpRayQueryGetIntersectionObjectRayDirectionKHR {
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionObjectRayDirectionKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryGetIntersectionObjectRayOriginKHR {
@@ -31576,6 +39684,16 @@ impl InstEncoding for OpRayQueryGetIntersectionObjectRayOriginKHR {
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionObjectRayOriginKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryGetWorldRayDirectionKHR {
@@ -31610,6 +39728,15 @@ impl InstEncoding for OpRayQueryGetWorldRayDirectionKHR {
             ray_query: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetWorldRayDirectionKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryGetWorldRayOriginKHR {
@@ -31643,6 +39770,15 @@ impl InstEncoding for OpRayQueryGetWorldRayOriginKHR {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             ray_query: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetWorldRayOriginKHR {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -31682,6 +39818,16 @@ impl InstEncoding for OpRayQueryGetIntersectionObjectToWorldKHR {
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionObjectToWorldKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRayQueryGetIntersectionWorldToObjectKHR {
@@ -31719,6 +39865,16 @@ impl InstEncoding for OpRayQueryGetIntersectionWorldToObjectKHR {
             ray_query: OperandEncoding::decode(&mut op_reader)?,
             intersection: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRayQueryGetIntersectionWorldToObjectKHR {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ray_query.dis(_ctx),
+            self.intersection.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -31766,6 +39922,18 @@ impl InstEncoding for OpAtomicFAddEXT {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpAtomicFAddEXT {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.pointer.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx),
+            self.value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeBufferSurfaceINTEL {
@@ -31796,6 +39964,14 @@ impl InstEncoding for OpTypeBufferSurfaceINTEL {
             access_qualifier: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTypeBufferSurfaceINTEL {}",
+            self.id_result.dis(_ctx),
+            self.access_qualifier.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeStructContinuedINTEL {
@@ -31820,6 +39996,9 @@ impl InstEncoding for OpTypeStructContinuedINTEL {
         Ok(Self {
             id_ref: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpTypeStructContinuedINTEL {}", self.id_ref.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -31846,6 +40025,13 @@ impl InstEncoding for OpConstantCompositeContinuedINTEL {
             constituents: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpConstantCompositeContinuedINTEL {}",
+            self.constituents.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSpecConstantCompositeContinuedINTEL {
@@ -31870,6 +40056,13 @@ impl InstEncoding for OpSpecConstantCompositeContinuedINTEL {
         Ok(Self {
             constituents: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSpecConstantCompositeContinuedINTEL {}",
+            self.constituents.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -31905,6 +40098,15 @@ impl InstEncoding for OpCompositeConstructContinuedINTEL {
             constituents: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpCompositeConstructContinuedINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.constituents.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConvertFToBF16INTEL {
@@ -31938,6 +40140,15 @@ impl InstEncoding for OpConvertFToBF16INTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             float_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertFToBF16INTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.float_value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -31973,6 +40184,15 @@ impl InstEncoding for OpConvertBF16ToFINTEL {
             b_float_16_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertBF16ToFINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.b_float_16_value.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpControlBarrierArriveINTEL {
@@ -32006,6 +40226,15 @@ impl InstEncoding for OpControlBarrierArriveINTEL {
             memory: OperandEncoding::decode(&mut op_reader)?,
             semantics: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpControlBarrierArriveINTEL {} {} {}",
+            self.execution.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -32041,6 +40270,15 @@ impl InstEncoding for OpControlBarrierWaitINTEL {
             semantics: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpControlBarrierWaitINTEL {} {} {}",
+            self.execution.dis(_ctx),
+            self.memory.dis(_ctx),
+            self.semantics.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpArithmeticFenceEXT {
@@ -32074,6 +40312,15 @@ impl InstEncoding for OpArithmeticFenceEXT {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             target: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpArithmeticFenceEXT {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.target.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -32125,6 +40372,19 @@ impl InstEncoding for OpTaskSequenceCreateALTERA {
             async_capacity: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTaskSequenceCreateALTERA {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.function.dis(_ctx),
+            self.pipelined.dis(_ctx),
+            self.use_stall_enable_clusters.dis(_ctx),
+            self.get_capacity.dis(_ctx),
+            self.async_capacity.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTaskSequenceAsyncALTERA {
@@ -32154,6 +40414,14 @@ impl InstEncoding for OpTaskSequenceAsyncALTERA {
             sequence: OperandEncoding::decode(&mut op_reader)?,
             arguments: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpTaskSequenceAsyncALTERA {} {}",
+            self.sequence.dis(_ctx),
+            self.arguments.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -32189,6 +40457,15 @@ impl InstEncoding for OpTaskSequenceGetALTERA {
             sequence: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpTaskSequenceGetALTERA {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.sequence.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTaskSequenceReleaseALTERA {
@@ -32214,6 +40491,9 @@ impl InstEncoding for OpTaskSequenceReleaseALTERA {
             sequence: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "OpTaskSequenceReleaseALTERA {}", self.sequence.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeTaskSequenceALTERA {
@@ -32238,6 +40518,9 @@ impl InstEncoding for OpTypeTaskSequenceALTERA {
         Ok(Self {
             id_result: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "{} = OpTypeTaskSequenceALTERA", self.id_result.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -32272,6 +40555,15 @@ impl InstEncoding for OpSubgroupBlockPrefetchINTEL {
             num_bytes: OperandEncoding::decode(&mut op_reader)?,
             memory_access: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSubgroupBlockPrefetchINTEL {} {} {}",
+            self.ptr.dis(_ctx),
+            self.num_bytes.dis(_ctx),
+            self.memory_access.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -32335,6 +40627,22 @@ impl InstEncoding for OpSubgroup2DBlockLoadINTEL {
             dst_pointer: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSubgroup2DBlockLoadINTEL {} {} {} {} {} {} {} {} {} {}",
+            self.element_size.dis(_ctx),
+            self.block_width.dis(_ctx),
+            self.block_height.dis(_ctx),
+            self.block_count.dis(_ctx),
+            self.src_base_pointer.dis(_ctx),
+            self.memory_width.dis(_ctx),
+            self.memory_height.dis(_ctx),
+            self.memory_pitch.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.dst_pointer.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroup2DBlockLoadTransformINTEL {
@@ -32396,6 +40704,22 @@ impl InstEncoding for OpSubgroup2DBlockLoadTransformINTEL {
             coordinate: OperandEncoding::decode(&mut op_reader)?,
             dst_pointer: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSubgroup2DBlockLoadTransformINTEL {} {} {} {} {} {} {} {} {} {}",
+            self.element_size.dis(_ctx),
+            self.block_width.dis(_ctx),
+            self.block_height.dis(_ctx),
+            self.block_count.dis(_ctx),
+            self.src_base_pointer.dis(_ctx),
+            self.memory_width.dis(_ctx),
+            self.memory_height.dis(_ctx),
+            self.memory_pitch.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.dst_pointer.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -32459,6 +40783,22 @@ impl InstEncoding for OpSubgroup2DBlockLoadTransposeINTEL {
             dst_pointer: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSubgroup2DBlockLoadTransposeINTEL {} {} {} {} {} {} {} {} {} {}",
+            self.element_size.dis(_ctx),
+            self.block_width.dis(_ctx),
+            self.block_height.dis(_ctx),
+            self.block_count.dis(_ctx),
+            self.src_base_pointer.dis(_ctx),
+            self.memory_width.dis(_ctx),
+            self.memory_height.dis(_ctx),
+            self.memory_pitch.dis(_ctx),
+            self.coordinate.dis(_ctx),
+            self.dst_pointer.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroup2DBlockPrefetchINTEL {
@@ -32516,6 +40856,21 @@ impl InstEncoding for OpSubgroup2DBlockPrefetchINTEL {
             memory_pitch: OperandEncoding::decode(&mut op_reader)?,
             coordinate: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSubgroup2DBlockPrefetchINTEL {} {} {} {} {} {} {} {} {}",
+            self.element_size.dis(_ctx),
+            self.block_width.dis(_ctx),
+            self.block_height.dis(_ctx),
+            self.block_count.dis(_ctx),
+            self.src_base_pointer.dis(_ctx),
+            self.memory_width.dis(_ctx),
+            self.memory_height.dis(_ctx),
+            self.memory_pitch.dis(_ctx),
+            self.coordinate.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -32579,6 +40934,22 @@ impl InstEncoding for OpSubgroup2DBlockStoreINTEL {
             coordinate: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpSubgroup2DBlockStoreINTEL {} {} {} {} {} {} {} {} {} {}",
+            self.element_size.dis(_ctx),
+            self.block_width.dis(_ctx),
+            self.block_height.dis(_ctx),
+            self.block_count.dis(_ctx),
+            self.src_pointer.dis(_ctx),
+            self.dst_base_pointer.dis(_ctx),
+            self.memory_width.dis(_ctx),
+            self.memory_height.dis(_ctx),
+            self.memory_pitch.dis(_ctx),
+            self.coordinate.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSubgroupMatrixMultiplyAccumulateINTEL {
@@ -32629,6 +41000,19 @@ impl InstEncoding for OpSubgroupMatrixMultiplyAccumulateINTEL {
             matrix_multiply_accumulate_operands: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSubgroupMatrixMultiplyAccumulateINTEL {} {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.k_dim.dis(_ctx),
+            self.matrix_a.dis(_ctx),
+            self.matrix_b.dis(_ctx),
+            self.matrix_c.dis(_ctx),
+            self.matrix_multiply_accumulate_operands.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpBitwiseFunctionINTEL {
@@ -32675,6 +41059,18 @@ impl InstEncoding for OpBitwiseFunctionINTEL {
             lut_index: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpBitwiseFunctionINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.a.dis(_ctx),
+            self.b.dis(_ctx),
+            self.c.dis(_ctx),
+            self.lut_index.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUntypedVariableLengthArrayINTEL {
@@ -32713,6 +41109,16 @@ impl InstEncoding for OpUntypedVariableLengthArrayINTEL {
             length: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpUntypedVariableLengthArrayINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.element_type.dis(_ctx),
+            self.length.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConditionalExtensionINTEL {
@@ -32741,6 +41147,14 @@ impl InstEncoding for OpConditionalExtensionINTEL {
             condition: OperandEncoding::decode(&mut op_reader)?,
             name: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpConditionalExtensionINTEL {} {}",
+            self.condition.dis(_ctx),
+            self.name.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -32784,6 +41198,17 @@ impl InstEncoding for OpConditionalEntryPointINTEL {
             interface: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpConditionalEntryPointINTEL {} {} {} {} {}",
+            self.condition.dis(_ctx),
+            self.execution_model.dis(_ctx),
+            self.entry_point.dis(_ctx),
+            self.name.dis(_ctx),
+            self.interface.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConditionalCapabilityINTEL {
@@ -32813,6 +41238,14 @@ impl InstEncoding for OpConditionalCapabilityINTEL {
             condition: OperandEncoding::decode(&mut op_reader)?,
             capability: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpConditionalCapabilityINTEL {} {}",
+            self.condition.dis(_ctx),
+            self.capability.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -32851,6 +41284,16 @@ impl InstEncoding for OpSpecConstantTargetINTEL {
             target: OperandEncoding::decode(&mut op_reader)?,
             features: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSpecConstantTargetINTEL {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.target.dis(_ctx),
+            self.features.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -32898,6 +41341,18 @@ impl InstEncoding for OpSpecConstantArchitectureINTEL {
             architecture: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSpecConstantArchitectureINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.category.dis(_ctx),
+            self.family.dis(_ctx),
+            self.opcode.dis(_ctx),
+            self.architecture.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSpecConstantCapabilitiesINTEL {
@@ -32932,6 +41387,15 @@ impl InstEncoding for OpSpecConstantCapabilitiesINTEL {
             capabilities: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpSpecConstantCapabilitiesINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.capabilities.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConditionalCopyObjectINTEL {
@@ -32965,6 +41429,15 @@ impl InstEncoding for OpConditionalCopyObjectINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             id_ref: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConditionalCopyObjectINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.id_ref.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -33008,6 +41481,17 @@ impl InstEncoding for OpGroupIMulKHR {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupIMulKHR {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupFMulKHR {
@@ -33049,6 +41533,17 @@ impl InstEncoding for OpGroupFMulKHR {
             operation: OperandEncoding::decode(&mut op_reader)?,
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupFMulKHR {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -33092,6 +41587,17 @@ impl InstEncoding for OpGroupBitwiseAndKHR {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupBitwiseAndKHR {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupBitwiseOrKHR {
@@ -33133,6 +41639,17 @@ impl InstEncoding for OpGroupBitwiseOrKHR {
             operation: OperandEncoding::decode(&mut op_reader)?,
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupBitwiseOrKHR {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -33176,6 +41693,17 @@ impl InstEncoding for OpGroupBitwiseXorKHR {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupBitwiseXorKHR {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupLogicalAndKHR {
@@ -33217,6 +41745,17 @@ impl InstEncoding for OpGroupLogicalAndKHR {
             operation: OperandEncoding::decode(&mut op_reader)?,
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupLogicalAndKHR {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -33260,6 +41799,17 @@ impl InstEncoding for OpGroupLogicalOrKHR {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupLogicalOrKHR {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupLogicalXorKHR {
@@ -33302,6 +41852,17 @@ impl InstEncoding for OpGroupLogicalXorKHR {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpGroupLogicalXorKHR {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.execution.dis(_ctx),
+            self.operation.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpRoundFToTF32INTEL {
@@ -33335,6 +41896,15 @@ impl InstEncoding for OpRoundFToTF32INTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             float_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpRoundFToTF32INTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.float_value.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -33382,6 +41952,18 @@ impl InstEncoding for OpMaskedGatherINTEL {
             fill_empty: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpMaskedGatherINTEL {} {} {} {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.ptr_vector.dis(_ctx),
+            self.alignment.dis(_ctx),
+            self.mask.dis(_ctx),
+            self.fill_empty.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpMaskedScatterINTEL {
@@ -33420,6 +42002,16 @@ impl InstEncoding for OpMaskedScatterINTEL {
             mask: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "OpMaskedScatterINTEL {} {} {} {}",
+            self.input_vector.dis(_ctx),
+            self.ptr_vector.dis(_ctx),
+            self.alignment.dis(_ctx),
+            self.mask.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConvertHandleToImageINTEL {
@@ -33453,6 +42045,15 @@ impl InstEncoding for OpConvertHandleToImageINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertHandleToImageINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -33488,6 +42089,15 @@ impl InstEncoding for OpConvertHandleToSamplerINTEL {
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertHandleToSamplerINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConvertHandleToSampledImageINTEL {
@@ -33521,5 +42131,14 @@ impl InstEncoding for OpConvertHandleToSampledImageINTEL {
             id_result: OperandEncoding::decode(&mut op_reader)?,
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} = OpConvertHandleToSampledImageINTEL {} {}",
+            self.id_result.dis(_ctx),
+            self.id_result_type.dis(_ctx),
+            self.operand.dis(_ctx)
+        )
     }
 }

@@ -18,6 +18,11 @@ impl InstEncoding for DebugPrintfInstSet {
             }
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        match self {
+            Self::DebugPrintf(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+        }
+    }
 }
 impl From<DebugPrintf> for DebugPrintfInstSet {
     fn from(inst: DebugPrintf) -> Self {

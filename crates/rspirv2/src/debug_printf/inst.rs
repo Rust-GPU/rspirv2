@@ -27,4 +27,12 @@ impl InstEncoding for DebugPrintf {
             id_ref: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "DebugPrintf {} {}",
+            self.format.dis(_ctx),
+            self.id_ref.dis(_ctx)
+        )
+    }
 }
