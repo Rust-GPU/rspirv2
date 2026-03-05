@@ -87,6 +87,65 @@ macro_rules! impl_float {
 impl_float!(f32);
 impl_float!(f64);
 
+impl LiteralConst {
+    pub fn as_u64(&self) -> Result<u64, DecodeError> {
+        if self.0.len() == 2 {
+            Ok(self.0[0].0 as u64 | (self.0[1].0 as u64) << 32)
+        } else {
+            Err(DecodeError::LiteralConstOfWrongWordSize {
+                expected_size: 2,
+                actual_size: self.0.len(),
+            })
+        }
+    }
+
+    pub fn as_u32(&self) -> Result<u32, DecodeError> {
+        if self.0.len() == 1 {
+            Ok(self.0[0].0)
+        } else {
+            Err(DecodeError::LiteralConstOfWrongWordSize {
+                expected_size: 1,
+                actual_size: self.0.len(),
+            })
+        }
+    }
+
+    pub fn as_u16(&self) -> Result<u16, DecodeError> {
+        let value = self.as_u32()?;
+        u16::try_from(value).map_err(|_| DecodeError::LiteralConstTooLarge { value, bits: 16 })
+    }
+
+    pub fn as_u8(&self) -> Result<u8, DecodeError> {
+        let value = self.as_u32()?;
+        u8::try_from(value).map_err(|_| DecodeError::LiteralConstTooLarge { value, bits: 8 })
+    }
+}
+
+macro_rules! as_signed {
+    ($uname:ident => $name:ident: $ty:ty) => {
+        pub fn $name(&self) -> Result<$ty, DecodeError> {
+            Ok(self.$uname()? as $ty)
+        }
+    };
+}
+
+macro_rules! as_float {
+    ($uname:ident => $name:ident: $ty:ty) => {
+        pub fn $name(&self) -> Result<$ty, DecodeError> {
+            Ok(<$ty>::from_bits(self.$uname()?))
+        }
+    };
+}
+
+impl LiteralConst {
+    as_signed!(as_u8 => as_i8: i8);
+    as_signed!(as_u16 => as_i16: i16);
+    as_signed!(as_u32 => as_i32: i32);
+    as_signed!(as_u64 => as_i64: i64);
+    as_float!(as_u32 => as_f32: f32);
+    as_float!(as_u64 => as_f64: f64);
+}
+
 unsafe impl Operand for LiteralConst {
     const KIND: &OperandKind = &OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER;
 }
@@ -107,7 +166,7 @@ unsafe impl OperandEncoding for LiteralConst {
 
     #[inline]
     fn decode(_: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
-        Err(DecodeError::LiteralIntegerNotLastOperand)
+        Err(DecodeError::LiteralConstNotLastOperand)
     }
 
     #[inline]
