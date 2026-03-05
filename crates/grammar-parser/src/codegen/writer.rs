@@ -50,14 +50,12 @@ impl GrammarWriter {
             #use_super
             #content
         };
-        let content_str;
+        let mut content_str = content.to_string();
         #[cfg(feature = "prettyplease")]
         {
-            content_str = prettyplease::unparse(&syn::parse2(content)?);
-        }
-        #[cfg(not(feature = "prettyplease"))]
-        {
-            content_str = content.to_string();
+            if let Ok(file) = syn::parse2(content) {
+                content_str = prettyplease::unparse(&file);
+            }
         }
         self.write_module_str(submodule, &content_str)
     }
