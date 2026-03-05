@@ -5,6 +5,9 @@ use std::string::FromUtf8Error;
 
 #[derive(Clone, PartialEq)]
 pub enum DecodeError {
+    UnknownOpCode {
+        opcode: u16,
+    },
     WrongOpCode {
         name: &'static str,
         expected: u16,
@@ -46,6 +49,10 @@ pub enum DecodeError {
 impl Display for DecodeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
+            DecodeError::UnknownOpCode { opcode } => write!(
+                f,
+                "Instruction Set couldn't decode instruction with unknown opcode {opcode}"
+            ),
             DecodeError::WrongOpCode {
                 name,
                 expected,

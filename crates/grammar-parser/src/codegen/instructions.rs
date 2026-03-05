@@ -89,16 +89,26 @@ pub fn write_inst_enum(
     opt: &CodegenOptions,
 ) -> anyhow::Result<()> {
     let name = format_ident!("{}InstSet", opt.name_suffix_type);
-    let enum_variants = grammar.insts.iter().map(|inst| {
-        let type_ident = InstMeta::type_ident(&inst.opname);
-        let enum_ident = InstMeta::enum_ident(&inst.opname);
-        quote! {
-            #enum_ident(#type_ident),
-        }
+    let insts = grammar
+        .insts
+        .iter()
+        .map(|inst| {
+            let type_ident = InstMeta::type_ident(&inst.opname);
+            let enum_ident = InstMeta::enum_ident(&inst.opname);
+            (inst, type_ident, enum_ident)
+        })
+        .collect::<Vec<_>>();
+    let enum_variants = insts
+        .iter()
+        .map(|(_, type_ident, enum_ident)| quote!(#enum_ident(#type_ident),));
+    let encode_match = insts.iter().map(
+        |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => InstEncoding::encode(inst, writer),),
+    );
+    let decode_match = insts.iter().map(|(inst, type_ident, enum_ident)| {
+        let opcode = inst.opcode;
+        quote!(#opcode => Self::#enum_ident(<#type_ident as InstEncoding>::decode(reader)?),)
     });
-    let from_impls = grammar.insts.iter().map(|inst| {
-        let type_ident = InstMeta::type_ident(&inst.opname);
-        let enum_ident = InstMeta::enum_ident(&inst.opname);
+    let from_impls = insts.iter().map(|(_, type_ident, enum_ident)| {
         quote! {
             impl From<#type_ident> for #name {
                 fn from(inst: #type_ident) -> Self {
@@ -114,6 +124,23 @@ pub fn write_inst_enum(
             pub enum #name {
                 #(#enum_variants)*
             }
+
+            impl InstEncoding for #name {
+                fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+                    match self {
+                        #(#encode_match)*
+                    }
+                }
+
+                fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+                    let opcode = reader.opcode();
+                    Ok(match opcode {
+                        #(#decode_match)*
+                        _ => return Err(DecodeError::UnknownOpCode { opcode }),
+                    })
+                }
+            }
+
             #(#from_impls)*
         },
     )
