@@ -59,7 +59,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Resu
 
             impl InstEncoding for #struct_ident {
                 fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
-                    let len = 0 #(+OperandEncoding::word_len(&self.#members))*;
+                    let len = 1 #(+OperandEncoding::word_len(&self.#members))*;
                     writer.write_op(Self::META.opcode, len)?;
                     #(OperandEncoding::encode(&self.#members, &mut *writer)?;)*
                     Ok(())
