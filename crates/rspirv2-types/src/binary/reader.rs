@@ -22,19 +22,21 @@ impl<'a> ModuleReader<'a> {
                 // out of instructions
                 return Ok(None);
             }
-            Some(first) => first.0,
+            Some(first) => *first,
         };
-        let opcode = first as u16;
-        let op_len = (first >> 16) as usize;
+        let (opcode, op_len) = first.to_op();
+        if op_len == 0 {
+            return Err(DecodeError::InstructionZeroSized { inst_offset });
+        }
         let params = self
             .data
-            .get((inst_offset + 1)..(inst_offset + 1 + op_len))
+            .get((inst_offset + 1)..(inst_offset + op_len))
             .ok_or(DecodeError::InstructionTooLong {
                 inst_offset,
                 op_len,
                 module_remaining: self.data.len(),
             })?;
-        self.offset += op_len + 1;
+        self.offset += op_len;
         Ok(Some(InstReader::new(opcode, params, inst_offset)))
     }
 }
