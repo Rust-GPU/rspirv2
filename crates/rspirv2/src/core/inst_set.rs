@@ -6174,6 +6174,1105 @@ impl InstEncoding for CoreInstSet {
             },
         )
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        match self {
+            Self::Nop(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Undef(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SourceContinued(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Source(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SourceExtension(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Name(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::MemberName(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::String(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Line(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Extension(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ExtInstImport(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ExtInst(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::MemoryModel(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::EntryPoint(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ExecutionMode(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Capability(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeVoid(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeBool(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeInt(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeFloat(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeVector(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeMatrix(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeImage(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeSampler(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeSampledImage(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeArray(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeRuntimeArray(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeStruct(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeOpaque(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypePointer(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeFunction(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeEvent(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeDeviceEvent(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeReserveId(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeQueue(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypePipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeForwardPointer(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConstantTrue(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConstantFalse(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Constant(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConstantComposite(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConstantSampler(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConstantNull(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SpecConstantTrue(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SpecConstantFalse(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SpecConstant(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SpecConstantComposite(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SpecConstantOp(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Function(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FunctionParameter(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FunctionEnd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FunctionCall(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Variable(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageTexelPointer(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Load(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Store(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CopyMemory(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CopyMemorySized(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AccessChain(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::InBoundsAccessChain(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::PtrAccessChain(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArrayLength(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GenericPtrMemSemantics(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::InBoundsPtrAccessChain(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Decorate(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::MemberDecorate(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::DecorationGroup(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupDecorate(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupMemberDecorate(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::VectorExtractDynamic(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::VectorInsertDynamic(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::VectorShuffle(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CompositeConstruct(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CompositeExtract(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CompositeInsert(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CopyObject(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Transpose(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SampledImage(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSampleImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSampleExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSampleDrefImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSampleDrefExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSampleProjImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSampleProjExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSampleProjDrefImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSampleProjDrefExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageFetch(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageGather(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageDrefGather(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageRead(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageWrite(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Image(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageQueryFormat(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageQueryOrder(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageQuerySizeLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageQuerySize(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageQueryLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageQueryLevels(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageQuerySamples(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertFToU(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertFToS(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertSToF(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertUToF(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UConvert(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SConvert(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FConvert(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::QuantizeToF16(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertPtrToU(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SatConvertSToU(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SatConvertUToS(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertUToPtr(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::PtrCastToGeneric(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GenericCastToPtr(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GenericCastToPtrExplicit(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Bitcast(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SNegate(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FNegate(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IAdd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FAdd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ISub(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FSub(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IMul(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FMul(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UDiv(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SDiv(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FDiv(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UMod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SRem(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SMod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FRem(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FMod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::VectorTimesScalar(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::MatrixTimesScalar(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::VectorTimesMatrix(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::MatrixTimesVector(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::MatrixTimesMatrix(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::OuterProduct(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Dot(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IAddCarry(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ISubBorrow(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UMulExtended(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SMulExtended(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Any(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::All(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IsNan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IsInf(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IsFinite(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IsNormal(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SignBitSet(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::LessOrGreater(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Ordered(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Unordered(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::LogicalEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::LogicalNotEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::LogicalOr(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::LogicalAnd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::LogicalNot(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Select(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::INotEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UGreaterThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SGreaterThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UGreaterThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SGreaterThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ULessThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SLessThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ULessThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SLessThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FOrdEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FUnordEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FOrdNotEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FUnordNotEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FOrdLessThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FUnordLessThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FOrdGreaterThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FUnordGreaterThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FOrdLessThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FUnordLessThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FOrdGreaterThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FUnordGreaterThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ShiftRightLogical(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ShiftRightArithmetic(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ShiftLeftLogical(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::BitwiseOr(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::BitwiseXor(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::BitwiseAnd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Not(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::BitFieldInsert(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::BitFieldSExtract(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::BitFieldUExtract(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::BitReverse(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::BitCount(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::DPdx(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::DPdy(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Fwidth(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::DPdxFine(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::DPdyFine(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FwidthFine(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::DPdxCoarse(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::DPdyCoarse(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FwidthCoarse(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::EmitVertex(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::EndPrimitive(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::EmitStreamVertex(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::EndStreamPrimitive(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ControlBarrier(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::MemoryBarrier(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicLoad(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicStore(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicExchange(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicCompareExchange(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicCompareExchangeWeak(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicIIncrement(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicIDecrement(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicIAdd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicISub(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicSMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicUMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicSMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicUMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicAnd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicOr(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicXor(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Phi(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::LoopMerge(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SelectionMerge(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Label(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Branch(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::BranchConditional(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Switch(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Kill(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Return(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ReturnValue(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Unreachable(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::LifetimeStart(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::LifetimeStop(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupAsyncCopy(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupWaitEvents(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupAll(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupAny(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupBroadcast(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupIAdd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupFAdd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupFMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupUMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupSMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupFMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupUMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupSMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ReadPipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::WritePipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ReservedReadPipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ReservedWritePipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ReserveReadPipePackets(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ReserveWritePipePackets(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CommitReadPipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CommitWritePipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IsValidReserveId(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GetNumPipePackets(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GetMaxPipePackets(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupReserveReadPipePackets(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupReserveWritePipePackets(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupCommitReadPipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupCommitWritePipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::EnqueueMarker(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::EnqueueKernel(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GetKernelNDrangeSubGroupCount(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GetKernelNDrangeMaxSubGroupSize(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GetKernelWorkGroupSize(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GetKernelPreferredWorkGroupSizeMultiple(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::RetainEvent(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ReleaseEvent(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CreateUserEvent(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IsValidEvent(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SetUserEventStatus(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CaptureEventProfilingInfo(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GetDefaultQueue(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::BuildNDRange(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleDrefImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleDrefExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleProjImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleProjExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleProjDrefImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleProjDrefExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSparseFetch(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSparseGather(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSparseDrefGather(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSparseTexelsResident(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::NoLine(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicFlagTestAndSet(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicFlagClear(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSparseRead(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SizeOf(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypePipeStorage(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConstantPipeStorage(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CreatePipeFromPipeStorage(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GetKernelLocalSizeForSubgroupCount(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GetKernelMaxNumSubgroups(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeNamedBarrier(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::NamedBarrierInitialize(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::MemoryNamedBarrier(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ModuleProcessed(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ExecutionModeId(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::DecorateId(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformElect(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformAll(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformAny(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformAllEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBroadcast(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBroadcastFirst(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBallot(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformInverseBallot(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBallotBitExtract(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBallotBitCount(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBallotFindLSB(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBallotFindMSB(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformShuffle(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformShuffleXor(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformShuffleUp(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformShuffleDown(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformIAdd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformFAdd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformIMul(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformFMul(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformSMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformUMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformFMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformSMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformUMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformFMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBitwiseAnd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBitwiseOr(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBitwiseXor(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformLogicalAnd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformLogicalOr(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformLogicalXor(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformQuadBroadcast(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformQuadSwap(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CopyLogical(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::PtrEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::PtrNotEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::PtrDiff(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ColorAttachmentReadEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::DepthAttachmentReadEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::StencilAttachmentReadEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeTensorARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TensorReadARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TensorWriteARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TensorQuerySizeARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GraphConstantARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GraphEntryPointARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GraphARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GraphInputARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GraphSetOutputARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GraphEndARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeGraphARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TerminateInvocation(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeUntypedPointerKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UntypedVariableKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UntypedAccessChainKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UntypedInBoundsAccessChainKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupBallotKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupFirstInvocationKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UntypedPtrAccessChainKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UntypedInBoundsPtrAccessChainKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UntypedArrayLengthKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UntypedPrefetchKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FmaKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAllKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAnyKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAllEqualKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformRotateKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupReadInvocationKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ExtInstWithForwardRefsKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UntypedGroupAsyncCopyKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TraceRayKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ExecuteCallableKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertUToAccelerationStructureKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IgnoreIntersectionKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TerminateRayKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SDot(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UDot(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SUDot(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SDotAccSat(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UDotAccSat(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SUDotAccSat(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeCooperativeMatrixKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixLoadKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixStoreKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixMulAddKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixLengthKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConstantCompositeReplicateEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SpecConstantCompositeReplicateEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CompositeConstructReplicateEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeRayQueryKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryInitializeKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryTerminateKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGenerateIntersectionKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryConfirmIntersectionKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryProceedKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionTypeKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSampleWeightedQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageBoxFilterQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageBlockMatchSSDQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageBlockMatchSADQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::BitCastArrayQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageBlockMatchWindowSSDQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageBlockMatchWindowSADQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageBlockMatchGatherSSDQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageBlockMatchGatherSADQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CompositeConstructCoopMatQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CompositeExtractCoopMatQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ExtractSubArrayQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupIAddNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupFAddNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupFMinNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupUMinNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupSMinNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupFMaxNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupUMaxNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupSMaxNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FragmentMaskFetchAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FragmentFetchAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ReadClockKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AllocateNodePayloadsAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::EnqueueNodePayloadsAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeNodePayloadArrayAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FinishWritingNodePayloadAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::NodePayloadArrayLengthAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IsNodePayloadValidAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConstantStringAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SpecConstantStringAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformQuadAllKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformQuadAnyKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeBufferEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::BufferPointerEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UntypedImageTexelPointerEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::MemberDecorateIdEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConstantSizeOfEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordHitMotionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordHitWithIndexMotionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordMissMotionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetWorldToObjectNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetObjectToWorldNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetObjectRayDirectionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetObjectRayOriginNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectTraceRayMotionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetShaderRecordBufferHandleNV(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::HitObjectGetShaderBindingTableRecordIndexNV(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::HitObjectRecordEmptyNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectTraceRayNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordHitNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordHitWithIndexNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordMissNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectExecuteShaderNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetCurrentTimeNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetAttributesNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetHitKindNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetPrimitiveIndexNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetGeometryIndexNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetInstanceIdNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetInstanceCustomIndexNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetWorldRayDirectionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetWorldRayOriginNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetRayTMaxNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetRayTMinNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectIsEmptyNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectIsHitNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectIsMissNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ReorderThreadWithHitObjectNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ReorderThreadWithHintNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeHitObjectNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageSampleFootprintNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeVectorIdEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeVectorMatrixMulNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeVectorOuterProductAccumulateNV(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::CooperativeVectorReduceSumAccumulateNV(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::CooperativeVectorMatrixMulAddNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixConvertNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::EmitMeshTasksEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SetMeshOutputsEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformPartitionEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::WritePackedPrimitiveIndices4x8NV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FetchMicroTriangleVertexPositionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FetchMicroTriangleVertexBarycentricNV(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::CooperativeVectorLoadNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeVectorStoreNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordFromQueryEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordMissEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordMissMotionEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetIntersectionTriangleVertexPositionsEXT(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::HitObjectGetRayFlagsEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectSetShaderBindingTableRecordIndexEXT(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::HitObjectReorderExecuteShaderEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectTraceReorderExecuteEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectTraceMotionReorderExecuteEXT(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::TypeHitObjectEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ReorderThreadWithHintEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ReorderThreadWithHitObjectEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectTraceRayEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectTraceRayMotionEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordEmptyEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectExecuteShaderEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetCurrentTimeEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetAttributesEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetHitKindEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetPrimitiveIndexEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetGeometryIndexEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetInstanceIdEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetInstanceCustomIndexEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetObjectRayOriginEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetObjectRayDirectionEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetWorldRayDirectionEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetWorldRayOriginEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetObjectToWorldEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetWorldToObjectEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetRayTMaxEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ReportIntersectionKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IgnoreIntersectionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TerminateRayNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TraceNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TraceMotionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TraceRayMotionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionTriangleVertexPositionsKHR(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::TypeAccelerationStructureKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ExecuteCallableNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionClusterIdNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetClusterIdNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetRayTMinEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetShaderBindingTableRecordIndexEXT(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::HitObjectGetShaderRecordBufferHandleEXT(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::HitObjectIsEmptyEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectIsHitEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectIsMissEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeCooperativeMatrixNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixLoadNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixStoreNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixMulAddNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixLengthNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::BeginInvocationInterlockEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::EndInvocationInterlockEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixReduceNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixLoadTensorNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixStoreTensorNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixPerElementOpNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeTensorLayoutNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeTensorViewNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CreateTensorLayoutNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TensorLayoutSetDimensionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TensorLayoutSetStrideNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TensorLayoutSliceNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TensorLayoutSetClampValueNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CreateTensorViewNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TensorViewSetDimensionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TensorViewSetStrideNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::DemoteToHelperInvocation(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IsHelperInvocationEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TensorViewSetClipNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TensorLayoutSetBlockSizeNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixTransposeNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertUToImageNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertUToSamplerNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertImageToUNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertSamplerToUNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertUToSampledImageNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertSampledImageToUNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SamplerImageAddressingModeNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RawAccessChainNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionSpherePositionNV(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::RayQueryGetIntersectionSphereRadiusNV(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::RayQueryGetIntersectionLSSPositionsNV(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::RayQueryGetIntersectionLSSRadiiNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionLSSHitValueNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetSpherePositionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetSphereRadiusNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetLSSPositionsNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetLSSRadiiNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectIsSphereHitNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectIsLSSHitNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryIsSphereHitNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryIsLSSHitNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupShuffleINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupShuffleDownINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupShuffleUpINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupShuffleXorINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupBlockReadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupBlockWriteINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupImageBlockReadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupImageBlockWriteINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupImageMediaBlockReadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupImageMediaBlockWriteINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UCountLeadingZerosINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UCountTrailingZerosINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AbsISubINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AbsUSubINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IAddSatINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UAddSatINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IAverageINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UAverageINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IAverageRoundedINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UAverageRoundedINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ISubSatINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::USubSatINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::IMul32x16INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UMul32x16INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConstantFunctionPointerINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FunctionPointerCallINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AsmTargetINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AsmINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AsmCallINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicFMinEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicFMaxEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AssumeTrueKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ExpectKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::DecorateString(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::MemberDecorateString(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::VmeImageINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeVmeImageINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeAvcImePayloadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeAvcRefPayloadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeAvcSicPayloadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeAvcMcePayloadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeAvcMceResultINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeAvcImeResultINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeAvcImeResultSingleReferenceStreamoutINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::TypeAvcImeResultDualReferenceStreamoutINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::TypeAvcImeSingleReferenceStreaminINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::TypeAvcImeDualReferenceStreaminINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeAvcRefResultINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeAvcSicResultINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetDefaultInterShapePenaltyINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceSetInterShapePenaltyINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceSetInterDirectionPenaltyINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceSetMotionVectorCostFunctionINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceSetAcOnlyHaarINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceConvertToImePayloadINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceConvertToImeResultINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceConvertToRefPayloadINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceConvertToRefResultINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceConvertToSicPayloadINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceConvertToSicResultINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetMotionVectorsINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcMceGetInterDistortionsINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetBestInterDistortionsINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetInterMajorShapeINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetInterMinorShapeINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetInterDirectionsINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetInterMotionVectorCountINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetInterReferenceIdsINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeInitializeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcImeSetSingleReferenceINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeSetDualReferenceINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcImeRefWindowSizeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcImeAdjustRefOffsetINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcImeConvertToMcePayloadINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeSetMaxMotionVectorCountINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeSetUnidirectionalMixDisableINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeSetWeightedSadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcImeEvaluateWithSingleReferenceINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeEvaluateWithDualReferenceINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeConvertToMceResultINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeGetSingleReferenceStreaminINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeGetDualReferenceStreaminINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeStripSingleReferenceStreamoutINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeStripDualReferenceStreamoutINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeGetBorderReachedINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcImeGetTruncatedSearchIndicationINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcFmeInitializeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcBmeInitializeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcRefConvertToMcePayloadINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcRefSetBidirectionalMixDisableINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcRefSetBilinearFilterEnableINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcRefEvaluateWithSingleReferenceINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcRefEvaluateWithDualReferenceINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcRefEvaluateWithMultiReferenceINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcRefConvertToMceResultINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicInitializeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcSicConfigureSkcINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcSicConfigureIpeLumaINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcSicConfigureIpeLumaChromaINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicGetMotionVectorMaskINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicConvertToMcePayloadINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicSetIntraLumaShapePenaltyINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicSetBilinearFilterEnableINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicSetSkcForwardTransformEnableINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicSetBlockBasedRawSkipSadINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicEvaluateIpeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcSicEvaluateWithSingleReferenceINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicEvaluateWithDualReferenceINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicEvaluateWithMultiReferenceINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicConvertToMceResultINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicGetIpeLumaShapeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcSicGetBestIpeLumaDistortionINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicGetBestIpeChromaDistortionINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicGetPackedIpeLumaModesINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicGetIpeChromaModeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::SubgroupAvcSicGetInterRawSadsINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::VariableLengthArrayINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SaveMemoryINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RestoreMemoryINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatSinCosPiALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatCastALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatCastFromIntALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatCastToIntALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatAddALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatSubALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatMulALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatDivALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatGTALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatGEALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatLTALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatLEALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatEQALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatRecipALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatRSqrtALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatCbrtALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatHypotALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatSqrtALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatLogINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatLog2INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatLog10INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatLog1pINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatExpINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatExp2INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatExp10INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatExpm1INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatSinINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatCosINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatSinCosINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatSinPiINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatCosPiINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatASinINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatASinPiINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatACosINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatACosPiINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatATanINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatATanPiINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatATan2INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatPowINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatPowRINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatPowNINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::LoopControlINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AliasDomainDeclINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AliasScopeDeclINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AliasScopeListDeclINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FixedSqrtALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FixedRecipALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FixedRsqrtALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FixedSinALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FixedCosALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FixedSinCosALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FixedSinPiALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FixedCosPiALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FixedSinCosPiALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FixedLogALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FixedExpALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::PtrCastToCrossWorkgroupALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CrossWorkgroupCastToPtrALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ReadPipeBlockingALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::WritePipeBlockingALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FPGARegALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetRayTMinKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetRayFlagsKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionTKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionInstanceCustomIndexKHR(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::RayQueryGetIntersectionInstanceIdKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::RayQueryGetIntersectionGeometryIndexKHR(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::RayQueryGetIntersectionPrimitiveIndexKHR(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::RayQueryGetIntersectionBarycentricsKHR(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::RayQueryGetIntersectionFrontFaceKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionCandidateAABBOpaqueKHR(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::RayQueryGetIntersectionObjectRayDirectionKHR(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::RayQueryGetIntersectionObjectRayOriginKHR(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::RayQueryGetWorldRayDirectionKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetWorldRayOriginKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionObjectToWorldKHR(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::RayQueryGetIntersectionWorldToObjectKHR(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::AtomicFAddEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeBufferSurfaceINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeStructContinuedINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConstantCompositeContinuedINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SpecConstantCompositeContinuedINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CompositeConstructContinuedINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertFToBF16INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertBF16ToFINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ControlBarrierArriveINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ControlBarrierWaitINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ArithmeticFenceEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TaskSequenceCreateALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TaskSequenceAsyncALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TaskSequenceGetALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TaskSequenceReleaseALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeTaskSequenceALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupBlockPrefetchINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Subgroup2DBlockLoadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Subgroup2DBlockLoadTransformINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Subgroup2DBlockLoadTransposeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Subgroup2DBlockPrefetchINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Subgroup2DBlockStoreINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupMatrixMultiplyAccumulateINTEL(inst) => {
+                InstEncoding::dis_fmt(inst, f, ctx)
+            }
+            Self::BitwiseFunctionINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::UntypedVariableLengthArrayINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConditionalExtensionINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConditionalEntryPointINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConditionalCapabilityINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SpecConstantTargetINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SpecConstantArchitectureINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SpecConstantCapabilitiesINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConditionalCopyObjectINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupIMulKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupFMulKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupBitwiseAndKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupBitwiseOrKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupBitwiseXorKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupLogicalAndKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupLogicalOrKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::GroupLogicalXorKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RoundFToTF32INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::MaskedGatherINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::MaskedScatterINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertHandleToImageINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertHandleToSamplerINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConvertHandleToSampledImageINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+        }
+    }
 }
 impl From<OpNop> for CoreInstSet {
     fn from(inst: OpNop) -> Self {

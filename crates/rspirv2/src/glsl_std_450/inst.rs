@@ -23,6 +23,9 @@ impl InstEncoding for Round {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Round {}", self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct RoundEven {
@@ -47,6 +50,9 @@ impl InstEncoding for RoundEven {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "RoundEven {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -73,6 +79,9 @@ impl InstEncoding for Trunc {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Trunc {}", self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FAbs {
@@ -97,6 +106,9 @@ impl InstEncoding for FAbs {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "FAbs {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -123,6 +135,9 @@ impl InstEncoding for SAbs {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "SAbs {}", self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FSign {
@@ -147,6 +162,9 @@ impl InstEncoding for FSign {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "FSign {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -173,6 +191,9 @@ impl InstEncoding for SSign {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "SSign {}", self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Floor {
@@ -197,6 +218,9 @@ impl InstEncoding for Floor {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Floor {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -223,6 +247,9 @@ impl InstEncoding for Ceil {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Ceil {}", self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Fract {
@@ -247,6 +274,9 @@ impl InstEncoding for Fract {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Fract {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -273,6 +303,9 @@ impl InstEncoding for Radians {
             degrees: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Radians {}", self.degrees.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Degrees {
@@ -297,6 +330,9 @@ impl InstEncoding for Degrees {
         Ok(Self {
             radians: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Degrees {}", self.radians.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -323,6 +359,9 @@ impl InstEncoding for Sin {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Sin {}", self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Cos {
@@ -347,6 +386,9 @@ impl InstEncoding for Cos {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Cos {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -373,6 +415,9 @@ impl InstEncoding for Tan {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Tan {}", self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Asin {
@@ -397,6 +442,9 @@ impl InstEncoding for Asin {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Asin {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -423,6 +471,9 @@ impl InstEncoding for Acos {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Acos {}", self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Atan {
@@ -447,6 +498,9 @@ impl InstEncoding for Atan {
         Ok(Self {
             y_over_x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Atan {}", self.y_over_x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -473,6 +527,9 @@ impl InstEncoding for Sinh {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Sinh {}", self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Cosh {
@@ -497,6 +554,9 @@ impl InstEncoding for Cosh {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Cosh {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -523,6 +583,9 @@ impl InstEncoding for Tanh {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Tanh {}", self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Asinh {
@@ -547,6 +610,9 @@ impl InstEncoding for Asinh {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Asinh {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -573,6 +639,9 @@ impl InstEncoding for Acosh {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Acosh {}", self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Atanh {
@@ -597,6 +666,9 @@ impl InstEncoding for Atanh {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Atanh {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -626,6 +698,9 @@ impl InstEncoding for Atan2 {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Atan2 {} {}", self.y.dis(_ctx), self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Pow {
@@ -654,6 +729,9 @@ impl InstEncoding for Pow {
             y: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Pow {} {}", self.x.dis(_ctx), self.y.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Exp {
@@ -678,6 +756,9 @@ impl InstEncoding for Exp {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Exp {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -704,6 +785,9 @@ impl InstEncoding for Log {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Log {}", self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Exp2 {
@@ -728,6 +812,9 @@ impl InstEncoding for Exp2 {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Exp2 {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -754,6 +841,9 @@ impl InstEncoding for Log2 {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Log2 {}", self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Sqrt {
@@ -778,6 +868,9 @@ impl InstEncoding for Sqrt {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Sqrt {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -804,6 +897,9 @@ impl InstEncoding for InverseSqrt {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "InverseSqrt {}", self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Determinant {
@@ -829,6 +925,9 @@ impl InstEncoding for Determinant {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Determinant {}", self.x.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct MatrixInverse {
@@ -853,6 +952,9 @@ impl InstEncoding for MatrixInverse {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "MatrixInverse {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -882,6 +984,9 @@ impl InstEncoding for Modf {
             i: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Modf {} {}", self.x.dis(_ctx), self.i.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct ModfStruct {
@@ -906,6 +1011,9 @@ impl InstEncoding for ModfStruct {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "ModfStruct {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -935,6 +1043,9 @@ impl InstEncoding for FMin {
             y: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "FMin {} {}", self.x.dis(_ctx), self.y.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct UMin {
@@ -962,6 +1073,9 @@ impl InstEncoding for UMin {
             x: OperandEncoding::decode(&mut op_reader)?,
             y: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "UMin {} {}", self.x.dis(_ctx), self.y.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -991,6 +1105,9 @@ impl InstEncoding for SMin {
             y: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "SMin {} {}", self.x.dis(_ctx), self.y.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FMax {
@@ -1018,6 +1135,9 @@ impl InstEncoding for FMax {
             x: OperandEncoding::decode(&mut op_reader)?,
             y: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "FMax {} {}", self.x.dis(_ctx), self.y.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1047,6 +1167,9 @@ impl InstEncoding for UMax {
             y: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "UMax {} {}", self.x.dis(_ctx), self.y.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct SMax {
@@ -1074,6 +1197,9 @@ impl InstEncoding for SMax {
             x: OperandEncoding::decode(&mut op_reader)?,
             y: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "SMax {} {}", self.x.dis(_ctx), self.y.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1109,6 +1235,15 @@ impl InstEncoding for FClamp {
             max_val: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "FClamp {} {} {}",
+            self.x.dis(_ctx),
+            self.min_val.dis(_ctx),
+            self.max_val.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct UClamp {
@@ -1142,6 +1277,15 @@ impl InstEncoding for UClamp {
             min_val: OperandEncoding::decode(&mut op_reader)?,
             max_val: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "UClamp {} {} {}",
+            self.x.dis(_ctx),
+            self.min_val.dis(_ctx),
+            self.max_val.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1177,6 +1321,15 @@ impl InstEncoding for SClamp {
             max_val: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "SClamp {} {} {}",
+            self.x.dis(_ctx),
+            self.min_val.dis(_ctx),
+            self.max_val.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FMix {
@@ -1210,6 +1363,15 @@ impl InstEncoding for FMix {
             y: OperandEncoding::decode(&mut op_reader)?,
             a: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "FMix {} {} {}",
+            self.x.dis(_ctx),
+            self.y.dis(_ctx),
+            self.a.dis(_ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1245,6 +1407,15 @@ impl InstEncoding for IMix {
             a: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "IMix {} {} {}",
+            self.x.dis(_ctx),
+            self.y.dis(_ctx),
+            self.a.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Step {
@@ -1272,6 +1443,9 @@ impl InstEncoding for Step {
             edge: OperandEncoding::decode(&mut op_reader)?,
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Step {} {}", self.edge.dis(_ctx), self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1307,6 +1481,15 @@ impl InstEncoding for SmoothStep {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "SmoothStep {} {} {}",
+            self.edge_0.dis(_ctx),
+            self.edge_1.dis(_ctx),
+            self.x.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Fma {
@@ -1341,6 +1524,15 @@ impl InstEncoding for Fma {
             c: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "Fma {} {} {}",
+            self.a.dis(_ctx),
+            self.b.dis(_ctx),
+            self.c.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Frexp {
@@ -1369,6 +1561,9 @@ impl InstEncoding for Frexp {
             exp: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Frexp {} {}", self.x.dis(_ctx), self.exp.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FrexpStruct {
@@ -1393,6 +1588,9 @@ impl InstEncoding for FrexpStruct {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "FrexpStruct {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1422,6 +1620,9 @@ impl InstEncoding for Ldexp {
             exp: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Ldexp {} {}", self.x.dis(_ctx), self.exp.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PackSnorm4x8 {
@@ -1446,6 +1647,9 @@ impl InstEncoding for PackSnorm4x8 {
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "PackSnorm4x8 {}", self.v.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1472,6 +1676,9 @@ impl InstEncoding for PackUnorm4x8 {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "PackUnorm4x8 {}", self.v.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PackSnorm2x16 {
@@ -1496,6 +1703,9 @@ impl InstEncoding for PackSnorm2x16 {
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "PackSnorm2x16 {}", self.v.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1522,6 +1732,9 @@ impl InstEncoding for PackUnorm2x16 {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "PackUnorm2x16 {}", self.v.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PackHalf2x16 {
@@ -1546,6 +1759,9 @@ impl InstEncoding for PackHalf2x16 {
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "PackHalf2x16 {}", self.v.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1572,6 +1788,9 @@ impl InstEncoding for PackDouble2x32 {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "PackDouble2x32 {}", self.v.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct UnpackSnorm2x16 {
@@ -1596,6 +1815,9 @@ impl InstEncoding for UnpackSnorm2x16 {
         Ok(Self {
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "UnpackSnorm2x16 {}", self.p.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1622,6 +1844,9 @@ impl InstEncoding for UnpackUnorm2x16 {
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "UnpackUnorm2x16 {}", self.p.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct UnpackHalf2x16 {
@@ -1646,6 +1871,9 @@ impl InstEncoding for UnpackHalf2x16 {
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "UnpackHalf2x16 {}", self.v.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1672,6 +1900,9 @@ impl InstEncoding for UnpackSnorm4x8 {
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "UnpackSnorm4x8 {}", self.p.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct UnpackUnorm4x8 {
@@ -1696,6 +1927,9 @@ impl InstEncoding for UnpackUnorm4x8 {
         Ok(Self {
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "UnpackUnorm4x8 {}", self.p.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1722,6 +1956,9 @@ impl InstEncoding for UnpackDouble2x32 {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "UnpackDouble2x32 {}", self.v.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Length {
@@ -1746,6 +1983,9 @@ impl InstEncoding for Length {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Length {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1775,6 +2015,9 @@ impl InstEncoding for Distance {
             p_1: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Distance {} {}", self.p_0.dis(_ctx), self.p_1.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Cross {
@@ -1803,6 +2046,9 @@ impl InstEncoding for Cross {
             y: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Cross {} {}", self.x.dis(_ctx), self.y.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Normalize {
@@ -1827,6 +2073,9 @@ impl InstEncoding for Normalize {
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Normalize {}", self.x.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1862,6 +2111,15 @@ impl InstEncoding for FaceForward {
             nref: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "FaceForward {} {} {}",
+            self.n.dis(_ctx),
+            self.i.dis(_ctx),
+            self.nref.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct Reflect {
@@ -1889,6 +2147,9 @@ impl InstEncoding for Reflect {
             i: OperandEncoding::decode(&mut op_reader)?,
             n: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "Reflect {} {}", self.i.dis(_ctx), self.n.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1924,6 +2185,15 @@ impl InstEncoding for Refract {
             eta: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "Refract {} {} {}",
+            self.i.dis(_ctx),
+            self.n.dis(_ctx),
+            self.eta.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FindILsb {
@@ -1948,6 +2218,9 @@ impl InstEncoding for FindILsb {
         Ok(Self {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "FindILsb {}", self.value.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1974,6 +2247,9 @@ impl InstEncoding for FindSMsb {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "FindSMsb {}", self.value.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct FindUMsb {
@@ -1999,6 +2275,9 @@ impl InstEncoding for FindUMsb {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "FindUMsb {}", self.value.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct InterpolateAtCentroid {
@@ -2023,6 +2302,9 @@ impl InstEncoding for InterpolateAtCentroid {
         Ok(Self {
             interpolant: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "InterpolateAtCentroid {}", self.interpolant.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2054,6 +2336,14 @@ impl InstEncoding for InterpolateAtSample {
             sample: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "InterpolateAtSample {} {}",
+            self.interpolant.dis(_ctx),
+            self.sample.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct InterpolateAtOffset {
@@ -2084,6 +2374,14 @@ impl InstEncoding for InterpolateAtOffset {
             offset: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "InterpolateAtOffset {} {}",
+            self.interpolant.dis(_ctx),
+            self.offset.dis(_ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct NMin {
@@ -2112,6 +2410,9 @@ impl InstEncoding for NMin {
             y: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "NMin {} {}", self.x.dis(_ctx), self.y.dis(_ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct NMax {
@@ -2139,6 +2440,9 @@ impl InstEncoding for NMax {
             x: OperandEncoding::decode(&mut op_reader)?,
             y: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(f, "NMax {} {}", self.x.dis(_ctx), self.y.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2173,5 +2477,14 @@ impl InstEncoding for NClamp {
             min_val: OperandEncoding::decode(&mut op_reader)?,
             max_val: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "NClamp {} {} {}",
+            self.x.dis(_ctx),
+            self.min_val.dis(_ctx),
+            self.max_val.dis(_ctx)
+        )
     }
 }

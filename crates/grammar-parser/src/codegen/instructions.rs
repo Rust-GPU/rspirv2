@@ -2,6 +2,7 @@ use crate::codegen::options::CodegenOptions;
 use crate::codegen::{GrammarWriter, OPERAND_ID_RESULT};
 use crate::parse::{Grammar, InstMeta, Operand, Quantifier};
 use quote::{format_ident, quote};
+use std::iter::once;
 
 pub const SMALLVEC_LEN: usize = 4;
 
@@ -23,11 +24,11 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             },
         );
 
-        let (maybe_id_result, id_result_ref) = if let Some(op_id_result) = member_operands
+        let id_result = member_operands
             .iter()
-            .find(|op| op.meta.kind == OPERAND_ID_RESULT)
-        {
-            let name = &op_id_result.name;
+            .find(|op| op.meta.kind == OPERAND_ID_RESULT);
+        let (maybe_id_result, id_result_ref) = if let Some(id_result) = id_result {
+            let name = &id_result.name;
             (quote!(OptionIdResult), quote!(&mut self.#name))
         } else {
             (quote!(()), quote!(make_mut_ref_unit()))
@@ -40,6 +41,26 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
         let members_non_last = &members[..members.len().saturating_sub(1)];
         let members_last = members.last().into_iter();
         let reader = (!members.is_empty()).then(|| quote!(let mut op_reader = ));
+
+        let (dis_id_result_pat, dis_id_result_value) = if let Some(id_result) = id_result {
+            let name = &id_result.name;
+            ("{} = ", Some(quote!(, self.#name.dis(_ctx))))
+        } else {
+            ("", None)
+        };
+        // `name: Ident` is a good key to filter out the id_result, as names must be unique anyway
+        let dis_operands_value = member_operands
+            .iter()
+            .filter(|op| id_result.is_none_or(|id_result| id_result.name != op.name))
+            .map(|op| {
+                let name = &op.name;
+                quote!(, self.#name.dis(_ctx))
+            })
+            .collect::<Vec<_>>();
+        let pat = once(dis_id_result_pat)
+            .chain(once(inst.opname.as_ref()))
+            .chain((0..dis_operands_value.len()).map(|_| " {}"))
+            .collect::<String>();
 
         quote! {
             #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -71,6 +92,10 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                         #(#members_non_last: OperandEncoding::decode(&mut op_reader)?,)*
                         #(#members_last: OperandEncoding::decode_last(&mut op_reader)?,)*
                     })
+                }
+
+                fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+                    write!(f, #pat #dis_id_result_value #(#dis_operands_value)*)
                 }
             }
         }
@@ -108,6 +133,9 @@ pub fn write_inst_enum(
         let opcode = inst.opcode;
         quote!(#opcode => Self::#enum_ident(<#type_ident as InstEncoding>::decode(reader)?),)
     });
+    let dis_match = insts.iter().map(
+        |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => InstEncoding::dis_fmt(inst, f, ctx),),
+    );
     let from_impls = insts.iter().map(|(_, type_ident, enum_ident)| {
         quote! {
             impl From<#type_ident> for #name {
@@ -138,6 +166,12 @@ pub fn write_inst_enum(
                         #(#decode_match)*
                         _ => return Err(DecodeError::UnknownOpCode { opcode }),
                     })
+                }
+
+                fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+                    match self {
+                        #(#dis_match)*
+                    }
                 }
             }
 

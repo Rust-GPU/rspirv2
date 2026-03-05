@@ -1,7 +1,8 @@
 use crate::binary::{DecodeError, EncodeError, IdResultAlloc, InstReader, WordWriter};
+use crate::dis::DisContext;
 use crate::meta::InstMeta;
 use crate::operand::{IdResult, OptionIdResult};
-use std::fmt::Debug;
+use std::fmt::{Debug, Display, Formatter};
 
 pub trait Inst: InstEncoding {
     const META: &InstMeta;
@@ -17,9 +18,14 @@ pub trait InstEncoding: Sized + Debug + Eq {
     /// Encode this instruction to a [`WordWriter`]
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError>;
 
-    /// Decode this instruction from an [`InstReader`]
+    /// Decode this instruction from an [`InstReader`], error when opcode is unknown.
+    ///
+    /// See [`Self::try_decode`] for a variant that returns `None` when opcode is unknown.
     fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError>;
 
+    /// Try to decode this instruction from an [`InstReader`], return `None` when the opcode is unknown.
+    ///
+    /// See [`Self::decode`] for a variant that errors when opcode is unknown.
     #[inline]
     fn try_decode(reader: &mut InstReader<'_>) -> Result<Option<Self>, DecodeError> {
         match Self::decode(reader) {
@@ -27,6 +33,26 @@ pub trait InstEncoding: Sized + Debug + Eq {
             Err(DecodeError::WrongOpCode { .. } | DecodeError::UnknownOpCode { .. }) => Ok(None),
             Err(e) => Err(e),
         }
+    }
+
+    /// Disassemble this instruction to the supplied [`Formatter`] `f`
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result;
+
+    /// Disassemble this instruction, returns a type that impl [`Display`] you may use in `format!`.
+    ///
+    /// You shouldn't overwrite this function but [`Self::dis_fmt`] instead.
+    #[inline]
+    fn dis<'a>(&'a self, ctx: &'a DisContext) -> InstDis<'a, Self> {
+        InstDis(self, ctx)
+    }
+}
+
+pub struct InstDis<'a, T: InstEncoding>(&'a T, &'a DisContext);
+
+impl<'a, T: InstEncoding> Display for InstDis<'a, T> {
+    #[inline]
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        self.0.dis_fmt(f, self.1)
     }
 }
 
