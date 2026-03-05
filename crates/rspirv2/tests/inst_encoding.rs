@@ -1,12 +1,12 @@
-use crate::binary::{ModuleReader, VecInstWriter};
-use crate::core::inst::{
+use anyhow::Context;
+use rspirv2::binary::{ModuleReader, VecInstWriter};
+use rspirv2::core::inst::{
     OpConstant, OpConvertUToF, OpDecorate, OpIAdd, OpNop, OpStore, OpTypeFloat, OpTypeInt,
     OpTypePointer, OpVariable,
 };
-use crate::core::operands::{Decoration, StorageClass};
-use crate::core::preamble::OpAccessChain;
-use crate::operand::{IdRef, IdResult, IdResultType, LiteralConst, LiteralInteger, Word};
-use anyhow::Context;
+use rspirv2::core::operands::{Decoration, StorageClass};
+use rspirv2::core::preamble::OpAccessChain;
+use rspirv2::operand::{IdRef, IdResult, IdResultType, LiteralConst, LiteralInteger, Word};
 use rspirv2_types::binary::EncodeError;
 use rspirv2_types::inst::Inst;
 use smallvec::SmallVec;
