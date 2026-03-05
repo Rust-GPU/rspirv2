@@ -5,6 +5,7 @@ mod literal_integer;
 mod literal_string;
 
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordCounter, WordWriter};
+use crate::dis::DisContext;
 use crate::meta::{OperandKind, Quantifier};
 pub use id::*;
 pub use literal_const::*;
@@ -12,7 +13,7 @@ pub use literal_float::*;
 pub use literal_integer::*;
 pub use literal_string::*;
 use smallvec::SmallVec;
-use std::fmt::Debug;
+use std::fmt::{Debug, Display, Formatter, Write};
 
 /// A 32bit SPIR-V Word
 #[repr(transparent)]
@@ -53,7 +54,7 @@ impl Word {
 ///
 /// # Safety
 /// * [`Self::KIND`] must match this implementation
-pub unsafe trait Operand: OperandEncoding + Debug {
+pub unsafe trait Operand: OperandEncoding {
     const KIND: &OperandKind;
 }
 
@@ -64,7 +65,7 @@ pub unsafe trait Operand: OperandEncoding + Debug {
 ///
 /// # Safety
 /// * should not be implemented outside of this file
-pub unsafe trait OperandSpec: OperandEncoding + Debug {
+pub unsafe trait OperandSpec: OperandEncoding {
     /// The [`Operand`]
     type Operand: Operand;
     /// The [`Quantifier`] or repetition factor of the [`Self::Operand`]
@@ -152,6 +153,32 @@ pub unsafe trait OperandEncoding: Sized + Debug {
         reader.assert_finished()?;
         Ok(result)
     }
+
+    /// Disassemble this operand to the supplied [`Formatter`]. Prefer [`Self::dis`] over calling this.
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result;
+
+    /// Disassemble this operand
+    ///
+    /// Returns a type that impl [`Display`], so it's usable with `format!`:
+    /// ```no_run
+    /// # use rspirv2_types::operand::IdResult;
+    /// let my_op = IdResult(Word(42));
+    /// let dis = format!("OpMyInst {}", my_op.dis());
+    /// assert_eq!(dis, "OpMyInst %42");
+    /// ```
+    #[inline]
+    fn dis<'a>(&'a self, ctx: &'a DisContext) -> OperandDis<'a, Self> {
+        OperandDis(self, ctx)
+    }
+}
+
+pub struct OperandDis<'a, T: OperandEncoding>(&'a T, &'a DisContext);
+
+impl<'a, T: OperandEncoding> Display for OperandDis<'a, T> {
+    #[inline]
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        self.0.dis_fmt(f, self.1)
+    }
 }
 
 unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
@@ -189,6 +216,14 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
             Ok(Some(T::decode_last(reader)?))
         } else {
             Ok(None)
+        }
+    }
+
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        match self {
+            None => Ok(()),
+            Some(e) => e.dis_fmt(f, ctx),
         }
     }
 }
@@ -246,6 +281,17 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
         }
         Ok(vec)
     }
+
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        for (i, v) in self.iter().enumerate() {
+            if i != 0 {
+                f.write_char(' ')?;
+            }
+            T::dis_fmt(v, &mut *f, ctx)?;
+        }
+        Ok(())
+    }
 }
 
 unsafe impl<T: Operand> OperandSpec for Vec<T> {
@@ -289,6 +335,17 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
             vec.push(T::decode(reader)?);
         }
         Ok(vec)
+    }
+
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        for (i, v) in self.iter().enumerate() {
+            if i != 0 {
+                f.write_char(' ')?;
+            }
+            T::dis_fmt(v, &mut *f, ctx)?;
+        }
+        Ok(())
     }
 }
 

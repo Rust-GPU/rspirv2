@@ -24,9 +24,11 @@ pub mod preamble {
     pub use super::operand_kinds::*;
     pub use super::operands::*;
     pub use crate::binary::*;
+    pub use crate::dis::*;
     pub use crate::inst::*;
     pub use crate::meta::*;
     pub use crate::operand::*;
     pub use bitflags::bitflags;
     pub use smallvec::SmallVec;
+    pub use std::fmt::Formatter;
 }

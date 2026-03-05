@@ -30,6 +30,8 @@ impl<'a> CodegenOptions<'a> {
                 pub use crate::inst::*;
                 pub use crate::meta::*;
                 pub use crate::operand::*;
+                pub use crate::dis::*;
+                pub use std::fmt::Formatter;
                 pub use bitflags::bitflags;
                 pub use smallvec::SmallVec;
             },

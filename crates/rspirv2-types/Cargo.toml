@@ -14,6 +14,7 @@ bytemuck = ["dep:bytemuck", "bitflags/bytemuck"]
 bytemuck = { workspace = true, optional = true }
 bitflags.workspace = true
 smallvec.workspace = true
+anstyle.workspace = true
 
 [dev-dependencies]
 anyhow.workspace = true

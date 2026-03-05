@@ -131,6 +131,11 @@ fn emit_rust_like_enum(
                     })
                 })
             }
+
+            #[inline]
+            fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+                write!(f, "{:?}", self)
+            }
         }
     }
 }
@@ -191,6 +196,11 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
                         variant,
                     })
                 })
+            }
+
+            #[inline]
+            fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+                write!(f, "{:?}", self)
             }
         }
     }
@@ -254,6 +264,11 @@ fn emit_bitflags_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_
                 let bits = reader.pull()?.0;
                 Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<#name>(stringify!(#name), bits))
             }
+
+            #[inline]
+            fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+                write!(f, "{:?}", self)
+            }
         }
     }
 }
@@ -275,6 +290,13 @@ fn emit_composite(operand_kind: &OperandKind<'_>, bases: &[Cow<'_, str>]) -> Tok
         quote!(OperandEncoding::encode(&self.#i, &mut *writer)?)
     });
     let decode = (0..bases.len()).map(|_| quote!(OperandEncoding::decode(&mut *reader)?));
+    let dis_pat = (0..bases.len())
+        .map(|i| if i == 0 { "{}" } else { " {}" })
+        .collect::<String>();
+    let dis_values = (0..bases.len()).map(|i| {
+        let i = proc_macro2::Literal::usize_unsuffixed(i);
+        quote!(OperandEncoding::dis(&self.#i, ctx))
+    });
 
     quote! {
         #doc
@@ -295,6 +317,11 @@ fn emit_composite(operand_kind: &OperandKind<'_>, bases: &[Cow<'_, str>]) -> Tok
 
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 Ok(Self(#(#decode),*))
+            }
+
+            #[inline]
+            fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+                write!(f, #dis_pat, #(#dis_values),*)
             }
         }
     }

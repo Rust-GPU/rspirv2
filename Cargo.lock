@@ -244,6 +244,7 @@ dependencies = [
 name = "rspirv2-types"
 version = "0.1.0"
 dependencies = [
+ "anstyle",
  "anyhow",
  "bitflags",
  "bytemuck",

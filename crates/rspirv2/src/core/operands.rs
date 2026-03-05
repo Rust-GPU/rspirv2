@@ -26,6 +26,10 @@ unsafe impl OperandEncoding for ImageOperands {
             bits,
         ))
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 bitflags! {
     #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct FPFastMathMode : u32 {
@@ -49,6 +53,10 @@ unsafe impl OperandEncoding for FPFastMathMode {
             bits,
         ))
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 bitflags! {
     #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct SelectionControl : u32
@@ -69,6 +77,10 @@ unsafe impl OperandEncoding for SelectionControl {
             stringify!(SelectionControl),
             bits,
         ))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 bitflags! {
@@ -102,6 +114,10 @@ unsafe impl OperandEncoding for LoopControl {
             bits,
         ))
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 bitflags! {
     #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct FunctionControl : u32 {
@@ -123,6 +139,10 @@ unsafe impl OperandEncoding for FunctionControl {
             stringify!(FunctionControl),
             bits,
         ))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 bitflags! {
@@ -151,6 +171,10 @@ unsafe impl OperandEncoding for MemorySemantics {
             bits,
         ))
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 bitflags! {
     #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct MemoryAccess : u32 {
@@ -176,6 +200,10 @@ unsafe impl OperandEncoding for MemoryAccess {
             bits,
         ))
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 bitflags! {
     #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct KernelProfilingInfo :
@@ -196,6 +224,10 @@ unsafe impl OperandEncoding for KernelProfilingInfo {
             stringify!(KernelProfilingInfo),
             bits,
         ))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 bitflags! {
@@ -222,6 +254,10 @@ unsafe impl OperandEncoding for RayFlags {
             bits,
         ))
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 bitflags! {
     #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct FragmentShadingRate :
@@ -244,6 +280,10 @@ unsafe impl OperandEncoding for FragmentShadingRate {
             bits,
         ))
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 bitflags! {
     #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct RawAccessChainOperands
@@ -265,6 +305,10 @@ unsafe impl OperandEncoding for RawAccessChainOperands {
             stringify!(RawAccessChainOperands),
             bits,
         ))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -322,6 +366,10 @@ unsafe impl OperandEncoding for SourceLanguage {
                 });
             }
         })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -386,6 +434,10 @@ unsafe impl OperandEncoding for ExecutionModel {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -424,6 +476,10 @@ unsafe impl OperandEncoding for AddressingModel {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -461,6 +517,10 @@ unsafe impl OperandEncoding for MemoryModel {
                 });
             }
         })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1116,6 +1176,10 @@ unsafe impl OperandEncoding for ExecutionMode {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -1206,6 +1270,10 @@ unsafe impl OperandEncoding for StorageClass {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -1251,6 +1319,10 @@ unsafe impl OperandEncoding for Dim {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -1290,6 +1362,10 @@ unsafe impl OperandEncoding for SamplerAddressingMode {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -1322,6 +1398,10 @@ unsafe impl OperandEncoding for SamplerFilterMode {
                 });
             }
         })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -1436,6 +1516,10 @@ unsafe impl OperandEncoding for ImageFormat {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -1504,6 +1588,10 @@ unsafe impl OperandEncoding for ImageChannelOrder {
                 });
             }
         })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -1586,6 +1674,10 @@ unsafe impl OperandEncoding for ImageChannelDataType {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -1623,6 +1715,10 @@ unsafe impl OperandEncoding for FPRoundingMode {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -1655,6 +1751,10 @@ unsafe impl OperandEncoding for FPDenormMode {
                 });
             }
         })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -1701,6 +1801,10 @@ unsafe impl OperandEncoding for QuantizationModes {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -1733,6 +1837,10 @@ unsafe impl OperandEncoding for FPOperationMode {
                 });
             }
         })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -1771,6 +1879,10 @@ unsafe impl OperandEncoding for OverflowModes {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -1806,6 +1918,10 @@ unsafe impl OperandEncoding for LinkageType {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -1840,6 +1956,10 @@ unsafe impl OperandEncoding for AccessQualifier {
                 });
             }
         })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -1877,6 +1997,10 @@ unsafe impl OperandEncoding for HostAccessQualifier {
                 });
             }
         })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -1924,6 +2048,10 @@ unsafe impl OperandEncoding for FunctionParameterAttribute {
                 });
             }
         })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2947,6 +3075,10 @@ unsafe impl OperandEncoding for Decoration {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -3242,6 +3374,10 @@ unsafe impl OperandEncoding for BuiltIn {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -3285,6 +3421,10 @@ unsafe impl OperandEncoding for Scope {
                 });
             }
         })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -3330,6 +3470,10 @@ unsafe impl OperandEncoding for GroupOperation {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -3364,6 +3508,10 @@ unsafe impl OperandEncoding for KernelEnqueueFlags {
                 });
             }
         })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -4005,6 +4153,10 @@ unsafe impl OperandEncoding for Capability {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -4037,6 +4189,10 @@ unsafe impl OperandEncoding for RayQueryIntersection {
                 });
             }
         })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -4073,6 +4229,10 @@ unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -4106,6 +4266,10 @@ unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -4138,6 +4302,10 @@ unsafe impl OperandEncoding for PackedVectorFormat {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 bitflags! {
     #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct
@@ -4161,6 +4329,10 @@ unsafe impl OperandEncoding for CooperativeMatrixOperands {
             stringify!(CooperativeMatrixOperands),
             bits,
         ))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -4199,6 +4371,10 @@ unsafe impl OperandEncoding for CooperativeMatrixLayout {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -4234,6 +4410,10 @@ unsafe impl OperandEncoding for CooperativeMatrixUse {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 bitflags! {
     #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct CooperativeMatrixReduce
@@ -4254,6 +4434,10 @@ unsafe impl OperandEncoding for CooperativeMatrixReduce {
             stringify!(CooperativeMatrixReduce),
             bits,
         ))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -4294,6 +4478,10 @@ unsafe impl OperandEncoding for TensorClampMode {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 bitflags! {
     #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct
@@ -4315,6 +4503,10 @@ unsafe impl OperandEncoding for TensorAddressingOperands {
             stringify!(TensorAddressingOperands),
             bits,
         ))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -4348,6 +4540,10 @@ unsafe impl OperandEncoding for InitializationModeQualifier {
                 });
             }
         })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -4388,6 +4584,10 @@ unsafe impl OperandEncoding for LoadCacheControl {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -4425,6 +4625,10 @@ unsafe impl OperandEncoding for StoreCacheControl {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[repr(u32)]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -4456,6 +4660,10 @@ unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 bitflags! {
     #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct
@@ -4482,6 +4690,10 @@ unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<
             MatrixMultiplyAccumulateOperands,
         >(stringify!(MatrixMultiplyAccumulateOperands), bits))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -4517,6 +4729,10 @@ unsafe impl OperandEncoding for FPEncoding {
                 });
             }
         })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -4554,6 +4770,10 @@ unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
                 });
             }
         })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
 #[repr(u32)]
@@ -4614,6 +4834,10 @@ unsafe impl OperandEncoding for ComponentType {
             }
         })
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PairLiteralIntegerIdRef(LiteralInteger, IdRef);
@@ -4635,6 +4859,15 @@ unsafe impl OperandEncoding for PairLiteralIntegerIdRef {
             OperandEncoding::decode(&mut *reader)?,
             OperandEncoding::decode(&mut *reader)?,
         ))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} {}",
+            OperandEncoding::dis(&self.0, ctx),
+            OperandEncoding::dis(&self.1, ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4658,6 +4891,15 @@ unsafe impl OperandEncoding for PairIdRefLiteralInteger {
             OperandEncoding::decode(&mut *reader)?,
         ))
     }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} {}",
+            OperandEncoding::dis(&self.0, ctx),
+            OperandEncoding::dis(&self.1, ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PairIdRefIdRef(IdRef, IdRef);
@@ -4679,6 +4921,15 @@ unsafe impl OperandEncoding for PairIdRefIdRef {
             OperandEncoding::decode(&mut *reader)?,
             OperandEncoding::decode(&mut *reader)?,
         ))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        write!(
+            f,
+            "{} {}",
+            OperandEncoding::dis(&self.0, ctx),
+            OperandEncoding::dis(&self.1, ctx)
+        )
     }
 }
 bitflags! {
@@ -4702,5 +4953,9 @@ unsafe impl OperandEncoding for TensorOperands {
             stringify!(TensorOperands),
             bits,
         ))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
