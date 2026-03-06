@@ -8,3 +8,4 @@ publish = false
 rspirv2-grammar = { workspace = true }
 rspirv2-grammar-parser = { workspace = true, features = ["codegen", "prettyplease"] }
 anyhow.workspace = true
+rayon.workspace = true
