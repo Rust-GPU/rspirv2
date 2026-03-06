@@ -1,2 +1,2 @@
 [alias]
-autogen = "run --bin autogen"
+autogen = "run --bin autogen --release --"
