@@ -8,3 +8,4 @@ publish = false
 rspirv2.workspace = true
 anyhow.workspace = true
 clap.workspace = true
+spv.workspace = true
