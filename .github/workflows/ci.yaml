@@ -38,8 +38,9 @@ jobs:
       - name: cargo fetch --locked
         run: cargo fetch --locked --target $TARGET
 
-      # check autogen
-      - run: cargo autogen
+      # check autogen, without --release
+      - name: cargo autogen
+        run: cargo run --bin autogen
       - name: check generated files are up-to-date
         run: |
           git add .
