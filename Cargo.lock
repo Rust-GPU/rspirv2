@@ -213,6 +213,7 @@ dependencies = [
  "anyhow",
  "clap",
  "rspirv2",
+ "spv",
 ]
 
 [[package]]
