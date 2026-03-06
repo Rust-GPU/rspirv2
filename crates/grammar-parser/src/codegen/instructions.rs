@@ -5,7 +5,7 @@ use quote::{format_ident, quote};
 
 pub const SMALLVEC_LEN: usize = 4;
 
-pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+pub fn write_inst(writer: &GrammarWriter, grammar: &Grammar, _: &CodegenOptions) -> anyhow::Result<()> {
     let insts = grammar.insts.iter().map(|inst| {
         let struct_ident = InstMeta::type_ident(&inst.opname);
         let meta = InstMeta::const_ident(&inst.opname);
@@ -84,7 +84,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Resu
 }
 
 pub fn write_inst_enum(
-    writer: &mut GrammarWriter,
+    writer: &GrammarWriter,
     grammar: &Grammar,
     opt: &CodegenOptions,
 ) -> anyhow::Result<()> {

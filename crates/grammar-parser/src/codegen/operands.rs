@@ -1,10 +1,10 @@
-use crate::codegen::GrammarWriter;
+use crate::codegen::{CodegenOptions, GrammarWriter};
 use crate::parse::{Category, Enumerant, Grammar, OperandKind, Quantifier};
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use std::borrow::Cow;
 
-pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+pub fn write_operands(writer: &GrammarWriter, grammar: &Grammar, _: &CodegenOptions) -> anyhow::Result<()> {
     let operands = grammar.operand_kinds.iter().map(|o| match &o.category {
         // `RefId` and Literals are imported
         Category::Id | Category::Literal => quote!(),

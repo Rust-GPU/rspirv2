@@ -1,12 +1,11 @@
 use proc_macro2::TokenStream;
 use quote::quote;
 
-#[derive(Clone, Debug, Default)]
 pub struct CodegenOptions<'a> {
     pub name_suffix_type: &'a str,
-    pub mod_attr: TokenStream,
-    pub mod_extra: TokenStream,
-    pub preamble: TokenStream,
+    pub mod_attr: Box<dyn Fn() -> TokenStream + Send + Sync>,
+    pub mod_extra: Box<dyn Fn() -> TokenStream + Send + Sync>,
+    pub preamble: Box<dyn Fn() -> TokenStream + Send + Sync>,
 }
 
 impl<'a> CodegenOptions<'a> {
@@ -22,29 +21,45 @@ impl<'a> CodegenOptions<'a> {
     pub fn new_core() -> Self {
         Self {
             name_suffix_type: "Core",
-            preamble: quote! {
-                pub use crate::binary::*;
-                pub use crate::inst::*;
-                pub use crate::meta::*;
-                pub use crate::operand::*;
-                pub use bitflags::bitflags;
-                pub use smallvec::SmallVec;
-            },
-            mod_attr: Self::mod_lints(),
-            mod_extra: quote! {
-                impl preamble::AnyCapability for preamble::Capability {}
-            },
+            preamble: Box::new(|| {
+                quote! {
+                    pub use crate::binary::*;
+                    pub use crate::inst::*;
+                    pub use crate::meta::*;
+                    pub use crate::operand::*;
+                    pub use bitflags::bitflags;
+                    pub use smallvec::SmallVec;
+                }
+            }),
+            mod_extra: Box::new(|| {
+                quote! {
+                    impl preamble::AnyCapability for preamble::Capability {}
+                }
+            }),
+            ..Default::default()
         }
     }
 
-    pub fn new_ext_inst_set(name_suffix_type: &'a str, path_to_core: &TokenStream) -> Self {
+    pub fn new_ext_inst_set(name_suffix_type: &'a str, _path_to_core: &TokenStream) -> Self {
         Self {
             name_suffix_type,
-            preamble: quote! {
-                pub use #path_to_core::preamble::*;
-            },
-            mod_attr: Self::mod_lints(),
+            preamble: Box::new(|| {
+                quote! {
+                    pub use crate::core::preamble::*;
+                }
+            }),
             ..Default::default()
+        }
+    }
+}
+
+impl Default for CodegenOptions<'_> {
+    fn default() -> Self {
+        Self {
+            name_suffix_type: "",
+            mod_attr: Box::new(Self::mod_lints),
+            mod_extra: Box::new(|| quote!()),
+            preamble: Box::new(|| quote!()),
         }
     }
 }

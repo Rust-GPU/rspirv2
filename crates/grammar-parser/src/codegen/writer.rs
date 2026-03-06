@@ -4,6 +4,7 @@ use quote::{format_ident, quote};
 use std::fs;
 use std::path::PathBuf;
 use std::process::Command;
+use std::sync::Mutex;
 
 /// a use statement that imports symbols from other files
 pub fn use_super() -> TokenStream {
@@ -14,7 +15,7 @@ pub fn use_super() -> TokenStream {
 
 pub struct GrammarWriter {
     folder: PathBuf,
-    submodules: Vec<String>,
+    submodules: Mutex<Vec<String>>,
 }
 
 impl GrammarWriter {
@@ -22,7 +23,7 @@ impl GrammarWriter {
         fs::create_dir_all(&folder)?;
         Ok(Self {
             folder,
-            submodules: Vec::new(),
+            submodules: Mutex::new(Vec::new()),
         })
     }
 
@@ -34,14 +35,14 @@ impl GrammarWriter {
     /// Write a module file and "link" it from `mod.rs`.
     ///
     /// The contents must contain the tokens that [`use_super`] returned.
-    pub fn write_module_str(&mut self, submodule: &str, content: &str) -> anyhow::Result<()> {
+    pub fn write_module_str(&self, submodule: &str, content: &str) -> anyhow::Result<()> {
         fs::write(self.submodule_file(submodule), content)?;
-        self.submodules.push(submodule.to_string());
+        self.submodules.lock().unwrap().push(submodule.to_string());
         Ok(())
     }
 
     /// Write some `content` to a module file called `submodule`
-    pub fn write_module(&mut self, submodule: &str, content: TokenStream) -> anyhow::Result<()> {
+    pub fn write_module(&self, submodule: &str, content: TokenStream) -> anyhow::Result<()> {
         if content.is_empty() {
             return Ok(());
         }
@@ -61,14 +62,14 @@ impl GrammarWriter {
     }
 
     /// Finish writing the grammar
-    pub fn finish(self, mod_options: &CodegenOptions) -> anyhow::Result<()> {
+    pub fn finish(mut self, mod_options: &CodegenOptions) -> anyhow::Result<()> {
         self.write_mod_rs(mod_options)?;
         self.format_submodules()?;
         Ok(())
     }
 
     /// always write mod.rs and don't add to `submodules`
-    fn write_mod_rs(&self, mod_options: &CodegenOptions) -> anyhow::Result<()> {
+    fn write_mod_rs(&mut self, mod_options: &CodegenOptions) -> anyhow::Result<()> {
         fs::write(
             self.submodule_file("mod"),
             self.codegen_mod_rs(mod_options)?.to_string(),
@@ -80,16 +81,15 @@ impl GrammarWriter {
     fn codegen_mod_rs(&self, mod_options: &CodegenOptions) -> anyhow::Result<TokenStream> {
         let (mods, imports): (Vec<_>, Vec<_>) = self
             .submodules
+            .lock()
+            .unwrap()
             .iter()
             .map(|s| format_ident!("{}", s))
             .map(|s| (quote!(pub mod #s;), quote!(pub use super::#s::*;)))
             .unzip();
-        let CodegenOptions {
-            mod_attr,
-            mod_extra,
-            preamble,
-            ..
-        } = mod_options;
+        let mod_attr = (mod_options.mod_attr)();
+        let mod_extra = (mod_options.mod_extra)();
+        let preamble = (mod_options.preamble)();
         Ok(quote! {
             #mod_attr
             #(#mods)*
@@ -102,8 +102,11 @@ impl GrammarWriter {
     }
 
     fn format_submodules(&self) -> anyhow::Result<()> {
-        let files = self
+        let submodules = self
             .submodules
+            .lock()
+            .unwrap();
+        let files = submodules
             .iter()
             .map(String::as_str)
             .chain(std::iter::once("mod"))

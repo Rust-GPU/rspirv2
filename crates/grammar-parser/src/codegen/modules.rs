@@ -7,6 +7,7 @@ use crate::parse::{
 };
 use proc_macro2::TokenStream;
 use quote::quote;
+use rayon::prelude::*;
 use std::collections::HashSet;
 use std::ops::Deref;
 
@@ -28,23 +29,35 @@ impl<'a> WriteableGrammar<'a> for ExtInstSetGrammar<'a> {
 }
 
 pub fn write_grammar<'a>(
-    mut writer: GrammarWriter,
+    writer: GrammarWriter,
     grammar: &impl WriteableGrammar<'a>,
     opt: &CodegenOptions,
 ) -> anyhow::Result<()> {
-    write_extensions(&mut writer, grammar)?;
-    write_operand_kinds(&mut writer, grammar)?;
-    write_operands(&mut writer, grammar)?;
-    write_inst_class(&mut writer, grammar)?;
-    write_inst_meta(&mut writer, grammar)?;
-    write_inst(&mut writer, grammar)?;
-    write_inst_enum(&mut writer, grammar, opt)?;
-    write_grammar_mod(&mut writer, grammar)?;
+    let inner_grammar = grammar.deref();
+    [
+        write_extensions,
+        write_operand_kinds,
+        write_operands,
+        write_inst_class,
+        write_inst_meta,
+        write_inst,
+        write_inst_enum,
+    ]
+    .as_slice()
+    .par_iter()
+    .map(|f| f(&writer, inner_grammar, opt))
+    .collect::<anyhow::Result<()>>()?;
+
+    write_grammar_mod(&writer, grammar, opt)?;
     writer.finish(opt)?;
     Ok(())
 }
 
-fn write_operand_kinds(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+fn write_operand_kinds(
+    writer: &GrammarWriter,
+    grammar: &Grammar,
+    _: &CodegenOptions,
+) -> anyhow::Result<()> {
     writer.write_module(
         "operand_kinds",
         grammar
@@ -55,21 +68,33 @@ fn write_operand_kinds(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow:
     )
 }
 
-fn write_inst_class(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+fn write_inst_class(
+    writer: &GrammarWriter,
+    grammar: &Grammar,
+    _: &CodegenOptions,
+) -> anyhow::Result<()> {
     writer.write_module(
         "inst_class",
         grammar.inst_class.iter().map(InstClass::emit_def).collect(),
     )
 }
 
-fn write_inst_meta(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+fn write_inst_meta(
+    writer: &GrammarWriter,
+    grammar: &Grammar,
+    _: &CodegenOptions,
+) -> anyhow::Result<()> {
     writer.write_module(
         "inst_meta",
         grammar.insts.iter().map(InstMeta::emit_def).collect(),
     )
 }
 
-fn write_extensions(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+fn write_extensions(
+    writer: &GrammarWriter,
+    grammar: &Grammar,
+    _: &CodegenOptions,
+) -> anyhow::Result<()> {
     let mut extensions = grammar
         .insts
         .iter()
@@ -97,8 +122,9 @@ fn write_extensions(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Re
 }
 
 fn write_grammar_mod<'a>(
-    writer: &mut GrammarWriter,
+    writer: &GrammarWriter,
     grammar: &impl WriteableGrammar<'a>,
+    _: &CodegenOptions,
 ) -> anyhow::Result<()> {
     let grammar_def = grammar.emit_grammar_def();
     let other_def = Grammar::emit_def(grammar);
