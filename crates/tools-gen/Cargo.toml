@@ -1,0 +1,15 @@
+[package]
+name = "rspirv2-tools-gen"
+version.workspace = true
+edition.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+rspirv2.workspace = true
+clap.workspace = true
+anyhow.workspace = true
+
+[dev-dependencies]
+spv.workspace = true

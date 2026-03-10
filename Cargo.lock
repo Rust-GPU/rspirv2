@@ -241,6 +241,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "rspirv2-tools"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "rspirv2",
+ "rspirv2-tools-gen",
+]
+
+[[package]]
+name = "rspirv2-tools-gen"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "rspirv2",
+ "spv",
+]
+
+[[package]]
 name = "rspirv2-types"
 version = "0.1.0"
 dependencies = [

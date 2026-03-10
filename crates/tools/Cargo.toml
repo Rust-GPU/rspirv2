@@ -1,0 +1,17 @@
+[package]
+name = "rspirv2-tools"
+version.workspace = true
+edition.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+rspirv2.workspace = true
+rspirv2-tools-gen.workspace = true
+clap.workspace = true
+anyhow.workspace = true
+
+[[bin]]
+name = "rspirv2-dis"
+path = "src/bin/dis.rs"
