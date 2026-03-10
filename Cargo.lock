@@ -201,9 +201,17 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "bitflags",
- "clap",
  "rspirv2-types",
  "smallvec",
+]
+
+[[package]]
+name = "rspirv2-examples"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "rspirv2",
 ]
 
 [[package]]
