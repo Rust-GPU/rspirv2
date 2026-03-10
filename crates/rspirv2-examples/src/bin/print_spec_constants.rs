@@ -1,5 +1,4 @@
 use clap::Parser;
-use rspirv2::binary::DecodeError;
 use rspirv2::core::inst::{OpName, OpSpecConstant};
 use rspirv2::inst::InstEncoding;
 use rspirv2::module::Module;
@@ -20,27 +19,19 @@ impl Args {
         let mut names = HashMap::<IdResult, String>::new();
         let mut module_reader = module.reader();
         while let Some(mut inst) = module_reader.next()? {
-            match OpName::decode(&mut inst) {
-                Ok(inst) => {
-                    names.insert(inst.target.0, inst.name.0);
-                }
-                Err(DecodeError::WrongOpCode { .. }) => (),
-                Err(err) => return Err(anyhow::Error::from(err)),
-            };
+            if let Some(inst) = OpName::try_decode(&mut inst)? {
+                names.insert(inst.target.0, inst.name.0);
+            }
         }
 
         let mut spec_const_name_to_value = HashMap::<String, _>::new();
         let mut module_reader = module.reader();
         while let Some(mut inst) = module_reader.next()? {
-            match OpSpecConstant::decode(&mut inst) {
-                Ok(inst) => {
-                    if let Some(name) = names.get(&inst.id_result.unwrap()) {
-                        spec_const_name_to_value.insert(name.clone(), inst.value.as_u32()?);
-                    }
-                }
-                Err(DecodeError::WrongOpCode { .. }) => {}
-                Err(err) => return Err(anyhow::Error::from(err)),
-            };
+            if let Some(inst) = OpSpecConstant::try_decode(&mut inst)?
+                && let Some(name) = names.get(&inst.id_result.unwrap())
+            {
+                spec_const_name_to_value.insert(name.clone(), inst.value.as_u32()?);
+            }
         }
 
         let mut vec = spec_const_name_to_value.into_iter().collect::<Vec<_>>();
