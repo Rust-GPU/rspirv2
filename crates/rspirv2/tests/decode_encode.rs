@@ -1,12 +1,10 @@
 use rspirv2::module::Module;
 use rspirv2_types::inst::InstEncoding;
+use spv::spv;
 
 #[test]
 fn test_bla() -> anyhow::Result<()> {
-    roundtrip_spv(&std::fs::read(concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/tests/spv/bla.spv"
-    ))?)
+    roundtrip_spv(&std::fs::read(spv("bla"))?)
 }
 
 fn roundtrip_spv(spv: &[u8]) -> anyhow::Result<()> {

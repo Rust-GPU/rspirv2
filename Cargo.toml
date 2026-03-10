@@ -6,6 +6,7 @@ members = [
 	"crates/rspirv2",
 	"crates/rspirv2-types",
 	"crates/rspirv2-examples",
+	"spv",
 ]
 resolver = "3"
 
@@ -20,6 +21,7 @@ rspirv2 = { path = "crates/rspirv2" }
 rspirv2-types = { path = "crates/rspirv2-types" }
 rspirv2-grammar = { path = "crates/grammar" }
 rspirv2-grammar-parser = { path = "crates/grammar-parser" }
+spv = { path = "spv" }
 
 anyhow = "1.0.100"
 serde = { version = "1.0.228", features = ["derive"] }
