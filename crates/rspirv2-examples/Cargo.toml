@@ -1,0 +1,10 @@
+[package]
+name = "rspirv2-examples"
+version.workspace = true
+edition.workspace = true
+publish = false
+
+[dependencies]
+rspirv2.workspace = true
+anyhow.workspace = true
+clap.workspace = true
