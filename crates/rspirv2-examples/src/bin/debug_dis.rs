@@ -10,14 +10,35 @@ pub struct Args {
     path: PathBuf,
 }
 
-pub fn main() -> anyhow::Result<()> {
-    let args = Args::parse();
-    let binary = std::fs::read(args.path)?;
-    let module = Module::from_bytes(binary.as_slice())?;
-    let mut module_reader = module.reader();
-    while let Some(mut inst) = module_reader.next()? {
-        let inst = CoreInstSet::decode(&mut inst)?;
-        println!("{:?}", inst);
+impl Args {
+    pub fn run(&self) -> anyhow::Result<()> {
+        let binary = std::fs::read(&self.path)?;
+        let module = Module::from_bytes(binary.as_slice())?;
+        let mut module_reader = module.reader();
+        while let Some(mut inst) = module_reader.next()? {
+            let inst = CoreInstSet::decode(&mut inst)?;
+            println!("{:?}", inst);
+        }
+        Ok(())
     }
-    Ok(())
+}
+
+pub fn main() -> anyhow::Result<()> {
+    Args::parse().run()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use spv::spv;
+
+    #[test]
+    pub fn test() -> anyhow::Result<()> {
+        Args { path: spv("bla") }.run()?;
+        Args {
+            path: spv("const_specs"),
+        }
+        .run()?;
+        Ok(())
+    }
 }
