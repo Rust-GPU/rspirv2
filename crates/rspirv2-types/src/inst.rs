@@ -19,6 +19,17 @@ pub trait InstEncoding: Sized + Debug + Eq {
 
     /// Decode this instruction from an [`InstReader`]
     fn decode(reader: &mut InstReader) -> Result<Self, DecodeError>;
+
+    #[inline]
+    fn try_decode(reader: &mut InstReader) -> Result<Option<Self>, DecodeError> {
+        match Self::decode(reader) {
+            Ok(e) => Ok(Some(e)),
+            Err(DecodeError::WrongOpCode { .. }) | Err(DecodeError::UnknownOpCode { .. }) => {
+                Ok(None)
+            }
+            Err(e) => Err(e),
+        }
+    }
 }
 
 /// A type that may be an [`IdResult`] or `()`.
