@@ -1,0 +1,103 @@
+; SPIR-V
+; Version: 1.5
+; Generator: rspirv
+; Bound: 56
+OpCapability Shader
+OpCapability StorageImageWriteWithoutFormat
+OpCapability VulkanMemoryModel
+OpMemoryModel Logical Vulkan
+OpEntryPoint GLCompute %1 "main" %2 %3 %4
+OpExecutionMode %1 LocalSize 32 1 1
+%5 = OpString "ui/dis_reference.rs"
+OpSource Unknown 0 %5 "// compile-flags: -C target-feature=+StorageImageWriteWithoutFormat\n// compile-flags: -C llvm-args=--disassemble\n// normalize-stderr-test \"OpSource .*\\n\" -> \"\"\n// normalize-stderr-test \"OpLine .*\\n\" -> \"\"\n// normalize-stderr-test \"%\\d+ = OpString .*\\n\" -> \"\"\n// normalize-stderr-test \"; .*\\n\" -> \"\"\n// normalize-stderr-test \"OpCapability VulkanMemoryModel\\n\" -> \"\"\n// normalize-stderr-test \"OpMemoryModel Logical Vulkan\" -> \"OpMemoryModel Logical Simple\"\n// ignore-vulkan1.0\n// ignore-vulkan1.1\n// ignore-spv1.0\n// ignore-spv1.1\n// ignore-spv1.2\n// ignore-spv1.3\n\nuse spirv_std::glam::*;\nuse spirv_std::spirv;\nuse spirv_std::Integer;\nuse spirv_std::memory::*;\nuse core::arch::asm;\n\n#[spirv(compute(threads(32)))]\npub fn main(\n    #[spirv(local_invocation_id)] tid: UVec3,\n    #[spirv(storage_buffer, descriptor_set = 0, binding = 42)] offset_buffer: &[u32],\n    #[spirv(storage_buffer, descriptor_set = 1, binding = 69)] output_buffer: &mut u32,\n    output: &mut f32,\n) {\n    unsafe {\n        let offset = compute_offset(tid.x);\n        let buffer_load = offset_buffer[offset];\n        let value = (buffer_load as f32 * 1.7) as u32;\n        atomic_i_add::<\n            _,\n            { Scope::QueueFamily as u32 },\n            { Semantics::CROSS_WORKGROUP_MEMORY.union(Semantics::ACQUIRE_RELEASE).union(Semantics::MAKE_AVAILABLE).union(Semantics::MAKE_VISIBLE).bits() },\n        >(output_buffer, value);\n    }\n}\n\n#[inline(never)]\npub const fn compute_offset(input: u32) -> usize {\n    1 + input as usize\n}\n\n/// local function to not bloat the spv with spirv_std::arch::atomic src code\n#[inline]\npub unsafe fn atomic_i_add<I: Integer, const SCOPE: u32, const SEMANTICS: u32>(\n    ptr: &mut I,\n    value: I,\n) -> I {\n    unsafe {\n        let mut old = I::default();\n        asm! {\n            \"%u32 = OpTypeInt 32 0\",\n            \"%scope = OpConstant %u32 {scope}\",\n            \"%semantics = OpConstant %u32 {semantics}\",\n            \"%value = OpLoad _ {value}\",\n            \"%old = OpAtomicIAdd _ {ptr} %scope %semantics %value\",\n            \"OpStore {old} %old\",\n            scope = const SCOPE,\n            semantics = const SEMANTICS,\n            ptr = in(reg) ptr,\n            old = in(reg) &mut old,\n            value = in(reg) &value\n        }\n        old\n    }\n}\n"
+OpName %2 "tid"
+OpName %3 "offset_buffer"
+OpName %4 "output_buffer"
+OpName %6 "dis_reference::compute_offset"
+OpDecorate %7 ArrayStride 4
+OpDecorate %8 Block
+OpMemberDecorate %8 0 Offset 0
+OpDecorate %9 Block
+OpMemberDecorate %9 0 Offset 0
+OpDecorate %2 BuiltIn LocalInvocationId
+OpDecorate %3 NonWritable
+OpDecorate %3 Binding 42
+OpDecorate %3 DescriptorSet 0
+OpDecorate %4 Binding 69
+OpDecorate %4 DescriptorSet 1
+%10 = OpTypeInt 32 0
+%11 = OpTypeVector %10 3
+%12 = OpTypePointer Input %11
+%7 = OpTypeRuntimeArray %10
+%8 = OpTypeStruct %7
+%13 = OpTypePointer StorageBuffer %8
+%9 = OpTypeStruct %10
+%14 = OpTypePointer StorageBuffer %9
+%15 = OpTypeFloat 32
+%16 = OpTypeVoid
+%17 = OpTypeFunction %16
+%2 = OpVariable  %12  Input
+%18 = OpTypePointer StorageBuffer %7
+%3 = OpVariable  %13  StorageBuffer
+%19 = OpConstant  %10  0
+%20 = OpTypePointer StorageBuffer %10
+%4 = OpVariable  %14  StorageBuffer
+%21 = OpTypeFunction %10 %10
+%22 = OpConstant  %10  1
+%23 = OpTypeBool
+%24 = OpConstant  %15  1.7
+%25 = OpConstant  %10  1333788671
+%26 = OpConstant  %10  4294967295
+%27 = OpConstant  %10  5
+%28 = OpConstant  %10  25096
+%1 = OpFunction  %16  None %17
+%29 = OpLabel
+OpLine %5 24 4
+%30 = OpLoad  %11  %2
+OpLine %5 25 4
+%31 = OpInBoundsAccessChain  %18  %3 %19
+%32 = OpArrayLength  %10  %3 0
+OpLine %5 26 4
+%33 = OpInBoundsAccessChain  %20  %4 %19
+OpLine %5 30 36
+%34 = OpCompositeExtract  %10  %30 0
+OpLine %5 30 21
+%35 = OpFunctionCall  %10  %6 %34
+OpLine %5 31 26
+%36 = OpULessThan  %23  %35 %32
+OpNoLine
+OpSelectionMerge %37 None
+OpBranchConditional %36 %38 %39
+%38 = OpLabel
+OpBranch %37
+%39 = OpLabel
+OpReturn
+%37 = OpLabel
+OpLine %5 31 26
+%40 = OpIAdd  %10  %19 %35
+%41 = OpInBoundsAccessChain  %20  %31 %40
+%42 = OpLoad  %10  %41
+OpLine %5 32 21
+%43 = OpConvertUToF  %15  %42
+OpLine %5 32 20
+%44 = OpFMul  %15  %43 %24
+%45 = OpBitcast  %15  %19
+%46 = OpBitcast  %15  %25
+%47 = OpConvertFToU  %10  %44
+%48 = OpFUnordLessThan  %23  %44 %45
+%49 = OpFOrdGreaterThan  %23  %44 %46
+%50 = OpSelect  %10  %48 %19 %47
+%51 = OpSelect  %10  %49 %26 %50
+OpLine %5 59 13
+%52 = OpAtomicIAdd  %10  %33 %27 %28 %51
+OpNoLine
+OpReturn
+OpFunctionEnd
+%6 = OpFunction  %10  DontInline|Const %21
+%53 = OpFunctionParameter  %10
+%54 = OpLabel
+OpLine %5 43 4
+%55 = OpIAdd  %10  %22 %53
+OpNoLine
+OpReturnValue %55
+OpFunctionEnd
