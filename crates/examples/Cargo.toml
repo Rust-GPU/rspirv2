@@ -1,5 +1,5 @@
 [package]
-name = "rspirv2-examples"
+name = "examples"
 version.workspace = true
 edition.workspace = true
 publish = false
