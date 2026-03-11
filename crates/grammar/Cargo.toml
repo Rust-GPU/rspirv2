@@ -2,7 +2,9 @@
 name = "rspirv2-grammar"
 version.workspace = true
 edition.workspace = true
-publish = false
+
+[lints]
+workspace = true
 
 [dependencies]
 rspirv2-grammar-parser = { workspace = true }
