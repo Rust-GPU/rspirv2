@@ -8,6 +8,7 @@ workspace = true
 
 [dependencies]
 rspirv2.workspace = true
+anstream.workspace = true
 rspirv2-tools-gen.workspace = true
 clap.workspace = true
 anyhow.workspace = true

@@ -86,7 +86,7 @@ pub mod test {
             like,
         };
         let mut stdout = Vec::new();
-        args.run::<CoreInstSet>(&mut stdout)?;
+        args.run::<CoreInstSet>(&mut anstream::AutoStream::never(&mut stdout))?;
         let stdout = String::from_utf8(stdout)?;
         expect.assert_eq(&stdout);
         Ok(())
