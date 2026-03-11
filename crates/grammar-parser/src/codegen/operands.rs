@@ -100,11 +100,11 @@ fn emit_rust_like_enum(
         }
     });
 
-    let dis = symbols.iter().map(|(_, symbol, params)| {
+    let dis = symbols.iter().map(|(e, symbol, params)| {
         let param_symbols = (0..params.len())
             .map(|i| format_ident!("p{}", i))
             .collect::<Vec<_>>();
-        let fmt = [" ", symbol.to_string().as_ref()].into_iter()
+        let fmt = [" ", &e.symbol].into_iter()
             .chain((0..param_symbols.len()).map(|_| "{}"))
             .collect::<String>();
         if !param_symbols.is_empty() {
@@ -177,6 +177,10 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
         let value = e.value;
         quote!(#value => Self::#symbol)
     });
+    let dis = symbols.iter().map(|(e, symbol)| {
+        let fmt = format!(" {}", e.symbol);
+        quote!(Self::#symbol => write!(f, #fmt))
+    });
 
     quote! {
         #doc
@@ -216,7 +220,9 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
 
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-                write!(f, " {:?}", self)
+                match self {
+                    #(#dis),*
+                }
             }
         }
     }
@@ -257,7 +263,7 @@ fn emit_bitflags_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_
 
     let dis = enumerants.iter().filter(|e| e.value != 0).map(|e| {
         let symbol = Enumerant::variant_ident(&e.symbol);
-        let fmt = format!("{{sep}}{}", symbol);
+        let fmt = format!("{{sep}}{}", e.symbol);
         quote! {
             if self.contains(Self::#symbol) {
                 write!(f, #fmt)?;
