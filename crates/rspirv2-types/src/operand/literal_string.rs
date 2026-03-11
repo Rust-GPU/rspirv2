@@ -67,7 +67,7 @@ unsafe impl OperandEncoding for LiteralString {
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         let color = ctx.color(AnsiColor::Green.on_default());
         let str = ctx.literal_string_escape.escape(&self.0);
-        write!(f, "{color}\"{str}\"{color:#}")
+        write!(f, " {color}\"{str}\"{color:#}")
     }
 }
 

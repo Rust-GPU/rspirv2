@@ -54,7 +54,7 @@ impl InstEncoding for OpUndef {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUndef {}",
+            "{} = OpUndef{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -85,7 +85,7 @@ impl InstEncoding for OpSourceContinued {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpSourceContinued {}", self.continued_source.dis(_ctx))
+        write!(f, "OpSourceContinued{}", self.continued_source.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -128,7 +128,7 @@ impl InstEncoding for OpSource {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSource {} {} {} {}",
+            "OpSource{}{}{}{}",
             self.source_language.dis(_ctx),
             self.version.dis(_ctx),
             self.file.dis(_ctx),
@@ -161,7 +161,7 @@ impl InstEncoding for OpSourceExtension {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpSourceExtension {}", self.extension.dis(_ctx))
+        write!(f, "OpSourceExtension{}", self.extension.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -193,12 +193,7 @@ impl InstEncoding for OpName {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(
-            f,
-            "OpName {} {}",
-            self.target.dis(_ctx),
-            self.name.dis(_ctx)
-        )
+        write!(f, "OpName{}{}", self.target.dis(_ctx), self.name.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -237,7 +232,7 @@ impl InstEncoding for OpMemberName {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpMemberName {} {} {}",
+            "OpMemberName{}{}{}",
             self.ty.dis(_ctx),
             self.member.dis(_ctx),
             self.name.dis(_ctx)
@@ -276,7 +271,7 @@ impl InstEncoding for OpString {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpString {}",
+            "{} = OpString{}",
             self.id_result.dis(_ctx),
             self.string.dis(_ctx)
         )
@@ -318,7 +313,7 @@ impl InstEncoding for OpLine {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpLine {} {} {}",
+            "OpLine{}{}{}",
             self.file.dis(_ctx),
             self.line.dis(_ctx),
             self.column.dis(_ctx)
@@ -350,7 +345,7 @@ impl InstEncoding for OpExtension {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpExtension {}", self.name.dis(_ctx))
+        write!(f, "OpExtension{}", self.name.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -384,7 +379,7 @@ impl InstEncoding for OpExtInstImport {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpExtInstImport {}",
+            "{} = OpExtInstImport{}",
             self.id_result.dis(_ctx),
             self.name.dis(_ctx)
         )
@@ -434,7 +429,7 @@ impl InstEncoding for OpExtInst {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpExtInst {} {} {} {}",
+            "{} = OpExtInst{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.set.dis(_ctx),
@@ -475,7 +470,7 @@ impl InstEncoding for OpMemoryModel {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpMemoryModel {} {}",
+            "OpMemoryModel{}{}",
             self.addressing_model.dis(_ctx),
             self.memory_model.dis(_ctx)
         )
@@ -521,7 +516,7 @@ impl InstEncoding for OpEntryPoint {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpEntryPoint {} {} {} {}",
+            "OpEntryPoint{}{}{}{}",
             self.execution_model.dis(_ctx),
             self.entry_point.dis(_ctx),
             self.name.dis(_ctx),
@@ -561,7 +556,7 @@ impl InstEncoding for OpExecutionMode {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpExecutionMode {} {}",
+            "OpExecutionMode{}{}",
             self.entry_point.dis(_ctx),
             self.mode.dis(_ctx)
         )
@@ -592,7 +587,7 @@ impl InstEncoding for OpCapability {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpCapability {}", self.capability.dis(_ctx))
+        write!(f, "OpCapability{}", self.capability.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -687,7 +682,7 @@ impl InstEncoding for OpTypeInt {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeInt {} {}",
+            "{} = OpTypeInt{}{}",
             self.id_result.dis(_ctx),
             self.width.dis(_ctx),
             self.signedness.dis(_ctx)
@@ -730,7 +725,7 @@ impl InstEncoding for OpTypeFloat {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeFloat {} {}",
+            "{} = OpTypeFloat{}{}",
             self.id_result.dis(_ctx),
             self.width.dis(_ctx),
             self.floating_point_encoding.dis(_ctx)
@@ -773,7 +768,7 @@ impl InstEncoding for OpTypeVector {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeVector {} {}",
+            "{} = OpTypeVector{}{}",
             self.id_result.dis(_ctx),
             self.component_type.dis(_ctx),
             self.component_count.dis(_ctx)
@@ -816,7 +811,7 @@ impl InstEncoding for OpTypeMatrix {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeMatrix {} {}",
+            "{} = OpTypeMatrix{}{}",
             self.id_result.dis(_ctx),
             self.column_type.dis(_ctx),
             self.column_count.dis(_ctx)
@@ -883,7 +878,7 @@ impl InstEncoding for OpTypeImage {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeImage {} {} {} {} {} {} {} {}",
+            "{} = OpTypeImage{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.sampled_type.dis(_ctx),
             self.dim.dis(_ctx),
@@ -956,7 +951,7 @@ impl InstEncoding for OpTypeSampledImage {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeSampledImage {}",
+            "{} = OpTypeSampledImage{}",
             self.id_result.dis(_ctx),
             self.image_type.dis(_ctx)
         )
@@ -998,7 +993,7 @@ impl InstEncoding for OpTypeArray {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeArray {} {}",
+            "{} = OpTypeArray{}{}",
             self.id_result.dis(_ctx),
             self.element_type.dis(_ctx),
             self.length.dis(_ctx)
@@ -1037,7 +1032,7 @@ impl InstEncoding for OpTypeRuntimeArray {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeRuntimeArray {}",
+            "{} = OpTypeRuntimeArray{}",
             self.id_result.dis(_ctx),
             self.element_type.dis(_ctx)
         )
@@ -1075,7 +1070,7 @@ impl InstEncoding for OpTypeStruct {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeStruct {}",
+            "{} = OpTypeStruct{}",
             self.id_result.dis(_ctx),
             self.id_ref.dis(_ctx)
         )
@@ -1113,7 +1108,7 @@ impl InstEncoding for OpTypeOpaque {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeOpaque {}",
+            "{} = OpTypeOpaque{}",
             self.id_result.dis(_ctx),
             self.literal_string.dis(_ctx)
         )
@@ -1155,7 +1150,7 @@ impl InstEncoding for OpTypePointer {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypePointer {} {}",
+            "{} = OpTypePointer{}{}",
             self.id_result.dis(_ctx),
             self.storage_class.dis(_ctx),
             self.ty.dis(_ctx)
@@ -1198,7 +1193,7 @@ impl InstEncoding for OpTypeFunction {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeFunction {} {}",
+            "{} = OpTypeFunction{}{}",
             self.id_result.dis(_ctx),
             self.return_type.dis(_ctx),
             self.id_ref.dis(_ctx)
@@ -1349,7 +1344,7 @@ impl InstEncoding for OpTypePipe {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypePipe {}",
+            "{} = OpTypePipe{}",
             self.id_result.dis(_ctx),
             self.qualifier.dis(_ctx)
         )
@@ -1387,7 +1382,7 @@ impl InstEncoding for OpTypeForwardPointer {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpTypeForwardPointer {} {}",
+            "OpTypeForwardPointer{}{}",
             self.pointer_type.dis(_ctx),
             self.storage_class.dis(_ctx)
         )
@@ -1425,7 +1420,7 @@ impl InstEncoding for OpConstantTrue {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConstantTrue {}",
+            "{} = OpConstantTrue{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -1463,7 +1458,7 @@ impl InstEncoding for OpConstantFalse {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConstantFalse {}",
+            "{} = OpConstantFalse{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -1505,7 +1500,7 @@ impl InstEncoding for OpConstant {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConstant {} {}",
+            "{} = OpConstant{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.value.dis(_ctx)
@@ -1548,7 +1543,7 @@ impl InstEncoding for OpConstantComposite {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConstantComposite {} {}",
+            "{} = OpConstantComposite{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.constituents.dis(_ctx)
@@ -1599,7 +1594,7 @@ impl InstEncoding for OpConstantSampler {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConstantSampler {} {} {} {}",
+            "{} = OpConstantSampler{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampler_addressing_mode.dis(_ctx),
@@ -1640,7 +1635,7 @@ impl InstEncoding for OpConstantNull {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConstantNull {}",
+            "{} = OpConstantNull{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -1678,7 +1673,7 @@ impl InstEncoding for OpSpecConstantTrue {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSpecConstantTrue {}",
+            "{} = OpSpecConstantTrue{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -1716,7 +1711,7 @@ impl InstEncoding for OpSpecConstantFalse {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSpecConstantFalse {}",
+            "{} = OpSpecConstantFalse{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -1758,7 +1753,7 @@ impl InstEncoding for OpSpecConstant {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSpecConstant {} {}",
+            "{} = OpSpecConstant{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.value.dis(_ctx)
@@ -1801,7 +1796,7 @@ impl InstEncoding for OpSpecConstantComposite {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSpecConstantComposite {} {}",
+            "{} = OpSpecConstantComposite{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.constituents.dis(_ctx)
@@ -1844,7 +1839,7 @@ impl InstEncoding for OpSpecConstantOp {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSpecConstantOp {} {}",
+            "{} = OpSpecConstantOp{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.opcode.dis(_ctx)
@@ -1891,7 +1886,7 @@ impl InstEncoding for OpFunction {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFunction {} {} {}",
+            "{} = OpFunction{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.function_control.dis(_ctx),
@@ -1931,7 +1926,7 @@ impl InstEncoding for OpFunctionParameter {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFunctionParameter {}",
+            "{} = OpFunctionParameter{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -2000,7 +1995,7 @@ impl InstEncoding for OpFunctionCall {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFunctionCall {} {} {}",
+            "{} = OpFunctionCall{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.function.dis(_ctx),
@@ -2048,7 +2043,7 @@ impl InstEncoding for OpVariable {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpVariable {} {} {}",
+            "{} = OpVariable{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.storage_class.dis(_ctx),
@@ -2100,7 +2095,7 @@ impl InstEncoding for OpImageTexelPointer {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageTexelPointer {} {} {} {}",
+            "{} = OpImageTexelPointer{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx),
@@ -2149,7 +2144,7 @@ impl InstEncoding for OpLoad {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpLoad {} {} {}",
+            "{} = OpLoad{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -2193,7 +2188,7 @@ impl InstEncoding for OpStore {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpStore {} {} {}",
+            "OpStore{}{}{}",
             self.pointer.dis(_ctx),
             self.object.dis(_ctx),
             self.memory_access.dis(_ctx)
@@ -2240,7 +2235,7 @@ impl InstEncoding for OpCopyMemory {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpCopyMemory {} {} {} {}",
+            "OpCopyMemory{}{}{}{}",
             self.target.dis(_ctx),
             self.source.dis(_ctx),
             self.memory_access_0.dis(_ctx),
@@ -2292,7 +2287,7 @@ impl InstEncoding for OpCopyMemorySized {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpCopyMemorySized {} {} {} {} {}",
+            "OpCopyMemorySized{}{}{}{}{}",
             self.target.dis(_ctx),
             self.source.dis(_ctx),
             self.size.dis(_ctx),
@@ -2341,7 +2336,7 @@ impl InstEncoding for OpAccessChain {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAccessChain {} {} {}",
+            "{} = OpAccessChain{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base.dis(_ctx),
@@ -2389,7 +2384,7 @@ impl InstEncoding for OpInBoundsAccessChain {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpInBoundsAccessChain {} {} {}",
+            "{} = OpInBoundsAccessChain{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base.dis(_ctx),
@@ -2441,7 +2436,7 @@ impl InstEncoding for OpPtrAccessChain {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpPtrAccessChain {} {} {} {}",
+            "{} = OpPtrAccessChain{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base.dis(_ctx),
@@ -2490,7 +2485,7 @@ impl InstEncoding for OpArrayLength {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArrayLength {} {} {}",
+            "{} = OpArrayLength{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.structure.dis(_ctx),
@@ -2534,7 +2529,7 @@ impl InstEncoding for OpGenericPtrMemSemantics {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGenericPtrMemSemantics {} {}",
+            "{} = OpGenericPtrMemSemantics{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx)
@@ -2585,7 +2580,7 @@ impl InstEncoding for OpInBoundsPtrAccessChain {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpInBoundsPtrAccessChain {} {} {} {}",
+            "{} = OpInBoundsPtrAccessChain{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base.dis(_ctx),
@@ -2626,7 +2621,7 @@ impl InstEncoding for OpDecorate {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpDecorate {} {}",
+            "OpDecorate{}{}",
             self.target.dis(_ctx),
             self.decoration.dis(_ctx)
         )
@@ -2668,7 +2663,7 @@ impl InstEncoding for OpMemberDecorate {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpMemberDecorate {} {} {}",
+            "OpMemberDecorate{}{}{}",
             self.structure_type.dis(_ctx),
             self.member.dis(_ctx),
             self.decoration.dis(_ctx)
@@ -2735,7 +2730,7 @@ impl InstEncoding for OpGroupDecorate {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpGroupDecorate {} {}",
+            "OpGroupDecorate{}{}",
             self.decoration_group.dis(_ctx),
             self.targets.dis(_ctx)
         )
@@ -2773,7 +2768,7 @@ impl InstEncoding for OpGroupMemberDecorate {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpGroupMemberDecorate {} {}",
+            "OpGroupMemberDecorate{}{}",
             self.decoration_group.dis(_ctx),
             self.targets.dis(_ctx)
         )
@@ -2819,7 +2814,7 @@ impl InstEncoding for OpVectorExtractDynamic {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpVectorExtractDynamic {} {} {}",
+            "{} = OpVectorExtractDynamic{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.vector.dis(_ctx),
@@ -2871,7 +2866,7 @@ impl InstEncoding for OpVectorInsertDynamic {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpVectorInsertDynamic {} {} {} {}",
+            "{} = OpVectorInsertDynamic{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.vector.dis(_ctx),
@@ -2924,7 +2919,7 @@ impl InstEncoding for OpVectorShuffle {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpVectorShuffle {} {} {} {}",
+            "{} = OpVectorShuffle{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.vector_1.dis(_ctx),
@@ -2969,7 +2964,7 @@ impl InstEncoding for OpCompositeConstruct {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCompositeConstruct {} {}",
+            "{} = OpCompositeConstruct{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.constituents.dis(_ctx)
@@ -3016,7 +3011,7 @@ impl InstEncoding for OpCompositeExtract {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCompositeExtract {} {} {}",
+            "{} = OpCompositeExtract{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.composite.dis(_ctx),
@@ -3068,7 +3063,7 @@ impl InstEncoding for OpCompositeInsert {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCompositeInsert {} {} {} {}",
+            "{} = OpCompositeInsert{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.object.dis(_ctx),
@@ -3113,7 +3108,7 @@ impl InstEncoding for OpCopyObject {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCopyObject {} {}",
+            "{} = OpCopyObject{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -3156,7 +3151,7 @@ impl InstEncoding for OpTranspose {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTranspose {} {}",
+            "{} = OpTranspose{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.matrix.dis(_ctx)
@@ -3203,7 +3198,7 @@ impl InstEncoding for OpSampledImage {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSampledImage {} {} {}",
+            "{} = OpSampledImage{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx),
@@ -3255,7 +3250,7 @@ impl InstEncoding for OpImageSampleImplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSampleImplicitLod {} {} {} {}",
+            "{} = OpImageSampleImplicitLod{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -3308,7 +3303,7 @@ impl InstEncoding for OpImageSampleExplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSampleExplicitLod {} {} {} {}",
+            "{} = OpImageSampleExplicitLod{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -3365,7 +3360,7 @@ impl InstEncoding for OpImageSampleDrefImplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSampleDrefImplicitLod {} {} {} {} {}",
+            "{} = OpImageSampleDrefImplicitLod{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -3423,7 +3418,7 @@ impl InstEncoding for OpImageSampleDrefExplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSampleDrefExplicitLod {} {} {} {} {}",
+            "{} = OpImageSampleDrefExplicitLod{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -3477,7 +3472,7 @@ impl InstEncoding for OpImageSampleProjImplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSampleProjImplicitLod {} {} {} {}",
+            "{} = OpImageSampleProjImplicitLod{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -3530,7 +3525,7 @@ impl InstEncoding for OpImageSampleProjExplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSampleProjExplicitLod {} {} {} {}",
+            "{} = OpImageSampleProjExplicitLod{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -3587,7 +3582,7 @@ impl InstEncoding for OpImageSampleProjDrefImplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSampleProjDrefImplicitLod {} {} {} {} {}",
+            "{} = OpImageSampleProjDrefImplicitLod{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -3645,7 +3640,7 @@ impl InstEncoding for OpImageSampleProjDrefExplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSampleProjDrefExplicitLod {} {} {} {} {}",
+            "{} = OpImageSampleProjDrefExplicitLod{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -3699,7 +3694,7 @@ impl InstEncoding for OpImageFetch {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageFetch {} {} {} {}",
+            "{} = OpImageFetch{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx),
@@ -3756,7 +3751,7 @@ impl InstEncoding for OpImageGather {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageGather {} {} {} {} {}",
+            "{} = OpImageGather{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -3814,7 +3809,7 @@ impl InstEncoding for OpImageDrefGather {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageDrefGather {} {} {} {} {}",
+            "{} = OpImageDrefGather{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -3868,7 +3863,7 @@ impl InstEncoding for OpImageRead {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageRead {} {} {} {}",
+            "{} = OpImageRead{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx),
@@ -3917,7 +3912,7 @@ impl InstEncoding for OpImageWrite {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpImageWrite {} {} {} {}",
+            "OpImageWrite{}{}{}{}",
             self.image.dis(_ctx),
             self.coordinate.dis(_ctx),
             self.texel.dis(_ctx),
@@ -3961,7 +3956,7 @@ impl InstEncoding for OpImage {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImage {} {}",
+            "{} = OpImage{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx)
@@ -4004,7 +3999,7 @@ impl InstEncoding for OpImageQueryFormat {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageQueryFormat {} {}",
+            "{} = OpImageQueryFormat{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx)
@@ -4047,7 +4042,7 @@ impl InstEncoding for OpImageQueryOrder {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageQueryOrder {} {}",
+            "{} = OpImageQueryOrder{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx)
@@ -4094,7 +4089,7 @@ impl InstEncoding for OpImageQuerySizeLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageQuerySizeLod {} {} {}",
+            "{} = OpImageQuerySizeLod{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx),
@@ -4138,7 +4133,7 @@ impl InstEncoding for OpImageQuerySize {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageQuerySize {} {}",
+            "{} = OpImageQuerySize{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx)
@@ -4185,7 +4180,7 @@ impl InstEncoding for OpImageQueryLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageQueryLod {} {} {}",
+            "{} = OpImageQueryLod{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -4229,7 +4224,7 @@ impl InstEncoding for OpImageQueryLevels {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageQueryLevels {} {}",
+            "{} = OpImageQueryLevels{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx)
@@ -4272,7 +4267,7 @@ impl InstEncoding for OpImageQuerySamples {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageQuerySamples {} {}",
+            "{} = OpImageQuerySamples{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx)
@@ -4315,7 +4310,7 @@ impl InstEncoding for OpConvertFToU {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertFToU {} {}",
+            "{} = OpConvertFToU{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.float_value.dis(_ctx)
@@ -4358,7 +4353,7 @@ impl InstEncoding for OpConvertFToS {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertFToS {} {}",
+            "{} = OpConvertFToS{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.float_value.dis(_ctx)
@@ -4401,7 +4396,7 @@ impl InstEncoding for OpConvertSToF {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertSToF {} {}",
+            "{} = OpConvertSToF{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.signed_value.dis(_ctx)
@@ -4444,7 +4439,7 @@ impl InstEncoding for OpConvertUToF {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertUToF {} {}",
+            "{} = OpConvertUToF{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.unsigned_value.dis(_ctx)
@@ -4487,7 +4482,7 @@ impl InstEncoding for OpUConvert {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUConvert {} {}",
+            "{} = OpUConvert{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.unsigned_value.dis(_ctx)
@@ -4530,7 +4525,7 @@ impl InstEncoding for OpSConvert {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSConvert {} {}",
+            "{} = OpSConvert{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.signed_value.dis(_ctx)
@@ -4573,7 +4568,7 @@ impl InstEncoding for OpFConvert {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFConvert {} {}",
+            "{} = OpFConvert{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.float_value.dis(_ctx)
@@ -4616,7 +4611,7 @@ impl InstEncoding for OpQuantizeToF16 {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpQuantizeToF16 {} {}",
+            "{} = OpQuantizeToF16{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.value.dis(_ctx)
@@ -4659,7 +4654,7 @@ impl InstEncoding for OpConvertPtrToU {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertPtrToU {} {}",
+            "{} = OpConvertPtrToU{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx)
@@ -4702,7 +4697,7 @@ impl InstEncoding for OpSatConvertSToU {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSatConvertSToU {} {}",
+            "{} = OpSatConvertSToU{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.signed_value.dis(_ctx)
@@ -4745,7 +4740,7 @@ impl InstEncoding for OpSatConvertUToS {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSatConvertUToS {} {}",
+            "{} = OpSatConvertUToS{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.unsigned_value.dis(_ctx)
@@ -4788,7 +4783,7 @@ impl InstEncoding for OpConvertUToPtr {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertUToPtr {} {}",
+            "{} = OpConvertUToPtr{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.integer_value.dis(_ctx)
@@ -4831,7 +4826,7 @@ impl InstEncoding for OpPtrCastToGeneric {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpPtrCastToGeneric {} {}",
+            "{} = OpPtrCastToGeneric{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx)
@@ -4874,7 +4869,7 @@ impl InstEncoding for OpGenericCastToPtr {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGenericCastToPtr {} {}",
+            "{} = OpGenericCastToPtr{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx)
@@ -4921,7 +4916,7 @@ impl InstEncoding for OpGenericCastToPtrExplicit {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGenericCastToPtrExplicit {} {} {}",
+            "{} = OpGenericCastToPtrExplicit{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -4965,7 +4960,7 @@ impl InstEncoding for OpBitcast {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpBitcast {} {}",
+            "{} = OpBitcast{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -5008,7 +5003,7 @@ impl InstEncoding for OpSNegate {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSNegate {} {}",
+            "{} = OpSNegate{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -5051,7 +5046,7 @@ impl InstEncoding for OpFNegate {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFNegate {} {}",
+            "{} = OpFNegate{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -5098,7 +5093,7 @@ impl InstEncoding for OpIAdd {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIAdd {} {} {}",
+            "{} = OpIAdd{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -5146,7 +5141,7 @@ impl InstEncoding for OpFAdd {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFAdd {} {} {}",
+            "{} = OpFAdd{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -5194,7 +5189,7 @@ impl InstEncoding for OpISub {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpISub {} {} {}",
+            "{} = OpISub{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -5242,7 +5237,7 @@ impl InstEncoding for OpFSub {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFSub {} {} {}",
+            "{} = OpFSub{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -5290,7 +5285,7 @@ impl InstEncoding for OpIMul {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIMul {} {} {}",
+            "{} = OpIMul{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -5338,7 +5333,7 @@ impl InstEncoding for OpFMul {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFMul {} {} {}",
+            "{} = OpFMul{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -5386,7 +5381,7 @@ impl InstEncoding for OpUDiv {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUDiv {} {} {}",
+            "{} = OpUDiv{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -5434,7 +5429,7 @@ impl InstEncoding for OpSDiv {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSDiv {} {} {}",
+            "{} = OpSDiv{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -5482,7 +5477,7 @@ impl InstEncoding for OpFDiv {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFDiv {} {} {}",
+            "{} = OpFDiv{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -5530,7 +5525,7 @@ impl InstEncoding for OpUMod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUMod {} {} {}",
+            "{} = OpUMod{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -5578,7 +5573,7 @@ impl InstEncoding for OpSRem {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSRem {} {} {}",
+            "{} = OpSRem{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -5626,7 +5621,7 @@ impl InstEncoding for OpSMod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSMod {} {} {}",
+            "{} = OpSMod{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -5674,7 +5669,7 @@ impl InstEncoding for OpFRem {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFRem {} {} {}",
+            "{} = OpFRem{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -5722,7 +5717,7 @@ impl InstEncoding for OpFMod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFMod {} {} {}",
+            "{} = OpFMod{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -5770,7 +5765,7 @@ impl InstEncoding for OpVectorTimesScalar {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpVectorTimesScalar {} {} {}",
+            "{} = OpVectorTimesScalar{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.vector.dis(_ctx),
@@ -5818,7 +5813,7 @@ impl InstEncoding for OpMatrixTimesScalar {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpMatrixTimesScalar {} {} {}",
+            "{} = OpMatrixTimesScalar{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.matrix.dis(_ctx),
@@ -5866,7 +5861,7 @@ impl InstEncoding for OpVectorTimesMatrix {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpVectorTimesMatrix {} {} {}",
+            "{} = OpVectorTimesMatrix{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.vector.dis(_ctx),
@@ -5914,7 +5909,7 @@ impl InstEncoding for OpMatrixTimesVector {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpMatrixTimesVector {} {} {}",
+            "{} = OpMatrixTimesVector{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.matrix.dis(_ctx),
@@ -5962,7 +5957,7 @@ impl InstEncoding for OpMatrixTimesMatrix {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpMatrixTimesMatrix {} {} {}",
+            "{} = OpMatrixTimesMatrix{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.left_matrix.dis(_ctx),
@@ -6010,7 +6005,7 @@ impl InstEncoding for OpOuterProduct {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpOuterProduct {} {} {}",
+            "{} = OpOuterProduct{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.vector_1.dis(_ctx),
@@ -6058,7 +6053,7 @@ impl InstEncoding for OpDot {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpDot {} {} {}",
+            "{} = OpDot{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.vector_1.dis(_ctx),
@@ -6106,7 +6101,7 @@ impl InstEncoding for OpIAddCarry {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIAddCarry {} {} {}",
+            "{} = OpIAddCarry{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -6154,7 +6149,7 @@ impl InstEncoding for OpISubBorrow {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpISubBorrow {} {} {}",
+            "{} = OpISubBorrow{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -6202,7 +6197,7 @@ impl InstEncoding for OpUMulExtended {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUMulExtended {} {} {}",
+            "{} = OpUMulExtended{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -6250,7 +6245,7 @@ impl InstEncoding for OpSMulExtended {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSMulExtended {} {} {}",
+            "{} = OpSMulExtended{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -6294,7 +6289,7 @@ impl InstEncoding for OpAny {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAny {} {}",
+            "{} = OpAny{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.vector.dis(_ctx)
@@ -6337,7 +6332,7 @@ impl InstEncoding for OpAll {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAll {} {}",
+            "{} = OpAll{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.vector.dis(_ctx)
@@ -6380,7 +6375,7 @@ impl InstEncoding for OpIsNan {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIsNan {} {}",
+            "{} = OpIsNan{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.x.dis(_ctx)
@@ -6423,7 +6418,7 @@ impl InstEncoding for OpIsInf {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIsInf {} {}",
+            "{} = OpIsInf{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.x.dis(_ctx)
@@ -6466,7 +6461,7 @@ impl InstEncoding for OpIsFinite {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIsFinite {} {}",
+            "{} = OpIsFinite{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.x.dis(_ctx)
@@ -6509,7 +6504,7 @@ impl InstEncoding for OpIsNormal {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIsNormal {} {}",
+            "{} = OpIsNormal{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.x.dis(_ctx)
@@ -6552,7 +6547,7 @@ impl InstEncoding for OpSignBitSet {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSignBitSet {} {}",
+            "{} = OpSignBitSet{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.x.dis(_ctx)
@@ -6599,7 +6594,7 @@ impl InstEncoding for OpLessOrGreater {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpLessOrGreater {} {} {}",
+            "{} = OpLessOrGreater{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.x.dis(_ctx),
@@ -6647,7 +6642,7 @@ impl InstEncoding for OpOrdered {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpOrdered {} {} {}",
+            "{} = OpOrdered{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.x.dis(_ctx),
@@ -6695,7 +6690,7 @@ impl InstEncoding for OpUnordered {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUnordered {} {} {}",
+            "{} = OpUnordered{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.x.dis(_ctx),
@@ -6743,7 +6738,7 @@ impl InstEncoding for OpLogicalEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpLogicalEqual {} {} {}",
+            "{} = OpLogicalEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -6791,7 +6786,7 @@ impl InstEncoding for OpLogicalNotEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpLogicalNotEqual {} {} {}",
+            "{} = OpLogicalNotEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -6839,7 +6834,7 @@ impl InstEncoding for OpLogicalOr {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpLogicalOr {} {} {}",
+            "{} = OpLogicalOr{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -6887,7 +6882,7 @@ impl InstEncoding for OpLogicalAnd {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpLogicalAnd {} {} {}",
+            "{} = OpLogicalAnd{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -6931,7 +6926,7 @@ impl InstEncoding for OpLogicalNot {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpLogicalNot {} {}",
+            "{} = OpLogicalNot{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -6982,7 +6977,7 @@ impl InstEncoding for OpSelect {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSelect {} {} {} {}",
+            "{} = OpSelect{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.condition.dis(_ctx),
@@ -7031,7 +7026,7 @@ impl InstEncoding for OpIEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIEqual {} {} {}",
+            "{} = OpIEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7079,7 +7074,7 @@ impl InstEncoding for OpINotEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpINotEqual {} {} {}",
+            "{} = OpINotEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7127,7 +7122,7 @@ impl InstEncoding for OpUGreaterThan {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUGreaterThan {} {} {}",
+            "{} = OpUGreaterThan{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7175,7 +7170,7 @@ impl InstEncoding for OpSGreaterThan {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSGreaterThan {} {} {}",
+            "{} = OpSGreaterThan{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7223,7 +7218,7 @@ impl InstEncoding for OpUGreaterThanEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUGreaterThanEqual {} {} {}",
+            "{} = OpUGreaterThanEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7271,7 +7266,7 @@ impl InstEncoding for OpSGreaterThanEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSGreaterThanEqual {} {} {}",
+            "{} = OpSGreaterThanEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7319,7 +7314,7 @@ impl InstEncoding for OpULessThan {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpULessThan {} {} {}",
+            "{} = OpULessThan{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7367,7 +7362,7 @@ impl InstEncoding for OpSLessThan {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSLessThan {} {} {}",
+            "{} = OpSLessThan{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7415,7 +7410,7 @@ impl InstEncoding for OpULessThanEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpULessThanEqual {} {} {}",
+            "{} = OpULessThanEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7463,7 +7458,7 @@ impl InstEncoding for OpSLessThanEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSLessThanEqual {} {} {}",
+            "{} = OpSLessThanEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7511,7 +7506,7 @@ impl InstEncoding for OpFOrdEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFOrdEqual {} {} {}",
+            "{} = OpFOrdEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7559,7 +7554,7 @@ impl InstEncoding for OpFUnordEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFUnordEqual {} {} {}",
+            "{} = OpFUnordEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7607,7 +7602,7 @@ impl InstEncoding for OpFOrdNotEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFOrdNotEqual {} {} {}",
+            "{} = OpFOrdNotEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7655,7 +7650,7 @@ impl InstEncoding for OpFUnordNotEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFUnordNotEqual {} {} {}",
+            "{} = OpFUnordNotEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7703,7 +7698,7 @@ impl InstEncoding for OpFOrdLessThan {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFOrdLessThan {} {} {}",
+            "{} = OpFOrdLessThan{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7751,7 +7746,7 @@ impl InstEncoding for OpFUnordLessThan {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFUnordLessThan {} {} {}",
+            "{} = OpFUnordLessThan{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7799,7 +7794,7 @@ impl InstEncoding for OpFOrdGreaterThan {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFOrdGreaterThan {} {} {}",
+            "{} = OpFOrdGreaterThan{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7847,7 +7842,7 @@ impl InstEncoding for OpFUnordGreaterThan {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFUnordGreaterThan {} {} {}",
+            "{} = OpFUnordGreaterThan{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7895,7 +7890,7 @@ impl InstEncoding for OpFOrdLessThanEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFOrdLessThanEqual {} {} {}",
+            "{} = OpFOrdLessThanEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7943,7 +7938,7 @@ impl InstEncoding for OpFUnordLessThanEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFUnordLessThanEqual {} {} {}",
+            "{} = OpFUnordLessThanEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -7991,7 +7986,7 @@ impl InstEncoding for OpFOrdGreaterThanEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFOrdGreaterThanEqual {} {} {}",
+            "{} = OpFOrdGreaterThanEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -8039,7 +8034,7 @@ impl InstEncoding for OpFUnordGreaterThanEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFUnordGreaterThanEqual {} {} {}",
+            "{} = OpFUnordGreaterThanEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -8087,7 +8082,7 @@ impl InstEncoding for OpShiftRightLogical {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpShiftRightLogical {} {} {}",
+            "{} = OpShiftRightLogical{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base.dis(_ctx),
@@ -8135,7 +8130,7 @@ impl InstEncoding for OpShiftRightArithmetic {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpShiftRightArithmetic {} {} {}",
+            "{} = OpShiftRightArithmetic{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base.dis(_ctx),
@@ -8183,7 +8178,7 @@ impl InstEncoding for OpShiftLeftLogical {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpShiftLeftLogical {} {} {}",
+            "{} = OpShiftLeftLogical{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base.dis(_ctx),
@@ -8231,7 +8226,7 @@ impl InstEncoding for OpBitwiseOr {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpBitwiseOr {} {} {}",
+            "{} = OpBitwiseOr{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -8279,7 +8274,7 @@ impl InstEncoding for OpBitwiseXor {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpBitwiseXor {} {} {}",
+            "{} = OpBitwiseXor{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -8327,7 +8322,7 @@ impl InstEncoding for OpBitwiseAnd {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpBitwiseAnd {} {} {}",
+            "{} = OpBitwiseAnd{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -8371,7 +8366,7 @@ impl InstEncoding for OpNot {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpNot {} {}",
+            "{} = OpNot{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -8426,7 +8421,7 @@ impl InstEncoding for OpBitFieldInsert {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpBitFieldInsert {} {} {} {} {}",
+            "{} = OpBitFieldInsert{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base.dis(_ctx),
@@ -8480,7 +8475,7 @@ impl InstEncoding for OpBitFieldSExtract {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpBitFieldSExtract {} {} {} {}",
+            "{} = OpBitFieldSExtract{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base.dis(_ctx),
@@ -8533,7 +8528,7 @@ impl InstEncoding for OpBitFieldUExtract {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpBitFieldUExtract {} {} {} {}",
+            "{} = OpBitFieldUExtract{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base.dis(_ctx),
@@ -8578,7 +8573,7 @@ impl InstEncoding for OpBitReverse {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpBitReverse {} {}",
+            "{} = OpBitReverse{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base.dis(_ctx)
@@ -8621,7 +8616,7 @@ impl InstEncoding for OpBitCount {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpBitCount {} {}",
+            "{} = OpBitCount{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base.dis(_ctx)
@@ -8664,7 +8659,7 @@ impl InstEncoding for OpDPdx {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpDPdx {} {}",
+            "{} = OpDPdx{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.p.dis(_ctx)
@@ -8707,7 +8702,7 @@ impl InstEncoding for OpDPdy {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpDPdy {} {}",
+            "{} = OpDPdy{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.p.dis(_ctx)
@@ -8750,7 +8745,7 @@ impl InstEncoding for OpFwidth {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFwidth {} {}",
+            "{} = OpFwidth{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.p.dis(_ctx)
@@ -8793,7 +8788,7 @@ impl InstEncoding for OpDPdxFine {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpDPdxFine {} {}",
+            "{} = OpDPdxFine{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.p.dis(_ctx)
@@ -8836,7 +8831,7 @@ impl InstEncoding for OpDPdyFine {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpDPdyFine {} {}",
+            "{} = OpDPdyFine{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.p.dis(_ctx)
@@ -8879,7 +8874,7 @@ impl InstEncoding for OpFwidthFine {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFwidthFine {} {}",
+            "{} = OpFwidthFine{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.p.dis(_ctx)
@@ -8922,7 +8917,7 @@ impl InstEncoding for OpDPdxCoarse {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpDPdxCoarse {} {}",
+            "{} = OpDPdxCoarse{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.p.dis(_ctx)
@@ -8965,7 +8960,7 @@ impl InstEncoding for OpDPdyCoarse {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpDPdyCoarse {} {}",
+            "{} = OpDPdyCoarse{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.p.dis(_ctx)
@@ -9008,7 +9003,7 @@ impl InstEncoding for OpFwidthCoarse {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFwidthCoarse {} {}",
+            "{} = OpFwidthCoarse{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.p.dis(_ctx)
@@ -9086,7 +9081,7 @@ impl InstEncoding for OpEmitStreamVertex {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpEmitStreamVertex {}", self.stream.dis(_ctx))
+        write!(f, "OpEmitStreamVertex{}", self.stream.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9114,7 +9109,7 @@ impl InstEncoding for OpEndStreamPrimitive {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpEndStreamPrimitive {}", self.stream.dis(_ctx))
+        write!(f, "OpEndStreamPrimitive{}", self.stream.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9153,7 +9148,7 @@ impl InstEncoding for OpControlBarrier {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpControlBarrier {} {} {}",
+            "OpControlBarrier{}{}{}",
             self.execution.dis(_ctx),
             self.memory.dis(_ctx),
             self.semantics.dis(_ctx)
@@ -9192,7 +9187,7 @@ impl InstEncoding for OpMemoryBarrier {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpMemoryBarrier {} {}",
+            "OpMemoryBarrier{}{}",
             self.memory.dis(_ctx),
             self.semantics.dis(_ctx)
         )
@@ -9242,7 +9237,7 @@ impl InstEncoding for OpAtomicLoad {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicLoad {} {} {} {}",
+            "{} = OpAtomicLoad{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -9291,7 +9286,7 @@ impl InstEncoding for OpAtomicStore {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpAtomicStore {} {} {} {}",
+            "OpAtomicStore{}{}{}{}",
             self.pointer.dis(_ctx),
             self.memory.dis(_ctx),
             self.semantics.dis(_ctx),
@@ -9347,7 +9342,7 @@ impl InstEncoding for OpAtomicExchange {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicExchange {} {} {} {} {}",
+            "{} = OpAtomicExchange{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -9413,7 +9408,7 @@ impl InstEncoding for OpAtomicCompareExchange {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicCompareExchange {} {} {} {} {} {} {}",
+            "{} = OpAtomicCompareExchange{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -9481,7 +9476,7 @@ impl InstEncoding for OpAtomicCompareExchangeWeak {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicCompareExchangeWeak {} {} {} {} {} {} {}",
+            "{} = OpAtomicCompareExchangeWeak{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -9537,7 +9532,7 @@ impl InstEncoding for OpAtomicIIncrement {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicIIncrement {} {} {} {}",
+            "{} = OpAtomicIIncrement{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -9590,7 +9585,7 @@ impl InstEncoding for OpAtomicIDecrement {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicIDecrement {} {} {} {}",
+            "{} = OpAtomicIDecrement{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -9647,7 +9642,7 @@ impl InstEncoding for OpAtomicIAdd {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicIAdd {} {} {} {} {}",
+            "{} = OpAtomicIAdd{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -9705,7 +9700,7 @@ impl InstEncoding for OpAtomicISub {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicISub {} {} {} {} {}",
+            "{} = OpAtomicISub{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -9763,7 +9758,7 @@ impl InstEncoding for OpAtomicSMin {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicSMin {} {} {} {} {}",
+            "{} = OpAtomicSMin{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -9821,7 +9816,7 @@ impl InstEncoding for OpAtomicUMin {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicUMin {} {} {} {} {}",
+            "{} = OpAtomicUMin{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -9879,7 +9874,7 @@ impl InstEncoding for OpAtomicSMax {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicSMax {} {} {} {} {}",
+            "{} = OpAtomicSMax{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -9937,7 +9932,7 @@ impl InstEncoding for OpAtomicUMax {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicUMax {} {} {} {} {}",
+            "{} = OpAtomicUMax{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -9995,7 +9990,7 @@ impl InstEncoding for OpAtomicAnd {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicAnd {} {} {} {} {}",
+            "{} = OpAtomicAnd{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -10053,7 +10048,7 @@ impl InstEncoding for OpAtomicOr {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicOr {} {} {} {} {}",
+            "{} = OpAtomicOr{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -10111,7 +10106,7 @@ impl InstEncoding for OpAtomicXor {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicXor {} {} {} {} {}",
+            "{} = OpAtomicXor{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -10157,7 +10152,7 @@ impl InstEncoding for OpPhi {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpPhi {} {}",
+            "{} = OpPhi{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pair_id_ref_id_ref.dis(_ctx)
@@ -10200,7 +10195,7 @@ impl InstEncoding for OpLoopMerge {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpLoopMerge {} {} {}",
+            "OpLoopMerge{}{}{}",
             self.merge_block.dis(_ctx),
             self.continue_target.dis(_ctx),
             self.loop_control.dis(_ctx)
@@ -10239,7 +10234,7 @@ impl InstEncoding for OpSelectionMerge {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSelectionMerge {} {}",
+            "OpSelectionMerge{}{}",
             self.merge_block.dis(_ctx),
             self.selection_control.dis(_ctx)
         )
@@ -10298,7 +10293,7 @@ impl InstEncoding for OpBranch {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpBranch {}", self.target_label.dis(_ctx))
+        write!(f, "OpBranch{}", self.target_label.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10341,7 +10336,7 @@ impl InstEncoding for OpBranchConditional {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpBranchConditional {} {} {} {}",
+            "OpBranchConditional{}{}{}{}",
             self.condition.dis(_ctx),
             self.true_label.dis(_ctx),
             self.false_label.dis(_ctx),
@@ -10385,7 +10380,7 @@ impl InstEncoding for OpSwitch {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSwitch {} {} {}",
+            "OpSwitch{}{}{}",
             self.selector.dis(_ctx),
             self.default.dis(_ctx),
             self.target.dis(_ctx)
@@ -10463,7 +10458,7 @@ impl InstEncoding for OpReturnValue {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpReturnValue {}", self.value.dis(_ctx))
+        write!(f, "OpReturnValue{}", self.value.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10520,7 +10515,7 @@ impl InstEncoding for OpLifetimeStart {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpLifetimeStart {} {}",
+            "OpLifetimeStart{}{}",
             self.pointer.dis(_ctx),
             self.size.dis(_ctx)
         )
@@ -10557,7 +10552,7 @@ impl InstEncoding for OpLifetimeStop {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpLifetimeStop {} {}",
+            "OpLifetimeStop{}{}",
             self.pointer.dis(_ctx),
             self.size.dis(_ctx)
         )
@@ -10619,7 +10614,7 @@ impl InstEncoding for OpGroupAsyncCopy {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupAsyncCopy {} {} {} {} {} {} {}",
+            "{} = OpGroupAsyncCopy{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -10667,7 +10662,7 @@ impl InstEncoding for OpGroupWaitEvents {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpGroupWaitEvents {} {} {}",
+            "OpGroupWaitEvents{}{}{}",
             self.execution.dis(_ctx),
             self.num_events.dis(_ctx),
             self.events_list.dis(_ctx)
@@ -10714,7 +10709,7 @@ impl InstEncoding for OpGroupAll {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupAll {} {} {}",
+            "{} = OpGroupAll{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -10762,7 +10757,7 @@ impl InstEncoding for OpGroupAny {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupAny {} {} {}",
+            "{} = OpGroupAny{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -10814,7 +10809,7 @@ impl InstEncoding for OpGroupBroadcast {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupBroadcast {} {} {} {}",
+            "{} = OpGroupBroadcast{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -10867,7 +10862,7 @@ impl InstEncoding for OpGroupIAdd {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupIAdd {} {} {} {}",
+            "{} = OpGroupIAdd{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -10920,7 +10915,7 @@ impl InstEncoding for OpGroupFAdd {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupFAdd {} {} {} {}",
+            "{} = OpGroupFAdd{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -10973,7 +10968,7 @@ impl InstEncoding for OpGroupFMin {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupFMin {} {} {} {}",
+            "{} = OpGroupFMin{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -11026,7 +11021,7 @@ impl InstEncoding for OpGroupUMin {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupUMin {} {} {} {}",
+            "{} = OpGroupUMin{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -11079,7 +11074,7 @@ impl InstEncoding for OpGroupSMin {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupSMin {} {} {} {}",
+            "{} = OpGroupSMin{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -11132,7 +11127,7 @@ impl InstEncoding for OpGroupFMax {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupFMax {} {} {} {}",
+            "{} = OpGroupFMax{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -11185,7 +11180,7 @@ impl InstEncoding for OpGroupUMax {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupUMax {} {} {} {}",
+            "{} = OpGroupUMax{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -11238,7 +11233,7 @@ impl InstEncoding for OpGroupSMax {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupSMax {} {} {} {}",
+            "{} = OpGroupSMax{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -11295,7 +11290,7 @@ impl InstEncoding for OpReadPipe {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpReadPipe {} {} {} {} {}",
+            "{} = OpReadPipe{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pipe.dis(_ctx),
@@ -11353,7 +11348,7 @@ impl InstEncoding for OpWritePipe {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpWritePipe {} {} {} {} {}",
+            "{} = OpWritePipe{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pipe.dis(_ctx),
@@ -11419,7 +11414,7 @@ impl InstEncoding for OpReservedReadPipe {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpReservedReadPipe {} {} {} {} {} {} {}",
+            "{} = OpReservedReadPipe{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pipe.dis(_ctx),
@@ -11487,7 +11482,7 @@ impl InstEncoding for OpReservedWritePipe {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpReservedWritePipe {} {} {} {} {} {} {}",
+            "{} = OpReservedWritePipe{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pipe.dis(_ctx),
@@ -11547,7 +11542,7 @@ impl InstEncoding for OpReserveReadPipePackets {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpReserveReadPipePackets {} {} {} {} {}",
+            "{} = OpReserveReadPipePackets{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pipe.dis(_ctx),
@@ -11605,7 +11600,7 @@ impl InstEncoding for OpReserveWritePipePackets {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpReserveWritePipePackets {} {} {} {} {}",
+            "{} = OpReserveWritePipePackets{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pipe.dis(_ctx),
@@ -11655,7 +11650,7 @@ impl InstEncoding for OpCommitReadPipe {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpCommitReadPipe {} {} {} {}",
+            "OpCommitReadPipe{}{}{}{}",
             self.pipe.dis(_ctx),
             self.reserve_id.dis(_ctx),
             self.packet_size.dis(_ctx),
@@ -11703,7 +11698,7 @@ impl InstEncoding for OpCommitWritePipe {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpCommitWritePipe {} {} {} {}",
+            "OpCommitWritePipe{}{}{}{}",
             self.pipe.dis(_ctx),
             self.reserve_id.dis(_ctx),
             self.packet_size.dis(_ctx),
@@ -11747,7 +11742,7 @@ impl InstEncoding for OpIsValidReserveId {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIsValidReserveId {} {}",
+            "{} = OpIsValidReserveId{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.reserve_id.dis(_ctx)
@@ -11798,7 +11793,7 @@ impl InstEncoding for OpGetNumPipePackets {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGetNumPipePackets {} {} {} {}",
+            "{} = OpGetNumPipePackets{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pipe.dis(_ctx),
@@ -11851,7 +11846,7 @@ impl InstEncoding for OpGetMaxPipePackets {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGetMaxPipePackets {} {} {} {}",
+            "{} = OpGetMaxPipePackets{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pipe.dis(_ctx),
@@ -11912,7 +11907,7 @@ impl InstEncoding for OpGroupReserveReadPipePackets {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupReserveReadPipePackets {} {} {} {} {} {}",
+            "{} = OpGroupReserveReadPipePackets{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -11975,7 +11970,7 @@ impl InstEncoding for OpGroupReserveWritePipePackets {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupReserveWritePipePackets {} {} {} {} {} {}",
+            "{} = OpGroupReserveWritePipePackets{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -12030,7 +12025,7 @@ impl InstEncoding for OpGroupCommitReadPipe {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpGroupCommitReadPipe {} {} {} {} {}",
+            "OpGroupCommitReadPipe{}{}{}{}{}",
             self.execution.dis(_ctx),
             self.pipe.dis(_ctx),
             self.reserve_id.dis(_ctx),
@@ -12083,7 +12078,7 @@ impl InstEncoding for OpGroupCommitWritePipe {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpGroupCommitWritePipe {} {} {} {} {}",
+            "OpGroupCommitWritePipe{}{}{}{}{}",
             self.execution.dis(_ctx),
             self.pipe.dis(_ctx),
             self.reserve_id.dis(_ctx),
@@ -12140,7 +12135,7 @@ impl InstEncoding for OpEnqueueMarker {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpEnqueueMarker {} {} {} {} {}",
+            "{} = OpEnqueueMarker{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.queue.dis(_ctx),
@@ -12226,7 +12221,7 @@ impl InstEncoding for OpEnqueueKernel {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpEnqueueKernel {} {} {} {} {} {} {} {} {} {} {} {}",
+            "{} = OpEnqueueKernel{}{}{}{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.queue.dis(_ctx),
@@ -12295,7 +12290,7 @@ impl InstEncoding for OpGetKernelNDrangeSubGroupCount {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGetKernelNDrangeSubGroupCount {} {} {} {} {} {}",
+            "{} = OpGetKernelNDrangeSubGroupCount{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.nd_range.dis(_ctx),
@@ -12358,7 +12353,7 @@ impl InstEncoding for OpGetKernelNDrangeMaxSubGroupSize {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGetKernelNDrangeMaxSubGroupSize {} {} {} {} {} {}",
+            "{} = OpGetKernelNDrangeMaxSubGroupSize{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.nd_range.dis(_ctx),
@@ -12417,7 +12412,7 @@ impl InstEncoding for OpGetKernelWorkGroupSize {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGetKernelWorkGroupSize {} {} {} {} {}",
+            "{} = OpGetKernelWorkGroupSize{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.invoke.dis(_ctx),
@@ -12475,7 +12470,7 @@ impl InstEncoding for OpGetKernelPreferredWorkGroupSizeMultiple {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGetKernelPreferredWorkGroupSizeMultiple {} {} {} {} {}",
+            "{} = OpGetKernelPreferredWorkGroupSizeMultiple{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.invoke.dis(_ctx),
@@ -12510,7 +12505,7 @@ impl InstEncoding for OpRetainEvent {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpRetainEvent {}", self.event.dis(_ctx))
+        write!(f, "OpRetainEvent{}", self.event.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -12538,7 +12533,7 @@ impl InstEncoding for OpReleaseEvent {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpReleaseEvent {}", self.event.dis(_ctx))
+        write!(f, "OpReleaseEvent{}", self.event.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -12573,7 +12568,7 @@ impl InstEncoding for OpCreateUserEvent {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCreateUserEvent {}",
+            "{} = OpCreateUserEvent{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -12615,7 +12610,7 @@ impl InstEncoding for OpIsValidEvent {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIsValidEvent {} {}",
+            "{} = OpIsValidEvent{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.event.dis(_ctx)
@@ -12653,7 +12648,7 @@ impl InstEncoding for OpSetUserEventStatus {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSetUserEventStatus {} {}",
+            "OpSetUserEventStatus{}{}",
             self.event.dis(_ctx),
             self.status.dis(_ctx)
         )
@@ -12695,7 +12690,7 @@ impl InstEncoding for OpCaptureEventProfilingInfo {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpCaptureEventProfilingInfo {} {} {}",
+            "OpCaptureEventProfilingInfo{}{}{}",
             self.event.dis(_ctx),
             self.profiling_info.dis(_ctx),
             self.value.dis(_ctx)
@@ -12734,7 +12729,7 @@ impl InstEncoding for OpGetDefaultQueue {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGetDefaultQueue {}",
+            "{} = OpGetDefaultQueue{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -12784,7 +12779,7 @@ impl InstEncoding for OpBuildNDRange {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpBuildNDRange {} {} {} {}",
+            "{} = OpBuildNDRange{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.global_work_size.dis(_ctx),
@@ -12837,7 +12832,7 @@ impl InstEncoding for OpImageSparseSampleImplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSparseSampleImplicitLod {} {} {} {}",
+            "{} = OpImageSparseSampleImplicitLod{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -12890,7 +12885,7 @@ impl InstEncoding for OpImageSparseSampleExplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSparseSampleExplicitLod {} {} {} {}",
+            "{} = OpImageSparseSampleExplicitLod{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -12947,7 +12942,7 @@ impl InstEncoding for OpImageSparseSampleDrefImplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSparseSampleDrefImplicitLod {} {} {} {} {}",
+            "{} = OpImageSparseSampleDrefImplicitLod{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -13005,7 +13000,7 @@ impl InstEncoding for OpImageSparseSampleDrefExplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSparseSampleDrefExplicitLod {} {} {} {} {}",
+            "{} = OpImageSparseSampleDrefExplicitLod{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -13059,7 +13054,7 @@ impl InstEncoding for OpImageSparseSampleProjImplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSparseSampleProjImplicitLod {} {} {} {}",
+            "{} = OpImageSparseSampleProjImplicitLod{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -13112,7 +13107,7 @@ impl InstEncoding for OpImageSparseSampleProjExplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSparseSampleProjExplicitLod {} {} {} {}",
+            "{} = OpImageSparseSampleProjExplicitLod{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -13169,7 +13164,7 @@ impl InstEncoding for OpImageSparseSampleProjDrefImplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSparseSampleProjDrefImplicitLod {} {} {} {} {}",
+            "{} = OpImageSparseSampleProjDrefImplicitLod{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -13227,7 +13222,7 @@ impl InstEncoding for OpImageSparseSampleProjDrefExplicitLod {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSparseSampleProjDrefExplicitLod {} {} {} {} {}",
+            "{} = OpImageSparseSampleProjDrefExplicitLod{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -13281,7 +13276,7 @@ impl InstEncoding for OpImageSparseFetch {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSparseFetch {} {} {} {}",
+            "{} = OpImageSparseFetch{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx),
@@ -13338,7 +13333,7 @@ impl InstEncoding for OpImageSparseGather {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSparseGather {} {} {} {} {}",
+            "{} = OpImageSparseGather{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -13396,7 +13391,7 @@ impl InstEncoding for OpImageSparseDrefGather {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSparseDrefGather {} {} {} {} {}",
+            "{} = OpImageSparseDrefGather{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -13442,7 +13437,7 @@ impl InstEncoding for OpImageSparseTexelsResident {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSparseTexelsResident {} {}",
+            "{} = OpImageSparseTexelsResident{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.resident_code.dis(_ctx)
@@ -13516,7 +13511,7 @@ impl InstEncoding for OpAtomicFlagTestAndSet {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicFlagTestAndSet {} {} {} {}",
+            "{} = OpAtomicFlagTestAndSet{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -13561,7 +13556,7 @@ impl InstEncoding for OpAtomicFlagClear {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpAtomicFlagClear {} {} {}",
+            "OpAtomicFlagClear{}{}{}",
             self.pointer.dis(_ctx),
             self.memory.dis(_ctx),
             self.semantics.dis(_ctx)
@@ -13612,7 +13607,7 @@ impl InstEncoding for OpImageSparseRead {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSparseRead {} {} {} {}",
+            "{} = OpImageSparseRead{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx),
@@ -13657,7 +13652,7 @@ impl InstEncoding for OpSizeOf {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSizeOf {} {}",
+            "{} = OpSizeOf{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx)
@@ -13736,7 +13731,7 @@ impl InstEncoding for OpConstantPipeStorage {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConstantPipeStorage {} {} {} {}",
+            "{} = OpConstantPipeStorage{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.packet_size.dis(_ctx),
@@ -13781,7 +13776,7 @@ impl InstEncoding for OpCreatePipeFromPipeStorage {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCreatePipeFromPipeStorage {} {}",
+            "{} = OpCreatePipeFromPipeStorage{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pipe_storage.dis(_ctx)
@@ -13840,7 +13835,7 @@ impl InstEncoding for OpGetKernelLocalSizeForSubgroupCount {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGetKernelLocalSizeForSubgroupCount {} {} {} {} {} {}",
+            "{} = OpGetKernelLocalSizeForSubgroupCount{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.subgroup_count.dis(_ctx),
@@ -13899,7 +13894,7 @@ impl InstEncoding for OpGetKernelMaxNumSubgroups {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGetKernelMaxNumSubgroups {} {} {} {} {}",
+            "{} = OpGetKernelMaxNumSubgroups{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.invoke.dis(_ctx),
@@ -13973,7 +13968,7 @@ impl InstEncoding for OpNamedBarrierInitialize {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpNamedBarrierInitialize {} {}",
+            "{} = OpNamedBarrierInitialize{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.subgroup_count.dis(_ctx)
@@ -14016,7 +14011,7 @@ impl InstEncoding for OpMemoryNamedBarrier {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpMemoryNamedBarrier {} {} {}",
+            "OpMemoryNamedBarrier{}{}{}",
             self.named_barrier.dis(_ctx),
             self.memory.dis(_ctx),
             self.semantics.dis(_ctx)
@@ -14048,7 +14043,7 @@ impl InstEncoding for OpModuleProcessed {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpModuleProcessed {}", self.process.dis(_ctx))
+        write!(f, "OpModuleProcessed{}", self.process.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -14083,7 +14078,7 @@ impl InstEncoding for OpExecutionModeId {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpExecutionModeId {} {}",
+            "OpExecutionModeId{}{}",
             self.entry_point.dis(_ctx),
             self.mode.dis(_ctx)
         )
@@ -14121,7 +14116,7 @@ impl InstEncoding for OpDecorateId {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpDecorateId {} {}",
+            "OpDecorateId{}{}",
             self.target.dis(_ctx),
             self.decoration.dis(_ctx)
         )
@@ -14163,7 +14158,7 @@ impl InstEncoding for OpGroupNonUniformElect {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformElect {} {}",
+            "{} = OpGroupNonUniformElect{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx)
@@ -14210,7 +14205,7 @@ impl InstEncoding for OpGroupNonUniformAll {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformAll {} {} {}",
+            "{} = OpGroupNonUniformAll{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -14258,7 +14253,7 @@ impl InstEncoding for OpGroupNonUniformAny {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformAny {} {} {}",
+            "{} = OpGroupNonUniformAny{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -14306,7 +14301,7 @@ impl InstEncoding for OpGroupNonUniformAllEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformAllEqual {} {} {}",
+            "{} = OpGroupNonUniformAllEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -14358,7 +14353,7 @@ impl InstEncoding for OpGroupNonUniformBroadcast {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformBroadcast {} {} {} {}",
+            "{} = OpGroupNonUniformBroadcast{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -14407,7 +14402,7 @@ impl InstEncoding for OpGroupNonUniformBroadcastFirst {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformBroadcastFirst {} {} {}",
+            "{} = OpGroupNonUniformBroadcastFirst{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -14455,7 +14450,7 @@ impl InstEncoding for OpGroupNonUniformBallot {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformBallot {} {} {}",
+            "{} = OpGroupNonUniformBallot{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -14503,7 +14498,7 @@ impl InstEncoding for OpGroupNonUniformInverseBallot {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformInverseBallot {} {} {}",
+            "{} = OpGroupNonUniformInverseBallot{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -14555,7 +14550,7 @@ impl InstEncoding for OpGroupNonUniformBallotBitExtract {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformBallotBitExtract {} {} {} {}",
+            "{} = OpGroupNonUniformBallotBitExtract{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -14608,7 +14603,7 @@ impl InstEncoding for OpGroupNonUniformBallotBitCount {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformBallotBitCount {} {} {} {}",
+            "{} = OpGroupNonUniformBallotBitCount{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -14657,7 +14652,7 @@ impl InstEncoding for OpGroupNonUniformBallotFindLSB {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformBallotFindLSB {} {} {}",
+            "{} = OpGroupNonUniformBallotFindLSB{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -14705,7 +14700,7 @@ impl InstEncoding for OpGroupNonUniformBallotFindMSB {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformBallotFindMSB {} {} {}",
+            "{} = OpGroupNonUniformBallotFindMSB{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -14757,7 +14752,7 @@ impl InstEncoding for OpGroupNonUniformShuffle {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformShuffle {} {} {} {}",
+            "{} = OpGroupNonUniformShuffle{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -14810,7 +14805,7 @@ impl InstEncoding for OpGroupNonUniformShuffleXor {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformShuffleXor {} {} {} {}",
+            "{} = OpGroupNonUniformShuffleXor{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -14863,7 +14858,7 @@ impl InstEncoding for OpGroupNonUniformShuffleUp {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformShuffleUp {} {} {} {}",
+            "{} = OpGroupNonUniformShuffleUp{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -14916,7 +14911,7 @@ impl InstEncoding for OpGroupNonUniformShuffleDown {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformShuffleDown {} {} {} {}",
+            "{} = OpGroupNonUniformShuffleDown{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -14973,7 +14968,7 @@ impl InstEncoding for OpGroupNonUniformIAdd {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformIAdd {} {} {} {} {}",
+            "{} = OpGroupNonUniformIAdd{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15031,7 +15026,7 @@ impl InstEncoding for OpGroupNonUniformFAdd {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformFAdd {} {} {} {} {}",
+            "{} = OpGroupNonUniformFAdd{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15089,7 +15084,7 @@ impl InstEncoding for OpGroupNonUniformIMul {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformIMul {} {} {} {} {}",
+            "{} = OpGroupNonUniformIMul{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15147,7 +15142,7 @@ impl InstEncoding for OpGroupNonUniformFMul {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformFMul {} {} {} {} {}",
+            "{} = OpGroupNonUniformFMul{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15205,7 +15200,7 @@ impl InstEncoding for OpGroupNonUniformSMin {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformSMin {} {} {} {} {}",
+            "{} = OpGroupNonUniformSMin{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15263,7 +15258,7 @@ impl InstEncoding for OpGroupNonUniformUMin {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformUMin {} {} {} {} {}",
+            "{} = OpGroupNonUniformUMin{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15321,7 +15316,7 @@ impl InstEncoding for OpGroupNonUniformFMin {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformFMin {} {} {} {} {}",
+            "{} = OpGroupNonUniformFMin{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15379,7 +15374,7 @@ impl InstEncoding for OpGroupNonUniformSMax {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformSMax {} {} {} {} {}",
+            "{} = OpGroupNonUniformSMax{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15437,7 +15432,7 @@ impl InstEncoding for OpGroupNonUniformUMax {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformUMax {} {} {} {} {}",
+            "{} = OpGroupNonUniformUMax{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15495,7 +15490,7 @@ impl InstEncoding for OpGroupNonUniformFMax {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformFMax {} {} {} {} {}",
+            "{} = OpGroupNonUniformFMax{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15553,7 +15548,7 @@ impl InstEncoding for OpGroupNonUniformBitwiseAnd {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformBitwiseAnd {} {} {} {} {}",
+            "{} = OpGroupNonUniformBitwiseAnd{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15611,7 +15606,7 @@ impl InstEncoding for OpGroupNonUniformBitwiseOr {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformBitwiseOr {} {} {} {} {}",
+            "{} = OpGroupNonUniformBitwiseOr{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15669,7 +15664,7 @@ impl InstEncoding for OpGroupNonUniformBitwiseXor {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformBitwiseXor {} {} {} {} {}",
+            "{} = OpGroupNonUniformBitwiseXor{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15727,7 +15722,7 @@ impl InstEncoding for OpGroupNonUniformLogicalAnd {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformLogicalAnd {} {} {} {} {}",
+            "{} = OpGroupNonUniformLogicalAnd{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15785,7 +15780,7 @@ impl InstEncoding for OpGroupNonUniformLogicalOr {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformLogicalOr {} {} {} {} {}",
+            "{} = OpGroupNonUniformLogicalOr{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15843,7 +15838,7 @@ impl InstEncoding for OpGroupNonUniformLogicalXor {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformLogicalXor {} {} {} {} {}",
+            "{} = OpGroupNonUniformLogicalXor{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15897,7 +15892,7 @@ impl InstEncoding for OpGroupNonUniformQuadBroadcast {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformQuadBroadcast {} {} {} {}",
+            "{} = OpGroupNonUniformQuadBroadcast{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15950,7 +15945,7 @@ impl InstEncoding for OpGroupNonUniformQuadSwap {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformQuadSwap {} {} {} {}",
+            "{} = OpGroupNonUniformQuadSwap{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -15995,7 +15990,7 @@ impl InstEncoding for OpCopyLogical {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCopyLogical {} {}",
+            "{} = OpCopyLogical{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -16042,7 +16037,7 @@ impl InstEncoding for OpPtrEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpPtrEqual {} {} {}",
+            "{} = OpPtrEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -16090,7 +16085,7 @@ impl InstEncoding for OpPtrNotEqual {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpPtrNotEqual {} {} {}",
+            "{} = OpPtrNotEqual{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -16138,7 +16133,7 @@ impl InstEncoding for OpPtrDiff {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpPtrDiff {} {} {}",
+            "{} = OpPtrDiff{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -16186,7 +16181,7 @@ impl InstEncoding for OpColorAttachmentReadEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpColorAttachmentReadEXT {} {} {}",
+            "{} = OpColorAttachmentReadEXT{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.attachment.dis(_ctx),
@@ -16230,7 +16225,7 @@ impl InstEncoding for OpDepthAttachmentReadEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpDepthAttachmentReadEXT {} {}",
+            "{} = OpDepthAttachmentReadEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sample.dis(_ctx)
@@ -16273,7 +16268,7 @@ impl InstEncoding for OpStencilAttachmentReadEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpStencilAttachmentReadEXT {} {}",
+            "{} = OpStencilAttachmentReadEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sample.dis(_ctx)
@@ -16320,7 +16315,7 @@ impl InstEncoding for OpTypeTensorARM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeTensorARM {} {} {}",
+            "{} = OpTypeTensorARM{}{}{}",
             self.id_result.dis(_ctx),
             self.element_type.dis(_ctx),
             self.rank.dis(_ctx),
@@ -16372,7 +16367,7 @@ impl InstEncoding for OpTensorReadARM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTensorReadARM {} {} {} {}",
+            "{} = OpTensorReadARM{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.tensor.dis(_ctx),
@@ -16421,7 +16416,7 @@ impl InstEncoding for OpTensorWriteARM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpTensorWriteARM {} {} {} {}",
+            "OpTensorWriteARM{}{}{}{}",
             self.tensor.dis(_ctx),
             self.coordinates.dis(_ctx),
             self.object.dis(_ctx),
@@ -16469,7 +16464,7 @@ impl InstEncoding for OpTensorQuerySizeARM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTensorQuerySizeARM {} {} {}",
+            "{} = OpTensorQuerySizeARM{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.tensor.dis(_ctx),
@@ -16513,7 +16508,7 @@ impl InstEncoding for OpGraphConstantARM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGraphConstantARM {} {}",
+            "{} = OpGraphConstantARM{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.graph_constant_id.dis(_ctx)
@@ -16556,7 +16551,7 @@ impl InstEncoding for OpGraphEntryPointARM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpGraphEntryPointARM {} {} {}",
+            "OpGraphEntryPointARM{}{}{}",
             self.graph.dis(_ctx),
             self.name.dis(_ctx),
             self.interface.dis(_ctx)
@@ -16595,7 +16590,7 @@ impl InstEncoding for OpGraphARM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGraphARM {}",
+            "{} = OpGraphARM{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -16641,7 +16636,7 @@ impl InstEncoding for OpGraphInputARM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGraphInputARM {} {} {}",
+            "{} = OpGraphInputARM{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.input_index.dis(_ctx),
@@ -16685,7 +16680,7 @@ impl InstEncoding for OpGraphSetOutputARM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpGraphSetOutputARM {} {} {}",
+            "OpGraphSetOutputARM{}{}{}",
             self.value.dis(_ctx),
             self.output_index.dis(_ctx),
             self.element_index.dis(_ctx)
@@ -16751,7 +16746,7 @@ impl InstEncoding for OpTypeGraphARM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeGraphARM {} {}",
+            "{} = OpTypeGraphARM{}{}",
             self.id_result.dis(_ctx),
             self.num_inputs.dis(_ctx),
             self.in_out_types.dis(_ctx)
@@ -16813,7 +16808,7 @@ impl InstEncoding for OpTypeUntypedPointerKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeUntypedPointerKHR {}",
+            "{} = OpTypeUntypedPointerKHR{}",
             self.id_result.dis(_ctx),
             self.storage_class.dis(_ctx)
         )
@@ -16863,7 +16858,7 @@ impl InstEncoding for OpUntypedVariableKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUntypedVariableKHR {} {} {} {}",
+            "{} = OpUntypedVariableKHR{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.storage_class.dis(_ctx),
@@ -16916,7 +16911,7 @@ impl InstEncoding for OpUntypedAccessChainKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUntypedAccessChainKHR {} {} {} {}",
+            "{} = OpUntypedAccessChainKHR{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base_type.dis(_ctx),
@@ -16969,7 +16964,7 @@ impl InstEncoding for OpUntypedInBoundsAccessChainKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUntypedInBoundsAccessChainKHR {} {} {} {}",
+            "{} = OpUntypedInBoundsAccessChainKHR{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base_type.dis(_ctx),
@@ -17014,7 +17009,7 @@ impl InstEncoding for OpSubgroupBallotKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupBallotKHR {} {}",
+            "{} = OpSubgroupBallotKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.predicate.dis(_ctx)
@@ -17057,7 +17052,7 @@ impl InstEncoding for OpSubgroupFirstInvocationKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupFirstInvocationKHR {} {}",
+            "{} = OpSubgroupFirstInvocationKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.value.dis(_ctx)
@@ -17112,7 +17107,7 @@ impl InstEncoding for OpUntypedPtrAccessChainKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUntypedPtrAccessChainKHR {} {} {} {} {}",
+            "{} = OpUntypedPtrAccessChainKHR{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base_type.dis(_ctx),
@@ -17170,7 +17165,7 @@ impl InstEncoding for OpUntypedInBoundsPtrAccessChainKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUntypedInBoundsPtrAccessChainKHR {} {} {} {} {}",
+            "{} = OpUntypedInBoundsPtrAccessChainKHR{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base_type.dis(_ctx),
@@ -17224,7 +17219,7 @@ impl InstEncoding for OpUntypedArrayLengthKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUntypedArrayLengthKHR {} {} {} {}",
+            "{} = OpUntypedArrayLengthKHR{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.structure.dis(_ctx),
@@ -17277,7 +17272,7 @@ impl InstEncoding for OpUntypedPrefetchKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpUntypedPrefetchKHR {} {} {} {} {}",
+            "OpUntypedPrefetchKHR{}{}{}{}{}",
             self.pointer_type.dis(_ctx),
             self.num_bytes.dis(_ctx),
             self.rw.dis(_ctx),
@@ -17330,7 +17325,7 @@ impl InstEncoding for OpFmaKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFmaKHR {} {} {} {}",
+            "{} = OpFmaKHR{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -17375,7 +17370,7 @@ impl InstEncoding for OpSubgroupAllKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAllKHR {} {}",
+            "{} = OpSubgroupAllKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.predicate.dis(_ctx)
@@ -17418,7 +17413,7 @@ impl InstEncoding for OpSubgroupAnyKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAnyKHR {} {}",
+            "{} = OpSubgroupAnyKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.predicate.dis(_ctx)
@@ -17461,7 +17456,7 @@ impl InstEncoding for OpSubgroupAllEqualKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAllEqualKHR {} {}",
+            "{} = OpSubgroupAllEqualKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.predicate.dis(_ctx)
@@ -17516,7 +17511,7 @@ impl InstEncoding for OpGroupNonUniformRotateKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformRotateKHR {} {} {} {} {}",
+            "{} = OpGroupNonUniformRotateKHR{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -17566,7 +17561,7 @@ impl InstEncoding for OpSubgroupReadInvocationKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupReadInvocationKHR {} {} {}",
+            "{} = OpSubgroupReadInvocationKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.value.dis(_ctx),
@@ -17618,7 +17613,7 @@ impl InstEncoding for OpExtInstWithForwardRefsKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpExtInstWithForwardRefsKHR {} {} {} {}",
+            "{} = OpExtInstWithForwardRefsKHR{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.set.dis(_ctx),
@@ -17695,7 +17690,7 @@ impl InstEncoding for OpUntypedGroupAsyncCopyKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUntypedGroupAsyncCopyKHR {} {} {} {} {} {} {} {} {} {}",
+            "{} = OpUntypedGroupAsyncCopyKHR{}{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -17778,7 +17773,7 @@ impl InstEncoding for OpTraceRayKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpTraceRayKHR {} {} {} {} {} {} {} {} {} {} {}",
+            "OpTraceRayKHR{}{}{}{}{}{}{}{}{}{}{}",
             self.accel.dis(_ctx),
             self.ray_flags.dis(_ctx),
             self.cull_mask.dis(_ctx),
@@ -17825,7 +17820,7 @@ impl InstEncoding for OpExecuteCallableKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpExecuteCallableKHR {} {}",
+            "OpExecuteCallableKHR{}{}",
             self.sbt_index.dis(_ctx),
             self.callable_data.dis(_ctx)
         )
@@ -17867,7 +17862,7 @@ impl InstEncoding for OpConvertUToAccelerationStructureKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertUToAccelerationStructureKHR {} {}",
+            "{} = OpConvertUToAccelerationStructureKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.accel.dis(_ctx)
@@ -17964,7 +17959,7 @@ impl InstEncoding for OpSDot {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSDot {} {} {} {}",
+            "{} = OpSDot{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.vector_1.dis(_ctx),
@@ -18017,7 +18012,7 @@ impl InstEncoding for OpUDot {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUDot {} {} {} {}",
+            "{} = OpUDot{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.vector_1.dis(_ctx),
@@ -18070,7 +18065,7 @@ impl InstEncoding for OpSUDot {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSUDot {} {} {} {}",
+            "{} = OpSUDot{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.vector_1.dis(_ctx),
@@ -18127,7 +18122,7 @@ impl InstEncoding for OpSDotAccSat {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSDotAccSat {} {} {} {} {}",
+            "{} = OpSDotAccSat{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.vector_1.dis(_ctx),
@@ -18185,7 +18180,7 @@ impl InstEncoding for OpUDotAccSat {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUDotAccSat {} {} {} {} {}",
+            "{} = OpUDotAccSat{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.vector_1.dis(_ctx),
@@ -18243,7 +18238,7 @@ impl InstEncoding for OpSUDotAccSat {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSUDotAccSat {} {} {} {} {}",
+            "{} = OpSUDotAccSat{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.vector_1.dis(_ctx),
@@ -18301,7 +18296,7 @@ impl InstEncoding for OpTypeCooperativeMatrixKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeCooperativeMatrixKHR {} {} {} {} {}",
+            "{} = OpTypeCooperativeMatrixKHR{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.component_type.dis(_ctx),
             self.scope.dis(_ctx),
@@ -18359,7 +18354,7 @@ impl InstEncoding for OpCooperativeMatrixLoadKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCooperativeMatrixLoadKHR {} {} {} {} {}",
+            "{} = OpCooperativeMatrixLoadKHR{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -18413,7 +18408,7 @@ impl InstEncoding for OpCooperativeMatrixStoreKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpCooperativeMatrixStoreKHR {} {} {} {} {}",
+            "OpCooperativeMatrixStoreKHR{}{}{}{}{}",
             self.pointer.dis(_ctx),
             self.object.dis(_ctx),
             self.memory_layout.dis(_ctx),
@@ -18470,7 +18465,7 @@ impl InstEncoding for OpCooperativeMatrixMulAddKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCooperativeMatrixMulAddKHR {} {} {} {} {}",
+            "{} = OpCooperativeMatrixMulAddKHR{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -18516,7 +18511,7 @@ impl InstEncoding for OpCooperativeMatrixLengthKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCooperativeMatrixLengthKHR {} {}",
+            "{} = OpCooperativeMatrixLengthKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ty.dis(_ctx)
@@ -18559,7 +18554,7 @@ impl InstEncoding for OpConstantCompositeReplicateEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConstantCompositeReplicateEXT {} {}",
+            "{} = OpConstantCompositeReplicateEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.value.dis(_ctx)
@@ -18602,7 +18597,7 @@ impl InstEncoding for OpSpecConstantCompositeReplicateEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSpecConstantCompositeReplicateEXT {} {}",
+            "{} = OpSpecConstantCompositeReplicateEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.value.dis(_ctx)
@@ -18645,7 +18640,7 @@ impl InstEncoding for OpCompositeConstructReplicateEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCompositeConstructReplicateEXT {} {}",
+            "{} = OpCompositeConstructReplicateEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.value.dis(_ctx)
@@ -18736,7 +18731,7 @@ impl InstEncoding for OpRayQueryInitializeKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpRayQueryInitializeKHR {} {} {} {} {} {} {} {}",
+            "OpRayQueryInitializeKHR{}{}{}{}{}{}{}{}",
             self.ray_query.dis(_ctx),
             self.accel.dis(_ctx),
             self.ray_flags.dis(_ctx),
@@ -18773,7 +18768,7 @@ impl InstEncoding for OpRayQueryTerminateKHR {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpRayQueryTerminateKHR {}", self.ray_query.dis(_ctx))
+        write!(f, "OpRayQueryTerminateKHR{}", self.ray_query.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -18807,7 +18802,7 @@ impl InstEncoding for OpRayQueryGenerateIntersectionKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpRayQueryGenerateIntersectionKHR {} {}",
+            "OpRayQueryGenerateIntersectionKHR{}{}",
             self.ray_query.dis(_ctx),
             self.hit_t.dis(_ctx)
         )
@@ -18840,7 +18835,7 @@ impl InstEncoding for OpRayQueryConfirmIntersectionKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpRayQueryConfirmIntersectionKHR {}",
+            "OpRayQueryConfirmIntersectionKHR{}",
             self.ray_query.dis(_ctx)
         )
     }
@@ -18881,7 +18876,7 @@ impl InstEncoding for OpRayQueryProceedKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryProceedKHR {} {}",
+            "{} = OpRayQueryProceedKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx)
@@ -18928,7 +18923,7 @@ impl InstEncoding for OpRayQueryGetIntersectionTypeKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionTypeKHR {} {} {}",
+            "{} = OpRayQueryGetIntersectionTypeKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -18980,7 +18975,7 @@ impl InstEncoding for OpImageSampleWeightedQCOM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSampleWeightedQCOM {} {} {} {}",
+            "{} = OpImageSampleWeightedQCOM{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.texture.dis(_ctx),
@@ -19033,7 +19028,7 @@ impl InstEncoding for OpImageBoxFilterQCOM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageBoxFilterQCOM {} {} {} {}",
+            "{} = OpImageBoxFilterQCOM{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.texture.dis(_ctx),
@@ -19094,7 +19089,7 @@ impl InstEncoding for OpImageBlockMatchSSDQCOM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageBlockMatchSSDQCOM {} {} {} {} {} {}",
+            "{} = OpImageBlockMatchSSDQCOM{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.target.dis(_ctx),
@@ -19157,7 +19152,7 @@ impl InstEncoding for OpImageBlockMatchSADQCOM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageBlockMatchSADQCOM {} {} {} {} {} {}",
+            "{} = OpImageBlockMatchSADQCOM{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.target.dis(_ctx),
@@ -19204,7 +19199,7 @@ impl InstEncoding for OpBitCastArrayQCOM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpBitCastArrayQCOM {} {}",
+            "{} = OpBitCastArrayQCOM{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.source_array.dis(_ctx)
@@ -19263,7 +19258,7 @@ impl InstEncoding for OpImageBlockMatchWindowSSDQCOM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageBlockMatchWindowSSDQCOM {} {} {} {} {} {}",
+            "{} = OpImageBlockMatchWindowSSDQCOM{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.target_sampled_image.dis(_ctx),
@@ -19326,7 +19321,7 @@ impl InstEncoding for OpImageBlockMatchWindowSADQCOM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageBlockMatchWindowSADQCOM {} {} {} {} {} {}",
+            "{} = OpImageBlockMatchWindowSADQCOM{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.target_sampled_image.dis(_ctx),
@@ -19389,7 +19384,7 @@ impl InstEncoding for OpImageBlockMatchGatherSSDQCOM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageBlockMatchGatherSSDQCOM {} {} {} {} {} {}",
+            "{} = OpImageBlockMatchGatherSSDQCOM{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.target_sampled_image.dis(_ctx),
@@ -19452,7 +19447,7 @@ impl InstEncoding for OpImageBlockMatchGatherSADQCOM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageBlockMatchGatherSADQCOM {} {} {} {} {} {}",
+            "{} = OpImageBlockMatchGatherSADQCOM{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.target_sampled_image.dis(_ctx),
@@ -19499,7 +19494,7 @@ impl InstEncoding for OpCompositeConstructCoopMatQCOM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCompositeConstructCoopMatQCOM {} {}",
+            "{} = OpCompositeConstructCoopMatQCOM{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.source_array.dis(_ctx)
@@ -19542,7 +19537,7 @@ impl InstEncoding for OpCompositeExtractCoopMatQCOM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCompositeExtractCoopMatQCOM {} {}",
+            "{} = OpCompositeExtractCoopMatQCOM{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.source_cooperative_matrix.dis(_ctx)
@@ -19589,7 +19584,7 @@ impl InstEncoding for OpExtractSubArrayQCOM {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpExtractSubArrayQCOM {} {} {}",
+            "{} = OpExtractSubArrayQCOM{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.source_array.dis(_ctx),
@@ -19641,7 +19636,7 @@ impl InstEncoding for OpGroupIAddNonUniformAMD {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupIAddNonUniformAMD {} {} {} {}",
+            "{} = OpGroupIAddNonUniformAMD{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -19694,7 +19689,7 @@ impl InstEncoding for OpGroupFAddNonUniformAMD {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupFAddNonUniformAMD {} {} {} {}",
+            "{} = OpGroupFAddNonUniformAMD{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -19747,7 +19742,7 @@ impl InstEncoding for OpGroupFMinNonUniformAMD {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupFMinNonUniformAMD {} {} {} {}",
+            "{} = OpGroupFMinNonUniformAMD{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -19800,7 +19795,7 @@ impl InstEncoding for OpGroupUMinNonUniformAMD {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupUMinNonUniformAMD {} {} {} {}",
+            "{} = OpGroupUMinNonUniformAMD{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -19853,7 +19848,7 @@ impl InstEncoding for OpGroupSMinNonUniformAMD {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupSMinNonUniformAMD {} {} {} {}",
+            "{} = OpGroupSMinNonUniformAMD{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -19906,7 +19901,7 @@ impl InstEncoding for OpGroupFMaxNonUniformAMD {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupFMaxNonUniformAMD {} {} {} {}",
+            "{} = OpGroupFMaxNonUniformAMD{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -19959,7 +19954,7 @@ impl InstEncoding for OpGroupUMaxNonUniformAMD {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupUMaxNonUniformAMD {} {} {} {}",
+            "{} = OpGroupUMaxNonUniformAMD{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -20012,7 +20007,7 @@ impl InstEncoding for OpGroupSMaxNonUniformAMD {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupSMaxNonUniformAMD {} {} {} {}",
+            "{} = OpGroupSMaxNonUniformAMD{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -20061,7 +20056,7 @@ impl InstEncoding for OpFragmentMaskFetchAMD {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFragmentMaskFetchAMD {} {} {}",
+            "{} = OpFragmentMaskFetchAMD{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx),
@@ -20113,7 +20108,7 @@ impl InstEncoding for OpFragmentFetchAMD {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFragmentFetchAMD {} {} {} {}",
+            "{} = OpFragmentFetchAMD{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx),
@@ -20158,7 +20153,7 @@ impl InstEncoding for OpReadClockKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpReadClockKHR {} {}",
+            "{} = OpReadClockKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.scope.dis(_ctx)
@@ -20209,7 +20204,7 @@ impl InstEncoding for OpAllocateNodePayloadsAMDX {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAllocateNodePayloadsAMDX {} {} {} {}",
+            "{} = OpAllocateNodePayloadsAMDX{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.visibility.dis(_ctx),
@@ -20245,7 +20240,7 @@ impl InstEncoding for OpEnqueueNodePayloadsAMDX {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpEnqueueNodePayloadsAMDX {}",
+            "OpEnqueueNodePayloadsAMDX{}",
             self.payload_array.dis(_ctx)
         )
     }
@@ -20282,7 +20277,7 @@ impl InstEncoding for OpTypeNodePayloadArrayAMDX {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeNodePayloadArrayAMDX {}",
+            "{} = OpTypeNodePayloadArrayAMDX{}",
             self.id_result.dis(_ctx),
             self.payload_type.dis(_ctx)
         )
@@ -20324,7 +20319,7 @@ impl InstEncoding for OpFinishWritingNodePayloadAMDX {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFinishWritingNodePayloadAMDX {} {}",
+            "{} = OpFinishWritingNodePayloadAMDX{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -20367,7 +20362,7 @@ impl InstEncoding for OpNodePayloadArrayLengthAMDX {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpNodePayloadArrayLengthAMDX {} {}",
+            "{} = OpNodePayloadArrayLengthAMDX{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload_array.dis(_ctx)
@@ -20414,7 +20409,7 @@ impl InstEncoding for OpIsNodePayloadValidAMDX {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIsNodePayloadValidAMDX {} {} {}",
+            "{} = OpIsNodePayloadValidAMDX{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload_type.dis(_ctx),
@@ -20454,7 +20449,7 @@ impl InstEncoding for OpConstantStringAMDX {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConstantStringAMDX {}",
+            "{} = OpConstantStringAMDX{}",
             self.id_result.dis(_ctx),
             self.literal_string.dis(_ctx)
         )
@@ -20492,7 +20487,7 @@ impl InstEncoding for OpSpecConstantStringAMDX {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSpecConstantStringAMDX {}",
+            "{} = OpSpecConstantStringAMDX{}",
             self.id_result.dis(_ctx),
             self.literal_string.dis(_ctx)
         )
@@ -20534,7 +20529,7 @@ impl InstEncoding for OpGroupNonUniformQuadAllKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformQuadAllKHR {} {}",
+            "{} = OpGroupNonUniformQuadAllKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.predicate.dis(_ctx)
@@ -20577,7 +20572,7 @@ impl InstEncoding for OpGroupNonUniformQuadAnyKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformQuadAnyKHR {} {}",
+            "{} = OpGroupNonUniformQuadAnyKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.predicate.dis(_ctx)
@@ -20616,7 +20611,7 @@ impl InstEncoding for OpTypeBufferEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeBufferEXT {}",
+            "{} = OpTypeBufferEXT{}",
             self.id_result.dis(_ctx),
             self.storage_class.dis(_ctx)
         )
@@ -20658,7 +20653,7 @@ impl InstEncoding for OpBufferPointerEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpBufferPointerEXT {} {}",
+            "{} = OpBufferPointerEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.buffer.dis(_ctx)
@@ -20713,7 +20708,7 @@ impl InstEncoding for OpUntypedImageTexelPointerEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUntypedImageTexelPointerEXT {} {} {} {} {}",
+            "{} = OpUntypedImageTexelPointerEXT{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image_type.dis(_ctx),
@@ -20759,7 +20754,7 @@ impl InstEncoding for OpMemberDecorateIdEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpMemberDecorateIdEXT {} {} {}",
+            "OpMemberDecorateIdEXT{}{}{}",
             self.structure_type.dis(_ctx),
             self.member.dis(_ctx),
             self.decoration.dis(_ctx)
@@ -20802,7 +20797,7 @@ impl InstEncoding for OpConstantSizeOfEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConstantSizeOfEXT {} {}",
+            "{} = OpConstantSizeOfEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ty.dis(_ctx)
@@ -20889,7 +20884,7 @@ impl InstEncoding for OpHitObjectRecordHitMotionNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectRecordHitMotionNV {} {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            "OpHitObjectRecordHitMotionNV{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.acceleration_structure.dis(_ctx),
             self.instance_id.dis(_ctx),
@@ -20983,7 +20978,7 @@ impl InstEncoding for OpHitObjectRecordHitWithIndexMotionNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectRecordHitWithIndexMotionNV {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            "OpHitObjectRecordHitWithIndexMotionNV{}{}{}{}{}{}{}{}{}{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.acceleration_structure.dis(_ctx),
             self.instance_id.dis(_ctx),
@@ -21052,7 +21047,7 @@ impl InstEncoding for OpHitObjectRecordMissMotionNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectRecordMissMotionNV {} {} {} {} {} {} {}",
+            "OpHitObjectRecordMissMotionNV{}{}{}{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.sbt_index.dis(_ctx),
             self.origin.dis(_ctx),
@@ -21099,7 +21094,7 @@ impl InstEncoding for OpHitObjectGetWorldToObjectNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetWorldToObjectNV {} {}",
+            "{} = OpHitObjectGetWorldToObjectNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -21142,7 +21137,7 @@ impl InstEncoding for OpHitObjectGetObjectToWorldNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetObjectToWorldNV {} {}",
+            "{} = OpHitObjectGetObjectToWorldNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -21185,7 +21180,7 @@ impl InstEncoding for OpHitObjectGetObjectRayDirectionNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetObjectRayDirectionNV {} {}",
+            "{} = OpHitObjectGetObjectRayDirectionNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -21228,7 +21223,7 @@ impl InstEncoding for OpHitObjectGetObjectRayOriginNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetObjectRayOriginNV {} {}",
+            "{} = OpHitObjectGetObjectRayOriginNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -21311,7 +21306,7 @@ impl InstEncoding for OpHitObjectTraceRayMotionNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectTraceRayMotionNV {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            "OpHitObjectTraceRayMotionNV{}{}{}{}{}{}{}{}{}{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.acceleration_structure.dis(_ctx),
             self.ray_flags.dis(_ctx),
@@ -21364,7 +21359,7 @@ impl InstEncoding for OpHitObjectGetShaderRecordBufferHandleNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetShaderRecordBufferHandleNV {} {}",
+            "{} = OpHitObjectGetShaderRecordBufferHandleNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -21407,7 +21402,7 @@ impl InstEncoding for OpHitObjectGetShaderBindingTableRecordIndexNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetShaderBindingTableRecordIndexNV {} {}",
+            "{} = OpHitObjectGetShaderBindingTableRecordIndexNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -21439,7 +21434,7 @@ impl InstEncoding for OpHitObjectRecordEmptyNV {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpHitObjectRecordEmptyNV {}", self.hit_object.dis(_ctx))
+        write!(f, "OpHitObjectRecordEmptyNV{}", self.hit_object.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -21514,7 +21509,7 @@ impl InstEncoding for OpHitObjectTraceRayNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectTraceRayNV {} {} {} {} {} {} {} {} {} {} {} {}",
+            "OpHitObjectTraceRayNV{}{}{}{}{}{}{}{}{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.acceleration_structure.dis(_ctx),
             self.ray_flags.dis(_ctx),
@@ -21606,7 +21601,7 @@ impl InstEncoding for OpHitObjectRecordHitNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectRecordHitNV {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            "OpHitObjectRecordHitNV{}{}{}{}{}{}{}{}{}{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.acceleration_structure.dis(_ctx),
             self.instance_id.dis(_ctx),
@@ -21695,7 +21690,7 @@ impl InstEncoding for OpHitObjectRecordHitWithIndexNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectRecordHitWithIndexNV {} {} {} {} {} {} {} {} {} {} {} {}",
+            "OpHitObjectRecordHitWithIndexNV{}{}{}{}{}{}{}{}{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.acceleration_structure.dis(_ctx),
             self.instance_id.dis(_ctx),
@@ -21759,7 +21754,7 @@ impl InstEncoding for OpHitObjectRecordMissNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectRecordMissNV {} {} {} {} {} {}",
+            "OpHitObjectRecordMissNV{}{}{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.sbt_index.dis(_ctx),
             self.origin.dis(_ctx),
@@ -21801,7 +21796,7 @@ impl InstEncoding for OpHitObjectExecuteShaderNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectExecuteShaderNV {} {}",
+            "OpHitObjectExecuteShaderNV{}{}",
             self.hit_object.dis(_ctx),
             self.payload.dis(_ctx)
         )
@@ -21843,7 +21838,7 @@ impl InstEncoding for OpHitObjectGetCurrentTimeNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetCurrentTimeNV {} {}",
+            "{} = OpHitObjectGetCurrentTimeNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -21882,7 +21877,7 @@ impl InstEncoding for OpHitObjectGetAttributesNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectGetAttributesNV {} {}",
+            "OpHitObjectGetAttributesNV{}{}",
             self.hit_object.dis(_ctx),
             self.hit_object_attribute.dis(_ctx)
         )
@@ -21924,7 +21919,7 @@ impl InstEncoding for OpHitObjectGetHitKindNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetHitKindNV {} {}",
+            "{} = OpHitObjectGetHitKindNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -21967,7 +21962,7 @@ impl InstEncoding for OpHitObjectGetPrimitiveIndexNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetPrimitiveIndexNV {} {}",
+            "{} = OpHitObjectGetPrimitiveIndexNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -22010,7 +22005,7 @@ impl InstEncoding for OpHitObjectGetGeometryIndexNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetGeometryIndexNV {} {}",
+            "{} = OpHitObjectGetGeometryIndexNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -22053,7 +22048,7 @@ impl InstEncoding for OpHitObjectGetInstanceIdNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetInstanceIdNV {} {}",
+            "{} = OpHitObjectGetInstanceIdNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -22096,7 +22091,7 @@ impl InstEncoding for OpHitObjectGetInstanceCustomIndexNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetInstanceCustomIndexNV {} {}",
+            "{} = OpHitObjectGetInstanceCustomIndexNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -22139,7 +22134,7 @@ impl InstEncoding for OpHitObjectGetWorldRayDirectionNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetWorldRayDirectionNV {} {}",
+            "{} = OpHitObjectGetWorldRayDirectionNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -22182,7 +22177,7 @@ impl InstEncoding for OpHitObjectGetWorldRayOriginNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetWorldRayOriginNV {} {}",
+            "{} = OpHitObjectGetWorldRayOriginNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -22225,7 +22220,7 @@ impl InstEncoding for OpHitObjectGetRayTMaxNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetRayTMaxNV {} {}",
+            "{} = OpHitObjectGetRayTMaxNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -22268,7 +22263,7 @@ impl InstEncoding for OpHitObjectGetRayTMinNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetRayTMinNV {} {}",
+            "{} = OpHitObjectGetRayTMinNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -22311,7 +22306,7 @@ impl InstEncoding for OpHitObjectIsEmptyNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectIsEmptyNV {} {}",
+            "{} = OpHitObjectIsEmptyNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -22354,7 +22349,7 @@ impl InstEncoding for OpHitObjectIsHitNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectIsHitNV {} {}",
+            "{} = OpHitObjectIsHitNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -22397,7 +22392,7 @@ impl InstEncoding for OpHitObjectIsMissNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectIsMissNV {} {}",
+            "{} = OpHitObjectIsMissNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -22440,7 +22435,7 @@ impl InstEncoding for OpReorderThreadWithHitObjectNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpReorderThreadWithHitObjectNV {} {} {}",
+            "OpReorderThreadWithHitObjectNV{}{}{}",
             self.hit_object.dis(_ctx),
             self.hint.dis(_ctx),
             self.bits.dis(_ctx)
@@ -22477,7 +22472,7 @@ impl InstEncoding for OpReorderThreadWithHintNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpReorderThreadWithHintNV {} {}",
+            "OpReorderThreadWithHintNV{}{}",
             self.hint.dis(_ctx),
             self.bits.dis(_ctx)
         )
@@ -22563,7 +22558,7 @@ impl InstEncoding for OpImageSampleFootprintNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpImageSampleFootprintNV {} {} {} {} {} {}",
+            "{} = OpImageSampleFootprintNV{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sampled_image.dis(_ctx),
@@ -22610,7 +22605,7 @@ impl InstEncoding for OpTypeVectorIdEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeVectorIdEXT {} {}",
+            "{} = OpTypeVectorIdEXT{}{}",
             self.id_result.dis(_ctx),
             self.component_type.dis(_ctx),
             self.component_count.dis(_ctx)
@@ -22693,7 +22688,7 @@ impl InstEncoding for OpCooperativeVectorMatrixMulNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCooperativeVectorMatrixMulNV {} {} {} {} {} {} {} {} {} {} {} {}",
+            "{} = OpCooperativeVectorMatrixMulNV{}{}{}{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.input.dis(_ctx),
@@ -22762,7 +22757,7 @@ impl InstEncoding for OpCooperativeVectorOuterProductAccumulateNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpCooperativeVectorOuterProductAccumulateNV {} {} {} {} {} {} {}",
+            "OpCooperativeVectorOuterProductAccumulateNV{}{}{}{}{}{}{}",
             self.pointer.dis(_ctx),
             self.offset.dis(_ctx),
             self.a.dis(_ctx),
@@ -22809,7 +22804,7 @@ impl InstEncoding for OpCooperativeVectorReduceSumAccumulateNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpCooperativeVectorReduceSumAccumulateNV {} {} {}",
+            "OpCooperativeVectorReduceSumAccumulateNV{}{}{}",
             self.pointer.dis(_ctx),
             self.offset.dis(_ctx),
             self.v.dis(_ctx)
@@ -22904,7 +22899,7 @@ impl InstEncoding for OpCooperativeVectorMatrixMulAddNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCooperativeVectorMatrixMulAddNV {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            "{} = OpCooperativeVectorMatrixMulAddNV{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.input.dis(_ctx),
@@ -22960,7 +22955,7 @@ impl InstEncoding for OpCooperativeMatrixConvertNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCooperativeMatrixConvertNV {} {}",
+            "{} = OpCooperativeMatrixConvertNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.matrix.dis(_ctx)
@@ -23007,7 +23002,7 @@ impl InstEncoding for OpEmitMeshTasksEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpEmitMeshTasksEXT {} {} {} {}",
+            "OpEmitMeshTasksEXT{}{}{}{}",
             self.group_count_x.dis(_ctx),
             self.group_count_y.dis(_ctx),
             self.group_count_z.dis(_ctx),
@@ -23047,7 +23042,7 @@ impl InstEncoding for OpSetMeshOutputsEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSetMeshOutputsEXT {} {}",
+            "OpSetMeshOutputsEXT{}{}",
             self.vertex_count.dis(_ctx),
             self.primitive_count.dis(_ctx)
         )
@@ -23089,7 +23084,7 @@ impl InstEncoding for OpGroupNonUniformPartitionEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupNonUniformPartitionEXT {} {}",
+            "{} = OpGroupNonUniformPartitionEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.value.dis(_ctx)
@@ -23128,7 +23123,7 @@ impl InstEncoding for OpWritePackedPrimitiveIndices4x8NV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpWritePackedPrimitiveIndices4x8NV {} {}",
+            "OpWritePackedPrimitiveIndices4x8NV{}{}",
             self.index_offset.dis(_ctx),
             self.packed_indices.dis(_ctx)
         )
@@ -23186,7 +23181,7 @@ impl InstEncoding for OpFetchMicroTriangleVertexPositionNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFetchMicroTriangleVertexPositionNV {} {} {} {} {} {}",
+            "{} = OpFetchMicroTriangleVertexPositionNV{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.accel.dis(_ctx),
@@ -23249,7 +23244,7 @@ impl InstEncoding for OpFetchMicroTriangleVertexBarycentricNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFetchMicroTriangleVertexBarycentricNV {} {} {} {} {} {}",
+            "{} = OpFetchMicroTriangleVertexBarycentricNV{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.accel.dis(_ctx),
@@ -23304,7 +23299,7 @@ impl InstEncoding for OpCooperativeVectorLoadNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCooperativeVectorLoadNV {} {} {} {}",
+            "{} = OpCooperativeVectorLoadNV{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -23353,7 +23348,7 @@ impl InstEncoding for OpCooperativeVectorStoreNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpCooperativeVectorStoreNV {} {} {} {}",
+            "OpCooperativeVectorStoreNV{}{}{}{}",
             self.pointer.dis(_ctx),
             self.offset.dis(_ctx),
             self.object.dis(_ctx),
@@ -23401,7 +23396,7 @@ impl InstEncoding for OpHitObjectRecordFromQueryEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectRecordFromQueryEXT {} {} {} {}",
+            "OpHitObjectRecordFromQueryEXT{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.ray_query.dis(_ctx),
             self.sbt_record_index.dis(_ctx),
@@ -23461,7 +23456,7 @@ impl InstEncoding for OpHitObjectRecordMissEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectRecordMissEXT {} {} {} {} {} {} {}",
+            "OpHitObjectRecordMissEXT{}{}{}{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.ray_flags.dis(_ctx),
             self.miss_index.dis(_ctx),
@@ -23528,7 +23523,7 @@ impl InstEncoding for OpHitObjectRecordMissMotionEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectRecordMissMotionEXT {} {} {} {} {} {} {} {}",
+            "OpHitObjectRecordMissMotionEXT{}{}{}{}{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.ray_flags.dis(_ctx),
             self.miss_index.dis(_ctx),
@@ -23576,7 +23571,7 @@ impl InstEncoding for OpHitObjectGetIntersectionTriangleVertexPositionsEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetIntersectionTriangleVertexPositionsEXT {} {}",
+            "{} = OpHitObjectGetIntersectionTriangleVertexPositionsEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -23619,7 +23614,7 @@ impl InstEncoding for OpHitObjectGetRayFlagsEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetRayFlagsEXT {} {}",
+            "{} = OpHitObjectGetRayFlagsEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -23658,7 +23653,7 @@ impl InstEncoding for OpHitObjectSetShaderBindingTableRecordIndexEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectSetShaderBindingTableRecordIndexEXT {} {}",
+            "OpHitObjectSetShaderBindingTableRecordIndexEXT{}{}",
             self.hit_object.dis(_ctx),
             self.sbt_record_index.dis(_ctx)
         )
@@ -23704,7 +23699,7 @@ impl InstEncoding for OpHitObjectReorderExecuteShaderEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectReorderExecuteShaderEXT {} {} {} {}",
+            "OpHitObjectReorderExecuteShaderEXT{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.payload.dis(_ctx),
             self.hint.dis(_ctx),
@@ -23792,7 +23787,7 @@ impl InstEncoding for OpHitObjectTraceReorderExecuteEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectTraceReorderExecuteEXT {} {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            "OpHitObjectTraceReorderExecuteEXT{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.acceleration_structure.dis(_ctx),
             self.ray_flags.dis(_ctx),
@@ -23894,7 +23889,7 @@ impl InstEncoding for OpHitObjectTraceMotionReorderExecuteEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectTraceMotionReorderExecuteEXT {} {} {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            "OpHitObjectTraceMotionReorderExecuteEXT{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.acceleration_structure.dis(_ctx),
             self.ray_flags.dis(_ctx),
@@ -23971,7 +23966,7 @@ impl InstEncoding for OpReorderThreadWithHintEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpReorderThreadWithHintEXT {} {}",
+            "OpReorderThreadWithHintEXT{}{}",
             self.hint.dis(_ctx),
             self.bits.dis(_ctx)
         )
@@ -24013,7 +24008,7 @@ impl InstEncoding for OpReorderThreadWithHitObjectEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpReorderThreadWithHitObjectEXT {} {} {}",
+            "OpReorderThreadWithHitObjectEXT{}{}{}",
             self.hit_object.dis(_ctx),
             self.hint.dis(_ctx),
             self.bits.dis(_ctx)
@@ -24092,7 +24087,7 @@ impl InstEncoding for OpHitObjectTraceRayEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectTraceRayEXT {} {} {} {} {} {} {} {} {} {} {} {}",
+            "OpHitObjectTraceRayEXT{}{}{}{}{}{}{}{}{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.acceleration_structure.dis(_ctx),
             self.ray_flags.dis(_ctx),
@@ -24184,7 +24179,7 @@ impl InstEncoding for OpHitObjectTraceRayMotionEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectTraceRayMotionEXT {} {} {} {} {} {} {} {} {} {} {} {} {}",
+            "OpHitObjectTraceRayMotionEXT{}{}{}{}{}{}{}{}{}{}{}{}{}",
             self.hit_object.dis(_ctx),
             self.acceleration_structure.dis(_ctx),
             self.ray_flags.dis(_ctx),
@@ -24226,7 +24221,7 @@ impl InstEncoding for OpHitObjectRecordEmptyEXT {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpHitObjectRecordEmptyEXT {}", self.hit_object.dis(_ctx))
+        write!(f, "OpHitObjectRecordEmptyEXT{}", self.hit_object.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -24261,7 +24256,7 @@ impl InstEncoding for OpHitObjectExecuteShaderEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectExecuteShaderEXT {} {}",
+            "OpHitObjectExecuteShaderEXT{}{}",
             self.hit_object.dis(_ctx),
             self.payload.dis(_ctx)
         )
@@ -24303,7 +24298,7 @@ impl InstEncoding for OpHitObjectGetCurrentTimeEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetCurrentTimeEXT {} {}",
+            "{} = OpHitObjectGetCurrentTimeEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -24342,7 +24337,7 @@ impl InstEncoding for OpHitObjectGetAttributesEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpHitObjectGetAttributesEXT {} {}",
+            "OpHitObjectGetAttributesEXT{}{}",
             self.hit_object.dis(_ctx),
             self.hit_object_attribute.dis(_ctx)
         )
@@ -24384,7 +24379,7 @@ impl InstEncoding for OpHitObjectGetHitKindEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetHitKindEXT {} {}",
+            "{} = OpHitObjectGetHitKindEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -24427,7 +24422,7 @@ impl InstEncoding for OpHitObjectGetPrimitiveIndexEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetPrimitiveIndexEXT {} {}",
+            "{} = OpHitObjectGetPrimitiveIndexEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -24470,7 +24465,7 @@ impl InstEncoding for OpHitObjectGetGeometryIndexEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetGeometryIndexEXT {} {}",
+            "{} = OpHitObjectGetGeometryIndexEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -24513,7 +24508,7 @@ impl InstEncoding for OpHitObjectGetInstanceIdEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetInstanceIdEXT {} {}",
+            "{} = OpHitObjectGetInstanceIdEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -24556,7 +24551,7 @@ impl InstEncoding for OpHitObjectGetInstanceCustomIndexEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetInstanceCustomIndexEXT {} {}",
+            "{} = OpHitObjectGetInstanceCustomIndexEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -24599,7 +24594,7 @@ impl InstEncoding for OpHitObjectGetObjectRayOriginEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetObjectRayOriginEXT {} {}",
+            "{} = OpHitObjectGetObjectRayOriginEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -24642,7 +24637,7 @@ impl InstEncoding for OpHitObjectGetObjectRayDirectionEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetObjectRayDirectionEXT {} {}",
+            "{} = OpHitObjectGetObjectRayDirectionEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -24685,7 +24680,7 @@ impl InstEncoding for OpHitObjectGetWorldRayDirectionEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetWorldRayDirectionEXT {} {}",
+            "{} = OpHitObjectGetWorldRayDirectionEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -24728,7 +24723,7 @@ impl InstEncoding for OpHitObjectGetWorldRayOriginEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetWorldRayOriginEXT {} {}",
+            "{} = OpHitObjectGetWorldRayOriginEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -24771,7 +24766,7 @@ impl InstEncoding for OpHitObjectGetObjectToWorldEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetObjectToWorldEXT {} {}",
+            "{} = OpHitObjectGetObjectToWorldEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -24814,7 +24809,7 @@ impl InstEncoding for OpHitObjectGetWorldToObjectEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetWorldToObjectEXT {} {}",
+            "{} = OpHitObjectGetWorldToObjectEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -24857,7 +24852,7 @@ impl InstEncoding for OpHitObjectGetRayTMaxEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetRayTMaxEXT {} {}",
+            "{} = OpHitObjectGetRayTMaxEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -24904,7 +24899,7 @@ impl InstEncoding for OpReportIntersectionKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpReportIntersectionKHR {} {} {}",
+            "{} = OpReportIntersectionKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit.dis(_ctx),
@@ -25026,7 +25021,7 @@ impl InstEncoding for OpTraceNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpTraceNV {} {} {} {} {} {} {} {} {} {} {}",
+            "OpTraceNV{}{}{}{}{}{}{}{}{}{}{}",
             self.accel.dis(_ctx),
             self.ray_flags.dis(_ctx),
             self.cull_mask.dis(_ctx),
@@ -25113,7 +25108,7 @@ impl InstEncoding for OpTraceMotionNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpTraceMotionNV {} {} {} {} {} {} {} {} {} {} {} {}",
+            "OpTraceMotionNV{}{}{}{}{}{}{}{}{}{}{}{}",
             self.accel.dis(_ctx),
             self.ray_flags.dis(_ctx),
             self.cull_mask.dis(_ctx),
@@ -25201,7 +25196,7 @@ impl InstEncoding for OpTraceRayMotionNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpTraceRayMotionNV {} {} {} {} {} {} {} {} {} {} {} {}",
+            "OpTraceRayMotionNV{}{}{}{}{}{}{}{}{}{}{}{}",
             self.accel.dis(_ctx),
             self.ray_flags.dis(_ctx),
             self.cull_mask.dis(_ctx),
@@ -25257,7 +25252,7 @@ impl InstEncoding for OpRayQueryGetIntersectionTriangleVertexPositionsKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionTriangleVertexPositionsKHR {} {} {}",
+            "{} = OpRayQueryGetIntersectionTriangleVertexPositionsKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -25329,7 +25324,7 @@ impl InstEncoding for OpExecuteCallableNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpExecuteCallableNV {} {}",
+            "OpExecuteCallableNV{}{}",
             self.sbt_index.dis(_ctx),
             self.callable_data_id.dis(_ctx)
         )
@@ -25375,7 +25370,7 @@ impl InstEncoding for OpRayQueryGetIntersectionClusterIdNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionClusterIdNV {} {} {}",
+            "{} = OpRayQueryGetIntersectionClusterIdNV{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -25419,7 +25414,7 @@ impl InstEncoding for OpHitObjectGetClusterIdNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetClusterIdNV {} {}",
+            "{} = OpHitObjectGetClusterIdNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -25462,7 +25457,7 @@ impl InstEncoding for OpHitObjectGetRayTMinEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetRayTMinEXT {} {}",
+            "{} = OpHitObjectGetRayTMinEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -25505,7 +25500,7 @@ impl InstEncoding for OpHitObjectGetShaderBindingTableRecordIndexEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetShaderBindingTableRecordIndexEXT {} {}",
+            "{} = OpHitObjectGetShaderBindingTableRecordIndexEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -25548,7 +25543,7 @@ impl InstEncoding for OpHitObjectGetShaderRecordBufferHandleEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetShaderRecordBufferHandleEXT {} {}",
+            "{} = OpHitObjectGetShaderRecordBufferHandleEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -25591,7 +25586,7 @@ impl InstEncoding for OpHitObjectIsEmptyEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectIsEmptyEXT {} {}",
+            "{} = OpHitObjectIsEmptyEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -25634,7 +25629,7 @@ impl InstEncoding for OpHitObjectIsHitEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectIsHitEXT {} {}",
+            "{} = OpHitObjectIsHitEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -25677,7 +25672,7 @@ impl InstEncoding for OpHitObjectIsMissEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectIsMissEXT {} {}",
+            "{} = OpHitObjectIsMissEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -25728,7 +25723,7 @@ impl InstEncoding for OpTypeCooperativeMatrixNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeCooperativeMatrixNV {} {} {} {}",
+            "{} = OpTypeCooperativeMatrixNV{}{}{}{}",
             self.id_result.dis(_ctx),
             self.component_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -25785,7 +25780,7 @@ impl InstEncoding for OpCooperativeMatrixLoadNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCooperativeMatrixLoadNV {} {} {} {} {}",
+            "{} = OpCooperativeMatrixLoadNV{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -25839,7 +25834,7 @@ impl InstEncoding for OpCooperativeMatrixStoreNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpCooperativeMatrixStoreNV {} {} {} {} {}",
+            "OpCooperativeMatrixStoreNV{}{}{}{}{}",
             self.pointer.dis(_ctx),
             self.object.dis(_ctx),
             self.stride.dis(_ctx),
@@ -25892,7 +25887,7 @@ impl InstEncoding for OpCooperativeMatrixMulAddNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCooperativeMatrixMulAddNV {} {} {} {}",
+            "{} = OpCooperativeMatrixMulAddNV{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -25937,7 +25932,7 @@ impl InstEncoding for OpCooperativeMatrixLengthNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCooperativeMatrixLengthNV {} {}",
+            "{} = OpCooperativeMatrixLengthNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ty.dis(_ctx)
@@ -26034,7 +26029,7 @@ impl InstEncoding for OpCooperativeMatrixReduceNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCooperativeMatrixReduceNV {} {} {} {}",
+            "{} = OpCooperativeMatrixReduceNV{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.matrix.dis(_ctx),
@@ -26095,7 +26090,7 @@ impl InstEncoding for OpCooperativeMatrixLoadTensorNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCooperativeMatrixLoadTensorNV {} {} {} {} {} {}",
+            "{} = OpCooperativeMatrixLoadTensorNV{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -26150,7 +26145,7 @@ impl InstEncoding for OpCooperativeMatrixStoreTensorNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpCooperativeMatrixStoreTensorNV {} {} {} {} {}",
+            "OpCooperativeMatrixStoreTensorNV{}{}{}{}{}",
             self.pointer.dis(_ctx),
             self.object.dis(_ctx),
             self.tensor_layout.dis(_ctx),
@@ -26203,7 +26198,7 @@ impl InstEncoding for OpCooperativeMatrixPerElementOpNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCooperativeMatrixPerElementOpNV {} {} {} {}",
+            "{} = OpCooperativeMatrixPerElementOpNV{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.matrix.dis(_ctx),
@@ -26248,7 +26243,7 @@ impl InstEncoding for OpTypeTensorLayoutNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeTensorLayoutNV {} {}",
+            "{} = OpTypeTensorLayoutNV{}{}",
             self.id_result.dis(_ctx),
             self.dim.dis(_ctx),
             self.clamp_mode.dis(_ctx)
@@ -26295,7 +26290,7 @@ impl InstEncoding for OpTypeTensorViewNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeTensorViewNV {} {} {}",
+            "{} = OpTypeTensorViewNV{}{}{}",
             self.id_result.dis(_ctx),
             self.dim.dis(_ctx),
             self.has_dimensions.dis(_ctx),
@@ -26335,7 +26330,7 @@ impl InstEncoding for OpCreateTensorLayoutNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCreateTensorLayoutNV {}",
+            "{} = OpCreateTensorLayoutNV{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -26381,7 +26376,7 @@ impl InstEncoding for OpTensorLayoutSetDimensionNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTensorLayoutSetDimensionNV {} {} {}",
+            "{} = OpTensorLayoutSetDimensionNV{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.tensor_layout.dis(_ctx),
@@ -26429,7 +26424,7 @@ impl InstEncoding for OpTensorLayoutSetStrideNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTensorLayoutSetStrideNV {} {} {}",
+            "{} = OpTensorLayoutSetStrideNV{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.tensor_layout.dis(_ctx),
@@ -26477,7 +26472,7 @@ impl InstEncoding for OpTensorLayoutSliceNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTensorLayoutSliceNV {} {} {}",
+            "{} = OpTensorLayoutSliceNV{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.tensor_layout.dis(_ctx),
@@ -26525,7 +26520,7 @@ impl InstEncoding for OpTensorLayoutSetClampValueNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTensorLayoutSetClampValueNV {} {} {}",
+            "{} = OpTensorLayoutSetClampValueNV{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.tensor_layout.dis(_ctx),
@@ -26565,7 +26560,7 @@ impl InstEncoding for OpCreateTensorViewNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCreateTensorViewNV {}",
+            "{} = OpCreateTensorViewNV{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -26611,7 +26606,7 @@ impl InstEncoding for OpTensorViewSetDimensionNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTensorViewSetDimensionNV {} {} {}",
+            "{} = OpTensorViewSetDimensionNV{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.tensor_view.dis(_ctx),
@@ -26659,7 +26654,7 @@ impl InstEncoding for OpTensorViewSetStrideNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTensorViewSetStrideNV {} {} {}",
+            "{} = OpTensorViewSetStrideNV{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.tensor_view.dis(_ctx),
@@ -26722,7 +26717,7 @@ impl InstEncoding for OpIsHelperInvocationEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIsHelperInvocationEXT {}",
+            "{} = OpIsHelperInvocationEXT{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -26780,7 +26775,7 @@ impl InstEncoding for OpTensorViewSetClipNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTensorViewSetClipNV {} {} {} {} {} {}",
+            "{} = OpTensorViewSetClipNV{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.tensor_view.dis(_ctx),
@@ -26831,7 +26826,7 @@ impl InstEncoding for OpTensorLayoutSetBlockSizeNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTensorLayoutSetBlockSizeNV {} {} {}",
+            "{} = OpTensorLayoutSetBlockSizeNV{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.tensor_layout.dis(_ctx),
@@ -26875,7 +26870,7 @@ impl InstEncoding for OpCooperativeMatrixTransposeNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCooperativeMatrixTransposeNV {} {}",
+            "{} = OpCooperativeMatrixTransposeNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.matrix.dis(_ctx)
@@ -26918,7 +26913,7 @@ impl InstEncoding for OpConvertUToImageNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertUToImageNV {} {}",
+            "{} = OpConvertUToImageNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -26961,7 +26956,7 @@ impl InstEncoding for OpConvertUToSamplerNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertUToSamplerNV {} {}",
+            "{} = OpConvertUToSamplerNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -27004,7 +26999,7 @@ impl InstEncoding for OpConvertImageToUNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertImageToUNV {} {}",
+            "{} = OpConvertImageToUNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -27047,7 +27042,7 @@ impl InstEncoding for OpConvertSamplerToUNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertSamplerToUNV {} {}",
+            "{} = OpConvertSamplerToUNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -27090,7 +27085,7 @@ impl InstEncoding for OpConvertUToSampledImageNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertUToSampledImageNV {} {}",
+            "{} = OpConvertUToSampledImageNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -27133,7 +27128,7 @@ impl InstEncoding for OpConvertSampledImageToUNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertSampledImageToUNV {} {}",
+            "{} = OpConvertSampledImageToUNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -27167,7 +27162,7 @@ impl InstEncoding for OpSamplerImageAddressingModeNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSamplerImageAddressingModeNV {}",
+            "OpSamplerImageAddressingModeNV{}",
             self.bit_width.dis(_ctx)
         )
     }
@@ -27224,7 +27219,7 @@ impl InstEncoding for OpRawAccessChainNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRawAccessChainNV {} {} {} {} {} {}",
+            "{} = OpRawAccessChainNV{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.base.dis(_ctx),
@@ -27275,7 +27270,7 @@ impl InstEncoding for OpRayQueryGetIntersectionSpherePositionNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionSpherePositionNV {} {} {}",
+            "{} = OpRayQueryGetIntersectionSpherePositionNV{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -27323,7 +27318,7 @@ impl InstEncoding for OpRayQueryGetIntersectionSphereRadiusNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionSphereRadiusNV {} {} {}",
+            "{} = OpRayQueryGetIntersectionSphereRadiusNV{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -27371,7 +27366,7 @@ impl InstEncoding for OpRayQueryGetIntersectionLSSPositionsNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionLSSPositionsNV {} {} {}",
+            "{} = OpRayQueryGetIntersectionLSSPositionsNV{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -27419,7 +27414,7 @@ impl InstEncoding for OpRayQueryGetIntersectionLSSRadiiNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionLSSRadiiNV {} {} {}",
+            "{} = OpRayQueryGetIntersectionLSSRadiiNV{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -27467,7 +27462,7 @@ impl InstEncoding for OpRayQueryGetIntersectionLSSHitValueNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionLSSHitValueNV {} {} {}",
+            "{} = OpRayQueryGetIntersectionLSSHitValueNV{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -27511,7 +27506,7 @@ impl InstEncoding for OpHitObjectGetSpherePositionNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetSpherePositionNV {} {}",
+            "{} = OpHitObjectGetSpherePositionNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -27554,7 +27549,7 @@ impl InstEncoding for OpHitObjectGetSphereRadiusNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetSphereRadiusNV {} {}",
+            "{} = OpHitObjectGetSphereRadiusNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -27597,7 +27592,7 @@ impl InstEncoding for OpHitObjectGetLSSPositionsNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetLSSPositionsNV {} {}",
+            "{} = OpHitObjectGetLSSPositionsNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -27640,7 +27635,7 @@ impl InstEncoding for OpHitObjectGetLSSRadiiNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectGetLSSRadiiNV {} {}",
+            "{} = OpHitObjectGetLSSRadiiNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -27683,7 +27678,7 @@ impl InstEncoding for OpHitObjectIsSphereHitNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectIsSphereHitNV {} {}",
+            "{} = OpHitObjectIsSphereHitNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -27726,7 +27721,7 @@ impl InstEncoding for OpHitObjectIsLSSHitNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpHitObjectIsLSSHitNV {} {}",
+            "{} = OpHitObjectIsLSSHitNV{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.hit_object.dis(_ctx)
@@ -27773,7 +27768,7 @@ impl InstEncoding for OpRayQueryIsSphereHitNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryIsSphereHitNV {} {} {}",
+            "{} = OpRayQueryIsSphereHitNV{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -27821,7 +27816,7 @@ impl InstEncoding for OpRayQueryIsLSSHitNV {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryIsLSSHitNV {} {} {}",
+            "{} = OpRayQueryIsLSSHitNV{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -27869,7 +27864,7 @@ impl InstEncoding for OpSubgroupShuffleINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupShuffleINTEL {} {} {}",
+            "{} = OpSubgroupShuffleINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.data.dis(_ctx),
@@ -27921,7 +27916,7 @@ impl InstEncoding for OpSubgroupShuffleDownINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupShuffleDownINTEL {} {} {} {}",
+            "{} = OpSubgroupShuffleDownINTEL{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.current.dis(_ctx),
@@ -27974,7 +27969,7 @@ impl InstEncoding for OpSubgroupShuffleUpINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupShuffleUpINTEL {} {} {} {}",
+            "{} = OpSubgroupShuffleUpINTEL{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.previous.dis(_ctx),
@@ -28023,7 +28018,7 @@ impl InstEncoding for OpSubgroupShuffleXorINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupShuffleXorINTEL {} {} {}",
+            "{} = OpSubgroupShuffleXorINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.data.dis(_ctx),
@@ -28067,7 +28062,7 @@ impl InstEncoding for OpSubgroupBlockReadINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupBlockReadINTEL {} {}",
+            "{} = OpSubgroupBlockReadINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ptr.dis(_ctx)
@@ -28104,7 +28099,7 @@ impl InstEncoding for OpSubgroupBlockWriteINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSubgroupBlockWriteINTEL {} {}",
+            "OpSubgroupBlockWriteINTEL{}{}",
             self.ptr.dis(_ctx),
             self.data.dis(_ctx)
         )
@@ -28150,7 +28145,7 @@ impl InstEncoding for OpSubgroupImageBlockReadINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupImageBlockReadINTEL {} {} {}",
+            "{} = OpSubgroupImageBlockReadINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx),
@@ -28194,7 +28189,7 @@ impl InstEncoding for OpSubgroupImageBlockWriteINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSubgroupImageBlockWriteINTEL {} {} {}",
+            "OpSubgroupImageBlockWriteINTEL{}{}{}",
             self.image.dis(_ctx),
             self.coordinate.dis(_ctx),
             self.data.dis(_ctx)
@@ -28249,7 +28244,7 @@ impl InstEncoding for OpSubgroupImageMediaBlockReadINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupImageMediaBlockReadINTEL {} {} {} {} {}",
+            "{} = OpSubgroupImageMediaBlockReadINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image.dis(_ctx),
@@ -28303,7 +28298,7 @@ impl InstEncoding for OpSubgroupImageMediaBlockWriteINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSubgroupImageMediaBlockWriteINTEL {} {} {} {} {}",
+            "OpSubgroupImageMediaBlockWriteINTEL{}{}{}{}{}",
             self.image.dis(_ctx),
             self.coordinate.dis(_ctx),
             self.width.dis(_ctx),
@@ -28348,7 +28343,7 @@ impl InstEncoding for OpUCountLeadingZerosINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUCountLeadingZerosINTEL {} {}",
+            "{} = OpUCountLeadingZerosINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -28391,7 +28386,7 @@ impl InstEncoding for OpUCountTrailingZerosINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUCountTrailingZerosINTEL {} {}",
+            "{} = OpUCountTrailingZerosINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -28438,7 +28433,7 @@ impl InstEncoding for OpAbsISubINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAbsISubINTEL {} {} {}",
+            "{} = OpAbsISubINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -28486,7 +28481,7 @@ impl InstEncoding for OpAbsUSubINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAbsUSubINTEL {} {} {}",
+            "{} = OpAbsUSubINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -28534,7 +28529,7 @@ impl InstEncoding for OpIAddSatINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIAddSatINTEL {} {} {}",
+            "{} = OpIAddSatINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -28582,7 +28577,7 @@ impl InstEncoding for OpUAddSatINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUAddSatINTEL {} {} {}",
+            "{} = OpUAddSatINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -28630,7 +28625,7 @@ impl InstEncoding for OpIAverageINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIAverageINTEL {} {} {}",
+            "{} = OpIAverageINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -28678,7 +28673,7 @@ impl InstEncoding for OpUAverageINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUAverageINTEL {} {} {}",
+            "{} = OpUAverageINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -28726,7 +28721,7 @@ impl InstEncoding for OpIAverageRoundedINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIAverageRoundedINTEL {} {} {}",
+            "{} = OpIAverageRoundedINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -28774,7 +28769,7 @@ impl InstEncoding for OpUAverageRoundedINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUAverageRoundedINTEL {} {} {}",
+            "{} = OpUAverageRoundedINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -28822,7 +28817,7 @@ impl InstEncoding for OpISubSatINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpISubSatINTEL {} {} {}",
+            "{} = OpISubSatINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -28870,7 +28865,7 @@ impl InstEncoding for OpUSubSatINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUSubSatINTEL {} {} {}",
+            "{} = OpUSubSatINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -28918,7 +28913,7 @@ impl InstEncoding for OpIMul32x16INTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpIMul32x16INTEL {} {} {}",
+            "{} = OpIMul32x16INTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -28966,7 +28961,7 @@ impl InstEncoding for OpUMul32x16INTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUMul32x16INTEL {} {} {}",
+            "{} = OpUMul32x16INTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx),
@@ -29010,7 +29005,7 @@ impl InstEncoding for OpConstantFunctionPointerINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConstantFunctionPointerINTEL {} {}",
+            "{} = OpConstantFunctionPointerINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.function.dis(_ctx)
@@ -29053,7 +29048,7 @@ impl InstEncoding for OpFunctionPointerCallINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFunctionPointerCallINTEL {} {}",
+            "{} = OpFunctionPointerCallINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand_1.dis(_ctx)
@@ -29092,7 +29087,7 @@ impl InstEncoding for OpAsmTargetINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAsmTargetINTEL {}",
+            "{} = OpAsmTargetINTEL{}",
             self.id_result.dis(_ctx),
             self.asm_target.dis(_ctx)
         )
@@ -29146,7 +29141,7 @@ impl InstEncoding for OpAsmINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAsmINTEL {} {} {} {} {}",
+            "{} = OpAsmINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.asm_type.dis(_ctx),
@@ -29196,7 +29191,7 @@ impl InstEncoding for OpAsmCallINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAsmCallINTEL {} {} {}",
+            "{} = OpAsmCallINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.asm.dis(_ctx),
@@ -29252,7 +29247,7 @@ impl InstEncoding for OpAtomicFMinEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicFMinEXT {} {} {} {} {}",
+            "{} = OpAtomicFMinEXT{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -29310,7 +29305,7 @@ impl InstEncoding for OpAtomicFMaxEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicFMaxEXT {} {} {} {} {}",
+            "{} = OpAtomicFMaxEXT{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -29345,7 +29340,7 @@ impl InstEncoding for OpAssumeTrueKHR {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpAssumeTrueKHR {}", self.condition.dis(_ctx))
+        write!(f, "OpAssumeTrueKHR{}", self.condition.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -29388,7 +29383,7 @@ impl InstEncoding for OpExpectKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpExpectKHR {} {} {}",
+            "{} = OpExpectKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.value.dis(_ctx),
@@ -29428,7 +29423,7 @@ impl InstEncoding for OpDecorateString {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpDecorateString {} {}",
+            "OpDecorateString{}{}",
             self.target.dis(_ctx),
             self.decoration.dis(_ctx)
         )
@@ -29470,7 +29465,7 @@ impl InstEncoding for OpMemberDecorateString {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpMemberDecorateString {} {} {}",
+            "OpMemberDecorateString{}{}{}",
             self.struct_type.dis(_ctx),
             self.member.dis(_ctx),
             self.decoration.dis(_ctx)
@@ -29517,7 +29512,7 @@ impl InstEncoding for OpVmeImageINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpVmeImageINTEL {} {} {}",
+            "{} = OpVmeImageINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image_type.dis(_ctx),
@@ -29557,7 +29552,7 @@ impl InstEncoding for OpTypeVmeImageINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeVmeImageINTEL {}",
+            "{} = OpTypeVmeImageINTEL{}",
             self.id_result.dis(_ctx),
             self.image_type.dis(_ctx)
         )
@@ -29956,7 +29951,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyIN
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL {} {} {}",
+            "{} = OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.slice_type.dis(_ctx),
@@ -30004,7 +29999,7 @@ impl InstEncoding for OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {} {} {}",
+            "{} = OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.reference_base_penalty.dis(_ctx),
@@ -30052,7 +30047,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL {} {} {}",
+            "{} = OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.slice_type.dis(_ctx),
@@ -30100,7 +30095,7 @@ impl InstEncoding for OpSubgroupAvcMceSetInterShapePenaltyINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceSetInterShapePenaltyINTEL {} {} {}",
+            "{} = OpSubgroupAvcMceSetInterShapePenaltyINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.packed_shape_penalty.dis(_ctx),
@@ -30148,7 +30143,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {} {} {}",
+            "{} = OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.slice_type.dis(_ctx),
@@ -30196,7 +30191,7 @@ impl InstEncoding for OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {} {} {}",
+            "{} = OpSubgroupAvcMceSetInterDirectionPenaltyINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.direction_cost.dis(_ctx),
@@ -30244,7 +30239,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {} {} {}",
+            "{} = OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.slice_type.dis(_ctx),
@@ -30292,7 +30287,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL 
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {} {} {}",
+            "{} = OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.slice_type.dis(_ctx),
@@ -30332,7 +30327,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {}",
+            "{} = OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -30370,7 +30365,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {}",
+            "{} = OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -30408,7 +30403,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {}",
+            "{} = OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -30462,7 +30457,7 @@ impl InstEncoding for OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL {} {} {} {} {}",
+            "{} = OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.packed_cost_center_delta.dis(_ctx),
@@ -30512,7 +30507,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {} {} {}",
+            "{} = OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.slice_type.dis(_ctx),
@@ -30552,7 +30547,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {}",
+            "{} = OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -30590,7 +30585,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL 
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL {}",
+            "{} = OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -30632,7 +30627,7 @@ impl InstEncoding for OpSubgroupAvcMceSetAcOnlyHaarINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceSetAcOnlyHaarINTEL {} {}",
+            "{} = OpSubgroupAvcMceSetAcOnlyHaarINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -30679,7 +30674,7 @@ impl InstEncoding for OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {} {} {}",
+            "{} = OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.source_field_polarity.dis(_ctx),
@@ -30728,7 +30723,7 @@ impl InstEncoding for OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityI
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {} {} {}",
+            "{} = OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.reference_field_polarity.dis(_ctx),
@@ -30781,7 +30776,7 @@ impl InstEncoding for OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesI
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL {} {} {} {}",
+            "{} = OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.forward_reference_field_polarity.dis(_ctx),
@@ -30826,7 +30821,7 @@ impl InstEncoding for OpSubgroupAvcMceConvertToImePayloadINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceConvertToImePayloadINTEL {} {}",
+            "{} = OpSubgroupAvcMceConvertToImePayloadINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -30869,7 +30864,7 @@ impl InstEncoding for OpSubgroupAvcMceConvertToImeResultINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceConvertToImeResultINTEL {} {}",
+            "{} = OpSubgroupAvcMceConvertToImeResultINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -30912,7 +30907,7 @@ impl InstEncoding for OpSubgroupAvcMceConvertToRefPayloadINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceConvertToRefPayloadINTEL {} {}",
+            "{} = OpSubgroupAvcMceConvertToRefPayloadINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -30955,7 +30950,7 @@ impl InstEncoding for OpSubgroupAvcMceConvertToRefResultINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceConvertToRefResultINTEL {} {}",
+            "{} = OpSubgroupAvcMceConvertToRefResultINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -30998,7 +30993,7 @@ impl InstEncoding for OpSubgroupAvcMceConvertToSicPayloadINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceConvertToSicPayloadINTEL {} {}",
+            "{} = OpSubgroupAvcMceConvertToSicPayloadINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -31041,7 +31036,7 @@ impl InstEncoding for OpSubgroupAvcMceConvertToSicResultINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceConvertToSicResultINTEL {} {}",
+            "{} = OpSubgroupAvcMceConvertToSicResultINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -31084,7 +31079,7 @@ impl InstEncoding for OpSubgroupAvcMceGetMotionVectorsINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetMotionVectorsINTEL {} {}",
+            "{} = OpSubgroupAvcMceGetMotionVectorsINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -31127,7 +31122,7 @@ impl InstEncoding for OpSubgroupAvcMceGetInterDistortionsINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetInterDistortionsINTEL {} {}",
+            "{} = OpSubgroupAvcMceGetInterDistortionsINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -31170,7 +31165,7 @@ impl InstEncoding for OpSubgroupAvcMceGetBestInterDistortionsINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetBestInterDistortionsINTEL {} {}",
+            "{} = OpSubgroupAvcMceGetBestInterDistortionsINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -31213,7 +31208,7 @@ impl InstEncoding for OpSubgroupAvcMceGetInterMajorShapeINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetInterMajorShapeINTEL {} {}",
+            "{} = OpSubgroupAvcMceGetInterMajorShapeINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -31256,7 +31251,7 @@ impl InstEncoding for OpSubgroupAvcMceGetInterMinorShapeINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetInterMinorShapeINTEL {} {}",
+            "{} = OpSubgroupAvcMceGetInterMinorShapeINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -31299,7 +31294,7 @@ impl InstEncoding for OpSubgroupAvcMceGetInterDirectionsINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetInterDirectionsINTEL {} {}",
+            "{} = OpSubgroupAvcMceGetInterDirectionsINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -31342,7 +31337,7 @@ impl InstEncoding for OpSubgroupAvcMceGetInterMotionVectorCountINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetInterMotionVectorCountINTEL {} {}",
+            "{} = OpSubgroupAvcMceGetInterMotionVectorCountINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -31385,7 +31380,7 @@ impl InstEncoding for OpSubgroupAvcMceGetInterReferenceIdsINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetInterReferenceIdsINTEL {} {}",
+            "{} = OpSubgroupAvcMceGetInterReferenceIdsINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -31440,7 +31435,7 @@ impl InstEncoding for OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolarities
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL {} {} {} {}",
+            "{} = OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.packed_reference_ids.dis(_ctx),
@@ -31493,7 +31488,7 @@ impl InstEncoding for OpSubgroupAvcImeInitializeINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeInitializeINTEL {} {} {} {}",
+            "{} = OpSubgroupAvcImeInitializeINTEL{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_coord.dis(_ctx),
@@ -31546,7 +31541,7 @@ impl InstEncoding for OpSubgroupAvcImeSetSingleReferenceINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeSetSingleReferenceINTEL {} {} {} {}",
+            "{} = OpSubgroupAvcImeSetSingleReferenceINTEL{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ref_offset.dis(_ctx),
@@ -31603,7 +31598,7 @@ impl InstEncoding for OpSubgroupAvcImeSetDualReferenceINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeSetDualReferenceINTEL {} {} {} {} {}",
+            "{} = OpSubgroupAvcImeSetDualReferenceINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.fwd_ref_offset.dis(_ctx),
@@ -31653,7 +31648,7 @@ impl InstEncoding for OpSubgroupAvcImeRefWindowSizeINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeRefWindowSizeINTEL {} {} {}",
+            "{} = OpSubgroupAvcImeRefWindowSizeINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.search_window_config.dis(_ctx),
@@ -31709,7 +31704,7 @@ impl InstEncoding for OpSubgroupAvcImeAdjustRefOffsetINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeAdjustRefOffsetINTEL {} {} {} {} {}",
+            "{} = OpSubgroupAvcImeAdjustRefOffsetINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ref_offset.dis(_ctx),
@@ -31755,7 +31750,7 @@ impl InstEncoding for OpSubgroupAvcImeConvertToMcePayloadINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeConvertToMcePayloadINTEL {} {}",
+            "{} = OpSubgroupAvcImeConvertToMcePayloadINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -31802,7 +31797,7 @@ impl InstEncoding for OpSubgroupAvcImeSetMaxMotionVectorCountINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeSetMaxMotionVectorCountINTEL {} {} {}",
+            "{} = OpSubgroupAvcImeSetMaxMotionVectorCountINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.max_motion_vector_count.dis(_ctx),
@@ -31846,7 +31841,7 @@ impl InstEncoding for OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {} {}",
+            "{} = OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -31893,7 +31888,7 @@ impl InstEncoding for OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {} {} {}",
+            "{} = OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.threshold.dis(_ctx),
@@ -31941,7 +31936,7 @@ impl InstEncoding for OpSubgroupAvcImeSetWeightedSadINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeSetWeightedSadINTEL {} {} {}",
+            "{} = OpSubgroupAvcImeSetWeightedSadINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.packed_sad_weights.dis(_ctx),
@@ -31993,7 +31988,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL {} {} {} {}",
+            "{} = OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -32050,7 +32045,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeEvaluateWithDualReferenceINTEL {} {} {} {} {}",
+            "{} = OpSubgroupAvcImeEvaluateWithDualReferenceINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -32108,7 +32103,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {} {} {} {} {}",
+            "{} = OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -32170,7 +32165,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {} {} {} {} {} {}",
+            "{} = OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -32225,7 +32220,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL 
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {} {} {} {}",
+            "{} = OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -32282,7 +32277,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {} {} {} {} {}",
+            "{} = OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -32340,7 +32335,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTE
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {} {} {} {} {}",
+            "{} = OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -32402,7 +32397,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL 
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL {} {} {} {} {} {}",
+            "{} = OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -32449,7 +32444,7 @@ impl InstEncoding for OpSubgroupAvcImeConvertToMceResultINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeConvertToMceResultINTEL {} {}",
+            "{} = OpSubgroupAvcImeConvertToMceResultINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -32492,7 +32487,7 @@ impl InstEncoding for OpSubgroupAvcImeGetSingleReferenceStreaminINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeGetSingleReferenceStreaminINTEL {} {}",
+            "{} = OpSubgroupAvcImeGetSingleReferenceStreaminINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -32535,7 +32530,7 @@ impl InstEncoding for OpSubgroupAvcImeGetDualReferenceStreaminINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeGetDualReferenceStreaminINTEL {} {}",
+            "{} = OpSubgroupAvcImeGetDualReferenceStreaminINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -32578,7 +32573,7 @@ impl InstEncoding for OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL {} {}",
+            "{} = OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -32621,7 +32616,7 @@ impl InstEncoding for OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {} {}",
+            "{} = OpSubgroupAvcImeStripDualReferenceStreamoutINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -32669,7 +32664,7 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotio
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL {} {} {}",
+            "{} = OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx),
@@ -32718,7 +32713,7 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDisto
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL {} {} {}",
+            "{} = OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx),
@@ -32767,7 +32762,7 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeRefer
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL {} {} {}",
+            "{} = OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx),
@@ -32820,7 +32815,7 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionV
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL {} {} {} {}",
+            "{} = OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx),
@@ -32874,7 +32869,7 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistort
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL {} {} {} {}",
+            "{} = OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx),
@@ -32928,7 +32923,7 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferen
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL {} {} {} {}",
+            "{} = OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx),
@@ -32977,7 +32972,7 @@ impl InstEncoding for OpSubgroupAvcImeGetBorderReachedINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeGetBorderReachedINTEL {} {} {}",
+            "{} = OpSubgroupAvcImeGetBorderReachedINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.image_select.dis(_ctx),
@@ -33021,7 +33016,7 @@ impl InstEncoding for OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {} {}",
+            "{} = OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -33064,7 +33059,7 @@ impl InstEncoding for OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINT
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL {} {}",
+            "{} = OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -33107,7 +33102,7 @@ impl InstEncoding for OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTE
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {} {}",
+            "{} = OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -33150,7 +33145,7 @@ impl InstEncoding for OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL 
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {} {}",
+            "{} = OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -33217,7 +33212,7 @@ impl InstEncoding for OpSubgroupAvcFmeInitializeINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcFmeInitializeINTEL {} {} {} {} {} {} {} {}",
+            "{} = OpSubgroupAvcFmeInitializeINTEL{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_coord.dis(_ctx),
@@ -33294,7 +33289,7 @@ impl InstEncoding for OpSubgroupAvcBmeInitializeINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcBmeInitializeINTEL {} {} {} {} {} {} {} {} {}",
+            "{} = OpSubgroupAvcBmeInitializeINTEL{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_coord.dis(_ctx),
@@ -33344,7 +33339,7 @@ impl InstEncoding for OpSubgroupAvcRefConvertToMcePayloadINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcRefConvertToMcePayloadINTEL {} {}",
+            "{} = OpSubgroupAvcRefConvertToMcePayloadINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -33387,7 +33382,7 @@ impl InstEncoding for OpSubgroupAvcRefSetBidirectionalMixDisableINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcRefSetBidirectionalMixDisableINTEL {} {}",
+            "{} = OpSubgroupAvcRefSetBidirectionalMixDisableINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -33430,7 +33425,7 @@ impl InstEncoding for OpSubgroupAvcRefSetBilinearFilterEnableINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcRefSetBilinearFilterEnableINTEL {} {}",
+            "{} = OpSubgroupAvcRefSetBilinearFilterEnableINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -33481,7 +33476,7 @@ impl InstEncoding for OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL {} {} {} {}",
+            "{} = OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -33538,7 +33533,7 @@ impl InstEncoding for OpSubgroupAvcRefEvaluateWithDualReferenceINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcRefEvaluateWithDualReferenceINTEL {} {} {} {} {}",
+            "{} = OpSubgroupAvcRefEvaluateWithDualReferenceINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -33592,7 +33587,7 @@ impl InstEncoding for OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {} {} {} {}",
+            "{} = OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -33649,7 +33644,7 @@ impl InstEncoding for OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL 
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL {} {} {} {} {}",
+            "{} = OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -33695,7 +33690,7 @@ impl InstEncoding for OpSubgroupAvcRefConvertToMceResultINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcRefConvertToMceResultINTEL {} {}",
+            "{} = OpSubgroupAvcRefConvertToMceResultINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -33738,7 +33733,7 @@ impl InstEncoding for OpSubgroupAvcSicInitializeINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicInitializeINTEL {} {}",
+            "{} = OpSubgroupAvcSicInitializeINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_coord.dis(_ctx)
@@ -33801,7 +33796,7 @@ impl InstEncoding for OpSubgroupAvcSicConfigureSkcINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicConfigureSkcINTEL {} {} {} {} {} {} {}",
+            "{} = OpSubgroupAvcSicConfigureSkcINTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.skip_block_partition_type.dis(_ctx),
@@ -33877,7 +33872,7 @@ impl InstEncoding for OpSubgroupAvcSicConfigureIpeLumaINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicConfigureIpeLumaINTEL {} {} {} {} {} {} {} {} {}",
+            "{} = OpSubgroupAvcSicConfigureIpeLumaINTEL{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.luma_intra_partition_mask.dis(_ctx),
@@ -33967,7 +33962,7 @@ impl InstEncoding for OpSubgroupAvcSicConfigureIpeLumaChromaINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicConfigureIpeLumaChromaINTEL {} {} {} {} {} {} {} {} {} {} {} {}",
+            "{} = OpSubgroupAvcSicConfigureIpeLumaChromaINTEL{}{}{}{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.luma_intra_partition_mask.dis(_ctx),
@@ -34024,7 +34019,7 @@ impl InstEncoding for OpSubgroupAvcSicGetMotionVectorMaskINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicGetMotionVectorMaskINTEL {} {} {}",
+            "{} = OpSubgroupAvcSicGetMotionVectorMaskINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.skip_block_partition_type.dis(_ctx),
@@ -34068,7 +34063,7 @@ impl InstEncoding for OpSubgroupAvcSicConvertToMcePayloadINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicConvertToMcePayloadINTEL {} {}",
+            "{} = OpSubgroupAvcSicConvertToMcePayloadINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -34115,7 +34110,7 @@ impl InstEncoding for OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL {} {} {}",
+            "{} = OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.packed_shape_penalty.dis(_ctx),
@@ -34171,7 +34166,7 @@ impl InstEncoding for OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {} {} {} {} {}",
+            "{} = OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.luma_mode_penalty.dis(_ctx),
@@ -34221,7 +34216,7 @@ impl InstEncoding for OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {} {} {}",
+            "{} = OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.chroma_mode_base_penalty.dis(_ctx),
@@ -34265,7 +34260,7 @@ impl InstEncoding for OpSubgroupAvcSicSetBilinearFilterEnableINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicSetBilinearFilterEnableINTEL {} {}",
+            "{} = OpSubgroupAvcSicSetBilinearFilterEnableINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -34312,7 +34307,7 @@ impl InstEncoding for OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL {} {} {}",
+            "{} = OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.packed_sad_coefficients.dis(_ctx),
@@ -34360,7 +34355,7 @@ impl InstEncoding for OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {} {} {}",
+            "{} = OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.block_based_skip_type.dis(_ctx),
@@ -34408,7 +34403,7 @@ impl InstEncoding for OpSubgroupAvcSicEvaluateIpeINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicEvaluateIpeINTEL {} {} {}",
+            "{} = OpSubgroupAvcSicEvaluateIpeINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -34460,7 +34455,7 @@ impl InstEncoding for OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL {} {} {} {}",
+            "{} = OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -34517,7 +34512,7 @@ impl InstEncoding for OpSubgroupAvcSicEvaluateWithDualReferenceINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicEvaluateWithDualReferenceINTEL {} {} {} {} {}",
+            "{} = OpSubgroupAvcSicEvaluateWithDualReferenceINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -34571,7 +34566,7 @@ impl InstEncoding for OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {} {} {} {}",
+            "{} = OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -34628,7 +34623,7 @@ impl InstEncoding for OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL 
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL {} {} {} {} {}",
+            "{} = OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.src_image.dis(_ctx),
@@ -34674,7 +34669,7 @@ impl InstEncoding for OpSubgroupAvcSicConvertToMceResultINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicConvertToMceResultINTEL {} {}",
+            "{} = OpSubgroupAvcSicConvertToMceResultINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -34717,7 +34712,7 @@ impl InstEncoding for OpSubgroupAvcSicGetIpeLumaShapeINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicGetIpeLumaShapeINTEL {} {}",
+            "{} = OpSubgroupAvcSicGetIpeLumaShapeINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -34760,7 +34755,7 @@ impl InstEncoding for OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {} {}",
+            "{} = OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -34803,7 +34798,7 @@ impl InstEncoding for OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL {} {}",
+            "{} = OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -34846,7 +34841,7 @@ impl InstEncoding for OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {} {}",
+            "{} = OpSubgroupAvcSicGetPackedIpeLumaModesINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -34889,7 +34884,7 @@ impl InstEncoding for OpSubgroupAvcSicGetIpeChromaModeINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicGetIpeChromaModeINTEL {} {}",
+            "{} = OpSubgroupAvcSicGetIpeChromaModeINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -34932,7 +34927,7 @@ impl InstEncoding for OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {} {}",
+            "{} = OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -34975,7 +34970,7 @@ impl InstEncoding for OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {} {}",
+            "{} = OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -35018,7 +35013,7 @@ impl InstEncoding for OpSubgroupAvcSicGetInterRawSadsINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupAvcSicGetInterRawSadsINTEL {} {}",
+            "{} = OpSubgroupAvcSicGetInterRawSadsINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.payload.dis(_ctx)
@@ -35061,7 +35056,7 @@ impl InstEncoding for OpVariableLengthArrayINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpVariableLengthArrayINTEL {} {}",
+            "{} = OpVariableLengthArrayINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.length.dis(_ctx)
@@ -35100,7 +35095,7 @@ impl InstEncoding for OpSaveMemoryINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSaveMemoryINTEL {}",
+            "{} = OpSaveMemoryINTEL{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx)
         )
@@ -35131,7 +35126,7 @@ impl InstEncoding for OpRestoreMemoryINTEL {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpRestoreMemoryINTEL {}", self.ptr.dis(_ctx))
+        write!(f, "OpRestoreMemoryINTEL{}", self.ptr.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -35190,7 +35185,7 @@ impl InstEncoding for OpArbitraryFloatSinCosPiALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatSinCosPiALTERA {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatSinCosPiALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -35258,7 +35253,7 @@ impl InstEncoding for OpArbitraryFloatCastALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatCastALTERA {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatCastALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -35326,7 +35321,7 @@ impl InstEncoding for OpArbitraryFloatCastFromIntALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatCastFromIntALTERA {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatCastFromIntALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -35394,7 +35389,7 @@ impl InstEncoding for OpArbitraryFloatCastToIntALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatCastToIntALTERA {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatCastToIntALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -35470,7 +35465,7 @@ impl InstEncoding for OpArbitraryFloatAddALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatAddALTERA {} {} {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatAddALTERA{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -35548,7 +35543,7 @@ impl InstEncoding for OpArbitraryFloatSubALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatSubALTERA {} {} {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatSubALTERA{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -35626,7 +35621,7 @@ impl InstEncoding for OpArbitraryFloatMulALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatMulALTERA {} {} {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatMulALTERA{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -35704,7 +35699,7 @@ impl InstEncoding for OpArbitraryFloatDivALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatDivALTERA {} {} {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatDivALTERA{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -35766,7 +35761,7 @@ impl InstEncoding for OpArbitraryFloatGTALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatGTALTERA {} {} {} {} {}",
+            "{} = OpArbitraryFloatGTALTERA{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -35824,7 +35819,7 @@ impl InstEncoding for OpArbitraryFloatGEALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatGEALTERA {} {} {} {} {}",
+            "{} = OpArbitraryFloatGEALTERA{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -35882,7 +35877,7 @@ impl InstEncoding for OpArbitraryFloatLTALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatLTALTERA {} {} {} {} {}",
+            "{} = OpArbitraryFloatLTALTERA{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -35940,7 +35935,7 @@ impl InstEncoding for OpArbitraryFloatLEALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatLEALTERA {} {} {} {} {}",
+            "{} = OpArbitraryFloatLEALTERA{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -35998,7 +35993,7 @@ impl InstEncoding for OpArbitraryFloatEQALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatEQALTERA {} {} {} {} {}",
+            "{} = OpArbitraryFloatEQALTERA{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -36064,7 +36059,7 @@ impl InstEncoding for OpArbitraryFloatRecipALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatRecipALTERA {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatRecipALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -36132,7 +36127,7 @@ impl InstEncoding for OpArbitraryFloatRSqrtALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatRSqrtALTERA {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatRSqrtALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -36200,7 +36195,7 @@ impl InstEncoding for OpArbitraryFloatCbrtALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatCbrtALTERA {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatCbrtALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -36276,7 +36271,7 @@ impl InstEncoding for OpArbitraryFloatHypotALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatHypotALTERA {} {} {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatHypotALTERA{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -36346,7 +36341,7 @@ impl InstEncoding for OpArbitraryFloatSqrtALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatSqrtALTERA {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatSqrtALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -36414,7 +36409,7 @@ impl InstEncoding for OpArbitraryFloatLogINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatLogINTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatLogINTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -36482,7 +36477,7 @@ impl InstEncoding for OpArbitraryFloatLog2INTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatLog2INTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatLog2INTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -36550,7 +36545,7 @@ impl InstEncoding for OpArbitraryFloatLog10INTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatLog10INTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatLog10INTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -36618,7 +36613,7 @@ impl InstEncoding for OpArbitraryFloatLog1pINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatLog1pINTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatLog1pINTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -36686,7 +36681,7 @@ impl InstEncoding for OpArbitraryFloatExpINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatExpINTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatExpINTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -36754,7 +36749,7 @@ impl InstEncoding for OpArbitraryFloatExp2INTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatExp2INTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatExp2INTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -36822,7 +36817,7 @@ impl InstEncoding for OpArbitraryFloatExp10INTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatExp10INTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatExp10INTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -36890,7 +36885,7 @@ impl InstEncoding for OpArbitraryFloatExpm1INTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatExpm1INTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatExpm1INTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -36958,7 +36953,7 @@ impl InstEncoding for OpArbitraryFloatSinINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatSinINTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatSinINTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -37026,7 +37021,7 @@ impl InstEncoding for OpArbitraryFloatCosINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatCosINTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatCosINTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -37094,7 +37089,7 @@ impl InstEncoding for OpArbitraryFloatSinCosINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatSinCosINTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatSinCosINTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -37162,7 +37157,7 @@ impl InstEncoding for OpArbitraryFloatSinPiINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatSinPiINTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatSinPiINTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -37230,7 +37225,7 @@ impl InstEncoding for OpArbitraryFloatCosPiINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatCosPiINTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatCosPiINTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -37298,7 +37293,7 @@ impl InstEncoding for OpArbitraryFloatASinINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatASinINTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatASinINTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -37366,7 +37361,7 @@ impl InstEncoding for OpArbitraryFloatASinPiINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatASinPiINTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatASinPiINTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -37434,7 +37429,7 @@ impl InstEncoding for OpArbitraryFloatACosINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatACosINTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatACosINTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -37502,7 +37497,7 @@ impl InstEncoding for OpArbitraryFloatACosPiINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatACosPiINTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatACosPiINTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -37570,7 +37565,7 @@ impl InstEncoding for OpArbitraryFloatATanINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatATanINTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatATanINTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -37638,7 +37633,7 @@ impl InstEncoding for OpArbitraryFloatATanPiINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatATanPiINTEL {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatATanPiINTEL{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -37714,7 +37709,7 @@ impl InstEncoding for OpArbitraryFloatATan2INTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatATan2INTEL {} {} {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatATan2INTEL{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -37792,7 +37787,7 @@ impl InstEncoding for OpArbitraryFloatPowINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatPowINTEL {} {} {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatPowINTEL{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -37870,7 +37865,7 @@ impl InstEncoding for OpArbitraryFloatPowRINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatPowRINTEL {} {} {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatPowRINTEL{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -37948,7 +37943,7 @@ impl InstEncoding for OpArbitraryFloatPowNINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArbitraryFloatPowNINTEL {} {} {} {} {} {} {} {} {}",
+            "{} = OpArbitraryFloatPowNINTEL{}{}{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -37989,7 +37984,7 @@ impl InstEncoding for OpLoopControlINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpLoopControlINTEL {}",
+            "OpLoopControlINTEL{}",
             self.loop_control_parameters.dis(_ctx)
         )
     }
@@ -38025,7 +38020,7 @@ impl InstEncoding for OpAliasDomainDeclINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAliasDomainDeclINTEL {}",
+            "{} = OpAliasDomainDeclINTEL{}",
             self.id_result.dis(_ctx),
             self.name.dis(_ctx)
         )
@@ -38067,7 +38062,7 @@ impl InstEncoding for OpAliasScopeDeclINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAliasScopeDeclINTEL {} {}",
+            "{} = OpAliasScopeDeclINTEL{}{}",
             self.id_result.dis(_ctx),
             self.alias_domain.dis(_ctx),
             self.name.dis(_ctx)
@@ -38106,7 +38101,7 @@ impl InstEncoding for OpAliasScopeListDeclINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAliasScopeListDeclINTEL {}",
+            "{} = OpAliasScopeListDeclINTEL{}",
             self.id_result.dis(_ctx),
             self.id_ref.dis(_ctx)
         )
@@ -38168,7 +38163,7 @@ impl InstEncoding for OpFixedSqrtALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFixedSqrtALTERA {} {} {} {} {} {} {}",
+            "{} = OpFixedSqrtALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.input.dis(_ctx),
@@ -38236,7 +38231,7 @@ impl InstEncoding for OpFixedRecipALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFixedRecipALTERA {} {} {} {} {} {} {}",
+            "{} = OpFixedRecipALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.input.dis(_ctx),
@@ -38304,7 +38299,7 @@ impl InstEncoding for OpFixedRsqrtALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFixedRsqrtALTERA {} {} {} {} {} {} {}",
+            "{} = OpFixedRsqrtALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.input.dis(_ctx),
@@ -38372,7 +38367,7 @@ impl InstEncoding for OpFixedSinALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFixedSinALTERA {} {} {} {} {} {} {}",
+            "{} = OpFixedSinALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.input.dis(_ctx),
@@ -38440,7 +38435,7 @@ impl InstEncoding for OpFixedCosALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFixedCosALTERA {} {} {} {} {} {} {}",
+            "{} = OpFixedCosALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.input.dis(_ctx),
@@ -38508,7 +38503,7 @@ impl InstEncoding for OpFixedSinCosALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFixedSinCosALTERA {} {} {} {} {} {} {}",
+            "{} = OpFixedSinCosALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.input.dis(_ctx),
@@ -38576,7 +38571,7 @@ impl InstEncoding for OpFixedSinPiALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFixedSinPiALTERA {} {} {} {} {} {} {}",
+            "{} = OpFixedSinPiALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.input.dis(_ctx),
@@ -38644,7 +38639,7 @@ impl InstEncoding for OpFixedCosPiALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFixedCosPiALTERA {} {} {} {} {} {} {}",
+            "{} = OpFixedCosPiALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.input.dis(_ctx),
@@ -38712,7 +38707,7 @@ impl InstEncoding for OpFixedSinCosPiALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFixedSinCosPiALTERA {} {} {} {} {} {} {}",
+            "{} = OpFixedSinCosPiALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.input.dis(_ctx),
@@ -38780,7 +38775,7 @@ impl InstEncoding for OpFixedLogALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFixedLogALTERA {} {} {} {} {} {} {}",
+            "{} = OpFixedLogALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.input.dis(_ctx),
@@ -38848,7 +38843,7 @@ impl InstEncoding for OpFixedExpALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFixedExpALTERA {} {} {} {} {} {} {}",
+            "{} = OpFixedExpALTERA{}{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.input.dis(_ctx),
@@ -38896,7 +38891,7 @@ impl InstEncoding for OpPtrCastToCrossWorkgroupALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpPtrCastToCrossWorkgroupALTERA {} {}",
+            "{} = OpPtrCastToCrossWorkgroupALTERA{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx)
@@ -38939,7 +38934,7 @@ impl InstEncoding for OpCrossWorkgroupCastToPtrALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCrossWorkgroupCastToPtrALTERA {} {}",
+            "{} = OpCrossWorkgroupCastToPtrALTERA{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx)
@@ -38986,7 +38981,7 @@ impl InstEncoding for OpReadPipeBlockingALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpReadPipeBlockingALTERA {} {} {}",
+            "{} = OpReadPipeBlockingALTERA{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.packet_size.dis(_ctx),
@@ -39034,7 +39029,7 @@ impl InstEncoding for OpWritePipeBlockingALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpWritePipeBlockingALTERA {} {} {}",
+            "{} = OpWritePipeBlockingALTERA{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.packet_size.dis(_ctx),
@@ -39078,7 +39073,7 @@ impl InstEncoding for OpFPGARegALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpFPGARegALTERA {} {}",
+            "{} = OpFPGARegALTERA{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.input.dis(_ctx)
@@ -39121,7 +39116,7 @@ impl InstEncoding for OpRayQueryGetRayTMinKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetRayTMinKHR {} {}",
+            "{} = OpRayQueryGetRayTMinKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx)
@@ -39164,7 +39159,7 @@ impl InstEncoding for OpRayQueryGetRayFlagsKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetRayFlagsKHR {} {}",
+            "{} = OpRayQueryGetRayFlagsKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx)
@@ -39211,7 +39206,7 @@ impl InstEncoding for OpRayQueryGetIntersectionTKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionTKHR {} {} {}",
+            "{} = OpRayQueryGetIntersectionTKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -39259,7 +39254,7 @@ impl InstEncoding for OpRayQueryGetIntersectionInstanceCustomIndexKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionInstanceCustomIndexKHR {} {} {}",
+            "{} = OpRayQueryGetIntersectionInstanceCustomIndexKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -39307,7 +39302,7 @@ impl InstEncoding for OpRayQueryGetIntersectionInstanceIdKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionInstanceIdKHR {} {} {}",
+            "{} = OpRayQueryGetIntersectionInstanceIdKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -39356,7 +39351,7 @@ impl InstEncoding for OpRayQueryGetIntersectionInstanceShaderBindingTableRecordO
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR {} {} {}",
+            "{} = OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -39404,7 +39399,7 @@ impl InstEncoding for OpRayQueryGetIntersectionGeometryIndexKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionGeometryIndexKHR {} {} {}",
+            "{} = OpRayQueryGetIntersectionGeometryIndexKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -39452,7 +39447,7 @@ impl InstEncoding for OpRayQueryGetIntersectionPrimitiveIndexKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionPrimitiveIndexKHR {} {} {}",
+            "{} = OpRayQueryGetIntersectionPrimitiveIndexKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -39500,7 +39495,7 @@ impl InstEncoding for OpRayQueryGetIntersectionBarycentricsKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionBarycentricsKHR {} {} {}",
+            "{} = OpRayQueryGetIntersectionBarycentricsKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -39548,7 +39543,7 @@ impl InstEncoding for OpRayQueryGetIntersectionFrontFaceKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionFrontFaceKHR {} {} {}",
+            "{} = OpRayQueryGetIntersectionFrontFaceKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -39592,7 +39587,7 @@ impl InstEncoding for OpRayQueryGetIntersectionCandidateAABBOpaqueKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionCandidateAABBOpaqueKHR {} {}",
+            "{} = OpRayQueryGetIntersectionCandidateAABBOpaqueKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx)
@@ -39639,7 +39634,7 @@ impl InstEncoding for OpRayQueryGetIntersectionObjectRayDirectionKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionObjectRayDirectionKHR {} {} {}",
+            "{} = OpRayQueryGetIntersectionObjectRayDirectionKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -39687,7 +39682,7 @@ impl InstEncoding for OpRayQueryGetIntersectionObjectRayOriginKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionObjectRayOriginKHR {} {} {}",
+            "{} = OpRayQueryGetIntersectionObjectRayOriginKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -39731,7 +39726,7 @@ impl InstEncoding for OpRayQueryGetWorldRayDirectionKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetWorldRayDirectionKHR {} {}",
+            "{} = OpRayQueryGetWorldRayDirectionKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx)
@@ -39774,7 +39769,7 @@ impl InstEncoding for OpRayQueryGetWorldRayOriginKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetWorldRayOriginKHR {} {}",
+            "{} = OpRayQueryGetWorldRayOriginKHR{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx)
@@ -39821,7 +39816,7 @@ impl InstEncoding for OpRayQueryGetIntersectionObjectToWorldKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionObjectToWorldKHR {} {} {}",
+            "{} = OpRayQueryGetIntersectionObjectToWorldKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -39869,7 +39864,7 @@ impl InstEncoding for OpRayQueryGetIntersectionWorldToObjectKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRayQueryGetIntersectionWorldToObjectKHR {} {} {}",
+            "{} = OpRayQueryGetIntersectionWorldToObjectKHR{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ray_query.dis(_ctx),
@@ -39925,7 +39920,7 @@ impl InstEncoding for OpAtomicFAddEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpAtomicFAddEXT {} {} {} {} {}",
+            "{} = OpAtomicFAddEXT{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.pointer.dis(_ctx),
@@ -39967,7 +39962,7 @@ impl InstEncoding for OpTypeBufferSurfaceINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTypeBufferSurfaceINTEL {}",
+            "{} = OpTypeBufferSurfaceINTEL{}",
             self.id_result.dis(_ctx),
             self.access_qualifier.dis(_ctx)
         )
@@ -39998,7 +39993,7 @@ impl InstEncoding for OpTypeStructContinuedINTEL {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpTypeStructContinuedINTEL {}", self.id_ref.dis(_ctx))
+        write!(f, "OpTypeStructContinuedINTEL{}", self.id_ref.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -40028,7 +40023,7 @@ impl InstEncoding for OpConstantCompositeContinuedINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpConstantCompositeContinuedINTEL {}",
+            "OpConstantCompositeContinuedINTEL{}",
             self.constituents.dis(_ctx)
         )
     }
@@ -40060,7 +40055,7 @@ impl InstEncoding for OpSpecConstantCompositeContinuedINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSpecConstantCompositeContinuedINTEL {}",
+            "OpSpecConstantCompositeContinuedINTEL{}",
             self.constituents.dis(_ctx)
         )
     }
@@ -40101,7 +40096,7 @@ impl InstEncoding for OpCompositeConstructContinuedINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpCompositeConstructContinuedINTEL {} {}",
+            "{} = OpCompositeConstructContinuedINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.constituents.dis(_ctx)
@@ -40144,7 +40139,7 @@ impl InstEncoding for OpConvertFToBF16INTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertFToBF16INTEL {} {}",
+            "{} = OpConvertFToBF16INTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.float_value.dis(_ctx)
@@ -40187,7 +40182,7 @@ impl InstEncoding for OpConvertBF16ToFINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertBF16ToFINTEL {} {}",
+            "{} = OpConvertBF16ToFINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.b_float_16_value.dis(_ctx)
@@ -40230,7 +40225,7 @@ impl InstEncoding for OpControlBarrierArriveINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpControlBarrierArriveINTEL {} {} {}",
+            "OpControlBarrierArriveINTEL{}{}{}",
             self.execution.dis(_ctx),
             self.memory.dis(_ctx),
             self.semantics.dis(_ctx)
@@ -40273,7 +40268,7 @@ impl InstEncoding for OpControlBarrierWaitINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpControlBarrierWaitINTEL {} {} {}",
+            "OpControlBarrierWaitINTEL{}{}{}",
             self.execution.dis(_ctx),
             self.memory.dis(_ctx),
             self.semantics.dis(_ctx)
@@ -40316,7 +40311,7 @@ impl InstEncoding for OpArithmeticFenceEXT {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpArithmeticFenceEXT {} {}",
+            "{} = OpArithmeticFenceEXT{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.target.dis(_ctx)
@@ -40375,7 +40370,7 @@ impl InstEncoding for OpTaskSequenceCreateALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTaskSequenceCreateALTERA {} {} {} {} {} {}",
+            "{} = OpTaskSequenceCreateALTERA{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.function.dis(_ctx),
@@ -40418,7 +40413,7 @@ impl InstEncoding for OpTaskSequenceAsyncALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpTaskSequenceAsyncALTERA {} {}",
+            "OpTaskSequenceAsyncALTERA{}{}",
             self.sequence.dis(_ctx),
             self.arguments.dis(_ctx)
         )
@@ -40460,7 +40455,7 @@ impl InstEncoding for OpTaskSequenceGetALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpTaskSequenceGetALTERA {} {}",
+            "{} = OpTaskSequenceGetALTERA{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.sequence.dis(_ctx)
@@ -40492,7 +40487,7 @@ impl InstEncoding for OpTaskSequenceReleaseALTERA {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "OpTaskSequenceReleaseALTERA {}", self.sequence.dis(_ctx))
+        write!(f, "OpTaskSequenceReleaseALTERA{}", self.sequence.dis(_ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -40559,7 +40554,7 @@ impl InstEncoding for OpSubgroupBlockPrefetchINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSubgroupBlockPrefetchINTEL {} {} {}",
+            "OpSubgroupBlockPrefetchINTEL{}{}{}",
             self.ptr.dis(_ctx),
             self.num_bytes.dis(_ctx),
             self.memory_access.dis(_ctx)
@@ -40630,7 +40625,7 @@ impl InstEncoding for OpSubgroup2DBlockLoadINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSubgroup2DBlockLoadINTEL {} {} {} {} {} {} {} {} {} {}",
+            "OpSubgroup2DBlockLoadINTEL{}{}{}{}{}{}{}{}{}{}",
             self.element_size.dis(_ctx),
             self.block_width.dis(_ctx),
             self.block_height.dis(_ctx),
@@ -40708,7 +40703,7 @@ impl InstEncoding for OpSubgroup2DBlockLoadTransformINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSubgroup2DBlockLoadTransformINTEL {} {} {} {} {} {} {} {} {} {}",
+            "OpSubgroup2DBlockLoadTransformINTEL{}{}{}{}{}{}{}{}{}{}",
             self.element_size.dis(_ctx),
             self.block_width.dis(_ctx),
             self.block_height.dis(_ctx),
@@ -40786,7 +40781,7 @@ impl InstEncoding for OpSubgroup2DBlockLoadTransposeINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSubgroup2DBlockLoadTransposeINTEL {} {} {} {} {} {} {} {} {} {}",
+            "OpSubgroup2DBlockLoadTransposeINTEL{}{}{}{}{}{}{}{}{}{}",
             self.element_size.dis(_ctx),
             self.block_width.dis(_ctx),
             self.block_height.dis(_ctx),
@@ -40860,7 +40855,7 @@ impl InstEncoding for OpSubgroup2DBlockPrefetchINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSubgroup2DBlockPrefetchINTEL {} {} {} {} {} {} {} {} {}",
+            "OpSubgroup2DBlockPrefetchINTEL{}{}{}{}{}{}{}{}{}",
             self.element_size.dis(_ctx),
             self.block_width.dis(_ctx),
             self.block_height.dis(_ctx),
@@ -40937,7 +40932,7 @@ impl InstEncoding for OpSubgroup2DBlockStoreINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpSubgroup2DBlockStoreINTEL {} {} {} {} {} {} {} {} {} {}",
+            "OpSubgroup2DBlockStoreINTEL{}{}{}{}{}{}{}{}{}{}",
             self.element_size.dis(_ctx),
             self.block_width.dis(_ctx),
             self.block_height.dis(_ctx),
@@ -41003,7 +40998,7 @@ impl InstEncoding for OpSubgroupMatrixMultiplyAccumulateINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSubgroupMatrixMultiplyAccumulateINTEL {} {} {} {} {} {}",
+            "{} = OpSubgroupMatrixMultiplyAccumulateINTEL{}{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.k_dim.dis(_ctx),
@@ -41062,7 +41057,7 @@ impl InstEncoding for OpBitwiseFunctionINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpBitwiseFunctionINTEL {} {} {} {} {}",
+            "{} = OpBitwiseFunctionINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.a.dis(_ctx),
@@ -41112,7 +41107,7 @@ impl InstEncoding for OpUntypedVariableLengthArrayINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpUntypedVariableLengthArrayINTEL {} {} {}",
+            "{} = OpUntypedVariableLengthArrayINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.element_type.dis(_ctx),
@@ -41151,7 +41146,7 @@ impl InstEncoding for OpConditionalExtensionINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpConditionalExtensionINTEL {} {}",
+            "OpConditionalExtensionINTEL{}{}",
             self.condition.dis(_ctx),
             self.name.dis(_ctx)
         )
@@ -41201,7 +41196,7 @@ impl InstEncoding for OpConditionalEntryPointINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpConditionalEntryPointINTEL {} {} {} {} {}",
+            "OpConditionalEntryPointINTEL{}{}{}{}{}",
             self.condition.dis(_ctx),
             self.execution_model.dis(_ctx),
             self.entry_point.dis(_ctx),
@@ -41242,7 +41237,7 @@ impl InstEncoding for OpConditionalCapabilityINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpConditionalCapabilityINTEL {} {}",
+            "OpConditionalCapabilityINTEL{}{}",
             self.condition.dis(_ctx),
             self.capability.dis(_ctx)
         )
@@ -41288,7 +41283,7 @@ impl InstEncoding for OpSpecConstantTargetINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSpecConstantTargetINTEL {} {} {}",
+            "{} = OpSpecConstantTargetINTEL{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.target.dis(_ctx),
@@ -41344,7 +41339,7 @@ impl InstEncoding for OpSpecConstantArchitectureINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSpecConstantArchitectureINTEL {} {} {} {} {}",
+            "{} = OpSpecConstantArchitectureINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.category.dis(_ctx),
@@ -41390,7 +41385,7 @@ impl InstEncoding for OpSpecConstantCapabilitiesINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpSpecConstantCapabilitiesINTEL {} {}",
+            "{} = OpSpecConstantCapabilitiesINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.capabilities.dis(_ctx)
@@ -41433,7 +41428,7 @@ impl InstEncoding for OpConditionalCopyObjectINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConditionalCopyObjectINTEL {} {}",
+            "{} = OpConditionalCopyObjectINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.id_ref.dis(_ctx)
@@ -41484,7 +41479,7 @@ impl InstEncoding for OpGroupIMulKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupIMulKHR {} {} {} {}",
+            "{} = OpGroupIMulKHR{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -41537,7 +41532,7 @@ impl InstEncoding for OpGroupFMulKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupFMulKHR {} {} {} {}",
+            "{} = OpGroupFMulKHR{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -41590,7 +41585,7 @@ impl InstEncoding for OpGroupBitwiseAndKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupBitwiseAndKHR {} {} {} {}",
+            "{} = OpGroupBitwiseAndKHR{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -41643,7 +41638,7 @@ impl InstEncoding for OpGroupBitwiseOrKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupBitwiseOrKHR {} {} {} {}",
+            "{} = OpGroupBitwiseOrKHR{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -41696,7 +41691,7 @@ impl InstEncoding for OpGroupBitwiseXorKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupBitwiseXorKHR {} {} {} {}",
+            "{} = OpGroupBitwiseXorKHR{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -41749,7 +41744,7 @@ impl InstEncoding for OpGroupLogicalAndKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupLogicalAndKHR {} {} {} {}",
+            "{} = OpGroupLogicalAndKHR{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -41802,7 +41797,7 @@ impl InstEncoding for OpGroupLogicalOrKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupLogicalOrKHR {} {} {} {}",
+            "{} = OpGroupLogicalOrKHR{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -41855,7 +41850,7 @@ impl InstEncoding for OpGroupLogicalXorKHR {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpGroupLogicalXorKHR {} {} {} {}",
+            "{} = OpGroupLogicalXorKHR{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.execution.dis(_ctx),
@@ -41900,7 +41895,7 @@ impl InstEncoding for OpRoundFToTF32INTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpRoundFToTF32INTEL {} {}",
+            "{} = OpRoundFToTF32INTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.float_value.dis(_ctx)
@@ -41955,7 +41950,7 @@ impl InstEncoding for OpMaskedGatherINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpMaskedGatherINTEL {} {} {} {} {}",
+            "{} = OpMaskedGatherINTEL{}{}{}{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.ptr_vector.dis(_ctx),
@@ -42005,7 +42000,7 @@ impl InstEncoding for OpMaskedScatterINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "OpMaskedScatterINTEL {} {} {} {}",
+            "OpMaskedScatterINTEL{}{}{}{}",
             self.input_vector.dis(_ctx),
             self.ptr_vector.dis(_ctx),
             self.alignment.dis(_ctx),
@@ -42049,7 +42044,7 @@ impl InstEncoding for OpConvertHandleToImageINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertHandleToImageINTEL {} {}",
+            "{} = OpConvertHandleToImageINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -42092,7 +42087,7 @@ impl InstEncoding for OpConvertHandleToSamplerINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertHandleToSamplerINTEL {} {}",
+            "{} = OpConvertHandleToSamplerINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)
@@ -42135,7 +42130,7 @@ impl InstEncoding for OpConvertHandleToSampledImageINTEL {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} = OpConvertHandleToSampledImageINTEL {} {}",
+            "{} = OpConvertHandleToSampledImageINTEL{}{}",
             self.id_result.dis(_ctx),
             self.id_result_type.dis(_ctx),
             self.operand.dis(_ctx)

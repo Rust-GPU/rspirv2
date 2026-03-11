@@ -74,7 +74,7 @@ unsafe impl OperandEncoding for IdResult {
 
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
-        self.dis_fmt_color(f, ctx, AnsiColor::Blue.on_default(), false)
+        self.dis_fmt_color(f, ctx, AnsiColor::Blue.on_default(), false, false)
     }
 }
 
@@ -84,14 +84,21 @@ impl IdResult {
         f: &mut Formatter<'_>,
         ctx: &DisContext,
         style: anstyle::Style,
+        prepend_space: bool,
         rspirv_extra_spaces: bool,
     ) -> std::fmt::Result {
         let style = ctx.color(style);
-        if rspirv_extra_spaces && ctx.rspirv_extra_spaces {
-            write!(f, " {style}%{}{style:#} ", self.0.0)
+        let prepend_space = if prepend_space { " " } else { "" };
+        let rspirv_spaces = if rspirv_extra_spaces && ctx.rspirv_extra_spaces {
+            " "
         } else {
-            write!(f, "{style}%{}{style:#}", self.0.0)
-        }
+            ""
+        };
+        write!(
+            f,
+            "{prepend_space}{rspirv_spaces}{style}%{}{style:#}{rspirv_spaces}",
+            self.0.0
+        )
     }
 }
 
@@ -144,7 +151,7 @@ macro_rules! id_ref {
 
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
-                self.0.dis_fmt_color(f, ctx, AnsiColor::Yellow.on_default(), $rspirv_extra_spaces)
+                self.0.dis_fmt_color(f, ctx, AnsiColor::Yellow.on_default(), true, $rspirv_extra_spaces)
             }
         }
     };

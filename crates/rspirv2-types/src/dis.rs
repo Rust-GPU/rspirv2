@@ -32,6 +32,15 @@ impl Default for DisOptions {
 }
 
 impl DisOptions {
+    /// simple tries to be as basic as possible, similar to [`Self::like_rspirv`], but without its quirks
+    pub fn simple() -> Self {
+        Self {
+            color: false,
+            ..Default::default()
+        }
+    }
+
+    /// output similarly to the `rspirv` crate
     pub fn like_rspirv() -> Self {
         Self {
             color: false,
@@ -40,6 +49,7 @@ impl DisOptions {
         }
     }
 
+    /// output similarly `spirv-dis` from the C++ spirv tools
     pub fn like_spirv_tools() -> Self {
         Self {
             color: true,

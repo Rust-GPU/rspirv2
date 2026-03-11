@@ -29,8 +29,9 @@ unsafe impl OperandEncoding for ImageOperands {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::Bias) {
                 write!(f, "{sep}Bias")?;
@@ -109,8 +110,9 @@ unsafe impl OperandEncoding for FPFastMathMode {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::NotNaN) {
                 write!(f, "{sep}NotNaN")?;
@@ -163,8 +165,9 @@ unsafe impl OperandEncoding for SelectionControl {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::Flatten) {
                 write!(f, "{sep}Flatten")?;
@@ -210,8 +213,9 @@ unsafe impl OperandEncoding for LoopControl {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::Unroll) {
                 write!(f, "{sep}Unroll")?;
@@ -298,8 +302,9 @@ unsafe impl OperandEncoding for FunctionControl {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::Inline) {
                 write!(f, "{sep}Inline")?;
@@ -349,8 +354,9 @@ unsafe impl OperandEncoding for MemorySemantics {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::Acquire) {
                 write!(f, "{sep}Acquire")?;
@@ -425,8 +431,9 @@ unsafe impl OperandEncoding for MemoryAccess {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::Volatile) {
                 write!(f, "{sep}Volatile")?;
@@ -479,8 +486,9 @@ unsafe impl OperandEncoding for KernelProfilingInfo {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::CmdExecTime) {
                 write!(f, "{sep}CmdExecTime")?;
@@ -516,8 +524,9 @@ unsafe impl OperandEncoding for RayFlags {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::OpaqueKHR) {
                 write!(f, "{sep}OpaqueKHR")?;
@@ -580,8 +589,9 @@ unsafe impl OperandEncoding for FragmentShadingRate {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::Vertical2Pixels) {
                 write!(f, "{sep}Vertical2Pixels")?;
@@ -623,8 +633,9 @@ unsafe impl OperandEncoding for RawAccessChainOperands {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::RobustnessPerComponentNV) {
                 write!(f, "{sep}RobustnessPerComponentNV")?;
@@ -694,7 +705,7 @@ unsafe impl OperandEncoding for SourceLanguage {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -761,7 +772,7 @@ unsafe impl OperandEncoding for ExecutionModel {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -803,7 +814,7 @@ unsafe impl OperandEncoding for AddressingModel {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -845,7 +856,7 @@ unsafe impl OperandEncoding for MemoryModel {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1504,26 +1515,26 @@ unsafe impl OperandEncoding for ExecutionMode {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         match self {
-            Self::Invocations(p0) => write!(f, "Invocations {}", p0.dis(_ctx)),
-            Self::SpacingEqual => write!(f, "SpacingEqual"),
-            Self::SpacingFractionalEven => write!(f, "SpacingFractionalEven"),
-            Self::SpacingFractionalOdd => write!(f, "SpacingFractionalOdd"),
-            Self::VertexOrderCw => write!(f, "VertexOrderCw"),
-            Self::VertexOrderCcw => write!(f, "VertexOrderCcw"),
-            Self::PixelCenterInteger => write!(f, "PixelCenterInteger"),
-            Self::OriginUpperLeft => write!(f, "OriginUpperLeft"),
-            Self::OriginLowerLeft => write!(f, "OriginLowerLeft"),
-            Self::EarlyFragmentTests => write!(f, "EarlyFragmentTests"),
-            Self::PointMode => write!(f, "PointMode"),
-            Self::Xfb => write!(f, "Xfb"),
-            Self::DepthReplacing => write!(f, "DepthReplacing"),
-            Self::DepthGreater => write!(f, "DepthGreater"),
-            Self::DepthLess => write!(f, "DepthLess"),
-            Self::DepthUnchanged => write!(f, "DepthUnchanged"),
+            Self::Invocations(p0) => write!(f, " Invocations{}", p0.dis(_ctx)),
+            Self::SpacingEqual => write!(f, " SpacingEqual"),
+            Self::SpacingFractionalEven => write!(f, " SpacingFractionalEven"),
+            Self::SpacingFractionalOdd => write!(f, " SpacingFractionalOdd"),
+            Self::VertexOrderCw => write!(f, " VertexOrderCw"),
+            Self::VertexOrderCcw => write!(f, " VertexOrderCcw"),
+            Self::PixelCenterInteger => write!(f, " PixelCenterInteger"),
+            Self::OriginUpperLeft => write!(f, " OriginUpperLeft"),
+            Self::OriginLowerLeft => write!(f, " OriginLowerLeft"),
+            Self::EarlyFragmentTests => write!(f, " EarlyFragmentTests"),
+            Self::PointMode => write!(f, " PointMode"),
+            Self::Xfb => write!(f, " Xfb"),
+            Self::DepthReplacing => write!(f, " DepthReplacing"),
+            Self::DepthGreater => write!(f, " DepthGreater"),
+            Self::DepthLess => write!(f, " DepthLess"),
+            Self::DepthUnchanged => write!(f, " DepthUnchanged"),
             Self::LocalSize(p0, p1, p2) => {
                 write!(
                     f,
-                    "LocalSize {} {} {}",
+                    " LocalSize{}{}{}",
                     p0.dis(_ctx),
                     p1.dis(_ctx),
                     p2.dis(_ctx)
@@ -1532,38 +1543,38 @@ unsafe impl OperandEncoding for ExecutionMode {
             Self::LocalSizeHint(p0, p1, p2) => {
                 write!(
                     f,
-                    "LocalSizeHint {} {} {}",
+                    " LocalSizeHint{}{}{}",
                     p0.dis(_ctx),
                     p1.dis(_ctx),
                     p2.dis(_ctx)
                 )
             }
-            Self::InputPoints => write!(f, "InputPoints"),
-            Self::InputLines => write!(f, "InputLines"),
-            Self::InputLinesAdjacency => write!(f, "InputLinesAdjacency"),
-            Self::Triangles => write!(f, "Triangles"),
-            Self::InputTrianglesAdjacency => write!(f, "InputTrianglesAdjacency"),
-            Self::Quads => write!(f, "Quads"),
-            Self::Isolines => write!(f, "Isolines"),
-            Self::OutputVertices(p0) => write!(f, "OutputVertices {}", p0.dis(_ctx)),
-            Self::OutputPoints => write!(f, "OutputPoints"),
-            Self::OutputLineStrip => write!(f, "OutputLineStrip"),
-            Self::OutputTriangleStrip => write!(f, "OutputTriangleStrip"),
-            Self::VecTypeHint(p0) => write!(f, "VecTypeHint {}", p0.dis(_ctx)),
-            Self::ContractionOff => write!(f, "ContractionOff"),
-            Self::Initializer => write!(f, "Initializer"),
-            Self::Finalizer => write!(f, "Finalizer"),
-            Self::SubgroupSize(p0) => write!(f, "SubgroupSize {}", p0.dis(_ctx)),
+            Self::InputPoints => write!(f, " InputPoints"),
+            Self::InputLines => write!(f, " InputLines"),
+            Self::InputLinesAdjacency => write!(f, " InputLinesAdjacency"),
+            Self::Triangles => write!(f, " Triangles"),
+            Self::InputTrianglesAdjacency => write!(f, " InputTrianglesAdjacency"),
+            Self::Quads => write!(f, " Quads"),
+            Self::Isolines => write!(f, " Isolines"),
+            Self::OutputVertices(p0) => write!(f, " OutputVertices{}", p0.dis(_ctx)),
+            Self::OutputPoints => write!(f, " OutputPoints"),
+            Self::OutputLineStrip => write!(f, " OutputLineStrip"),
+            Self::OutputTriangleStrip => write!(f, " OutputTriangleStrip"),
+            Self::VecTypeHint(p0) => write!(f, " VecTypeHint{}", p0.dis(_ctx)),
+            Self::ContractionOff => write!(f, " ContractionOff"),
+            Self::Initializer => write!(f, " Initializer"),
+            Self::Finalizer => write!(f, " Finalizer"),
+            Self::SubgroupSize(p0) => write!(f, " SubgroupSize{}", p0.dis(_ctx)),
             Self::SubgroupsPerWorkgroup(p0) => {
-                write!(f, "SubgroupsPerWorkgroup {}", p0.dis(_ctx))
+                write!(f, " SubgroupsPerWorkgroup{}", p0.dis(_ctx))
             }
             Self::SubgroupsPerWorkgroupId(p0) => {
-                write!(f, "SubgroupsPerWorkgroupId {}", p0.dis(_ctx))
+                write!(f, " SubgroupsPerWorkgroupId{}", p0.dis(_ctx))
             }
             Self::LocalSizeId(p0, p1, p2) => {
                 write!(
                     f,
-                    "LocalSizeId {} {} {}",
+                    " LocalSizeId{}{}{}",
                     p0.dis(_ctx),
                     p1.dis(_ctx),
                     p2.dis(_ctx)
@@ -1572,156 +1583,160 @@ unsafe impl OperandEncoding for ExecutionMode {
             Self::LocalSizeHintId(p0, p1, p2) => {
                 write!(
                     f,
-                    "LocalSizeHintId {} {} {}",
+                    " LocalSizeHintId{}{}{}",
                     p0.dis(_ctx),
                     p1.dis(_ctx),
                     p2.dis(_ctx)
                 )
             }
             Self::NonCoherentColorAttachmentReadEXT => {
-                write!(f, "NonCoherentColorAttachmentReadEXT")
+                write!(f, " NonCoherentColorAttachmentReadEXT")
             }
             Self::NonCoherentDepthAttachmentReadEXT => {
-                write!(f, "NonCoherentDepthAttachmentReadEXT")
+                write!(f, " NonCoherentDepthAttachmentReadEXT")
             }
             Self::NonCoherentStencilAttachmentReadEXT => {
-                write!(f, "NonCoherentStencilAttachmentReadEXT")
+                write!(f, " NonCoherentStencilAttachmentReadEXT")
             }
             Self::SubgroupUniformControlFlowKHR => {
-                write!(f, "SubgroupUniformControlFlowKHR")
+                write!(f, " SubgroupUniformControlFlowKHR")
             }
-            Self::PostDepthCoverage => write!(f, "PostDepthCoverage"),
-            Self::DenormPreserve(p0) => write!(f, "DenormPreserve {}", p0.dis(_ctx)),
+            Self::PostDepthCoverage => write!(f, " PostDepthCoverage"),
+            Self::DenormPreserve(p0) => write!(f, " DenormPreserve{}", p0.dis(_ctx)),
             Self::DenormFlushToZero(p0) => {
-                write!(f, "DenormFlushToZero {}", p0.dis(_ctx))
+                write!(f, " DenormFlushToZero{}", p0.dis(_ctx))
             }
             Self::SignedZeroInfNanPreserve(p0) => {
-                write!(f, "SignedZeroInfNanPreserve {}", p0.dis(_ctx))
+                write!(f, " SignedZeroInfNanPreserve{}", p0.dis(_ctx))
             }
-            Self::RoundingModeRTE(p0) => write!(f, "RoundingModeRTE {}", p0.dis(_ctx)),
-            Self::RoundingModeRTZ(p0) => write!(f, "RoundingModeRTZ {}", p0.dis(_ctx)),
+            Self::RoundingModeRTE(p0) => write!(f, " RoundingModeRTE{}", p0.dis(_ctx)),
+            Self::RoundingModeRTZ(p0) => write!(f, " RoundingModeRTZ{}", p0.dis(_ctx)),
             Self::NonCoherentTileAttachmentReadQCOM => {
-                write!(f, "NonCoherentTileAttachmentReadQCOM")
+                write!(f, " NonCoherentTileAttachmentReadQCOM")
             }
             Self::TileShadingRateQCOM(p0, p1, p2) => {
                 write!(
                     f,
-                    "TileShadingRateQCOM {} {} {}",
+                    " TileShadingRateQCOM{}{}{}",
                     p0.dis(_ctx),
                     p1.dis(_ctx),
                     p2.dis(_ctx)
                 )
             }
             Self::EarlyAndLateFragmentTestsAMD => {
-                write!(f, "EarlyAndLateFragmentTestsAMD")
+                write!(f, " EarlyAndLateFragmentTestsAMD")
             }
-            Self::StencilRefReplacingEXT => write!(f, "StencilRefReplacingEXT"),
-            Self::CoalescingAMDX => write!(f, "CoalescingAMDX"),
-            Self::IsApiEntryAMDX(p0) => write!(f, "IsApiEntryAMDX {}", p0.dis(_ctx)),
+            Self::StencilRefReplacingEXT => write!(f, " StencilRefReplacingEXT"),
+            Self::CoalescingAMDX => write!(f, " CoalescingAMDX"),
+            Self::IsApiEntryAMDX(p0) => write!(f, " IsApiEntryAMDX{}", p0.dis(_ctx)),
             Self::MaxNodeRecursionAMDX(p0) => {
-                write!(f, "MaxNodeRecursionAMDX {}", p0.dis(_ctx))
+                write!(f, " MaxNodeRecursionAMDX{}", p0.dis(_ctx))
             }
             Self::StaticNumWorkgroupsAMDX(p0, p1, p2) => {
                 write!(
                     f,
-                    "StaticNumWorkgroupsAMDX {} {} {}",
+                    " StaticNumWorkgroupsAMDX{}{}{}",
                     p0.dis(_ctx),
                     p1.dis(_ctx),
                     p2.dis(_ctx)
                 )
             }
-            Self::ShaderIndexAMDX(p0) => write!(f, "ShaderIndexAMDX {}", p0.dis(_ctx)),
+            Self::ShaderIndexAMDX(p0) => write!(f, " ShaderIndexAMDX{}", p0.dis(_ctx)),
             Self::MaxNumWorkgroupsAMDX(p0, p1, p2) => {
                 write!(
                     f,
-                    "MaxNumWorkgroupsAMDX {} {} {}",
+                    " MaxNumWorkgroupsAMDX{}{}{}",
                     p0.dis(_ctx),
                     p1.dis(_ctx),
                     p2.dis(_ctx)
                 )
             }
-            Self::StencilRefUnchangedFrontAMD => write!(f, "StencilRefUnchangedFrontAMD"),
-            Self::StencilRefGreaterFrontAMD => write!(f, "StencilRefGreaterFrontAMD"),
-            Self::StencilRefLessFrontAMD => write!(f, "StencilRefLessFrontAMD"),
-            Self::StencilRefUnchangedBackAMD => write!(f, "StencilRefUnchangedBackAMD"),
-            Self::StencilRefGreaterBackAMD => write!(f, "StencilRefGreaterBackAMD"),
-            Self::StencilRefLessBackAMD => write!(f, "StencilRefLessBackAMD"),
-            Self::QuadDerivativesKHR => write!(f, "QuadDerivativesKHR"),
-            Self::RequireFullQuadsKHR => write!(f, "RequireFullQuadsKHR"),
+            Self::StencilRefUnchangedFrontAMD => {
+                write!(f, " StencilRefUnchangedFrontAMD")
+            }
+            Self::StencilRefGreaterFrontAMD => write!(f, " StencilRefGreaterFrontAMD"),
+            Self::StencilRefLessFrontAMD => write!(f, " StencilRefLessFrontAMD"),
+            Self::StencilRefUnchangedBackAMD => write!(f, " StencilRefUnchangedBackAMD"),
+            Self::StencilRefGreaterBackAMD => write!(f, " StencilRefGreaterBackAMD"),
+            Self::StencilRefLessBackAMD => write!(f, " StencilRefLessBackAMD"),
+            Self::QuadDerivativesKHR => write!(f, " QuadDerivativesKHR"),
+            Self::RequireFullQuadsKHR => write!(f, " RequireFullQuadsKHR"),
             Self::SharesInputWithAMDX(p0, p1) => {
-                write!(f, "SharesInputWithAMDX {} {}", p0.dis(_ctx), p1.dis(_ctx))
+                write!(f, " SharesInputWithAMDX{}{}", p0.dis(_ctx), p1.dis(_ctx))
             }
-            Self::OutputLinesEXT => write!(f, "OutputLinesEXT"),
+            Self::OutputLinesEXT => write!(f, " OutputLinesEXT"),
             Self::OutputPrimitivesEXT(p0) => {
-                write!(f, "OutputPrimitivesEXT {}", p0.dis(_ctx))
+                write!(f, " OutputPrimitivesEXT{}", p0.dis(_ctx))
             }
-            Self::DerivativeGroupQuadsKHR => write!(f, "DerivativeGroupQuadsKHR"),
-            Self::DerivativeGroupLinearKHR => write!(f, "DerivativeGroupLinearKHR"),
-            Self::OutputTrianglesEXT => write!(f, "OutputTrianglesEXT"),
-            Self::PixelInterlockOrderedEXT => write!(f, "PixelInterlockOrderedEXT"),
-            Self::PixelInterlockUnorderedEXT => write!(f, "PixelInterlockUnorderedEXT"),
-            Self::SampleInterlockOrderedEXT => write!(f, "SampleInterlockOrderedEXT"),
-            Self::SampleInterlockUnorderedEXT => write!(f, "SampleInterlockUnorderedEXT"),
+            Self::DerivativeGroupQuadsKHR => write!(f, " DerivativeGroupQuadsKHR"),
+            Self::DerivativeGroupLinearKHR => write!(f, " DerivativeGroupLinearKHR"),
+            Self::OutputTrianglesEXT => write!(f, " OutputTrianglesEXT"),
+            Self::PixelInterlockOrderedEXT => write!(f, " PixelInterlockOrderedEXT"),
+            Self::PixelInterlockUnorderedEXT => write!(f, " PixelInterlockUnorderedEXT"),
+            Self::SampleInterlockOrderedEXT => write!(f, " SampleInterlockOrderedEXT"),
+            Self::SampleInterlockUnorderedEXT => {
+                write!(f, " SampleInterlockUnorderedEXT")
+            }
             Self::ShadingRateInterlockOrderedEXT => {
-                write!(f, "ShadingRateInterlockOrderedEXT")
+                write!(f, " ShadingRateInterlockOrderedEXT")
             }
             Self::ShadingRateInterlockUnorderedEXT => {
-                write!(f, "ShadingRateInterlockUnorderedEXT")
+                write!(f, " ShadingRateInterlockUnorderedEXT")
             }
-            Self::Shader64BitIndexingEXT => write!(f, "Shader64BitIndexingEXT"),
+            Self::Shader64BitIndexingEXT => write!(f, " Shader64BitIndexingEXT"),
             Self::SharedLocalMemorySizeINTEL(p0) => {
-                write!(f, "SharedLocalMemorySizeINTEL {}", p0.dis(_ctx))
+                write!(f, " SharedLocalMemorySizeINTEL{}", p0.dis(_ctx))
             }
             Self::RoundingModeRTPINTEL(p0) => {
-                write!(f, "RoundingModeRTPINTEL {}", p0.dis(_ctx))
+                write!(f, " RoundingModeRTPINTEL{}", p0.dis(_ctx))
             }
             Self::RoundingModeRTNINTEL(p0) => {
-                write!(f, "RoundingModeRTNINTEL {}", p0.dis(_ctx))
+                write!(f, " RoundingModeRTNINTEL{}", p0.dis(_ctx))
             }
             Self::FloatingPointModeALTINTEL(p0) => {
-                write!(f, "FloatingPointModeALTINTEL {}", p0.dis(_ctx))
+                write!(f, " FloatingPointModeALTINTEL{}", p0.dis(_ctx))
             }
             Self::FloatingPointModeIEEEINTEL(p0) => {
-                write!(f, "FloatingPointModeIEEEINTEL {}", p0.dis(_ctx))
+                write!(f, " FloatingPointModeIEEEINTEL{}", p0.dis(_ctx))
             }
             Self::MaxWorkgroupSizeINTEL(p0, p1, p2) => {
                 write!(
                     f,
-                    "MaxWorkgroupSizeINTEL {} {} {}",
+                    " MaxWorkgroupSizeINTEL{}{}{}",
                     p0.dis(_ctx),
                     p1.dis(_ctx),
                     p2.dis(_ctx)
                 )
             }
-            Self::MaxWorkDimINTEL(p0) => write!(f, "MaxWorkDimINTEL {}", p0.dis(_ctx)),
-            Self::NoGlobalOffsetINTEL => write!(f, "NoGlobalOffsetINTEL"),
+            Self::MaxWorkDimINTEL(p0) => write!(f, " MaxWorkDimINTEL{}", p0.dis(_ctx)),
+            Self::NoGlobalOffsetINTEL => write!(f, " NoGlobalOffsetINTEL"),
             Self::NumSIMDWorkitemsINTEL(p0) => {
-                write!(f, "NumSIMDWorkitemsINTEL {}", p0.dis(_ctx))
+                write!(f, " NumSIMDWorkitemsINTEL{}", p0.dis(_ctx))
             }
             Self::SchedulerTargetFmaxMhzINTEL(p0) => {
-                write!(f, "SchedulerTargetFmaxMhzINTEL {}", p0.dis(_ctx))
+                write!(f, " SchedulerTargetFmaxMhzINTEL{}", p0.dis(_ctx))
             }
-            Self::MaximallyReconvergesKHR => write!(f, "MaximallyReconvergesKHR"),
+            Self::MaximallyReconvergesKHR => write!(f, " MaximallyReconvergesKHR"),
             Self::FPFastMathDefault(p0, p1) => {
-                write!(f, "FPFastMathDefault {} {}", p0.dis(_ctx), p1.dis(_ctx))
+                write!(f, " FPFastMathDefault{}{}", p0.dis(_ctx), p1.dis(_ctx))
             }
             Self::StreamingInterfaceINTEL(p0) => {
-                write!(f, "StreamingInterfaceINTEL {}", p0.dis(_ctx))
+                write!(f, " StreamingInterfaceINTEL{}", p0.dis(_ctx))
             }
             Self::RegisterMapInterfaceINTEL(p0) => {
-                write!(f, "RegisterMapInterfaceINTEL {}", p0.dis(_ctx))
+                write!(f, " RegisterMapInterfaceINTEL{}", p0.dis(_ctx))
             }
             Self::NamedBarrierCountINTEL(p0) => {
-                write!(f, "NamedBarrierCountINTEL {}", p0.dis(_ctx))
+                write!(f, " NamedBarrierCountINTEL{}", p0.dis(_ctx))
             }
             Self::MaximumRegistersINTEL(p0) => {
-                write!(f, "MaximumRegistersINTEL {}", p0.dis(_ctx))
+                write!(f, " MaximumRegistersINTEL{}", p0.dis(_ctx))
             }
             Self::MaximumRegistersIdINTEL(p0) => {
-                write!(f, "MaximumRegistersIdINTEL {}", p0.dis(_ctx))
+                write!(f, " MaximumRegistersIdINTEL{}", p0.dis(_ctx))
             }
             Self::NamedMaximumRegistersINTEL(p0) => {
-                write!(f, "NamedMaximumRegistersINTEL {}", p0.dis(_ctx))
+                write!(f, " NamedMaximumRegistersINTEL{}", p0.dis(_ctx))
             }
         }
     }
@@ -1817,7 +1832,7 @@ unsafe impl OperandEncoding for StorageClass {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -1866,7 +1881,7 @@ unsafe impl OperandEncoding for Dim {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -1909,7 +1924,7 @@ unsafe impl OperandEncoding for SamplerAddressingMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -1946,7 +1961,7 @@ unsafe impl OperandEncoding for SamplerFilterMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -2063,7 +2078,7 @@ unsafe impl OperandEncoding for ImageFormat {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -2136,7 +2151,7 @@ unsafe impl OperandEncoding for ImageChannelOrder {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -2221,7 +2236,7 @@ unsafe impl OperandEncoding for ImageChannelDataType {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -2262,7 +2277,7 @@ unsafe impl OperandEncoding for FPRoundingMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -2299,7 +2314,7 @@ unsafe impl OperandEncoding for FPDenormMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -2348,7 +2363,7 @@ unsafe impl OperandEncoding for QuantizationModes {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -2385,7 +2400,7 @@ unsafe impl OperandEncoding for FPOperationMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -2426,7 +2441,7 @@ unsafe impl OperandEncoding for OverflowModes {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -2465,7 +2480,7 @@ unsafe impl OperandEncoding for LinkageType {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -2504,7 +2519,7 @@ unsafe impl OperandEncoding for AccessQualifier {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -2545,7 +2560,7 @@ unsafe impl OperandEncoding for HostAccessQualifier {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -2596,7 +2611,7 @@ unsafe impl OperandEncoding for FunctionParameterAttribute {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3623,131 +3638,133 @@ unsafe impl OperandEncoding for Decoration {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         match self {
-            Self::RelaxedPrecision => write!(f, "RelaxedPrecision"),
-            Self::SpecId(p0) => write!(f, "SpecId {}", p0.dis(_ctx)),
-            Self::Block => write!(f, "Block"),
-            Self::BufferBlock => write!(f, "BufferBlock"),
-            Self::RowMajor => write!(f, "RowMajor"),
-            Self::ColMajor => write!(f, "ColMajor"),
-            Self::ArrayStride(p0) => write!(f, "ArrayStride {}", p0.dis(_ctx)),
-            Self::MatrixStride(p0) => write!(f, "MatrixStride {}", p0.dis(_ctx)),
-            Self::GLSLShared => write!(f, "GLSLShared"),
-            Self::GLSLPacked => write!(f, "GLSLPacked"),
-            Self::CPacked => write!(f, "CPacked"),
-            Self::BuiltIn(p0) => write!(f, "BuiltIn {}", p0.dis(_ctx)),
-            Self::NoPerspective => write!(f, "NoPerspective"),
-            Self::Flat => write!(f, "Flat"),
-            Self::Patch => write!(f, "Patch"),
-            Self::Centroid => write!(f, "Centroid"),
-            Self::Sample => write!(f, "Sample"),
-            Self::Invariant => write!(f, "Invariant"),
-            Self::Restrict => write!(f, "Restrict"),
-            Self::Aliased => write!(f, "Aliased"),
-            Self::Volatile => write!(f, "Volatile"),
-            Self::Constant => write!(f, "Constant"),
-            Self::Coherent => write!(f, "Coherent"),
-            Self::NonWritable => write!(f, "NonWritable"),
-            Self::NonReadable => write!(f, "NonReadable"),
-            Self::Uniform => write!(f, "Uniform"),
-            Self::UniformId(p0) => write!(f, "UniformId {}", p0.dis(_ctx)),
-            Self::SaturatedConversion => write!(f, "SaturatedConversion"),
-            Self::Stream(p0) => write!(f, "Stream {}", p0.dis(_ctx)),
-            Self::Location(p0) => write!(f, "Location {}", p0.dis(_ctx)),
-            Self::Component(p0) => write!(f, "Component {}", p0.dis(_ctx)),
-            Self::Index(p0) => write!(f, "Index {}", p0.dis(_ctx)),
-            Self::Binding(p0) => write!(f, "Binding {}", p0.dis(_ctx)),
-            Self::DescriptorSet(p0) => write!(f, "DescriptorSet {}", p0.dis(_ctx)),
-            Self::Offset(p0) => write!(f, "Offset {}", p0.dis(_ctx)),
-            Self::XfbBuffer(p0) => write!(f, "XfbBuffer {}", p0.dis(_ctx)),
-            Self::XfbStride(p0) => write!(f, "XfbStride {}", p0.dis(_ctx)),
-            Self::FuncParamAttr(p0) => write!(f, "FuncParamAttr {}", p0.dis(_ctx)),
-            Self::FPRoundingMode(p0) => write!(f, "FPRoundingMode {}", p0.dis(_ctx)),
-            Self::FPFastMathMode(p0) => write!(f, "FPFastMathMode {}", p0.dis(_ctx)),
+            Self::RelaxedPrecision => write!(f, " RelaxedPrecision"),
+            Self::SpecId(p0) => write!(f, " SpecId{}", p0.dis(_ctx)),
+            Self::Block => write!(f, " Block"),
+            Self::BufferBlock => write!(f, " BufferBlock"),
+            Self::RowMajor => write!(f, " RowMajor"),
+            Self::ColMajor => write!(f, " ColMajor"),
+            Self::ArrayStride(p0) => write!(f, " ArrayStride{}", p0.dis(_ctx)),
+            Self::MatrixStride(p0) => write!(f, " MatrixStride{}", p0.dis(_ctx)),
+            Self::GLSLShared => write!(f, " GLSLShared"),
+            Self::GLSLPacked => write!(f, " GLSLPacked"),
+            Self::CPacked => write!(f, " CPacked"),
+            Self::BuiltIn(p0) => write!(f, " BuiltIn{}", p0.dis(_ctx)),
+            Self::NoPerspective => write!(f, " NoPerspective"),
+            Self::Flat => write!(f, " Flat"),
+            Self::Patch => write!(f, " Patch"),
+            Self::Centroid => write!(f, " Centroid"),
+            Self::Sample => write!(f, " Sample"),
+            Self::Invariant => write!(f, " Invariant"),
+            Self::Restrict => write!(f, " Restrict"),
+            Self::Aliased => write!(f, " Aliased"),
+            Self::Volatile => write!(f, " Volatile"),
+            Self::Constant => write!(f, " Constant"),
+            Self::Coherent => write!(f, " Coherent"),
+            Self::NonWritable => write!(f, " NonWritable"),
+            Self::NonReadable => write!(f, " NonReadable"),
+            Self::Uniform => write!(f, " Uniform"),
+            Self::UniformId(p0) => write!(f, " UniformId{}", p0.dis(_ctx)),
+            Self::SaturatedConversion => write!(f, " SaturatedConversion"),
+            Self::Stream(p0) => write!(f, " Stream{}", p0.dis(_ctx)),
+            Self::Location(p0) => write!(f, " Location{}", p0.dis(_ctx)),
+            Self::Component(p0) => write!(f, " Component{}", p0.dis(_ctx)),
+            Self::Index(p0) => write!(f, " Index{}", p0.dis(_ctx)),
+            Self::Binding(p0) => write!(f, " Binding{}", p0.dis(_ctx)),
+            Self::DescriptorSet(p0) => write!(f, " DescriptorSet{}", p0.dis(_ctx)),
+            Self::Offset(p0) => write!(f, " Offset{}", p0.dis(_ctx)),
+            Self::XfbBuffer(p0) => write!(f, " XfbBuffer{}", p0.dis(_ctx)),
+            Self::XfbStride(p0) => write!(f, " XfbStride{}", p0.dis(_ctx)),
+            Self::FuncParamAttr(p0) => write!(f, " FuncParamAttr{}", p0.dis(_ctx)),
+            Self::FPRoundingMode(p0) => write!(f, " FPRoundingMode{}", p0.dis(_ctx)),
+            Self::FPFastMathMode(p0) => write!(f, " FPFastMathMode{}", p0.dis(_ctx)),
             Self::LinkageAttributes(p0, p1) => {
-                write!(f, "LinkageAttributes {} {}", p0.dis(_ctx), p1.dis(_ctx))
+                write!(f, " LinkageAttributes{}{}", p0.dis(_ctx), p1.dis(_ctx))
             }
-            Self::NoContraction => write!(f, "NoContraction"),
+            Self::NoContraction => write!(f, " NoContraction"),
             Self::InputAttachmentIndex(p0) => {
-                write!(f, "InputAttachmentIndex {}", p0.dis(_ctx))
+                write!(f, " InputAttachmentIndex{}", p0.dis(_ctx))
             }
-            Self::Alignment(p0) => write!(f, "Alignment {}", p0.dis(_ctx)),
-            Self::MaxByteOffset(p0) => write!(f, "MaxByteOffset {}", p0.dis(_ctx)),
-            Self::AlignmentId(p0) => write!(f, "AlignmentId {}", p0.dis(_ctx)),
-            Self::MaxByteOffsetId(p0) => write!(f, "MaxByteOffsetId {}", p0.dis(_ctx)),
+            Self::Alignment(p0) => write!(f, " Alignment{}", p0.dis(_ctx)),
+            Self::MaxByteOffset(p0) => write!(f, " MaxByteOffset{}", p0.dis(_ctx)),
+            Self::AlignmentId(p0) => write!(f, " AlignmentId{}", p0.dis(_ctx)),
+            Self::MaxByteOffsetId(p0) => write!(f, " MaxByteOffsetId{}", p0.dis(_ctx)),
             Self::SaturatedToLargestFloat8NormalConversionEXT => {
-                write!(f, "SaturatedToLargestFloat8NormalConversionEXT")
+                write!(f, " SaturatedToLargestFloat8NormalConversionEXT")
             }
-            Self::NoSignedWrap => write!(f, "NoSignedWrap"),
-            Self::NoUnsignedWrap => write!(f, "NoUnsignedWrap"),
-            Self::WeightTextureQCOM => write!(f, "WeightTextureQCOM"),
-            Self::BlockMatchTextureQCOM => write!(f, "BlockMatchTextureQCOM"),
-            Self::BlockMatchSamplerQCOM => write!(f, "BlockMatchSamplerQCOM"),
-            Self::ExplicitInterpAMD => write!(f, "ExplicitInterpAMD"),
+            Self::NoSignedWrap => write!(f, " NoSignedWrap"),
+            Self::NoUnsignedWrap => write!(f, " NoUnsignedWrap"),
+            Self::WeightTextureQCOM => write!(f, " WeightTextureQCOM"),
+            Self::BlockMatchTextureQCOM => write!(f, " BlockMatchTextureQCOM"),
+            Self::BlockMatchSamplerQCOM => write!(f, " BlockMatchSamplerQCOM"),
+            Self::ExplicitInterpAMD => write!(f, " ExplicitInterpAMD"),
             Self::NodeSharesPayloadLimitsWithAMDX(p0) => {
-                write!(f, "NodeSharesPayloadLimitsWithAMDX {}", p0.dis(_ctx))
+                write!(f, " NodeSharesPayloadLimitsWithAMDX{}", p0.dis(_ctx))
             }
             Self::NodeMaxPayloadsAMDX(p0) => {
-                write!(f, "NodeMaxPayloadsAMDX {}", p0.dis(_ctx))
+                write!(f, " NodeMaxPayloadsAMDX{}", p0.dis(_ctx))
             }
-            Self::TrackFinishWritingAMDX => write!(f, "TrackFinishWritingAMDX"),
+            Self::TrackFinishWritingAMDX => write!(f, " TrackFinishWritingAMDX"),
             Self::PayloadNodeNameAMDX(p0) => {
-                write!(f, "PayloadNodeNameAMDX {}", p0.dis(_ctx))
+                write!(f, " PayloadNodeNameAMDX{}", p0.dis(_ctx))
             }
             Self::PayloadNodeBaseIndexAMDX(p0) => {
-                write!(f, "PayloadNodeBaseIndexAMDX {}", p0.dis(_ctx))
+                write!(f, " PayloadNodeBaseIndexAMDX{}", p0.dis(_ctx))
             }
-            Self::PayloadNodeSparseArrayAMDX => write!(f, "PayloadNodeSparseArrayAMDX"),
+            Self::PayloadNodeSparseArrayAMDX => write!(f, " PayloadNodeSparseArrayAMDX"),
             Self::PayloadNodeArraySizeAMDX(p0) => {
-                write!(f, "PayloadNodeArraySizeAMDX {}", p0.dis(_ctx))
+                write!(f, " PayloadNodeArraySizeAMDX{}", p0.dis(_ctx))
             }
-            Self::PayloadDispatchIndirectAMDX => write!(f, "PayloadDispatchIndirectAMDX"),
-            Self::ArrayStrideIdEXT(p0) => write!(f, "ArrayStrideIdEXT {}", p0.dis(_ctx)),
-            Self::OffsetIdEXT(p0) => write!(f, "OffsetIdEXT {}", p0.dis(_ctx)),
-            Self::OverrideCoverageNV => write!(f, "OverrideCoverageNV"),
-            Self::PassthroughNV => write!(f, "PassthroughNV"),
-            Self::ViewportRelativeNV => write!(f, "ViewportRelativeNV"),
+            Self::PayloadDispatchIndirectAMDX => {
+                write!(f, " PayloadDispatchIndirectAMDX")
+            }
+            Self::ArrayStrideIdEXT(p0) => write!(f, " ArrayStrideIdEXT{}", p0.dis(_ctx)),
+            Self::OffsetIdEXT(p0) => write!(f, " OffsetIdEXT{}", p0.dis(_ctx)),
+            Self::OverrideCoverageNV => write!(f, " OverrideCoverageNV"),
+            Self::PassthroughNV => write!(f, " PassthroughNV"),
+            Self::ViewportRelativeNV => write!(f, " ViewportRelativeNV"),
             Self::SecondaryViewportRelativeNV(p0) => {
-                write!(f, "SecondaryViewportRelativeNV {}", p0.dis(_ctx))
+                write!(f, " SecondaryViewportRelativeNV{}", p0.dis(_ctx))
             }
-            Self::PerPrimitiveEXT => write!(f, "PerPrimitiveEXT"),
-            Self::PerViewNV => write!(f, "PerViewNV"),
-            Self::PerTaskNV => write!(f, "PerTaskNV"),
-            Self::PerVertexKHR => write!(f, "PerVertexKHR"),
-            Self::NonUniform => write!(f, "NonUniform"),
-            Self::RestrictPointer => write!(f, "RestrictPointer"),
-            Self::AliasedPointer => write!(f, "AliasedPointer"),
-            Self::MemberOffsetNV(p0) => write!(f, "MemberOffsetNV {}", p0.dis(_ctx)),
+            Self::PerPrimitiveEXT => write!(f, " PerPrimitiveEXT"),
+            Self::PerViewNV => write!(f, " PerViewNV"),
+            Self::PerTaskNV => write!(f, " PerTaskNV"),
+            Self::PerVertexKHR => write!(f, " PerVertexKHR"),
+            Self::NonUniform => write!(f, " NonUniform"),
+            Self::RestrictPointer => write!(f, " RestrictPointer"),
+            Self::AliasedPointer => write!(f, " AliasedPointer"),
+            Self::MemberOffsetNV(p0) => write!(f, " MemberOffsetNV{}", p0.dis(_ctx)),
             Self::HitObjectShaderRecordBufferNV => {
-                write!(f, "HitObjectShaderRecordBufferNV")
+                write!(f, " HitObjectShaderRecordBufferNV")
             }
             Self::HitObjectShaderRecordBufferEXT => {
-                write!(f, "HitObjectShaderRecordBufferEXT")
+                write!(f, " HitObjectShaderRecordBufferEXT")
             }
-            Self::BankNV(p0) => write!(f, "BankNV {}", p0.dis(_ctx)),
-            Self::BindlessSamplerNV => write!(f, "BindlessSamplerNV"),
-            Self::BindlessImageNV => write!(f, "BindlessImageNV"),
-            Self::BoundSamplerNV => write!(f, "BoundSamplerNV"),
-            Self::BoundImageNV => write!(f, "BoundImageNV"),
-            Self::SIMTCallINTEL(p0) => write!(f, "SIMTCallINTEL {}", p0.dis(_ctx)),
-            Self::ReferencedIndirectlyINTEL => write!(f, "ReferencedIndirectlyINTEL"),
-            Self::ClobberINTEL(p0) => write!(f, "ClobberINTEL {}", p0.dis(_ctx)),
-            Self::SideEffectsINTEL => write!(f, "SideEffectsINTEL"),
-            Self::VectorComputeVariableINTEL => write!(f, "VectorComputeVariableINTEL"),
+            Self::BankNV(p0) => write!(f, " BankNV{}", p0.dis(_ctx)),
+            Self::BindlessSamplerNV => write!(f, " BindlessSamplerNV"),
+            Self::BindlessImageNV => write!(f, " BindlessImageNV"),
+            Self::BoundSamplerNV => write!(f, " BoundSamplerNV"),
+            Self::BoundImageNV => write!(f, " BoundImageNV"),
+            Self::SIMTCallINTEL(p0) => write!(f, " SIMTCallINTEL{}", p0.dis(_ctx)),
+            Self::ReferencedIndirectlyINTEL => write!(f, " ReferencedIndirectlyINTEL"),
+            Self::ClobberINTEL(p0) => write!(f, " ClobberINTEL{}", p0.dis(_ctx)),
+            Self::SideEffectsINTEL => write!(f, " SideEffectsINTEL"),
+            Self::VectorComputeVariableINTEL => write!(f, " VectorComputeVariableINTEL"),
             Self::FuncParamIOKindINTEL(p0) => {
-                write!(f, "FuncParamIOKindINTEL {}", p0.dis(_ctx))
+                write!(f, " FuncParamIOKindINTEL{}", p0.dis(_ctx))
             }
-            Self::VectorComputeFunctionINTEL => write!(f, "VectorComputeFunctionINTEL"),
-            Self::StackCallINTEL => write!(f, "StackCallINTEL"),
+            Self::VectorComputeFunctionINTEL => write!(f, " VectorComputeFunctionINTEL"),
+            Self::StackCallINTEL => write!(f, " StackCallINTEL"),
             Self::GlobalVariableOffsetINTEL(p0) => {
-                write!(f, "GlobalVariableOffsetINTEL {}", p0.dis(_ctx))
+                write!(f, " GlobalVariableOffsetINTEL{}", p0.dis(_ctx))
             }
-            Self::CounterBuffer(p0) => write!(f, "CounterBuffer {}", p0.dis(_ctx)),
-            Self::UserSemantic(p0) => write!(f, "UserSemantic {}", p0.dis(_ctx)),
-            Self::UserTypeGOOGLE(p0) => write!(f, "UserTypeGOOGLE {}", p0.dis(_ctx)),
+            Self::CounterBuffer(p0) => write!(f, " CounterBuffer{}", p0.dis(_ctx)),
+            Self::UserSemantic(p0) => write!(f, " UserSemantic{}", p0.dis(_ctx)),
+            Self::UserTypeGOOGLE(p0) => write!(f, " UserTypeGOOGLE{}", p0.dis(_ctx)),
             Self::FunctionRoundingModeINTEL(p0, p1) => {
                 write!(
                     f,
-                    "FunctionRoundingModeINTEL {} {}",
+                    " FunctionRoundingModeINTEL{}{}",
                     p0.dis(_ctx),
                     p1.dis(_ctx)
                 )
@@ -3755,132 +3772,129 @@ unsafe impl OperandEncoding for Decoration {
             Self::FunctionDenormModeINTEL(p0, p1) => {
                 write!(
                     f,
-                    "FunctionDenormModeINTEL {} {}",
+                    " FunctionDenormModeINTEL{}{}",
                     p0.dis(_ctx),
                     p1.dis(_ctx)
                 )
             }
-            Self::RegisterALTERA => write!(f, "RegisterALTERA"),
-            Self::MemoryALTERA(p0) => write!(f, "MemoryALTERA {}", p0.dis(_ctx)),
-            Self::NumbanksALTERA(p0) => write!(f, "NumbanksALTERA {}", p0.dis(_ctx)),
-            Self::BankwidthALTERA(p0) => write!(f, "BankwidthALTERA {}", p0.dis(_ctx)),
+            Self::RegisterALTERA => write!(f, " RegisterALTERA"),
+            Self::MemoryALTERA(p0) => write!(f, " MemoryALTERA{}", p0.dis(_ctx)),
+            Self::NumbanksALTERA(p0) => write!(f, " NumbanksALTERA{}", p0.dis(_ctx)),
+            Self::BankwidthALTERA(p0) => write!(f, " BankwidthALTERA{}", p0.dis(_ctx)),
             Self::MaxPrivateCopiesALTERA(p0) => {
-                write!(f, "MaxPrivateCopiesALTERA {}", p0.dis(_ctx))
+                write!(f, " MaxPrivateCopiesALTERA{}", p0.dis(_ctx))
             }
-            Self::SinglepumpALTERA => write!(f, "SinglepumpALTERA"),
-            Self::DoublepumpALTERA => write!(f, "DoublepumpALTERA"),
+            Self::SinglepumpALTERA => write!(f, " SinglepumpALTERA"),
+            Self::DoublepumpALTERA => write!(f, " DoublepumpALTERA"),
             Self::MaxReplicatesALTERA(p0) => {
-                write!(f, "MaxReplicatesALTERA {}", p0.dis(_ctx))
+                write!(f, " MaxReplicatesALTERA{}", p0.dis(_ctx))
             }
-            Self::SimpleDualPortALTERA => write!(f, "SimpleDualPortALTERA"),
+            Self::SimpleDualPortALTERA => write!(f, " SimpleDualPortALTERA"),
             Self::MergeALTERA(p0, p1) => {
-                write!(f, "MergeALTERA {} {}", p0.dis(_ctx), p1.dis(_ctx))
+                write!(f, " MergeALTERA{}{}", p0.dis(_ctx), p1.dis(_ctx))
             }
-            Self::BankBitsALTERA(p0) => write!(f, "BankBitsALTERA {}", p0.dis(_ctx)),
+            Self::BankBitsALTERA(p0) => write!(f, " BankBitsALTERA{}", p0.dis(_ctx)),
             Self::ForcePow2DepthALTERA(p0) => {
-                write!(f, "ForcePow2DepthALTERA {}", p0.dis(_ctx))
+                write!(f, " ForcePow2DepthALTERA{}", p0.dis(_ctx))
             }
-            Self::StridesizeALTERA(p0) => write!(f, "StridesizeALTERA {}", p0.dis(_ctx)),
-            Self::WordsizeALTERA(p0) => write!(f, "WordsizeALTERA {}", p0.dis(_ctx)),
-            Self::TrueDualPortALTERA => write!(f, "TrueDualPortALTERA"),
-            Self::BurstCoalesceALTERA => write!(f, "BurstCoalesceALTERA"),
-            Self::CacheSizeALTERA(p0) => write!(f, "CacheSizeALTERA {}", p0.dis(_ctx)),
+            Self::StridesizeALTERA(p0) => write!(f, " StridesizeALTERA{}", p0.dis(_ctx)),
+            Self::WordsizeALTERA(p0) => write!(f, " WordsizeALTERA{}", p0.dis(_ctx)),
+            Self::TrueDualPortALTERA => write!(f, " TrueDualPortALTERA"),
+            Self::BurstCoalesceALTERA => write!(f, " BurstCoalesceALTERA"),
+            Self::CacheSizeALTERA(p0) => write!(f, " CacheSizeALTERA{}", p0.dis(_ctx)),
             Self::DontStaticallyCoalesceALTERA => {
-                write!(f, "DontStaticallyCoalesceALTERA")
+                write!(f, " DontStaticallyCoalesceALTERA")
             }
-            Self::PrefetchALTERA(p0) => write!(f, "PrefetchALTERA {}", p0.dis(_ctx)),
-            Self::StallEnableALTERA => write!(f, "StallEnableALTERA"),
-            Self::FuseLoopsInFunctionALTERA => write!(f, "FuseLoopsInFunctionALTERA"),
+            Self::PrefetchALTERA(p0) => write!(f, " PrefetchALTERA{}", p0.dis(_ctx)),
+            Self::StallEnableALTERA => write!(f, " StallEnableALTERA"),
+            Self::FuseLoopsInFunctionALTERA => write!(f, " FuseLoopsInFunctionALTERA"),
             Self::MathOpDSPModeALTERA(p0, p1) => {
-                write!(f, "MathOpDSPModeALTERA {} {}", p0.dis(_ctx), p1.dis(_ctx))
+                write!(f, " MathOpDSPModeALTERA{}{}", p0.dis(_ctx), p1.dis(_ctx))
             }
-            Self::AliasScopeINTEL(p0) => write!(f, "AliasScopeINTEL {}", p0.dis(_ctx)),
-            Self::NoAliasINTEL(p0) => write!(f, "NoAliasINTEL {}", p0.dis(_ctx)),
+            Self::AliasScopeINTEL(p0) => write!(f, " AliasScopeINTEL{}", p0.dis(_ctx)),
+            Self::NoAliasINTEL(p0) => write!(f, " NoAliasINTEL{}", p0.dis(_ctx)),
             Self::InitiationIntervalALTERA(p0) => {
-                write!(f, "InitiationIntervalALTERA {}", p0.dis(_ctx))
+                write!(f, " InitiationIntervalALTERA{}", p0.dis(_ctx))
             }
             Self::MaxConcurrencyALTERA(p0) => {
-                write!(f, "MaxConcurrencyALTERA {}", p0.dis(_ctx))
+                write!(f, " MaxConcurrencyALTERA{}", p0.dis(_ctx))
             }
             Self::PipelineEnableALTERA(p0) => {
-                write!(f, "PipelineEnableALTERA {}", p0.dis(_ctx))
+                write!(f, " PipelineEnableALTERA{}", p0.dis(_ctx))
             }
             Self::BufferLocationALTERA(p0) => {
-                write!(f, "BufferLocationALTERA {}", p0.dis(_ctx))
+                write!(f, " BufferLocationALTERA{}", p0.dis(_ctx))
             }
             Self::IOPipeStorageALTERA(p0) => {
-                write!(f, "IOPipeStorageALTERA {}", p0.dis(_ctx))
+                write!(f, " IOPipeStorageALTERA{}", p0.dis(_ctx))
             }
             Self::FunctionFloatingPointModeINTEL(p0, p1) => {
                 write!(
                     f,
-                    "FunctionFloatingPointModeINTEL {} {}",
+                    " FunctionFloatingPointModeINTEL{}{}",
                     p0.dis(_ctx),
                     p1.dis(_ctx)
                 )
             }
-            Self::SingleElementVectorINTEL => write!(f, "SingleElementVectorINTEL"),
+            Self::SingleElementVectorINTEL => write!(f, " SingleElementVectorINTEL"),
             Self::VectorComputeCallableFunctionINTEL => {
-                write!(f, "VectorComputeCallableFunctionINTEL")
+                write!(f, " VectorComputeCallableFunctionINTEL")
             }
-            Self::MediaBlockIOINTEL => write!(f, "MediaBlockIOINTEL"),
-            Self::StallFreeALTERA => write!(f, "StallFreeALTERA"),
+            Self::MediaBlockIOINTEL => write!(f, " MediaBlockIOINTEL"),
+            Self::StallFreeALTERA => write!(f, " StallFreeALTERA"),
             Self::FPMaxErrorDecorationINTEL(p0) => {
-                write!(f, "FPMaxErrorDecorationINTEL {}", p0.dis(_ctx))
+                write!(f, " FPMaxErrorDecorationINTEL{}", p0.dis(_ctx))
             }
             Self::LatencyControlLabelALTERA(p0) => {
-                write!(f, "LatencyControlLabelALTERA {}", p0.dis(_ctx))
+                write!(f, " LatencyControlLabelALTERA{}", p0.dis(_ctx))
             }
             Self::LatencyControlConstraintALTERA(p0, p1, p2) => {
                 write!(
                     f,
-                    "LatencyControlConstraintALTERA {} {} {}",
+                    " LatencyControlConstraintALTERA{}{}{}",
                     p0.dis(_ctx),
                     p1.dis(_ctx),
                     p2.dis(_ctx)
                 )
             }
-            Self::ConduitKernelArgumentALTERA => write!(f, "ConduitKernelArgumentALTERA"),
+            Self::ConduitKernelArgumentALTERA => {
+                write!(f, " ConduitKernelArgumentALTERA")
+            }
             Self::RegisterMapKernelArgumentALTERA => {
-                write!(f, "RegisterMapKernelArgumentALTERA")
+                write!(f, " RegisterMapKernelArgumentALTERA")
             }
             Self::MMHostInterfaceAddressWidthALTERA(p0) => {
-                write!(f, "MMHostInterfaceAddressWidthALTERA {}", p0.dis(_ctx))
+                write!(f, " MMHostInterfaceAddressWidthALTERA{}", p0.dis(_ctx))
             }
             Self::MMHostInterfaceDataWidthALTERA(p0) => {
-                write!(f, "MMHostInterfaceDataWidthALTERA {}", p0.dis(_ctx))
+                write!(f, " MMHostInterfaceDataWidthALTERA{}", p0.dis(_ctx))
             }
             Self::MMHostInterfaceLatencyALTERA(p0) => {
-                write!(f, "MMHostInterfaceLatencyALTERA {}", p0.dis(_ctx))
+                write!(f, " MMHostInterfaceLatencyALTERA{}", p0.dis(_ctx))
             }
             Self::MMHostInterfaceReadWriteModeALTERA(p0) => {
-                write!(f, "MMHostInterfaceReadWriteModeALTERA {}", p0.dis(_ctx))
+                write!(f, " MMHostInterfaceReadWriteModeALTERA{}", p0.dis(_ctx))
             }
             Self::MMHostInterfaceMaxBurstALTERA(p0) => {
-                write!(f, "MMHostInterfaceMaxBurstALTERA {}", p0.dis(_ctx))
+                write!(f, " MMHostInterfaceMaxBurstALTERA{}", p0.dis(_ctx))
             }
             Self::MMHostInterfaceWaitRequestALTERA(p0) => {
-                write!(f, "MMHostInterfaceWaitRequestALTERA {}", p0.dis(_ctx))
+                write!(f, " MMHostInterfaceWaitRequestALTERA{}", p0.dis(_ctx))
             }
-            Self::StableKernelArgumentALTERA => write!(f, "StableKernelArgumentALTERA"),
+            Self::StableKernelArgumentALTERA => write!(f, " StableKernelArgumentALTERA"),
             Self::HostAccessINTEL(p0, p1) => {
-                write!(f, "HostAccessINTEL {} {}", p0.dis(_ctx), p1.dis(_ctx))
+                write!(f, " HostAccessINTEL{}{}", p0.dis(_ctx), p1.dis(_ctx))
             }
-            Self::InitModeALTERA(p0) => write!(f, "InitModeALTERA {}", p0.dis(_ctx)),
+            Self::InitModeALTERA(p0) => write!(f, " InitModeALTERA{}", p0.dis(_ctx)),
             Self::ImplementInRegisterMapALTERA(p0) => {
-                write!(f, "ImplementInRegisterMapALTERA {}", p0.dis(_ctx))
+                write!(f, " ImplementInRegisterMapALTERA{}", p0.dis(_ctx))
             }
-            Self::ConditionalINTEL(p0) => write!(f, "ConditionalINTEL {}", p0.dis(_ctx)),
+            Self::ConditionalINTEL(p0) => write!(f, " ConditionalINTEL{}", p0.dis(_ctx)),
             Self::CacheControlLoadINTEL(p0, p1) => {
-                write!(f, "CacheControlLoadINTEL {} {}", p0.dis(_ctx), p1.dis(_ctx))
+                write!(f, " CacheControlLoadINTEL{}{}", p0.dis(_ctx), p1.dis(_ctx))
             }
             Self::CacheControlStoreINTEL(p0, p1) => {
-                write!(
-                    f,
-                    "CacheControlStoreINTEL {} {}",
-                    p0.dis(_ctx),
-                    p1.dis(_ctx)
-                )
+                write!(f, " CacheControlStoreINTEL{}{}", p0.dis(_ctx), p1.dis(_ctx))
             }
         }
     }
@@ -4181,7 +4195,7 @@ unsafe impl OperandEncoding for BuiltIn {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -4229,7 +4243,7 @@ unsafe impl OperandEncoding for Scope {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -4277,7 +4291,7 @@ unsafe impl OperandEncoding for GroupOperation {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -4316,7 +4330,7 @@ unsafe impl OperandEncoding for KernelEnqueueFlags {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -4960,7 +4974,7 @@ unsafe impl OperandEncoding for Capability {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -4997,7 +5011,7 @@ unsafe impl OperandEncoding for RayQueryIntersection {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -5036,7 +5050,7 @@ unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -5073,7 +5087,7 @@ unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -5109,7 +5123,7 @@ unsafe impl OperandEncoding for PackedVectorFormat {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 bitflags! {
@@ -5138,8 +5152,9 @@ unsafe impl OperandEncoding for CooperativeMatrixOperands {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::MatrixASignedComponentsKHR) {
                 write!(f, "{sep}MatrixASignedComponentsKHR")?;
@@ -5198,7 +5213,7 @@ unsafe impl OperandEncoding for CooperativeMatrixLayout {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -5237,7 +5252,7 @@ unsafe impl OperandEncoding for CooperativeMatrixUse {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 bitflags! {
@@ -5263,8 +5278,9 @@ unsafe impl OperandEncoding for CooperativeMatrixReduce {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::Row) {
                 write!(f, "{sep}Row")?;
@@ -5319,7 +5335,7 @@ unsafe impl OperandEncoding for TensorClampMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 bitflags! {
@@ -5346,8 +5362,9 @@ unsafe impl OperandEncoding for TensorAddressingOperands {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::TensorView) {
                 write!(f, "{sep}TensorView")?;
@@ -5393,7 +5410,7 @@ unsafe impl OperandEncoding for InitializationModeQualifier {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -5436,7 +5453,7 @@ unsafe impl OperandEncoding for LoadCacheControl {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -5477,7 +5494,7 @@ unsafe impl OperandEncoding for StoreCacheControl {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -5512,7 +5529,7 @@ unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 bitflags! {
@@ -5544,8 +5561,9 @@ unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::MatrixASignedComponentsINTEL) {
                 write!(f, "{sep}MatrixASignedComponentsINTEL")?;
@@ -5629,7 +5647,7 @@ unsafe impl OperandEncoding for FPEncoding {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -5670,7 +5688,7 @@ unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[repr(u32)]
@@ -5733,7 +5751,7 @@ unsafe impl OperandEncoding for ComponentType {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, " {:?}", self)
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5761,7 +5779,7 @@ unsafe impl OperandEncoding for PairLiteralIntegerIdRef {
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} {}",
+            " {} {}",
             OperandEncoding::dis(&self.0, ctx),
             OperandEncoding::dis(&self.1, ctx)
         )
@@ -5792,7 +5810,7 @@ unsafe impl OperandEncoding for PairIdRefLiteralInteger {
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} {}",
+            " {} {}",
             OperandEncoding::dis(&self.0, ctx),
             OperandEncoding::dis(&self.1, ctx)
         )
@@ -5823,7 +5841,7 @@ unsafe impl OperandEncoding for PairIdRefIdRef {
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "{} {}",
+            " {} {}",
             OperandEncoding::dis(&self.0, ctx),
             OperandEncoding::dis(&self.1, ctx)
         )
@@ -5854,8 +5872,9 @@ unsafe impl OperandEncoding for TensorOperands {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         if self.is_empty() {
-            write!(f, "None")
+            write!(f, " None")
         } else {
+            write!(f, " ")?;
             let sep = SeparatorJoiner::new("|");
             if self.contains(Self::NontemporalARM) {
                 write!(f, "{sep}NontemporalARM")?;
