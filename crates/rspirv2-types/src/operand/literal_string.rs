@@ -3,7 +3,8 @@ use crate::dis::DisContext;
 use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandEncoding, Word};
 use anstyle::AnsiColor;
-use std::fmt::Formatter;
+use std::borrow::Cow;
+use std::fmt::{Debug, Formatter};
 
 pub const OPERAND_KIND_LITERAL_STRING: OperandKind = OperandKind {
     name: "LiteralString",
@@ -65,7 +66,36 @@ unsafe impl OperandEncoding for LiteralString {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         let color = ctx.color(AnsiColor::Green.on_default());
-        write!(f, "{color}\"{}\"{color:#}", self.0)
+        let str = ctx.literal_string_escape.escape(&self.0);
+        write!(f, "{color}\"{str}\"{color:#}")
+    }
+}
+
+/// Describes how to escape string sequences
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash, Default)]
+pub enum LiteralStringEscape {
+    /// Don't escape anything
+    Noop,
+    /// Replace newlines with `\n` to keep strings on a single line
+    EscapeNewlines,
+    /// Keep newlines intact, allowing strings to span multiple lines
+    #[default]
+    MultiLine,
+}
+
+impl LiteralStringEscape {
+    pub fn escape<'a>(&self, str: &'a str) -> Cow<'a, str> {
+        match self {
+            LiteralStringEscape::Noop => str.into(),
+            LiteralStringEscape::EscapeNewlines => str
+                .replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .into(),
+            LiteralStringEscape::MultiLine => {
+                str.replace("\\", "\\\\").replace("\"", "\\\"").into()
+            }
+        }
     }
 }
 
