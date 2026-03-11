@@ -1,8 +1,7 @@
 use crate::codegen::options::CodegenOptions;
-use crate::codegen::{GrammarWriter, OPERAND_ID_RESULT};
+use crate::codegen::{GrammarWriter, OPERAND_ID_RESULT, OPERAND_ID_RESULT_TYPE};
 use crate::parse::{Grammar, InstMeta, Operand, Quantifier};
 use quote::{format_ident, quote};
-use std::iter::once;
 
 pub const SMALLVEC_LEN: usize = 4;
 
@@ -49,18 +48,42 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             ("", None)
         };
         // `name: Ident` is a good key to filter out the id_result, as names must be unique anyway
-        let dis_operands_value = member_operands
+        let operands_without_result_id = member_operands
             .iter()
             .filter(|op| id_result.is_none_or(|id_result| id_result.name != op.name))
+            .collect::<Vec<_>>();
+        let dis_operands_value = operands_without_result_id
+            .iter()
             .map(|op| {
                 let name = &op.name;
                 quote!(, self.#name.dis(_ctx))
             })
             .collect::<Vec<_>>();
-        let pat = once(dis_id_result_pat)
-            .chain(once(inst.opname.as_ref()))
-            .chain((0..dis_operands_value.len()).map(|_| "{}"))
+        let pat = [dis_id_result_pat, inst.opname.as_ref()]
+            .into_iter()
+            .chain(
+                operands_without_result_id
+                    .iter()
+                    .enumerate()
+                    .map(|(i, op)| {
+                        let last = i == operands_without_result_id.len() - 1;
+                        let is_result_type = op.meta.kind == OPERAND_ID_RESULT_TYPE;
+                        match (is_result_type, last) {
+                            (true, false) => "{rspirv_space}{}{rspirv_space}",
+                            (true, true) => "{rspirv_space}{}",
+                            (false, _) => "{}",
+                        }
+                    }),
+            )
             .collect::<String>();
+        let has_rspirv_spaces = member_operands
+            .iter()
+            .any(|op| op.meta.kind == OPERAND_ID_RESULT_TYPE);
+        let rspirv_spaces_prefix = if has_rspirv_spaces {
+            quote!(let rspirv_space = _ctx.rspirv_space();)
+        } else {
+            quote!()
+        };
 
         quote! {
             #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -95,6 +118,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                 }
 
                 fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+                    #rspirv_spaces_prefix
                     write!(f, #pat #dis_id_result_value #(#dis_operands_value)*)
                 }
             }
