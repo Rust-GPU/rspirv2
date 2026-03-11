@@ -3,7 +3,6 @@ use crate::parse::{Category, Enumerant, Grammar, OperandKind, Quantifier};
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use std::borrow::Cow;
-use std::iter::once;
 
 pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     let operands = grammar.operand_kinds.iter().map(|o| match &o.category {
@@ -105,14 +104,13 @@ fn emit_rust_like_enum(
         let param_symbols = (0..params.len())
             .map(|i| format_ident!("p{}", i))
             .collect::<Vec<_>>();
-        let variant_name = symbol.to_string();
+        let fmt = [" ", symbol.to_string().as_ref()].into_iter()
+            .chain((0..param_symbols.len()).map(|_| "{}"))
+            .collect::<String>();
         if !param_symbols.is_empty() {
-            let fmt = once(variant_name.as_ref())
-                .chain((0..param_symbols.len()).map(|_| " {}"))
-                .collect::<String>();
             quote!(Self::#symbol (#(#param_symbols),*) => write!(f, #fmt, #(#param_symbols.dis(_ctx)),*))
         } else {
-            quote!(Self::#symbol => write!(f, #variant_name))
+            quote!(Self::#symbol => write!(f, #fmt))
         }
     });
 
@@ -218,7 +216,7 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
 
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-                write!(f, "{:?}", self)
+                write!(f, " {:?}", self)
             }
         }
     }
@@ -296,8 +294,9 @@ fn emit_bitflags_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
                 if self.is_empty() {
-                    write!(f, "None")
+                    write!(f, " None")
                 } else {
+                    write!(f, " ")?;
                     let sep = SeparatorJoiner::new("|");
                     #(#dis)*
                     Ok(())
@@ -324,9 +323,7 @@ fn emit_composite(operand_kind: &OperandKind<'_>, bases: &[Cow<'_, str>]) -> Tok
         quote!(OperandEncoding::encode(&self.#i, &mut *writer)?)
     });
     let decode = (0..bases.len()).map(|_| quote!(OperandEncoding::decode(&mut *reader)?));
-    let dis_pat = (0..bases.len())
-        .map(|i| if i == 0 { "{}" } else { " {}" })
-        .collect::<String>();
+    let dis_pat = (0..bases.len()).map(|_| " {}").collect::<String>();
     let dis_values = (0..bases.len()).map(|i| {
         let i = proc_macro2::Literal::usize_unsuffixed(i);
         quote!(OperandEncoding::dis(&self.#i, ctx))

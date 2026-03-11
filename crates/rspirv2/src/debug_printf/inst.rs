@@ -30,7 +30,7 @@ impl InstEncoding for DebugPrintf {
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
         write!(
             f,
-            "DebugPrintf {} {}",
+            "DebugPrintf{}{}",
             self.format.dis(_ctx),
             self.id_ref.dis(_ctx)
         )

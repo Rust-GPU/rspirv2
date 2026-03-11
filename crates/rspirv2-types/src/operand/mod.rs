@@ -13,7 +13,7 @@ pub use literal_float::*;
 pub use literal_integer::*;
 pub use literal_string::*;
 use smallvec::SmallVec;
-use std::fmt::{Debug, Display, Formatter, Write};
+use std::fmt::{Debug, Display, Formatter};
 
 /// A 32bit SPIR-V Word
 #[repr(transparent)]
@@ -284,10 +284,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
 
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
-        for (i, v) in self.iter().enumerate() {
-            if i != 0 {
-                f.write_char(' ')?;
-            }
+        for v in self {
             T::dis_fmt(v, &mut *f, ctx)?;
         }
         Ok(())
@@ -339,10 +336,7 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
 
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
-        for (i, v) in self.iter().enumerate() {
-            if i != 0 {
-                f.write_char(' ')?;
-            }
+        for v in self {
             T::dis_fmt(v, &mut *f, ctx)?;
         }
         Ok(())

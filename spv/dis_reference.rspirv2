@@ -98,15 +98,15 @@ OpDecorate %4 DescriptorSet 1
 %13 = OpTypePointer StorageBuffer %8
 %9 = OpTypeStruct %10
 %14 = OpTypePointer StorageBuffer %9
-%15 = OpTypeFloat 32 
+%15 = OpTypeFloat 32
 %16 = OpTypeVoid
-%17 = OpTypeFunction %16 
-%2 = OpVariable %12 Input 
+%17 = OpTypeFunction %16
+%2 = OpVariable %12 Input
 %18 = OpTypePointer StorageBuffer %7
-%3 = OpVariable %13 StorageBuffer 
+%3 = OpVariable %13 StorageBuffer
 %19 = OpConstant %10 0
 %20 = OpTypePointer StorageBuffer %10
-%4 = OpVariable %14 StorageBuffer 
+%4 = OpVariable %14 StorageBuffer
 %21 = OpTypeFunction %10 %10
 %22 = OpConstant %10 1
 %23 = OpTypeBool
@@ -118,7 +118,7 @@ OpDecorate %4 DescriptorSet 1
 %1 = OpFunction %16 None %17
 %29 = OpLabel
 OpLine %5 24 4
-%30 = OpLoad %11 %2 
+%30 = OpLoad %11 %2
 OpLine %5 25 4
 %31 = OpInBoundsAccessChain %18 %3 %19
 %32 = OpArrayLength %10 %3 0
@@ -132,7 +132,7 @@ OpLine %5 31 26
 %36 = OpULessThan %23 %35 %32
 OpNoLine
 OpSelectionMerge %37 None
-OpBranchConditional %36 %38 %39 
+OpBranchConditional %36 %38 %39
 %38 = OpLabel
 OpBranch %37
 %39 = OpLabel
@@ -141,7 +141,7 @@ OpReturn
 OpLine %5 31 26
 %40 = OpIAdd %10 %19 %35
 %41 = OpInBoundsAccessChain %20 %31 %40
-%42 = OpLoad %10 %41 
+%42 = OpLoad %10 %41
 OpLine %5 32 21
 %43 = OpConvertUToF %15 %42
 OpLine %5 32 20

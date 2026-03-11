@@ -76,7 +76,7 @@ macro_rules! def_literal_integer {
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
                 let color = ctx.color(AnsiColor::Red.on_default());
-                write!(f, "{color}{}{color:#}", self.0.0)
+                write!(f, " {color}{}{color:#}", self.0.0)
             }
         }
     };

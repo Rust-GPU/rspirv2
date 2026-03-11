@@ -59,7 +59,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             .collect::<Vec<_>>();
         let pat = once(dis_id_result_pat)
             .chain(once(inst.opname.as_ref()))
-            .chain((0..dis_operands_value.len()).map(|_| " {}"))
+            .chain((0..dis_operands_value.len()).map(|_| "{}"))
             .collect::<String>();
 
         quote! {
