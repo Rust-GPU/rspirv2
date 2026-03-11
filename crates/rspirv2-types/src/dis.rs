@@ -3,21 +3,42 @@
 use crate::binary::{DecodeError, ModuleReader};
 use crate::inst::InstEncoding;
 use crate::operand::Word;
+use anstyle::Style;
 use std::fmt::{Display, Formatter};
 use std::marker::PhantomData;
 use std::ops::{Deref, DerefMut};
 
 /// Options for disassembly
-#[derive(Clone, Debug, Default)]
-pub struct DisOptions {}
+#[derive(Clone, Debug)]
+pub struct DisOptions {
+    /// Whether to emit ANSI escape sequences for colorful output
+    pub color: bool,
+}
+
+impl Default for DisOptions {
+    #[inline]
+    fn default() -> Self {
+        Self { color: true }
+    }
+}
 
 impl DisOptions {
     pub fn like_rspirv() -> Self {
-        Self::default()
+        Self { color: false }
     }
 
     pub fn like_spirv_tools() -> Self {
-        Self::default()
+        Self { color: true }
+    }
+
+    /// Disable the style if `color == false`
+    #[inline]
+    pub fn color(&self, style: Style) -> Style {
+        if self.color {
+            style
+        } else {
+            Default::default()
+        }
     }
 }
 

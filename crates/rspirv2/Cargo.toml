@@ -17,3 +17,4 @@ smallvec.workspace = true
 [dev-dependencies]
 anyhow.workspace = true
 spv.workspace = true
+anstream.workspace = true

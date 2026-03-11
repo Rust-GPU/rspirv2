@@ -178,8 +178,8 @@ unsafe impl OperandEncoding for LiteralConst {
     }
 
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        let color = AnsiColor::Red.on_default();
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        let color = ctx.color(AnsiColor::Red.on_default());
         match self.0.len() {
             1 => write!(f, "{color}{}{color:#}", self.as_u32().unwrap()),
             2 => write!(f, "{color}{}{color:#}", self.as_u64().unwrap()),

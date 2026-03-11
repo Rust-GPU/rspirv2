@@ -231,6 +231,7 @@ dependencies = [
 name = "rspirv2"
 version = "0.1.0"
 dependencies = [
+ "anstream",
  "anyhow",
  "bitflags",
  "rspirv2-types",

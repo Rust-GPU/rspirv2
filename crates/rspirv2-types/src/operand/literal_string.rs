@@ -63,8 +63,8 @@ unsafe impl OperandEncoding for LiteralString {
     }
 
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        let color = AnsiColor::Green.on_default();
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        let color = ctx.color(AnsiColor::Green.on_default());
         write!(f, "{color}\"{}\"{color:#}", self.0)
     }
 }
