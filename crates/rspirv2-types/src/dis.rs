@@ -17,7 +17,7 @@ pub struct DisOptions {
     /// Describes how to escape string sequences
     pub literal_string_escape: LiteralStringEscape,
     /// Add extra spaces around [`crate::operand::IdResultType`] to match `rspirv`'s behaviour
-    pub rspirv_extra_spaces: bool,
+    pub rspirv_space: bool,
 }
 
 impl Default for DisOptions {
@@ -26,7 +26,7 @@ impl Default for DisOptions {
         Self {
             color: true,
             literal_string_escape: LiteralStringEscape::default(),
-            rspirv_extra_spaces: false,
+            rspirv_space: false,
         }
     }
 }
@@ -45,7 +45,7 @@ impl DisOptions {
         Self {
             color: false,
             literal_string_escape: LiteralStringEscape::EscapeNewlines,
-            rspirv_extra_spaces: true,
+            rspirv_space: true,
         }
     }
 
@@ -54,7 +54,7 @@ impl DisOptions {
         Self {
             color: true,
             literal_string_escape: LiteralStringEscape::MultiLine,
-            rspirv_extra_spaces: false,
+            rspirv_space: false,
         }
     }
 
@@ -66,6 +66,11 @@ impl DisOptions {
         } else {
             Default::default()
         }
+    }
+
+    /// Return a space " " if `rspirv_spaces` is on
+    pub fn rspirv_space(&self) -> &str {
+        if self.rspirv_space { " " } else { "" }
     }
 }
 

@@ -90,7 +90,7 @@ OpNoLine
 OpReturn
 OpFunctionEnd
 %6 = OpFunction  %10  DontInline|Const %21
-%53 = OpFunctionParameter  %10 
+%53 = OpFunctionParameter  %10
 %54 = OpLabel
 OpLine %5 43 4
 %55 = OpIAdd  %10  %22 %53

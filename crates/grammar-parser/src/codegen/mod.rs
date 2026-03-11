@@ -11,6 +11,7 @@ pub use options::*;
 pub use writer::*;
 
 pub const OPERAND_ID_RESULT: &str = "IdResult";
+pub const OPERAND_ID_RESULT_TYPE: &str = "IdResultType";
 
 /// Copied from `proc_macro2::fallback::validate_ident`
 pub fn ident_ok(string: &str) -> bool {
