@@ -1,0 +1,168 @@
+OpCapability Shader
+OpCapability StorageImageWriteWithoutFormat
+OpCapability VulkanMemoryModel
+OpMemoryModel Logical Vulkan
+OpEntryPoint GLCompute [33m%1[0m [32m"main"[0m [33m%2[0m [33m%3[0m [33m%4[0m
+OpExecutionMode [33m%1[0m LocalSize(LiteralInteger(Word(32)), LiteralInteger(Word(1)), LiteralInteger(Word(1)))
+[34m%5[0m = OpString [32m"ui/dis_reference.rs"[0m
+OpSource Unknown [31m0[0m [33m%5[0m [32m"// compile-flags: -C target-feature=+StorageImageWriteWithoutFormat
+// compile-flags: -C llvm-args=--disassemble
+// normalize-stderr-test "OpSource .*\n" -> ""
+// normalize-stderr-test "OpLine .*\n" -> ""
+// normalize-stderr-test "%\d+ = OpString .*\n" -> ""
+// normalize-stderr-test "; .*\n" -> ""
+// normalize-stderr-test "OpCapability VulkanMemoryModel\n" -> ""
+// normalize-stderr-test "OpMemoryModel Logical Vulkan" -> "OpMemoryModel Logical Simple"
+// ignore-vulkan1.0
+// ignore-vulkan1.1
+// ignore-spv1.0
+// ignore-spv1.1
+// ignore-spv1.2
+// ignore-spv1.3
+
+use spirv_std::glam::*;
+use spirv_std::spirv;
+use spirv_std::Integer;
+use spirv_std::memory::*;
+use core::arch::asm;
+
+#[spirv(compute(threads(32)))]
+pub fn main(
+    #[spirv(local_invocation_id)] tid: UVec3,
+    #[spirv(storage_buffer, descriptor_set = 0, binding = 42)] offset_buffer: &[u32],
+    #[spirv(storage_buffer, descriptor_set = 1, binding = 69)] output_buffer: &mut u32,
+    output: &mut f32,
+) {
+    unsafe {
+        let offset = compute_offset(tid.x);
+        let buffer_load = offset_buffer[offset];
+        let value = (buffer_load as f32 * 1.7) as u32;
+        atomic_i_add::<
+            _,
+            { Scope::QueueFamily as u32 },
+            { Semantics::CROSS_WORKGROUP_MEMORY.union(Semantics::ACQUIRE_RELEASE).union(Semantics::MAKE_AVAILABLE).union(Semantics::MAKE_VISIBLE).bits() },
+        >(output_buffer, value);
+    }
+}
+
+#[inline(never)]
+pub const fn compute_offset(input: u32) -> usize {
+    1 + input as usize
+}
+
+/// local function to not bloat the spv with spirv_std::arch::atomic src code
+#[inline]
+pub unsafe fn atomic_i_add<I: Integer, const SCOPE: u32, const SEMANTICS: u32>(
+    ptr: &mut I,
+    value: I,
+) -> I {
+    unsafe {
+        let mut old = I::default();
+        asm! {
+            "%u32 = OpTypeInt 32 0",
+            "%scope = OpConstant %u32 {scope}",
+            "%semantics = OpConstant %u32 {semantics}",
+            "%value = OpLoad _ {value}",
+            "%old = OpAtomicIAdd _ {ptr} %scope %semantics %value",
+            "OpStore {old} %old",
+            scope = const SCOPE,
+            semantics = const SEMANTICS,
+            ptr = in(reg) ptr,
+            old = in(reg) &mut old,
+            value = in(reg) &value
+        }
+        old
+    }
+}
+"[0m
+OpName [33m%2[0m [32m"tid"[0m
+OpName [33m%3[0m [32m"offset_buffer"[0m
+OpName [33m%4[0m [32m"output_buffer"[0m
+OpName [33m%6[0m [32m"dis_reference::compute_offset"[0m
+OpDecorate [33m%7[0m ArrayStride(LiteralInteger(Word(4)))
+OpDecorate [33m%8[0m Block
+OpMemberDecorate [33m%8[0m [31m0[0m Offset(LiteralInteger(Word(0)))
+OpDecorate [33m%9[0m Block
+OpMemberDecorate [33m%9[0m [31m0[0m Offset(LiteralInteger(Word(0)))
+OpDecorate [33m%2[0m BuiltIn(LocalInvocationId)
+OpDecorate [33m%3[0m NonWritable
+OpDecorate [33m%3[0m Binding(LiteralInteger(Word(42)))
+OpDecorate [33m%3[0m DescriptorSet(LiteralInteger(Word(0)))
+OpDecorate [33m%4[0m Binding(LiteralInteger(Word(69)))
+OpDecorate [33m%4[0m DescriptorSet(LiteralInteger(Word(1)))
+[34m%10[0m = OpTypeInt [31m32[0m [31m0[0m
+[34m%11[0m = OpTypeVector [33m%10[0m [31m3[0m
+[34m%12[0m = OpTypePointer Input [33m%11[0m
+[34m%7[0m = OpTypeRuntimeArray [33m%10[0m
+[34m%8[0m = OpTypeStruct [33m%7[0m
+[34m%13[0m = OpTypePointer StorageBuffer [33m%8[0m
+[34m%9[0m = OpTypeStruct [33m%10[0m
+[34m%14[0m = OpTypePointer StorageBuffer [33m%9[0m
+[34m%15[0m = OpTypeFloat [31m32[0m 
+[34m%16[0m = OpTypeVoid
+[34m%17[0m = OpTypeFunction [33m%16[0m 
+[34m%2[0m = OpVariable [33m%12[0m Input 
+[34m%18[0m = OpTypePointer StorageBuffer [33m%7[0m
+[34m%3[0m = OpVariable [33m%13[0m StorageBuffer 
+[34m%19[0m = OpConstant [33m%10[0m [31m0[0m
+[34m%20[0m = OpTypePointer StorageBuffer [33m%10[0m
+[34m%4[0m = OpVariable [33m%14[0m StorageBuffer 
+[34m%21[0m = OpTypeFunction [33m%10[0m [33m%10[0m
+[34m%22[0m = OpConstant [33m%10[0m [31m1[0m
+[34m%23[0m = OpTypeBool
+[34m%24[0m = OpConstant [33m%15[0m [31m1071225242[0m
+[34m%25[0m = OpConstant [33m%10[0m [31m1333788671[0m
+[34m%26[0m = OpConstant [33m%10[0m [31m4294967295[0m
+[34m%27[0m = OpConstant [33m%10[0m [31m5[0m
+[34m%28[0m = OpConstant [33m%10[0m [31m25096[0m
+[34m%1[0m = OpFunction [33m%16[0m FunctionControl(0x0) [33m%17[0m
+[34m%29[0m = OpLabel
+OpLine [33m%5[0m [31m24[0m [31m4[0m
+[34m%30[0m = OpLoad [33m%11[0m [33m%2[0m 
+OpLine [33m%5[0m [31m25[0m [31m4[0m
+[34m%31[0m = OpInBoundsAccessChain [33m%18[0m [33m%3[0m [33m%19[0m
+[34m%32[0m = OpArrayLength [33m%10[0m [33m%3[0m [31m0[0m
+OpLine [33m%5[0m [31m26[0m [31m4[0m
+[34m%33[0m = OpInBoundsAccessChain [33m%20[0m [33m%4[0m [33m%19[0m
+OpLine [33m%5[0m [31m30[0m [31m36[0m
+[34m%34[0m = OpCompositeExtract [33m%10[0m [33m%30[0m [31m0[0m
+OpLine [33m%5[0m [31m30[0m [31m21[0m
+[34m%35[0m = OpFunctionCall [33m%10[0m [33m%6[0m [33m%34[0m
+OpLine [33m%5[0m [31m31[0m [31m26[0m
+[34m%36[0m = OpULessThan [33m%23[0m [33m%35[0m [33m%32[0m
+OpNoLine
+OpSelectionMerge [33m%37[0m SelectionControl(0x0)
+OpBranchConditional [33m%36[0m [33m%38[0m [33m%39[0m 
+[34m%38[0m = OpLabel
+OpBranch [33m%37[0m
+[34m%39[0m = OpLabel
+OpReturn
+[34m%37[0m = OpLabel
+OpLine [33m%5[0m [31m31[0m [31m26[0m
+[34m%40[0m = OpIAdd [33m%10[0m [33m%19[0m [33m%35[0m
+[34m%41[0m = OpInBoundsAccessChain [33m%20[0m [33m%31[0m [33m%40[0m
+[34m%42[0m = OpLoad [33m%10[0m [33m%41[0m 
+OpLine [33m%5[0m [31m32[0m [31m21[0m
+[34m%43[0m = OpConvertUToF [33m%15[0m [33m%42[0m
+OpLine [33m%5[0m [31m32[0m [31m20[0m
+[34m%44[0m = OpFMul [33m%15[0m [33m%43[0m [33m%24[0m
+[34m%45[0m = OpBitcast [33m%15[0m [33m%19[0m
+[34m%46[0m = OpBitcast [33m%15[0m [33m%25[0m
+[34m%47[0m = OpConvertFToU [33m%10[0m [33m%44[0m
+[34m%48[0m = OpFUnordLessThan [33m%23[0m [33m%44[0m [33m%45[0m
+[34m%49[0m = OpFOrdGreaterThan [33m%23[0m [33m%44[0m [33m%46[0m
+[34m%50[0m = OpSelect [33m%10[0m [33m%48[0m [33m%19[0m [33m%47[0m
+[34m%51[0m = OpSelect [33m%10[0m [33m%49[0m [33m%26[0m [33m%50[0m
+OpLine [33m%5[0m [31m59[0m [31m13[0m
+[34m%52[0m = OpAtomicIAdd [33m%10[0m [33m%33[0m [33m%27[0m [33m%28[0m [33m%51[0m
+OpNoLine
+OpReturn
+OpFunctionEnd
+[34m%6[0m = OpFunction [33m%10[0m FunctionControl(DontInline | Const) [33m%21[0m
+[34m%53[0m = OpFunctionParameter [33m%10[0m
+[34m%54[0m = OpLabel
+OpLine [33m%5[0m [31m43[0m [31m4[0m
+[34m%55[0m = OpIAdd [33m%10[0m [33m%22[0m [33m%53[0m
+OpNoLine
+OpReturnValue [33m%55[0m
+OpFunctionEnd

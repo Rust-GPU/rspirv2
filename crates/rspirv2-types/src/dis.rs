@@ -11,6 +11,16 @@ use std::ops::{Deref, DerefMut};
 #[derive(Clone, Debug, Default)]
 pub struct DisOptions {}
 
+impl DisOptions {
+    pub fn like_rspirv() -> Self {
+        Self::default()
+    }
+
+    pub fn like_spirv_tools() -> Self {
+        Self::default()
+    }
+}
+
 /// Context object for disassembly generation
 #[derive(Clone, Debug, Default)]
 pub struct DisContext {
