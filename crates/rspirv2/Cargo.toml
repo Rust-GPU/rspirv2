@@ -3,6 +3,9 @@ name = "rspirv2"
 version.workspace = true
 edition.workspace = true
 
+[lints]
+workspace = true
+
 [features]
 bytemuck = ["rspirv2-types/bytemuck"]
 

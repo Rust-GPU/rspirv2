@@ -3,6 +3,9 @@ name = "rspirv2-grammar-parser"
 version.workspace = true
 edition.workspace = true
 
+[lints]
+workspace = true
+
 [features]
 codegen = ["quote", "proc-macro2", "convert_case", "unicode-ident"]
 prettyplease = ["dep:prettyplease", "dep:syn"]
