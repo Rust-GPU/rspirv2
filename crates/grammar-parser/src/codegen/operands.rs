@@ -239,6 +239,16 @@ fn emit_bitflags_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_
         }
     });
 
+    let dis = enumerants.iter().filter(|e| e.value != 0).map(|e| {
+        let symbol = Enumerant::variant_ident(&e.symbol);
+        let fmt = format!("{{sep}}{}", symbol);
+        quote! {
+            if self.contains(Self::#symbol) {
+                write!(f, #fmt)?;
+            }
+        }
+    });
+
     quote! {
         bitflags! {
             #doc
@@ -267,7 +277,13 @@ fn emit_bitflags_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_
 
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-                write!(f, "{:?}", self)
+                if self.is_empty() {
+                    write!(f, "None")
+                } else {
+                    let sep = SeparatorJoiner::new("|");
+                    #(#dis)*
+                    Ok(())
+                }
             }
         }
     }
