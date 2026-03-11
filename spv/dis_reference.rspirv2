@@ -2,10 +2,10 @@ OpCapability Shader
 OpCapability StorageImageWriteWithoutFormat
 OpCapability VulkanMemoryModel
 OpMemoryModel Logical Vulkan
-OpEntryPoint GLCompute [33m%1[0m [32m"main"[0m [33m%2[0m [33m%3[0m [33m%4[0m
-OpExecutionMode [33m%1[0m LocalSize(LiteralInteger(Word(32)), LiteralInteger(Word(1)), LiteralInteger(Word(1)))
-[34m%5[0m = OpString [32m"ui/dis_reference.rs"[0m
-OpSource Unknown [31m0[0m [33m%5[0m [32m"// compile-flags: -C target-feature=+StorageImageWriteWithoutFormat
+OpEntryPoint GLCompute %1 "main" %2 %3 %4
+OpExecutionMode %1 LocalSize(LiteralInteger(Word(32)), LiteralInteger(Word(1)), LiteralInteger(Word(1)))
+%5 = OpString "ui/dis_reference.rs"
+OpSource Unknown 0 %5 "// compile-flags: -C target-feature=+StorageImageWriteWithoutFormat
 // compile-flags: -C llvm-args=--disassemble
 // normalize-stderr-test "OpSource .*\n" -> ""
 // normalize-stderr-test "OpLine .*\n" -> ""
@@ -74,95 +74,95 @@ pub unsafe fn atomic_i_add<I: Integer, const SCOPE: u32, const SEMANTICS: u32>(
         old
     }
 }
-"[0m
-OpName [33m%2[0m [32m"tid"[0m
-OpName [33m%3[0m [32m"offset_buffer"[0m
-OpName [33m%4[0m [32m"output_buffer"[0m
-OpName [33m%6[0m [32m"dis_reference::compute_offset"[0m
-OpDecorate [33m%7[0m ArrayStride(LiteralInteger(Word(4)))
-OpDecorate [33m%8[0m Block
-OpMemberDecorate [33m%8[0m [31m0[0m Offset(LiteralInteger(Word(0)))
-OpDecorate [33m%9[0m Block
-OpMemberDecorate [33m%9[0m [31m0[0m Offset(LiteralInteger(Word(0)))
-OpDecorate [33m%2[0m BuiltIn(LocalInvocationId)
-OpDecorate [33m%3[0m NonWritable
-OpDecorate [33m%3[0m Binding(LiteralInteger(Word(42)))
-OpDecorate [33m%3[0m DescriptorSet(LiteralInteger(Word(0)))
-OpDecorate [33m%4[0m Binding(LiteralInteger(Word(69)))
-OpDecorate [33m%4[0m DescriptorSet(LiteralInteger(Word(1)))
-[34m%10[0m = OpTypeInt [31m32[0m [31m0[0m
-[34m%11[0m = OpTypeVector [33m%10[0m [31m3[0m
-[34m%12[0m = OpTypePointer Input [33m%11[0m
-[34m%7[0m = OpTypeRuntimeArray [33m%10[0m
-[34m%8[0m = OpTypeStruct [33m%7[0m
-[34m%13[0m = OpTypePointer StorageBuffer [33m%8[0m
-[34m%9[0m = OpTypeStruct [33m%10[0m
-[34m%14[0m = OpTypePointer StorageBuffer [33m%9[0m
-[34m%15[0m = OpTypeFloat [31m32[0m 
-[34m%16[0m = OpTypeVoid
-[34m%17[0m = OpTypeFunction [33m%16[0m 
-[34m%2[0m = OpVariable [33m%12[0m Input 
-[34m%18[0m = OpTypePointer StorageBuffer [33m%7[0m
-[34m%3[0m = OpVariable [33m%13[0m StorageBuffer 
-[34m%19[0m = OpConstant [33m%10[0m [31m0[0m
-[34m%20[0m = OpTypePointer StorageBuffer [33m%10[0m
-[34m%4[0m = OpVariable [33m%14[0m StorageBuffer 
-[34m%21[0m = OpTypeFunction [33m%10[0m [33m%10[0m
-[34m%22[0m = OpConstant [33m%10[0m [31m1[0m
-[34m%23[0m = OpTypeBool
-[34m%24[0m = OpConstant [33m%15[0m [31m1071225242[0m
-[34m%25[0m = OpConstant [33m%10[0m [31m1333788671[0m
-[34m%26[0m = OpConstant [33m%10[0m [31m4294967295[0m
-[34m%27[0m = OpConstant [33m%10[0m [31m5[0m
-[34m%28[0m = OpConstant [33m%10[0m [31m25096[0m
-[34m%1[0m = OpFunction [33m%16[0m FunctionControl(0x0) [33m%17[0m
-[34m%29[0m = OpLabel
-OpLine [33m%5[0m [31m24[0m [31m4[0m
-[34m%30[0m = OpLoad [33m%11[0m [33m%2[0m 
-OpLine [33m%5[0m [31m25[0m [31m4[0m
-[34m%31[0m = OpInBoundsAccessChain [33m%18[0m [33m%3[0m [33m%19[0m
-[34m%32[0m = OpArrayLength [33m%10[0m [33m%3[0m [31m0[0m
-OpLine [33m%5[0m [31m26[0m [31m4[0m
-[34m%33[0m = OpInBoundsAccessChain [33m%20[0m [33m%4[0m [33m%19[0m
-OpLine [33m%5[0m [31m30[0m [31m36[0m
-[34m%34[0m = OpCompositeExtract [33m%10[0m [33m%30[0m [31m0[0m
-OpLine [33m%5[0m [31m30[0m [31m21[0m
-[34m%35[0m = OpFunctionCall [33m%10[0m [33m%6[0m [33m%34[0m
-OpLine [33m%5[0m [31m31[0m [31m26[0m
-[34m%36[0m = OpULessThan [33m%23[0m [33m%35[0m [33m%32[0m
+"
+OpName %2 "tid"
+OpName %3 "offset_buffer"
+OpName %4 "output_buffer"
+OpName %6 "dis_reference::compute_offset"
+OpDecorate %7 ArrayStride(LiteralInteger(Word(4)))
+OpDecorate %8 Block
+OpMemberDecorate %8 0 Offset(LiteralInteger(Word(0)))
+OpDecorate %9 Block
+OpMemberDecorate %9 0 Offset(LiteralInteger(Word(0)))
+OpDecorate %2 BuiltIn(LocalInvocationId)
+OpDecorate %3 NonWritable
+OpDecorate %3 Binding(LiteralInteger(Word(42)))
+OpDecorate %3 DescriptorSet(LiteralInteger(Word(0)))
+OpDecorate %4 Binding(LiteralInteger(Word(69)))
+OpDecorate %4 DescriptorSet(LiteralInteger(Word(1)))
+%10 = OpTypeInt 32 0
+%11 = OpTypeVector %10 3
+%12 = OpTypePointer Input %11
+%7 = OpTypeRuntimeArray %10
+%8 = OpTypeStruct %7
+%13 = OpTypePointer StorageBuffer %8
+%9 = OpTypeStruct %10
+%14 = OpTypePointer StorageBuffer %9
+%15 = OpTypeFloat 32 
+%16 = OpTypeVoid
+%17 = OpTypeFunction %16 
+%2 = OpVariable %12 Input 
+%18 = OpTypePointer StorageBuffer %7
+%3 = OpVariable %13 StorageBuffer 
+%19 = OpConstant %10 0
+%20 = OpTypePointer StorageBuffer %10
+%4 = OpVariable %14 StorageBuffer 
+%21 = OpTypeFunction %10 %10
+%22 = OpConstant %10 1
+%23 = OpTypeBool
+%24 = OpConstant %15 1071225242
+%25 = OpConstant %10 1333788671
+%26 = OpConstant %10 4294967295
+%27 = OpConstant %10 5
+%28 = OpConstant %10 25096
+%1 = OpFunction %16 FunctionControl(0x0) %17
+%29 = OpLabel
+OpLine %5 24 4
+%30 = OpLoad %11 %2 
+OpLine %5 25 4
+%31 = OpInBoundsAccessChain %18 %3 %19
+%32 = OpArrayLength %10 %3 0
+OpLine %5 26 4
+%33 = OpInBoundsAccessChain %20 %4 %19
+OpLine %5 30 36
+%34 = OpCompositeExtract %10 %30 0
+OpLine %5 30 21
+%35 = OpFunctionCall %10 %6 %34
+OpLine %5 31 26
+%36 = OpULessThan %23 %35 %32
 OpNoLine
-OpSelectionMerge [33m%37[0m SelectionControl(0x0)
-OpBranchConditional [33m%36[0m [33m%38[0m [33m%39[0m 
-[34m%38[0m = OpLabel
-OpBranch [33m%37[0m
-[34m%39[0m = OpLabel
+OpSelectionMerge %37 SelectionControl(0x0)
+OpBranchConditional %36 %38 %39 
+%38 = OpLabel
+OpBranch %37
+%39 = OpLabel
 OpReturn
-[34m%37[0m = OpLabel
-OpLine [33m%5[0m [31m31[0m [31m26[0m
-[34m%40[0m = OpIAdd [33m%10[0m [33m%19[0m [33m%35[0m
-[34m%41[0m = OpInBoundsAccessChain [33m%20[0m [33m%31[0m [33m%40[0m
-[34m%42[0m = OpLoad [33m%10[0m [33m%41[0m 
-OpLine [33m%5[0m [31m32[0m [31m21[0m
-[34m%43[0m = OpConvertUToF [33m%15[0m [33m%42[0m
-OpLine [33m%5[0m [31m32[0m [31m20[0m
-[34m%44[0m = OpFMul [33m%15[0m [33m%43[0m [33m%24[0m
-[34m%45[0m = OpBitcast [33m%15[0m [33m%19[0m
-[34m%46[0m = OpBitcast [33m%15[0m [33m%25[0m
-[34m%47[0m = OpConvertFToU [33m%10[0m [33m%44[0m
-[34m%48[0m = OpFUnordLessThan [33m%23[0m [33m%44[0m [33m%45[0m
-[34m%49[0m = OpFOrdGreaterThan [33m%23[0m [33m%44[0m [33m%46[0m
-[34m%50[0m = OpSelect [33m%10[0m [33m%48[0m [33m%19[0m [33m%47[0m
-[34m%51[0m = OpSelect [33m%10[0m [33m%49[0m [33m%26[0m [33m%50[0m
-OpLine [33m%5[0m [31m59[0m [31m13[0m
-[34m%52[0m = OpAtomicIAdd [33m%10[0m [33m%33[0m [33m%27[0m [33m%28[0m [33m%51[0m
+%37 = OpLabel
+OpLine %5 31 26
+%40 = OpIAdd %10 %19 %35
+%41 = OpInBoundsAccessChain %20 %31 %40
+%42 = OpLoad %10 %41 
+OpLine %5 32 21
+%43 = OpConvertUToF %15 %42
+OpLine %5 32 20
+%44 = OpFMul %15 %43 %24
+%45 = OpBitcast %15 %19
+%46 = OpBitcast %15 %25
+%47 = OpConvertFToU %10 %44
+%48 = OpFUnordLessThan %23 %44 %45
+%49 = OpFOrdGreaterThan %23 %44 %46
+%50 = OpSelect %10 %48 %19 %47
+%51 = OpSelect %10 %49 %26 %50
+OpLine %5 59 13
+%52 = OpAtomicIAdd %10 %33 %27 %28 %51
 OpNoLine
 OpReturn
 OpFunctionEnd
-[34m%6[0m = OpFunction [33m%10[0m FunctionControl(DontInline | Const) [33m%21[0m
-[34m%53[0m = OpFunctionParameter [33m%10[0m
-[34m%54[0m = OpLabel
-OpLine [33m%5[0m [31m43[0m [31m4[0m
-[34m%55[0m = OpIAdd [33m%10[0m [33m%22[0m [33m%53[0m
+%6 = OpFunction %10 FunctionControl(DontInline | Const) %21
+%53 = OpFunctionParameter %10
+%54 = OpLabel
+OpLine %5 43 4
+%55 = OpIAdd %10 %22 %53
 OpNoLine
-OpReturnValue [33m%55[0m
+OpReturnValue %55
 OpFunctionEnd
