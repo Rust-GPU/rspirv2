@@ -5,7 +5,7 @@ members = [
 	"crates/grammar-parser",
 	"crates/rspirv2",
 	"crates/rspirv2-types",
-	"crates/rspirv2-examples",
+	"crates/examples",
 	"spv",
 ]
 resolver = "3"

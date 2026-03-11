@@ -138,6 +138,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "examples"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "rspirv2",
+ "spv",
+]
+
+[[package]]
 name = "heck"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -203,16 +213,6 @@ dependencies = [
  "bitflags",
  "rspirv2-types",
  "smallvec",
- "spv",
-]
-
-[[package]]
-name = "rspirv2-examples"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "clap",
- "rspirv2",
  "spv",
 ]
 
