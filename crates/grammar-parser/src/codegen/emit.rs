@@ -48,12 +48,11 @@ impl<T: EmitRef + ToOwned + ?Sized> EmitRef for Cow<'_, T> {
 
 impl<T: EmitRef> EmitRef for Option<T> {
     fn emit_ref(&self) -> TokenStream {
-        match self {
-            Some(v) => {
-                let inner = v.emit_ref();
-                quote!(Some(#inner))
-            }
-            None => quote!(None),
+        if let Some(v) = self {
+            let inner = v.emit_ref();
+            quote!(Some(#inner))
+        } else {
+            quote!(None)
         }
     }
 }

@@ -1,7 +1,10 @@
 #![allow(unused_imports)]
 #![allow(non_camel_case_types)]
 #![allow(deprecated)]
+#![allow(missing_docs)]
 #![allow(clippy::identity_op)]
+#![allow(clippy::semicolon_if_nothing_returned)]
+#![allow(clippy::doc_markdown)]
 pub mod extensions;
 pub mod grammar;
 pub mod inst;

@@ -30,7 +30,7 @@ impl<'a> WriteableGrammar<'a> for ExtInstSetGrammar<'a> {
 pub fn write_grammar<'a>(
     mut writer: GrammarWriter,
     grammar: &impl WriteableGrammar<'a>,
-    opt: &CodegenOptions,
+    opt: &CodegenOptions<'_>,
 ) -> anyhow::Result<()> {
     write_extensions(&mut writer, grammar)?;
     write_operand_kinds(&mut writer, grammar)?;
@@ -44,7 +44,7 @@ pub fn write_grammar<'a>(
     Ok(())
 }
 
-fn write_operand_kinds(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+fn write_operand_kinds(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     writer.write_module(
         "operand_kinds",
         grammar
@@ -55,21 +55,21 @@ fn write_operand_kinds(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow:
     )
 }
 
-fn write_inst_class(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+fn write_inst_class(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     writer.write_module(
         "inst_class",
         grammar.inst_class.iter().map(InstClass::emit_def).collect(),
     )
 }
 
-fn write_inst_meta(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+fn write_inst_meta(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     writer.write_module(
         "inst_meta",
         grammar.insts.iter().map(InstMeta::emit_def).collect(),
     )
 }
 
-fn write_extensions(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+fn write_extensions(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     let mut extensions = grammar
         .insts
         .iter()

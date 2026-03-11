@@ -274,11 +274,14 @@ mod codegen {
         fn test_inst_operand_naming() {
             let test = |names: &[Option<&str>], expected: &[&str]| {
                 let inst = InstMeta {
-                    operands: SmallVec::from_iter(names.iter().map(|name| OperandSpecMeta {
-                        name: name.map(Cow::from),
-                        kind: Cow::Borrowed("testkind"),
-                        quantifier: Quantifier::One,
-                    })),
+                    operands: names
+                        .iter()
+                        .map(|name| OperandSpecMeta {
+                            name: name.map(Cow::from),
+                            kind: Cow::Borrowed("testkind"),
+                            quantifier: Quantifier::One,
+                        })
+                        .collect::<SmallVec<_>>(),
                     ..Default::default()
                 };
                 let names = inst

@@ -9,7 +9,6 @@ use rspirv2::core::preamble::OpAccessChain;
 use rspirv2::operand::{IdRef, IdResult, IdResultType, LiteralConst, LiteralInteger, Word};
 use rspirv2_types::binary::EncodeError;
 use rspirv2_types::inst::{Inst, InstEncoding};
-use smallvec::SmallVec;
 
 fn roundtrip<T: Inst>(inst: T) {
     let mut spirv = Vec::<Word>::new();
@@ -47,7 +46,7 @@ fn test_op_with_array() {
             id_result_type: IdResultType(IdResult(Word(42))),
             id_result: Some(IdResult(Word(69))),
             base: IdRef(IdResult(Word(123))),
-            indexes: SmallVec::from_iter(indexes.iter().map(|i| IdRef(IdResult(Word(*i))))),
+            indexes: indexes.iter().map(|i| IdRef(IdResult(Word(*i)))).collect(),
         });
     };
     test(&[1, 2, 3, 4, 5]);

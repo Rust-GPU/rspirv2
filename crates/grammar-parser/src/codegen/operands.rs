@@ -4,7 +4,7 @@ use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use std::borrow::Cow;
 
-pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     let operands = grammar.operand_kinds.iter().map(|o| match &o.category {
         // `RefId` and Literals are imported
         Category::Id | Category::Literal => quote!(),
@@ -27,7 +27,10 @@ pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::
     )
 }
 
-fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> TokenStream {
+fn emit_rust_like_enum(
+    operand_kind: &OperandKind<'_>,
+    enumerants: &[Enumerant<'_>],
+) -> TokenStream {
     let name = OperandKind::type_ident(&operand_kind.name);
     let kind = OperandKind::const_ident(&operand_kind.name);
     let doc = make_doc(&operand_kind.doc);
@@ -132,7 +135,7 @@ fn emit_rust_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> 
     }
 }
 
-fn emit_c_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> TokenStream {
+fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]) -> TokenStream {
     let name = OperandKind::type_ident(&operand_kind.name);
     let kind = OperandKind::const_ident(&operand_kind.name);
     let doc = make_doc(&operand_kind.doc);
@@ -193,7 +196,7 @@ fn emit_c_like_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> Tok
     }
 }
 
-fn emit_enumerant_preamble(e: &Enumerant) -> TokenStream {
+fn emit_enumerant_preamble(e: &Enumerant<'_>) -> TokenStream {
     let docs_since = e
         .version
         .as_ref()
@@ -211,7 +214,7 @@ fn emit_enumerant_preamble(e: &Enumerant) -> TokenStream {
     }
 }
 
-fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> TokenStream {
+fn emit_bitflags_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]) -> TokenStream {
     let name = OperandKind::type_ident(&operand_kind.name);
     let kind = OperandKind::const_ident(&operand_kind.name);
     let doc = make_doc(&operand_kind.doc);
@@ -255,7 +258,7 @@ fn emit_bitflags_enum(operand_kind: &OperandKind, enumerants: &[Enumerant]) -> T
     }
 }
 
-fn emit_composite(operand_kind: &OperandKind, bases: &[Cow<str>]) -> TokenStream {
+fn emit_composite(operand_kind: &OperandKind<'_>, bases: &[Cow<'_, str>]) -> TokenStream {
     let name = OperandKind::type_ident(&operand_kind.name);
     let kind = OperandKind::const_ident(&operand_kind.name);
     let doc = make_doc(&operand_kind.doc);

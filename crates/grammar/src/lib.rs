@@ -11,11 +11,11 @@ macro_rules! folder_path {
 
 #[allow(unused)]
 pub const PATH_GRAMMAR_FOLDER: &str = folder_path!();
-pub const PATH_GRAMMAR_CORE: GrammarFile<CoreGrammar> =
+pub const PATH_GRAMMAR_CORE: GrammarFile<'static, CoreGrammar<'static>> =
     GrammarFile::new_const(concat!(folder_path!(), "spirv.core.grammar.json"));
-pub const PATH_GRAMMAR_GLSL_STD_450: GrammarFile<ExtInstSetGrammar> =
+pub const PATH_GRAMMAR_GLSL_STD_450: GrammarFile<'static, ExtInstSetGrammar<'static>> =
     GrammarFile::new_const(concat!(folder_path!(), "extinst.glsl.std.450.grammar.json"));
-pub const PATH_GRAMMAR_DEBUG_PRINTF: GrammarFile<ExtInstSetGrammar> =
+pub const PATH_GRAMMAR_DEBUG_PRINTF: GrammarFile<'static, ExtInstSetGrammar<'static>> =
     GrammarFile::new_const(concat!(
         folder_path!(),
         "extinst.nonsemantic.debugprintf.grammar.json"
@@ -55,24 +55,25 @@ mod test {
     #[test]
     pub fn parse_core_grammar() -> anyhow::Result<()> {
         let json = PATH_GRAMMAR_CORE.read()?;
-        let core: CoreGrammar = json.parse_grammar()?;
+        let core: CoreGrammar<'_> = json.parse_grammar()?;
         println!("core has {} Instructions", core.insts.len());
         Ok(())
     }
 
     #[test]
     pub fn parse_all_extinst_grammars() -> anyhow::Result<()> {
-        let mut extinst: Vec<GrammarFile<ExtInstSetGrammar>> = fs::read_dir(PATH_GRAMMAR_FOLDER)
-            .expect("failed to read SPIR-V headers directory")
-            .filter_map(|entry| {
-                let path = entry.ok()?.path();
-                let name = path.file_name()?.to_str()?;
-                (name.starts_with("extinst.") && name.ends_with(".json")).then(|| {
-                    let path_str = path.into_os_string().into_string().ok()?;
-                    Some(GrammarFile::new(Cow::Owned(path_str)))
-                })?
-            })
-            .collect();
+        let mut extinst: Vec<GrammarFile<'_, ExtInstSetGrammar<'_>>> =
+            fs::read_dir(PATH_GRAMMAR_FOLDER)
+                .expect("failed to read SPIR-V headers directory")
+                .filter_map(|entry| {
+                    let path = entry.ok()?.path();
+                    let name = path.file_name()?.to_str()?;
+                    (name.starts_with("extinst.") && name.ends_with(".json")).then(|| {
+                        let path_str = path.into_os_string().into_string().ok()?;
+                        Some(GrammarFile::new(Cow::Owned(path_str)))
+                    })?
+                })
+                .collect();
         extinst.sort_by(|a, b| a.as_path().cmp(b.as_path()));
 
         // equality on paths may fail on some platforms?
@@ -82,7 +83,7 @@ mod test {
         for path in &extinst {
             let name = path.as_path().file_name().unwrap().to_str().unwrap();
             let data = path.read()?;
-            let grammar: ExtInstSetGrammar = data
+            let grammar: ExtInstSetGrammar<'_> = data
                 .parse_grammar()
                 .map_err(|e| anyhow::anyhow!("{name}: {e}"))?;
             println!("{}: {} instructions", name, grammar.insts.len());

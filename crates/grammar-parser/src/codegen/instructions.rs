@@ -5,7 +5,7 @@ use quote::{format_ident, quote};
 
 pub const SMALLVEC_LEN: usize = 4;
 
-pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Result<()> {
+pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     let insts = grammar.insts.iter().map(|inst| {
         let struct_ident = InstMeta::type_ident(&inst.opname);
         let meta = InstMeta::const_ident(&inst.opname);
@@ -65,7 +65,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Resu
                     Ok(())
                 }
 
-                fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+                fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
                     #reader reader.check_opcode(Self::META)?;
                     Ok(Self {
                         #(#members_non_last: OperandEncoding::decode(&mut op_reader)?,)*
@@ -85,8 +85,8 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar) -> anyhow::Resu
 
 pub fn write_inst_enum(
     writer: &mut GrammarWriter,
-    grammar: &Grammar,
-    opt: &CodegenOptions,
+    grammar: &Grammar<'_>,
+    opt: &CodegenOptions<'_>,
 ) -> anyhow::Result<()> {
     let name = format_ident!("{}InstSet", opt.name_suffix_type);
     let insts = grammar
@@ -132,7 +132,7 @@ pub fn write_inst_enum(
                     }
                 }
 
-                fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+                fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
                     let opcode = reader.opcode();
                     Ok(match opcode {
                         #(#decode_match)*

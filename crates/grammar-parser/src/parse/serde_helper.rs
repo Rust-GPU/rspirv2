@@ -7,7 +7,7 @@ pub fn num_or_hex<'de, D: de::Deserializer<'de>>(d: D) -> Result<u32, D::Error> 
     impl de::Visitor<'_> for NumOrStr {
         type Value = u32;
 
-        fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+        fn expecting(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
             write!(formatter, "either a number or a hex string")
         }
 
