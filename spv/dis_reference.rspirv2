@@ -3,7 +3,7 @@ OpCapability StorageImageWriteWithoutFormat
 OpCapability VulkanMemoryModel
 OpMemoryModel Logical Vulkan
 OpEntryPoint GLCompute %1 "main" %2 %3 %4
-OpExecutionMode %1 LocalSize(LiteralInteger(Word(32)), LiteralInteger(Word(1)), LiteralInteger(Word(1)))
+OpExecutionMode %1 LocalSize 32 1 1
 %5 = OpString "ui/dis_reference.rs"
 OpSource Unknown 0 %5 "// compile-flags: -C target-feature=+StorageImageWriteWithoutFormat
 // compile-flags: -C llvm-args=--disassemble
@@ -79,17 +79,17 @@ OpName %2 "tid"
 OpName %3 "offset_buffer"
 OpName %4 "output_buffer"
 OpName %6 "dis_reference::compute_offset"
-OpDecorate %7 ArrayStride(LiteralInteger(Word(4)))
+OpDecorate %7 ArrayStride 4
 OpDecorate %8 Block
-OpMemberDecorate %8 0 Offset(LiteralInteger(Word(0)))
+OpMemberDecorate %8 0 Offset 0
 OpDecorate %9 Block
-OpMemberDecorate %9 0 Offset(LiteralInteger(Word(0)))
-OpDecorate %2 BuiltIn(LocalInvocationId)
+OpMemberDecorate %9 0 Offset 0
+OpDecorate %2 BuiltIn LocalInvocationId
 OpDecorate %3 NonWritable
-OpDecorate %3 Binding(LiteralInteger(Word(42)))
-OpDecorate %3 DescriptorSet(LiteralInteger(Word(0)))
-OpDecorate %4 Binding(LiteralInteger(Word(69)))
-OpDecorate %4 DescriptorSet(LiteralInteger(Word(1)))
+OpDecorate %3 Binding 42
+OpDecorate %3 DescriptorSet 0
+OpDecorate %4 Binding 69
+OpDecorate %4 DescriptorSet 1
 %10 = OpTypeInt 32 0
 %11 = OpTypeVector %10 3
 %12 = OpTypePointer Input %11
