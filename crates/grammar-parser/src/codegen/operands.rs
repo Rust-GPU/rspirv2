@@ -3,6 +3,7 @@ use crate::parse::{Category, Enumerant, Grammar, OperandKind, Quantifier};
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use std::borrow::Cow;
+use std::iter::once;
 
 pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     let operands = grammar.operand_kinds.iter().map(|o| match &o.category {
@@ -100,6 +101,21 @@ fn emit_rust_like_enum(
         }
     });
 
+    let dis = symbols.iter().map(|(_, symbol, params)| {
+        let param_symbols = (0..params.len())
+            .map(|i| format_ident!("p{}", i))
+            .collect::<Vec<_>>();
+        let variant_name = symbol.to_string();
+        if !param_symbols.is_empty() {
+            let fmt = once(variant_name.as_ref())
+                .chain((0..param_symbols.len()).map(|_| " {}"))
+                .collect::<String>();
+            quote!(Self::#symbol (#(#param_symbols),*) => write!(f, #fmt, #(#param_symbols.dis(_ctx)),*))
+        } else {
+            quote!(Self::#symbol => write!(f, #variant_name))
+        }
+    });
+
     quote! {
         #doc
         #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -133,8 +149,10 @@ fn emit_rust_like_enum(
             }
 
             #[inline]
-            fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-                write!(f, "{:?}", self)
+            fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+                match self {
+                    #(#dis),*
+                }
             }
         }
     }
