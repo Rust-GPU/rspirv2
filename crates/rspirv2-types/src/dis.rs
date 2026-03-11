@@ -2,7 +2,7 @@
 
 use crate::binary::{DecodeError, ModuleReader};
 use crate::inst::InstEncoding;
-use crate::operand::Word;
+use crate::operand::{LiteralStringEscape, Word};
 use anstyle::Style;
 use std::fmt::{Display, Formatter};
 use std::marker::PhantomData;
@@ -13,22 +13,33 @@ use std::ops::{Deref, DerefMut};
 pub struct DisOptions {
     /// Whether to emit ANSI escape sequences for colorful output
     pub color: bool,
+    /// Describes how to escape string sequences
+    pub literal_string_escape: LiteralStringEscape,
 }
 
 impl Default for DisOptions {
     #[inline]
     fn default() -> Self {
-        Self { color: true }
+        Self {
+            color: true,
+            literal_string_escape: LiteralStringEscape::default(),
+        }
     }
 }
 
 impl DisOptions {
     pub fn like_rspirv() -> Self {
-        Self { color: false }
+        Self {
+            color: false,
+            literal_string_escape: LiteralStringEscape::EscapeNewlines,
+        }
     }
 
     pub fn like_spirv_tools() -> Self {
-        Self { color: true }
+        Self {
+            color: true,
+            literal_string_escape: LiteralStringEscape::MultiLine,
+        }
     }
 
     /// Disable the style if `color == false`

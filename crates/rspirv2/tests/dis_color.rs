@@ -12,14 +12,20 @@ pub fn test_disabled_color() -> anyhow::Result<()> {
     write!(
         anstream::AutoStream::never(&mut color_stripped),
         "{}",
-        module.dis::<CoreInstSet>(DisOptions { color: true })?
+        module.dis::<CoreInstSet>(DisOptions {
+            color: true,
+            ..Default::default()
+        })?
     )?;
 
     let mut color_disabled = Vec::new();
     write!(
         &mut color_disabled,
         "{}",
-        module.dis::<CoreInstSet>(DisOptions { color: false })?
+        module.dis::<CoreInstSet>(DisOptions {
+            color: false,
+            ..Default::default()
+        })?
     )?;
 
     assert_eq!(
