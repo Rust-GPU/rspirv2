@@ -74,7 +74,7 @@ unsafe impl OperandEncoding for IdResult {
 
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
-        self.dis_fmt_color(f, ctx, AnsiColor::Blue.on_default())
+        self.dis_fmt_color(f, ctx, AnsiColor::Blue.on_default(), false)
     }
 }
 
@@ -84,16 +84,21 @@ impl IdResult {
         f: &mut Formatter<'_>,
         ctx: &DisContext,
         style: anstyle::Style,
+        rspirv_extra_spaces: bool,
     ) -> std::fmt::Result {
         let style = ctx.color(style);
-        write!(f, "{style}%{}{style:#}", self.0.0)
+        if rspirv_extra_spaces && ctx.rspirv_extra_spaces {
+            write!(f, " {style}%{}{style:#} ", self.0.0)
+        } else {
+            write!(f, "{style}%{}{style:#}", self.0.0)
+        }
     }
 }
 
 pub type OptionIdResult = Option<IdResult>;
 
 macro_rules! id_ref {
-    ($name:ident; $kind:expr; $docs:literal) => {
+    ($name:ident; $kind:expr; $docs:literal; $rspirv_extra_spaces:literal) => {
         #[doc = concat!("A `", stringify!($name), "` is a reference to a [`IdResult`] of another operation.")]
         #[doc = $docs]
         #[repr(transparent)]
@@ -139,13 +144,13 @@ macro_rules! id_ref {
 
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
-                self.0.dis_fmt_color(f, ctx, AnsiColor::Yellow.on_default())
+                self.0.dis_fmt_color(f, ctx, AnsiColor::Yellow.on_default(), $rspirv_extra_spaces)
             }
         }
     };
 }
 
-id_ref!(IdResultType; OPERAND_KIND_ID_RESULT_TYPE; "");
-id_ref!(IdMemorySemantics; OPERAND_KIND_ID_MEMORY_SEMANTICS; "");
-id_ref!(IdScope; OPERAND_KIND_ID_SCOPE; "");
-id_ref!(IdRef; OPERAND_KIND_ID_REF; "");
+id_ref!(IdResultType; OPERAND_KIND_ID_RESULT_TYPE; ""; true);
+id_ref!(IdMemorySemantics; OPERAND_KIND_ID_MEMORY_SEMANTICS; ""; false);
+id_ref!(IdScope; OPERAND_KIND_ID_SCOPE; ""; false);
+id_ref!(IdRef; OPERAND_KIND_ID_REF; ""; false);

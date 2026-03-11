@@ -32,35 +32,35 @@ OpDecorate %4 DescriptorSet 1
 %15 = OpTypeFloat 32 
 %16 = OpTypeVoid
 %17 = OpTypeFunction %16 
-%2 = OpVariable %12 Input 
+%2 = OpVariable  %12  Input 
 %18 = OpTypePointer StorageBuffer %7
-%3 = OpVariable %13 StorageBuffer 
-%19 = OpConstant %10 0
+%3 = OpVariable  %13  StorageBuffer 
+%19 = OpConstant  %10  0
 %20 = OpTypePointer StorageBuffer %10
-%4 = OpVariable %14 StorageBuffer 
+%4 = OpVariable  %14  StorageBuffer 
 %21 = OpTypeFunction %10 %10
-%22 = OpConstant %10 1
+%22 = OpConstant  %10  1
 %23 = OpTypeBool
-%24 = OpConstant %15 1071225242
-%25 = OpConstant %10 1333788671
-%26 = OpConstant %10 4294967295
-%27 = OpConstant %10 5
-%28 = OpConstant %10 25096
-%1 = OpFunction %16 None %17
+%24 = OpConstant  %15  1071225242
+%25 = OpConstant  %10  1333788671
+%26 = OpConstant  %10  4294967295
+%27 = OpConstant  %10  5
+%28 = OpConstant  %10  25096
+%1 = OpFunction  %16  None %17
 %29 = OpLabel
 OpLine %5 24 4
-%30 = OpLoad %11 %2 
+%30 = OpLoad  %11  %2 
 OpLine %5 25 4
-%31 = OpInBoundsAccessChain %18 %3 %19
-%32 = OpArrayLength %10 %3 0
+%31 = OpInBoundsAccessChain  %18  %3 %19
+%32 = OpArrayLength  %10  %3 0
 OpLine %5 26 4
-%33 = OpInBoundsAccessChain %20 %4 %19
+%33 = OpInBoundsAccessChain  %20  %4 %19
 OpLine %5 30 36
-%34 = OpCompositeExtract %10 %30 0
+%34 = OpCompositeExtract  %10  %30 0
 OpLine %5 30 21
-%35 = OpFunctionCall %10 %6 %34
+%35 = OpFunctionCall  %10  %6 %34
 OpLine %5 31 26
-%36 = OpULessThan %23 %35 %32
+%36 = OpULessThan  %23  %35 %32
 OpNoLine
 OpSelectionMerge %37 None
 OpBranchConditional %36 %38 %39 
@@ -70,30 +70,30 @@ OpBranch %37
 OpReturn
 %37 = OpLabel
 OpLine %5 31 26
-%40 = OpIAdd %10 %19 %35
-%41 = OpInBoundsAccessChain %20 %31 %40
-%42 = OpLoad %10 %41 
+%40 = OpIAdd  %10  %19 %35
+%41 = OpInBoundsAccessChain  %20  %31 %40
+%42 = OpLoad  %10  %41 
 OpLine %5 32 21
-%43 = OpConvertUToF %15 %42
+%43 = OpConvertUToF  %15  %42
 OpLine %5 32 20
-%44 = OpFMul %15 %43 %24
-%45 = OpBitcast %15 %19
-%46 = OpBitcast %15 %25
-%47 = OpConvertFToU %10 %44
-%48 = OpFUnordLessThan %23 %44 %45
-%49 = OpFOrdGreaterThan %23 %44 %46
-%50 = OpSelect %10 %48 %19 %47
-%51 = OpSelect %10 %49 %26 %50
+%44 = OpFMul  %15  %43 %24
+%45 = OpBitcast  %15  %19
+%46 = OpBitcast  %15  %25
+%47 = OpConvertFToU  %10  %44
+%48 = OpFUnordLessThan  %23  %44 %45
+%49 = OpFOrdGreaterThan  %23  %44 %46
+%50 = OpSelect  %10  %48 %19 %47
+%51 = OpSelect  %10  %49 %26 %50
 OpLine %5 59 13
-%52 = OpAtomicIAdd %10 %33 %27 %28 %51
+%52 = OpAtomicIAdd  %10  %33 %27 %28 %51
 OpNoLine
 OpReturn
 OpFunctionEnd
-%6 = OpFunction %10 DontInline|Const %21
-%53 = OpFunctionParameter %10
+%6 = OpFunction  %10  DontInline|Const %21
+%53 = OpFunctionParameter  %10 
 %54 = OpLabel
 OpLine %5 43 4
-%55 = OpIAdd %10 %22 %53
+%55 = OpIAdd  %10  %22 %53
 OpNoLine
 OpReturnValue %55
 OpFunctionEnd
