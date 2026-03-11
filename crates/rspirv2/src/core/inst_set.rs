@@ -2035,7 +2035,7 @@ impl InstEncoding for CoreInstSet {
             Self::ConvertHandleToSampledImageINTEL(inst) => InstEncoding::encode(inst, writer),
         }
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let opcode = reader.opcode();
         Ok(
             match opcode {

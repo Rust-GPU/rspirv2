@@ -50,17 +50,17 @@ impl<W: WordWriter> InstWriter<W, DisallowedIdResultAllocator> {
 impl<W: WordWriter, A: IdResultAlloc> WordWriter for InstWriter<W, A> {
     #[inline]
     fn write(&mut self, word: Word) {
-        self.words.write(word)
+        self.words.write(word);
     }
 
     #[inline]
     fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) {
-        self.words.write_iter(iter)
+        self.words.write_iter(iter);
     }
 
     #[inline]
     fn inst_reserve(&mut self, len: usize) {
-        self.words.inst_reserve(len)
+        self.words.inst_reserve(len);
     }
 }
 

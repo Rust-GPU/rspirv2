@@ -17,7 +17,7 @@ impl InstEncoding for Round {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -42,7 +42,7 @@ impl InstEncoding for RoundEven {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -67,7 +67,7 @@ impl InstEncoding for Trunc {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -92,7 +92,7 @@ impl InstEncoding for FAbs {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -117,7 +117,7 @@ impl InstEncoding for SAbs {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -142,7 +142,7 @@ impl InstEncoding for FSign {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -167,7 +167,7 @@ impl InstEncoding for SSign {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -192,7 +192,7 @@ impl InstEncoding for Floor {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -217,7 +217,7 @@ impl InstEncoding for Ceil {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -242,7 +242,7 @@ impl InstEncoding for Fract {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -267,7 +267,7 @@ impl InstEncoding for Radians {
         OperandEncoding::encode(&self.degrees, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             degrees: OperandEncoding::decode_last(&mut op_reader)?,
@@ -292,7 +292,7 @@ impl InstEncoding for Degrees {
         OperandEncoding::encode(&self.radians, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             radians: OperandEncoding::decode_last(&mut op_reader)?,
@@ -317,7 +317,7 @@ impl InstEncoding for Sin {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -342,7 +342,7 @@ impl InstEncoding for Cos {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -367,7 +367,7 @@ impl InstEncoding for Tan {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -392,7 +392,7 @@ impl InstEncoding for Asin {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -417,7 +417,7 @@ impl InstEncoding for Acos {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -442,7 +442,7 @@ impl InstEncoding for Atan {
         OperandEncoding::encode(&self.y_over_x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             y_over_x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -467,7 +467,7 @@ impl InstEncoding for Sinh {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -492,7 +492,7 @@ impl InstEncoding for Cosh {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -517,7 +517,7 @@ impl InstEncoding for Tanh {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -542,7 +542,7 @@ impl InstEncoding for Asinh {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -567,7 +567,7 @@ impl InstEncoding for Acosh {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -592,7 +592,7 @@ impl InstEncoding for Atanh {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -619,7 +619,7 @@ impl InstEncoding for Atan2 {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             y: OperandEncoding::decode(&mut op_reader)?,
@@ -647,7 +647,7 @@ impl InstEncoding for Pow {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -673,7 +673,7 @@ impl InstEncoding for Exp {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -698,7 +698,7 @@ impl InstEncoding for Log {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -723,7 +723,7 @@ impl InstEncoding for Exp2 {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -748,7 +748,7 @@ impl InstEncoding for Log2 {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -773,7 +773,7 @@ impl InstEncoding for Sqrt {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -798,7 +798,7 @@ impl InstEncoding for InverseSqrt {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -823,7 +823,7 @@ impl InstEncoding for Determinant {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -848,7 +848,7 @@ impl InstEncoding for MatrixInverse {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -875,7 +875,7 @@ impl InstEncoding for Modf {
         OperandEncoding::encode(&self.i, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -901,7 +901,7 @@ impl InstEncoding for ModfStruct {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -928,7 +928,7 @@ impl InstEncoding for FMin {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -956,7 +956,7 @@ impl InstEncoding for UMin {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -984,7 +984,7 @@ impl InstEncoding for SMin {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1012,7 +1012,7 @@ impl InstEncoding for FMax {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1040,7 +1040,7 @@ impl InstEncoding for UMax {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1068,7 +1068,7 @@ impl InstEncoding for SMax {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1101,7 +1101,7 @@ impl InstEncoding for FClamp {
         OperandEncoding::encode(&self.max_val, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1135,7 +1135,7 @@ impl InstEncoding for UClamp {
         OperandEncoding::encode(&self.max_val, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1169,7 +1169,7 @@ impl InstEncoding for SClamp {
         OperandEncoding::encode(&self.max_val, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1203,7 +1203,7 @@ impl InstEncoding for FMix {
         OperandEncoding::encode(&self.a, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1237,7 +1237,7 @@ impl InstEncoding for IMix {
         OperandEncoding::encode(&self.a, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1266,7 +1266,7 @@ impl InstEncoding for Step {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             edge: OperandEncoding::decode(&mut op_reader)?,
@@ -1299,7 +1299,7 @@ impl InstEncoding for SmoothStep {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             edge_0: OperandEncoding::decode(&mut op_reader)?,
@@ -1333,7 +1333,7 @@ impl InstEncoding for Fma {
         OperandEncoding::encode(&self.c, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             a: OperandEncoding::decode(&mut op_reader)?,
@@ -1362,7 +1362,7 @@ impl InstEncoding for Frexp {
         OperandEncoding::encode(&self.exp, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1388,7 +1388,7 @@ impl InstEncoding for FrexpStruct {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1415,7 +1415,7 @@ impl InstEncoding for Ldexp {
         OperandEncoding::encode(&self.exp, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1441,7 +1441,7 @@ impl InstEncoding for PackSnorm4x8 {
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1466,7 +1466,7 @@ impl InstEncoding for PackUnorm4x8 {
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1491,7 +1491,7 @@ impl InstEncoding for PackSnorm2x16 {
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1516,7 +1516,7 @@ impl InstEncoding for PackUnorm2x16 {
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1541,7 +1541,7 @@ impl InstEncoding for PackHalf2x16 {
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1566,7 +1566,7 @@ impl InstEncoding for PackDouble2x32 {
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1591,7 +1591,7 @@ impl InstEncoding for UnpackSnorm2x16 {
         OperandEncoding::encode(&self.p, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             p: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1616,7 +1616,7 @@ impl InstEncoding for UnpackUnorm2x16 {
         OperandEncoding::encode(&self.p, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             p: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1641,7 +1641,7 @@ impl InstEncoding for UnpackHalf2x16 {
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1666,7 +1666,7 @@ impl InstEncoding for UnpackSnorm4x8 {
         OperandEncoding::encode(&self.p, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             p: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1691,7 +1691,7 @@ impl InstEncoding for UnpackUnorm4x8 {
         OperandEncoding::encode(&self.p, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             p: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1716,7 +1716,7 @@ impl InstEncoding for UnpackDouble2x32 {
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1741,7 +1741,7 @@ impl InstEncoding for Length {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1768,7 +1768,7 @@ impl InstEncoding for Distance {
         OperandEncoding::encode(&self.p_1, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             p_0: OperandEncoding::decode(&mut op_reader)?,
@@ -1796,7 +1796,7 @@ impl InstEncoding for Cross {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1822,7 +1822,7 @@ impl InstEncoding for Normalize {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1854,7 +1854,7 @@ impl InstEncoding for FaceForward {
         OperandEncoding::encode(&self.nref, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             n: OperandEncoding::decode(&mut op_reader)?,
@@ -1883,7 +1883,7 @@ impl InstEncoding for Reflect {
         OperandEncoding::encode(&self.n, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             i: OperandEncoding::decode(&mut op_reader)?,
@@ -1916,7 +1916,7 @@ impl InstEncoding for Refract {
         OperandEncoding::encode(&self.eta, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             i: OperandEncoding::decode(&mut op_reader)?,
@@ -1943,7 +1943,7 @@ impl InstEncoding for FindILsb {
         OperandEncoding::encode(&self.value, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             value: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1968,7 +1968,7 @@ impl InstEncoding for FindSMsb {
         OperandEncoding::encode(&self.value, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             value: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1993,7 +1993,7 @@ impl InstEncoding for FindUMsb {
         OperandEncoding::encode(&self.value, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             value: OperandEncoding::decode_last(&mut op_reader)?,
@@ -2018,7 +2018,7 @@ impl InstEncoding for InterpolateAtCentroid {
         OperandEncoding::encode(&self.interpolant, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             interpolant: OperandEncoding::decode_last(&mut op_reader)?,
@@ -2047,7 +2047,7 @@ impl InstEncoding for InterpolateAtSample {
         OperandEncoding::encode(&self.sample, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             interpolant: OperandEncoding::decode(&mut op_reader)?,
@@ -2077,7 +2077,7 @@ impl InstEncoding for InterpolateAtOffset {
         OperandEncoding::encode(&self.offset, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             interpolant: OperandEncoding::decode(&mut op_reader)?,
@@ -2105,7 +2105,7 @@ impl InstEncoding for NMin {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -2133,7 +2133,7 @@ impl InstEncoding for NMax {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -2166,7 +2166,7 @@ impl InstEncoding for NClamp {
         OperandEncoding::encode(&self.max_val, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,

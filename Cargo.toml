@@ -38,16 +38,13 @@ syn = { version = "2.0.116", default-features = false }
 clap = { version = "4.5.57", features = ["derive"] }
 
 [workspace.lints.rust]
-missing_docs = "warn"
+#missing_docs = "warn"
 # copied from rust-gpu
 future_incompatible = "warn"
 nonstandard_style = "warn"
 rust_2018_idioms = "warn"
 
 [workspace.lints.clippy]
-print_stdout = "deny"
-print_stderr = "deny"
-exit = "deny"
 # copied from rust-gpu
 all = { level = "warn", priority = -1 }
 await_holding_lock = "warn"
@@ -81,7 +78,6 @@ linkedlist = "warn"
 lossy_float_literal = "warn"
 macro_use_imports = "warn"
 manual_ok_or = "warn"
-map_err_ignore = "warn"
 map_flatten = "warn"
 map_unwrap_or = "warn"
 match_same_arms = "warn"
@@ -93,7 +89,6 @@ mut_mut = "warn"
 mutex_integer = "warn"
 needless_borrow = "warn"
 needless_continue = "warn"
-needless_for_each = "warn"
 option_option = "warn"
 path_buf_push_overwrite = "warn"
 ptr_as_ptr = "warn"

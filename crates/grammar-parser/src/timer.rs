@@ -31,7 +31,7 @@ impl<'a> TimerPrintOnDrop<'a> {
 impl Drop for TimerPrintOnDrop<'_> {
     fn drop(&mut self) {
         if !self.disabled {
-            println!("{} took {:.2}s", self.name, self.elapsed().as_secs_f64())
+            println!("{} took {:.2}s", self.name, self.elapsed().as_secs_f64());
         }
     }
 }

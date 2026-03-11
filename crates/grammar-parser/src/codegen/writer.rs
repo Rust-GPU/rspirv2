@@ -61,14 +61,14 @@ impl GrammarWriter {
     }
 
     /// Finish writing the grammar
-    pub fn finish(self, mod_options: &CodegenOptions) -> anyhow::Result<()> {
+    pub fn finish(self, mod_options: &CodegenOptions<'_>) -> anyhow::Result<()> {
         self.write_mod_rs(mod_options)?;
         self.format_submodules()?;
         Ok(())
     }
 
     /// always write mod.rs and don't add to `submodules`
-    fn write_mod_rs(&self, mod_options: &CodegenOptions) -> anyhow::Result<()> {
+    fn write_mod_rs(&self, mod_options: &CodegenOptions<'_>) -> anyhow::Result<()> {
         fs::write(
             self.submodule_file("mod"),
             self.codegen_mod_rs(mod_options)?.to_string(),
@@ -77,7 +77,7 @@ impl GrammarWriter {
     }
 
     /// see [`use_super`]
-    fn codegen_mod_rs(&self, mod_options: &CodegenOptions) -> anyhow::Result<TokenStream> {
+    fn codegen_mod_rs(&self, mod_options: &CodegenOptions<'_>) -> anyhow::Result<TokenStream> {
         let (mods, imports): (Vec<_>, Vec<_>) = self
             .submodules
             .iter()

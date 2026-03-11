@@ -18,15 +18,13 @@ pub trait InstEncoding: Sized + Debug + Eq {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError>;
 
     /// Decode this instruction from an [`InstReader`]
-    fn decode(reader: &mut InstReader) -> Result<Self, DecodeError>;
+    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError>;
 
     #[inline]
-    fn try_decode(reader: &mut InstReader) -> Result<Option<Self>, DecodeError> {
+    fn try_decode(reader: &mut InstReader<'_>) -> Result<Option<Self>, DecodeError> {
         match Self::decode(reader) {
             Ok(e) => Ok(Some(e)),
-            Err(DecodeError::WrongOpCode { .. }) | Err(DecodeError::UnknownOpCode { .. }) => {
-                Ok(None)
-            }
+            Err(DecodeError::WrongOpCode { .. } | DecodeError::UnknownOpCode { .. }) => Ok(None),
             Err(e) => Err(e),
         }
     }
