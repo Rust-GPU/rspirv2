@@ -28,7 +28,60 @@ unsafe impl OperandEncoding for ImageOperands {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::Bias) {
+                write!(f, "{sep}Bias")?;
+            }
+            if self.contains(Self::Lod) {
+                write!(f, "{sep}Lod")?;
+            }
+            if self.contains(Self::Grad) {
+                write!(f, "{sep}Grad")?;
+            }
+            if self.contains(Self::ConstOffset) {
+                write!(f, "{sep}ConstOffset")?;
+            }
+            if self.contains(Self::Offset) {
+                write!(f, "{sep}Offset")?;
+            }
+            if self.contains(Self::ConstOffsets) {
+                write!(f, "{sep}ConstOffsets")?;
+            }
+            if self.contains(Self::Sample) {
+                write!(f, "{sep}Sample")?;
+            }
+            if self.contains(Self::MinLod) {
+                write!(f, "{sep}MinLod")?;
+            }
+            if self.contains(Self::MakeTexelAvailable) {
+                write!(f, "{sep}MakeTexelAvailable")?;
+            }
+            if self.contains(Self::MakeTexelVisible) {
+                write!(f, "{sep}MakeTexelVisible")?;
+            }
+            if self.contains(Self::NonPrivateTexel) {
+                write!(f, "{sep}NonPrivateTexel")?;
+            }
+            if self.contains(Self::VolatileTexel) {
+                write!(f, "{sep}VolatileTexel")?;
+            }
+            if self.contains(Self::SignExtend) {
+                write!(f, "{sep}SignExtend")?;
+            }
+            if self.contains(Self::ZeroExtend) {
+                write!(f, "{sep}ZeroExtend")?;
+            }
+            if self.contains(Self::Nontemporal) {
+                write!(f, "{sep}Nontemporal")?;
+            }
+            if self.contains(Self::Offsets) {
+                write!(f, "{sep}Offsets")?;
+            }
+            Ok(())
+        }
     }
 }
 bitflags! {
@@ -55,7 +108,36 @@ unsafe impl OperandEncoding for FPFastMathMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::NotNaN) {
+                write!(f, "{sep}NotNaN")?;
+            }
+            if self.contains(Self::NotInf) {
+                write!(f, "{sep}NotInf")?;
+            }
+            if self.contains(Self::NSZ) {
+                write!(f, "{sep}NSZ")?;
+            }
+            if self.contains(Self::AllowRecip) {
+                write!(f, "{sep}AllowRecip")?;
+            }
+            if self.contains(Self::Fast) {
+                write!(f, "{sep}Fast")?;
+            }
+            if self.contains(Self::AllowContract) {
+                write!(f, "{sep}AllowContract")?;
+            }
+            if self.contains(Self::AllowReassoc) {
+                write!(f, "{sep}AllowReassoc")?;
+            }
+            if self.contains(Self::AllowTransform) {
+                write!(f, "{sep}AllowTransform")?;
+            }
+            Ok(())
+        }
     }
 }
 bitflags! {
@@ -80,7 +162,18 @@ unsafe impl OperandEncoding for SelectionControl {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::Flatten) {
+                write!(f, "{sep}Flatten")?;
+            }
+            if self.contains(Self::DontFlatten) {
+                write!(f, "{sep}DontFlatten")?;
+            }
+            Ok(())
+        }
     }
 }
 bitflags! {
@@ -116,7 +209,69 @@ unsafe impl OperandEncoding for LoopControl {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::Unroll) {
+                write!(f, "{sep}Unroll")?;
+            }
+            if self.contains(Self::DontUnroll) {
+                write!(f, "{sep}DontUnroll")?;
+            }
+            if self.contains(Self::DependencyInfinite) {
+                write!(f, "{sep}DependencyInfinite")?;
+            }
+            if self.contains(Self::DependencyLength) {
+                write!(f, "{sep}DependencyLength")?;
+            }
+            if self.contains(Self::MinIterations) {
+                write!(f, "{sep}MinIterations")?;
+            }
+            if self.contains(Self::MaxIterations) {
+                write!(f, "{sep}MaxIterations")?;
+            }
+            if self.contains(Self::IterationMultiple) {
+                write!(f, "{sep}IterationMultiple")?;
+            }
+            if self.contains(Self::PeelCount) {
+                write!(f, "{sep}PeelCount")?;
+            }
+            if self.contains(Self::PartialCount) {
+                write!(f, "{sep}PartialCount")?;
+            }
+            if self.contains(Self::InitiationIntervalALTERA) {
+                write!(f, "{sep}InitiationIntervalALTERA")?;
+            }
+            if self.contains(Self::MaxConcurrencyALTERA) {
+                write!(f, "{sep}MaxConcurrencyALTERA")?;
+            }
+            if self.contains(Self::DependencyArrayALTERA) {
+                write!(f, "{sep}DependencyArrayALTERA")?;
+            }
+            if self.contains(Self::PipelineEnableALTERA) {
+                write!(f, "{sep}PipelineEnableALTERA")?;
+            }
+            if self.contains(Self::LoopCoalesceALTERA) {
+                write!(f, "{sep}LoopCoalesceALTERA")?;
+            }
+            if self.contains(Self::MaxInterleavingALTERA) {
+                write!(f, "{sep}MaxInterleavingALTERA")?;
+            }
+            if self.contains(Self::SpeculatedIterationsALTERA) {
+                write!(f, "{sep}SpeculatedIterationsALTERA")?;
+            }
+            if self.contains(Self::NoFusionALTERA) {
+                write!(f, "{sep}NoFusionALTERA")?;
+            }
+            if self.contains(Self::LoopCountALTERA) {
+                write!(f, "{sep}LoopCountALTERA")?;
+            }
+            if self.contains(Self::MaxReinvocationDelayALTERA) {
+                write!(f, "{sep}MaxReinvocationDelayALTERA")?;
+            }
+            Ok(())
+        }
     }
 }
 bitflags! {
@@ -142,7 +297,27 @@ unsafe impl OperandEncoding for FunctionControl {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::Inline) {
+                write!(f, "{sep}Inline")?;
+            }
+            if self.contains(Self::DontInline) {
+                write!(f, "{sep}DontInline")?;
+            }
+            if self.contains(Self::Pure) {
+                write!(f, "{sep}Pure")?;
+            }
+            if self.contains(Self::Const) {
+                write!(f, "{sep}Const")?;
+            }
+            if self.contains(Self::OptNoneEXT) {
+                write!(f, "{sep}OptNoneEXT")?;
+            }
+            Ok(())
+        }
     }
 }
 bitflags! {
@@ -173,7 +348,54 @@ unsafe impl OperandEncoding for MemorySemantics {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::Acquire) {
+                write!(f, "{sep}Acquire")?;
+            }
+            if self.contains(Self::Release) {
+                write!(f, "{sep}Release")?;
+            }
+            if self.contains(Self::AcquireRelease) {
+                write!(f, "{sep}AcquireRelease")?;
+            }
+            if self.contains(Self::SequentiallyConsistent) {
+                write!(f, "{sep}SequentiallyConsistent")?;
+            }
+            if self.contains(Self::UniformMemory) {
+                write!(f, "{sep}UniformMemory")?;
+            }
+            if self.contains(Self::SubgroupMemory) {
+                write!(f, "{sep}SubgroupMemory")?;
+            }
+            if self.contains(Self::WorkgroupMemory) {
+                write!(f, "{sep}WorkgroupMemory")?;
+            }
+            if self.contains(Self::CrossWorkgroupMemory) {
+                write!(f, "{sep}CrossWorkgroupMemory")?;
+            }
+            if self.contains(Self::AtomicCounterMemory) {
+                write!(f, "{sep}AtomicCounterMemory")?;
+            }
+            if self.contains(Self::ImageMemory) {
+                write!(f, "{sep}ImageMemory")?;
+            }
+            if self.contains(Self::OutputMemory) {
+                write!(f, "{sep}OutputMemory")?;
+            }
+            if self.contains(Self::MakeAvailable) {
+                write!(f, "{sep}MakeAvailable")?;
+            }
+            if self.contains(Self::MakeVisible) {
+                write!(f, "{sep}MakeVisible")?;
+            }
+            if self.contains(Self::Volatile) {
+                write!(f, "{sep}Volatile")?;
+            }
+            Ok(())
+        }
     }
 }
 bitflags! {
@@ -202,7 +424,36 @@ unsafe impl OperandEncoding for MemoryAccess {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::Volatile) {
+                write!(f, "{sep}Volatile")?;
+            }
+            if self.contains(Self::Aligned) {
+                write!(f, "{sep}Aligned")?;
+            }
+            if self.contains(Self::Nontemporal) {
+                write!(f, "{sep}Nontemporal")?;
+            }
+            if self.contains(Self::MakePointerAvailable) {
+                write!(f, "{sep}MakePointerAvailable")?;
+            }
+            if self.contains(Self::MakePointerVisible) {
+                write!(f, "{sep}MakePointerVisible")?;
+            }
+            if self.contains(Self::NonPrivatePointer) {
+                write!(f, "{sep}NonPrivatePointer")?;
+            }
+            if self.contains(Self::AliasScopeINTELMask) {
+                write!(f, "{sep}AliasScopeINTELMask")?;
+            }
+            if self.contains(Self::NoAliasINTELMask) {
+                write!(f, "{sep}NoAliasINTELMask")?;
+            }
+            Ok(())
+        }
     }
 }
 bitflags! {
@@ -227,7 +478,15 @@ unsafe impl OperandEncoding for KernelProfilingInfo {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::CmdExecTime) {
+                write!(f, "{sep}CmdExecTime")?;
+            }
+            Ok(())
+        }
     }
 }
 bitflags! {
@@ -256,7 +515,45 @@ unsafe impl OperandEncoding for RayFlags {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::OpaqueKHR) {
+                write!(f, "{sep}OpaqueKHR")?;
+            }
+            if self.contains(Self::NoOpaqueKHR) {
+                write!(f, "{sep}NoOpaqueKHR")?;
+            }
+            if self.contains(Self::TerminateOnFirstHitKHR) {
+                write!(f, "{sep}TerminateOnFirstHitKHR")?;
+            }
+            if self.contains(Self::SkipClosestHitShaderKHR) {
+                write!(f, "{sep}SkipClosestHitShaderKHR")?;
+            }
+            if self.contains(Self::CullBackFacingTrianglesKHR) {
+                write!(f, "{sep}CullBackFacingTrianglesKHR")?;
+            }
+            if self.contains(Self::CullFrontFacingTrianglesKHR) {
+                write!(f, "{sep}CullFrontFacingTrianglesKHR")?;
+            }
+            if self.contains(Self::CullOpaqueKHR) {
+                write!(f, "{sep}CullOpaqueKHR")?;
+            }
+            if self.contains(Self::CullNoOpaqueKHR) {
+                write!(f, "{sep}CullNoOpaqueKHR")?;
+            }
+            if self.contains(Self::SkipTrianglesKHR) {
+                write!(f, "{sep}SkipTrianglesKHR")?;
+            }
+            if self.contains(Self::SkipAABBsKHR) {
+                write!(f, "{sep}SkipAABBsKHR")?;
+            }
+            if self.contains(Self::ForceOpacityMicromap2StateEXT) {
+                write!(f, "{sep}ForceOpacityMicromap2StateEXT")?;
+            }
+            Ok(())
+        }
     }
 }
 bitflags! {
@@ -282,7 +579,24 @@ unsafe impl OperandEncoding for FragmentShadingRate {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::Vertical2Pixels) {
+                write!(f, "{sep}Vertical2Pixels")?;
+            }
+            if self.contains(Self::Vertical4Pixels) {
+                write!(f, "{sep}Vertical4Pixels")?;
+            }
+            if self.contains(Self::Horizontal2Pixels) {
+                write!(f, "{sep}Horizontal2Pixels")?;
+            }
+            if self.contains(Self::Horizontal4Pixels) {
+                write!(f, "{sep}Horizontal4Pixels")?;
+            }
+            Ok(())
+        }
     }
 }
 bitflags! {
@@ -308,7 +622,18 @@ unsafe impl OperandEncoding for RawAccessChainOperands {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::RobustnessPerComponentNV) {
+                write!(f, "{sep}RobustnessPerComponentNV")?;
+            }
+            if self.contains(Self::RobustnessPerElementNV) {
+                write!(f, "{sep}RobustnessPerElementNV")?;
+            }
+            Ok(())
+        }
     }
 }
 #[repr(u32)]
@@ -4332,7 +4657,27 @@ unsafe impl OperandEncoding for CooperativeMatrixOperands {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::MatrixASignedComponentsKHR) {
+                write!(f, "{sep}MatrixASignedComponentsKHR")?;
+            }
+            if self.contains(Self::MatrixBSignedComponentsKHR) {
+                write!(f, "{sep}MatrixBSignedComponentsKHR")?;
+            }
+            if self.contains(Self::MatrixCSignedComponentsKHR) {
+                write!(f, "{sep}MatrixCSignedComponentsKHR")?;
+            }
+            if self.contains(Self::MatrixResultSignedComponentsKHR) {
+                write!(f, "{sep}MatrixResultSignedComponentsKHR")?;
+            }
+            if self.contains(Self::SaturatingAccumulationKHR) {
+                write!(f, "{sep}SaturatingAccumulationKHR")?;
+            }
+            Ok(())
+        }
     }
 }
 #[repr(u32)]
@@ -4437,7 +4782,21 @@ unsafe impl OperandEncoding for CooperativeMatrixReduce {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::Row) {
+                write!(f, "{sep}Row")?;
+            }
+            if self.contains(Self::Column) {
+                write!(f, "{sep}Column")?;
+            }
+            if self.contains(Self::TwoByTwo) {
+                write!(f, "{sep}TwoByTwo")?;
+            }
+            Ok(())
+        }
     }
 }
 #[repr(u32)]
@@ -4506,7 +4865,18 @@ unsafe impl OperandEncoding for TensorAddressingOperands {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::TensorView) {
+                write!(f, "{sep}TensorView")?;
+            }
+            if self.contains(Self::DecodeFunc) {
+                write!(f, "{sep}DecodeFunc")?;
+            }
+            Ok(())
+        }
     }
 }
 #[repr(u32)]
@@ -4693,7 +5063,54 @@ unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::MatrixASignedComponentsINTEL) {
+                write!(f, "{sep}MatrixASignedComponentsINTEL")?;
+            }
+            if self.contains(Self::MatrixBSignedComponentsINTEL) {
+                write!(f, "{sep}MatrixBSignedComponentsINTEL")?;
+            }
+            if self.contains(Self::MatrixCBFloat16INTEL) {
+                write!(f, "{sep}MatrixCBFloat16INTEL")?;
+            }
+            if self.contains(Self::MatrixResultBFloat16INTEL) {
+                write!(f, "{sep}MatrixResultBFloat16INTEL")?;
+            }
+            if self.contains(Self::MatrixAPackedInt8INTEL) {
+                write!(f, "{sep}MatrixAPackedInt8INTEL")?;
+            }
+            if self.contains(Self::MatrixBPackedInt8INTEL) {
+                write!(f, "{sep}MatrixBPackedInt8INTEL")?;
+            }
+            if self.contains(Self::MatrixAPackedInt4INTEL) {
+                write!(f, "{sep}MatrixAPackedInt4INTEL")?;
+            }
+            if self.contains(Self::MatrixBPackedInt4INTEL) {
+                write!(f, "{sep}MatrixBPackedInt4INTEL")?;
+            }
+            if self.contains(Self::MatrixATF32INTEL) {
+                write!(f, "{sep}MatrixATF32INTEL")?;
+            }
+            if self.contains(Self::MatrixBTF32INTEL) {
+                write!(f, "{sep}MatrixBTF32INTEL")?;
+            }
+            if self.contains(Self::MatrixAPackedFloat16INTEL) {
+                write!(f, "{sep}MatrixAPackedFloat16INTEL")?;
+            }
+            if self.contains(Self::MatrixBPackedFloat16INTEL) {
+                write!(f, "{sep}MatrixBPackedFloat16INTEL")?;
+            }
+            if self.contains(Self::MatrixAPackedBFloat16INTEL) {
+                write!(f, "{sep}MatrixAPackedBFloat16INTEL")?;
+            }
+            if self.contains(Self::MatrixBPackedBFloat16INTEL) {
+                write!(f, "{sep}MatrixBPackedBFloat16INTEL")?;
+            }
+            Ok(())
+        }
     }
 }
 #[repr(u32)]
@@ -4956,6 +5373,26 @@ unsafe impl OperandEncoding for TensorOperands {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        if self.is_empty() {
+            write!(f, "None")
+        } else {
+            let sep = SeparatorJoiner::new("|");
+            if self.contains(Self::NontemporalARM) {
+                write!(f, "{sep}NontemporalARM")?;
+            }
+            if self.contains(Self::OutOfBoundsValueARM) {
+                write!(f, "{sep}OutOfBoundsValueARM")?;
+            }
+            if self.contains(Self::MakeElementAvailableARM) {
+                write!(f, "{sep}MakeElementAvailableARM")?;
+            }
+            if self.contains(Self::MakeElementVisibleARM) {
+                write!(f, "{sep}MakeElementVisibleARM")?;
+            }
+            if self.contains(Self::NonPrivateElementARM) {
+                write!(f, "{sep}NonPrivateElementARM")?;
+            }
+            Ok(())
+        }
     }
 }

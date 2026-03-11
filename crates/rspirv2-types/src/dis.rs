@@ -4,6 +4,7 @@ use crate::binary::{DecodeError, ModuleReader};
 use crate::inst::InstEncoding;
 use crate::operand::{LiteralStringEscape, Word};
 use anstyle::Style;
+use std::cell::Cell;
 use std::fmt::{Display, Formatter};
 use std::marker::PhantomData;
 use std::ops::{Deref, DerefMut};
@@ -105,5 +106,34 @@ impl<'a, ISA: InstEncoding> Display for DisModule<'a, ISA> {
             writeln!(f, "{}", inst.dis(&self.dis))?;
         }
         Ok(())
+    }
+}
+
+/// Utility struct for inserting separators between variants. Use it like `format!({sep}{value})`, will skip the
+/// separator on first write.
+///
+/// Used by bitmasks to add `|` in disassembly.
+pub struct SeparatorJoiner<'a> {
+    first: Cell<bool>,
+    sep: &'a str,
+}
+
+impl<'a> SeparatorJoiner<'a> {
+    #[inline]
+    pub fn new(sep: &'a str) -> Self {
+        Self {
+            first: Cell::new(false),
+            sep,
+        }
+    }
+}
+
+impl<'a> Display for SeparatorJoiner<'a> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        if self.first.replace(true) {
+            write!(f, "{}", self.sep)
+        } else {
+            Ok(())
+        }
     }
 }
