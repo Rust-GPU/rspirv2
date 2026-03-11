@@ -705,7 +705,22 @@ unsafe impl OperandEncoding for SourceLanguage {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::Unknown => write!(f, " Unknown"),
+            Self::ESSL => write!(f, " ESSL"),
+            Self::GLSL => write!(f, " GLSL"),
+            Self::OpenCL_C => write!(f, " OpenCL_C"),
+            Self::OpenCL_CPP => write!(f, " OpenCL_CPP"),
+            Self::HLSL => write!(f, " HLSL"),
+            Self::CPP_for_OpenCL => write!(f, " CPP_for_OpenCL"),
+            Self::SYCL => write!(f, " SYCL"),
+            Self::HERO_C => write!(f, " HERO_C"),
+            Self::NZSL => write!(f, " NZSL"),
+            Self::WGSL => write!(f, " WGSL"),
+            Self::Slang => write!(f, " Slang"),
+            Self::Zig => write!(f, " Zig"),
+            Self::Rust => write!(f, " Rust"),
+        }
     }
 }
 #[repr(u32)]
@@ -772,7 +787,25 @@ unsafe impl OperandEncoding for ExecutionModel {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::Vertex => write!(f, " Vertex"),
+            Self::TessellationControl => write!(f, " TessellationControl"),
+            Self::TessellationEvaluation => write!(f, " TessellationEvaluation"),
+            Self::Geometry => write!(f, " Geometry"),
+            Self::Fragment => write!(f, " Fragment"),
+            Self::GLCompute => write!(f, " GLCompute"),
+            Self::Kernel => write!(f, " Kernel"),
+            Self::TaskNV => write!(f, " TaskNV"),
+            Self::MeshNV => write!(f, " MeshNV"),
+            Self::RayGenerationKHR => write!(f, " RayGenerationKHR"),
+            Self::IntersectionKHR => write!(f, " IntersectionKHR"),
+            Self::AnyHitKHR => write!(f, " AnyHitKHR"),
+            Self::ClosestHitKHR => write!(f, " ClosestHitKHR"),
+            Self::MissKHR => write!(f, " MissKHR"),
+            Self::CallableKHR => write!(f, " CallableKHR"),
+            Self::TaskEXT => write!(f, " TaskEXT"),
+            Self::MeshEXT => write!(f, " MeshEXT"),
+        }
     }
 }
 #[repr(u32)]
@@ -814,7 +847,12 @@ unsafe impl OperandEncoding for AddressingModel {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::Logical => write!(f, " Logical"),
+            Self::Physical32 => write!(f, " Physical32"),
+            Self::Physical64 => write!(f, " Physical64"),
+            Self::PhysicalStorageBuffer64 => write!(f, " PhysicalStorageBuffer64"),
+        }
     }
 }
 #[repr(u32)]
@@ -856,7 +894,12 @@ unsafe impl OperandEncoding for MemoryModel {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::Simple => write!(f, " Simple"),
+            Self::GLSL450 => write!(f, " GLSL450"),
+            Self::OpenCL => write!(f, " OpenCL"),
+            Self::Vulkan => write!(f, " Vulkan"),
+        }
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1832,7 +1875,37 @@ unsafe impl OperandEncoding for StorageClass {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::UniformConstant => write!(f, " UniformConstant"),
+            Self::Input => write!(f, " Input"),
+            Self::Uniform => write!(f, " Uniform"),
+            Self::Output => write!(f, " Output"),
+            Self::Workgroup => write!(f, " Workgroup"),
+            Self::CrossWorkgroup => write!(f, " CrossWorkgroup"),
+            Self::Private => write!(f, " Private"),
+            Self::Function => write!(f, " Function"),
+            Self::Generic => write!(f, " Generic"),
+            Self::PushConstant => write!(f, " PushConstant"),
+            Self::AtomicCounter => write!(f, " AtomicCounter"),
+            Self::Image => write!(f, " Image"),
+            Self::StorageBuffer => write!(f, " StorageBuffer"),
+            Self::TileImageEXT => write!(f, " TileImageEXT"),
+            Self::TileAttachmentQCOM => write!(f, " TileAttachmentQCOM"),
+            Self::NodePayloadAMDX => write!(f, " NodePayloadAMDX"),
+            Self::CallableDataKHR => write!(f, " CallableDataKHR"),
+            Self::IncomingCallableDataKHR => write!(f, " IncomingCallableDataKHR"),
+            Self::RayPayloadKHR => write!(f, " RayPayloadKHR"),
+            Self::HitAttributeKHR => write!(f, " HitAttributeKHR"),
+            Self::IncomingRayPayloadKHR => write!(f, " IncomingRayPayloadKHR"),
+            Self::ShaderRecordBufferKHR => write!(f, " ShaderRecordBufferKHR"),
+            Self::PhysicalStorageBuffer => write!(f, " PhysicalStorageBuffer"),
+            Self::HitObjectAttributeNV => write!(f, " HitObjectAttributeNV"),
+            Self::TaskPayloadWorkgroupEXT => write!(f, " TaskPayloadWorkgroupEXT"),
+            Self::HitObjectAttributeEXT => write!(f, " HitObjectAttributeEXT"),
+            Self::CodeSectionINTEL => write!(f, " CodeSectionINTEL"),
+            Self::DeviceOnlyALTERA => write!(f, " DeviceOnlyALTERA"),
+            Self::HostOnlyALTERA => write!(f, " HostOnlyALTERA"),
+        }
     }
 }
 #[repr(u32)]
@@ -1881,7 +1954,16 @@ unsafe impl OperandEncoding for Dim {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::Dim1D => write!(f, " 1D"),
+            Self::Dim2D => write!(f, " 2D"),
+            Self::Dim3D => write!(f, " 3D"),
+            Self::Cube => write!(f, " Cube"),
+            Self::Rect => write!(f, " Rect"),
+            Self::Buffer => write!(f, " Buffer"),
+            Self::SubpassData => write!(f, " SubpassData"),
+            Self::TileImageDataEXT => write!(f, " TileImageDataEXT"),
+        }
     }
 }
 #[repr(u32)]
@@ -1924,7 +2006,13 @@ unsafe impl OperandEncoding for SamplerAddressingMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::None => write!(f, " None"),
+            Self::ClampToEdge => write!(f, " ClampToEdge"),
+            Self::Clamp => write!(f, " Clamp"),
+            Self::Repeat => write!(f, " Repeat"),
+            Self::RepeatMirrored => write!(f, " RepeatMirrored"),
+        }
     }
 }
 #[repr(u32)]
@@ -1961,7 +2049,10 @@ unsafe impl OperandEncoding for SamplerFilterMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::Nearest => write!(f, " Nearest"),
+            Self::Linear => write!(f, " Linear"),
+        }
     }
 }
 #[repr(u32)]
@@ -2078,7 +2169,50 @@ unsafe impl OperandEncoding for ImageFormat {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::Unknown => write!(f, " Unknown"),
+            Self::Rgba32f => write!(f, " Rgba32f"),
+            Self::Rgba16f => write!(f, " Rgba16f"),
+            Self::R32f => write!(f, " R32f"),
+            Self::Rgba8 => write!(f, " Rgba8"),
+            Self::Rgba8Snorm => write!(f, " Rgba8Snorm"),
+            Self::Rg32f => write!(f, " Rg32f"),
+            Self::Rg16f => write!(f, " Rg16f"),
+            Self::R11fG11fB10f => write!(f, " R11fG11fB10f"),
+            Self::R16f => write!(f, " R16f"),
+            Self::Rgba16 => write!(f, " Rgba16"),
+            Self::Rgb10A2 => write!(f, " Rgb10A2"),
+            Self::Rg16 => write!(f, " Rg16"),
+            Self::Rg8 => write!(f, " Rg8"),
+            Self::R16 => write!(f, " R16"),
+            Self::R8 => write!(f, " R8"),
+            Self::Rgba16Snorm => write!(f, " Rgba16Snorm"),
+            Self::Rg16Snorm => write!(f, " Rg16Snorm"),
+            Self::Rg8Snorm => write!(f, " Rg8Snorm"),
+            Self::R16Snorm => write!(f, " R16Snorm"),
+            Self::R8Snorm => write!(f, " R8Snorm"),
+            Self::Rgba32i => write!(f, " Rgba32i"),
+            Self::Rgba16i => write!(f, " Rgba16i"),
+            Self::Rgba8i => write!(f, " Rgba8i"),
+            Self::R32i => write!(f, " R32i"),
+            Self::Rg32i => write!(f, " Rg32i"),
+            Self::Rg16i => write!(f, " Rg16i"),
+            Self::Rg8i => write!(f, " Rg8i"),
+            Self::R16i => write!(f, " R16i"),
+            Self::R8i => write!(f, " R8i"),
+            Self::Rgba32ui => write!(f, " Rgba32ui"),
+            Self::Rgba16ui => write!(f, " Rgba16ui"),
+            Self::Rgba8ui => write!(f, " Rgba8ui"),
+            Self::R32ui => write!(f, " R32ui"),
+            Self::Rgb10a2ui => write!(f, " Rgb10a2ui"),
+            Self::Rg32ui => write!(f, " Rg32ui"),
+            Self::Rg16ui => write!(f, " Rg16ui"),
+            Self::Rg8ui => write!(f, " Rg8ui"),
+            Self::R16ui => write!(f, " R16ui"),
+            Self::R8ui => write!(f, " R8ui"),
+            Self::R64ui => write!(f, " R64ui"),
+            Self::R64i => write!(f, " R64i"),
+        }
     }
 }
 #[repr(u32)]
@@ -2151,7 +2285,28 @@ unsafe impl OperandEncoding for ImageChannelOrder {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::R => write!(f, " R"),
+            Self::A => write!(f, " A"),
+            Self::RG => write!(f, " RG"),
+            Self::RA => write!(f, " RA"),
+            Self::RGB => write!(f, " RGB"),
+            Self::RGBA => write!(f, " RGBA"),
+            Self::BGRA => write!(f, " BGRA"),
+            Self::ARGB => write!(f, " ARGB"),
+            Self::Intensity => write!(f, " Intensity"),
+            Self::Luminance => write!(f, " Luminance"),
+            Self::Rx => write!(f, " Rx"),
+            Self::RGx => write!(f, " RGx"),
+            Self::RGBx => write!(f, " RGBx"),
+            Self::Depth => write!(f, " Depth"),
+            Self::DepthStencil => write!(f, " DepthStencil"),
+            Self::sRGB => write!(f, " sRGB"),
+            Self::sRGBx => write!(f, " sRGBx"),
+            Self::sRGBA => write!(f, " sRGBA"),
+            Self::sBGRA => write!(f, " sBGRA"),
+            Self::ABGR => write!(f, " ABGR"),
+        }
     }
 }
 #[repr(u32)]
@@ -2236,7 +2391,34 @@ unsafe impl OperandEncoding for ImageChannelDataType {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::SnormInt8 => write!(f, " SnormInt8"),
+            Self::SnormInt16 => write!(f, " SnormInt16"),
+            Self::UnormInt8 => write!(f, " UnormInt8"),
+            Self::UnormInt16 => write!(f, " UnormInt16"),
+            Self::UnormShort565 => write!(f, " UnormShort565"),
+            Self::UnormShort555 => write!(f, " UnormShort555"),
+            Self::UnormInt101010 => write!(f, " UnormInt101010"),
+            Self::SignedInt8 => write!(f, " SignedInt8"),
+            Self::SignedInt16 => write!(f, " SignedInt16"),
+            Self::SignedInt32 => write!(f, " SignedInt32"),
+            Self::UnsignedInt8 => write!(f, " UnsignedInt8"),
+            Self::UnsignedInt16 => write!(f, " UnsignedInt16"),
+            Self::UnsignedInt32 => write!(f, " UnsignedInt32"),
+            Self::HalfFloat => write!(f, " HalfFloat"),
+            Self::Float => write!(f, " Float"),
+            Self::UnormInt24 => write!(f, " UnormInt24"),
+            Self::UnormInt101010_2 => write!(f, " UnormInt101010_2"),
+            Self::UnormInt10X6EXT => write!(f, " UnormInt10X6EXT"),
+            Self::UnsignedIntRaw10EXT => write!(f, " UnsignedIntRaw10EXT"),
+            Self::UnsignedIntRaw12EXT => write!(f, " UnsignedIntRaw12EXT"),
+            Self::UnormInt2_101010EXT => write!(f, " UnormInt2_101010EXT"),
+            Self::UnsignedInt10X6EXT => write!(f, " UnsignedInt10X6EXT"),
+            Self::UnsignedInt12X4EXT => write!(f, " UnsignedInt12X4EXT"),
+            Self::UnsignedInt14X2EXT => write!(f, " UnsignedInt14X2EXT"),
+            Self::UnormInt12X4EXT => write!(f, " UnormInt12X4EXT"),
+            Self::UnormInt14X2EXT => write!(f, " UnormInt14X2EXT"),
+        }
     }
 }
 #[repr(u32)]
@@ -2277,7 +2459,12 @@ unsafe impl OperandEncoding for FPRoundingMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::RTE => write!(f, " RTE"),
+            Self::RTZ => write!(f, " RTZ"),
+            Self::RTP => write!(f, " RTP"),
+            Self::RTN => write!(f, " RTN"),
+        }
     }
 }
 #[repr(u32)]
@@ -2314,7 +2501,10 @@ unsafe impl OperandEncoding for FPDenormMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::Preserve => write!(f, " Preserve"),
+            Self::FlushToZero => write!(f, " FlushToZero"),
+        }
     }
 }
 #[repr(u32)]
@@ -2363,7 +2553,16 @@ unsafe impl OperandEncoding for QuantizationModes {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::TRN => write!(f, " TRN"),
+            Self::TRN_ZERO => write!(f, " TRN_ZERO"),
+            Self::RND => write!(f, " RND"),
+            Self::RND_ZERO => write!(f, " RND_ZERO"),
+            Self::RND_INF => write!(f, " RND_INF"),
+            Self::RND_MIN_INF => write!(f, " RND_MIN_INF"),
+            Self::RND_CONV => write!(f, " RND_CONV"),
+            Self::RND_CONV_ODD => write!(f, " RND_CONV_ODD"),
+        }
     }
 }
 #[repr(u32)]
@@ -2400,7 +2599,10 @@ unsafe impl OperandEncoding for FPOperationMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::IEEE => write!(f, " IEEE"),
+            Self::ALT => write!(f, " ALT"),
+        }
     }
 }
 #[repr(u32)]
@@ -2441,7 +2643,12 @@ unsafe impl OperandEncoding for OverflowModes {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::WRAP => write!(f, " WRAP"),
+            Self::SAT => write!(f, " SAT"),
+            Self::SAT_ZERO => write!(f, " SAT_ZERO"),
+            Self::SAT_SYM => write!(f, " SAT_SYM"),
+        }
     }
 }
 #[repr(u32)]
@@ -2480,7 +2687,11 @@ unsafe impl OperandEncoding for LinkageType {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::Export => write!(f, " Export"),
+            Self::Import => write!(f, " Import"),
+            Self::LinkOnceODR => write!(f, " LinkOnceODR"),
+        }
     }
 }
 #[repr(u32)]
@@ -2519,7 +2730,11 @@ unsafe impl OperandEncoding for AccessQualifier {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::ReadOnly => write!(f, " ReadOnly"),
+            Self::WriteOnly => write!(f, " WriteOnly"),
+            Self::ReadWrite => write!(f, " ReadWrite"),
+        }
     }
 }
 #[repr(u32)]
@@ -2560,7 +2775,12 @@ unsafe impl OperandEncoding for HostAccessQualifier {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::NoneINTEL => write!(f, " NoneINTEL"),
+            Self::ReadINTEL => write!(f, " ReadINTEL"),
+            Self::WriteINTEL => write!(f, " WriteINTEL"),
+            Self::ReadWriteINTEL => write!(f, " ReadWriteINTEL"),
+        }
     }
 }
 #[repr(u32)]
@@ -2611,7 +2831,17 @@ unsafe impl OperandEncoding for FunctionParameterAttribute {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::Zext => write!(f, " Zext"),
+            Self::Sext => write!(f, " Sext"),
+            Self::ByVal => write!(f, " ByVal"),
+            Self::Sret => write!(f, " Sret"),
+            Self::NoAlias => write!(f, " NoAlias"),
+            Self::NoCapture => write!(f, " NoCapture"),
+            Self::NoWrite => write!(f, " NoWrite"),
+            Self::NoReadWrite => write!(f, " NoReadWrite"),
+            Self::RuntimeAlignedALTERA => write!(f, " RuntimeAlignedALTERA"),
+        }
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -4195,7 +4425,152 @@ unsafe impl OperandEncoding for BuiltIn {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::Position => write!(f, " Position"),
+            Self::PointSize => write!(f, " PointSize"),
+            Self::ClipDistance => write!(f, " ClipDistance"),
+            Self::CullDistance => write!(f, " CullDistance"),
+            Self::VertexId => write!(f, " VertexId"),
+            Self::InstanceId => write!(f, " InstanceId"),
+            Self::PrimitiveId => write!(f, " PrimitiveId"),
+            Self::InvocationId => write!(f, " InvocationId"),
+            Self::Layer => write!(f, " Layer"),
+            Self::ViewportIndex => write!(f, " ViewportIndex"),
+            Self::TessLevelOuter => write!(f, " TessLevelOuter"),
+            Self::TessLevelInner => write!(f, " TessLevelInner"),
+            Self::TessCoord => write!(f, " TessCoord"),
+            Self::PatchVertices => write!(f, " PatchVertices"),
+            Self::FragCoord => write!(f, " FragCoord"),
+            Self::PointCoord => write!(f, " PointCoord"),
+            Self::FrontFacing => write!(f, " FrontFacing"),
+            Self::SampleId => write!(f, " SampleId"),
+            Self::SamplePosition => write!(f, " SamplePosition"),
+            Self::SampleMask => write!(f, " SampleMask"),
+            Self::FragDepth => write!(f, " FragDepth"),
+            Self::HelperInvocation => write!(f, " HelperInvocation"),
+            Self::NumWorkgroups => write!(f, " NumWorkgroups"),
+            Self::WorkgroupSize => write!(f, " WorkgroupSize"),
+            Self::WorkgroupId => write!(f, " WorkgroupId"),
+            Self::LocalInvocationId => write!(f, " LocalInvocationId"),
+            Self::GlobalInvocationId => write!(f, " GlobalInvocationId"),
+            Self::LocalInvocationIndex => write!(f, " LocalInvocationIndex"),
+            Self::WorkDim => write!(f, " WorkDim"),
+            Self::GlobalSize => write!(f, " GlobalSize"),
+            Self::EnqueuedWorkgroupSize => write!(f, " EnqueuedWorkgroupSize"),
+            Self::GlobalOffset => write!(f, " GlobalOffset"),
+            Self::GlobalLinearId => write!(f, " GlobalLinearId"),
+            Self::SubgroupSize => write!(f, " SubgroupSize"),
+            Self::SubgroupMaxSize => write!(f, " SubgroupMaxSize"),
+            Self::NumSubgroups => write!(f, " NumSubgroups"),
+            Self::NumEnqueuedSubgroups => write!(f, " NumEnqueuedSubgroups"),
+            Self::SubgroupId => write!(f, " SubgroupId"),
+            Self::SubgroupLocalInvocationId => write!(f, " SubgroupLocalInvocationId"),
+            Self::VertexIndex => write!(f, " VertexIndex"),
+            Self::InstanceIndex => write!(f, " InstanceIndex"),
+            Self::CoreIDARM => write!(f, " CoreIDARM"),
+            Self::CoreCountARM => write!(f, " CoreCountARM"),
+            Self::CoreMaxIDARM => write!(f, " CoreMaxIDARM"),
+            Self::WarpIDARM => write!(f, " WarpIDARM"),
+            Self::WarpMaxIDARM => write!(f, " WarpMaxIDARM"),
+            Self::SubgroupEqMask => write!(f, " SubgroupEqMask"),
+            Self::SubgroupGeMask => write!(f, " SubgroupGeMask"),
+            Self::SubgroupGtMask => write!(f, " SubgroupGtMask"),
+            Self::SubgroupLeMask => write!(f, " SubgroupLeMask"),
+            Self::SubgroupLtMask => write!(f, " SubgroupLtMask"),
+            Self::BaseVertex => write!(f, " BaseVertex"),
+            Self::BaseInstance => write!(f, " BaseInstance"),
+            Self::DrawIndex => write!(f, " DrawIndex"),
+            Self::PrimitiveShadingRateKHR => write!(f, " PrimitiveShadingRateKHR"),
+            Self::DeviceIndex => write!(f, " DeviceIndex"),
+            Self::ViewIndex => write!(f, " ViewIndex"),
+            Self::ShadingRateKHR => write!(f, " ShadingRateKHR"),
+            Self::TileOffsetQCOM => write!(f, " TileOffsetQCOM"),
+            Self::TileDimensionQCOM => write!(f, " TileDimensionQCOM"),
+            Self::TileApronSizeQCOM => write!(f, " TileApronSizeQCOM"),
+            Self::BaryCoordNoPerspAMD => write!(f, " BaryCoordNoPerspAMD"),
+            Self::BaryCoordNoPerspCentroidAMD => {
+                write!(f, " BaryCoordNoPerspCentroidAMD")
+            }
+            Self::BaryCoordNoPerspSampleAMD => write!(f, " BaryCoordNoPerspSampleAMD"),
+            Self::BaryCoordSmoothAMD => write!(f, " BaryCoordSmoothAMD"),
+            Self::BaryCoordSmoothCentroidAMD => write!(f, " BaryCoordSmoothCentroidAMD"),
+            Self::BaryCoordSmoothSampleAMD => write!(f, " BaryCoordSmoothSampleAMD"),
+            Self::BaryCoordPullModelAMD => write!(f, " BaryCoordPullModelAMD"),
+            Self::FragStencilRefEXT => write!(f, " FragStencilRefEXT"),
+            Self::RemainingRecursionLevelsAMDX => {
+                write!(f, " RemainingRecursionLevelsAMDX")
+            }
+            Self::ShaderIndexAMDX => write!(f, " ShaderIndexAMDX"),
+            Self::SamplerHeapEXT => write!(f, " SamplerHeapEXT"),
+            Self::ResourceHeapEXT => write!(f, " ResourceHeapEXT"),
+            Self::ViewportMaskNV => write!(f, " ViewportMaskNV"),
+            Self::SecondaryPositionNV => write!(f, " SecondaryPositionNV"),
+            Self::SecondaryViewportMaskNV => write!(f, " SecondaryViewportMaskNV"),
+            Self::PositionPerViewNV => write!(f, " PositionPerViewNV"),
+            Self::ViewportMaskPerViewNV => write!(f, " ViewportMaskPerViewNV"),
+            Self::FullyCoveredEXT => write!(f, " FullyCoveredEXT"),
+            Self::TaskCountNV => write!(f, " TaskCountNV"),
+            Self::PrimitiveCountNV => write!(f, " PrimitiveCountNV"),
+            Self::PrimitiveIndicesNV => write!(f, " PrimitiveIndicesNV"),
+            Self::ClipDistancePerViewNV => write!(f, " ClipDistancePerViewNV"),
+            Self::CullDistancePerViewNV => write!(f, " CullDistancePerViewNV"),
+            Self::LayerPerViewNV => write!(f, " LayerPerViewNV"),
+            Self::MeshViewCountNV => write!(f, " MeshViewCountNV"),
+            Self::MeshViewIndicesNV => write!(f, " MeshViewIndicesNV"),
+            Self::BaryCoordKHR => write!(f, " BaryCoordKHR"),
+            Self::BaryCoordNoPerspKHR => write!(f, " BaryCoordNoPerspKHR"),
+            Self::FragSizeEXT => write!(f, " FragSizeEXT"),
+            Self::FragInvocationCountEXT => write!(f, " FragInvocationCountEXT"),
+            Self::PrimitivePointIndicesEXT => write!(f, " PrimitivePointIndicesEXT"),
+            Self::PrimitiveLineIndicesEXT => write!(f, " PrimitiveLineIndicesEXT"),
+            Self::PrimitiveTriangleIndicesEXT => {
+                write!(f, " PrimitiveTriangleIndicesEXT")
+            }
+            Self::CullPrimitiveEXT => write!(f, " CullPrimitiveEXT"),
+            Self::LaunchIdKHR => write!(f, " LaunchIdKHR"),
+            Self::LaunchSizeKHR => write!(f, " LaunchSizeKHR"),
+            Self::WorldRayOriginKHR => write!(f, " WorldRayOriginKHR"),
+            Self::WorldRayDirectionKHR => write!(f, " WorldRayDirectionKHR"),
+            Self::ObjectRayOriginKHR => write!(f, " ObjectRayOriginKHR"),
+            Self::ObjectRayDirectionKHR => write!(f, " ObjectRayDirectionKHR"),
+            Self::RayTminKHR => write!(f, " RayTminKHR"),
+            Self::RayTmaxKHR => write!(f, " RayTmaxKHR"),
+            Self::InstanceCustomIndexKHR => write!(f, " InstanceCustomIndexKHR"),
+            Self::ObjectToWorldKHR => write!(f, " ObjectToWorldKHR"),
+            Self::WorldToObjectKHR => write!(f, " WorldToObjectKHR"),
+            Self::HitTNV => write!(f, " HitTNV"),
+            Self::HitKindKHR => write!(f, " HitKindKHR"),
+            Self::CurrentRayTimeNV => write!(f, " CurrentRayTimeNV"),
+            Self::HitTriangleVertexPositionsKHR => {
+                write!(f, " HitTriangleVertexPositionsKHR")
+            }
+            Self::HitMicroTriangleVertexPositionsNV => {
+                write!(f, " HitMicroTriangleVertexPositionsNV")
+            }
+            Self::HitMicroTriangleVertexBarycentricsNV => {
+                write!(f, " HitMicroTriangleVertexBarycentricsNV")
+            }
+            Self::IncomingRayFlagsKHR => write!(f, " IncomingRayFlagsKHR"),
+            Self::RayGeometryIndexKHR => write!(f, " RayGeometryIndexKHR"),
+            Self::HitIsSphereNV => write!(f, " HitIsSphereNV"),
+            Self::HitIsLSSNV => write!(f, " HitIsLSSNV"),
+            Self::HitSpherePositionNV => write!(f, " HitSpherePositionNV"),
+            Self::WarpsPerSMNV => write!(f, " WarpsPerSMNV"),
+            Self::SMCountNV => write!(f, " SMCountNV"),
+            Self::WarpIDNV => write!(f, " WarpIDNV"),
+            Self::SMIDNV => write!(f, " SMIDNV"),
+            Self::HitLSSPositionsNV => write!(f, " HitLSSPositionsNV"),
+            Self::HitKindFrontFacingMicroTriangleNV => {
+                write!(f, " HitKindFrontFacingMicroTriangleNV")
+            }
+            Self::HitKindBackFacingMicroTriangleNV => {
+                write!(f, " HitKindBackFacingMicroTriangleNV")
+            }
+            Self::HitSphereRadiusNV => write!(f, " HitSphereRadiusNV"),
+            Self::HitLSSRadiiNV => write!(f, " HitLSSRadiiNV"),
+            Self::ClusterIDNV => write!(f, " ClusterIDNV"),
+            Self::CullMaskKHR => write!(f, " CullMaskKHR"),
+        }
     }
 }
 #[repr(u32)]
@@ -4243,7 +4618,15 @@ unsafe impl OperandEncoding for Scope {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::CrossDevice => write!(f, " CrossDevice"),
+            Self::Device => write!(f, " Device"),
+            Self::Workgroup => write!(f, " Workgroup"),
+            Self::Subgroup => write!(f, " Subgroup"),
+            Self::Invocation => write!(f, " Invocation"),
+            Self::QueueFamily => write!(f, " QueueFamily"),
+            Self::ShaderCallKHR => write!(f, " ShaderCallKHR"),
+        }
     }
 }
 #[repr(u32)]
@@ -4291,7 +4674,19 @@ unsafe impl OperandEncoding for GroupOperation {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::Reduce => write!(f, " Reduce"),
+            Self::InclusiveScan => write!(f, " InclusiveScan"),
+            Self::ExclusiveScan => write!(f, " ExclusiveScan"),
+            Self::ClusteredReduce => write!(f, " ClusteredReduce"),
+            Self::PartitionedReduceEXT => write!(f, " PartitionedReduceEXT"),
+            Self::PartitionedInclusiveScanEXT => {
+                write!(f, " PartitionedInclusiveScanEXT")
+            }
+            Self::PartitionedExclusiveScanEXT => {
+                write!(f, " PartitionedExclusiveScanEXT")
+            }
+        }
     }
 }
 #[repr(u32)]
@@ -4330,7 +4725,11 @@ unsafe impl OperandEncoding for KernelEnqueueFlags {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::NoWait => write!(f, " NoWait"),
+            Self::WaitKernel => write!(f, " WaitKernel"),
+            Self::WaitWorkGroup => write!(f, " WaitWorkGroup"),
+        }
     }
 }
 #[repr(u32)]
@@ -4974,7 +5373,446 @@ unsafe impl OperandEncoding for Capability {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::Matrix => write!(f, " Matrix"),
+            Self::Shader => write!(f, " Shader"),
+            Self::Geometry => write!(f, " Geometry"),
+            Self::Tessellation => write!(f, " Tessellation"),
+            Self::Addresses => write!(f, " Addresses"),
+            Self::Linkage => write!(f, " Linkage"),
+            Self::Kernel => write!(f, " Kernel"),
+            Self::Vector16 => write!(f, " Vector16"),
+            Self::Float16Buffer => write!(f, " Float16Buffer"),
+            Self::Float16 => write!(f, " Float16"),
+            Self::Float64 => write!(f, " Float64"),
+            Self::Int64 => write!(f, " Int64"),
+            Self::Int64Atomics => write!(f, " Int64Atomics"),
+            Self::ImageBasic => write!(f, " ImageBasic"),
+            Self::ImageReadWrite => write!(f, " ImageReadWrite"),
+            Self::ImageMipmap => write!(f, " ImageMipmap"),
+            Self::Pipes => write!(f, " Pipes"),
+            Self::Groups => write!(f, " Groups"),
+            Self::DeviceEnqueue => write!(f, " DeviceEnqueue"),
+            Self::LiteralSampler => write!(f, " LiteralSampler"),
+            Self::AtomicStorage => write!(f, " AtomicStorage"),
+            Self::Int16 => write!(f, " Int16"),
+            Self::TessellationPointSize => write!(f, " TessellationPointSize"),
+            Self::GeometryPointSize => write!(f, " GeometryPointSize"),
+            Self::ImageGatherExtended => write!(f, " ImageGatherExtended"),
+            Self::StorageImageMultisample => write!(f, " StorageImageMultisample"),
+            Self::UniformBufferArrayDynamicIndexing => {
+                write!(f, " UniformBufferArrayDynamicIndexing")
+            }
+            Self::SampledImageArrayDynamicIndexing => {
+                write!(f, " SampledImageArrayDynamicIndexing")
+            }
+            Self::StorageBufferArrayDynamicIndexing => {
+                write!(f, " StorageBufferArrayDynamicIndexing")
+            }
+            Self::StorageImageArrayDynamicIndexing => {
+                write!(f, " StorageImageArrayDynamicIndexing")
+            }
+            Self::ClipDistance => write!(f, " ClipDistance"),
+            Self::CullDistance => write!(f, " CullDistance"),
+            Self::ImageCubeArray => write!(f, " ImageCubeArray"),
+            Self::SampleRateShading => write!(f, " SampleRateShading"),
+            Self::ImageRect => write!(f, " ImageRect"),
+            Self::SampledRect => write!(f, " SampledRect"),
+            Self::GenericPointer => write!(f, " GenericPointer"),
+            Self::Int8 => write!(f, " Int8"),
+            Self::InputAttachment => write!(f, " InputAttachment"),
+            Self::SparseResidency => write!(f, " SparseResidency"),
+            Self::MinLod => write!(f, " MinLod"),
+            Self::Sampled1D => write!(f, " Sampled1D"),
+            Self::Image1D => write!(f, " Image1D"),
+            Self::SampledCubeArray => write!(f, " SampledCubeArray"),
+            Self::SampledBuffer => write!(f, " SampledBuffer"),
+            Self::ImageBuffer => write!(f, " ImageBuffer"),
+            Self::ImageMSArray => write!(f, " ImageMSArray"),
+            Self::StorageImageExtendedFormats => {
+                write!(f, " StorageImageExtendedFormats")
+            }
+            Self::ImageQuery => write!(f, " ImageQuery"),
+            Self::DerivativeControl => write!(f, " DerivativeControl"),
+            Self::InterpolationFunction => write!(f, " InterpolationFunction"),
+            Self::TransformFeedback => write!(f, " TransformFeedback"),
+            Self::GeometryStreams => write!(f, " GeometryStreams"),
+            Self::StorageImageReadWithoutFormat => {
+                write!(f, " StorageImageReadWithoutFormat")
+            }
+            Self::StorageImageWriteWithoutFormat => {
+                write!(f, " StorageImageWriteWithoutFormat")
+            }
+            Self::MultiViewport => write!(f, " MultiViewport"),
+            Self::SubgroupDispatch => write!(f, " SubgroupDispatch"),
+            Self::NamedBarrier => write!(f, " NamedBarrier"),
+            Self::PipeStorage => write!(f, " PipeStorage"),
+            Self::GroupNonUniform => write!(f, " GroupNonUniform"),
+            Self::GroupNonUniformVote => write!(f, " GroupNonUniformVote"),
+            Self::GroupNonUniformArithmetic => write!(f, " GroupNonUniformArithmetic"),
+            Self::GroupNonUniformBallot => write!(f, " GroupNonUniformBallot"),
+            Self::GroupNonUniformShuffle => write!(f, " GroupNonUniformShuffle"),
+            Self::GroupNonUniformShuffleRelative => {
+                write!(f, " GroupNonUniformShuffleRelative")
+            }
+            Self::GroupNonUniformClustered => write!(f, " GroupNonUniformClustered"),
+            Self::GroupNonUniformQuad => write!(f, " GroupNonUniformQuad"),
+            Self::ShaderLayer => write!(f, " ShaderLayer"),
+            Self::ShaderViewportIndex => write!(f, " ShaderViewportIndex"),
+            Self::UniformDecoration => write!(f, " UniformDecoration"),
+            Self::CoreBuiltinsARM => write!(f, " CoreBuiltinsARM"),
+            Self::TileImageColorReadAccessEXT => {
+                write!(f, " TileImageColorReadAccessEXT")
+            }
+            Self::TileImageDepthReadAccessEXT => {
+                write!(f, " TileImageDepthReadAccessEXT")
+            }
+            Self::TileImageStencilReadAccessEXT => {
+                write!(f, " TileImageStencilReadAccessEXT")
+            }
+            Self::TensorsARM => write!(f, " TensorsARM"),
+            Self::StorageTensorArrayDynamicIndexingARM => {
+                write!(f, " StorageTensorArrayDynamicIndexingARM")
+            }
+            Self::StorageTensorArrayNonUniformIndexingARM => {
+                write!(f, " StorageTensorArrayNonUniformIndexingARM")
+            }
+            Self::GraphARM => write!(f, " GraphARM"),
+            Self::CooperativeMatrixLayoutsARM => {
+                write!(f, " CooperativeMatrixLayoutsARM")
+            }
+            Self::Float8EXT => write!(f, " Float8EXT"),
+            Self::Float8CooperativeMatrixEXT => write!(f, " Float8CooperativeMatrixEXT"),
+            Self::FragmentShadingRateKHR => write!(f, " FragmentShadingRateKHR"),
+            Self::SubgroupBallotKHR => write!(f, " SubgroupBallotKHR"),
+            Self::DrawParameters => write!(f, " DrawParameters"),
+            Self::WorkgroupMemoryExplicitLayoutKHR => {
+                write!(f, " WorkgroupMemoryExplicitLayoutKHR")
+            }
+            Self::WorkgroupMemoryExplicitLayout8BitAccessKHR => {
+                write!(f, " WorkgroupMemoryExplicitLayout8BitAccessKHR")
+            }
+            Self::WorkgroupMemoryExplicitLayout16BitAccessKHR => {
+                write!(f, " WorkgroupMemoryExplicitLayout16BitAccessKHR")
+            }
+            Self::SubgroupVoteKHR => write!(f, " SubgroupVoteKHR"),
+            Self::StorageBuffer16BitAccess => write!(f, " StorageBuffer16BitAccess"),
+            Self::UniformAndStorageBuffer16BitAccess => {
+                write!(f, " UniformAndStorageBuffer16BitAccess")
+            }
+            Self::StoragePushConstant16 => write!(f, " StoragePushConstant16"),
+            Self::StorageInputOutput16 => write!(f, " StorageInputOutput16"),
+            Self::DeviceGroup => write!(f, " DeviceGroup"),
+            Self::MultiView => write!(f, " MultiView"),
+            Self::VariablePointersStorageBuffer => {
+                write!(f, " VariablePointersStorageBuffer")
+            }
+            Self::VariablePointers => write!(f, " VariablePointers"),
+            Self::AtomicStorageOps => write!(f, " AtomicStorageOps"),
+            Self::SampleMaskPostDepthCoverage => {
+                write!(f, " SampleMaskPostDepthCoverage")
+            }
+            Self::StorageBuffer8BitAccess => write!(f, " StorageBuffer8BitAccess"),
+            Self::UniformAndStorageBuffer8BitAccess => {
+                write!(f, " UniformAndStorageBuffer8BitAccess")
+            }
+            Self::StoragePushConstant8 => write!(f, " StoragePushConstant8"),
+            Self::DenormPreserve => write!(f, " DenormPreserve"),
+            Self::DenormFlushToZero => write!(f, " DenormFlushToZero"),
+            Self::SignedZeroInfNanPreserve => write!(f, " SignedZeroInfNanPreserve"),
+            Self::RoundingModeRTE => write!(f, " RoundingModeRTE"),
+            Self::RoundingModeRTZ => write!(f, " RoundingModeRTZ"),
+            Self::RayQueryProvisionalKHR => write!(f, " RayQueryProvisionalKHR"),
+            Self::RayQueryKHR => write!(f, " RayQueryKHR"),
+            Self::UntypedPointersKHR => write!(f, " UntypedPointersKHR"),
+            Self::RayTraversalPrimitiveCullingKHR => {
+                write!(f, " RayTraversalPrimitiveCullingKHR")
+            }
+            Self::RayTracingKHR => write!(f, " RayTracingKHR"),
+            Self::TextureSampleWeightedQCOM => write!(f, " TextureSampleWeightedQCOM"),
+            Self::TextureBoxFilterQCOM => write!(f, " TextureBoxFilterQCOM"),
+            Self::TextureBlockMatchQCOM => write!(f, " TextureBlockMatchQCOM"),
+            Self::TileShadingQCOM => write!(f, " TileShadingQCOM"),
+            Self::CooperativeMatrixConversionQCOM => {
+                write!(f, " CooperativeMatrixConversionQCOM")
+            }
+            Self::TextureBlockMatch2QCOM => write!(f, " TextureBlockMatch2QCOM"),
+            Self::Float16ImageAMD => write!(f, " Float16ImageAMD"),
+            Self::ImageGatherBiasLodAMD => write!(f, " ImageGatherBiasLodAMD"),
+            Self::FragmentMaskAMD => write!(f, " FragmentMaskAMD"),
+            Self::StencilExportEXT => write!(f, " StencilExportEXT"),
+            Self::ImageReadWriteLodAMD => write!(f, " ImageReadWriteLodAMD"),
+            Self::Int64ImageEXT => write!(f, " Int64ImageEXT"),
+            Self::ShaderClockKHR => write!(f, " ShaderClockKHR"),
+            Self::ShaderEnqueueAMDX => write!(f, " ShaderEnqueueAMDX"),
+            Self::QuadControlKHR => write!(f, " QuadControlKHR"),
+            Self::Int4TypeINTEL => write!(f, " Int4TypeINTEL"),
+            Self::Int4CooperativeMatrixINTEL => write!(f, " Int4CooperativeMatrixINTEL"),
+            Self::BFloat16TypeKHR => write!(f, " BFloat16TypeKHR"),
+            Self::BFloat16DotProductKHR => write!(f, " BFloat16DotProductKHR"),
+            Self::BFloat16CooperativeMatrixKHR => {
+                write!(f, " BFloat16CooperativeMatrixKHR")
+            }
+            Self::DescriptorHeapEXT => write!(f, " DescriptorHeapEXT"),
+            Self::SampleMaskOverrideCoverageNV => {
+                write!(f, " SampleMaskOverrideCoverageNV")
+            }
+            Self::GeometryShaderPassthroughNV => {
+                write!(f, " GeometryShaderPassthroughNV")
+            }
+            Self::ShaderViewportIndexLayerEXT => {
+                write!(f, " ShaderViewportIndexLayerEXT")
+            }
+            Self::ShaderViewportMaskNV => write!(f, " ShaderViewportMaskNV"),
+            Self::ShaderStereoViewNV => write!(f, " ShaderStereoViewNV"),
+            Self::PerViewAttributesNV => write!(f, " PerViewAttributesNV"),
+            Self::FragmentFullyCoveredEXT => write!(f, " FragmentFullyCoveredEXT"),
+            Self::MeshShadingNV => write!(f, " MeshShadingNV"),
+            Self::ImageFootprintNV => write!(f, " ImageFootprintNV"),
+            Self::MeshShadingEXT => write!(f, " MeshShadingEXT"),
+            Self::FragmentBarycentricKHR => write!(f, " FragmentBarycentricKHR"),
+            Self::ComputeDerivativeGroupQuadsKHR => {
+                write!(f, " ComputeDerivativeGroupQuadsKHR")
+            }
+            Self::FragmentDensityEXT => write!(f, " FragmentDensityEXT"),
+            Self::GroupNonUniformPartitionedEXT => {
+                write!(f, " GroupNonUniformPartitionedEXT")
+            }
+            Self::ShaderNonUniform => write!(f, " ShaderNonUniform"),
+            Self::RuntimeDescriptorArray => write!(f, " RuntimeDescriptorArray"),
+            Self::InputAttachmentArrayDynamicIndexing => {
+                write!(f, " InputAttachmentArrayDynamicIndexing")
+            }
+            Self::UniformTexelBufferArrayDynamicIndexing => {
+                write!(f, " UniformTexelBufferArrayDynamicIndexing")
+            }
+            Self::StorageTexelBufferArrayDynamicIndexing => {
+                write!(f, " StorageTexelBufferArrayDynamicIndexing")
+            }
+            Self::UniformBufferArrayNonUniformIndexing => {
+                write!(f, " UniformBufferArrayNonUniformIndexing")
+            }
+            Self::SampledImageArrayNonUniformIndexing => {
+                write!(f, " SampledImageArrayNonUniformIndexing")
+            }
+            Self::StorageBufferArrayNonUniformIndexing => {
+                write!(f, " StorageBufferArrayNonUniformIndexing")
+            }
+            Self::StorageImageArrayNonUniformIndexing => {
+                write!(f, " StorageImageArrayNonUniformIndexing")
+            }
+            Self::InputAttachmentArrayNonUniformIndexing => {
+                write!(f, " InputAttachmentArrayNonUniformIndexing")
+            }
+            Self::UniformTexelBufferArrayNonUniformIndexing => {
+                write!(f, " UniformTexelBufferArrayNonUniformIndexing")
+            }
+            Self::StorageTexelBufferArrayNonUniformIndexing => {
+                write!(f, " StorageTexelBufferArrayNonUniformIndexing")
+            }
+            Self::RayTracingPositionFetchKHR => write!(f, " RayTracingPositionFetchKHR"),
+            Self::RayTracingNV => write!(f, " RayTracingNV"),
+            Self::RayTracingMotionBlurNV => write!(f, " RayTracingMotionBlurNV"),
+            Self::VulkanMemoryModel => write!(f, " VulkanMemoryModel"),
+            Self::VulkanMemoryModelDeviceScope => {
+                write!(f, " VulkanMemoryModelDeviceScope")
+            }
+            Self::PhysicalStorageBufferAddresses => {
+                write!(f, " PhysicalStorageBufferAddresses")
+            }
+            Self::ComputeDerivativeGroupLinearKHR => {
+                write!(f, " ComputeDerivativeGroupLinearKHR")
+            }
+            Self::RayTracingProvisionalKHR => write!(f, " RayTracingProvisionalKHR"),
+            Self::CooperativeMatrixNV => write!(f, " CooperativeMatrixNV"),
+            Self::FragmentShaderSampleInterlockEXT => {
+                write!(f, " FragmentShaderSampleInterlockEXT")
+            }
+            Self::FragmentShaderShadingRateInterlockEXT => {
+                write!(f, " FragmentShaderShadingRateInterlockEXT")
+            }
+            Self::ShaderSMBuiltinsNV => write!(f, " ShaderSMBuiltinsNV"),
+            Self::FragmentShaderPixelInterlockEXT => {
+                write!(f, " FragmentShaderPixelInterlockEXT")
+            }
+            Self::DemoteToHelperInvocation => write!(f, " DemoteToHelperInvocation"),
+            Self::DisplacementMicromapNV => write!(f, " DisplacementMicromapNV"),
+            Self::RayTracingOpacityMicromapEXT => {
+                write!(f, " RayTracingOpacityMicromapEXT")
+            }
+            Self::ShaderInvocationReorderNV => write!(f, " ShaderInvocationReorderNV"),
+            Self::ShaderInvocationReorderEXT => write!(f, " ShaderInvocationReorderEXT"),
+            Self::BindlessTextureNV => write!(f, " BindlessTextureNV"),
+            Self::RayQueryPositionFetchKHR => write!(f, " RayQueryPositionFetchKHR"),
+            Self::CooperativeVectorNV => write!(f, " CooperativeVectorNV"),
+            Self::AtomicFloat16VectorNV => write!(f, " AtomicFloat16VectorNV"),
+            Self::RayTracingDisplacementMicromapNV => {
+                write!(f, " RayTracingDisplacementMicromapNV")
+            }
+            Self::RawAccessChainsNV => write!(f, " RawAccessChainsNV"),
+            Self::RayTracingSpheresGeometryNV => {
+                write!(f, " RayTracingSpheresGeometryNV")
+            }
+            Self::RayTracingLinearSweptSpheresGeometryNV => {
+                write!(f, " RayTracingLinearSweptSpheresGeometryNV")
+            }
+            Self::PushConstantBanksNV => write!(f, " PushConstantBanksNV"),
+            Self::LongVectorEXT => write!(f, " LongVectorEXT"),
+            Self::Shader64BitIndexingEXT => write!(f, " Shader64BitIndexingEXT"),
+            Self::CooperativeMatrixReductionsNV => {
+                write!(f, " CooperativeMatrixReductionsNV")
+            }
+            Self::CooperativeMatrixConversionsNV => {
+                write!(f, " CooperativeMatrixConversionsNV")
+            }
+            Self::CooperativeMatrixPerElementOperationsNV => {
+                write!(f, " CooperativeMatrixPerElementOperationsNV")
+            }
+            Self::CooperativeMatrixTensorAddressingNV => {
+                write!(f, " CooperativeMatrixTensorAddressingNV")
+            }
+            Self::CooperativeMatrixBlockLoadsNV => {
+                write!(f, " CooperativeMatrixBlockLoadsNV")
+            }
+            Self::CooperativeVectorTrainingNV => {
+                write!(f, " CooperativeVectorTrainingNV")
+            }
+            Self::RayTracingClusterAccelerationStructureNV => {
+                write!(f, " RayTracingClusterAccelerationStructureNV")
+            }
+            Self::TensorAddressingNV => write!(f, " TensorAddressingNV"),
+            Self::SubgroupShuffleINTEL => write!(f, " SubgroupShuffleINTEL"),
+            Self::SubgroupBufferBlockIOINTEL => write!(f, " SubgroupBufferBlockIOINTEL"),
+            Self::SubgroupImageBlockIOINTEL => write!(f, " SubgroupImageBlockIOINTEL"),
+            Self::SubgroupImageMediaBlockIOINTEL => {
+                write!(f, " SubgroupImageMediaBlockIOINTEL")
+            }
+            Self::RoundToInfinityINTEL => write!(f, " RoundToInfinityINTEL"),
+            Self::FloatingPointModeINTEL => write!(f, " FloatingPointModeINTEL"),
+            Self::IntegerFunctions2INTEL => write!(f, " IntegerFunctions2INTEL"),
+            Self::FunctionPointersINTEL => write!(f, " FunctionPointersINTEL"),
+            Self::IndirectReferencesINTEL => write!(f, " IndirectReferencesINTEL"),
+            Self::AsmINTEL => write!(f, " AsmINTEL"),
+            Self::AtomicFloat32MinMaxEXT => write!(f, " AtomicFloat32MinMaxEXT"),
+            Self::AtomicFloat64MinMaxEXT => write!(f, " AtomicFloat64MinMaxEXT"),
+            Self::AtomicFloat16MinMaxEXT => write!(f, " AtomicFloat16MinMaxEXT"),
+            Self::VectorComputeINTEL => write!(f, " VectorComputeINTEL"),
+            Self::VectorAnyINTEL => write!(f, " VectorAnyINTEL"),
+            Self::ExpectAssumeKHR => write!(f, " ExpectAssumeKHR"),
+            Self::SubgroupAvcMotionEstimationINTEL => {
+                write!(f, " SubgroupAvcMotionEstimationINTEL")
+            }
+            Self::SubgroupAvcMotionEstimationIntraINTEL => {
+                write!(f, " SubgroupAvcMotionEstimationIntraINTEL")
+            }
+            Self::SubgroupAvcMotionEstimationChromaINTEL => {
+                write!(f, " SubgroupAvcMotionEstimationChromaINTEL")
+            }
+            Self::VariableLengthArrayINTEL => write!(f, " VariableLengthArrayINTEL"),
+            Self::FunctionFloatControlINTEL => write!(f, " FunctionFloatControlINTEL"),
+            Self::FPGAMemoryAttributesALTERA => write!(f, " FPGAMemoryAttributesALTERA"),
+            Self::FPFastMathModeINTEL => write!(f, " FPFastMathModeINTEL"),
+            Self::ArbitraryPrecisionIntegersALTERA => {
+                write!(f, " ArbitraryPrecisionIntegersALTERA")
+            }
+            Self::ArbitraryPrecisionFloatingPointALTERA => {
+                write!(f, " ArbitraryPrecisionFloatingPointALTERA")
+            }
+            Self::UnstructuredLoopControlsINTEL => {
+                write!(f, " UnstructuredLoopControlsINTEL")
+            }
+            Self::FPGALoopControlsALTERA => write!(f, " FPGALoopControlsALTERA"),
+            Self::KernelAttributesINTEL => write!(f, " KernelAttributesINTEL"),
+            Self::FPGAKernelAttributesINTEL => write!(f, " FPGAKernelAttributesINTEL"),
+            Self::FPGAMemoryAccessesALTERA => write!(f, " FPGAMemoryAccessesALTERA"),
+            Self::FPGAClusterAttributesALTERA => {
+                write!(f, " FPGAClusterAttributesALTERA")
+            }
+            Self::LoopFuseALTERA => write!(f, " LoopFuseALTERA"),
+            Self::FPGADSPControlALTERA => write!(f, " FPGADSPControlALTERA"),
+            Self::MemoryAccessAliasingINTEL => write!(f, " MemoryAccessAliasingINTEL"),
+            Self::FPGAInvocationPipeliningAttributesALTERA => {
+                write!(f, " FPGAInvocationPipeliningAttributesALTERA")
+            }
+            Self::FPGABufferLocationALTERA => write!(f, " FPGABufferLocationALTERA"),
+            Self::ArbitraryPrecisionFixedPointALTERA => {
+                write!(f, " ArbitraryPrecisionFixedPointALTERA")
+            }
+            Self::USMStorageClassesALTERA => write!(f, " USMStorageClassesALTERA"),
+            Self::RuntimeAlignedAttributeALTERA => {
+                write!(f, " RuntimeAlignedAttributeALTERA")
+            }
+            Self::IOPipesALTERA => write!(f, " IOPipesALTERA"),
+            Self::BlockingPipesALTERA => write!(f, " BlockingPipesALTERA"),
+            Self::FPGARegALTERA => write!(f, " FPGARegALTERA"),
+            Self::DotProductInputAll => write!(f, " DotProductInputAll"),
+            Self::DotProductInput4x8Bit => write!(f, " DotProductInput4x8Bit"),
+            Self::DotProductInput4x8BitPacked => {
+                write!(f, " DotProductInput4x8BitPacked")
+            }
+            Self::DotProduct => write!(f, " DotProduct"),
+            Self::RayCullMaskKHR => write!(f, " RayCullMaskKHR"),
+            Self::CooperativeMatrixKHR => write!(f, " CooperativeMatrixKHR"),
+            Self::ReplicatedCompositesEXT => write!(f, " ReplicatedCompositesEXT"),
+            Self::BitInstructions => write!(f, " BitInstructions"),
+            Self::GroupNonUniformRotateKHR => write!(f, " GroupNonUniformRotateKHR"),
+            Self::FloatControls2 => write!(f, " FloatControls2"),
+            Self::FMAKHR => write!(f, " FMAKHR"),
+            Self::AtomicFloat32AddEXT => write!(f, " AtomicFloat32AddEXT"),
+            Self::AtomicFloat64AddEXT => write!(f, " AtomicFloat64AddEXT"),
+            Self::LongCompositesINTEL => write!(f, " LongCompositesINTEL"),
+            Self::OptNoneEXT => write!(f, " OptNoneEXT"),
+            Self::AtomicFloat16AddEXT => write!(f, " AtomicFloat16AddEXT"),
+            Self::DebugInfoModuleINTEL => write!(f, " DebugInfoModuleINTEL"),
+            Self::BFloat16ConversionINTEL => write!(f, " BFloat16ConversionINTEL"),
+            Self::SplitBarrierINTEL => write!(f, " SplitBarrierINTEL"),
+            Self::ArithmeticFenceEXT => write!(f, " ArithmeticFenceEXT"),
+            Self::FPGAClusterAttributesV2ALTERA => {
+                write!(f, " FPGAClusterAttributesV2ALTERA")
+            }
+            Self::FPGAKernelAttributesv2INTEL => {
+                write!(f, " FPGAKernelAttributesv2INTEL")
+            }
+            Self::TaskSequenceALTERA => write!(f, " TaskSequenceALTERA"),
+            Self::FPMaxErrorINTEL => write!(f, " FPMaxErrorINTEL"),
+            Self::FPGALatencyControlALTERA => write!(f, " FPGALatencyControlALTERA"),
+            Self::FPGAArgumentInterfacesALTERA => {
+                write!(f, " FPGAArgumentInterfacesALTERA")
+            }
+            Self::GlobalVariableHostAccessINTEL => {
+                write!(f, " GlobalVariableHostAccessINTEL")
+            }
+            Self::GlobalVariableFPGADecorationsALTERA => {
+                write!(f, " GlobalVariableFPGADecorationsALTERA")
+            }
+            Self::SubgroupBufferPrefetchINTEL => {
+                write!(f, " SubgroupBufferPrefetchINTEL")
+            }
+            Self::Subgroup2DBlockIOINTEL => write!(f, " Subgroup2DBlockIOINTEL"),
+            Self::Subgroup2DBlockTransformINTEL => {
+                write!(f, " Subgroup2DBlockTransformINTEL")
+            }
+            Self::Subgroup2DBlockTransposeINTEL => {
+                write!(f, " Subgroup2DBlockTransposeINTEL")
+            }
+            Self::SubgroupMatrixMultiplyAccumulateINTEL => {
+                write!(f, " SubgroupMatrixMultiplyAccumulateINTEL")
+            }
+            Self::TernaryBitwiseFunctionINTEL => {
+                write!(f, " TernaryBitwiseFunctionINTEL")
+            }
+            Self::UntypedVariableLengthArrayINTEL => {
+                write!(f, " UntypedVariableLengthArrayINTEL")
+            }
+            Self::SpecConditionalINTEL => write!(f, " SpecConditionalINTEL"),
+            Self::FunctionVariantsINTEL => write!(f, " FunctionVariantsINTEL"),
+            Self::GroupUniformArithmeticKHR => write!(f, " GroupUniformArithmeticKHR"),
+            Self::TensorFloat32RoundingINTEL => write!(f, " TensorFloat32RoundingINTEL"),
+            Self::MaskedGatherScatterINTEL => write!(f, " MaskedGatherScatterINTEL"),
+            Self::CacheControlsINTEL => write!(f, " CacheControlsINTEL"),
+            Self::RegisterLimitsINTEL => write!(f, " RegisterLimitsINTEL"),
+            Self::BindlessImagesINTEL => write!(f, " BindlessImagesINTEL"),
+        }
     }
 }
 #[repr(u32)]
@@ -5011,7 +5849,14 @@ unsafe impl OperandEncoding for RayQueryIntersection {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::RayQueryCandidateIntersectionKHR => {
+                write!(f, " RayQueryCandidateIntersectionKHR")
+            }
+            Self::RayQueryCommittedIntersectionKHR => {
+                write!(f, " RayQueryCommittedIntersectionKHR")
+            }
+        }
     }
 }
 #[repr(u32)]
@@ -5050,7 +5895,17 @@ unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::RayQueryCommittedIntersectionNoneKHR => {
+                write!(f, " RayQueryCommittedIntersectionNoneKHR")
+            }
+            Self::RayQueryCommittedIntersectionTriangleKHR => {
+                write!(f, " RayQueryCommittedIntersectionTriangleKHR")
+            }
+            Self::RayQueryCommittedIntersectionGeneratedKHR => {
+                write!(f, " RayQueryCommittedIntersectionGeneratedKHR")
+            }
+        }
     }
 }
 #[repr(u32)]
@@ -5087,7 +5942,14 @@ unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::RayQueryCandidateIntersectionTriangleKHR => {
+                write!(f, " RayQueryCandidateIntersectionTriangleKHR")
+            }
+            Self::RayQueryCandidateIntersectionAABBKHR => {
+                write!(f, " RayQueryCandidateIntersectionAABBKHR")
+            }
+        }
     }
 }
 #[repr(u32)]
@@ -5123,7 +5985,9 @@ unsafe impl OperandEncoding for PackedVectorFormat {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::PackedVectorFormat4x8Bit => write!(f, " PackedVectorFormat4x8Bit"),
+        }
     }
 }
 bitflags! {
@@ -5213,7 +6077,14 @@ unsafe impl OperandEncoding for CooperativeMatrixLayout {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::RowMajorKHR => write!(f, " RowMajorKHR"),
+            Self::ColumnMajorKHR => write!(f, " ColumnMajorKHR"),
+            Self::RowBlockedInterleavedARM => write!(f, " RowBlockedInterleavedARM"),
+            Self::ColumnBlockedInterleavedARM => {
+                write!(f, " ColumnBlockedInterleavedARM")
+            }
+        }
     }
 }
 #[repr(u32)]
@@ -5252,7 +6123,11 @@ unsafe impl OperandEncoding for CooperativeMatrixUse {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::MatrixAKHR => write!(f, " MatrixAKHR"),
+            Self::MatrixBKHR => write!(f, " MatrixBKHR"),
+            Self::MatrixAccumulatorKHR => write!(f, " MatrixAccumulatorKHR"),
+        }
     }
 }
 bitflags! {
@@ -5289,7 +6164,7 @@ unsafe impl OperandEncoding for CooperativeMatrixReduce {
                 write!(f, "{sep}Column")?;
             }
             if self.contains(Self::TwoByTwo) {
-                write!(f, "{sep}TwoByTwo")?;
+                write!(f, "{sep}2x2")?;
             }
             Ok(())
         }
@@ -5335,7 +6210,13 @@ unsafe impl OperandEncoding for TensorClampMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::Undefined => write!(f, " Undefined"),
+            Self::Constant => write!(f, " Constant"),
+            Self::ClampToEdge => write!(f, " ClampToEdge"),
+            Self::Repeat => write!(f, " Repeat"),
+            Self::RepeatMirrored => write!(f, " RepeatMirrored"),
+        }
     }
 }
 bitflags! {
@@ -5410,7 +6291,12 @@ unsafe impl OperandEncoding for InitializationModeQualifier {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::InitOnDeviceReprogramALTERA => {
+                write!(f, " InitOnDeviceReprogramALTERA")
+            }
+            Self::InitOnDeviceResetALTERA => write!(f, " InitOnDeviceResetALTERA"),
+        }
     }
 }
 #[repr(u32)]
@@ -5453,7 +6339,13 @@ unsafe impl OperandEncoding for LoadCacheControl {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::UncachedINTEL => write!(f, " UncachedINTEL"),
+            Self::CachedINTEL => write!(f, " CachedINTEL"),
+            Self::StreamingINTEL => write!(f, " StreamingINTEL"),
+            Self::InvalidateAfterReadINTEL => write!(f, " InvalidateAfterReadINTEL"),
+            Self::ConstCachedINTEL => write!(f, " ConstCachedINTEL"),
+        }
     }
 }
 #[repr(u32)]
@@ -5494,7 +6386,12 @@ unsafe impl OperandEncoding for StoreCacheControl {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::UncachedINTEL => write!(f, " UncachedINTEL"),
+            Self::WriteThroughINTEL => write!(f, " WriteThroughINTEL"),
+            Self::WriteBackINTEL => write!(f, " WriteBackINTEL"),
+            Self::StreamingINTEL => write!(f, " StreamingINTEL"),
+        }
     }
 }
 #[repr(u32)]
@@ -5529,7 +6426,9 @@ unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::AutoINTEL => write!(f, " AutoINTEL"),
+        }
     }
 }
 bitflags! {
@@ -5647,7 +6546,11 @@ unsafe impl OperandEncoding for FPEncoding {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::BFloat16KHR => write!(f, " BFloat16KHR"),
+            Self::Float8E4M3EXT => write!(f, " Float8E4M3EXT"),
+            Self::Float8E5M2EXT => write!(f, " Float8E5M2EXT"),
+        }
     }
 }
 #[repr(u32)]
@@ -5688,7 +6591,12 @@ unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::RowMajorNV => write!(f, " RowMajorNV"),
+            Self::ColumnMajorNV => write!(f, " ColumnMajorNV"),
+            Self::InferencingOptimalNV => write!(f, " InferencingOptimalNV"),
+            Self::TrainingOptimalNV => write!(f, " TrainingOptimalNV"),
+        }
     }
 }
 #[repr(u32)]
@@ -5751,7 +6659,23 @@ unsafe impl OperandEncoding for ComponentType {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
-        write!(f, " {:?}", self)
+        match self {
+            Self::Float16NV => write!(f, " Float16NV"),
+            Self::Float32NV => write!(f, " Float32NV"),
+            Self::Float64NV => write!(f, " Float64NV"),
+            Self::SignedInt8NV => write!(f, " SignedInt8NV"),
+            Self::SignedInt16NV => write!(f, " SignedInt16NV"),
+            Self::SignedInt32NV => write!(f, " SignedInt32NV"),
+            Self::SignedInt64NV => write!(f, " SignedInt64NV"),
+            Self::UnsignedInt8NV => write!(f, " UnsignedInt8NV"),
+            Self::UnsignedInt16NV => write!(f, " UnsignedInt16NV"),
+            Self::UnsignedInt32NV => write!(f, " UnsignedInt32NV"),
+            Self::UnsignedInt64NV => write!(f, " UnsignedInt64NV"),
+            Self::SignedInt8PackedNV => write!(f, " SignedInt8PackedNV"),
+            Self::UnsignedInt8PackedNV => write!(f, " UnsignedInt8PackedNV"),
+            Self::FloatE4M3NV => write!(f, " FloatE4M3NV"),
+            Self::FloatE5M2NV => write!(f, " FloatE5M2NV"),
+        }
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
