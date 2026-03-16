@@ -84,6 +84,9 @@ pub enum GlslInstSet {
     NClamp(NClamp),
 }
 impl InstEncoding for GlslInstSet {
+    fn name() -> &'static str {
+        stringify!(GlslInstSet)
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         match self {
             Self::Round(inst) => InstEncoding::encode(inst, writer),

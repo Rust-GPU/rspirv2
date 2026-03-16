@@ -4,6 +4,9 @@ pub enum DebugPrintfInstSet {
     DebugPrintf(DebugPrintf),
 }
 impl InstEncoding for DebugPrintfInstSet {
+    fn name() -> &'static str {
+        stringify!(DebugPrintfInstSet)
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         match self {
             Self::DebugPrintf(inst) => InstEncoding::encode(inst, writer),
