@@ -1,7 +1,8 @@
+use crate::Word;
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
 use crate::dis::DisContext;
 use crate::meta::{Category, OperandKind};
-use crate::operand::{Operand, OperandEncoding, Word};
+use crate::operand::{Operand, OperandEncoding};
 use anstyle::AnsiColor;
 use std::fmt::Formatter;
 

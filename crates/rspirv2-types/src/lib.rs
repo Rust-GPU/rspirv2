@@ -6,3 +6,6 @@ pub mod inst;
 pub mod meta;
 pub mod module;
 pub mod operand;
+mod word;
+
+pub use word::*;
