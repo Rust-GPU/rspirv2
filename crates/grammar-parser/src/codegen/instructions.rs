@@ -182,6 +182,10 @@ pub fn write_inst_enum(
             }
 
             impl InstEncoding for #name {
+                fn name() -> &'static str {
+                    stringify!(#name)
+                }
+
                 fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
                     match self {
                         #(#encode_match)*

@@ -966,6 +966,9 @@ pub enum CoreInstSet {
     ConvertHandleToSampledImageINTEL(OpConvertHandleToSampledImageINTEL),
 }
 impl InstEncoding for CoreInstSet {
+    fn name() -> &'static str {
+        stringify!(CoreInstSet)
+    }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         match self {
             Self::Nop(inst) => InstEncoding::encode(inst, writer),

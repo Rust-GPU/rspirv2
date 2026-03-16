@@ -15,6 +15,11 @@ pub trait Inst: InstEncoding {
 }
 
 pub trait InstEncoding: Sized + Debug + Eq {
+    /// Name of the instruction set, for debug printing
+    fn name() -> &'static str {
+        "unknown"
+    }
+
     /// Encode this instruction to a [`WordWriter`]
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError>;
 
@@ -48,6 +53,10 @@ pub trait InstEncoding: Sized + Debug + Eq {
 }
 
 impl InstEncoding for () {
+    fn name() -> &'static str {
+        "()"
+    }
+
     fn encode(&self, _: &mut impl WordWriter) -> Result<(), EncodeError> {
         Ok(())
     }
