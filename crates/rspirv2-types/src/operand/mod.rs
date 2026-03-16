@@ -25,21 +25,25 @@ unsafe impl bytemuck::Zeroable for Word {}
 unsafe impl bytemuck::Pod for Word {}
 
 impl Word {
+    #[inline]
+    pub const fn from_le_bytes(value: [u8; 4]) -> Self {
+        Self(u32::from_le_bytes(value))
+    }
+
+    #[inline]
+    pub const fn to_le_bytes(&self) -> [u8; 4] {
+        self.0.to_le_bytes()
+    }
+
+    #[inline]
     pub fn new_op(op: u16, len: usize) -> Result<Self, EncodeError> {
         let len = u16::try_from(len).map_err(|_e| EncodeError::OpTooLong)?;
         Ok(Self(op as u32 | ((len as u32) << 16)))
     }
 
+    #[inline]
     pub fn to_op(&self) -> (u16, usize) {
         (self.0 as u16, (self.0 >> 16) as u16 as usize)
-    }
-
-    pub fn to_u32(self) -> u32 {
-        self.0
-    }
-
-    pub fn to_u8_array(self) -> [u8; 4] {
-        u32::to_ne_bytes(self.0)
     }
 }
 
