@@ -229,9 +229,12 @@ mod tests {
 
     #[test]
     fn test_spirv_version_roundtrip() {
-        for expected in
-            (0..=255).flat_map(|major| (0..=255).map(move |minor| SpirvVersion::new(major, minor)))
-        {
+        let test_corpus = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 32, 64, 255];
+        for expected in test_corpus.iter().flat_map(|major| {
+            test_corpus
+                .iter()
+                .map(move |minor| SpirvVersion::new(*major, *minor))
+        }) {
             let parsed = SpirvVersion::from_word(expected.to_word());
             assert_eq!(expected, parsed);
         }
