@@ -29,6 +29,7 @@ mod test {
     use std::path::Path;
 
     #[test]
+    #[cfg_attr(miri, ignore)]
     pub fn sanity_grammar_files_exist() {
         assert!(
             Path::new(PATH_GRAMMAR_FOLDER).is_dir(),
@@ -53,6 +54,7 @@ mod test {
     }
 
     #[test]
+    #[cfg_attr(miri, ignore)]
     pub fn parse_core_grammar() -> anyhow::Result<()> {
         let json = PATH_GRAMMAR_CORE.read()?;
         let core: CoreGrammar<'_> = json.parse_grammar()?;
@@ -61,6 +63,7 @@ mod test {
     }
 
     #[test]
+    #[cfg_attr(miri, ignore)]
     pub fn parse_all_extinst_grammars() -> anyhow::Result<()> {
         let mut extinst: Vec<GrammarFile<'_, ExtInstSetGrammar<'_>>> =
             fs::read_dir(PATH_GRAMMAR_FOLDER)
