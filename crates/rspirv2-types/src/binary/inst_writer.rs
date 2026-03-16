@@ -1,8 +1,9 @@
+use crate::Word;
 use crate::binary::{
     DisallowedIdResultAllocator, EncodeError, IdResultAlloc, IdResultAllocator, WordWriter,
 };
 use crate::inst::{Inst, MaybeIdResult};
-use crate::operand::{IdResult, Word};
+use crate::operand::IdResult;
 
 /// On an [`InstWriter`] you can directly [`push`] SPIR-V [`Inst`]ructions to encode them and allocate required
 /// [`IdResult`]s.

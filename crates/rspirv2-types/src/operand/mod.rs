@@ -15,39 +15,6 @@ pub use literal_string::*;
 use smallvec::SmallVec;
 use std::fmt::{Debug, Display, Formatter};
 
-/// A 32bit SPIR-V Word
-#[repr(transparent)]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-pub struct Word(pub u32);
-
-#[cfg(feature = "bytemuck")]
-unsafe impl bytemuck::Zeroable for Word {}
-#[cfg(feature = "bytemuck")]
-unsafe impl bytemuck::Pod for Word {}
-
-impl Word {
-    #[inline]
-    pub const fn from_le_bytes(value: [u8; 4]) -> Self {
-        Self(u32::from_le_bytes(value))
-    }
-
-    #[inline]
-    pub const fn to_le_bytes(&self) -> [u8; 4] {
-        self.0.to_le_bytes()
-    }
-
-    #[inline]
-    pub fn new_op(op: u16, len: usize) -> Result<Self, EncodeError> {
-        let len = u16::try_from(len).map_err(|_e| EncodeError::OpTooLong)?;
-        Ok(Self(op as u32 | ((len as u32) << 16)))
-    }
-
-    #[inline]
-    pub fn to_op(&self) -> (u16, usize) {
-        (self.0 as u16, (self.0 >> 16) as u16 as usize)
-    }
-}
-
 /// A SPIR-V operand. The associated const [`Self::KIND`] links to it's [`OperandKind`].
 ///
 /// Requires [`OperandEncoding`], see that for encoding and decoding SPIR-V.
@@ -84,9 +51,9 @@ unsafe impl<T: Operand> OperandSpec for T {
 /// [`Quantifier::ZeroOrMore`] (`Vec`).
 ///
 /// # Safety
-/// * [`Self::encode`] must [`WordWriter::write`] exactly [`Self::word_len`] many [`Word`]s.
+/// * [`Self::encode`] must [`WordWriter::write`] exactly [`Self::word_len`] many words.
 /// * [`Self::decode`] must [`OperandReader::pull`] (or [`Iterator::next`]) exactly [`Self::word_len`] many
-///   [`Word`]s.
+///   words.
 /// * If [`Self::FIXED_LEN`] is `Some`, it must equal the computed [`Self::word_len`].
 ///
 /// These constraints should only be validated with `cfg!(debug_assertions)`, which are enabled by default in debug
@@ -98,7 +65,7 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     /// operand length calculation. See the safety contract in [`OperandEncoding`].
     const FIXED_LEN: Option<usize>;
 
-    /// The length of the operand in [`Word`]s.
+    /// The length of the operand in words.
     ///
     /// By default, returns [`Self::FIXED_LEN`] if it is `Some`, or computes it by [`Self::encode`]ing with
     /// [`WordCounter`]. If encoding your type could be expensive, we recommend overwriting this implementation,
@@ -128,7 +95,7 @@ pub unsafe trait OperandEncoding: Sized + Debug {
         }
     }
 
-    /// Encode this `Operand` to a sequence of [`Word`]s.
+    /// Encode this `Operand` to a sequence of words.
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError>;
 
     /// Validate this `Option<Operand>` before encoding.
@@ -140,11 +107,11 @@ pub unsafe trait OperandEncoding: Sized + Debug {
         Ok(())
     }
 
-    /// Parse the `Operand` from the supplied [`Iterator`] of [`Word`]s, advancing it in the process.
+    /// Parse the `Operand` from the supplied [`Iterator`] of words, advancing it in the process.
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError>;
 
     /// Like [`Self::decode`], but the `Operand` is guaranteed to be the last one of this Instruction. This is used by
-    /// [`LiteralInteger`] to consume all the remaining [`Word`]s and not have to calculate the exact size of a type.
+    /// [`LiteralInteger`] to consume all the remaining words and not have to calculate the exact size of a type.
     ///
     /// See [`LiteralInteger`] for details.
     #[inline]

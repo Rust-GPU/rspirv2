@@ -1,7 +1,7 @@
+use crate::Word;
 use crate::binary::{DecodeError, ModuleReader};
 use crate::dis::{DisModule, DisOptions};
 use crate::inst::InstEncoding;
-use crate::operand::Word;
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 

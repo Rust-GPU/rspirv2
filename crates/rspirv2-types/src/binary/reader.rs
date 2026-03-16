@@ -1,6 +1,6 @@
+use crate::Word;
 use crate::binary::DecodeError;
 use crate::meta::InstMeta;
-use crate::operand::Word;
 use std::ops::Deref;
 
 /// Reader for an entire module

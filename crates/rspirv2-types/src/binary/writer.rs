@@ -1,5 +1,5 @@
+use crate::Word;
 use crate::binary::EncodeError;
-use crate::operand::Word;
 use smallvec::SmallVec;
 use std::ops::{Deref, DerefMut};
 

@@ -1,5 +1,6 @@
+use crate::Word;
 use crate::binary::EncodeError;
-use crate::operand::{IdResult, Word};
+use crate::operand::IdResult;
 use std::sync::Arc;
 use std::sync::atomic::AtomicU32;
 use std::sync::atomic::Ordering::Relaxed;

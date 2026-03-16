@@ -1,8 +1,9 @@
 //! Module for Disassembly
 
+use crate::Word;
 use crate::binary::{DecodeError, ModuleReader};
 use crate::inst::InstEncoding;
-use crate::operand::{LiteralStringEscape, Word};
+use crate::operand::LiteralStringEscape;
 use anstyle::Style;
 use std::cell::Cell;
 use std::fmt::{Display, Formatter};

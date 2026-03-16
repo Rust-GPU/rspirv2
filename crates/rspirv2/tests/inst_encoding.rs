@@ -6,7 +6,8 @@ use rspirv2::core::inst::{
 };
 use rspirv2::core::operands::{Decoration, StorageClass};
 use rspirv2::core::preamble::OpAccessChain;
-use rspirv2::operand::{IdRef, IdResult, IdResultType, LiteralConst, LiteralInteger, Word};
+use rspirv2::operand::{IdRef, IdResult, IdResultType, LiteralConst, LiteralInteger};
+use rspirv2_types::Word;
 use rspirv2_types::binary::EncodeError;
 use rspirv2_types::inst::{Inst, InstEncoding};
 

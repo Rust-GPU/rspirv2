@@ -26,6 +26,7 @@ impl<'a> CodegenOptions<'a> {
         Self {
             name_suffix_type: "Core",
             preamble: quote! {
+                pub use crate::*;
                 pub use crate::binary::*;
                 pub use crate::inst::*;
                 pub use crate::meta::*;
