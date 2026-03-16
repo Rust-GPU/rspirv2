@@ -45,7 +45,7 @@ unsafe impl OperandEncoding for LiteralString {
         let words = self.word_len();
         let load = |i, o| *self.0.as_bytes().get(i * 4 + o).unwrap_or(&0);
         writer.write_iter((0..words).map(|i| {
-            Word(u32::from_ne_bytes([
+            Word(u32::from_le_bytes([
                 load(i, 0),
                 load(i, 1),
                 load(i, 2),
@@ -57,7 +57,7 @@ unsafe impl OperandEncoding for LiteralString {
 
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bytes = reader
-            .flat_map(|w| u32::to_ne_bytes(w.0).into_iter())
+            .flat_map(|w| u32::to_le_bytes(w.0).into_iter())
             .take_while(|p| *p != 0)
             .collect::<Vec<_>>();
         Ok(Self(String::from_utf8(bytes)?))
@@ -89,21 +89,21 @@ mod tests {
 
     #[test]
     fn test_str() -> anyhow::Result<()> {
-        roundtrip("abc", &[u32::from_ne_bytes([b'a', b'b', b'c', 0])])?;
-        roundtrip("123", &[u32::from_ne_bytes([b'1', b'2', b'3', 0])])?;
-        roundtrip("abcd", &[u32::from_ne_bytes([b'a', b'b', b'c', b'd']), 0])?;
+        roundtrip("abc", &[u32::from_le_bytes([b'a', b'b', b'c', 0])])?;
+        roundtrip("123", &[u32::from_le_bytes([b'1', b'2', b'3', 0])])?;
+        roundtrip("abcd", &[u32::from_le_bytes([b'a', b'b', b'c', b'd']), 0])?;
         roundtrip(
             "abcdefg",
             &[
-                u32::from_ne_bytes([b'a', b'b', b'c', b'd']),
-                u32::from_ne_bytes([b'e', b'f', b'g', 0]),
+                u32::from_le_bytes([b'a', b'b', b'c', b'd']),
+                u32::from_le_bytes([b'e', b'f', b'g', 0]),
             ],
         )?;
         roundtrip(
             "abcdefgh",
             &[
-                u32::from_ne_bytes([b'a', b'b', b'c', b'd']),
-                u32::from_ne_bytes([b'e', b'f', b'g', b'h']),
+                u32::from_le_bytes([b'a', b'b', b'c', b'd']),
+                u32::from_le_bytes([b'e', b'f', b'g', b'h']),
                 0,
             ],
         )?;
