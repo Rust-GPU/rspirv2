@@ -9,7 +9,7 @@ use rspirv2_types::operand::{
 
 #[test]
 pub fn test_dis_optional_operand() -> anyhow::Result<()> {
-    let ctx = DisContext::new(DisOptions::simple());
+    let ctx = DisContext::no_context(DisOptions::simple());
     let mut alloc = IdResultAllocator::default();
     let float = OpTypeFloat {
         id_result: Some(alloc.alloc_id()?),
@@ -30,7 +30,7 @@ pub fn test_dis_optional_operand() -> anyhow::Result<()> {
 /// Symbols that have been renamed in `Enumerant::variant_ident` to be valid rust idents
 #[test]
 pub fn test_dis_renamed_symbols() -> anyhow::Result<()> {
-    let ctx = DisContext::new(DisOptions::simple());
+    let ctx = DisContext::no_context(DisOptions::simple());
     let ctx = OperandDisContext::new(&ctx);
     assert_eq!(" 1D", Dim::Dim1D.dis(&ctx).to_string());
     assert_eq!(" 2D", Dim::Dim2D.dis(&ctx).to_string());
