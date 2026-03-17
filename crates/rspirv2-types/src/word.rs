@@ -12,6 +12,7 @@ unsafe impl bytemuck::Zeroable for Word {}
 unsafe impl bytemuck::Pod for Word {}
 
 impl Word {
+    // strings are little-endian encoded, likely the correct choice in many instances
     #[inline]
     pub const fn from_le_bytes(value: [u8; 4]) -> Self {
         Self(u32::from_le_bytes(value))
@@ -20,6 +21,17 @@ impl Word {
     #[inline]
     pub const fn to_le_bytes(&self) -> [u8; 4] {
         self.0.to_le_bytes()
+    }
+
+    // big-endian is only needed for `Module::from_bytes()`
+    #[inline]
+    pub const fn from_be_bytes(value: [u8; 4]) -> Self {
+        Self(u32::from_be_bytes(value))
+    }
+
+    #[inline]
+    pub const fn to_be_bytes(&self) -> [u8; 4] {
+        self.0.to_be_bytes()
     }
 
     #[inline]
