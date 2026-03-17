@@ -3,7 +3,9 @@ use rspirv2::core::operands::{CooperativeMatrixReduce, Dim};
 use rspirv2_types::binary::{IdResultAlloc, IdResultAllocator};
 use rspirv2_types::dis::{DisContext, DisOptions};
 use rspirv2_types::inst::InstEncoding;
-use rspirv2_types::operand::{IdRef, IdResultType, LiteralInteger, OperandEncoding};
+use rspirv2_types::operand::{
+    IdRef, IdResultType, LiteralInteger, OperandDisContext, OperandEncoding,
+};
 
 #[test]
 pub fn test_dis_optional_operand() -> anyhow::Result<()> {
@@ -29,6 +31,7 @@ pub fn test_dis_optional_operand() -> anyhow::Result<()> {
 #[test]
 pub fn test_dis_renamed_symbols() -> anyhow::Result<()> {
     let ctx = DisContext::new(DisOptions::simple());
+    let ctx = OperandDisContext::new(&ctx);
     assert_eq!(" 1D", Dim::Dim1D.dis(&ctx).to_string());
     assert_eq!(" 2D", Dim::Dim2D.dis(&ctx).to_string());
     assert_eq!(" 3D", Dim::Dim3D.dis(&ctx).to_string());

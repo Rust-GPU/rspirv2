@@ -24,7 +24,12 @@ impl InstEncoding for Round {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Round{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Round{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -52,7 +57,12 @@ impl InstEncoding for RoundEven {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "RoundEven{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "RoundEven{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -80,7 +90,12 @@ impl InstEncoding for Trunc {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Trunc{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Trunc{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -108,7 +123,12 @@ impl InstEncoding for FAbs {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "FAbs{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "FAbs{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -136,7 +156,12 @@ impl InstEncoding for SAbs {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "SAbs{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "SAbs{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -164,7 +189,12 @@ impl InstEncoding for FSign {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "FSign{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "FSign{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -192,7 +222,12 @@ impl InstEncoding for SSign {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "SSign{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "SSign{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -220,7 +255,12 @@ impl InstEncoding for Floor {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Floor{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Floor{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -248,7 +288,12 @@ impl InstEncoding for Ceil {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Ceil{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Ceil{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -276,7 +321,12 @@ impl InstEncoding for Fract {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Fract{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Fract{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -304,7 +354,12 @@ impl InstEncoding for Radians {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Radians{}", self.degrees.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Radians{}", self.degrees.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -332,7 +387,12 @@ impl InstEncoding for Degrees {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Degrees{}", self.radians.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Degrees{}", self.radians.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -360,7 +420,12 @@ impl InstEncoding for Sin {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Sin{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Sin{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -388,7 +453,12 @@ impl InstEncoding for Cos {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Cos{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Cos{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -416,7 +486,12 @@ impl InstEncoding for Tan {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Tan{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Tan{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -444,7 +519,12 @@ impl InstEncoding for Asin {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Asin{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Asin{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -472,7 +552,12 @@ impl InstEncoding for Acos {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Acos{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Acos{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -500,7 +585,12 @@ impl InstEncoding for Atan {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Atan{}", self.y_over_x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Atan{}", self.y_over_x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -528,7 +618,12 @@ impl InstEncoding for Sinh {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Sinh{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Sinh{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -556,7 +651,12 @@ impl InstEncoding for Cosh {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Cosh{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Cosh{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -584,7 +684,12 @@ impl InstEncoding for Tanh {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Tanh{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Tanh{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -612,7 +717,12 @@ impl InstEncoding for Asinh {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Asinh{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Asinh{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -640,7 +750,12 @@ impl InstEncoding for Acosh {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Acosh{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Acosh{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -668,7 +783,12 @@ impl InstEncoding for Atanh {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Atanh{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Atanh{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -699,7 +819,12 @@ impl InstEncoding for Atan2 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Atan2{}{}", self.y.dis(_ctx), self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Atan2{}{}", self.y.dis(ctx), self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -730,7 +855,12 @@ impl InstEncoding for Pow {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Pow{}{}", self.x.dis(_ctx), self.y.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Pow{}{}", self.x.dis(ctx), self.y.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -758,7 +888,12 @@ impl InstEncoding for Exp {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Exp{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Exp{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -786,7 +921,12 @@ impl InstEncoding for Log {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Log{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Log{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -814,7 +954,12 @@ impl InstEncoding for Exp2 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Exp2{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Exp2{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -842,7 +987,12 @@ impl InstEncoding for Log2 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Log2{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Log2{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -870,7 +1020,12 @@ impl InstEncoding for Sqrt {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Sqrt{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Sqrt{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -898,7 +1053,12 @@ impl InstEncoding for InverseSqrt {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "InverseSqrt{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "InverseSqrt{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -926,7 +1086,12 @@ impl InstEncoding for Determinant {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Determinant{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Determinant{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -954,7 +1119,12 @@ impl InstEncoding for MatrixInverse {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "MatrixInverse{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "MatrixInverse{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -985,7 +1155,12 @@ impl InstEncoding for Modf {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Modf{}{}", self.x.dis(_ctx), self.i.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Modf{}{}", self.x.dis(ctx), self.i.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1013,7 +1188,12 @@ impl InstEncoding for ModfStruct {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "ModfStruct{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "ModfStruct{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1044,7 +1224,12 @@ impl InstEncoding for FMin {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "FMin{}{}", self.x.dis(_ctx), self.y.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "FMin{}{}", self.x.dis(ctx), self.y.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1075,7 +1260,12 @@ impl InstEncoding for UMin {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "UMin{}{}", self.x.dis(_ctx), self.y.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "UMin{}{}", self.x.dis(ctx), self.y.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1106,7 +1296,12 @@ impl InstEncoding for SMin {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "SMin{}{}", self.x.dis(_ctx), self.y.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "SMin{}{}", self.x.dis(ctx), self.y.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1137,7 +1332,12 @@ impl InstEncoding for FMax {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "FMax{}{}", self.x.dis(_ctx), self.y.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "FMax{}{}", self.x.dis(ctx), self.y.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1168,7 +1368,12 @@ impl InstEncoding for UMax {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "UMax{}{}", self.x.dis(_ctx), self.y.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "UMax{}{}", self.x.dis(ctx), self.y.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1199,7 +1404,12 @@ impl InstEncoding for SMax {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "SMax{}{}", self.x.dis(_ctx), self.y.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "SMax{}{}", self.x.dis(ctx), self.y.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1236,12 +1446,17 @@ impl InstEncoding for FClamp {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
         write!(
             f,
             "FClamp{}{}{}",
-            self.x.dis(_ctx),
-            self.min_val.dis(_ctx),
-            self.max_val.dis(_ctx)
+            self.x.dis(ctx),
+            self.min_val.dis(ctx),
+            self.max_val.dis(ctx)
         )
     }
 }
@@ -1279,12 +1494,17 @@ impl InstEncoding for UClamp {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
         write!(
             f,
             "UClamp{}{}{}",
-            self.x.dis(_ctx),
-            self.min_val.dis(_ctx),
-            self.max_val.dis(_ctx)
+            self.x.dis(ctx),
+            self.min_val.dis(ctx),
+            self.max_val.dis(ctx)
         )
     }
 }
@@ -1322,12 +1542,17 @@ impl InstEncoding for SClamp {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
         write!(
             f,
             "SClamp{}{}{}",
-            self.x.dis(_ctx),
-            self.min_val.dis(_ctx),
-            self.max_val.dis(_ctx)
+            self.x.dis(ctx),
+            self.min_val.dis(ctx),
+            self.max_val.dis(ctx)
         )
     }
 }
@@ -1365,12 +1590,17 @@ impl InstEncoding for FMix {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
         write!(
             f,
             "FMix{}{}{}",
-            self.x.dis(_ctx),
-            self.y.dis(_ctx),
-            self.a.dis(_ctx)
+            self.x.dis(ctx),
+            self.y.dis(ctx),
+            self.a.dis(ctx)
         )
     }
 }
@@ -1408,12 +1638,17 @@ impl InstEncoding for IMix {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
         write!(
             f,
             "IMix{}{}{}",
-            self.x.dis(_ctx),
-            self.y.dis(_ctx),
-            self.a.dis(_ctx)
+            self.x.dis(ctx),
+            self.y.dis(ctx),
+            self.a.dis(ctx)
         )
     }
 }
@@ -1445,7 +1680,12 @@ impl InstEncoding for Step {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Step{}{}", self.edge.dis(_ctx), self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Step{}{}", self.edge.dis(ctx), self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1482,12 +1722,17 @@ impl InstEncoding for SmoothStep {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
         write!(
             f,
             "SmoothStep{}{}{}",
-            self.edge_0.dis(_ctx),
-            self.edge_1.dis(_ctx),
-            self.x.dis(_ctx)
+            self.edge_0.dis(ctx),
+            self.edge_1.dis(ctx),
+            self.x.dis(ctx)
         )
     }
 }
@@ -1525,12 +1770,17 @@ impl InstEncoding for Fma {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
         write!(
             f,
             "Fma{}{}{}",
-            self.a.dis(_ctx),
-            self.b.dis(_ctx),
-            self.c.dis(_ctx)
+            self.a.dis(ctx),
+            self.b.dis(ctx),
+            self.c.dis(ctx)
         )
     }
 }
@@ -1562,7 +1812,12 @@ impl InstEncoding for Frexp {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Frexp{}{}", self.x.dis(_ctx), self.exp.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Frexp{}{}", self.x.dis(ctx), self.exp.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1590,7 +1845,12 @@ impl InstEncoding for FrexpStruct {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "FrexpStruct{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "FrexpStruct{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1621,7 +1881,12 @@ impl InstEncoding for Ldexp {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Ldexp{}{}", self.x.dis(_ctx), self.exp.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Ldexp{}{}", self.x.dis(ctx), self.exp.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1649,7 +1914,12 @@ impl InstEncoding for PackSnorm4x8 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "PackSnorm4x8{}", self.v.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "PackSnorm4x8{}", self.v.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1677,7 +1947,12 @@ impl InstEncoding for PackUnorm4x8 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "PackUnorm4x8{}", self.v.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "PackUnorm4x8{}", self.v.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1705,7 +1980,12 @@ impl InstEncoding for PackSnorm2x16 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "PackSnorm2x16{}", self.v.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "PackSnorm2x16{}", self.v.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1733,7 +2013,12 @@ impl InstEncoding for PackUnorm2x16 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "PackUnorm2x16{}", self.v.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "PackUnorm2x16{}", self.v.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1761,7 +2046,12 @@ impl InstEncoding for PackHalf2x16 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "PackHalf2x16{}", self.v.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "PackHalf2x16{}", self.v.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1789,7 +2079,12 @@ impl InstEncoding for PackDouble2x32 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "PackDouble2x32{}", self.v.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "PackDouble2x32{}", self.v.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1817,7 +2112,12 @@ impl InstEncoding for UnpackSnorm2x16 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "UnpackSnorm2x16{}", self.p.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "UnpackSnorm2x16{}", self.p.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1845,7 +2145,12 @@ impl InstEncoding for UnpackUnorm2x16 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "UnpackUnorm2x16{}", self.p.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "UnpackUnorm2x16{}", self.p.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1873,7 +2178,12 @@ impl InstEncoding for UnpackHalf2x16 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "UnpackHalf2x16{}", self.v.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "UnpackHalf2x16{}", self.v.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1901,7 +2211,12 @@ impl InstEncoding for UnpackSnorm4x8 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "UnpackSnorm4x8{}", self.p.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "UnpackSnorm4x8{}", self.p.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1929,7 +2244,12 @@ impl InstEncoding for UnpackUnorm4x8 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "UnpackUnorm4x8{}", self.p.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "UnpackUnorm4x8{}", self.p.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1957,7 +2277,12 @@ impl InstEncoding for UnpackDouble2x32 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "UnpackDouble2x32{}", self.v.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "UnpackDouble2x32{}", self.v.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -1985,7 +2310,12 @@ impl InstEncoding for Length {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Length{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Length{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2016,7 +2346,12 @@ impl InstEncoding for Distance {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Distance{}{}", self.p_0.dis(_ctx), self.p_1.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Distance{}{}", self.p_0.dis(ctx), self.p_1.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2047,7 +2382,12 @@ impl InstEncoding for Cross {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Cross{}{}", self.x.dis(_ctx), self.y.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Cross{}{}", self.x.dis(ctx), self.y.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2075,7 +2415,12 @@ impl InstEncoding for Normalize {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Normalize{}", self.x.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Normalize{}", self.x.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2112,12 +2457,17 @@ impl InstEncoding for FaceForward {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
         write!(
             f,
             "FaceForward{}{}{}",
-            self.n.dis(_ctx),
-            self.i.dis(_ctx),
-            self.nref.dis(_ctx)
+            self.n.dis(ctx),
+            self.i.dis(ctx),
+            self.nref.dis(ctx)
         )
     }
 }
@@ -2149,7 +2499,12 @@ impl InstEncoding for Reflect {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "Reflect{}{}", self.i.dis(_ctx), self.n.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "Reflect{}{}", self.i.dis(ctx), self.n.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2186,12 +2541,17 @@ impl InstEncoding for Refract {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
         write!(
             f,
             "Refract{}{}{}",
-            self.i.dis(_ctx),
-            self.n.dis(_ctx),
-            self.eta.dis(_ctx)
+            self.i.dis(ctx),
+            self.n.dis(ctx),
+            self.eta.dis(ctx)
         )
     }
 }
@@ -2220,7 +2580,12 @@ impl InstEncoding for FindILsb {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "FindILsb{}", self.value.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "FindILsb{}", self.value.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2248,7 +2613,12 @@ impl InstEncoding for FindSMsb {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "FindSMsb{}", self.value.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "FindSMsb{}", self.value.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2276,7 +2646,12 @@ impl InstEncoding for FindUMsb {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "FindUMsb{}", self.value.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "FindUMsb{}", self.value.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2304,7 +2679,12 @@ impl InstEncoding for InterpolateAtCentroid {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "InterpolateAtCentroid{}", self.interpolant.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "InterpolateAtCentroid{}", self.interpolant.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2337,11 +2717,16 @@ impl InstEncoding for InterpolateAtSample {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
         write!(
             f,
             "InterpolateAtSample{}{}",
-            self.interpolant.dis(_ctx),
-            self.sample.dis(_ctx)
+            self.interpolant.dis(ctx),
+            self.sample.dis(ctx)
         )
     }
 }
@@ -2375,11 +2760,16 @@ impl InstEncoding for InterpolateAtOffset {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
         write!(
             f,
             "InterpolateAtOffset{}{}",
-            self.interpolant.dis(_ctx),
-            self.offset.dis(_ctx)
+            self.interpolant.dis(ctx),
+            self.offset.dis(ctx)
         )
     }
 }
@@ -2411,7 +2801,12 @@ impl InstEncoding for NMin {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "NMin{}{}", self.x.dis(_ctx), self.y.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "NMin{}{}", self.x.dis(ctx), self.y.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2442,7 +2837,12 @@ impl InstEncoding for NMax {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
-        write!(f, "NMax{}{}", self.x.dis(_ctx), self.y.dis(_ctx))
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
+        write!(f, "NMax{}{}", self.x.dis(ctx), self.y.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -2479,12 +2879,17 @@ impl InstEncoding for NClamp {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
         write!(
             f,
             "NClamp{}{}{}",
-            self.x.dis(_ctx),
-            self.min_val.dis(_ctx),
-            self.max_val.dis(_ctx)
+            self.x.dis(ctx),
+            self.min_val.dis(ctx),
+            self.max_val.dis(ctx)
         )
     }
 }

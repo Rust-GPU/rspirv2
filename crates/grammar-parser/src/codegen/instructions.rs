@@ -48,9 +48,32 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
         let reader = (!members.is_empty()).then(|| quote!(let mut op_reader = ));
 
         // disassembly
+        let dis_operand_ctx = if !member_operands.is_empty() {
+            let id_result_opt = if let Some(id_result) = id_result {
+                let name = &id_result.name;
+                quote!(self.#name)
+            } else {
+                quote!(None)
+            };
+            let id_result_type_opt = if let Some(id_result_type) = id_result_type {
+                let name = &id_result_type.name;
+                quote!(Some(self.#name))
+            } else {
+                quote!(None)
+            };
+            quote! {
+                let ctx = &OperandDisContext {
+                    id_result: #id_result_opt,
+                    id_result_type: #id_result_type_opt,
+                    ctx: _ctx,
+                };
+            }
+        } else {
+            quote!()
+        };
         let (dis_id_result_pat, dis_id_result_value) = if let Some(id_result) = id_result {
             let name = &id_result.name;
-            ("{} = ", Some(quote!(, self.#name.dis(_ctx))))
+            ("{} = ", Some(quote!(, self.#name.dis(ctx))))
         } else {
             ("", None)
         };
@@ -63,7 +86,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             .iter()
             .map(|op| {
                 let name = &op.name;
-                quote!(, self.#name.dis(_ctx))
+                quote!(, self.#name.dis(ctx))
             })
             .collect::<Vec<_>>();
         let pat = [dis_id_result_pat, inst.opname.as_ref()]
@@ -84,7 +107,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             )
             .collect::<String>();
         let rspirv_spaces_prefix = if id_result_type.is_some() {
-            quote!(let rspirv_space = _ctx.rspirv_space();)
+            quote!(let rspirv_space = ctx.rspirv_space();)
         } else {
             quote!()
         };
@@ -122,6 +145,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                 }
 
                 fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+                    #dis_operand_ctx
                     #rspirv_spaces_prefix
                     write!(f, #pat #dis_id_result_value #(#dis_operands_value)*)
                 }
