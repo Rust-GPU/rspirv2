@@ -80,6 +80,13 @@ mod codegen {
             }
         }
 
+        pub fn has_lifetime(name: &str) -> bool {
+            match name {
+                "LiteralString" => true,
+                _ => false,
+            }
+        }
+
         pub fn emit_def(&self) -> TokenStream {
             match self.category {
                 Category::Id | Category::Literal => quote!(),

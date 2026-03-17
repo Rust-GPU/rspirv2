@@ -1,6 +1,6 @@
 use crate::codegen::options::CodegenOptions;
-use crate::codegen::{GrammarWriter, OPERAND_ID_RESULT, OPERAND_ID_RESULT_TYPE};
-use crate::parse::{Grammar, InstMeta, Operand, Quantifier};
+use crate::codegen::{operand_has_lifetime, GrammarWriter, OPERAND_ID_RESULT, OPERAND_ID_RESULT_TYPE};
+use crate::parse::{Grammar, InstMeta, Operand, OperandKind, Quantifier};
 use quote::{format_ident, quote};
 
 pub const SMALLVEC_LEN: usize = 4;
@@ -16,6 +16,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
         let id_result_type = member_operands
             .iter()
             .find(|op| op.meta.kind == OPERAND_ID_RESULT_TYPE);
+        let has_lifetime = member_operands.iter().any(|o| OperandKind::has_lifetime(&o.meta.kind));
 
         // struct decl
         let member_decls = member_operands.iter().map(
