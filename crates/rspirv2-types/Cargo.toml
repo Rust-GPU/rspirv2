@@ -18,3 +18,4 @@ anstyle.workspace = true
 
 [dev-dependencies]
 anyhow.workspace = true
+bytemuck.workspace = true
