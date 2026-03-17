@@ -1,10 +1,11 @@
-use crate::Word;
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
 use crate::dis::DisContext;
 use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandEncoding};
+use crate::{Word, cast_words_to_ne_bytes};
 use anstyle::AnsiColor;
 use std::borrow::Cow;
+use std::ffi::CStr;
 use std::fmt::{Debug, Formatter};
 
 pub const OPERAND_KIND_LITERAL_STRING: OperandKind = OperandKind {
@@ -15,16 +16,16 @@ pub const OPERAND_KIND_LITERAL_STRING: OperandKind = OperandKind {
 
 /// A SPIR-V String literal. Defined as a sequence of UTF-8, so we can just use an ordinary [`String`].
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct LiteralString(pub String);
+pub struct LiteralString<'a>(pub Cow<'a, str>);
 
-impl LiteralString {
+impl<'a> LiteralString<'a> {
     #[inline]
-    pub fn new(str: String) -> Self {
-        Self(str)
+    pub fn new(str: impl Into<Cow<'a, str>>) -> Self {
+        Self(str.into())
     }
 
     #[inline]
-    pub fn into_string(self) -> String {
+    pub fn into_inner(self) -> Cow<'a, str> {
         self.0
     }
 
@@ -34,11 +35,11 @@ impl LiteralString {
     }
 }
 
-unsafe impl Operand<'_> for LiteralString {
+unsafe impl<'a> Operand<'a> for LiteralString<'a> {
     const KIND: &'static OperandKind = &OPERAND_KIND_LITERAL_STRING;
 }
 
-unsafe impl OperandEncoding<'_> for LiteralString {
+unsafe impl<'a> OperandEncoding<'a> for LiteralString<'a> {
     const FIXED_LEN: Option<usize> = None;
 
     #[inline]
@@ -55,19 +56,29 @@ unsafe impl OperandEncoding<'_> for LiteralString {
         Ok(())
     }
 
-    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
-        let mut found_null_terminator = false;
-        let bytes = reader
-            .flat_map(|w| w.to_le_bytes().into_iter())
-            .take_while(|c| {
-                found_null_terminator |= *c == 0;
-                !found_null_terminator
-            })
-            .collect::<Vec<_>>();
-        if found_null_terminator {
-            Ok(Self(String::from_utf8(bytes)?))
+    fn decode(reader: &mut OperandReader<'a>) -> Result<Self, DecodeError> {
+        if cfg!(target_endian = "little") {
+            // zero-copy zero-alloc on little-endian only, as we can just cast the `&[Word]` to `&str`
+            let cstr = CStr::from_bytes_until_nul(cast_words_to_ne_bytes(reader.as_slice()))
+                .map_err(|_| DecodeError::StringNotNulTerminated)?;
+            // manually advance, since we didn't actually pull values from the OperandReader
+            reader.advance_by(cstr.to_bytes_with_nul().len().div_ceil(4));
+            Ok(Self(Cow::Borrowed(cstr.to_str()?)))
         } else {
-            Err(DecodeError::StringNotNulTerminated)
+            // full copy on big-endian, but since all modern machines are little-endian, who cares if this is slow?
+            let mut found_null_terminator = false;
+            let bytes = reader
+                .flat_map(|w| w.to_le_bytes().into_iter())
+                .take_while(|c| {
+                    found_null_terminator |= *c == 0;
+                    !found_null_terminator
+                })
+                .collect::<Vec<_>>();
+            if found_null_terminator {
+                Ok(Self(Cow::Owned(String::from_utf8(bytes)?)))
+            } else {
+                Err(DecodeError::StringNotNulTerminated)
+            }
         }
     }
 
@@ -113,7 +124,7 @@ mod tests {
 
     fn roundtrip(str: &str, expected_spirv: &[[u8; 4]]) -> anyhow::Result<()> {
         let mut spirv = Vec::<Word>::default();
-        LiteralString(str.to_string()).encode(&mut spirv)?;
+        LiteralString::new(str).encode(&mut spirv)?;
         let read = LiteralString::decode(&mut OperandReader::new(spirv.as_slice()))?;
         assert_eq!(str, read.as_str());
         assert_eq!(
