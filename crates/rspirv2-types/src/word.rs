@@ -51,3 +51,37 @@ impl Debug for Word {
         write!(f, "Word({:#010x})", self.0)
     }
 }
+
+/// Convert a slice of [`Word`]s to a slice of `u8`s in native endian.
+///
+/// Implementation replicates `bytemuck::cast_slice()`, see `test_cast_words_bytemuck_equivalence`.
+pub fn cast_words_to_ne_bytes(words: &[Word]) -> &[u8] {
+    unsafe { core::slice::from_raw_parts(words.as_ptr().cast::<u8>(), words.len() * 4) }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const TEST_CORPUS: &[&[u32]] = &[
+        &[1, 2, 3, 4],
+        &[0xDEADBEEF],
+        &[0, 0xDEADBEEF, 0x12345678, 0xFFFFFFFF],
+        &[0],
+        &[],
+    ];
+
+    #[test]
+    pub fn test_cast_words_bytemuck_equivalence() {
+        for case in TEST_CORPUS {
+            // convert to Words (potentially changing byte order)
+            let case = case.iter().map(|v| Word(*v)).collect::<Vec<_>>();
+            // "transmute" slice of words to slice of u32s, without impl bytemuck::Pod for Word, NO CONVERSIONS HERE!
+            let case_u32s = case.iter().map(|w| w.0).collect::<Vec<_>>();
+            assert_eq!(
+                bytemuck::cast_slice::<u32, u8>(&case_u32s),
+                cast_words_to_ne_bytes(&case)
+            );
+        }
+    }
+}
