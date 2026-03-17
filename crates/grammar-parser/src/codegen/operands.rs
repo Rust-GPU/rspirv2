@@ -147,7 +147,7 @@ fn emit_rust_like_enum(
             }
 
             #[inline]
-            fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+            fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
                 match self {
                     #(#dis),*
                 }
@@ -219,7 +219,7 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
             }
 
             #[inline]
-            fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+            fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
                 match self {
                     #(#dis),*
                 }
@@ -298,7 +298,7 @@ fn emit_bitflags_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_
             }
 
             #[inline]
-            fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+            fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
                 if self.is_empty() {
                     write!(f, " None")
                 } else {
@@ -357,7 +357,7 @@ fn emit_composite(operand_kind: &OperandKind<'_>, bases: &[Cow<'_, str>]) -> Tok
             }
 
             #[inline]
-            fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+            fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
                 write!(f, #dis_pat, #(#dis_values),*)
             }
         }

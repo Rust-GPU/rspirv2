@@ -28,11 +28,16 @@ impl InstEncoding for DebugPrintf {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx: _ctx,
+        };
         write!(
             f,
             "DebugPrintf{}{}",
-            self.format.dis(_ctx),
-            self.id_ref.dis(_ctx)
+            self.format.dis(ctx),
+            self.id_ref.dis(ctx)
         )
     }
 }

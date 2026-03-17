@@ -14,6 +14,7 @@ pub use literal_integer::*;
 pub use literal_string::*;
 use smallvec::SmallVec;
 use std::fmt::{Debug, Display, Formatter};
+use std::ops::Deref;
 
 /// A 32bit SPIR-V Word
 #[repr(transparent)]
@@ -155,7 +156,7 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     }
 
     /// Disassemble this operand to the supplied [`Formatter`]. Prefer [`Self::dis`] over calling this.
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result;
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result;
 
     /// Disassemble this operand
     ///
@@ -167,17 +168,42 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     /// assert_eq!(dis, "OpMyInst %42");
     /// ```
     #[inline]
-    fn dis<'a>(&'a self, ctx: &'a DisContext) -> OperandDis<'a, Self> {
+    fn dis<'a>(&'a self, ctx: &'a OperandDisContext<'_>) -> OperandDis<'a, Self> {
         OperandDis(self, ctx)
     }
 }
 
-pub struct OperandDis<'a, T: OperandEncoding>(&'a T, &'a DisContext);
+pub struct OperandDis<'a, T: OperandEncoding>(&'a T, &'a OperandDisContext<'a>);
 
 impl<'a, T: OperandEncoding> Display for OperandDis<'a, T> {
     #[inline]
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, self.1)
+    }
+}
+
+/// Context object for disassembly generation of operands within an instruction
+#[derive(Copy, Clone, Debug)]
+pub struct OperandDisContext<'a> {
+    pub ctx: &'a DisContext,
+    pub id_result: Option<IdResult>,
+    pub id_result_type: Option<IdResultType>,
+}
+
+impl<'a> OperandDisContext<'a> {
+    pub fn new(ctx: &'a DisContext) -> Self {
+        Self {
+            ctx,
+            id_result: None,
+            id_result_type: None,
+        }
+    }
+}
+
+impl<'a> Deref for OperandDisContext<'a> {
+    type Target = DisContext;
+    fn deref(&self) -> &Self::Target {
+        self.ctx
     }
 }
 
@@ -220,7 +246,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
     }
 
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             None => Ok(()),
             Some(e) => e.dis_fmt(f, ctx),
@@ -283,7 +309,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     }
 
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         for v in self {
             T::dis_fmt(v, &mut *f, ctx)?;
         }
@@ -335,7 +361,7 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
     }
 
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         for v in self {
             T::dis_fmt(v, &mut *f, ctx)?;
         }

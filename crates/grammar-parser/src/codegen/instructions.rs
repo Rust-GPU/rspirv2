@@ -9,8 +9,15 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
     let insts = grammar.insts.iter().map(|inst| {
         let struct_ident = InstMeta::type_ident(&inst.opname);
         let meta = InstMeta::const_ident(&inst.opname);
-
         let member_operands = inst.compute_operands();
+        let id_result = member_operands
+            .iter()
+            .find(|op| op.meta.kind == OPERAND_ID_RESULT);
+        let id_result_type = member_operands
+            .iter()
+            .find(|op| op.meta.kind == OPERAND_ID_RESULT_TYPE);
+
+        // struct decl
         let member_decls = member_operands.iter().map(
             |&Operand {
                  meta,
@@ -23,16 +30,15 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             },
         );
 
-        let id_result = member_operands
-            .iter()
-            .find(|op| op.meta.kind == OPERAND_ID_RESULT);
-        let (maybe_id_result, id_result_ref) = if let Some(id_result) = id_result {
+        // id_result(&mut self) -> &mut OptionIdResult
+        let (maybe_id_result, id_result_mut_ref) = if let Some(id_result) = id_result {
             let name = &id_result.name;
             (quote!(OptionIdResult), quote!(&mut self.#name))
         } else {
             (quote!(()), quote!(make_mut_ref_unit()))
         };
 
+        // encode decode
         let members = member_operands
             .iter()
             .map(|Operand { name, .. }| name)
@@ -41,9 +47,33 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
         let members_last = members.last().into_iter();
         let reader = (!members.is_empty()).then(|| quote!(let mut op_reader = ));
 
+        // disassembly
+        let dis_operand_ctx = if !member_operands.is_empty() {
+            let id_result_opt = if let Some(id_result) = id_result {
+                let name = &id_result.name;
+                quote!(self.#name)
+            } else {
+                quote!(None)
+            };
+            let id_result_type_opt = if let Some(id_result_type) = id_result_type {
+                let name = &id_result_type.name;
+                quote!(Some(self.#name))
+            } else {
+                quote!(None)
+            };
+            quote! {
+                let ctx = &OperandDisContext {
+                    id_result: #id_result_opt,
+                    id_result_type: #id_result_type_opt,
+                    ctx: _ctx,
+                };
+            }
+        } else {
+            quote!()
+        };
         let (dis_id_result_pat, dis_id_result_value) = if let Some(id_result) = id_result {
             let name = &id_result.name;
-            ("{} = ", Some(quote!(, self.#name.dis(_ctx))))
+            ("{} = ", Some(quote!(, self.#name.dis(ctx))))
         } else {
             ("", None)
         };
@@ -56,7 +86,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             .iter()
             .map(|op| {
                 let name = &op.name;
-                quote!(, self.#name.dis(_ctx))
+                quote!(, self.#name.dis(ctx))
             })
             .collect::<Vec<_>>();
         let pat = [dis_id_result_pat, inst.opname.as_ref()]
@@ -76,11 +106,8 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                     }),
             )
             .collect::<String>();
-        let has_rspirv_spaces = member_operands
-            .iter()
-            .any(|op| op.meta.kind == OPERAND_ID_RESULT_TYPE);
-        let rspirv_spaces_prefix = if has_rspirv_spaces {
-            quote!(let rspirv_space = _ctx.rspirv_space();)
+        let rspirv_spaces_prefix = if id_result_type.is_some() {
+            quote!(let rspirv_space = ctx.rspirv_space();)
         } else {
             quote!()
         };
@@ -97,7 +124,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                 type MaybeIdResult = #maybe_id_result;
 
                 fn id_result(&mut self) -> &mut Self::MaybeIdResult {
-                    #id_result_ref
+                    #id_result_mut_ref
                 }
             }
 
@@ -118,6 +145,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                 }
 
                 fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+                    #dis_operand_ctx
                     #rspirv_spaces_prefix
                     write!(f, #pat #dis_id_result_value #(#dis_operands_value)*)
                 }

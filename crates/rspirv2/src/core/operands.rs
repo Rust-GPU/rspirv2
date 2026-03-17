@@ -27,7 +27,7 @@ unsafe impl OperandEncoding for ImageOperands {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -108,7 +108,7 @@ unsafe impl OperandEncoding for FPFastMathMode {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -163,7 +163,7 @@ unsafe impl OperandEncoding for SelectionControl {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -211,7 +211,7 @@ unsafe impl OperandEncoding for LoopControl {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -300,7 +300,7 @@ unsafe impl OperandEncoding for FunctionControl {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -352,7 +352,7 @@ unsafe impl OperandEncoding for MemorySemantics {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -429,7 +429,7 @@ unsafe impl OperandEncoding for MemoryAccess {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -484,7 +484,7 @@ unsafe impl OperandEncoding for KernelProfilingInfo {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -522,7 +522,7 @@ unsafe impl OperandEncoding for RayFlags {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -587,7 +587,7 @@ unsafe impl OperandEncoding for FragmentShadingRate {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -631,7 +631,7 @@ unsafe impl OperandEncoding for RawAccessChainOperands {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -704,7 +704,7 @@ unsafe impl OperandEncoding for SourceLanguage {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Unknown => write!(f, " Unknown"),
             Self::ESSL => write!(f, " ESSL"),
@@ -786,7 +786,7 @@ unsafe impl OperandEncoding for ExecutionModel {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Vertex => write!(f, " Vertex"),
             Self::TessellationControl => write!(f, " TessellationControl"),
@@ -846,7 +846,7 @@ unsafe impl OperandEncoding for AddressingModel {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Logical => write!(f, " Logical"),
             Self::Physical32 => write!(f, " Physical32"),
@@ -893,7 +893,7 @@ unsafe impl OperandEncoding for MemoryModel {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Simple => write!(f, " Simple"),
             Self::GLSL450 => write!(f, " GLSL450"),
@@ -1556,7 +1556,7 @@ unsafe impl OperandEncoding for ExecutionMode {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Invocations(p0) => write!(f, " Invocations{}", p0.dis(_ctx)),
             Self::SpacingEqual => write!(f, " SpacingEqual"),
@@ -1874,7 +1874,7 @@ unsafe impl OperandEncoding for StorageClass {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::UniformConstant => write!(f, " UniformConstant"),
             Self::Input => write!(f, " Input"),
@@ -1953,7 +1953,7 @@ unsafe impl OperandEncoding for Dim {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Dim1D => write!(f, " 1D"),
             Self::Dim2D => write!(f, " 2D"),
@@ -2005,7 +2005,7 @@ unsafe impl OperandEncoding for SamplerAddressingMode {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::None => write!(f, " None"),
             Self::ClampToEdge => write!(f, " ClampToEdge"),
@@ -2048,7 +2048,7 @@ unsafe impl OperandEncoding for SamplerFilterMode {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Nearest => write!(f, " Nearest"),
             Self::Linear => write!(f, " Linear"),
@@ -2168,7 +2168,7 @@ unsafe impl OperandEncoding for ImageFormat {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Unknown => write!(f, " Unknown"),
             Self::Rgba32f => write!(f, " Rgba32f"),
@@ -2284,7 +2284,7 @@ unsafe impl OperandEncoding for ImageChannelOrder {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::R => write!(f, " R"),
             Self::A => write!(f, " A"),
@@ -2390,7 +2390,7 @@ unsafe impl OperandEncoding for ImageChannelDataType {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::SnormInt8 => write!(f, " SnormInt8"),
             Self::SnormInt16 => write!(f, " SnormInt16"),
@@ -2458,7 +2458,7 @@ unsafe impl OperandEncoding for FPRoundingMode {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::RTE => write!(f, " RTE"),
             Self::RTZ => write!(f, " RTZ"),
@@ -2500,7 +2500,7 @@ unsafe impl OperandEncoding for FPDenormMode {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Preserve => write!(f, " Preserve"),
             Self::FlushToZero => write!(f, " FlushToZero"),
@@ -2552,7 +2552,7 @@ unsafe impl OperandEncoding for QuantizationModes {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::TRN => write!(f, " TRN"),
             Self::TRN_ZERO => write!(f, " TRN_ZERO"),
@@ -2598,7 +2598,7 @@ unsafe impl OperandEncoding for FPOperationMode {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::IEEE => write!(f, " IEEE"),
             Self::ALT => write!(f, " ALT"),
@@ -2642,7 +2642,7 @@ unsafe impl OperandEncoding for OverflowModes {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::WRAP => write!(f, " WRAP"),
             Self::SAT => write!(f, " SAT"),
@@ -2686,7 +2686,7 @@ unsafe impl OperandEncoding for LinkageType {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Export => write!(f, " Export"),
             Self::Import => write!(f, " Import"),
@@ -2729,7 +2729,7 @@ unsafe impl OperandEncoding for AccessQualifier {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::ReadOnly => write!(f, " ReadOnly"),
             Self::WriteOnly => write!(f, " WriteOnly"),
@@ -2774,7 +2774,7 @@ unsafe impl OperandEncoding for HostAccessQualifier {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::NoneINTEL => write!(f, " NoneINTEL"),
             Self::ReadINTEL => write!(f, " ReadINTEL"),
@@ -2830,7 +2830,7 @@ unsafe impl OperandEncoding for FunctionParameterAttribute {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Zext => write!(f, " Zext"),
             Self::Sext => write!(f, " Sext"),
@@ -3866,7 +3866,7 @@ unsafe impl OperandEncoding for Decoration {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::RelaxedPrecision => write!(f, " RelaxedPrecision"),
             Self::SpecId(p0) => write!(f, " SpecId{}", p0.dis(_ctx)),
@@ -4424,7 +4424,7 @@ unsafe impl OperandEncoding for BuiltIn {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Position => write!(f, " Position"),
             Self::PointSize => write!(f, " PointSize"),
@@ -4617,7 +4617,7 @@ unsafe impl OperandEncoding for Scope {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::CrossDevice => write!(f, " CrossDevice"),
             Self::Device => write!(f, " Device"),
@@ -4673,7 +4673,7 @@ unsafe impl OperandEncoding for GroupOperation {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Reduce => write!(f, " Reduce"),
             Self::InclusiveScan => write!(f, " InclusiveScan"),
@@ -4724,7 +4724,7 @@ unsafe impl OperandEncoding for KernelEnqueueFlags {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::NoWait => write!(f, " NoWait"),
             Self::WaitKernel => write!(f, " WaitKernel"),
@@ -5372,7 +5372,7 @@ unsafe impl OperandEncoding for Capability {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Matrix => write!(f, " Matrix"),
             Self::Shader => write!(f, " Shader"),
@@ -5848,7 +5848,7 @@ unsafe impl OperandEncoding for RayQueryIntersection {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::RayQueryCandidateIntersectionKHR => {
                 write!(f, " RayQueryCandidateIntersectionKHR")
@@ -5894,7 +5894,7 @@ unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::RayQueryCommittedIntersectionNoneKHR => {
                 write!(f, " RayQueryCommittedIntersectionNoneKHR")
@@ -5941,7 +5941,7 @@ unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::RayQueryCandidateIntersectionTriangleKHR => {
                 write!(f, " RayQueryCandidateIntersectionTriangleKHR")
@@ -5984,7 +5984,7 @@ unsafe impl OperandEncoding for PackedVectorFormat {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::PackedVectorFormat4x8Bit => write!(f, " PackedVectorFormat4x8Bit"),
         }
@@ -6014,7 +6014,7 @@ unsafe impl OperandEncoding for CooperativeMatrixOperands {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -6076,7 +6076,7 @@ unsafe impl OperandEncoding for CooperativeMatrixLayout {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::RowMajorKHR => write!(f, " RowMajorKHR"),
             Self::ColumnMajorKHR => write!(f, " ColumnMajorKHR"),
@@ -6122,7 +6122,7 @@ unsafe impl OperandEncoding for CooperativeMatrixUse {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::MatrixAKHR => write!(f, " MatrixAKHR"),
             Self::MatrixBKHR => write!(f, " MatrixBKHR"),
@@ -6151,7 +6151,7 @@ unsafe impl OperandEncoding for CooperativeMatrixReduce {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -6209,7 +6209,7 @@ unsafe impl OperandEncoding for TensorClampMode {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Undefined => write!(f, " Undefined"),
             Self::Constant => write!(f, " Constant"),
@@ -6241,7 +6241,7 @@ unsafe impl OperandEncoding for TensorAddressingOperands {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -6290,7 +6290,7 @@ unsafe impl OperandEncoding for InitializationModeQualifier {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::InitOnDeviceReprogramALTERA => {
                 write!(f, " InitOnDeviceReprogramALTERA")
@@ -6338,7 +6338,7 @@ unsafe impl OperandEncoding for LoadCacheControl {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::UncachedINTEL => write!(f, " UncachedINTEL"),
             Self::CachedINTEL => write!(f, " CachedINTEL"),
@@ -6385,7 +6385,7 @@ unsafe impl OperandEncoding for StoreCacheControl {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::UncachedINTEL => write!(f, " UncachedINTEL"),
             Self::WriteThroughINTEL => write!(f, " WriteThroughINTEL"),
@@ -6425,7 +6425,7 @@ unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::AutoINTEL => write!(f, " AutoINTEL"),
         }
@@ -6458,7 +6458,7 @@ unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
         >(stringify!(MatrixMultiplyAccumulateOperands), bits))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -6545,7 +6545,7 @@ unsafe impl OperandEncoding for FPEncoding {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::BFloat16KHR => write!(f, " BFloat16KHR"),
             Self::Float8E4M3EXT => write!(f, " Float8E4M3EXT"),
@@ -6590,7 +6590,7 @@ unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::RowMajorNV => write!(f, " RowMajorNV"),
             Self::ColumnMajorNV => write!(f, " ColumnMajorNV"),
@@ -6658,7 +6658,7 @@ unsafe impl OperandEncoding for ComponentType {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             Self::Float16NV => write!(f, " Float16NV"),
             Self::Float32NV => write!(f, " Float32NV"),
@@ -6700,7 +6700,7 @@ unsafe impl OperandEncoding for PairLiteralIntegerIdRef {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         write!(
             f,
             " {} {}",
@@ -6731,7 +6731,7 @@ unsafe impl OperandEncoding for PairIdRefLiteralInteger {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         write!(
             f,
             " {} {}",
@@ -6762,7 +6762,7 @@ unsafe impl OperandEncoding for PairIdRefIdRef {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         write!(
             f,
             " {} {}",
@@ -6794,7 +6794,7 @@ unsafe impl OperandEncoding for TensorOperands {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         if self.is_empty() {
             write!(f, " None")
         } else {

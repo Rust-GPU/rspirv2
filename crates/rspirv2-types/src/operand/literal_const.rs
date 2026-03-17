@@ -1,7 +1,6 @@
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
-use crate::dis::DisContext;
 use crate::meta::{Category, OperandKind};
-use crate::operand::{Operand, OperandEncoding, Word};
+use crate::operand::{Operand, OperandDisContext, OperandEncoding, Word};
 use anstyle::AnsiColor;
 use smallvec::SmallVec;
 use std::fmt::Formatter;
@@ -178,7 +177,7 @@ unsafe impl OperandEncoding for LiteralConst {
     }
 
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         let color = ctx.color(AnsiColor::Red.on_default());
         match self.0.len() {
             1 => write!(f, " {color}{}{color:#}", self.as_u32().unwrap()),

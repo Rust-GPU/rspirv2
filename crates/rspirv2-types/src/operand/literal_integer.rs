@@ -1,7 +1,6 @@
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
-use crate::dis::DisContext;
 use crate::meta::{Category, OperandKind};
-use crate::operand::{Operand, OperandEncoding, Word};
+use crate::operand::{Operand, OperandDisContext, OperandEncoding, Word};
 use anstyle::AnsiColor;
 use std::fmt::Formatter;
 
@@ -74,7 +73,11 @@ macro_rules! def_literal_integer {
             }
 
             #[inline]
-            fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+            fn dis_fmt(
+                &self,
+                f: &mut Formatter<'_>,
+                ctx: &OperandDisContext<'_>,
+            ) -> std::fmt::Result {
                 let color = ctx.color(AnsiColor::Red.on_default());
                 write!(f, " {color}{}{color:#}", self.0.0)
             }

@@ -1,7 +1,6 @@
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
-use crate::dis::DisContext;
 use crate::meta::{Category, OperandKind};
-use crate::operand::{Operand, OperandEncoding, Word};
+use crate::operand::{Operand, OperandDisContext, OperandEncoding, Word};
 use anstyle::AnsiColor;
 use std::borrow::Cow;
 use std::fmt::{Debug, Formatter};
@@ -64,7 +63,7 @@ unsafe impl OperandEncoding for LiteralString {
     }
 
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         let color = ctx.color(AnsiColor::Green.on_default());
         let str = ctx.literal_string_escape.escape(&self.0);
         write!(f, " {color}\"{str}\"{color:#}")
