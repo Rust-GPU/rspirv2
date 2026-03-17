@@ -180,10 +180,39 @@ unsafe impl OperandEncoding for LiteralConst {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         let color = ctx.color(AnsiColor::Red.on_default());
-        match self.0.len() {
-            1 => write!(f, " {color}{}{color:#}", self.as_u32().unwrap()),
-            2 => write!(f, " {color}{}{color:#}", self.as_u64().unwrap()),
-            _ => write!(f, " {color}{:?}{color:#}", self.0.as_slice()),
+        let fmt = ctx
+            .id_result_type
+            .and_then(|ty| ctx.id_to_const_fmt.get(&ty.0))
+            .copied()
+            .unwrap_or_default();
+        match (self.0.len(), fmt) {
+            (1, ConstFmt::Decimal) => write!(f, " {color}{}{color:#}", self.as_u32().unwrap()),
+            (2, ConstFmt::Decimal) => write!(f, " {color}{}{color:#}", self.as_u64().unwrap()),
+            (1, ConstFmt::LowerHex) => write!(f, " {color}{:x}{color:#}", self.as_u32().unwrap()),
+            (2, ConstFmt::LowerHex) => write!(f, " {color}{:x}{color:#}", self.as_u64().unwrap()),
+            (1, ConstFmt::UpperHex) => write!(f, " {color}{:X}{color:#}", self.as_u32().unwrap()),
+            (2, ConstFmt::UpperHex) => write!(f, " {color}{:X}{color:#}", self.as_u64().unwrap()),
+            (1, ConstFmt::Float) => write!(f, " {color}{}{color:#}", self.as_f32().unwrap()),
+            (2, ConstFmt::Float) => write!(f, " {color}{}{color:#}", self.as_f64().unwrap()),
+            (_, _) => write!(f, " {color}{:?}{color:#}", self.0.as_slice()),
         }
     }
+}
+
+/// How the untyped constant value of a [`LiteralConst`] should be formatted
+#[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)]
+pub enum ConstFmt {
+    /// Format constant as a decimal integer
+    #[default]
+    Decimal,
+    /// **INCOMPLIANT** Format constant as a lower case hex value
+    ///
+    /// Hex values in disassembly are not supported by `spirv-as`
+    LowerHex,
+    /// **INCOMPLIANT** Format constant as an upper case hex value
+    ///
+    /// Hex values in disassembly are not supported by `spirv-as`
+    UpperHex,
+    /// Format constant as a float
+    Float,
 }

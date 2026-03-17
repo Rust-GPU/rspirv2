@@ -1,6 +1,6 @@
 use crate::Word;
 use crate::binary::{DecodeError, InstOffset, InstReader};
-use crate::dis::{DisContext, DisOptions};
+use crate::dis::{DisContext, DisOptions, InstSetDisCtx};
 use crate::inst::{InstEncoding, InstRef};
 use std::fmt::{Debug, Display, Formatter};
 use std::marker::PhantomData;
@@ -92,12 +92,6 @@ impl<ISA: InstEncoding> InstSlice<ISA> {
     pub const fn iter(&self) -> InstIter<'_, ISA> {
         InstIter::new(self)
     }
-
-    /// disassemble
-    #[inline]
-    pub fn dis(&self, opt: DisOptions) -> Result<DisInstSlice<'_, ISA>, DecodeError> {
-        DisInstSlice::new(self, opt)
-    }
 }
 
 impl<ISA: InstEncoding> Deref for InstSlice<ISA> {
@@ -117,25 +111,33 @@ impl<ISA: InstEncoding> Debug for InstSlice<ISA> {
     }
 }
 
+impl<ISA: InstSetDisCtx> InstSlice<ISA> {
+    /// disassemble
+    #[inline]
+    pub fn dis(&self, opt: DisOptions) -> DisInstSlice<'_, ISA> {
+        DisInstSlice::new(self, opt)
+    }
+}
+
 /// A sequence of words that has been pre-processed and may be [`Display`]ed.
 ///
 /// The `ISA: `[`InstEncoding`] generic determines for which instruction set these Words are disassembled.
-pub struct DisInstSlice<'a, ISA: InstEncoding> {
+pub struct DisInstSlice<'a, ISA: InstSetDisCtx> {
     slice: &'a InstSlice<ISA>,
     dis: DisContext,
 }
 
-impl<'a, ISA: InstEncoding> DisInstSlice<'a, ISA> {
+impl<'a, ISA: InstSetDisCtx> DisInstSlice<'a, ISA> {
     #[inline]
-    pub fn new(slice: &'a InstSlice<ISA>, opt: DisOptions) -> Result<Self, DecodeError> {
-        Ok(Self {
+    pub fn new(slice: &'a InstSlice<ISA>, opt: DisOptions) -> Self {
+        Self {
             slice,
-            dis: DisContext::new(opt),
-        })
+            dis: DisContext::new(opt, slice),
+        }
     }
 }
 
-impl<'a, ISA: InstEncoding> Display for DisInstSlice<'a, ISA> {
+impl<'a, ISA: InstSetDisCtx> Display for DisInstSlice<'a, ISA> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         for inst in self.slice.iter() {
             writeln!(f, "{}", inst.dis(&self.dis))?;

@@ -16,7 +16,7 @@ pub fn test_disabled_color() -> anyhow::Result<()> {
         module.dis(DisOptions {
             color: true,
             ..Default::default()
-        })?
+        })
     )?;
 
     let mut color_disabled = Vec::new();
@@ -26,7 +26,7 @@ pub fn test_disabled_color() -> anyhow::Result<()> {
         module.dis(DisOptions {
             color: false,
             ..Default::default()
-        })?
+        })
     )?;
 
     assert_eq!(
