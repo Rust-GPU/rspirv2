@@ -47,21 +47,34 @@ unsafe impl OperandEncoding for LiteralString {
     }
 
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
-        let words = self.word_len();
-        let load = |i, o| *self.0.as_bytes().get(i * 4 + o).unwrap_or(&0);
-        writer.write_iter(
-            (0..words)
-                .map(|i| Word::from_le_bytes([load(i, 0), load(i, 1), load(i, 2), load(i, 3)])),
-        );
+        let (chunks, remainder) = self.0.as_bytes().as_chunks::<4>();
+        let mut last = [0; 4];
+        last[..remainder.len()].copy_from_slice(remainder);
+        writer.write_iter(chunks.iter().copied().map(Word::from_le_bytes));
+        writer.write(Word::from_le_bytes(last));
         Ok(())
     }
 
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        let inst_offset = reader.inst_offset();
+        let mut found_null_terminator = false;
         let bytes = reader
             .flat_map(|w| w.to_le_bytes().into_iter())
-            .take_while(|p| *p != 0)
+            .take_while(|c| {
+                found_null_terminator |= *c == 0;
+                !found_null_terminator
+            })
             .collect::<Vec<_>>();
-        Ok(Self(String::from_utf8(bytes)?))
+        if found_null_terminator {
+            Ok(Self(String::from_utf8(bytes).map_err(|error| {
+                DecodeError::Utf8Error {
+                    inst_offset,
+                    error: error.utf8_error(),
+                }
+            })?))
+        } else {
+            Err(DecodeError::StringNotNulTerminated { inst_offset })
+        }
     }
 
     #[inline]
@@ -144,5 +157,41 @@ mod tests {
             ],
         )?;
         Ok(())
+    }
+
+    #[test]
+    pub fn reject_bad_str() {
+        let test = |bytes: &[[u8; 4]], str: Option<&str>| {
+            let words = bytes
+                .iter()
+                .copied()
+                .map(Word::from_le_bytes)
+                .collect::<Vec<_>>();
+            let read =
+                LiteralString::decode(&mut InstReader::new(0, words.as_slice(), 0).operand_reader())
+                    .ok();
+            assert_eq!(read.as_ref().map(|s| s.as_str()), str);
+        };
+
+        test(&[[b'a', 0, 0, 0]], Some("a"));
+        test(&[[b'a', b'b', 0, 0]], Some("ab"));
+        test(&[[b'a', b'b', b'c', 0]], Some("abc"));
+        test(&[[b'a', b'b', b'c', b'd'], [0, 0, 0, 0]], Some("abcd"));
+        test(&[[b'a', b'b', b'c', b'd'], [b'e', 0, 0, 0]], Some("abcde"));
+        test(
+            &[[b'a', b'b', b'c', b'd'], [b'e', b'f', b'g', 0]],
+            Some("abcdefg"),
+        );
+        test(
+            &[[b'a', b'b', b'c', b'd'], [b'e', b'f', b'g', b'h'], [0; 4]],
+            Some("abcdefgh"),
+        );
+
+        // missing null terminator
+        test(&[], None);
+        test(&[[b'a', b'b', b'c', b'd']], None);
+        test(&[[b'a', b'b', b'c', b'd'], [b'e', b'f', b'g', b'h']], None);
+
+        test(&[[0, 0, 0, 0]], Some(""));
     }
 }
