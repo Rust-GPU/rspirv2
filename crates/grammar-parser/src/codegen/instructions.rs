@@ -9,8 +9,15 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
     let insts = grammar.insts.iter().map(|inst| {
         let struct_ident = InstMeta::type_ident(&inst.opname);
         let meta = InstMeta::const_ident(&inst.opname);
-
         let member_operands = inst.compute_operands();
+        let id_result = member_operands
+            .iter()
+            .find(|op| op.meta.kind == OPERAND_ID_RESULT);
+        let id_result_type = member_operands
+            .iter()
+            .find(|op| op.meta.kind == OPERAND_ID_RESULT_TYPE);
+
+        // struct decl
         let member_decls = member_operands.iter().map(
             |&Operand {
                  meta,
@@ -23,16 +30,15 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             },
         );
 
-        let id_result = member_operands
-            .iter()
-            .find(|op| op.meta.kind == OPERAND_ID_RESULT);
-        let (maybe_id_result, id_result_ref) = if let Some(id_result) = id_result {
+        // id_result(&mut self) -> &mut OptionIdResult
+        let (maybe_id_result, id_result_mut_ref) = if let Some(id_result) = id_result {
             let name = &id_result.name;
             (quote!(OptionIdResult), quote!(&mut self.#name))
         } else {
             (quote!(()), quote!(make_mut_ref_unit()))
         };
 
+        // encode decode
         let members = member_operands
             .iter()
             .map(|Operand { name, .. }| name)
@@ -41,6 +47,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
         let members_last = members.last().into_iter();
         let reader = (!members.is_empty()).then(|| quote!(let mut op_reader = ));
 
+        // disassembly
         let (dis_id_result_pat, dis_id_result_value) = if let Some(id_result) = id_result {
             let name = &id_result.name;
             ("{} = ", Some(quote!(, self.#name.dis(_ctx))))
@@ -76,10 +83,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                     }),
             )
             .collect::<String>();
-        let has_rspirv_spaces = member_operands
-            .iter()
-            .any(|op| op.meta.kind == OPERAND_ID_RESULT_TYPE);
-        let rspirv_spaces_prefix = if has_rspirv_spaces {
+        let rspirv_spaces_prefix = if id_result_type.is_some() {
             quote!(let rspirv_space = _ctx.rspirv_space();)
         } else {
             quote!()
@@ -97,7 +101,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                 type MaybeIdResult = #maybe_id_result;
 
                 fn id_result(&mut self) -> &mut Self::MaybeIdResult {
-                    #id_result_ref
+                    #id_result_mut_ref
                 }
             }
 
