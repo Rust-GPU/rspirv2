@@ -1,7 +1,7 @@
 use bitflags::Flags;
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
-use std::string::FromUtf8Error;
+use std::str::Utf8Error;
 
 #[derive(Clone, PartialEq)]
 pub enum DecodeError {
@@ -45,7 +45,13 @@ pub enum DecodeError {
     InstructionZeroSized {
         inst_offset: usize,
     },
-    Utf8Error(FromUtf8Error),
+    StringNotNulTerminated {
+        inst_offset: usize,
+    },
+    Utf8Error {
+        inst_offset: usize,
+        error: Utf8Error,
+    },
     InvalidBitflags {
         name: &'static str,
         unknown: u32,
@@ -129,7 +135,14 @@ impl Display for DecodeError {
                 f,
                 "The Instruction at offset {inst_offset} has an invalid length of 0, but must at least be of length 1 to include the opcode itself."
             ),
-            DecodeError::Utf8Error(inner) => write!(f, "UTF-8 error: {inner}."),
+            DecodeError::StringNotNulTerminated { inst_offset } => write!(
+                f,
+                "The Instruction at offset {inst_offset} has a string that is not null-terminated."
+            ),
+            DecodeError::Utf8Error { inst_offset, error } => write!(
+                f,
+                "The Instruction at offset {inst_offset} has an invalid UTF-8 string: {error}"
+            ),
             DecodeError::InvalidBitflags {
                 name,
                 unknown,
@@ -152,12 +165,6 @@ impl Debug for DecodeError {
 }
 
 impl Error for DecodeError {}
-
-impl From<FromUtf8Error> for DecodeError {
-    fn from(value: FromUtf8Error) -> Self {
-        Self::Utf8Error(value)
-    }
-}
 
 impl DecodeError {
     #[inline]
