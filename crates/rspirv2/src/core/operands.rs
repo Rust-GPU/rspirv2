@@ -10,10 +10,10 @@ bitflags! {
     4096u32; #[doc = "Since SPIR-V 1.4"] const ZeroExtend = 8192u32; #[doc =
     "Since SPIR-V 1.6"] const Nontemporal = 16384u32; const Offsets = 65536u32; }
 }
-unsafe impl Operand for ImageOperands {
-    const KIND: &OperandKind = &OPERAND_KIND_IMAGE_OPERANDS;
+unsafe impl Operand<'_> for ImageOperands {
+    const KIND: &'static OperandKind = &OPERAND_KIND_IMAGE_OPERANDS;
 }
-unsafe impl OperandEncoding for ImageOperands {
+unsafe impl OperandEncoding<'_> for ImageOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -91,10 +91,10 @@ bitflags! {
     AllowRecip = 8u32; const Fast = 16u32; const AllowContract = 65536u32; const
     AllowReassoc = 131072u32; const AllowTransform = 262144u32; }
 }
-unsafe impl Operand for FPFastMathMode {
-    const KIND: &OperandKind = &OPERAND_KIND_FP_FAST_MATH_MODE;
+unsafe impl Operand<'_> for FPFastMathMode {
+    const KIND: &'static OperandKind = &OPERAND_KIND_FP_FAST_MATH_MODE;
 }
-unsafe impl OperandEncoding for FPFastMathMode {
+unsafe impl OperandEncoding<'_> for FPFastMathMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -146,10 +146,10 @@ bitflags! {
     #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct SelectionControl : u32
     { const None = 0u32; const Flatten = 1u32; const DontFlatten = 2u32; }
 }
-unsafe impl Operand for SelectionControl {
-    const KIND: &OperandKind = &OPERAND_KIND_SELECTION_CONTROL;
+unsafe impl Operand<'_> for SelectionControl {
+    const KIND: &'static OperandKind = &OPERAND_KIND_SELECTION_CONTROL;
 }
-unsafe impl OperandEncoding for SelectionControl {
+unsafe impl OperandEncoding<'_> for SelectionControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -194,10 +194,10 @@ bitflags! {
     const LoopCountALTERA = 16777216u32; const MaxReinvocationDelayALTERA = 33554432u32;
     }
 }
-unsafe impl Operand for LoopControl {
-    const KIND: &OperandKind = &OPERAND_KIND_LOOP_CONTROL;
+unsafe impl Operand<'_> for LoopControl {
+    const KIND: &'static OperandKind = &OPERAND_KIND_LOOP_CONTROL;
 }
-unsafe impl OperandEncoding for LoopControl {
+unsafe impl OperandEncoding<'_> for LoopControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -283,10 +283,10 @@ bitflags! {
     const None = 0u32; const Inline = 1u32; const DontInline = 2u32; const Pure = 4u32;
     const Const = 8u32; const OptNoneEXT = 65536u32; }
 }
-unsafe impl Operand for FunctionControl {
-    const KIND: &OperandKind = &OPERAND_KIND_FUNCTION_CONTROL;
+unsafe impl Operand<'_> for FunctionControl {
+    const KIND: &'static OperandKind = &OPERAND_KIND_FUNCTION_CONTROL;
 }
-unsafe impl OperandEncoding for FunctionControl {
+unsafe impl OperandEncoding<'_> for FunctionControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -335,10 +335,10 @@ bitflags! {
     "Since SPIR-V 1.5"] const MakeAvailable = 8192u32; #[doc = "Since SPIR-V 1.5"] const
     MakeVisible = 16384u32; #[doc = "Since SPIR-V 1.5"] const Volatile = 32768u32; }
 }
-unsafe impl Operand for MemorySemantics {
-    const KIND: &OperandKind = &OPERAND_KIND_MEMORY_SEMANTICS;
+unsafe impl Operand<'_> for MemorySemantics {
+    const KIND: &'static OperandKind = &OPERAND_KIND_MEMORY_SEMANTICS;
 }
-unsafe impl OperandEncoding for MemorySemantics {
+unsafe impl OperandEncoding<'_> for MemorySemantics {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -412,10 +412,10 @@ bitflags! {
     const NonPrivatePointer = 32u32; const AliasScopeINTELMask = 65536u32; const
     NoAliasINTELMask = 131072u32; }
 }
-unsafe impl Operand for MemoryAccess {
-    const KIND: &OperandKind = &OPERAND_KIND_MEMORY_ACCESS;
+unsafe impl Operand<'_> for MemoryAccess {
+    const KIND: &'static OperandKind = &OPERAND_KIND_MEMORY_ACCESS;
 }
-unsafe impl OperandEncoding for MemoryAccess {
+unsafe impl OperandEncoding<'_> for MemoryAccess {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -467,10 +467,10 @@ bitflags! {
     #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct KernelProfilingInfo :
     u32 { const None = 0u32; const CmdExecTime = 1u32; }
 }
-unsafe impl Operand for KernelProfilingInfo {
-    const KIND: &OperandKind = &OPERAND_KIND_KERNEL_PROFILING_INFO;
+unsafe impl Operand<'_> for KernelProfilingInfo {
+    const KIND: &'static OperandKind = &OPERAND_KIND_KERNEL_PROFILING_INFO;
 }
-unsafe impl OperandEncoding for KernelProfilingInfo {
+unsafe impl OperandEncoding<'_> for KernelProfilingInfo {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -505,10 +505,10 @@ bitflags! {
     CullOpaqueKHR = 64u32; const CullNoOpaqueKHR = 128u32; const SkipTrianglesKHR =
     256u32; const SkipAABBsKHR = 512u32; const ForceOpacityMicromap2StateEXT = 1024u32; }
 }
-unsafe impl Operand for RayFlags {
-    const KIND: &OperandKind = &OPERAND_KIND_RAY_FLAGS;
+unsafe impl Operand<'_> for RayFlags {
+    const KIND: &'static OperandKind = &OPERAND_KIND_RAY_FLAGS;
 }
-unsafe impl OperandEncoding for RayFlags {
+unsafe impl OperandEncoding<'_> for RayFlags {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -570,10 +570,10 @@ bitflags! {
     u32 { const Vertical2Pixels = 1u32; const Vertical4Pixels = 2u32; const
     Horizontal2Pixels = 4u32; const Horizontal4Pixels = 8u32; }
 }
-unsafe impl Operand for FragmentShadingRate {
-    const KIND: &OperandKind = &OPERAND_KIND_FRAGMENT_SHADING_RATE;
+unsafe impl Operand<'_> for FragmentShadingRate {
+    const KIND: &'static OperandKind = &OPERAND_KIND_FRAGMENT_SHADING_RATE;
 }
-unsafe impl OperandEncoding for FragmentShadingRate {
+unsafe impl OperandEncoding<'_> for FragmentShadingRate {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -614,10 +614,10 @@ bitflags! {
     : u32 { const None = 0u32; const RobustnessPerComponentNV = 1u32; const
     RobustnessPerElementNV = 2u32; }
 }
-unsafe impl Operand for RawAccessChainOperands {
-    const KIND: &OperandKind = &OPERAND_KIND_RAW_ACCESS_CHAIN_OPERANDS;
+unsafe impl Operand<'_> for RawAccessChainOperands {
+    const KIND: &'static OperandKind = &OPERAND_KIND_RAW_ACCESS_CHAIN_OPERANDS;
 }
-unsafe impl OperandEncoding for RawAccessChainOperands {
+unsafe impl OperandEncoding<'_> for RawAccessChainOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -669,10 +669,10 @@ pub enum SourceLanguage {
 unsafe impl bytemuck::Zeroable for SourceLanguage {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for SourceLanguage {}
-unsafe impl Operand for SourceLanguage {
-    const KIND: &OperandKind = &OPERAND_KIND_SOURCE_LANGUAGE;
+unsafe impl Operand<'_> for SourceLanguage {
+    const KIND: &'static OperandKind = &OPERAND_KIND_SOURCE_LANGUAGE;
 }
-unsafe impl OperandEncoding for SourceLanguage {
+unsafe impl OperandEncoding<'_> for SourceLanguage {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -748,10 +748,10 @@ pub enum ExecutionModel {
 unsafe impl bytemuck::Zeroable for ExecutionModel {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for ExecutionModel {}
-unsafe impl Operand for ExecutionModel {
-    const KIND: &OperandKind = &OPERAND_KIND_EXECUTION_MODEL;
+unsafe impl Operand<'_> for ExecutionModel {
+    const KIND: &'static OperandKind = &OPERAND_KIND_EXECUTION_MODEL;
 }
-unsafe impl OperandEncoding for ExecutionModel {
+unsafe impl OperandEncoding<'_> for ExecutionModel {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -821,10 +821,10 @@ pub enum AddressingModel {
 unsafe impl bytemuck::Zeroable for AddressingModel {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for AddressingModel {}
-unsafe impl Operand for AddressingModel {
-    const KIND: &OperandKind = &OPERAND_KIND_ADDRESSING_MODEL;
+unsafe impl Operand<'_> for AddressingModel {
+    const KIND: &'static OperandKind = &OPERAND_KIND_ADDRESSING_MODEL;
 }
-unsafe impl OperandEncoding for AddressingModel {
+unsafe impl OperandEncoding<'_> for AddressingModel {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -868,10 +868,10 @@ pub enum MemoryModel {
 unsafe impl bytemuck::Zeroable for MemoryModel {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for MemoryModel {}
-unsafe impl Operand for MemoryModel {
-    const KIND: &OperandKind = &OPERAND_KIND_MEMORY_MODEL;
+unsafe impl Operand<'_> for MemoryModel {
+    const KIND: &'static OperandKind = &OPERAND_KIND_MEMORY_MODEL;
 }
-unsafe impl OperandEncoding for MemoryModel {
+unsafe impl OperandEncoding<'_> for MemoryModel {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -1167,10 +1167,10 @@ pub enum ExecutionMode {
         NamedMaximumNumberOfRegisters,
     ),
 }
-unsafe impl Operand for ExecutionMode {
-    const KIND: &OperandKind = &OPERAND_KIND_EXECUTION_MODE;
+unsafe impl Operand<'_> for ExecutionMode {
+    const KIND: &'static OperandKind = &OPERAND_KIND_EXECUTION_MODE;
 }
-unsafe impl OperandEncoding for ExecutionMode {
+unsafe impl OperandEncoding<'_> for ExecutionMode {
     const FIXED_LEN: Option<usize> = None;
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         match self {
@@ -1824,10 +1824,10 @@ pub enum StorageClass {
 unsafe impl bytemuck::Zeroable for StorageClass {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for StorageClass {}
-unsafe impl Operand for StorageClass {
-    const KIND: &OperandKind = &OPERAND_KIND_STORAGE_CLASS;
+unsafe impl Operand<'_> for StorageClass {
+    const KIND: &'static OperandKind = &OPERAND_KIND_STORAGE_CLASS;
 }
-unsafe impl OperandEncoding for StorageClass {
+unsafe impl OperandEncoding<'_> for StorageClass {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -1924,10 +1924,10 @@ pub enum Dim {
 unsafe impl bytemuck::Zeroable for Dim {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for Dim {}
-unsafe impl Operand for Dim {
-    const KIND: &OperandKind = &OPERAND_KIND_DIM;
+unsafe impl Operand<'_> for Dim {
+    const KIND: &'static OperandKind = &OPERAND_KIND_DIM;
 }
-unsafe impl OperandEncoding for Dim {
+unsafe impl OperandEncoding<'_> for Dim {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -1979,10 +1979,10 @@ pub enum SamplerAddressingMode {
 unsafe impl bytemuck::Zeroable for SamplerAddressingMode {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for SamplerAddressingMode {}
-unsafe impl Operand for SamplerAddressingMode {
-    const KIND: &OperandKind = &OPERAND_KIND_SAMPLER_ADDRESSING_MODE;
+unsafe impl Operand<'_> for SamplerAddressingMode {
+    const KIND: &'static OperandKind = &OPERAND_KIND_SAMPLER_ADDRESSING_MODE;
 }
-unsafe impl OperandEncoding for SamplerAddressingMode {
+unsafe impl OperandEncoding<'_> for SamplerAddressingMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -2025,10 +2025,10 @@ pub enum SamplerFilterMode {
 unsafe impl bytemuck::Zeroable for SamplerFilterMode {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for SamplerFilterMode {}
-unsafe impl Operand for SamplerFilterMode {
-    const KIND: &OperandKind = &OPERAND_KIND_SAMPLER_FILTER_MODE;
+unsafe impl Operand<'_> for SamplerFilterMode {
+    const KIND: &'static OperandKind = &OPERAND_KIND_SAMPLER_FILTER_MODE;
 }
-unsafe impl OperandEncoding for SamplerFilterMode {
+unsafe impl OperandEncoding<'_> for SamplerFilterMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -2105,10 +2105,10 @@ pub enum ImageFormat {
 unsafe impl bytemuck::Zeroable for ImageFormat {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for ImageFormat {}
-unsafe impl Operand for ImageFormat {
-    const KIND: &OperandKind = &OPERAND_KIND_IMAGE_FORMAT;
+unsafe impl Operand<'_> for ImageFormat {
+    const KIND: &'static OperandKind = &OPERAND_KIND_IMAGE_FORMAT;
 }
-unsafe impl OperandEncoding for ImageFormat {
+unsafe impl OperandEncoding<'_> for ImageFormat {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -2243,10 +2243,10 @@ pub enum ImageChannelOrder {
 unsafe impl bytemuck::Zeroable for ImageChannelOrder {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for ImageChannelOrder {}
-unsafe impl Operand for ImageChannelOrder {
-    const KIND: &OperandKind = &OPERAND_KIND_IMAGE_CHANNEL_ORDER;
+unsafe impl Operand<'_> for ImageChannelOrder {
+    const KIND: &'static OperandKind = &OPERAND_KIND_IMAGE_CHANNEL_ORDER;
 }
-unsafe impl OperandEncoding for ImageChannelOrder {
+unsafe impl OperandEncoding<'_> for ImageChannelOrder {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -2343,10 +2343,10 @@ pub enum ImageChannelDataType {
 unsafe impl bytemuck::Zeroable for ImageChannelDataType {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for ImageChannelDataType {}
-unsafe impl Operand for ImageChannelDataType {
-    const KIND: &OperandKind = &OPERAND_KIND_IMAGE_CHANNEL_DATA_TYPE;
+unsafe impl Operand<'_> for ImageChannelDataType {
+    const KIND: &'static OperandKind = &OPERAND_KIND_IMAGE_CHANNEL_DATA_TYPE;
 }
-unsafe impl OperandEncoding for ImageChannelDataType {
+unsafe impl OperandEncoding<'_> for ImageChannelDataType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -2433,10 +2433,10 @@ pub enum FPRoundingMode {
 unsafe impl bytemuck::Zeroable for FPRoundingMode {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for FPRoundingMode {}
-unsafe impl Operand for FPRoundingMode {
-    const KIND: &OperandKind = &OPERAND_KIND_FP_ROUNDING_MODE;
+unsafe impl Operand<'_> for FPRoundingMode {
+    const KIND: &'static OperandKind = &OPERAND_KIND_FP_ROUNDING_MODE;
 }
-unsafe impl OperandEncoding for FPRoundingMode {
+unsafe impl OperandEncoding<'_> for FPRoundingMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -2477,10 +2477,10 @@ pub enum FPDenormMode {
 unsafe impl bytemuck::Zeroable for FPDenormMode {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for FPDenormMode {}
-unsafe impl Operand for FPDenormMode {
-    const KIND: &OperandKind = &OPERAND_KIND_FP_DENORM_MODE;
+unsafe impl Operand<'_> for FPDenormMode {
+    const KIND: &'static OperandKind = &OPERAND_KIND_FP_DENORM_MODE;
 }
-unsafe impl OperandEncoding for FPDenormMode {
+unsafe impl OperandEncoding<'_> for FPDenormMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -2523,10 +2523,10 @@ pub enum QuantizationModes {
 unsafe impl bytemuck::Zeroable for QuantizationModes {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for QuantizationModes {}
-unsafe impl Operand for QuantizationModes {
-    const KIND: &OperandKind = &OPERAND_KIND_QUANTIZATION_MODES;
+unsafe impl Operand<'_> for QuantizationModes {
+    const KIND: &'static OperandKind = &OPERAND_KIND_QUANTIZATION_MODES;
 }
-unsafe impl OperandEncoding for QuantizationModes {
+unsafe impl OperandEncoding<'_> for QuantizationModes {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -2575,10 +2575,10 @@ pub enum FPOperationMode {
 unsafe impl bytemuck::Zeroable for FPOperationMode {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for FPOperationMode {}
-unsafe impl Operand for FPOperationMode {
-    const KIND: &OperandKind = &OPERAND_KIND_FP_OPERATION_MODE;
+unsafe impl Operand<'_> for FPOperationMode {
+    const KIND: &'static OperandKind = &OPERAND_KIND_FP_OPERATION_MODE;
 }
-unsafe impl OperandEncoding for FPOperationMode {
+unsafe impl OperandEncoding<'_> for FPOperationMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -2617,10 +2617,10 @@ pub enum OverflowModes {
 unsafe impl bytemuck::Zeroable for OverflowModes {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for OverflowModes {}
-unsafe impl Operand for OverflowModes {
-    const KIND: &OperandKind = &OPERAND_KIND_OVERFLOW_MODES;
+unsafe impl Operand<'_> for OverflowModes {
+    const KIND: &'static OperandKind = &OPERAND_KIND_OVERFLOW_MODES;
 }
-unsafe impl OperandEncoding for OverflowModes {
+unsafe impl OperandEncoding<'_> for OverflowModes {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -2662,10 +2662,10 @@ pub enum LinkageType {
 unsafe impl bytemuck::Zeroable for LinkageType {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for LinkageType {}
-unsafe impl Operand for LinkageType {
-    const KIND: &OperandKind = &OPERAND_KIND_LINKAGE_TYPE;
+unsafe impl Operand<'_> for LinkageType {
+    const KIND: &'static OperandKind = &OPERAND_KIND_LINKAGE_TYPE;
 }
-unsafe impl OperandEncoding for LinkageType {
+unsafe impl OperandEncoding<'_> for LinkageType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -2705,10 +2705,10 @@ pub enum AccessQualifier {
 unsafe impl bytemuck::Zeroable for AccessQualifier {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for AccessQualifier {}
-unsafe impl Operand for AccessQualifier {
-    const KIND: &OperandKind = &OPERAND_KIND_ACCESS_QUALIFIER;
+unsafe impl Operand<'_> for AccessQualifier {
+    const KIND: &'static OperandKind = &OPERAND_KIND_ACCESS_QUALIFIER;
 }
-unsafe impl OperandEncoding for AccessQualifier {
+unsafe impl OperandEncoding<'_> for AccessQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -2749,10 +2749,10 @@ pub enum HostAccessQualifier {
 unsafe impl bytemuck::Zeroable for HostAccessQualifier {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for HostAccessQualifier {}
-unsafe impl Operand for HostAccessQualifier {
-    const KIND: &OperandKind = &OPERAND_KIND_HOST_ACCESS_QUALIFIER;
+unsafe impl Operand<'_> for HostAccessQualifier {
+    const KIND: &'static OperandKind = &OPERAND_KIND_HOST_ACCESS_QUALIFIER;
 }
-unsafe impl OperandEncoding for HostAccessQualifier {
+unsafe impl OperandEncoding<'_> for HostAccessQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -2800,10 +2800,10 @@ pub enum FunctionParameterAttribute {
 unsafe impl bytemuck::Zeroable for FunctionParameterAttribute {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for FunctionParameterAttribute {}
-unsafe impl Operand for FunctionParameterAttribute {
-    const KIND: &OperandKind = &OPERAND_KIND_FUNCTION_PARAMETER_ATTRIBUTE;
+unsafe impl Operand<'_> for FunctionParameterAttribute {
+    const KIND: &'static OperandKind = &OPERAND_KIND_FUNCTION_PARAMETER_ATTRIBUTE;
 }
-unsafe impl OperandEncoding for FunctionParameterAttribute {
+unsafe impl OperandEncoding<'_> for FunctionParameterAttribute {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -3262,10 +3262,10 @@ pub enum Decoration {
         StoreCacheControl,
     ),
 }
-unsafe impl Operand for Decoration {
-    const KIND: &OperandKind = &OPERAND_KIND_DECORATION;
+unsafe impl Operand<'_> for Decoration {
+    const KIND: &'static OperandKind = &OPERAND_KIND_DECORATION;
 }
-unsafe impl OperandEncoding for Decoration {
+unsafe impl OperandEncoding<'_> for Decoration {
     const FIXED_LEN: Option<usize> = None;
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         match self {
@@ -4275,10 +4275,10 @@ pub enum BuiltIn {
 unsafe impl bytemuck::Zeroable for BuiltIn {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for BuiltIn {}
-unsafe impl Operand for BuiltIn {
-    const KIND: &OperandKind = &OPERAND_KIND_BUILT_IN;
+unsafe impl Operand<'_> for BuiltIn {
+    const KIND: &'static OperandKind = &OPERAND_KIND_BUILT_IN;
 }
-unsafe impl OperandEncoding for BuiltIn {
+unsafe impl OperandEncoding<'_> for BuiltIn {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -4589,10 +4589,10 @@ pub enum Scope {
 unsafe impl bytemuck::Zeroable for Scope {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for Scope {}
-unsafe impl Operand for Scope {
-    const KIND: &OperandKind = &OPERAND_KIND_SCOPE;
+unsafe impl Operand<'_> for Scope {
+    const KIND: &'static OperandKind = &OPERAND_KIND_SCOPE;
 }
-unsafe impl OperandEncoding for Scope {
+unsafe impl OperandEncoding<'_> for Scope {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -4645,10 +4645,10 @@ pub enum GroupOperation {
 unsafe impl bytemuck::Zeroable for GroupOperation {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for GroupOperation {}
-unsafe impl Operand for GroupOperation {
-    const KIND: &OperandKind = &OPERAND_KIND_GROUP_OPERATION;
+unsafe impl Operand<'_> for GroupOperation {
+    const KIND: &'static OperandKind = &OPERAND_KIND_GROUP_OPERATION;
 }
-unsafe impl OperandEncoding for GroupOperation {
+unsafe impl OperandEncoding<'_> for GroupOperation {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -4700,10 +4700,10 @@ pub enum KernelEnqueueFlags {
 unsafe impl bytemuck::Zeroable for KernelEnqueueFlags {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for KernelEnqueueFlags {}
-unsafe impl Operand for KernelEnqueueFlags {
-    const KIND: &OperandKind = &OPERAND_KIND_KERNEL_ENQUEUE_FLAGS;
+unsafe impl Operand<'_> for KernelEnqueueFlags {
+    const KIND: &'static OperandKind = &OPERAND_KIND_KERNEL_ENQUEUE_FLAGS;
 }
-unsafe impl OperandEncoding for KernelEnqueueFlags {
+unsafe impl OperandEncoding<'_> for KernelEnqueueFlags {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -5071,10 +5071,10 @@ pub enum Capability {
 unsafe impl bytemuck::Zeroable for Capability {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for Capability {}
-unsafe impl Operand for Capability {
-    const KIND: &OperandKind = &OPERAND_KIND_CAPABILITY;
+unsafe impl Operand<'_> for Capability {
+    const KIND: &'static OperandKind = &OPERAND_KIND_CAPABILITY;
 }
-unsafe impl OperandEncoding for Capability {
+unsafe impl OperandEncoding<'_> for Capability {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -5825,10 +5825,10 @@ pub enum RayQueryIntersection {
 unsafe impl bytemuck::Zeroable for RayQueryIntersection {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for RayQueryIntersection {}
-unsafe impl Operand for RayQueryIntersection {
-    const KIND: &OperandKind = &OPERAND_KIND_RAY_QUERY_INTERSECTION;
+unsafe impl Operand<'_> for RayQueryIntersection {
+    const KIND: &'static OperandKind = &OPERAND_KIND_RAY_QUERY_INTERSECTION;
 }
-unsafe impl OperandEncoding for RayQueryIntersection {
+unsafe impl OperandEncoding<'_> for RayQueryIntersection {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -5870,10 +5870,10 @@ pub enum RayQueryCommittedIntersectionType {
 unsafe impl bytemuck::Zeroable for RayQueryCommittedIntersectionType {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for RayQueryCommittedIntersectionType {}
-unsafe impl Operand for RayQueryCommittedIntersectionType {
-    const KIND: &OperandKind = &OPERAND_KIND_RAY_QUERY_COMMITTED_INTERSECTION_TYPE;
+unsafe impl Operand<'_> for RayQueryCommittedIntersectionType {
+    const KIND: &'static OperandKind = &OPERAND_KIND_RAY_QUERY_COMMITTED_INTERSECTION_TYPE;
 }
-unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
+unsafe impl OperandEncoding<'_> for RayQueryCommittedIntersectionType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -5918,10 +5918,10 @@ pub enum RayQueryCandidateIntersectionType {
 unsafe impl bytemuck::Zeroable for RayQueryCandidateIntersectionType {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for RayQueryCandidateIntersectionType {}
-unsafe impl Operand for RayQueryCandidateIntersectionType {
-    const KIND: &OperandKind = &OPERAND_KIND_RAY_QUERY_CANDIDATE_INTERSECTION_TYPE;
+unsafe impl Operand<'_> for RayQueryCandidateIntersectionType {
+    const KIND: &'static OperandKind = &OPERAND_KIND_RAY_QUERY_CANDIDATE_INTERSECTION_TYPE;
 }
-unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
+unsafe impl OperandEncoding<'_> for RayQueryCandidateIntersectionType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -5962,10 +5962,10 @@ pub enum PackedVectorFormat {
 unsafe impl bytemuck::Zeroable for PackedVectorFormat {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for PackedVectorFormat {}
-unsafe impl Operand for PackedVectorFormat {
-    const KIND: &OperandKind = &OPERAND_KIND_PACKED_VECTOR_FORMAT;
+unsafe impl Operand<'_> for PackedVectorFormat {
+    const KIND: &'static OperandKind = &OPERAND_KIND_PACKED_VECTOR_FORMAT;
 }
-unsafe impl OperandEncoding for PackedVectorFormat {
+unsafe impl OperandEncoding<'_> for PackedVectorFormat {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -5997,10 +5997,10 @@ bitflags! {
     MatrixCSignedComponentsKHR = 4u32; const MatrixResultSignedComponentsKHR = 8u32;
     const SaturatingAccumulationKHR = 16u32; }
 }
-unsafe impl Operand for CooperativeMatrixOperands {
-    const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_OPERANDS;
+unsafe impl Operand<'_> for CooperativeMatrixOperands {
+    const KIND: &'static OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_OPERANDS;
 }
-unsafe impl OperandEncoding for CooperativeMatrixOperands {
+unsafe impl OperandEncoding<'_> for CooperativeMatrixOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -6051,10 +6051,10 @@ pub enum CooperativeMatrixLayout {
 unsafe impl bytemuck::Zeroable for CooperativeMatrixLayout {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for CooperativeMatrixLayout {}
-unsafe impl Operand for CooperativeMatrixLayout {
-    const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_LAYOUT;
+unsafe impl Operand<'_> for CooperativeMatrixLayout {
+    const KIND: &'static OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_LAYOUT;
 }
-unsafe impl OperandEncoding for CooperativeMatrixLayout {
+unsafe impl OperandEncoding<'_> for CooperativeMatrixLayout {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -6098,10 +6098,10 @@ pub enum CooperativeMatrixUse {
 unsafe impl bytemuck::Zeroable for CooperativeMatrixUse {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for CooperativeMatrixUse {}
-unsafe impl Operand for CooperativeMatrixUse {
-    const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_USE;
+unsafe impl Operand<'_> for CooperativeMatrixUse {
+    const KIND: &'static OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_USE;
 }
-unsafe impl OperandEncoding for CooperativeMatrixUse {
+unsafe impl OperandEncoding<'_> for CooperativeMatrixUse {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -6134,10 +6134,10 @@ bitflags! {
     #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct CooperativeMatrixReduce
     : u32 { const Row = 1u32; const Column = 2u32; const TwoByTwo = 4u32; }
 }
-unsafe impl Operand for CooperativeMatrixReduce {
-    const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_REDUCE;
+unsafe impl Operand<'_> for CooperativeMatrixReduce {
+    const KIND: &'static OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_REDUCE;
 }
-unsafe impl OperandEncoding for CooperativeMatrixReduce {
+unsafe impl OperandEncoding<'_> for CooperativeMatrixReduce {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -6183,10 +6183,10 @@ pub enum TensorClampMode {
 unsafe impl bytemuck::Zeroable for TensorClampMode {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for TensorClampMode {}
-unsafe impl Operand for TensorClampMode {
-    const KIND: &OperandKind = &OPERAND_KIND_TENSOR_CLAMP_MODE;
+unsafe impl Operand<'_> for TensorClampMode {
+    const KIND: &'static OperandKind = &OPERAND_KIND_TENSOR_CLAMP_MODE;
 }
-unsafe impl OperandEncoding for TensorClampMode {
+unsafe impl OperandEncoding<'_> for TensorClampMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -6224,10 +6224,10 @@ bitflags! {
     TensorAddressingOperands : u32 { const None = 0u32; const TensorView = 1u32; const
     DecodeFunc = 2u32; }
 }
-unsafe impl Operand for TensorAddressingOperands {
-    const KIND: &OperandKind = &OPERAND_KIND_TENSOR_ADDRESSING_OPERANDS;
+unsafe impl Operand<'_> for TensorAddressingOperands {
+    const KIND: &'static OperandKind = &OPERAND_KIND_TENSOR_ADDRESSING_OPERANDS;
 }
-unsafe impl OperandEncoding for TensorAddressingOperands {
+unsafe impl OperandEncoding<'_> for TensorAddressingOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -6267,10 +6267,10 @@ pub enum InitializationModeQualifier {
 unsafe impl bytemuck::Zeroable for InitializationModeQualifier {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for InitializationModeQualifier {}
-unsafe impl Operand for InitializationModeQualifier {
-    const KIND: &OperandKind = &OPERAND_KIND_INITIALIZATION_MODE_QUALIFIER;
+unsafe impl Operand<'_> for InitializationModeQualifier {
+    const KIND: &'static OperandKind = &OPERAND_KIND_INITIALIZATION_MODE_QUALIFIER;
 }
-unsafe impl OperandEncoding for InitializationModeQualifier {
+unsafe impl OperandEncoding<'_> for InitializationModeQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -6312,10 +6312,10 @@ pub enum LoadCacheControl {
 unsafe impl bytemuck::Zeroable for LoadCacheControl {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for LoadCacheControl {}
-unsafe impl Operand for LoadCacheControl {
-    const KIND: &OperandKind = &OPERAND_KIND_LOAD_CACHE_CONTROL;
+unsafe impl Operand<'_> for LoadCacheControl {
+    const KIND: &'static OperandKind = &OPERAND_KIND_LOAD_CACHE_CONTROL;
 }
-unsafe impl OperandEncoding for LoadCacheControl {
+unsafe impl OperandEncoding<'_> for LoadCacheControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -6360,10 +6360,10 @@ pub enum StoreCacheControl {
 unsafe impl bytemuck::Zeroable for StoreCacheControl {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for StoreCacheControl {}
-unsafe impl Operand for StoreCacheControl {
-    const KIND: &OperandKind = &OPERAND_KIND_STORE_CACHE_CONTROL;
+unsafe impl Operand<'_> for StoreCacheControl {
+    const KIND: &'static OperandKind = &OPERAND_KIND_STORE_CACHE_CONTROL;
 }
-unsafe impl OperandEncoding for StoreCacheControl {
+unsafe impl OperandEncoding<'_> for StoreCacheControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -6403,10 +6403,10 @@ pub enum NamedMaximumNumberOfRegisters {
 unsafe impl bytemuck::Zeroable for NamedMaximumNumberOfRegisters {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for NamedMaximumNumberOfRegisters {}
-unsafe impl Operand for NamedMaximumNumberOfRegisters {
-    const KIND: &OperandKind = &OPERAND_KIND_NAMED_MAXIMUM_NUMBER_OF_REGISTERS;
+unsafe impl Operand<'_> for NamedMaximumNumberOfRegisters {
+    const KIND: &'static OperandKind = &OPERAND_KIND_NAMED_MAXIMUM_NUMBER_OF_REGISTERS;
 }
-unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
+unsafe impl OperandEncoding<'_> for NamedMaximumNumberOfRegisters {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -6442,10 +6442,10 @@ bitflags! {
     MatrixAPackedFloat16INTEL = 1024u32; const MatrixBPackedFloat16INTEL = 2048u32; const
     MatrixAPackedBFloat16INTEL = 4096u32; const MatrixBPackedBFloat16INTEL = 8192u32; }
 }
-unsafe impl Operand for MatrixMultiplyAccumulateOperands {
-    const KIND: &OperandKind = &OPERAND_KIND_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS;
+unsafe impl Operand<'_> for MatrixMultiplyAccumulateOperands {
+    const KIND: &'static OperandKind = &OPERAND_KIND_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS;
 }
-unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
+unsafe impl OperandEncoding<'_> for MatrixMultiplyAccumulateOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -6521,10 +6521,10 @@ pub enum FPEncoding {
 unsafe impl bytemuck::Zeroable for FPEncoding {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for FPEncoding {}
-unsafe impl Operand for FPEncoding {
-    const KIND: &OperandKind = &OPERAND_KIND_FP_ENCODING;
+unsafe impl Operand<'_> for FPEncoding {
+    const KIND: &'static OperandKind = &OPERAND_KIND_FP_ENCODING;
 }
-unsafe impl OperandEncoding for FPEncoding {
+unsafe impl OperandEncoding<'_> for FPEncoding {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -6565,10 +6565,10 @@ pub enum CooperativeVectorMatrixLayout {
 unsafe impl bytemuck::Zeroable for CooperativeVectorMatrixLayout {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for CooperativeVectorMatrixLayout {}
-unsafe impl Operand for CooperativeVectorMatrixLayout {
-    const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_VECTOR_MATRIX_LAYOUT;
+unsafe impl Operand<'_> for CooperativeVectorMatrixLayout {
+    const KIND: &'static OperandKind = &OPERAND_KIND_COOPERATIVE_VECTOR_MATRIX_LAYOUT;
 }
-unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
+unsafe impl OperandEncoding<'_> for CooperativeVectorMatrixLayout {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -6622,10 +6622,10 @@ pub enum ComponentType {
 unsafe impl bytemuck::Zeroable for ComponentType {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for ComponentType {}
-unsafe impl Operand for ComponentType {
-    const KIND: &OperandKind = &OPERAND_KIND_COMPONENT_TYPE;
+unsafe impl Operand<'_> for ComponentType {
+    const KIND: &'static OperandKind = &OPERAND_KIND_COMPONENT_TYPE;
 }
-unsafe impl OperandEncoding for ComponentType {
+unsafe impl OperandEncoding<'_> for ComponentType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(*self as u32));
@@ -6680,10 +6680,10 @@ unsafe impl OperandEncoding for ComponentType {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PairLiteralIntegerIdRef(pub LiteralInteger, pub IdRef);
-unsafe impl Operand for PairLiteralIntegerIdRef {
-    const KIND: &OperandKind = &OPERAND_KIND_PAIR_LITERAL_INTEGER_ID_REF;
+unsafe impl Operand<'_> for PairLiteralIntegerIdRef {
+    const KIND: &'static OperandKind = &OPERAND_KIND_PAIR_LITERAL_INTEGER_ID_REF;
 }
-unsafe impl OperandEncoding for PairLiteralIntegerIdRef {
+unsafe impl OperandEncoding<'_> for PairLiteralIntegerIdRef {
     const FIXED_LEN: Option<usize> = FixedLenComposer::new()
         .append(<LiteralInteger as OperandEncoding>::FIXED_LEN)
         .append(<IdRef as OperandEncoding>::FIXED_LEN)
@@ -6711,10 +6711,10 @@ unsafe impl OperandEncoding for PairLiteralIntegerIdRef {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PairIdRefLiteralInteger(pub IdRef, pub LiteralInteger);
-unsafe impl Operand for PairIdRefLiteralInteger {
-    const KIND: &OperandKind = &OPERAND_KIND_PAIR_ID_REF_LITERAL_INTEGER;
+unsafe impl Operand<'_> for PairIdRefLiteralInteger {
+    const KIND: &'static OperandKind = &OPERAND_KIND_PAIR_ID_REF_LITERAL_INTEGER;
 }
-unsafe impl OperandEncoding for PairIdRefLiteralInteger {
+unsafe impl OperandEncoding<'_> for PairIdRefLiteralInteger {
     const FIXED_LEN: Option<usize> = FixedLenComposer::new()
         .append(<IdRef as OperandEncoding>::FIXED_LEN)
         .append(<LiteralInteger as OperandEncoding>::FIXED_LEN)
@@ -6742,10 +6742,10 @@ unsafe impl OperandEncoding for PairIdRefLiteralInteger {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct PairIdRefIdRef(pub IdRef, pub IdRef);
-unsafe impl Operand for PairIdRefIdRef {
-    const KIND: &OperandKind = &OPERAND_KIND_PAIR_ID_REF_ID_REF;
+unsafe impl Operand<'_> for PairIdRefIdRef {
+    const KIND: &'static OperandKind = &OPERAND_KIND_PAIR_ID_REF_ID_REF;
 }
-unsafe impl OperandEncoding for PairIdRefIdRef {
+unsafe impl OperandEncoding<'_> for PairIdRefIdRef {
     const FIXED_LEN: Option<usize> = FixedLenComposer::new()
         .append(<IdRef as OperandEncoding>::FIXED_LEN)
         .append(<IdRef as OperandEncoding>::FIXED_LEN)
@@ -6777,10 +6777,10 @@ bitflags! {
     const MakeElementAvailableARM = 4u32; const MakeElementVisibleARM = 8u32; const
     NonPrivateElementARM = 16u32; }
 }
-unsafe impl Operand for TensorOperands {
-    const KIND: &OperandKind = &OPERAND_KIND_TENSOR_OPERANDS;
+unsafe impl Operand<'_> for TensorOperands {
+    const KIND: &'static OperandKind = &OPERAND_KIND_TENSOR_OPERANDS;
 }
-unsafe impl OperandEncoding for TensorOperands {
+unsafe impl OperandEncoding<'_> for TensorOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));

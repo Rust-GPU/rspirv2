@@ -121,11 +121,11 @@ fn emit_rust_like_enum(
             #(#variants),*
         }
 
-        unsafe impl Operand for #name {
-            const KIND: &OperandKind = &#kind;
+        unsafe impl Operand<'_> for #name {
+            const KIND: &'static OperandKind = &#kind;
         }
 
-        unsafe impl OperandEncoding for #name {
+        unsafe impl OperandEncoding<'_> for #name {
             const FIXED_LEN: Option<usize> = None;
 
             fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -195,11 +195,11 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
         #[cfg(feature = "bytemuck")]
         unsafe impl bytemuck::Pod for #name {}
 
-        unsafe impl Operand for #name {
-            const KIND: &OperandKind = &#kind;
+        unsafe impl Operand<'_> for #name {
+            const KIND: &'static OperandKind = &#kind;
         }
 
-        unsafe impl OperandEncoding for #name {
+        unsafe impl OperandEncoding<'_> for #name {
             const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl WordWriter)  -> Result<(), EncodeError>{
@@ -280,11 +280,11 @@ fn emit_bitflags_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_
             }
         }
 
-        unsafe impl Operand for #name {
-            const KIND: &OperandKind = &#kind;
+        unsafe impl Operand<'_> for #name {
+            const KIND: &'static OperandKind = &#kind;
         }
 
-        unsafe impl OperandEncoding for #name {
+        unsafe impl OperandEncoding<'_> for #name {
             const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -340,11 +340,11 @@ fn emit_composite(operand_kind: &OperandKind<'_>, bases: &[Cow<'_, str>]) -> Tok
         #[derive(Clone, Debug, Eq, PartialEq, Hash)]
         pub struct #name(#(pub #member_tys),*);
 
-        unsafe impl Operand for #name {
-            const KIND: &OperandKind = &#kind;
+        unsafe impl Operand<'_> for #name {
+            const KIND: &'static OperandKind = &#kind;
         }
 
-        unsafe impl OperandEncoding for #name {
+        unsafe impl OperandEncoding<'_> for #name {
             const FIXED_LEN: Option<usize> = FixedLenComposer::new()#(.append(#len))*.finish();
 
             fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {

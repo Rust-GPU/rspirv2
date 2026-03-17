@@ -56,11 +56,11 @@ macro_rules! def_literal_integer {
             }
         }
 
-        unsafe impl Operand for $name {
-            const KIND: &OperandKind = &$kind;
+        unsafe impl Operand<'_> for $name {
+            const KIND: &'static OperandKind = &$kind;
         }
 
-        unsafe impl OperandEncoding for $name {
+        unsafe impl OperandEncoding<'_> for $name {
             const FIXED_LEN: Option<usize> = Some(1);
 
             #[inline]

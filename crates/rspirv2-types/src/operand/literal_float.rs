@@ -50,11 +50,11 @@ impl LiteralFloat {
     }
 }
 
-unsafe impl Operand for LiteralFloat {
-    const KIND: &OperandKind = &OPERAND_KIND_LITERAL_FLOAT;
+unsafe impl Operand<'_> for LiteralFloat {
+    const KIND: &'static OperandKind = &OPERAND_KIND_LITERAL_FLOAT;
 }
 
-unsafe impl OperandEncoding for LiteralFloat {
+unsafe impl OperandEncoding<'_> for LiteralFloat {
     const FIXED_LEN: Option<usize> = Some(1);
 
     #[inline]

@@ -14,6 +14,7 @@ pub use literal_integer::*;
 pub use literal_string::*;
 use smallvec::SmallVec;
 use std::fmt::{Debug, Display, Formatter};
+use std::marker::PhantomData;
 
 /// A SPIR-V operand. The associated const [`Self::KIND`] links to it's [`OperandKind`].
 ///
@@ -21,8 +22,8 @@ use std::fmt::{Debug, Display, Formatter};
 ///
 /// # Safety
 /// * [`Self::KIND`] must match this implementation
-pub unsafe trait Operand: OperandEncoding {
-    const KIND: &OperandKind;
+pub unsafe trait Operand<'a>: OperandEncoding<'a> {
+    const KIND: &'static OperandKind;
 }
 
 /// A `OperandSpec` is an [`Operand`] with a [`Quantifier`] to describe the repetition of the [`Operand`].
@@ -32,14 +33,14 @@ pub unsafe trait Operand: OperandEncoding {
 ///
 /// # Safety
 /// * should not be implemented outside of this file
-pub unsafe trait OperandSpec: OperandEncoding {
+pub unsafe trait OperandSpec<'a>: OperandEncoding<'a> {
     /// The [`Operand`]
-    type Operand: Operand;
+    type Operand: Operand<'a>;
     /// The [`Quantifier`] or repetition factor of the [`Self::Operand`]
     const QUANTIFIER: Quantifier;
 }
 
-unsafe impl<T: Operand> OperandSpec for T {
+unsafe impl<'a, T: Operand<'a>> OperandSpec<'a> for T {
     type Operand = Self;
     const QUANTIFIER: Quantifier = Quantifier::One;
 }
@@ -60,7 +61,7 @@ unsafe impl<T: Operand> OperandSpec for T {
 /// builds.
 ///
 /// [`OperandSpecMeta`]: `crate::meta::OperandSpecMeta`
-pub unsafe trait OperandEncoding: Sized + Debug {
+pub unsafe trait OperandEncoding<'a>: Sized + Debug {
     /// The fixed length of the Operand, or `None` if it's variable length. Specifying this is an optimization for
     /// operand length calculation. See the safety contract in [`OperandEncoding`].
     const FIXED_LEN: Option<usize>;
@@ -73,7 +74,7 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     ///
     /// Several debug assertions to check whether the length is correct are masked behind `cfg!(debug_assertions)`.
     fn word_len(&self) -> usize {
-        fn computed_word_len(op: &impl OperandEncoding) -> usize {
+        fn computed_word_len<'a>(op: &impl OperandEncoding<'a>) -> usize {
             let mut counter = WordCounter::default();
             // `WordCounter` never fails
             let _ = op.encode(&mut counter);
@@ -108,14 +109,14 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     }
 
     /// Parse the `Operand` from the supplied [`Iterator`] of words, advancing it in the process.
-    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError>;
+    fn decode(reader: &mut OperandReader<'a>) -> Result<Self, DecodeError>;
 
     /// Like [`Self::decode`], but the `Operand` is guaranteed to be the last one of this Instruction. This is used by
     /// [`LiteralInteger`] to consume all the remaining words and not have to calculate the exact size of a type.
     ///
     /// See [`LiteralInteger`] for details.
     #[inline]
-    fn decode_last(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+    fn decode_last(reader: &mut OperandReader<'a>) -> Result<Self, DecodeError> {
         let result = Self::decode(reader)?;
         reader.finalize()?;
         Ok(result)
@@ -134,21 +135,29 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     /// assert_eq!(dis, "OpMyInst %42");
     /// ```
     #[inline]
-    fn dis<'a>(&'a self, ctx: &'a DisContext) -> OperandDis<'a, Self> {
-        OperandDis(self, ctx)
+    fn dis<'b: 'a>(&'b self, ctx: &'b DisContext) -> OperandDis<'a, 'b, Self> {
+        OperandDis {
+            operand: self,
+            ctx,
+            _phantom: PhantomData
+        }
     }
 }
 
-pub struct OperandDis<'a, T: OperandEncoding>(&'a T, &'a DisContext);
+pub struct OperandDis<'a, 'b, T: OperandEncoding<'a>> {
+    operand: &'b T,
+    ctx: &'b DisContext,
+    _phantom: PhantomData<&'a ()>,
+}
 
-impl<'a, T: OperandEncoding> Display for OperandDis<'a, T> {
+impl<'a, 'b, T: OperandEncoding<'a>> Display for OperandDis<'a, 'b, T> {
     #[inline]
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        self.0.dis_fmt(f, self.1)
+        self.operand.dis_fmt(f, self.ctx)
     }
 }
 
-unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
+unsafe impl<'a, T: OperandEncoding<'a>> OperandEncoding<'a> for Option<T> {
     const FIXED_LEN: Option<usize> = None;
 
     #[inline]
@@ -169,7 +178,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
     }
 
     #[inline]
-    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'a>) -> Result<Self, DecodeError> {
         if reader.peek().is_ok() {
             Ok(Some(T::decode(reader)?))
         } else {
@@ -178,7 +187,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
     }
 
     #[inline]
-    fn decode_last(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+    fn decode_last(reader: &mut OperandReader<'a>) -> Result<Self, DecodeError> {
         if reader.peek().is_ok() {
             Ok(Some(T::decode_last(reader)?))
         } else {
@@ -195,12 +204,12 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
     }
 }
 
-unsafe impl<T: Operand> OperandSpec for Option<T> {
+unsafe impl<'a, T: Operand<'a>> OperandSpec<'a> for Option<T> {
     type Operand = T;
     const QUANTIFIER: Quantifier = Quantifier::ZeroOrOne;
 }
 
-unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
+unsafe impl<'a, T: OperandEncoding<'a>> OperandEncoding<'a> for Vec<T> {
     const FIXED_LEN: Option<usize> = None;
 
     #[inline]
@@ -229,7 +238,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     ///
     /// [`Quantifier`]: `crate::meta::Quantifier`
     #[inline]
-    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'a>) -> Result<Self, DecodeError> {
         let mut vec = if let Some(fixed_len) = T::FIXED_LEN {
             let remaining = reader.remaining();
             if !remaining.is_multiple_of(fixed_len) {
@@ -257,13 +266,13 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     }
 }
 
-unsafe impl<T: Operand> OperandSpec for Vec<T> {
+unsafe impl<'a, T: Operand<'a>> OperandSpec<'a> for Vec<T> {
     type Operand = T;
     const QUANTIFIER: Quantifier = Quantifier::ZeroOrMore;
 }
 
 /// copy of Vec impl above
-unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T; N]> {
+unsafe impl<'a, T: OperandEncoding<'a>, const N: usize> OperandEncoding<'a> for SmallVec<[T; N]> {
     const FIXED_LEN: Option<usize> = None;
 
     #[inline]
@@ -280,7 +289,7 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
     }
 
     #[inline]
-    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: &mut OperandReader<'a>) -> Result<Self, DecodeError> {
         let mut vec = if let Some(fixed_len) = T::FIXED_LEN {
             let remaining = reader.remaining();
             if !remaining.is_multiple_of(fixed_len) {
@@ -308,7 +317,7 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
     }
 }
 
-unsafe impl<T: Operand, const N: usize> OperandSpec for SmallVec<[T; N]> {
+unsafe impl<'a, T: Operand<'a>, const N: usize> OperandSpec<'a> for SmallVec<[T; N]> {
     type Operand = T;
     const QUANTIFIER: Quantifier = Quantifier::ZeroOrMore;
 }

@@ -150,11 +150,11 @@ impl LiteralConst {
     as_float!(as_u64 => as_f64: f64);
 }
 
-unsafe impl Operand for LiteralConst {
-    const KIND: &OperandKind = &OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER;
+unsafe impl Operand<'_> for LiteralConst {
+    const KIND: &'static OperandKind = &OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER;
 }
 
-unsafe impl OperandEncoding for LiteralConst {
+unsafe impl OperandEncoding<'_> for LiteralConst {
     const FIXED_LEN: Option<usize> = None;
 
     #[inline]

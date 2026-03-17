@@ -34,11 +34,11 @@ impl LiteralString {
     }
 }
 
-unsafe impl Operand for LiteralString {
-    const KIND: &OperandKind = &OPERAND_KIND_LITERAL_STRING;
+unsafe impl Operand<'_> for LiteralString {
+    const KIND: &'static OperandKind = &OPERAND_KIND_LITERAL_STRING;
 }
 
-unsafe impl OperandEncoding for LiteralString {
+unsafe impl OperandEncoding<'_> for LiteralString {
     const FIXED_LEN: Option<usize> = None;
 
     #[inline]

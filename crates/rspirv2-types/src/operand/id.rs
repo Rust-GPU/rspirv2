@@ -47,11 +47,11 @@ unsafe impl bytemuck::Zeroable for IdResult {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for IdResult {}
 
-unsafe impl Operand for IdResult {
-    const KIND: &OperandKind = &OPERAND_KIND_ID_RESULT;
+unsafe impl Operand<'_> for IdResult {
+    const KIND: &'static OperandKind = &OPERAND_KIND_ID_RESULT;
 }
 
-unsafe impl OperandEncoding for IdResult {
+unsafe impl OperandEncoding<'_> for IdResult {
     const FIXED_LEN: Option<usize> = Some(1);
 
     #[inline]
@@ -122,11 +122,11 @@ macro_rules! id_ref {
             }
         }
 
-        unsafe impl Operand for $name {
-            const KIND: &OperandKind = &$kind;
+        unsafe impl Operand<'_> for $name {
+            const KIND: &'static OperandKind = &$kind;
         }
 
-        unsafe impl OperandEncoding for $name {
+        unsafe impl OperandEncoding<'_> for $name {
             const FIXED_LEN: Option<usize> = Some(1);
 
             #[inline]
