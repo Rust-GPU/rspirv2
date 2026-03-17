@@ -13,3 +13,4 @@ anyhow.workspace = true
 
 [dev-dependencies]
 spv.workspace = true
+expect-test.workspace = true
