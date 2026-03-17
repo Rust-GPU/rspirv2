@@ -117,7 +117,7 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     #[inline]
     fn decode_last(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let result = Self::decode(reader)?;
-        reader.assert_finished()?;
+        reader.finalize()?;
         Ok(result)
     }
 
