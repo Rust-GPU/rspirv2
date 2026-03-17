@@ -2,9 +2,8 @@
 
 use crate::Word;
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
-use crate::dis::DisContext;
 use crate::meta::{Category, OperandKind};
-use crate::operand::{Operand, OperandEncoding};
+use crate::operand::{Operand, OperandDisContext, OperandEncoding};
 use anstyle::AnsiColor;
 use std::fmt::Formatter;
 
@@ -74,7 +73,7 @@ unsafe impl OperandEncoding for IdResult {
     }
 
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         self.dis_fmt_color(f, ctx, AnsiColor::Blue.on_default(), false)
     }
 }
@@ -83,7 +82,7 @@ impl IdResult {
     pub fn dis_fmt_color(
         &self,
         f: &mut Formatter<'_>,
-        ctx: &DisContext,
+        ctx: &OperandDisContext<'_>,
         style: anstyle::Style,
         prepend_space: bool,
     ) -> std::fmt::Result {
@@ -141,7 +140,7 @@ macro_rules! id_ref {
             }
 
             #[inline]
-            fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+            fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
                 self.0.dis_fmt_color(f, ctx, AnsiColor::Yellow.on_default(), true)
             }
         }
