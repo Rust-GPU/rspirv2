@@ -1,8 +1,9 @@
 use crate::binary::EncodeError;
+use std::fmt::{Debug, Formatter};
 
 /// A 32bit SPIR-V Word
 #[repr(transparent)]
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub struct Word(pub u32);
 
 #[cfg(feature = "bytemuck")]
@@ -30,5 +31,11 @@ impl Word {
     #[inline]
     pub fn to_op(&self) -> (u16, usize) {
         (self.0 as u16, (self.0 >> 16) as u16 as usize)
+    }
+}
+
+impl Debug for Word {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Word({:#010x})", self.0)
     }
 }
