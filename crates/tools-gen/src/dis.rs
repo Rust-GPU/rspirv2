@@ -1,6 +1,5 @@
 use clap::{Parser, ValueEnum};
-use rspirv2::dis::DisOptions;
-use rspirv2::inst::InstEncoding;
+use rspirv2::dis::{DisOptions, InstSetDisCtx};
 use rspirv2::module::Module;
 use std::io::Write;
 use std::path::PathBuf;
@@ -26,7 +25,7 @@ pub enum Like {
 }
 
 impl Args {
-    pub fn run<ISA: InstEncoding>(&self, stdout: &mut impl Write) -> anyhow::Result<()> {
+    pub fn run<ISA: InstSetDisCtx>(&self, stdout: &mut impl Write) -> anyhow::Result<()> {
         let mut slice = std::fs::read(&self.path)?;
         if self.module_swap_bytes {
             for chunk in slice.as_chunks_mut::<4>().0.iter_mut() {

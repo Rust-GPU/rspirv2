@@ -41,7 +41,7 @@ OpDecorate %4 DescriptorSet 1
 %21 = OpTypeFunction %10 %10
 %22 = OpConstant  %10  1
 %23 = OpTypeBool
-%24 = OpConstant  %15  1071225242
+%24 = OpConstant  %15  1.7
 %25 = OpConstant  %10  1333788671
 %26 = OpConstant  %10  4294967295
 %27 = OpConstant  %10  5

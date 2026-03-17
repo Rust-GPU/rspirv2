@@ -42,6 +42,7 @@ clap = { version = "4.5.57", features = ["derive"] }
 anstream = "0.6.21"
 anstyle = "1.0.13"
 expect-test = "1.5.1"
+rustc-hash = "2.1.1"
 
 [workspace.lints.rust]
 #missing_docs = "warn"

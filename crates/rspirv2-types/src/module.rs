@@ -1,6 +1,5 @@
 use crate::binary::{DecodeError, ModuleReader};
-use crate::dis::{DisModule, DisOptions};
-use crate::inst::InstEncoding;
+use crate::dis::{DisModule, DisOptions, InstSetDisCtx};
 use crate::operand::Word;
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
@@ -181,7 +180,7 @@ impl Module {
         ModuleReader::new(self.instructions())
     }
 
-    pub fn dis<ISA: InstEncoding>(
+    pub fn dis<ISA: InstSetDisCtx>(
         &self,
         opt: DisOptions,
     ) -> Result<DisModule<'_, ISA>, DecodeError> {
