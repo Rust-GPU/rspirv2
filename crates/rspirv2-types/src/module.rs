@@ -76,6 +76,11 @@ pub struct SpirvHeader {
     pub reserved: Word,
 }
 
+const HEADER_WORDS: usize = const {
+    assert!(size_of::<SpirvHeader>().is_multiple_of(4));
+    size_of::<SpirvHeader>() / 4
+};
+
 impl SpirvHeader {
     pub fn new(version: SpirvVersion, generator_magic: Word, bound: Word) -> Self {
         Self {
@@ -142,29 +147,24 @@ impl Module {
 
     /// Parse a SPIR-V module from bytes. Endianness is automatically detected.
     pub fn from_bytes(bytes: &[u8]) -> Result<Self, ParseError> {
-        if !bytes.len().is_multiple_of(4) {
-            return Err(ParseError::BytesNotMultipleOfFour(bytes.len()));
+        let (chunks, remainder) = bytes.as_chunks();
+        if !remainder.is_empty() {
+            return Err(ParseError::BytesNotMultipleOfFour(chunks.len()));
         }
-        let word_count = bytes.len() / 4;
-        if bytes.len() < size_of::<SpirvHeader>() {
-            return Err(ParseError::BytesTooShort(bytes.len()));
+        if chunks.len() < HEADER_WORDS {
+            return Err(ParseError::BytesTooShort(chunks.len()));
         }
 
-        let magic = u32::from_ne_bytes(bytes[..4].try_into().unwrap());
-        let stream = (0..word_count).map(|i| {
-            Word(u32::from_ne_bytes([
-                bytes[i * 4],
-                bytes[i * 4 + 1],
-                bytes[i * 4 + 2],
-                bytes[i * 4 + 3],
-            ]))
-        });
-        let words = if magic == SPIRV_MAGIC.0 {
-            stream.collect()
-        } else if magic.swap_bytes() == SPIRV_MAGIC.0 {
-            stream.map(|i| Word(i.0.swap_bytes())).collect()
+        let magic = Word::from_le_bytes(chunks[0]);
+        let requires_swap = magic == Word(SPIRV_MAGIC.0.swap_bytes());
+        if (magic != SPIRV_MAGIC) && !requires_swap {
+            return Err(ParseError::MismatchedMagic(magic));
+        }
+
+        let words = if requires_swap {
+            chunks.iter().copied().map(Word::from_be_bytes).collect()
         } else {
-            return Err(ParseError::MismatchedMagic(Word(magic)));
+            chunks.iter().copied().map(Word::from_le_bytes).collect()
         };
         Self::from_words(words)
     }
@@ -188,8 +188,6 @@ impl Module {
         DisModule::new(self.instructions(), opt)
     }
 }
-
-const HEADER_BYTES: usize = size_of::<SpirvHeader>();
 
 #[derive(Clone, PartialEq)]
 pub enum ParseError {
@@ -215,7 +213,8 @@ impl Display for ParseError {
             }
             ParseError::BytesTooShort(len) => write!(
                 f,
-                "The byte array of length {len} must be at least {HEADER_BYTES} bytes"
+                "The byte array of length {len} must be at least {HEADER_WORDS} words / {} bytes",
+                HEADER_WORDS * 4
             ),
             ParseError::BytesNotMultipleOfFour(len) => {
                 write!(f, "The byte array of length {len} must be a multiple of 4")
