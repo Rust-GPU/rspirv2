@@ -1,6 +1,7 @@
 use crate::Word;
 use crate::binary::DecodeError;
 use crate::meta::InstMeta;
+use std::cmp::Ordering;
 use std::ops::Deref;
 
 /// Reader for an entire module
@@ -26,6 +27,7 @@ impl<'a> ModuleReader<'a> {
         };
         let (opcode, op_len) = first.to_op();
         if op_len == 0 {
+            // len must at least be 1, as it includes the op Word itself
             return Err(DecodeError::InstructionZeroSized { inst_offset });
         }
         let params = self
@@ -84,7 +86,7 @@ impl<'a> InstReader<'a> {
     }
 }
 
-/// Reader for a single instruction
+/// Reader of Operand Words for a single instruction
 ///
 /// Not `Copy` to prevent accidental copies.
 #[derive(Clone, Debug)]
@@ -103,42 +105,66 @@ impl<'a> Deref for OperandReader<'a> {
 }
 
 impl<'a> OperandReader<'a> {
-    /// Peek at the next [`Word`] in the [`InstReader`] without advancing the [`Self::params_offset`].
+    /// Peek at the next [`Word`] in the [`InstReader`] without advancing the `params_offset`.
     ///
     /// Calling this again will yield the same value, advance the [`Self::params_offset`] by [`Self::pull`]ing the
     /// [`Word`].
     #[inline]
     pub fn peek(&self) -> Result<Word, DecodeError> {
-        Ok(*self.params.get(self.params_offset).ok_or(
-            DecodeError::InstructionDecodePulledTooManyWords {
-                inst_offset: self.inst_offset,
-                op_len: self.params.len(),
-            },
-        )?)
+        Ok(*self
+            .params
+            .get(self.params_offset)
+            .ok_or(self.err_too_many_words())?)
     }
 
-    /// Pull a single [`Word`] from the [`InstReader`], advancing the [`Self::params_offset`].
+    /// Pull a single [`Word`] from the [`InstReader`], advancing the `params_offset`.
     ///
     /// Calling this again will yield the next [`Word`].
     #[inline]
     pub fn pull(&mut self) -> Result<Word, DecodeError> {
         let result = self.peek();
-        self.params_offset += 1;
+        // always advance, even if we're out of words, so `finalize()` fails
+        self.advance();
         result
     }
 
-    #[inline]
-    pub fn assert_finished(&self) -> Result<(), DecodeError> {
+    /// Finalize an [`OperandReader`] to verify *exactly* all operands have been consumed
+    pub fn finalize(&self) -> Result<(), DecodeError> {
         let remaining = self.remaining();
-        if remaining == 0 {
-            Ok(())
-        } else {
-            Err(DecodeError::InstructionWithAdditionalOperants {
+        match 0.cmp(&remaining) {
+            Ordering::Less => Err(DecodeError::InstructionWithAdditionalOperants {
                 inst_offset: self.inst_offset,
-                op_len: self.len(),
+                op_len: self.params.len(),
                 remaining,
-            })
+            }),
+            Ordering::Equal => Ok(()),
+            Ordering::Greater => Err(self.err_too_many_words()),
         }
+    }
+
+    fn err_too_many_words(&self) -> DecodeError {
+        DecodeError::InstructionDecodePulledTooManyWords {
+            inst_offset: self.inst_offset,
+            op_len: self.params.len(),
+        }
+    }
+
+    /// View the *remaining* Words as a slice, does not advance the `params_offset`.
+    #[inline]
+    pub fn as_slice(&self) -> &'a [Word] {
+        &self.inst.params[self.params_offset..]
+    }
+
+    /// Advance the `params_offset` by 1
+    #[inline]
+    pub fn advance(&mut self) {
+        self.advance_by(1);
+    }
+
+    /// Advance the `params_offset` by an arbitrary amount
+    #[inline]
+    pub fn advance_by(&mut self, count: usize) {
+        self.params_offset += count;
     }
 
     /// Offset of the instruction, purely informational, for error reporting
@@ -167,7 +193,7 @@ impl<'a> OperandReader<'a> {
     }
 }
 
-impl<'a> Iterator for OperandReader<'a> {
+impl Iterator for OperandReader<'_> {
     type Item = Word;
 
     #[inline]
