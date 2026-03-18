@@ -1,9 +1,11 @@
 use bitflags::Flags;
 use std::error::Error;
+use std::ffi::FromBytesUntilNulError;
 use std::fmt::{Debug, Display, Formatter};
 use std::str::Utf8Error;
+use std::string::FromUtf8Error;
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone)]
 pub enum DecodeError {
     UnknownOpCode {
         opcode: u16,
@@ -24,34 +26,23 @@ pub enum DecodeError {
     },
     /// This error must be cheap to crate, it will be discarded when iterating an `InstructionReader`.
     InstructionDecodePulledTooManyWords {
-        inst_offset: usize,
         op_len: usize,
     },
     InstructionWithAdditionalOperants {
-        inst_offset: usize,
         op_len: usize,
         remaining: usize,
     },
     InstructionWithMismatchedVariableOperants {
-        inst_offset: usize,
         op_len: usize,
         expected_multiple: usize,
     },
     InstructionTooLong {
-        inst_offset: usize,
         op_len: usize,
         module_remaining: usize,
     },
-    InstructionZeroSized {
-        inst_offset: usize,
-    },
-    StringNotNulTerminated {
-        inst_offset: usize,
-    },
-    Utf8Error {
-        inst_offset: usize,
-        error: Utf8Error,
-    },
+    InstructionZeroSized,
+    StringNotNulTerminated,
+    Utf8Error(Utf8Error),
     InvalidBitflags {
         name: &'static str,
         unknown: u32,
@@ -66,11 +57,11 @@ pub enum DecodeError {
 impl Display for DecodeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            DecodeError::UnknownOpCode { opcode } => write!(
+            Self::UnknownOpCode { opcode } => write!(
                 f,
                 "Instruction Set couldn't decode instruction with unknown opcode {opcode}"
             ),
-            DecodeError::WrongOpCode {
+            Self::WrongOpCode {
                 name,
                 expected,
                 actual,
@@ -78,12 +69,12 @@ impl Display for DecodeError {
                 f,
                 "Op {name} with opcode {expected} got InstructionReader with differing opcode {actual}."
             ),
-            DecodeError::LiteralConstNotLastOperand => write!(
+            Self::LiteralConstNotLastOperand => write!(
                 f,
                 "Implementation Limitation: The `LiteralConst` must be the last operand of an Instruction for parsing \
                  to function properly. See documentation of `LiteralConst` for details."
             ),
-            DecodeError::LiteralConstOfWrongWordSize {
+            Self::LiteralConstOfWrongWordSize {
                 expected_size,
                 actual_size,
             } => write!(
@@ -91,59 +82,42 @@ impl Display for DecodeError {
                 "Tried to read value from LiteralConst that expects {expected_size} Word(s) but \
                 LiteralConst has {actual_size} Word(s)"
             ),
-            DecodeError::LiteralConstTooLarge { value, bits } => write!(
+            Self::LiteralConstTooLarge { value, bits } => write!(
                 f,
                 "LiteralConst's value `{value:x}` is too large for {} bits",
                 bits
             ),
-            DecodeError::InstructionDecodePulledTooManyWords {
-                inst_offset,
-                op_len,
-            } => write!(
+            Self::InstructionDecodePulledTooManyWords { op_len } => write!(
                 f,
-                "The Instruction at offset {inst_offset} with {op_len} param words tried to decode more Operants than \
-                were available."
+                "Instruction with {op_len} param words tried to decode more Operants than were available."
             ),
-            DecodeError::InstructionWithAdditionalOperants {
-                inst_offset,
-                op_len,
-                remaining,
-            } => write!(
+            Self::InstructionWithAdditionalOperants { op_len, remaining } => write!(
                 f,
-                "The fixed-size Instruction at offset {inst_offset} with {op_len} param words has {remaining} Words \
-                left over after decoding."
+                "The fixed-size Instruction with {op_len} param words has {remaining} Words left over after decoding."
             ),
-            DecodeError::InstructionWithMismatchedVariableOperants {
-                inst_offset,
+            Self::InstructionWithMismatchedVariableOperants {
                 op_len,
                 expected_multiple,
             } => write!(
                 f,
-                "The variable-sized Instruction at offset {inst_offset} has an unexpected operand length {op_len} \
+                "The variable-sized Instruction has an unexpected operand length {op_len} \
                 which was expected to be a multiple of {expected_multiple}."
             ),
-            DecodeError::InstructionTooLong {
-                inst_offset,
+            Self::InstructionTooLong {
                 op_len,
                 module_remaining,
             } => write!(
                 f,
-                "The Instruction at offset {inst_offset} has a supposed length of {op_len} but the module only has \
-                {module_remaining} words remaining."
+                "Instruction has a supposed length of {op_len} but the module only has {module_remaining} words \
+                 remaining."
             ),
-            DecodeError::InstructionZeroSized { inst_offset } => write!(
+            Self::InstructionZeroSized => write!(
                 f,
-                "The Instruction at offset {inst_offset} has an invalid length of 0, but must at least be of length 1 to include the opcode itself."
+                "Instruction has an invalid length of 0, must be least 1 word as it includes the opcode itself."
             ),
-            DecodeError::StringNotNulTerminated { inst_offset } => write!(
-                f,
-                "The Instruction at offset {inst_offset} has a string that is not null-terminated."
-            ),
-            DecodeError::Utf8Error { inst_offset, error } => write!(
-                f,
-                "The Instruction at offset {inst_offset} has an invalid UTF-8 string: {error}"
-            ),
-            DecodeError::InvalidBitflags {
+            Self::StringNotNulTerminated => write!(f, "String is not null-terminated."),
+            Self::Utf8Error(error) => write!(f, "Invalid UTF-8 string: {error}"),
+            Self::InvalidBitflags {
                 name,
                 unknown,
                 bits,
@@ -151,7 +125,7 @@ impl Display for DecodeError {
                 f,
                 "Bitflag {name} encountered unknown bits `{unknown:x}` in pattern `{bits:x}`."
             ),
-            DecodeError::UnknownEnumVariant { name, variant } => {
+            Self::UnknownEnumVariant { name, variant } => {
                 write!(f, "Enum {name} encountered unknown variant `{variant}`.")
             }
         }
@@ -174,5 +148,23 @@ impl DecodeError {
             unknown: bits & T::all().bits(),
             bits,
         }
+    }
+}
+
+impl From<FromBytesUntilNulError> for DecodeError {
+    fn from(_: FromBytesUntilNulError) -> Self {
+        Self::StringNotNulTerminated
+    }
+}
+
+impl From<Utf8Error> for DecodeError {
+    fn from(value: Utf8Error) -> Self {
+        Self::Utf8Error(value)
+    }
+}
+
+impl From<FromUtf8Error> for DecodeError {
+    fn from(value: FromUtf8Error) -> Self {
+        Self::Utf8Error(value.utf8_error())
     }
 }
