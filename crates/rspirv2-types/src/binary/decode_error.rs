@@ -24,12 +24,13 @@ pub enum DecodeError {
         value: u32,
         bits: usize,
     },
+    OutOfInstructions,
     /// This error must be cheap to crate, it will be discarded when iterating an `InstructionReader`.
     InstructionDecodePulledTooManyWords {
-        op_len: usize,
+        param_len: usize,
     },
     InstructionWithAdditionalOperants {
-        op_len: usize,
+        param_len: usize,
         remaining: usize,
     },
     InstructionWithMismatchedVariableOperants {
@@ -87,13 +88,19 @@ impl Display for DecodeError {
                 "LiteralConst's value `{value:x}` is too large for {} bits",
                 bits
             ),
-            Self::InstructionDecodePulledTooManyWords { op_len } => write!(
+            Self::OutOfInstructions => {
+                write!(f, "instruction stream ended")
+            }
+            Self::InstructionDecodePulledTooManyWords { param_len } => write!(
                 f,
-                "Instruction with {op_len} param words tried to decode more Operants than were available."
+                "Instruction with {param_len} param words tried to decode more Operants than were available."
             ),
-            Self::InstructionWithAdditionalOperants { op_len, remaining } => write!(
+            Self::InstructionWithAdditionalOperants {
+                param_len,
+                remaining,
+            } => write!(
                 f,
-                "The fixed-size Instruction with {op_len} param words has {remaining} Words left over after decoding."
+                "The fixed-size Instruction with {param_len} param words has {remaining} Words left over after decoding."
             ),
             Self::InstructionWithMismatchedVariableOperants {
                 op_len,
