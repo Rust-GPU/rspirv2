@@ -1,9 +1,10 @@
 use crate::Word;
-use crate::binary::{DecodeError, ModuleReader};
-use crate::dis::{DisModule, DisOptions};
+use crate::binary::DecodeError;
 use crate::inst::InstEncoding;
+use crate::vec::InstVec;
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
+use std::ops::Deref;
 
 pub const SPIRV_MAGIC: Word = Word(0x07230203);
 
@@ -128,25 +129,38 @@ impl SpirvHeader {
     }
 }
 
-/// A SPIR-V Module with a valid header.
+/// A SPIR-V Module is an [`InstVec`] with an optional [`SpirvHeader`].
 ///
 /// See <https://registry.khronos.org/SPIR-V/specs/unified1/SPIRV.html#_physical_layout_of_a_spir_v_module_and_instruction>
-#[derive(Clone, Debug)]
-pub struct Module(Vec<Word>);
+#[derive(Clone, Debug, Default)]
+pub struct Module<ISA: InstEncoding> {
+    pub header: Option<SpirvHeader>,
+    pub inst: InstVec<ISA>,
+}
 
-impl Module {
-    pub fn new(header: SpirvHeader) -> Self {
-        Self(header.to_array().to_vec())
-    }
-
-    pub fn from_words(words: Vec<Word>) -> Result<Self, ParseError> {
-        let slf = Self(words);
-        slf.header().validate()?;
-        Ok(slf)
-    }
-
-    /// Parse a SPIR-V module from bytes. Endianness is automatically detected.
+impl<ISA: InstEncoding> Module<ISA> {
+    /// Parse a SPIR-V module from bytes, endianness is automatically detected and instructions checked for validity.
     pub fn from_bytes(bytes: &[u8]) -> Result<Self, ParseError> {
+        let (header, inst_words) = Self::from_bytes_inner(bytes)?;
+        Ok(Self {
+            header: Some(header),
+            inst: InstVec::from_words(inst_words)?,
+        })
+    }
+
+    /// Parse a SPIR-V module from bytes, endianness is automatically detected. However, instructions are not checked
+    /// for validity, and you may get panics due to invalid instructions later on.
+    pub fn from_bytes_unchecked(bytes: &[u8]) -> Result<Self, ParseError> {
+        let (header, inst_words) = Self::from_bytes_inner(bytes)?;
+        Ok(Self {
+            header: Some(header),
+            inst: InstVec::from_words_unchecked(inst_words),
+        })
+    }
+
+    /// Parse a SPIR-V module from bytes, endianness is automatically detected. However, instructions are not checked
+    /// for validity, and you may get panics due to invalid instructions later on.
+    fn from_bytes_inner(bytes: &[u8]) -> Result<(SpirvHeader, Vec<Word>), ParseError> {
         let (chunks, remainder) = bytes.as_chunks();
         if !remainder.is_empty() {
             return Err(ParseError::BytesNotMultipleOfFour(chunks.len()));
@@ -161,31 +175,35 @@ impl Module {
             return Err(ParseError::MismatchedMagic(magic));
         }
 
-        let words = if requires_swap {
-            chunks.iter().copied().map(Word::from_be_bytes).collect()
-        } else {
-            chunks.iter().copied().map(Word::from_le_bytes).collect()
-        };
-        Self::from_words(words)
-    }
+        let header = SpirvHeader::from_array(core::array::from_fn(|i| {
+            if requires_swap {
+                Word::from_be_bytes(chunks[i])
+            } else {
+                Word::from_le_bytes(chunks[i])
+            }
+        }));
 
-    pub fn header(&self) -> SpirvHeader {
-        SpirvHeader::from_slice(self.0.as_slice())
+        let inst_words = chunks
+            .iter()
+            .skip(HEADER_WORDS)
+            .copied()
+            .map(|w| {
+                if requires_swap {
+                    Word::from_be_bytes(w)
+                } else {
+                    Word::from_le_bytes(w)
+                }
+            })
+            .collect::<Vec<_>>();
+        Ok((header, inst_words))
     }
+}
 
-    pub fn instructions(&self) -> &[Word] {
-        &self.0[5..]
-    }
+impl<ISA: InstEncoding> Deref for Module<ISA> {
+    type Target = InstVec<ISA>;
 
-    pub fn reader(&self) -> ModuleReader<'_> {
-        ModuleReader::new(self.instructions())
-    }
-
-    pub fn dis<ISA: InstEncoding>(
-        &self,
-        opt: DisOptions,
-    ) -> Result<DisModule<'_, ISA>, DecodeError> {
-        DisModule::new(self.instructions(), opt)
+    fn deref(&self) -> &Self::Target {
+        &self.inst
     }
 }
 
@@ -196,6 +214,7 @@ pub enum ParseError {
     HeaderReservedNotZero(SpirvHeader),
     BytesTooShort(usize),
     BytesNotMultipleOfFour(usize),
+    DecodeError(DecodeError),
 }
 
 impl Display for ParseError {
@@ -219,6 +238,7 @@ impl Display for ParseError {
             ParseError::BytesNotMultipleOfFour(len) => {
                 write!(f, "The byte array of length {len} must be a multiple of 4")
             }
+            ParseError::DecodeError(e) => write!(f, "{e}"),
         }
     }
 }
@@ -230,6 +250,12 @@ impl Debug for ParseError {
 }
 
 impl Error for ParseError {}
+
+impl From<DecodeError> for ParseError {
+    fn from(value: DecodeError) -> Self {
+        Self::DecodeError(value)
+    }
+}
 
 #[cfg(test)]
 mod tests {
@@ -283,9 +309,9 @@ mod tests {
         assert_eq!(valid.validate(), Ok(()));
 
         let test = |bytes: &[u8]| {
-            let module = Module::from_bytes(bytes);
+            let module = Module::<()>::from_bytes(bytes);
             assert!(module.is_ok(), "{:?}", module);
-            assert_eq!(module.unwrap().header(), valid);
+            assert_eq!(module.unwrap().header, Some(valid));
         };
 
         let ne_bytes = valid

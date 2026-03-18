@@ -34,8 +34,8 @@ impl Args {
             }
         }
 
-        let module = Module::from_bytes(slice.as_slice())?;
-        write!(stdout, "{}", module.dis::<ISA>(self.to_dis_opts()?)?)?;
+        let module = Module::<ISA>::from_bytes(slice.as_slice())?;
+        write!(stdout, "{}", module.dis(self.to_dis_opts()?)?)?;
         Ok(())
     }
 

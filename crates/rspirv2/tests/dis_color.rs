@@ -6,13 +6,14 @@ use std::io::Write;
 
 #[test]
 pub fn test_disabled_color() -> anyhow::Result<()> {
-    let module = Module::from_bytes(std::fs::read(spv("dis_reference"))?.as_slice())?;
+    let module =
+        Module::<CoreInstSet>::from_bytes(std::fs::read(spv("dis_reference"))?.as_slice())?;
 
     let mut color_stripped = Vec::new();
     write!(
         anstream::AutoStream::never(&mut color_stripped),
         "{}",
-        module.dis::<CoreInstSet>(DisOptions {
+        module.dis(DisOptions {
             color: true,
             ..Default::default()
         })?
@@ -22,7 +23,7 @@ pub fn test_disabled_color() -> anyhow::Result<()> {
     write!(
         &mut color_disabled,
         "{}",
-        module.dis::<CoreInstSet>(DisOptions {
+        module.dis(DisOptions {
             color: false,
             ..Default::default()
         })?
