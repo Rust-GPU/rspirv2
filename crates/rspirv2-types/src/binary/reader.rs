@@ -2,23 +2,53 @@ use crate::Word;
 use crate::binary::DecodeError;
 use crate::meta::InstMeta;
 use std::cmp::Ordering;
+use std::fmt::{Display, Formatter};
+use std::ops::{Deref, DerefMut};
+
+/// An offset to some instruction, a wrapper around `usize`.
+#[repr(transparent)]
+#[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct InstOffset(pub usize);
+
+impl Deref for InstOffset {
+    type Target = usize;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl DerefMut for InstOffset {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+impl Display for InstOffset {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        Display::fmt(&self.0, f)
+    }
+}
 
 /// Reader for an entire module
 pub struct ModuleReader<'a> {
     words: &'a [Word],
-    offset: usize,
+    offset: InstOffset,
 }
 
 impl<'a> ModuleReader<'a> {
     pub fn new(words: &'a [Word]) -> Self {
-        Self { words, offset: 0 }
+        Self {
+            words,
+            offset: InstOffset(0),
+        }
     }
 
     #[allow(clippy::should_implement_trait)]
     pub fn next(&mut self) -> Result<Option<InstReader<'a>>, DecodeError> {
-        match InstReader::from_words(&self.words[self.offset..]) {
+        match InstReader::from_words(&self.words[*self.offset..]) {
             Ok(inst_reader) => {
-                self.offset += inst_reader.len();
+                *self.offset += inst_reader.len();
                 Ok(Some(inst_reader))
             }
             Err(DecodeError::OutOfInstructions) => Ok(None),
