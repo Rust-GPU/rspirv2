@@ -2,7 +2,6 @@ use crate::Word;
 use crate::binary::DecodeError;
 use crate::meta::InstMeta;
 use std::cmp::Ordering;
-use std::ops::Deref;
 
 /// Reader for an entire module
 pub struct ModuleReader<'a> {
@@ -17,100 +16,115 @@ impl<'a> ModuleReader<'a> {
 
     #[allow(clippy::should_implement_trait)]
     pub fn next(&mut self) -> Result<Option<InstReader<'a>>, DecodeError> {
-        let words = &self.words[self.offset..];
-        let first = match words.first() {
-            None => {
-                // out of instructions
-                return Ok(None);
+        match InstReader::from_words(&self.words[self.offset..]) {
+            Ok(inst_reader) => {
+                self.offset += inst_reader.len();
+                Ok(Some(inst_reader))
             }
-            Some(first) => *first,
-        };
-        let (opcode, op_len) = first.to_op();
-        if op_len == 0 {
-            // len must at least be 1, as it includes the op Word itself
-            return Err(DecodeError::InstructionZeroSized);
+            Err(DecodeError::OutOfInstructions) => Ok(None),
+            Err(e) => Err(e),
         }
-        let params = words
-            .get(1..op_len)
-            .ok_or(DecodeError::InstructionTooLong {
-                op_len,
-                module_remaining: words.len(),
-            })?;
-        self.offset += op_len;
-        Ok(Some(InstReader::new(opcode, params)))
     }
 }
 
 /// Reader for a single instruction
 #[derive(Copy, Clone, Debug)]
-pub struct InstReader<'a> {
-    /// opcode of the instruction
-    opcode: u16,
-    /// slice to the parameters of the instruction
-    params: &'a [Word],
-}
+pub struct InstReader<'a>(&'a [Word]);
 
 impl<'a> InstReader<'a> {
-    pub fn new(opcode: u16, params: &'a [Word]) -> Self {
-        Self { opcode, params }
+    /// Create an [`InstReader`] from the instruction encoded in the slice of [`Word`]s at offset 0, cut off any further
+    /// words not associated with this instruction. Use [`Self::len`] to figure out how many words have been consumed
+    /// by this instruction.
+    pub fn from_words(words: &'a [Word]) -> Result<Self, DecodeError> {
+        let first = words.first().ok_or(DecodeError::OutOfInstructions)?;
+        let (_, op_len) = first.to_op();
+        if op_len == 0 {
+            // len must at least be 1, as it includes the op Word itself
+            return Err(DecodeError::InstructionZeroSized);
+        }
+        let inst_words = words
+            .get(0..op_len)
+            .ok_or(DecodeError::InstructionTooLong {
+                op_len,
+                module_remaining: words.len(),
+            })?;
+        Ok(Self(inst_words))
     }
 
+    /// Length of the **entire** instruction, including the op word
+    #[inline]
+    #[allow(clippy::len_without_is_empty)]
+    pub fn len(&self) -> usize {
+        self.0.len()
+    }
+
+    /// Opcode of the instruction
+    #[inline]
     pub fn opcode(&self) -> u16 {
-        self.opcode
+        self.0.first().unwrap().to_op().0
     }
 
+    /// Check whether the opcode matches, return an [`OperandReader`] if it is, or a [`DecodeError`] if it isn't
+    #[inline]
     pub fn check_opcode(&self, meta: &InstMeta) -> Result<OperandReader<'a>, DecodeError> {
-        if self.opcode != meta.opcode {
+        let opcode = self.opcode();
+        if opcode != meta.opcode {
             Err(DecodeError::WrongOpCode {
                 name: meta.opname,
                 expected: meta.opcode,
-                actual: self.opcode,
+                actual: opcode,
             })
         } else {
             Ok(self.operand_reader())
         }
     }
 
+    /// Create an [`OperandReader`] for the operands of this Instruction
+    #[inline]
     pub fn operand_reader(&self) -> OperandReader<'a> {
-        OperandReader {
-            inst: *self,
-            params_offset: 0,
-        }
+        // skip over opcode word
+        OperandReader::new(&self.0[1..])
+    }
+
+    /// Returns the slice of Words that encodes a single instruction
+    #[inline]
+    pub fn to_words(&self) -> &'a [Word] {
+        self.0
     }
 }
 
-/// Reader of Operand Words for a single instruction
+/// Read operand [`Word`]s from an instruction
 ///
 /// Not `Copy` to prevent accidental copies.
 #[derive(Clone, Debug)]
 pub struct OperandReader<'a> {
-    inst: InstReader<'a>,
+    /// params encoded as words
+    params: &'a [Word],
     /// advancing offset pointing into params
-    params_offset: usize,
-}
-
-impl<'a> Deref for OperandReader<'a> {
-    type Target = InstReader<'a>;
-
-    fn deref(&self) -> &Self::Target {
-        &self.inst
-    }
+    offset: usize,
 }
 
 impl<'a> OperandReader<'a> {
-    /// Peek at the next [`Word`] in the [`InstReader`] without advancing the `params_offset`.
+    #[inline]
+    pub fn new(params: &'a [Word]) -> Self {
+        Self { params, offset: 0 }
+    }
+
+    /// Peek at the next [`Word`] in the [`InstReader`] without advancing the `params_offset`. Fails if there are no
+    /// further params.
     ///
-    /// Calling this again will yield the same value, advance the [`Self::params_offset`] by [`Self::pull`]ing the
+    /// Calling this again will yield the same value, advance the [`Self::offset`] by [`Self::pull`]ing the
     /// [`Word`].
     #[inline]
     pub fn peek(&self) -> Result<Word, DecodeError> {
         Ok(*self
             .params
-            .get(self.params_offset)
+            .get(self.offset)
             .ok_or(self.err_too_many_words())?)
     }
 
-    /// Pull a single [`Word`] from the [`InstReader`], advancing the `params_offset`.
+    /// Pull a single [`Word`] from the [`InstReader`], advancing the `params_offset`. Fails if there are no further
+    /// params.
     ///
     /// Calling this again will yield the next [`Word`].
     #[inline]
@@ -121,12 +135,12 @@ impl<'a> OperandReader<'a> {
         result
     }
 
-    /// Finalize an [`OperandReader`] to verify *exactly* all operands have been consumed
+    /// Finalize an [`OperandReader`] to verify *exactly* all operands have been consumed.
     pub fn finalize(&self) -> Result<(), DecodeError> {
         let remaining = self.remaining();
         match 0.cmp(&remaining) {
             Ordering::Less => Err(DecodeError::InstructionWithAdditionalOperants {
-                op_len: self.params.len(),
+                param_len: self.params.len(),
                 remaining,
             }),
             Ordering::Equal => Ok(()),
@@ -135,44 +149,51 @@ impl<'a> OperandReader<'a> {
     }
 
     fn err_too_many_words(&self) -> DecodeError {
-        DecodeError::InstructionDecodePulledTooManyWords { op_len: self.len() }
+        DecodeError::InstructionDecodePulledTooManyWords {
+            param_len: self.len(),
+        }
     }
 
     /// View the *remaining* Words as a slice, does not advance the `params_offset`.
     #[inline]
     pub fn as_slice(&self) -> &'a [Word] {
-        &self.inst.params[self.params_offset..]
+        &self.params[self.offset..]
     }
 
-    /// Advance the `params_offset` by 1
+    /// Advance the `params_offset` by 1.
     #[inline]
     pub fn advance(&mut self) {
         self.advance_by(1);
     }
 
-    /// Advance the `params_offset` by an arbitrary amount
+    /// Advance the `params_offset` by an arbitrary amount.
     #[inline]
     pub fn advance_by(&mut self, count: usize) {
-        self.params_offset += count;
+        self.offset += count;
     }
 
-    /// len of the params
+    /// Returns the number of params.
     #[inline]
-    #[allow(clippy::len_without_is_empty)]
     pub fn len(&self) -> usize {
         self.params.len()
     }
 
-    /// current offset of the params, in [`Word`]s
+    /// Returns `true` if the param slice has a length of 0.
     #[inline]
-    pub fn params_offset(&self) -> usize {
-        self.params_offset
+    pub fn is_empty(&self) -> bool {
+        self.params.is_empty()
     }
 
-    /// amount of remaining param [`Word`]s
+    /// Current offset of the params, in [`Word`]s.
+    #[inline]
+    pub fn offset(&self) -> usize {
+        self.offset
+    }
+
+    /// Amount of remaining param [`Word`]s.
     #[inline]
     pub fn remaining(&self) -> usize {
-        self.params.len() - self.params_offset
+        self.params.len() - self.offset
     }
 }
 

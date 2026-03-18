@@ -110,13 +110,11 @@ impl LiteralStringEscape {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::binary::InstReader;
 
     fn roundtrip(str: &str, expected_spirv: &[[u8; 4]]) -> anyhow::Result<()> {
         let mut spirv = Vec::<Word>::default();
         LiteralString(str.to_string()).encode(&mut spirv)?;
-        let read =
-            LiteralString::decode(&mut InstReader::new(0, spirv.as_slice()).operand_reader())?;
+        let read = LiteralString::decode(&mut OperandReader::new(spirv.as_slice()))?;
         assert_eq!(str, read.as_str());
         assert_eq!(
             expected_spirv
@@ -161,9 +159,7 @@ mod tests {
                 .copied()
                 .map(Word::from_le_bytes)
                 .collect::<Vec<_>>();
-            let read =
-                LiteralString::decode(&mut InstReader::new(0, words.as_slice()).operand_reader())
-                    .ok();
+            let read = LiteralString::decode(&mut OperandReader::new(words.as_slice())).ok();
             assert_eq!(read.as_ref().map(|s| s.as_str()), str);
         };
 
