@@ -6170,9 +6170,12 @@ impl InstEncoding for CoreInstSet {
                     )
                 }
                 _ => {
-                    return Err(DecodeError::UnknownOpCode {
-                        opcode,
-                    });
+                    return Err(
+                        DecodeErrorKind::UnknownOpCode {
+                            opcode,
+                        }
+                            .into(),
+                    );
                 }
             },
         )

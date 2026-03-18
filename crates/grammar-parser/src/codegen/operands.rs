@@ -139,10 +139,10 @@ fn emit_rust_like_enum(
                 let variant = reader.pull()?.0;
                 Ok(match variant {
                     #(#decode,)*
-                    _ => return Err(DecodeError::UnknownEnumVariant {
+                    _ => return Err(DecodeErrorKind::UnknownEnumVariant {
                         name: stringify!(#name),
                         variant,
-                    })
+                    }.into())
                 })
             }
 
@@ -211,10 +211,10 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
                 let variant = reader.pull()?.0;
                 Ok(match variant {
                     #(#decode,)*
-                    _ => return Err(DecodeError::UnknownEnumVariant {
+                    _ => return Err(DecodeErrorKind::UnknownEnumVariant {
                         name: stringify!(#name),
                         variant,
-                    })
+                    }.into())
                 })
             }
 

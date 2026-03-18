@@ -1,5 +1,7 @@
 use crate::Word;
-use crate::binary::{DecodeError, EncodeError, IdResultAlloc, InstReader, WordWriter};
+use crate::binary::{
+    DecodeError, DecodeErrorKind, EncodeError, IdResultAlloc, InstReader, WordWriter,
+};
 use crate::dis::DisContext;
 use crate::meta::InstMeta;
 use crate::operand::{IdResult, OptionIdResult};
@@ -38,7 +40,9 @@ pub trait InstEncoding: Sized + Debug + Eq {
     fn try_decode(reader: InstReader<'_>) -> Result<Option<Self>, DecodeError> {
         match Self::decode(reader) {
             Ok(e) => Ok(Some(e)),
-            Err(DecodeError::WrongOpCode { .. } | DecodeError::UnknownOpCode { .. }) => Ok(None),
+            Err(DecodeError {
+                kind: DecodeErrorKind::WrongOpCode { .. } | DecodeErrorKind::UnknownOpCode { .. },
+            }) => Ok(None),
             Err(e) => Err(e),
         }
     }
@@ -65,9 +69,10 @@ impl InstEncoding for () {
     }
 
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
-        Err(DecodeError::UnknownOpCode {
+        Err(DecodeErrorKind::UnknownOpCode {
             opcode: reader.opcode(),
-        })
+        }
+        .into())
     }
 
     fn dis_fmt(&self, _: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {

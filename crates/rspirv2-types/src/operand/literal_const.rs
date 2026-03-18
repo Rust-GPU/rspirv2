@@ -1,5 +1,5 @@
 use crate::Word;
-use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
+use crate::binary::{DecodeError, DecodeErrorKind, EncodeError, OperandReader, WordWriter};
 use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandDisContext, OperandEncoding};
 use anstyle::AnsiColor;
@@ -95,10 +95,11 @@ impl LiteralConst {
         if self.0.len() == 2 {
             Ok(self.0[0].0 as u64 | (self.0[1].0 as u64) << 32)
         } else {
-            Err(DecodeError::LiteralConstOfWrongWordSize {
+            Err(DecodeErrorKind::LiteralConstOfWrongWordSize {
                 expected_size: 2,
                 actual_size: self.0.len(),
-            })
+            }
+            .into())
         }
     }
 
@@ -106,21 +107,24 @@ impl LiteralConst {
         if self.0.len() == 1 {
             Ok(self.0[0].0)
         } else {
-            Err(DecodeError::LiteralConstOfWrongWordSize {
+            Err(DecodeErrorKind::LiteralConstOfWrongWordSize {
                 expected_size: 1,
                 actual_size: self.0.len(),
-            })
+            }
+            .into())
         }
     }
 
     pub fn as_u16(&self) -> Result<u16, DecodeError> {
         let value = self.as_u32()?;
-        u16::try_from(value).map_err(|_| DecodeError::LiteralConstTooLarge { value, bits: 16 })
+        u16::try_from(value)
+            .map_err(|_| DecodeErrorKind::LiteralConstTooLarge { value, bits: 16 }.into())
     }
 
     pub fn as_u8(&self) -> Result<u8, DecodeError> {
         let value = self.as_u32()?;
-        u8::try_from(value).map_err(|_| DecodeError::LiteralConstTooLarge { value, bits: 8 })
+        u8::try_from(value)
+            .map_err(|_| DecodeErrorKind::LiteralConstTooLarge { value, bits: 8 }.into())
     }
 }
 
@@ -169,7 +173,7 @@ unsafe impl OperandEncoding for LiteralConst {
 
     #[inline]
     fn decode(_: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
-        Err(DecodeError::LiteralConstNotLastOperand)
+        Err(DecodeErrorKind::LiteralConstNotLastOperand.into())
     }
 
     #[inline]

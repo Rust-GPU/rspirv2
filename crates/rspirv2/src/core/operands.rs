@@ -696,10 +696,11 @@ unsafe impl OperandEncoding for SourceLanguage {
             12u32 => Self::Zig,
             13u32 => Self::Rust,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(SourceLanguage),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -778,10 +779,11 @@ unsafe impl OperandEncoding for ExecutionModel {
             5364u32 => Self::TaskEXT,
             5365u32 => Self::MeshEXT,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(ExecutionModel),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -838,10 +840,11 @@ unsafe impl OperandEncoding for AddressingModel {
             2u32 => Self::Physical64,
             5348u32 => Self::PhysicalStorageBuffer64,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(AddressingModel),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -885,10 +888,11 @@ unsafe impl OperandEncoding for MemoryModel {
             2u32 => Self::OpenCL,
             3u32 => Self::Vulkan,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(MemoryModel),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -1548,10 +1552,11 @@ unsafe impl OperandEncoding for ExecutionMode {
             6462u32 => Self::MaximumRegistersIdINTEL(OperandEncoding::decode(&mut *reader)?),
             6463u32 => Self::NamedMaximumRegistersINTEL(OperandEncoding::decode(&mut *reader)?),
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(ExecutionMode),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -1866,10 +1871,11 @@ unsafe impl OperandEncoding for StorageClass {
             5936u32 => Self::DeviceOnlyALTERA,
             5937u32 => Self::HostOnlyALTERA,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(StorageClass),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -1945,10 +1951,11 @@ unsafe impl OperandEncoding for Dim {
             6u32 => Self::SubpassData,
             4173u32 => Self::TileImageDataEXT,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(Dim),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -1997,10 +2004,11 @@ unsafe impl OperandEncoding for SamplerAddressingMode {
             3u32 => Self::Repeat,
             4u32 => Self::RepeatMirrored,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(SamplerAddressingMode),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -2040,10 +2048,11 @@ unsafe impl OperandEncoding for SamplerFilterMode {
             0u32 => Self::Nearest,
             1u32 => Self::Linear,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(SamplerFilterMode),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -2160,10 +2169,11 @@ unsafe impl OperandEncoding for ImageFormat {
             40u32 => Self::R64ui,
             41u32 => Self::R64i,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(ImageFormat),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -2276,10 +2286,11 @@ unsafe impl OperandEncoding for ImageChannelOrder {
             18u32 => Self::sBGRA,
             19u32 => Self::ABGR,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(ImageChannelOrder),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -2382,10 +2393,11 @@ unsafe impl OperandEncoding for ImageChannelDataType {
             25u32 => Self::UnormInt12X4EXT,
             26u32 => Self::UnormInt14X2EXT,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(ImageChannelDataType),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -2450,10 +2462,11 @@ unsafe impl OperandEncoding for FPRoundingMode {
             2u32 => Self::RTP,
             3u32 => Self::RTN,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(FPRoundingMode),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -2492,10 +2505,11 @@ unsafe impl OperandEncoding for FPDenormMode {
             0u32 => Self::Preserve,
             1u32 => Self::FlushToZero,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(FPDenormMode),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -2544,10 +2558,11 @@ unsafe impl OperandEncoding for QuantizationModes {
             6u32 => Self::RND_CONV,
             7u32 => Self::RND_CONV_ODD,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(QuantizationModes),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -2590,10 +2605,11 @@ unsafe impl OperandEncoding for FPOperationMode {
             0u32 => Self::IEEE,
             1u32 => Self::ALT,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(FPOperationMode),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -2634,10 +2650,11 @@ unsafe impl OperandEncoding for OverflowModes {
             2u32 => Self::SAT_ZERO,
             3u32 => Self::SAT_SYM,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(OverflowModes),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -2678,10 +2695,11 @@ unsafe impl OperandEncoding for LinkageType {
             1u32 => Self::Import,
             2u32 => Self::LinkOnceODR,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(LinkageType),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -2721,10 +2739,11 @@ unsafe impl OperandEncoding for AccessQualifier {
             1u32 => Self::WriteOnly,
             2u32 => Self::ReadWrite,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(AccessQualifier),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -2766,10 +2785,11 @@ unsafe impl OperandEncoding for HostAccessQualifier {
             2u32 => Self::WriteINTEL,
             3u32 => Self::ReadWriteINTEL,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(HostAccessQualifier),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -2822,10 +2842,11 @@ unsafe impl OperandEncoding for FunctionParameterAttribute {
             7u32 => Self::NoReadWrite,
             5940u32 => Self::RuntimeAlignedALTERA,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(FunctionParameterAttribute),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -3858,10 +3879,11 @@ unsafe impl OperandEncoding for Decoration {
                 OperandEncoding::decode(&mut *reader)?,
             ),
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(Decoration),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -4416,10 +4438,11 @@ unsafe impl OperandEncoding for BuiltIn {
             5436u32 => Self::ClusterIDNV,
             6021u32 => Self::CullMaskKHR,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(BuiltIn),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -4609,10 +4632,11 @@ unsafe impl OperandEncoding for Scope {
             5u32 => Self::QueueFamily,
             6u32 => Self::ShaderCallKHR,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(Scope),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -4665,10 +4689,11 @@ unsafe impl OperandEncoding for GroupOperation {
             7u32 => Self::PartitionedInclusiveScanEXT,
             8u32 => Self::PartitionedExclusiveScanEXT,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(GroupOperation),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -4716,10 +4741,11 @@ unsafe impl OperandEncoding for KernelEnqueueFlags {
             1u32 => Self::WaitKernel,
             2u32 => Self::WaitWorkGroup,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(KernelEnqueueFlags),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -5364,10 +5390,11 @@ unsafe impl OperandEncoding for Capability {
             6460u32 => Self::RegisterLimitsINTEL,
             6528u32 => Self::BindlessImagesINTEL,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(Capability),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -5840,10 +5867,11 @@ unsafe impl OperandEncoding for RayQueryIntersection {
             0u32 => Self::RayQueryCandidateIntersectionKHR,
             1u32 => Self::RayQueryCommittedIntersectionKHR,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(RayQueryIntersection),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -5886,10 +5914,11 @@ unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
             1u32 => Self::RayQueryCommittedIntersectionTriangleKHR,
             2u32 => Self::RayQueryCommittedIntersectionGeneratedKHR,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(RayQueryCommittedIntersectionType),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -5933,10 +5962,11 @@ unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
             0u32 => Self::RayQueryCandidateIntersectionTriangleKHR,
             1u32 => Self::RayQueryCandidateIntersectionAABBKHR,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(RayQueryCandidateIntersectionType),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -5976,10 +6006,11 @@ unsafe impl OperandEncoding for PackedVectorFormat {
         Ok(match variant {
             0u32 => Self::PackedVectorFormat4x8Bit,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(PackedVectorFormat),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -6068,10 +6099,11 @@ unsafe impl OperandEncoding for CooperativeMatrixLayout {
             4202u32 => Self::RowBlockedInterleavedARM,
             4203u32 => Self::ColumnBlockedInterleavedARM,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(CooperativeMatrixLayout),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -6114,10 +6146,11 @@ unsafe impl OperandEncoding for CooperativeMatrixUse {
             1u32 => Self::MatrixBKHR,
             2u32 => Self::MatrixAccumulatorKHR,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(CooperativeMatrixUse),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -6201,10 +6234,11 @@ unsafe impl OperandEncoding for TensorClampMode {
             3u32 => Self::Repeat,
             4u32 => Self::RepeatMirrored,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(TensorClampMode),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -6282,10 +6316,11 @@ unsafe impl OperandEncoding for InitializationModeQualifier {
             0u32 => Self::InitOnDeviceReprogramALTERA,
             1u32 => Self::InitOnDeviceResetALTERA,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(InitializationModeQualifier),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -6330,10 +6365,11 @@ unsafe impl OperandEncoding for LoadCacheControl {
             3u32 => Self::InvalidateAfterReadINTEL,
             4u32 => Self::ConstCachedINTEL,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(LoadCacheControl),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -6377,10 +6413,11 @@ unsafe impl OperandEncoding for StoreCacheControl {
             2u32 => Self::WriteBackINTEL,
             3u32 => Self::StreamingINTEL,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(StoreCacheControl),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -6417,10 +6454,11 @@ unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
         Ok(match variant {
             0u32 => Self::AutoINTEL,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(NamedMaximumNumberOfRegisters),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -6537,10 +6575,11 @@ unsafe impl OperandEncoding for FPEncoding {
             4214u32 => Self::Float8E4M3EXT,
             4215u32 => Self::Float8E5M2EXT,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(FPEncoding),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -6582,10 +6621,11 @@ unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
             2u32 => Self::InferencingOptimalNV,
             3u32 => Self::TrainingOptimalNV,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(CooperativeVectorMatrixLayout),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }
@@ -6650,10 +6690,11 @@ unsafe impl OperandEncoding for ComponentType {
             1000491002u32 => Self::FloatE4M3NV,
             1000491003u32 => Self::FloatE5M2NV,
             _ => {
-                return Err(DecodeError::UnknownEnumVariant {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(ComponentType),
                     variant,
-                });
+                }
+                .into());
             }
         })
     }

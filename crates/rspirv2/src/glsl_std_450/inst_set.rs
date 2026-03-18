@@ -263,7 +263,7 @@ impl InstEncoding for GlslInstSet {
             80u16 => Self::NMax(<NMax as InstEncoding>::decode(reader)?),
             81u16 => Self::NClamp(<NClamp as InstEncoding>::decode(reader)?),
             _ => {
-                return Err(DecodeError::UnknownOpCode { opcode });
+                return Err(DecodeErrorKind::UnknownOpCode { opcode }.into());
             }
         })
     }

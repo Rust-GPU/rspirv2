@@ -1,5 +1,5 @@
 use crate::Word;
-use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
+use crate::binary::{DecodeError, DecodeErrorKind, EncodeError, OperandReader, WordWriter};
 use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandDisContext, OperandEncoding};
 use anstyle::AnsiColor;
@@ -66,7 +66,7 @@ unsafe impl OperandEncoding for LiteralString {
         if found_null_terminator {
             Ok(Self(String::from_utf8(bytes)?))
         } else {
-            Err(DecodeError::StringNotNulTerminated)
+            Err(DecodeErrorKind::StringNotNulTerminated.into())
         }
     }
 

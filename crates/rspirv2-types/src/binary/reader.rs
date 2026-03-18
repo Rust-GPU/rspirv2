@@ -1,5 +1,5 @@
 use crate::Word;
-use crate::binary::DecodeError;
+use crate::binary::{DecodeError, DecodeErrorKind};
 use crate::meta::InstMeta;
 use std::cmp::Ordering;
 use std::fmt::{Display, Formatter};
@@ -39,15 +39,15 @@ impl<'a> InstReader<'a> {
     /// words not associated with this instruction. Use [`Self::len`] to figure out how many words have been consumed
     /// by this instruction.
     pub fn from_words(words: &'a [Word]) -> Result<Self, DecodeError> {
-        let first = words.first().ok_or(DecodeError::OutOfInstructions)?;
+        let first = words.first().ok_or(DecodeErrorKind::OutOfInstructions)?;
         let (_, op_len) = first.to_op();
         if op_len == 0 {
             // len must at least be 1, as it includes the op Word itself
-            return Err(DecodeError::InstructionZeroSized);
+            return Err(DecodeErrorKind::InstructionZeroSized.into());
         }
         let inst_words = words
             .get(0..op_len)
-            .ok_or(DecodeError::InstructionTooLong {
+            .ok_or(DecodeErrorKind::InstructionTooLong {
                 op_len,
                 module_remaining: words.len(),
             })?;
@@ -72,11 +72,12 @@ impl<'a> InstReader<'a> {
     pub fn check_opcode(&self, meta: &InstMeta) -> Result<OperandReader<'a>, DecodeError> {
         let opcode = self.opcode();
         if opcode != meta.opcode {
-            Err(DecodeError::WrongOpCode {
+            Err(DecodeErrorKind::WrongOpCode {
                 name: meta.opname,
                 expected: meta.opcode,
                 actual: opcode,
-            })
+            }
+            .into())
         } else {
             Ok(self.operand_reader())
         }
@@ -142,19 +143,21 @@ impl<'a> OperandReader<'a> {
     pub fn finalize(&self) -> Result<(), DecodeError> {
         let remaining = self.remaining();
         match 0.cmp(&remaining) {
-            Ordering::Less => Err(DecodeError::InstructionWithAdditionalOperants {
+            Ordering::Less => Err(DecodeErrorKind::InstructionWithAdditionalOperants {
                 param_len: self.params.len(),
                 remaining,
-            }),
+            }
+            .into()),
             Ordering::Equal => Ok(()),
             Ordering::Greater => Err(self.err_too_many_words()),
         }
     }
 
     fn err_too_many_words(&self) -> DecodeError {
-        DecodeError::InstructionDecodePulledTooManyWords {
+        DecodeErrorKind::InstructionDecodePulledTooManyWords {
             param_len: self.len(),
         }
+        .into()
     }
 
     /// View the *remaining* Words as a slice, does not advance the `params_offset`.

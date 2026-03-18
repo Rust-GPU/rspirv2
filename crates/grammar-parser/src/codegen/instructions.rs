@@ -220,7 +220,7 @@ pub fn write_inst_enum(
                     let opcode = reader.opcode();
                     Ok(match opcode {
                         #(#decode_match)*
-                        _ => return Err(DecodeError::UnknownOpCode { opcode }),
+                        _ => return Err(DecodeErrorKind::UnknownOpCode { opcode }.into()),
                     })
                 }
 
