@@ -47,6 +47,22 @@ pub trait InstEncoding: Sized + Debug + Eq {
     }
 }
 
+impl InstEncoding for () {
+    fn encode(&self, _: &mut impl WordWriter) -> Result<(), EncodeError> {
+        Ok(())
+    }
+
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        Err(DecodeError::UnknownOpCode {
+            opcode: reader.opcode(),
+        })
+    }
+
+    fn dis_fmt(&self, _: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
+        Ok(())
+    }
+}
+
 pub struct InstDis<'a, T: InstEncoding>(&'a T, &'a DisContext);
 
 impl<'a, T: InstEncoding> Display for InstDis<'a, T> {

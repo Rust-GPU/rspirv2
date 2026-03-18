@@ -5,7 +5,7 @@ use std::fmt::{Debug, Display, Formatter};
 use std::str::Utf8Error;
 use std::string::FromUtf8Error;
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub enum DecodeError {
     UnknownOpCode {
         opcode: u16,

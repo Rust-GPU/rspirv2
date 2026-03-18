@@ -1,6 +1,5 @@
 use clap::Parser;
-use rspirv2::core::inst::{OpName, OpSpecConstant};
-use rspirv2::inst::InstEncoding;
+use rspirv2::core::inst_set::CoreInstSet;
 use rspirv2::module::Module;
 use rspirv2::operand::IdResult;
 use std::collections::HashMap;
@@ -14,20 +13,18 @@ pub struct Args {
 
 impl Args {
     pub fn run(&self, f: &mut impl std::io::Write) -> anyhow::Result<()> {
-        let module = Module::from_bytes(std::fs::read(&self.path)?.as_slice())?;
+        let module = Module::<CoreInstSet>::from_bytes(std::fs::read(&self.path)?.as_slice())?;
 
         let mut names = HashMap::<IdResult, String>::new();
-        let mut module_reader = module.reader();
-        while let Some(inst) = module_reader.next()? {
-            if let Some(inst) = OpName::try_decode(inst)? {
+        for inst in module.iter() {
+            if let CoreInstSet::Name(inst) = inst {
                 names.insert(inst.target.0, inst.name.0);
             }
         }
 
         let mut spec_const_name_to_value = HashMap::<String, _>::new();
-        let mut module_reader = module.reader();
-        while let Some(inst) = module_reader.next()? {
-            if let Some(inst) = OpSpecConstant::try_decode(inst)?
+        for inst in module.iter() {
+            if let CoreInstSet::SpecConstant(inst) = inst
                 && let Some(name) = names.get(&inst.id_result.unwrap())
             {
                 spec_const_name_to_value.insert(name.clone(), inst.value.as_u32()?);
