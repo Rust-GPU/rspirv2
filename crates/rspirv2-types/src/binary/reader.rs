@@ -30,33 +30,6 @@ impl Display for InstOffset {
     }
 }
 
-/// Reader for an entire module
-pub struct ModuleReader<'a> {
-    words: &'a [Word],
-    offset: InstOffset,
-}
-
-impl<'a> ModuleReader<'a> {
-    pub fn new(words: &'a [Word]) -> Self {
-        Self {
-            words,
-            offset: InstOffset(0),
-        }
-    }
-
-    #[allow(clippy::should_implement_trait)]
-    pub fn next(&mut self) -> Result<Option<InstReader<'a>>, DecodeError> {
-        match InstReader::from_words(&self.words[*self.offset..]) {
-            Ok(inst_reader) => {
-                *self.offset += inst_reader.len();
-                Ok(Some(inst_reader))
-            }
-            Err(DecodeError::OutOfInstructions) => Ok(None),
-            Err(e) => Err(e),
-        }
-    }
-}
-
 /// Reader for a single instruction
 #[derive(Copy, Clone, Debug)]
 pub struct InstReader<'a>(&'a [Word]);
