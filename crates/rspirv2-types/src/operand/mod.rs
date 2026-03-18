@@ -4,7 +4,9 @@ mod literal_float;
 mod literal_integer;
 mod literal_string;
 
-use crate::binary::{DecodeError, EncodeError, OperandReader, WordCounter, WordWriter};
+use crate::binary::{
+    DecodeError, DecodeErrorKind, EncodeError, OperandReader, WordCounter, WordWriter,
+};
 use crate::dis::DisContext;
 use crate::meta::{OperandKind, Quantifier};
 pub use id::*;
@@ -259,10 +261,11 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
         let mut vec = if let Some(fixed_len) = T::FIXED_LEN {
             let remaining = reader.remaining();
             if !remaining.is_multiple_of(fixed_len) {
-                return Err(DecodeError::InstructionWithMismatchedVariableOperants {
+                return Err(DecodeErrorKind::InstructionWithMismatchedVariableOperants {
                     op_len: reader.remaining(),
                     expected_multiple: fixed_len,
-                });
+                }
+                .into());
             }
             Vec::with_capacity(remaining / fixed_len)
         } else {
@@ -310,10 +313,11 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
         let mut vec = if let Some(fixed_len) = T::FIXED_LEN {
             let remaining = reader.remaining();
             if !remaining.is_multiple_of(fixed_len) {
-                return Err(DecodeError::InstructionWithMismatchedVariableOperants {
+                return Err(DecodeErrorKind::InstructionWithMismatchedVariableOperants {
                     op_len: reader.remaining(),
                     expected_multiple: fixed_len,
-                });
+                }
+                .into());
             }
             SmallVec::with_capacity(remaining / fixed_len)
         } else {

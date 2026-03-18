@@ -1,5 +1,5 @@
 use crate::Word;
-use crate::binary::{DecodeError, InstOffset, InstReader};
+use crate::binary::{DecodeError, DecodeErrorKind, InstOffset, InstReader};
 use crate::dis::{DisInstSlice, InstSetDisCtx, IntoDisContext};
 use crate::inst::{InstEncoding, InstRef};
 use std::fmt::{Debug, Formatter};
@@ -356,7 +356,9 @@ impl<'a> Iterator for RawInstOffsetRefIter<'a> {
                     *self.offset += inst_reader.len();
                     Some(Ok((old_offset, inst_reader)))
                 }
-                Err(DecodeError::OutOfInstructions) => None,
+                Err(DecodeError {
+                    kind: DecodeErrorKind::OutOfInstructions,
+                }) => None,
                 Err(e) => {
                     self.offset = InstOffset(!0);
                     Some(Err(e))

@@ -6,7 +6,7 @@ use std::str::Utf8Error;
 use std::string::FromUtf8Error;
 
 #[derive(Clone, PartialEq)]
-pub enum DecodeError {
+pub enum DecodeErrorKind {
     UnknownOpCode {
         opcode: u16,
     },
@@ -55,7 +55,7 @@ pub enum DecodeError {
     },
 }
 
-impl Display for DecodeError {
+impl Display for DecodeErrorKind {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::UnknownOpCode { opcode } => write!(
@@ -139,6 +139,65 @@ impl Display for DecodeError {
     }
 }
 
+impl Debug for DecodeErrorKind {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        Display::fmt(self, f)
+    }
+}
+
+impl Error for DecodeErrorKind {}
+
+#[derive(Clone, PartialEq)]
+pub struct DecodeError {
+    pub kind: DecodeErrorKind,
+}
+
+impl DecodeError {
+    #[inline]
+    pub fn new(kind: DecodeErrorKind) -> Self {
+        Self { kind }
+    }
+
+    #[inline]
+    pub fn invalid_bitflags<T: Flags<Bits = u32>>(name: &'static str, bits: u32) -> Self {
+        Self::new(DecodeErrorKind::InvalidBitflags {
+            name,
+            unknown: bits & T::all().bits(),
+            bits,
+        })
+    }
+}
+
+impl From<DecodeErrorKind> for DecodeError {
+    fn from(variant: DecodeErrorKind) -> Self {
+        Self::new(variant)
+    }
+}
+
+impl From<FromBytesUntilNulError> for DecodeError {
+    fn from(_: FromBytesUntilNulError) -> Self {
+        Self::new(DecodeErrorKind::StringNotNulTerminated)
+    }
+}
+
+impl From<Utf8Error> for DecodeError {
+    fn from(value: Utf8Error) -> Self {
+        Self::new(DecodeErrorKind::Utf8Error(value))
+    }
+}
+
+impl From<FromUtf8Error> for DecodeError {
+    fn from(value: FromUtf8Error) -> Self {
+        Self::new(DecodeErrorKind::Utf8Error(value.utf8_error()))
+    }
+}
+
+impl Display for DecodeError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.kind)
+    }
+}
+
 impl Debug for DecodeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         Display::fmt(self, f)
@@ -146,32 +205,3 @@ impl Debug for DecodeError {
 }
 
 impl Error for DecodeError {}
-
-impl DecodeError {
-    #[inline]
-    pub fn invalid_bitflags<T: Flags<Bits = u32>>(name: &'static str, bits: u32) -> Self {
-        Self::InvalidBitflags {
-            name,
-            unknown: bits & T::all().bits(),
-            bits,
-        }
-    }
-}
-
-impl From<FromBytesUntilNulError> for DecodeError {
-    fn from(_: FromBytesUntilNulError) -> Self {
-        Self::StringNotNulTerminated
-    }
-}
-
-impl From<Utf8Error> for DecodeError {
-    fn from(value: Utf8Error) -> Self {
-        Self::Utf8Error(value)
-    }
-}
-
-impl From<FromUtf8Error> for DecodeError {
-    fn from(value: FromUtf8Error) -> Self {
-        Self::Utf8Error(value.utf8_error())
-    }
-}

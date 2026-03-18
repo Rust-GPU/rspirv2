@@ -17,7 +17,7 @@ impl InstEncoding for DebugPrintfInstSet {
         Ok(match opcode {
             1u16 => Self::DebugPrintf(<DebugPrintf as InstEncoding>::decode(reader)?),
             _ => {
-                return Err(DecodeError::UnknownOpCode { opcode });
+                return Err(DecodeErrorKind::UnknownOpCode { opcode }.into());
             }
         })
     }
