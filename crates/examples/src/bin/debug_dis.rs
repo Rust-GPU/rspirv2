@@ -1,6 +1,5 @@
 use clap::Parser;
 use rspirv2::core::inst_set::CoreInstSet;
-use rspirv2::inst::InstEncoding;
 use rspirv2::module::Module;
 use std::path::PathBuf;
 
@@ -13,10 +12,8 @@ pub struct Args {
 impl Args {
     pub fn run(&self) -> anyhow::Result<()> {
         let binary = std::fs::read(&self.path)?;
-        let module = Module::from_bytes(binary.as_slice())?;
-        let mut module_reader = module.reader();
-        while let Some(inst) = module_reader.next()? {
-            let inst = CoreInstSet::decode(inst)?;
+        let module = Module::<CoreInstSet>::from_bytes(binary.as_slice())?;
+        for inst in module.iter() {
             println!("{:?}", inst);
         }
         Ok(())

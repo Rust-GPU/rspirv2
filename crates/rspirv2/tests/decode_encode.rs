@@ -1,3 +1,4 @@
+use rspirv2::core::inst_set::CoreInstSet;
 use rspirv2::module::Module;
 use rspirv2_types::inst::InstEncoding;
 use rspirv2_types::module::SPIRV_MAGIC;
@@ -22,13 +23,11 @@ fn test_bla_be() -> anyhow::Result<()> {
 }
 
 fn roundtrip_spv(spv: &[u8]) -> anyhow::Result<()> {
-    let module = Module::from_bytes(spv)?;
-    let mut module_reader = module.reader();
+    let module = Module::<CoreInstSet>::from_bytes(spv)?;
     let mut writer = Vec::new();
-    while let Some(inst) = module_reader.next()? {
-        let inst = rspirv2::core::inst_set::CoreInstSet::decode(inst)?;
+    for inst in module.iter() {
         inst.encode(&mut writer)?;
     }
-    assert_eq!(module.instructions(), writer.as_slice());
+    assert_eq!(module.as_slice(), writer.as_slice());
     Ok(())
 }
