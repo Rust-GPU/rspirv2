@@ -56,7 +56,6 @@ unsafe impl OperandEncoding for LiteralString {
     }
 
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
-        let inst_offset = reader.inst_offset();
         let mut found_null_terminator = false;
         let bytes = reader
             .flat_map(|w| w.to_le_bytes().into_iter())
@@ -66,14 +65,9 @@ unsafe impl OperandEncoding for LiteralString {
             })
             .collect::<Vec<_>>();
         if found_null_terminator {
-            Ok(Self(String::from_utf8(bytes).map_err(|error| {
-                DecodeError::Utf8Error {
-                    inst_offset,
-                    error: error.utf8_error(),
-                }
-            })?))
+            Ok(Self(String::from_utf8(bytes)?))
         } else {
-            Err(DecodeError::StringNotNulTerminated { inst_offset })
+            Err(DecodeError::StringNotNulTerminated)
         }
     }
 
@@ -122,7 +116,7 @@ mod tests {
         let mut spirv = Vec::<Word>::default();
         LiteralString(str.to_string()).encode(&mut spirv)?;
         let read =
-            LiteralString::decode(&mut InstReader::new(0, spirv.as_slice(), 0).operand_reader())?;
+            LiteralString::decode(&mut InstReader::new(0, spirv.as_slice()).operand_reader())?;
         assert_eq!(str, read.as_str());
         assert_eq!(
             expected_spirv
@@ -168,7 +162,7 @@ mod tests {
                 .map(Word::from_le_bytes)
                 .collect::<Vec<_>>();
             let read =
-                LiteralString::decode(&mut InstReader::new(0, words.as_slice(), 0).operand_reader())
+                LiteralString::decode(&mut InstReader::new(0, words.as_slice()).operand_reader())
                     .ok();
             assert_eq!(read.as_ref().map(|s| s.as_str()), str);
         };

@@ -6,19 +6,19 @@ use std::ops::Deref;
 
 /// Reader for an entire module
 pub struct ModuleReader<'a> {
-    data: &'a [Word],
+    words: &'a [Word],
     offset: usize,
 }
 
 impl<'a> ModuleReader<'a> {
-    pub fn new(data: &'a [Word]) -> Self {
-        Self { data, offset: 0 }
+    pub fn new(words: &'a [Word]) -> Self {
+        Self { words, offset: 0 }
     }
 
     #[allow(clippy::should_implement_trait)]
     pub fn next(&mut self) -> Result<Option<InstReader<'a>>, DecodeError> {
-        let inst_offset = self.offset;
-        let first = match self.data.get(inst_offset) {
+        let words = &self.words[self.offset..];
+        let first = match words.first() {
             None => {
                 // out of instructions
                 return Ok(None);
@@ -28,18 +28,16 @@ impl<'a> ModuleReader<'a> {
         let (opcode, op_len) = first.to_op();
         if op_len == 0 {
             // len must at least be 1, as it includes the op Word itself
-            return Err(DecodeError::InstructionZeroSized { inst_offset });
+            return Err(DecodeError::InstructionZeroSized);
         }
-        let params = self
-            .data
-            .get((inst_offset + 1)..(inst_offset + op_len))
+        let params = words
+            .get(1..op_len)
             .ok_or(DecodeError::InstructionTooLong {
-                inst_offset,
                 op_len,
-                module_remaining: self.data.len(),
+                module_remaining: words.len(),
             })?;
         self.offset += op_len;
-        Ok(Some(InstReader::new(opcode, params, inst_offset)))
+        Ok(Some(InstReader::new(opcode, params)))
     }
 }
 
@@ -50,16 +48,11 @@ pub struct InstReader<'a> {
     opcode: u16,
     /// slice to the parameters of the instruction
     params: &'a [Word],
-    inst_offset: usize,
 }
 
 impl<'a> InstReader<'a> {
-    pub fn new(opcode: u16, params: &'a [Word], inst_offset: usize) -> Self {
-        Self {
-            opcode,
-            params,
-            inst_offset,
-        }
+    pub fn new(opcode: u16, params: &'a [Word]) -> Self {
+        Self { opcode, params }
     }
 
     pub fn opcode(&self) -> u16 {
@@ -133,7 +126,6 @@ impl<'a> OperandReader<'a> {
         let remaining = self.remaining();
         match 0.cmp(&remaining) {
             Ordering::Less => Err(DecodeError::InstructionWithAdditionalOperants {
-                inst_offset: self.inst_offset,
                 op_len: self.params.len(),
                 remaining,
             }),
@@ -143,10 +135,7 @@ impl<'a> OperandReader<'a> {
     }
 
     fn err_too_many_words(&self) -> DecodeError {
-        DecodeError::InstructionDecodePulledTooManyWords {
-            inst_offset: self.inst_offset,
-            op_len: self.params.len(),
-        }
+        DecodeError::InstructionDecodePulledTooManyWords { op_len: self.len() }
     }
 
     /// View the *remaining* Words as a slice, does not advance the `params_offset`.
@@ -165,12 +154,6 @@ impl<'a> OperandReader<'a> {
     #[inline]
     pub fn advance_by(&mut self, count: usize) {
         self.params_offset += count;
-    }
-
-    /// Offset of the instruction, purely informational, for error reporting
-    #[inline]
-    pub fn inst_offset(&self) -> usize {
-        self.params_offset
     }
 
     /// len of the params
