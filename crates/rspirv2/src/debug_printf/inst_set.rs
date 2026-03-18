@@ -9,7 +9,7 @@ impl InstEncoding for DebugPrintfInstSet {
             Self::DebugPrintf(inst) => InstEncoding::encode(inst, writer),
         }
     }
-    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
         let opcode = reader.opcode();
         Ok(match opcode {
             1u16 => Self::DebugPrintf(<DebugPrintf as InstEncoding>::decode(reader)?),

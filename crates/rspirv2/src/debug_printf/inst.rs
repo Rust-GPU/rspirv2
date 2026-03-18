@@ -20,7 +20,7 @@ impl InstEncoding for DebugPrintf {
         OperandEncoding::encode(&self.id_ref, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             format: OperandEncoding::decode(&mut op_reader)?,

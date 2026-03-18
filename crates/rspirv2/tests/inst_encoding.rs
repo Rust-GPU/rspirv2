@@ -15,9 +15,9 @@ fn roundtrip<T: Inst>(inst: T) {
     let mut spirv = Vec::<Word>::new();
     inst.encode(&mut spirv).unwrap();
     let mut mod_reader = ModuleReader::new(spirv.as_slice());
-    let mut inst_reader = mod_reader.next().unwrap().unwrap();
+    let inst_reader = mod_reader.next().unwrap().unwrap();
     assert!(matches!(mod_reader.next(), Ok(None)));
-    let decoded = T::decode(&mut inst_reader).unwrap();
+    let decoded = T::decode(inst_reader).unwrap();
     assert_eq!(inst, decoded);
 }
 
@@ -79,9 +79,9 @@ fn test_op_constant_sequence() -> anyhow::Result<()> {
     c3.encode(&mut spirv)?;
 
     let mut mod_reader = ModuleReader::new(spirv.as_slice());
-    let d1 = OpConstant::decode(&mut mod_reader.next()?.context("No further ops")?)?;
-    let d2 = OpConstant::decode(&mut mod_reader.next()?.context("No further ops")?)?;
-    let d3 = OpConstant::decode(&mut mod_reader.next()?.context("No further ops")?)?;
+    let d1 = OpConstant::decode(mod_reader.next()?.context("No further ops")?)?;
+    let d2 = OpConstant::decode(mod_reader.next()?.context("No further ops")?)?;
+    let d3 = OpConstant::decode(mod_reader.next()?.context("No further ops")?)?;
     assert_eq!(c1, d1);
     assert_eq!(c2, d2);
     assert_eq!(c3, d3);
@@ -160,15 +160,15 @@ fn test_non_trivial_code() -> anyhow::Result<()> {
 
     let mut mod_reader = ModuleReader::new(spirv.words.as_slice());
     let mut decode = || mod_reader.next()?.context("No further ops");
-    assert_eq!(u32_op, OpTypeInt::decode(&mut decode()?)?);
-    assert_eq!(u32_1_op, OpConstant::decode(&mut decode()?)?);
-    assert_eq!(add_op, OpIAdd::decode(&mut decode()?)?);
-    assert_eq!(f32_op, OpTypeFloat::decode(&mut decode()?)?);
-    assert_eq!(u_to_f_op, OpConvertUToF::decode(&mut decode()?)?);
-    assert_eq!(f32_ptr_op, OpTypePointer::decode(&mut decode()?)?);
-    assert_eq!(var_out_op, OpVariable::decode(&mut decode()?)?);
-    assert_eq!(var_out_location_op, OpDecorate::decode(&mut decode()?)?);
-    assert_eq!(store_op, OpStore::decode(&mut decode()?)?);
+    assert_eq!(u32_op, OpTypeInt::decode(decode()?)?);
+    assert_eq!(u32_1_op, OpConstant::decode(decode()?)?);
+    assert_eq!(add_op, OpIAdd::decode(decode()?)?);
+    assert_eq!(f32_op, OpTypeFloat::decode(decode()?)?);
+    assert_eq!(u_to_f_op, OpConvertUToF::decode(decode()?)?);
+    assert_eq!(f32_ptr_op, OpTypePointer::decode(decode()?)?);
+    assert_eq!(var_out_op, OpVariable::decode(decode()?)?);
+    assert_eq!(var_out_location_op, OpDecorate::decode(decode()?)?);
+    assert_eq!(store_op, OpStore::decode(decode()?)?);
 
     Ok(())
 }

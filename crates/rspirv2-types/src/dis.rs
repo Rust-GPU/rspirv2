@@ -122,8 +122,8 @@ impl<'a, ISA: InstEncoding> DisModule<'a, ISA> {
 impl<'a, ISA: InstEncoding> Display for DisModule<'a, ISA> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         let mut reader = ModuleReader::new(self.words);
-        while let Some(mut inst) = reader.next().map_err(|_| std::fmt::Error)? {
-            let inst = ISA::decode(&mut inst).map_err(|_| std::fmt::Error)?;
+        while let Some(inst) = reader.next().map_err(|_| std::fmt::Error)? {
+            let inst = ISA::decode(inst).map_err(|_| std::fmt::Error)?;
             writeln!(f, "{}", inst.dis(&self.dis))?;
         }
         Ok(())
