@@ -15,8 +15,8 @@ impl Args {
         let binary = std::fs::read(&self.path)?;
         let module = Module::from_bytes(binary.as_slice())?;
         let mut module_reader = module.reader();
-        while let Some(mut inst) = module_reader.next()? {
-            let inst = CoreInstSet::decode(&mut inst)?;
+        while let Some(inst) = module_reader.next()? {
+            let inst = CoreInstSet::decode(inst)?;
             println!("{:?}", inst);
         }
         Ok(())

@@ -18,16 +18,16 @@ impl Args {
 
         let mut names = HashMap::<IdResult, String>::new();
         let mut module_reader = module.reader();
-        while let Some(mut inst) = module_reader.next()? {
-            if let Some(inst) = OpName::try_decode(&mut inst)? {
+        while let Some(inst) = module_reader.next()? {
+            if let Some(inst) = OpName::try_decode(inst)? {
                 names.insert(inst.target.0, inst.name.0);
             }
         }
 
         let mut spec_const_name_to_value = HashMap::<String, _>::new();
         let mut module_reader = module.reader();
-        while let Some(mut inst) = module_reader.next()? {
-            if let Some(inst) = OpSpecConstant::try_decode(&mut inst)?
+        while let Some(inst) = module_reader.next()? {
+            if let Some(inst) = OpSpecConstant::try_decode(inst)?
                 && let Some(name) = names.get(&inst.id_result.unwrap())
             {
                 spec_const_name_to_value.insert(name.clone(), inst.value.as_u32()?);

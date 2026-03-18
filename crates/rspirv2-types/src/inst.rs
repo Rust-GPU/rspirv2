@@ -21,13 +21,13 @@ pub trait InstEncoding: Sized + Debug + Eq {
     /// Decode this instruction from an [`InstReader`], error when opcode is unknown.
     ///
     /// See [`Self::try_decode`] for a variant that returns `None` when opcode is unknown.
-    fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError>;
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError>;
 
     /// Try to decode this instruction from an [`InstReader`], return `None` when the opcode is unknown.
     ///
     /// See [`Self::decode`] for a variant that errors when opcode is unknown.
     #[inline]
-    fn try_decode(reader: &mut InstReader<'_>) -> Result<Option<Self>, DecodeError> {
+    fn try_decode(reader: InstReader<'_>) -> Result<Option<Self>, DecodeError> {
         match Self::decode(reader) {
             Ok(e) => Ok(Some(e)),
             Err(DecodeError::WrongOpCode { .. } | DecodeError::UnknownOpCode { .. }) => Ok(None),

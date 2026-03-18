@@ -113,7 +113,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                     Ok(())
                 }
 
-                fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
+                fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
                     #reader reader.check_opcode(Self::META)?;
                     Ok(Self {
                         #(#members_non_last: OperandEncoding::decode(&mut op_reader)?,)*
@@ -188,7 +188,7 @@ pub fn write_inst_enum(
                     }
                 }
 
-                fn decode(reader: &mut InstReader<'_>) -> Result<Self, DecodeError> {
+                fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
                     let opcode = reader.opcode();
                     Ok(match opcode {
                         #(#decode_match)*
