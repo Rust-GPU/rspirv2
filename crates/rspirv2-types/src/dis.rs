@@ -1,9 +1,10 @@
 //! Module for Disassembly
 
 use crate::Word;
-use crate::binary::{DecodeError, ModuleReader};
+use crate::binary::DecodeError;
 use crate::inst::InstEncoding;
 use crate::operand::LiteralStringEscape;
+use crate::vec::InstIter;
 use anstyle::Style;
 use std::cell::Cell;
 use std::fmt::{Display, Formatter};
@@ -121,9 +122,7 @@ impl<'a, ISA: InstEncoding> DisModule<'a, ISA> {
 
 impl<'a, ISA: InstEncoding> Display for DisModule<'a, ISA> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        let mut reader = ModuleReader::new(self.words);
-        while let Some(inst) = reader.next().map_err(|_| std::fmt::Error)? {
-            let inst = ISA::decode(inst).map_err(|_| std::fmt::Error)?;
+        for inst in InstIter::<ISA>::from_words_unchecked(self.words) {
             writeln!(f, "{}", inst.dis(&self.dis))?;
         }
         Ok(())

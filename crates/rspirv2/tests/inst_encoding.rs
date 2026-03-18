@@ -1,24 +1,27 @@
-use anyhow::Context;
-use rspirv2::binary::{ModuleReader, VecInstWriter};
+use rspirv2::binary::VecInstWriter;
 use rspirv2::core::inst::{
     OpConstant, OpConvertUToF, OpDecorate, OpIAdd, OpNop, OpStore, OpTypeFloat, OpTypeInt,
     OpTypePointer, OpVariable,
 };
+use rspirv2::core::inst_set::CoreInstSet;
 use rspirv2::core::operands::{Decoration, StorageClass};
 use rspirv2::core::preamble::OpAccessChain;
 use rspirv2::operand::{IdRef, IdResult, IdResultType, LiteralConst, LiteralInteger};
 use rspirv2_types::Word;
 use rspirv2_types::binary::EncodeError;
 use rspirv2_types::inst::{Inst, InstEncoding};
+use rspirv2_types::vec::InstIter;
 
-fn roundtrip<T: Inst>(inst: T) {
+fn roundtrip<T: Inst>(inst: T)
+where
+    CoreInstSet: From<T>,
+{
     let mut spirv = Vec::<Word>::new();
     inst.encode(&mut spirv).unwrap();
-    let mut mod_reader = ModuleReader::new(spirv.as_slice());
-    let inst_reader = mod_reader.next().unwrap().unwrap();
-    assert!(matches!(mod_reader.next(), Ok(None)));
-    let decoded = T::decode(inst_reader).unwrap();
-    assert_eq!(inst, decoded);
+    let mut iter = InstIter::<CoreInstSet>::from_words_unchecked(&spirv);
+    let decoded = iter.next().unwrap();
+    assert!(iter.next().is_none());
+    assert_eq!(CoreInstSet::from(inst), decoded);
 }
 
 #[test]
@@ -78,13 +81,10 @@ fn test_op_constant_sequence() -> anyhow::Result<()> {
     c2.encode(&mut spirv)?;
     c3.encode(&mut spirv)?;
 
-    let mut mod_reader = ModuleReader::new(spirv.as_slice());
-    let d1 = OpConstant::decode(mod_reader.next()?.context("No further ops")?)?;
-    let d2 = OpConstant::decode(mod_reader.next()?.context("No further ops")?)?;
-    let d3 = OpConstant::decode(mod_reader.next()?.context("No further ops")?)?;
-    assert_eq!(c1, d1);
-    assert_eq!(c2, d2);
-    assert_eq!(c3, d3);
+    let mut iter = InstIter::<OpConstant>::from_words_unchecked(&spirv);
+    assert_eq!(c1, iter.next().unwrap());
+    assert_eq!(c2, iter.next().unwrap());
+    assert_eq!(c3, iter.next().unwrap());
 
     Ok(())
 }
@@ -158,17 +158,16 @@ fn test_non_trivial_code() -> anyhow::Result<()> {
     };
     spirv.push_mut(&mut store_op)?;
 
-    let mut mod_reader = ModuleReader::new(spirv.words.as_slice());
-    let mut decode = || mod_reader.next()?.context("No further ops");
-    assert_eq!(u32_op, OpTypeInt::decode(decode()?)?);
-    assert_eq!(u32_1_op, OpConstant::decode(decode()?)?);
-    assert_eq!(add_op, OpIAdd::decode(decode()?)?);
-    assert_eq!(f32_op, OpTypeFloat::decode(decode()?)?);
-    assert_eq!(u_to_f_op, OpConvertUToF::decode(decode()?)?);
-    assert_eq!(f32_ptr_op, OpTypePointer::decode(decode()?)?);
-    assert_eq!(var_out_op, OpVariable::decode(decode()?)?);
-    assert_eq!(var_out_location_op, OpDecorate::decode(decode()?)?);
-    assert_eq!(store_op, OpStore::decode(decode()?)?);
+    let mut iter = InstIter::<CoreInstSet>::from_words_unchecked(&spirv.words);
+    assert_eq!(Some(CoreInstSet::from(u32_op)), iter.next());
+    assert_eq!(Some(CoreInstSet::from(u32_1_op)), iter.next());
+    assert_eq!(Some(CoreInstSet::from(add_op)), iter.next());
+    assert_eq!(Some(CoreInstSet::from(f32_op)), iter.next());
+    assert_eq!(Some(CoreInstSet::from(u_to_f_op)), iter.next());
+    assert_eq!(Some(CoreInstSet::from(f32_ptr_op)), iter.next());
+    assert_eq!(Some(CoreInstSet::from(var_out_op)), iter.next());
+    assert_eq!(Some(CoreInstSet::from(var_out_location_op)), iter.next());
+    assert_eq!(Some(CoreInstSet::from(store_op)), iter.next());
 
     Ok(())
 }
