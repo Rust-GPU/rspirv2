@@ -1,19 +1,16 @@
 use super::preamble::*;
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct ImageOperands : u32 {
-    const None = 0u32; const Bias = 1u32; const Lod = 2u32; const Grad = 4u32; const
-    ConstOffset = 8u32; const Offset = 16u32; const ConstOffsets = 32u32; const Sample =
-    64u32; const MinLod = 128u32; #[doc = "Since SPIR-V 1.5"] const MakeTexelAvailable =
-    256u32; #[doc = "Since SPIR-V 1.5"] const MakeTexelVisible = 512u32; #[doc =
-    "Since SPIR-V 1.5"] const NonPrivateTexel = 1024u32; #[doc = "Since SPIR-V 1.5"]
-    const VolatileTexel = 2048u32; #[doc = "Since SPIR-V 1.4"] const SignExtend =
-    4096u32; #[doc = "Since SPIR-V 1.4"] const ZeroExtend = 8192u32; #[doc =
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
+    ImageOperandsBits : u32 { const None = 0u32; const Bias = 1u32; const Lod = 2u32;
+    const Grad = 4u32; const ConstOffset = 8u32; const Offset = 16u32; const ConstOffsets
+    = 32u32; const Sample = 64u32; const MinLod = 128u32; #[doc = "Since SPIR-V 1.5"]
+    const MakeTexelAvailable = 256u32; #[doc = "Since SPIR-V 1.5"] const MakeTexelVisible
+    = 512u32; #[doc = "Since SPIR-V 1.5"] const NonPrivateTexel = 1024u32; #[doc =
+    "Since SPIR-V 1.5"] const VolatileTexel = 2048u32; #[doc = "Since SPIR-V 1.4"] const
+    SignExtend = 4096u32; #[doc = "Since SPIR-V 1.4"] const ZeroExtend = 8192u32; #[doc =
     "Since SPIR-V 1.6"] const Nontemporal = 16384u32; const Offsets = 65536u32; }
 }
-unsafe impl Operand for ImageOperands {
-    const KIND: &OperandKind = &OPERAND_KIND_IMAGE_OPERANDS;
-}
-unsafe impl OperandEncoding for ImageOperands {
+unsafe impl OperandEncoding for ImageOperandsBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -21,8 +18,8 @@ unsafe impl OperandEncoding for ImageOperands {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<ImageOperands>(
-            stringify!(ImageOperands),
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<ImageOperandsBits>(
+            stringify!(ImageOperandsBits),
             bits,
         ))
     }
@@ -85,11 +82,236 @@ unsafe impl OperandEncoding for ImageOperands {
         }
     }
 }
+impl ParameterizedBitmaskBits for ImageOperandsBits {
+    const BIT_TO_EXTRA_LEN: &[usize] = &[
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(IdScope::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(IdScope::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+    ];
+}
+#[derive(Clone, Debug, Default, Eq, PartialEq, Hash)]
+pub struct ImageOperands(ParameterizedBitmask<ImageOperandsBits>);
+impl ImageOperands {
+    pub fn new() -> Self {
+        Self::default()
+    }
+    pub fn get_bias(&self) -> Option<IdRef> {
+        self.0.get(0u32)
+    }
+    pub fn set_bias(&mut self, opt: Option<IdRef>) {
+        self.0.set(0u32, opt);
+    }
+    pub fn get_lod(&self) -> Option<IdRef> {
+        self.0.get(1u32)
+    }
+    pub fn set_lod(&mut self, opt: Option<IdRef>) {
+        self.0.set(1u32, opt);
+    }
+    pub fn get_grad(&self) -> Option<(IdRef, IdRef)> {
+        self.0.get(2u32)
+    }
+    pub fn set_grad(&mut self, opt: Option<(IdRef, IdRef)>) {
+        self.0.set(2u32, opt);
+    }
+    pub fn get_const_offset(&self) -> Option<IdRef> {
+        self.0.get(3u32)
+    }
+    pub fn set_const_offset(&mut self, opt: Option<IdRef>) {
+        self.0.set(3u32, opt);
+    }
+    pub fn get_offset(&self) -> Option<IdRef> {
+        self.0.get(4u32)
+    }
+    pub fn set_offset(&mut self, opt: Option<IdRef>) {
+        self.0.set(4u32, opt);
+    }
+    pub fn get_const_offsets(&self) -> Option<IdRef> {
+        self.0.get(5u32)
+    }
+    pub fn set_const_offsets(&mut self, opt: Option<IdRef>) {
+        self.0.set(5u32, opt);
+    }
+    pub fn get_sample(&self) -> Option<IdRef> {
+        self.0.get(6u32)
+    }
+    pub fn set_sample(&mut self, opt: Option<IdRef>) {
+        self.0.set(6u32, opt);
+    }
+    pub fn get_min_lod(&self) -> Option<IdRef> {
+        self.0.get(7u32)
+    }
+    pub fn set_min_lod(&mut self, opt: Option<IdRef>) {
+        self.0.set(7u32, opt);
+    }
+    pub fn get_make_texel_available(&self) -> Option<IdScope> {
+        self.0.get(8u32)
+    }
+    pub fn set_make_texel_available(&mut self, opt: Option<IdScope>) {
+        self.0.set(8u32, opt);
+    }
+    pub fn get_make_texel_visible(&self) -> Option<IdScope> {
+        self.0.get(9u32)
+    }
+    pub fn set_make_texel_visible(&mut self, opt: Option<IdScope>) {
+        self.0.set(9u32, opt);
+    }
+    pub fn get_non_private_texel(&self) -> bool {
+        self.0.get_bool(10u32)
+    }
+    pub fn set_non_private_texel(&mut self, enabled: bool) {
+        self.0.set_bool(10u32, enabled);
+    }
+    pub fn get_volatile_texel(&self) -> bool {
+        self.0.get_bool(11u32)
+    }
+    pub fn set_volatile_texel(&mut self, enabled: bool) {
+        self.0.set_bool(11u32, enabled);
+    }
+    pub fn get_sign_extend(&self) -> bool {
+        self.0.get_bool(12u32)
+    }
+    pub fn set_sign_extend(&mut self, enabled: bool) {
+        self.0.set_bool(12u32, enabled);
+    }
+    pub fn get_zero_extend(&self) -> bool {
+        self.0.get_bool(13u32)
+    }
+    pub fn set_zero_extend(&mut self, enabled: bool) {
+        self.0.set_bool(13u32, enabled);
+    }
+    pub fn get_nontemporal(&self) -> bool {
+        self.0.get_bool(14u32)
+    }
+    pub fn set_nontemporal(&mut self, enabled: bool) {
+        self.0.set_bool(14u32, enabled);
+    }
+    pub fn get_offsets(&self) -> Option<IdRef> {
+        self.0.get(16u32)
+    }
+    pub fn set_offsets(&mut self, opt: Option<IdRef>) {
+        self.0.set(16u32, opt);
+    }
+}
+unsafe impl Operand for ImageOperands {
+    const KIND: &OperandKind = &OPERAND_KIND_IMAGE_OPERANDS;
+}
+unsafe impl OperandEncoding for ImageOperands {
+    const FIXED_LEN: Option<usize> = None;
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        self.0.encode(writer)
+    }
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        Ok(Self(ParameterizedBitmask::<ImageOperandsBits>::decode(
+            reader,
+        )?))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+        self.0.dis_fmt(f, ctx)?;
+        if let Some(extra) = self.get_bias() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_lod() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_grad() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_const_offset() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_offset() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_const_offsets() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_sample() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_min_lod() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_make_texel_available() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_make_texel_visible() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_offsets() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        Ok(())
+    }
+}
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct FPFastMathMode : u32 {
-    const None = 0u32; const NotNaN = 1u32; const NotInf = 2u32; const NSZ = 4u32; const
-    AllowRecip = 8u32; const Fast = 16u32; const AllowContract = 65536u32; const
-    AllowReassoc = 131072u32; const AllowTransform = 262144u32; }
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct FPFastMathMode
+    : u32 { const None = 0u32; const NotNaN = 1u32; const NotInf = 2u32; const NSZ =
+    4u32; const AllowRecip = 8u32; const Fast = 16u32; const AllowContract = 65536u32;
+    const AllowReassoc = 131072u32; const AllowTransform = 262144u32; }
 }
 unsafe impl Operand for FPFastMathMode {
     const KIND: &OperandKind = &OPERAND_KIND_FP_FAST_MATH_MODE;
@@ -143,8 +365,9 @@ unsafe impl OperandEncoding for FPFastMathMode {
     }
 }
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct SelectionControl : u32
-    { const None = 0u32; const Flatten = 1u32; const DontFlatten = 2u32; }
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
+    SelectionControl : u32 { const None = 0u32; const Flatten = 1u32; const DontFlatten =
+    2u32; }
 }
 unsafe impl Operand for SelectionControl {
     const KIND: &OperandKind = &OPERAND_KIND_SELECTION_CONTROL;
@@ -180,12 +403,12 @@ unsafe impl OperandEncoding for SelectionControl {
     }
 }
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct LoopControl : u32 {
-    const None = 0u32; const Unroll = 1u32; const DontUnroll = 2u32; #[doc =
-    "Since SPIR-V 1.1"] const DependencyInfinite = 4u32; #[doc = "Since SPIR-V 1.1"]
-    const DependencyLength = 8u32; #[doc = "Since SPIR-V 1.4"] const MinIterations =
-    16u32; #[doc = "Since SPIR-V 1.4"] const MaxIterations = 32u32; #[doc =
-    "Since SPIR-V 1.4"] const IterationMultiple = 64u32; #[doc = "Since SPIR-V 1.4"]
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
+    LoopControlBits : u32 { const None = 0u32; const Unroll = 1u32; const DontUnroll =
+    2u32; #[doc = "Since SPIR-V 1.1"] const DependencyInfinite = 4u32; #[doc =
+    "Since SPIR-V 1.1"] const DependencyLength = 8u32; #[doc = "Since SPIR-V 1.4"] const
+    MinIterations = 16u32; #[doc = "Since SPIR-V 1.4"] const MaxIterations = 32u32; #[doc
+    = "Since SPIR-V 1.4"] const IterationMultiple = 64u32; #[doc = "Since SPIR-V 1.4"]
     const PeelCount = 128u32; #[doc = "Since SPIR-V 1.4"] const PartialCount = 256u32;
     const InitiationIntervalALTERA = 65536u32; const MaxConcurrencyALTERA = 131072u32;
     const DependencyArrayALTERA = 262144u32; const PipelineEnableALTERA = 524288u32;
@@ -194,10 +417,7 @@ bitflags! {
     const LoopCountALTERA = 16777216u32; const MaxReinvocationDelayALTERA = 33554432u32;
     }
 }
-unsafe impl Operand for LoopControl {
-    const KIND: &OperandKind = &OPERAND_KIND_LOOP_CONTROL;
-}
-unsafe impl OperandEncoding for LoopControl {
+unsafe impl OperandEncoding for LoopControlBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -205,8 +425,8 @@ unsafe impl OperandEncoding for LoopControl {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<LoopControl>(
-            stringify!(LoopControl),
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<LoopControlBits>(
+            stringify!(LoopControlBits),
             bits,
         ))
     }
@@ -278,10 +498,276 @@ unsafe impl OperandEncoding for LoopControl {
         }
     }
 }
+impl ParameterizedBitmaskBits for LoopControlBits {
+    const BIT_TO_EXTRA_LEN: &[usize] = &[
+        0,
+        0,
+        0,
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        0,
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+    ];
+}
+#[derive(Clone, Debug, Default, Eq, PartialEq, Hash)]
+pub struct LoopControl(ParameterizedBitmask<LoopControlBits>);
+impl LoopControl {
+    pub fn new() -> Self {
+        Self::default()
+    }
+    pub fn get_unroll(&self) -> bool {
+        self.0.get_bool(0u32)
+    }
+    pub fn set_unroll(&mut self, enabled: bool) {
+        self.0.set_bool(0u32, enabled);
+    }
+    pub fn get_dont_unroll(&self) -> bool {
+        self.0.get_bool(1u32)
+    }
+    pub fn set_dont_unroll(&mut self, enabled: bool) {
+        self.0.set_bool(1u32, enabled);
+    }
+    pub fn get_dependency_infinite(&self) -> bool {
+        self.0.get_bool(2u32)
+    }
+    pub fn set_dependency_infinite(&mut self, enabled: bool) {
+        self.0.set_bool(2u32, enabled);
+    }
+    pub fn get_dependency_length(&self) -> Option<LiteralInteger> {
+        self.0.get(3u32)
+    }
+    pub fn set_dependency_length(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(3u32, opt);
+    }
+    pub fn get_min_iterations(&self) -> Option<LiteralInteger> {
+        self.0.get(4u32)
+    }
+    pub fn set_min_iterations(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(4u32, opt);
+    }
+    pub fn get_max_iterations(&self) -> Option<LiteralInteger> {
+        self.0.get(5u32)
+    }
+    pub fn set_max_iterations(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(5u32, opt);
+    }
+    pub fn get_iteration_multiple(&self) -> Option<LiteralInteger> {
+        self.0.get(6u32)
+    }
+    pub fn set_iteration_multiple(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(6u32, opt);
+    }
+    pub fn get_peel_count(&self) -> Option<LiteralInteger> {
+        self.0.get(7u32)
+    }
+    pub fn set_peel_count(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(7u32, opt);
+    }
+    pub fn get_partial_count(&self) -> Option<LiteralInteger> {
+        self.0.get(8u32)
+    }
+    pub fn set_partial_count(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(8u32, opt);
+    }
+    pub fn get_initiation_interval_altera(&self) -> Option<LiteralInteger> {
+        self.0.get(16u32)
+    }
+    pub fn set_initiation_interval_altera(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(16u32, opt);
+    }
+    pub fn get_max_concurrency_altera(&self) -> Option<LiteralInteger> {
+        self.0.get(17u32)
+    }
+    pub fn set_max_concurrency_altera(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(17u32, opt);
+    }
+    pub fn get_dependency_array_altera(&self) -> Option<LiteralInteger> {
+        self.0.get(18u32)
+    }
+    pub fn set_dependency_array_altera(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(18u32, opt);
+    }
+    pub fn get_pipeline_enable_altera(&self) -> Option<LiteralInteger> {
+        self.0.get(19u32)
+    }
+    pub fn set_pipeline_enable_altera(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(19u32, opt);
+    }
+    pub fn get_loop_coalesce_altera(&self) -> Option<LiteralInteger> {
+        self.0.get(20u32)
+    }
+    pub fn set_loop_coalesce_altera(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(20u32, opt);
+    }
+    pub fn get_max_interleaving_altera(&self) -> Option<LiteralInteger> {
+        self.0.get(21u32)
+    }
+    pub fn set_max_interleaving_altera(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(21u32, opt);
+    }
+    pub fn get_speculated_iterations_altera(&self) -> Option<LiteralInteger> {
+        self.0.get(22u32)
+    }
+    pub fn set_speculated_iterations_altera(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(22u32, opt);
+    }
+    pub fn get_no_fusion_altera(&self) -> bool {
+        self.0.get_bool(23u32)
+    }
+    pub fn set_no_fusion_altera(&mut self, enabled: bool) {
+        self.0.set_bool(23u32, enabled);
+    }
+    pub fn get_loop_count_altera(&self) -> Option<LiteralInteger> {
+        self.0.get(24u32)
+    }
+    pub fn set_loop_count_altera(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(24u32, opt);
+    }
+    pub fn get_max_reinvocation_delay_altera(&self) -> Option<LiteralInteger> {
+        self.0.get(25u32)
+    }
+    pub fn set_max_reinvocation_delay_altera(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(25u32, opt);
+    }
+}
+unsafe impl Operand for LoopControl {
+    const KIND: &OperandKind = &OPERAND_KIND_LOOP_CONTROL;
+}
+unsafe impl OperandEncoding for LoopControl {
+    const FIXED_LEN: Option<usize> = None;
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        self.0.encode(writer)
+    }
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        Ok(Self(ParameterizedBitmask::<LoopControlBits>::decode(
+            reader,
+        )?))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+        self.0.dis_fmt(f, ctx)?;
+        if let Some(extra) = self.get_dependency_length() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_min_iterations() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_max_iterations() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_iteration_multiple() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_peel_count() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_partial_count() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_initiation_interval_altera() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_max_concurrency_altera() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_dependency_array_altera() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_pipeline_enable_altera() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_loop_coalesce_altera() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_max_interleaving_altera() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_speculated_iterations_altera() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_loop_count_altera() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_max_reinvocation_delay_altera() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        Ok(())
+    }
+}
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct FunctionControl : u32 {
-    const None = 0u32; const Inline = 1u32; const DontInline = 2u32; const Pure = 4u32;
-    const Const = 8u32; const OptNoneEXT = 65536u32; }
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
+    FunctionControl : u32 { const None = 0u32; const Inline = 1u32; const DontInline =
+    2u32; const Pure = 4u32; const Const = 8u32; const OptNoneEXT = 65536u32; }
 }
 unsafe impl Operand for FunctionControl {
     const KIND: &OperandKind = &OPERAND_KIND_FUNCTION_CONTROL;
@@ -326,14 +812,15 @@ unsafe impl OperandEncoding for FunctionControl {
     }
 }
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct MemorySemantics : u32 {
-    const Relaxed = 0u32; const Acquire = 2u32; const Release = 4u32; const
-    AcquireRelease = 8u32; const SequentiallyConsistent = 16u32; const UniformMemory =
-    64u32; const SubgroupMemory = 128u32; const WorkgroupMemory = 256u32; const
-    CrossWorkgroupMemory = 512u32; const AtomicCounterMemory = 1024u32; const ImageMemory
-    = 2048u32; #[doc = "Since SPIR-V 1.5"] const OutputMemory = 4096u32; #[doc =
-    "Since SPIR-V 1.5"] const MakeAvailable = 8192u32; #[doc = "Since SPIR-V 1.5"] const
-    MakeVisible = 16384u32; #[doc = "Since SPIR-V 1.5"] const Volatile = 32768u32; }
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
+    MemorySemantics : u32 { const Relaxed = 0u32; const Acquire = 2u32; const Release =
+    4u32; const AcquireRelease = 8u32; const SequentiallyConsistent = 16u32; const
+    UniformMemory = 64u32; const SubgroupMemory = 128u32; const WorkgroupMemory = 256u32;
+    const CrossWorkgroupMemory = 512u32; const AtomicCounterMemory = 1024u32; const
+    ImageMemory = 2048u32; #[doc = "Since SPIR-V 1.5"] const OutputMemory = 4096u32;
+    #[doc = "Since SPIR-V 1.5"] const MakeAvailable = 8192u32; #[doc =
+    "Since SPIR-V 1.5"] const MakeVisible = 16384u32; #[doc = "Since SPIR-V 1.5"] const
+    Volatile = 32768u32; }
 }
 unsafe impl Operand for MemorySemantics {
     const KIND: &OperandKind = &OPERAND_KIND_MEMORY_SEMANTICS;
@@ -405,17 +892,14 @@ unsafe impl OperandEncoding for MemorySemantics {
     }
 }
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct MemoryAccess : u32 {
-    const None = 0u32; const Volatile = 1u32; const Aligned = 2u32; const Nontemporal =
-    4u32; #[doc = "Since SPIR-V 1.5"] const MakePointerAvailable = 8u32; #[doc =
-    "Since SPIR-V 1.5"] const MakePointerVisible = 16u32; #[doc = "Since SPIR-V 1.5"]
-    const NonPrivatePointer = 32u32; const AliasScopeINTELMask = 65536u32; const
-    NoAliasINTELMask = 131072u32; }
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
+    MemoryAccessBits : u32 { const None = 0u32; const Volatile = 1u32; const Aligned =
+    2u32; const Nontemporal = 4u32; #[doc = "Since SPIR-V 1.5"] const
+    MakePointerAvailable = 8u32; #[doc = "Since SPIR-V 1.5"] const MakePointerVisible =
+    16u32; #[doc = "Since SPIR-V 1.5"] const NonPrivatePointer = 32u32; const
+    AliasScopeINTELMask = 65536u32; const NoAliasINTELMask = 131072u32; }
 }
-unsafe impl Operand for MemoryAccess {
-    const KIND: &OperandKind = &OPERAND_KIND_MEMORY_ACCESS;
-}
-unsafe impl OperandEncoding for MemoryAccess {
+unsafe impl OperandEncoding for MemoryAccessBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -423,8 +907,8 @@ unsafe impl OperandEncoding for MemoryAccess {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<MemoryAccess>(
-            stringify!(MemoryAccess),
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<MemoryAccessBits>(
+            stringify!(MemoryAccessBits),
             bits,
         ))
     }
@@ -463,9 +947,149 @@ unsafe impl OperandEncoding for MemoryAccess {
         }
     }
 }
+impl ParameterizedBitmaskBits for MemoryAccessBits {
+    const BIT_TO_EXTRA_LEN: &[usize] = &[
+        0,
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        0,
+        FixedLenComposer::new()
+            .append(IdScope::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(IdScope::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+    ];
+}
+#[derive(Clone, Debug, Default, Eq, PartialEq, Hash)]
+pub struct MemoryAccess(ParameterizedBitmask<MemoryAccessBits>);
+impl MemoryAccess {
+    pub fn new() -> Self {
+        Self::default()
+    }
+    pub fn get_volatile(&self) -> bool {
+        self.0.get_bool(0u32)
+    }
+    pub fn set_volatile(&mut self, enabled: bool) {
+        self.0.set_bool(0u32, enabled);
+    }
+    pub fn get_aligned(&self) -> Option<LiteralInteger> {
+        self.0.get(1u32)
+    }
+    pub fn set_aligned(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(1u32, opt);
+    }
+    pub fn get_nontemporal(&self) -> bool {
+        self.0.get_bool(2u32)
+    }
+    pub fn set_nontemporal(&mut self, enabled: bool) {
+        self.0.set_bool(2u32, enabled);
+    }
+    pub fn get_make_pointer_available(&self) -> Option<IdScope> {
+        self.0.get(3u32)
+    }
+    pub fn set_make_pointer_available(&mut self, opt: Option<IdScope>) {
+        self.0.set(3u32, opt);
+    }
+    pub fn get_make_pointer_visible(&self) -> Option<IdScope> {
+        self.0.get(4u32)
+    }
+    pub fn set_make_pointer_visible(&mut self, opt: Option<IdScope>) {
+        self.0.set(4u32, opt);
+    }
+    pub fn get_non_private_pointer(&self) -> bool {
+        self.0.get_bool(5u32)
+    }
+    pub fn set_non_private_pointer(&mut self, enabled: bool) {
+        self.0.set_bool(5u32, enabled);
+    }
+    pub fn get_alias_scope_intel_mask(&self) -> Option<IdRef> {
+        self.0.get(16u32)
+    }
+    pub fn set_alias_scope_intel_mask(&mut self, opt: Option<IdRef>) {
+        self.0.set(16u32, opt);
+    }
+    pub fn get_no_alias_intel_mask(&self) -> Option<IdRef> {
+        self.0.get(17u32)
+    }
+    pub fn set_no_alias_intel_mask(&mut self, opt: Option<IdRef>) {
+        self.0.set(17u32, opt);
+    }
+}
+unsafe impl Operand for MemoryAccess {
+    const KIND: &OperandKind = &OPERAND_KIND_MEMORY_ACCESS;
+}
+unsafe impl OperandEncoding for MemoryAccess {
+    const FIXED_LEN: Option<usize> = None;
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        self.0.encode(writer)
+    }
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        Ok(Self(ParameterizedBitmask::<MemoryAccessBits>::decode(
+            reader,
+        )?))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+        self.0.dis_fmt(f, ctx)?;
+        if let Some(extra) = self.get_aligned() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_make_pointer_available() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_make_pointer_visible() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_alias_scope_intel_mask() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_no_alias_intel_mask() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        Ok(())
+    }
+}
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct KernelProfilingInfo :
-    u32 { const None = 0u32; const CmdExecTime = 1u32; }
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
+    KernelProfilingInfo : u32 { const None = 0u32; const CmdExecTime = 1u32; }
 }
 unsafe impl Operand for KernelProfilingInfo {
     const KIND: &OperandKind = &OPERAND_KIND_KERNEL_PROFILING_INFO;
@@ -498,8 +1122,8 @@ unsafe impl OperandEncoding for KernelProfilingInfo {
     }
 }
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct RayFlags : u32 { const
-    NoneKHR = 0u32; const OpaqueKHR = 1u32; const NoOpaqueKHR = 2u32; const
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct RayFlags : u32
+    { const NoneKHR = 0u32; const OpaqueKHR = 1u32; const NoOpaqueKHR = 2u32; const
     TerminateOnFirstHitKHR = 4u32; const SkipClosestHitShaderKHR = 8u32; const
     CullBackFacingTrianglesKHR = 16u32; const CullFrontFacingTrianglesKHR = 32u32; const
     CullOpaqueKHR = 64u32; const CullNoOpaqueKHR = 128u32; const SkipTrianglesKHR =
@@ -566,9 +1190,9 @@ unsafe impl OperandEncoding for RayFlags {
     }
 }
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct FragmentShadingRate :
-    u32 { const Vertical2Pixels = 1u32; const Vertical4Pixels = 2u32; const
-    Horizontal2Pixels = 4u32; const Horizontal4Pixels = 8u32; }
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
+    FragmentShadingRate : u32 { const Vertical2Pixels = 1u32; const Vertical4Pixels =
+    2u32; const Horizontal2Pixels = 4u32; const Horizontal4Pixels = 8u32; }
 }
 unsafe impl Operand for FragmentShadingRate {
     const KIND: &OperandKind = &OPERAND_KIND_FRAGMENT_SHADING_RATE;
@@ -610,9 +1234,9 @@ unsafe impl OperandEncoding for FragmentShadingRate {
     }
 }
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct RawAccessChainOperands
-    : u32 { const None = 0u32; const RobustnessPerComponentNV = 1u32; const
-    RobustnessPerElementNV = 2u32; }
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
+    RawAccessChainOperands : u32 { const None = 0u32; const RobustnessPerComponentNV =
+    1u32; const RobustnessPerElementNV = 2u32; }
 }
 unsafe impl Operand for RawAccessChainOperands {
     const KIND: &OperandKind = &OPERAND_KIND_RAW_ACCESS_CHAIN_OPERANDS;
@@ -6022,7 +6646,7 @@ unsafe impl OperandEncoding for PackedVectorFormat {
     }
 }
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
     CooperativeMatrixOperands : u32 { const NoneKHR = 0u32; const
     MatrixASignedComponentsKHR = 1u32; const MatrixBSignedComponentsKHR = 2u32; const
     MatrixCSignedComponentsKHR = 4u32; const MatrixResultSignedComponentsKHR = 8u32;
@@ -6164,8 +6788,9 @@ unsafe impl OperandEncoding for CooperativeMatrixUse {
     }
 }
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct CooperativeMatrixReduce
-    : u32 { const Row = 1u32; const Column = 2u32; const TwoByTwo = 4u32; }
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
+    CooperativeMatrixReduce : u32 { const Row = 1u32; const Column = 2u32; const TwoByTwo
+    = 4u32; }
 }
 unsafe impl Operand for CooperativeMatrixReduce {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_REDUCE;
@@ -6254,14 +6879,11 @@ unsafe impl OperandEncoding for TensorClampMode {
     }
 }
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct
-    TensorAddressingOperands : u32 { const None = 0u32; const TensorView = 1u32; const
-    DecodeFunc = 2u32; }
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
+    TensorAddressingOperandsBits : u32 { const None = 0u32; const TensorView = 1u32;
+    const DecodeFunc = 2u32; }
 }
-unsafe impl Operand for TensorAddressingOperands {
-    const KIND: &OperandKind = &OPERAND_KIND_TENSOR_ADDRESSING_OPERANDS;
-}
-unsafe impl OperandEncoding for TensorAddressingOperands {
+unsafe impl OperandEncoding for TensorAddressingOperandsBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -6269,10 +6891,12 @@ unsafe impl OperandEncoding for TensorAddressingOperands {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<TensorAddressingOperands>(
-            stringify!(TensorAddressingOperands),
-            bits,
-        ))
+        Self::from_bits(bits).ok_or(
+            DecodeError::invalid_bitflags::<TensorAddressingOperandsBits>(
+                stringify!(TensorAddressingOperandsBits),
+                bits,
+            ),
+        )
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
@@ -6289,6 +6913,92 @@ unsafe impl OperandEncoding for TensorAddressingOperands {
             }
             Ok(())
         }
+    }
+}
+impl ParameterizedBitmaskBits for TensorAddressingOperandsBits {
+    const BIT_TO_EXTRA_LEN: &[usize] = &[
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+    ];
+}
+#[derive(Clone, Debug, Default, Eq, PartialEq, Hash)]
+pub struct TensorAddressingOperands(ParameterizedBitmask<TensorAddressingOperandsBits>);
+impl TensorAddressingOperands {
+    pub fn new() -> Self {
+        Self::default()
+    }
+    pub fn get_tensor_view(&self) -> Option<IdRef> {
+        self.0.get(0u32)
+    }
+    pub fn set_tensor_view(&mut self, opt: Option<IdRef>) {
+        self.0.set(0u32, opt);
+    }
+    pub fn get_decode_func(&self) -> Option<IdRef> {
+        self.0.get(1u32)
+    }
+    pub fn set_decode_func(&mut self, opt: Option<IdRef>) {
+        self.0.set(1u32, opt);
+    }
+}
+unsafe impl Operand for TensorAddressingOperands {
+    const KIND: &OperandKind = &OPERAND_KIND_TENSOR_ADDRESSING_OPERANDS;
+}
+unsafe impl OperandEncoding for TensorAddressingOperands {
+    const FIXED_LEN: Option<usize> = None;
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        self.0.encode(writer)
+    }
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        Ok(Self(
+            ParameterizedBitmask::<TensorAddressingOperandsBits>::decode(reader)?,
+        ))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+        self.0.dis_fmt(f, ctx)?;
+        if let Some(extra) = self.get_tensor_view() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_decode_func() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        Ok(())
     }
 }
 #[repr(u32)]
@@ -6470,7 +7180,7 @@ unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
     }
 }
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
     MatrixMultiplyAccumulateOperands : u32 { const None = 0u32; const
     MatrixASignedComponentsINTEL = 1u32; const MatrixBSignedComponentsINTEL = 2u32; const
     MatrixCBFloat16INTEL = 4u32; const MatrixResultBFloat16INTEL = 8u32; const
@@ -6723,15 +7433,12 @@ pub type PairLiteralIntegerIdRef = (LiteralInteger, IdRef);
 pub type PairIdRefLiteralInteger = (IdRef, LiteralInteger);
 pub type PairIdRefIdRef = (IdRef, IdRef);
 bitflags! {
-    #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)] pub struct TensorOperands : u32 {
-    const NoneARM = 0u32; const NontemporalARM = 1u32; const OutOfBoundsValueARM = 2u32;
-    const MakeElementAvailableARM = 4u32; const MakeElementVisibleARM = 8u32; const
-    NonPrivateElementARM = 16u32; }
+    #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
+    TensorOperandsBits : u32 { const NoneARM = 0u32; const NontemporalARM = 1u32; const
+    OutOfBoundsValueARM = 2u32; const MakeElementAvailableARM = 4u32; const
+    MakeElementVisibleARM = 8u32; const NonPrivateElementARM = 16u32; }
 }
-unsafe impl Operand for TensorOperands {
-    const KIND: &OperandKind = &OPERAND_KIND_TENSOR_OPERANDS;
-}
-unsafe impl OperandEncoding for TensorOperands {
+unsafe impl OperandEncoding for TensorOperandsBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         writer.write(Word(self.bits()));
@@ -6739,8 +7446,8 @@ unsafe impl OperandEncoding for TensorOperands {
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         let bits = reader.pull()?.0;
-        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<TensorOperands>(
-            stringify!(TensorOperands),
+        Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<TensorOperandsBits>(
+            stringify!(TensorOperandsBits),
             bits,
         ))
     }
@@ -6768,5 +7475,115 @@ unsafe impl OperandEncoding for TensorOperands {
             }
             Ok(())
         }
+    }
+}
+impl ParameterizedBitmaskBits for TensorOperandsBits {
+    const BIT_TO_EXTRA_LEN: &[usize] = &[
+        0,
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+    ];
+}
+#[derive(Clone, Debug, Default, Eq, PartialEq, Hash)]
+pub struct TensorOperands(ParameterizedBitmask<TensorOperandsBits>);
+impl TensorOperands {
+    pub fn new() -> Self {
+        Self::default()
+    }
+    pub fn get_nontemporal_arm(&self) -> bool {
+        self.0.get_bool(0u32)
+    }
+    pub fn set_nontemporal_arm(&mut self, enabled: bool) {
+        self.0.set_bool(0u32, enabled);
+    }
+    pub fn get_out_of_bounds_value_arm(&self) -> Option<IdRef> {
+        self.0.get(1u32)
+    }
+    pub fn set_out_of_bounds_value_arm(&mut self, opt: Option<IdRef>) {
+        self.0.set(1u32, opt);
+    }
+    pub fn get_make_element_available_arm(&self) -> Option<IdRef> {
+        self.0.get(2u32)
+    }
+    pub fn set_make_element_available_arm(&mut self, opt: Option<IdRef>) {
+        self.0.set(2u32, opt);
+    }
+    pub fn get_make_element_visible_arm(&self) -> Option<IdRef> {
+        self.0.get(3u32)
+    }
+    pub fn set_make_element_visible_arm(&mut self, opt: Option<IdRef>) {
+        self.0.set(3u32, opt);
+    }
+    pub fn get_non_private_element_arm(&self) -> bool {
+        self.0.get_bool(4u32)
+    }
+    pub fn set_non_private_element_arm(&mut self, enabled: bool) {
+        self.0.set_bool(4u32, enabled);
+    }
+}
+unsafe impl Operand for TensorOperands {
+    const KIND: &OperandKind = &OPERAND_KIND_TENSOR_OPERANDS;
+}
+unsafe impl OperandEncoding for TensorOperands {
+    const FIXED_LEN: Option<usize> = None;
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        self.0.encode(writer)
+    }
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        Ok(Self(ParameterizedBitmask::<TensorOperandsBits>::decode(
+            reader,
+        )?))
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+        self.0.dis_fmt(f, ctx)?;
+        if let Some(extra) = self.get_out_of_bounds_value_arm() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_make_element_available_arm() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_make_element_visible_arm() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        Ok(())
     }
 }

@@ -1,0 +1,98 @@
+; SPIR-V
+; Version: 1.0
+; Generator: rspirv
+; Bound: 61
+OpCapability Shader
+%1 = OpExtInstImport "GLSL.std.450"
+OpMemoryModel Logical GLSL450
+OpEntryPoint Fragment %4 "main" %24 %47
+OpExecutionMode %4 OriginUpperLeft
+OpSource GLSL 450
+OpSourceExtension "GL_GOOGLE_cpp_style_line_directive"
+OpSourceExtension "GL_GOOGLE_include_directive"
+OpName %4 "main"
+OpName %7 "myBuffer"
+OpMemberName %7 0 "mode"
+OpName %9 ""
+OpName %22 "tex_coord"
+OpName %24 "vtx_tex_coord"
+OpName %39 "grad_x"
+OpName %42 "grad_y"
+OpName %47 "out_color"
+OpName %51 "image"
+OpDecorate %7 BufferBlock
+OpMemberDecorate %7 0 Offset 0
+OpDecorate %9 Binding 0
+OpDecorate %9 DescriptorSet 0
+OpDecorate %24 Location 0
+OpDecorate %47 Location 0
+OpDecorate %51 Binding 1
+OpDecorate %51 DescriptorSet 0
+%2 = OpTypeVoid
+%3 = OpTypeFunction %2
+%6 = OpTypeInt 32 0
+%7 = OpTypeStruct %6
+%8 = OpTypePointer Uniform %7
+%9 = OpVariable  %8  Uniform
+%10 = OpTypeInt 32 1
+%11 = OpConstant  %10  0
+%12 = OpTypePointer Uniform %6
+%19 = OpTypeFloat 32
+%20 = OpTypeVector %19 2
+%21 = OpTypePointer Function %20
+%23 = OpTypePointer Input %20
+%24 = OpVariable  %23  Input
+%27 = OpConstant  %19  1
+%33 = OpConstant  %19  0.5
+%45 = OpTypeVector %19 4
+%46 = OpTypePointer Output %45
+%47 = OpVariable  %46  Output
+%48 = OpTypeImage %19 2D 0 0 0 1 Unknown
+%49 = OpTypeSampledImage %48
+%50 = OpTypePointer UniformConstant %49
+%51 = OpVariable  %50  UniformConstant
+%56 = OpTypeVector %10 2
+%57 = OpConstant  %10  1
+%58 = OpConstant  %10  -1
+%59 = OpConstantComposite  %56  %57 %58
+%4 = OpFunction  %2  None %3
+%5 = OpLabel
+%22 = OpVariable  %21  Function
+%39 = OpVariable  %21  Function
+%42 = OpVariable  %21  Function
+%13 = OpAccessChain  %12  %9 %11
+%14 = OpLoad  %6  %13
+OpSelectionMerge %18 None
+OpSwitch %14 %18 0 %15 1 %16 2 %17
+%15 = OpLabel
+%25 = OpLoad  %20  %24
+OpStore %22 %25
+OpBranch %18
+%16 = OpLabel
+%28 = OpLoad  %20  %24
+%29 = OpCompositeConstruct  %20  %27 %27
+%30 = OpFSub  %20  %29 %28
+OpStore %22 %30
+OpBranch %18
+%17 = OpLabel
+%32 = OpLoad  %20  %24
+%34 = OpVectorTimesScalar  %20  %32 %33
+%35 = OpCompositeConstruct  %20  %33 %33
+%36 = OpFAdd  %20  %34 %35
+OpStore %22 %36
+OpBranch %18
+%18 = OpLabel
+%40 = OpLoad  %20  %22
+%41 = OpDPdx  %20  %40
+OpStore %39 %41
+%43 = OpLoad  %20  %22
+%44 = OpDPdy  %20  %43
+OpStore %42 %44
+%52 = OpLoad  %49  %51
+%53 = OpLoad  %20  %22
+%54 = OpLoad  %20  %39
+%55 = OpLoad  %20  %42
+%60 = OpImageSampleExplicitLod  %45  %52 %53 Grad|ConstOffset %54 %55 %59
+OpStore %47 %60
+OpReturn
+OpFunctionEnd

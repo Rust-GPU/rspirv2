@@ -3,6 +3,7 @@ mod literal_const;
 mod literal_float;
 mod literal_integer;
 mod literal_string;
+mod parameterized_bitmask;
 mod tuple;
 
 use crate::binary::{
@@ -15,6 +16,7 @@ pub use literal_const::*;
 pub use literal_float::*;
 pub use literal_integer::*;
 pub use literal_string::*;
+pub use parameterized_bitmask::*;
 use smallvec::SmallVec;
 use std::fmt::{Debug, Display, Formatter};
 use std::ops::Deref;

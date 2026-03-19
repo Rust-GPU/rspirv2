@@ -1,0 +1,94 @@
+               OpCapability Shader
+          %1 = OpExtInstImport "GLSL.std.450"
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint Fragment %main "main" %vtx_tex_coord %out_color
+               OpExecutionMode %main OriginUpperLeft
+               OpSource GLSL 450
+               OpSourceExtension "GL_GOOGLE_cpp_style_line_directive"
+               OpSourceExtension "GL_GOOGLE_include_directive"
+               OpName %main "main"
+               OpName %myBuffer "myBuffer"
+               OpMemberName %myBuffer 0 "mode"
+               OpName %9 ""
+               OpName %tex_coord "tex_coord"
+               OpName %vtx_tex_coord "vtx_tex_coord"
+               OpName %grad_x "grad_x"
+               OpName %grad_y "grad_y"
+               OpName %out_color "out_color"
+               OpName %image "image"
+               OpDecorate %myBuffer BufferBlock
+               OpMemberDecorate %myBuffer 0 Offset 0
+               OpDecorate %9 Binding 0
+               OpDecorate %9 DescriptorSet 0
+               OpDecorate %vtx_tex_coord Location 0
+               OpDecorate %out_color Location 0
+               OpDecorate %image Binding 1
+               OpDecorate %image DescriptorSet 0
+       %void = OpTypeVoid
+          %3 = OpTypeFunction %void
+        %u32 = OpTypeInt 32 0
+   %myBuffer = OpTypeStruct %u32
+%_ptr_Uniform_myBuffer = OpTypePointer Uniform %myBuffer
+          %9 = OpVariable %_ptr_Uniform_myBuffer Uniform
+        %i32 = OpTypeInt 32 1
+      %i32_0 = OpConstant %i32 0
+%_ptr_Uniform_u32 = OpTypePointer Uniform %u32
+        %f32 = OpTypeFloat 32
+      %v2f32 = OpTypeVector %f32 2
+%_ptr_Function_v2f32 = OpTypePointer Function %v2f32
+%_ptr_Input_v2f32 = OpTypePointer Input %v2f32
+%vtx_tex_coord = OpVariable %_ptr_Input_v2f32 Input
+      %f32_1 = OpConstant %f32 1
+    %f32_0_5 = OpConstant %f32 0.5
+      %v4f32 = OpTypeVector %f32 4
+%_ptr_Output_v4f32 = OpTypePointer Output %v4f32
+  %out_color = OpVariable %_ptr_Output_v4f32 Output
+         %48 = OpTypeImage %f32 2D 0 0 0 1 Unknown
+         %49 = OpTypeSampledImage %48
+%_ptr_UniformConstant_49 = OpTypePointer UniformConstant %49
+      %image = OpVariable %_ptr_UniformConstant_49 UniformConstant
+      %v2i32 = OpTypeVector %i32 2
+      %i32_1 = OpConstant %i32 1
+     %i32_n1 = OpConstant %i32 -1
+         %59 = OpConstantComposite %v2i32 %i32_1 %i32_n1
+       %main = OpFunction %void None %3
+          %5 = OpLabel
+  %tex_coord = OpVariable %_ptr_Function_v2f32 Function
+     %grad_x = OpVariable %_ptr_Function_v2f32 Function
+     %grad_y = OpVariable %_ptr_Function_v2f32 Function
+         %13 = OpAccessChain %_ptr_Uniform_u32 %9 %i32_0
+         %14 = OpLoad %u32 %13
+               OpSelectionMerge %18 None
+               OpSwitch %14 %18 0 %15 1 %16 2 %17
+         %15 = OpLabel
+         %25 = OpLoad %v2f32 %vtx_tex_coord
+               OpStore %tex_coord %25
+               OpBranch %18
+         %16 = OpLabel
+         %28 = OpLoad %v2f32 %vtx_tex_coord
+         %29 = OpCompositeConstruct %v2f32 %f32_1 %f32_1
+         %30 = OpFSub %v2f32 %29 %28
+               OpStore %tex_coord %30
+               OpBranch %18
+         %17 = OpLabel
+         %32 = OpLoad %v2f32 %vtx_tex_coord
+         %34 = OpVectorTimesScalar %v2f32 %32 %f32_0_5
+         %35 = OpCompositeConstruct %v2f32 %f32_0_5 %f32_0_5
+         %36 = OpFAdd %v2f32 %34 %35
+               OpStore %tex_coord %36
+               OpBranch %18
+         %18 = OpLabel
+         %40 = OpLoad %v2f32 %tex_coord
+         %41 = OpDPdx %v2f32 %40
+               OpStore %grad_x %41
+         %43 = OpLoad %v2f32 %tex_coord
+         %44 = OpDPdy %v2f32 %43
+               OpStore %grad_y %44
+         %52 = OpLoad %49 %image
+         %53 = OpLoad %v2f32 %tex_coord
+         %54 = OpLoad %v2f32 %grad_x
+         %55 = OpLoad %v2f32 %grad_y
+         %60 = OpImageSampleExplicitLod %v4f32 %52 %53 Grad|ConstOffset %54 %55 %59
+               OpStore %out_color %60
+               OpReturn
+               OpFunctionEnd
