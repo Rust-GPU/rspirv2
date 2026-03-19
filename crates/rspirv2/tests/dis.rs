@@ -1,11 +1,15 @@
-use rspirv2::core::inst::{OpLoad, OpTypeFloat};
-use rspirv2::core::operands::{CooperativeMatrixReduce, Dim};
+use expect_test::expect;
+use rspirv2::core::inst::{OpLoad, OpPhi, OpSwitch, OpTypeFloat};
+use rspirv2::core::operands::{
+    CooperativeMatrixReduce, Dim, PairIdRefIdRef, PairLiteralIntegerIdRef,
+};
 use rspirv2_types::binary::{IdResultAlloc, IdResultAllocator};
 use rspirv2_types::dis::{DisContext, DisOptions};
 use rspirv2_types::inst::InstEncoding;
 use rspirv2_types::operand::{
     IdRef, IdResultType, LiteralInteger, OperandDisContext, OperandEncoding,
 };
+use smallvec::SmallVec;
 
 #[test]
 pub fn test_dis_optional_operand() -> anyhow::Result<()> {
@@ -16,14 +20,39 @@ pub fn test_dis_optional_operand() -> anyhow::Result<()> {
         width: LiteralInteger::new(32),
         floating_point_encoding: None,
     };
-    assert_eq!("%0 = OpTypeFloat 32", float.dis(&ctx).to_string());
-    let float = OpLoad {
+    expect!["%0 = OpTypeFloat 32"].assert_eq(&float.dis(&ctx).to_string());
+    let load = OpLoad {
         id_result_type: IdResultType(float.id_result.unwrap()),
         id_result: Some(alloc.alloc_id()?),
         pointer: IdRef(alloc.alloc_id()?),
         memory_access: None,
     };
-    assert_eq!("%1 = OpLoad %0 %2", float.dis(&ctx).to_string());
+    expect!["%1 = OpLoad %0 %2"].assert_eq(&load.dis(&ctx).to_string());
+    Ok(())
+}
+
+#[test]
+pub fn test_dis_composite_types() -> anyhow::Result<()> {
+    let ctx = DisContext::no_context(DisOptions::simple());
+    let mut alloc = IdResultAllocator::default();
+    let switch = OpSwitch {
+        selector: IdRef(alloc.alloc_id()?),
+        default: IdRef(alloc.alloc_id()?),
+        target: SmallVec::from_iter([
+            PairLiteralIntegerIdRef(LiteralInteger::new(42), IdRef(alloc.alloc_id()?)),
+            PairLiteralIntegerIdRef(LiteralInteger::new(69), IdRef(alloc.alloc_id()?)),
+        ]),
+    };
+    expect!["OpSwitch %0 %1  42  %2  69  %3"].assert_eq(&switch.dis(&ctx).to_string());
+    let phi = OpPhi {
+        id_result_type: IdResultType(alloc.alloc_id()?),
+        id_result: Some(alloc.alloc_id()?),
+        pair_id_ref_id_ref: SmallVec::from_iter([
+            PairIdRefIdRef(IdRef(alloc.alloc_id()?), IdRef(alloc.alloc_id()?)),
+            PairIdRefIdRef(IdRef(alloc.alloc_id()?), IdRef(alloc.alloc_id()?)),
+        ]),
+    };
+    expect!["%5 = OpPhi %4  %6  %7  %8  %9"].assert_eq(&phi.dis(&ctx).to_string());
     Ok(())
 }
 
@@ -32,12 +61,9 @@ pub fn test_dis_optional_operand() -> anyhow::Result<()> {
 pub fn test_dis_renamed_symbols() -> anyhow::Result<()> {
     let ctx = DisContext::no_context(DisOptions::simple());
     let ctx = OperandDisContext::new(&ctx);
-    assert_eq!(" 1D", Dim::Dim1D.dis(&ctx).to_string());
-    assert_eq!(" 2D", Dim::Dim2D.dis(&ctx).to_string());
-    assert_eq!(" 3D", Dim::Dim3D.dis(&ctx).to_string());
-    assert_eq!(
-        " 2x2",
-        CooperativeMatrixReduce::TwoByTwo.dis(&ctx).to_string()
-    );
+    expect!(" 1D").assert_eq(&Dim::Dim1D.dis(&ctx).to_string());
+    expect!(" 2D").assert_eq(&Dim::Dim2D.dis(&ctx).to_string());
+    expect!(" 3D").assert_eq(&Dim::Dim3D.dis(&ctx).to_string());
+    expect!(" 2x2").assert_eq(&CooperativeMatrixReduce::TwoByTwo.dis(&ctx).to_string());
     Ok(())
 }
