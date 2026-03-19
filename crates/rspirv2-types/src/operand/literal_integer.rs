@@ -35,23 +35,33 @@ macro_rules! def_literal_integer {
 
         impl $name {
             #[inline]
+            pub fn from_word(value: Word) -> Self {
+                Self(value)
+            }
+
+            #[inline]
             pub fn new(value: u32) -> Self {
                 Self(Word(value))
             }
 
             #[inline]
-            pub fn from_word(value: Word) -> Self {
-                Self(value)
+            pub fn from_bool(value: bool) -> Self {
+                Self(Word(value as u32))
             }
 
             #[inline]
             pub fn to_word(&self) -> Word {
                 self.0
             }
-            #[inline]
 
+            #[inline]
             pub fn to_u32(&self) -> u32 {
                 self.0.0
+            }
+
+            #[inline]
+            pub fn to_bool(&self) -> bool {
+                self.0.0 != 0
             }
         }
 

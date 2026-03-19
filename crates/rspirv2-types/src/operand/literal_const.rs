@@ -186,8 +186,10 @@ unsafe impl OperandEncoding for LiteralConst {
             .copied()
             .unwrap_or_default();
         match (self.0.len(), fmt) {
-            (1, ConstFmt::Decimal) => write!(f, " {color}{}{color:#}", self.as_u32().unwrap()),
-            (2, ConstFmt::Decimal) => write!(f, " {color}{}{color:#}", self.as_u64().unwrap()),
+            (1, ConstFmt::Unsigned) => write!(f, " {color}{}{color:#}", self.as_u32().unwrap()),
+            (2, ConstFmt::Unsigned) => write!(f, " {color}{}{color:#}", self.as_u64().unwrap()),
+            (1, ConstFmt::Signed) => write!(f, " {color}{}{color:#}", self.as_i32().unwrap()),
+            (2, ConstFmt::Signed) => write!(f, " {color}{}{color:#}", self.as_i64().unwrap()),
             (1, ConstFmt::LowerHex) => write!(f, " {color}{:x}{color:#}", self.as_u32().unwrap()),
             (2, ConstFmt::LowerHex) => write!(f, " {color}{:x}{color:#}", self.as_u64().unwrap()),
             (1, ConstFmt::UpperHex) => write!(f, " {color}{:X}{color:#}", self.as_u32().unwrap()),
@@ -202,9 +204,11 @@ unsafe impl OperandEncoding for LiteralConst {
 /// How the untyped constant value of a [`LiteralConst`] should be formatted
 #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)]
 pub enum ConstFmt {
-    /// Format constant as a decimal integer
+    /// Format constant as an unsigned decimal integer
     #[default]
-    Decimal,
+    Unsigned,
+    /// Format constant as a signed decimal integer
+    Signed,
     /// **INCOMPLIANT** Format constant as a lower case hex value
     ///
     /// Hex values in disassembly are not supported by `spirv-as`
