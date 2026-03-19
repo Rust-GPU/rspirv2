@@ -314,53 +314,16 @@ fn emit_bitflags_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_
 
 fn emit_composite(operand_kind: &OperandKind<'_>, bases: &[Cow<'_, str>]) -> TokenStream {
     let name = OperandKind::type_ident(&operand_kind.name);
-    let kind = OperandKind::const_ident(&operand_kind.name);
     let doc = make_doc(&operand_kind.doc);
 
     let member_tys = bases
         .iter()
         .map(|name| OperandKind::type_ident(name))
         .collect::<Vec<_>>();
-    let len = member_tys
-        .iter()
-        .map(|ty| quote!(<#ty as OperandEncoding>::FIXED_LEN));
-    let encode = (0..bases.len()).map(|i| {
-        let i = proc_macro2::Literal::usize_unsuffixed(i);
-        quote!(OperandEncoding::encode(&self.#i, &mut *writer)?)
-    });
-    let decode = (0..bases.len()).map(|_| quote!(OperandEncoding::decode(&mut *reader)?));
-    let dis_pat = (0..bases.len()).map(|_| "{}").collect::<String>();
-    let dis_values = (0..bases.len()).map(|i| {
-        let i = proc_macro2::Literal::usize_unsuffixed(i);
-        quote!(OperandEncoding::dis(&self.#i, ctx))
-    });
 
     quote! {
         #doc
-        #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-        pub struct #name(#(pub #member_tys),*);
-
-        unsafe impl Operand for #name {
-            const KIND: &OperandKind = &#kind;
-        }
-
-        unsafe impl OperandEncoding for #name {
-            const FIXED_LEN: Option<usize> = FixedLenComposer::new()#(.append(#len))*.finish();
-
-            fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
-                #(#encode;)*
-                Ok(())
-            }
-
-            fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
-                Ok(Self(#(#decode),*))
-            }
-
-            #[inline]
-            fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
-                write!(f, #dis_pat, #(#dis_values),*)
-            }
-        }
+        pub type #name = (#(#member_tys),*);
     }
 }
 

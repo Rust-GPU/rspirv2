@@ -3,6 +3,7 @@ mod literal_const;
 mod literal_float;
 mod literal_integer;
 mod literal_string;
+mod tuple;
 
 use crate::binary::{
     DecodeError, DecodeErrorKind, EncodeError, OperandReader, WordCounter, WordWriter,
@@ -17,6 +18,7 @@ pub use literal_string::*;
 use smallvec::SmallVec;
 use std::fmt::{Debug, Display, Formatter};
 use std::ops::Deref;
+pub use tuple::*;
 
 /// A SPIR-V operand. The associated const [`Self::KIND`] links to it's [`OperandKind`].
 ///
@@ -345,33 +347,4 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
 unsafe impl<T: Operand, const N: usize> OperandSpec for SmallVec<[T; N]> {
     type Operand = T;
     const QUANTIFIER: Quantifier = Quantifier::ZeroOrMore;
-}
-
-/// Compose the [`OperandEncoding::FIXED_LEN`] from multiple maybe fixed len Operands
-pub struct FixedLenComposer(Option<usize>);
-
-impl FixedLenComposer {
-    #[inline]
-    pub const fn new() -> Self {
-        Self(Some(0))
-    }
-
-    #[inline]
-    pub const fn append(self, len: Option<usize>) -> Self {
-        match (self.0, len) {
-            (Some(a), Some(b)) => Self(Some(a + b)),
-            (_, _) => Self(None),
-        }
-    }
-
-    #[inline]
-    pub const fn finish(self) -> Option<usize> {
-        self.0
-    }
-}
-
-impl Default for FixedLenComposer {
-    fn default() -> Self {
-        Self::new()
-    }
 }

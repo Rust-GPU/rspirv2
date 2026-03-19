@@ -1,8 +1,6 @@
 use expect_test::expect;
 use rspirv2::core::inst::{OpLoad, OpPhi, OpSwitch, OpTypeFloat};
-use rspirv2::core::operands::{
-    CooperativeMatrixReduce, Dim, PairIdRefIdRef, PairLiteralIntegerIdRef,
-};
+use rspirv2::core::operands::{CooperativeMatrixReduce, Dim};
 use rspirv2_types::binary::{IdResultAlloc, IdResultAllocator};
 use rspirv2_types::dis::{DisContext, DisOptions};
 use rspirv2_types::inst::InstEncoding;
@@ -39,8 +37,8 @@ pub fn test_dis_composite_types() -> anyhow::Result<()> {
         selector: IdRef(alloc.alloc_id()?),
         default: IdRef(alloc.alloc_id()?),
         target: SmallVec::from_iter([
-            PairLiteralIntegerIdRef(LiteralInteger::new(42), IdRef(alloc.alloc_id()?)),
-            PairLiteralIntegerIdRef(LiteralInteger::new(69), IdRef(alloc.alloc_id()?)),
+            (LiteralInteger::new(42), IdRef(alloc.alloc_id()?)),
+            (LiteralInteger::new(69), IdRef(alloc.alloc_id()?)),
         ]),
     };
     expect!["OpSwitch %0 %1 42 %2 69 %3"].assert_eq(&switch.dis(&ctx).to_string());
@@ -48,8 +46,8 @@ pub fn test_dis_composite_types() -> anyhow::Result<()> {
         id_result_type: IdResultType(alloc.alloc_id()?),
         id_result: Some(alloc.alloc_id()?),
         pair_id_ref_id_ref: SmallVec::from_iter([
-            PairIdRefIdRef(IdRef(alloc.alloc_id()?), IdRef(alloc.alloc_id()?)),
-            PairIdRefIdRef(IdRef(alloc.alloc_id()?), IdRef(alloc.alloc_id()?)),
+            (IdRef(alloc.alloc_id()?), IdRef(alloc.alloc_id()?)),
+            (IdRef(alloc.alloc_id()?), IdRef(alloc.alloc_id()?)),
         ]),
     };
     expect!["%5 = OpPhi %4 %6 %7 %8 %9"].assert_eq(&phi.dis(&ctx).to_string());
