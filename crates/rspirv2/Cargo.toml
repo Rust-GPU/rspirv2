@@ -19,3 +19,4 @@ bytemuck = { workspace = true, optional = true }
 anyhow.workspace = true
 spv.workspace = true
 anstream.workspace = true
+expect-test.workspace = true
