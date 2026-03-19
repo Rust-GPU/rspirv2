@@ -105,7 +105,8 @@ pub mod test {
 
     #[test]
     fn test_dis_reference_default() -> anyhow::Result<()> {
-        test_dis_reference(
+        test_disassembly(
+            spv("dis_reference"),
             expect_file!["../../../spv/dis_reference.rspirv2"],
             Profile::Default,
             false,
@@ -114,7 +115,8 @@ pub mod test {
 
     #[test]
     fn test_dis_reference_default_be() -> anyhow::Result<()> {
-        test_dis_reference(
+        test_disassembly(
+            spv("dis_reference"),
             expect_file!["../../../spv/dis_reference.rspirv2"],
             Profile::Default,
             true,
@@ -123,7 +125,8 @@ pub mod test {
 
     #[test]
     fn test_dis_reference_rspirv() -> anyhow::Result<()> {
-        test_dis_reference(
+        test_disassembly(
+            spv("dis_reference"),
             expect_file!["../../../spv/dis_reference.rspirv_like"],
             Profile::Rspirv,
             false,
@@ -132,7 +135,8 @@ pub mod test {
 
     #[test]
     fn test_dis_reference_rspirv_be() -> anyhow::Result<()> {
-        test_dis_reference(
+        test_disassembly(
+            spv("dis_reference"),
             expect_file!["../../../spv/dis_reference.rspirv_like"],
             Profile::Rspirv,
             true,
@@ -141,7 +145,8 @@ pub mod test {
 
     #[test]
     fn test_dis_reference_spirv_tools() -> anyhow::Result<()> {
-        test_dis_reference(
+        test_disassembly(
+            spv("dis_reference"),
             expect_file!["../../../spv/dis_reference.spirv_tools_like"],
             Profile::SpirvTools,
             false,
@@ -150,20 +155,82 @@ pub mod test {
 
     #[test]
     fn test_dis_reference_spirv_tools_be() -> anyhow::Result<()> {
-        test_dis_reference(
+        test_disassembly(
+            spv("dis_reference"),
             expect_file!["../../../spv/dis_reference.spirv_tools_like"],
             Profile::SpirvTools,
             true,
         )
     }
 
-    fn test_dis_reference(
+    #[test]
+    fn test_texture_grad_offset_default() -> anyhow::Result<()> {
+        test_disassembly(
+            spv("textureGradOffset"),
+            expect_file!["../../../spv/textureGradOffset.rspirv2"],
+            Profile::Default,
+            false,
+        )
+    }
+
+    #[test]
+    fn test_texture_grad_offset_default_be() -> anyhow::Result<()> {
+        test_disassembly(
+            spv("textureGradOffset"),
+            expect_file!["../../../spv/textureGradOffset.rspirv2"],
+            Profile::Default,
+            true,
+        )
+    }
+
+    #[test]
+    fn test_texture_grad_offset_rspirv() -> anyhow::Result<()> {
+        test_disassembly(
+            spv("textureGradOffset"),
+            expect_file!["../../../spv/textureGradOffset.rspirv_like"],
+            Profile::Rspirv,
+            false,
+        )
+    }
+
+    #[test]
+    fn test_texture_grad_offset_rspirv_be() -> anyhow::Result<()> {
+        test_disassembly(
+            spv("textureGradOffset"),
+            expect_file!["../../../spv/textureGradOffset.rspirv_like"],
+            Profile::Rspirv,
+            true,
+        )
+    }
+
+    #[test]
+    fn test_texture_grad_offset_spirv_tools() -> anyhow::Result<()> {
+        test_disassembly(
+            spv("textureGradOffset"),
+            expect_file!["../../../spv/textureGradOffset.spirv_tools_like"],
+            Profile::SpirvTools,
+            false,
+        )
+    }
+
+    #[test]
+    fn test_texture_grad_offset_spirv_tools_be() -> anyhow::Result<()> {
+        test_disassembly(
+            spv("textureGradOffset"),
+            expect_file!["../../../spv/textureGradOffset.spirv_tools_like"],
+            Profile::SpirvTools,
+            false,
+        )
+    }
+
+    fn test_disassembly(
+        path: PathBuf,
         expect: ExpectFile,
         profile: Profile,
         module_swap_bytes: bool,
     ) -> anyhow::Result<()> {
         let args = Args {
-            path: spv("dis_reference"),
+            path,
             profile,
             module_swap_bytes,
             color: clap::ColorChoice::Never,

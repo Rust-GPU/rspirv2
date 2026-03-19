@@ -1,0 +1,94 @@
+               OpCapability Shader
+          %1 = OpExtInstImport "GLSL.std.450"
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint Fragment %main "main" %vtx_tex_coord %out_color
+               OpExecutionMode %main OriginUpperLeft
+               OpSource GLSL 450
+               OpSourceExtension "GL_GOOGLE_cpp_style_line_directive"
+               OpSourceExtension "GL_GOOGLE_include_directive"
+               OpName %main "main"
+               OpName %myBuffer "myBuffer"
+               OpMemberName %myBuffer 0 "mode"
+               OpName %9 ""
+               OpName %tex_coord "tex_coord"
+               OpName %vtx_tex_coord "vtx_tex_coord"
+               OpName %grad_x "grad_x"
+               OpName %grad_y "grad_y"
+               OpName %out_color "out_color"
+               OpName %image "image"
+               OpDecorate %myBuffer BufferBlock
+               OpMemberDecorate %myBuffer 0 Offset 0
+               OpDecorate %9 Binding 0
+               OpDecorate %9 DescriptorSet 0
+               OpDecorate %vtx_tex_coord Location 0
+               OpDecorate %out_color Location 0
+               OpDecorate %image Binding 1
+               OpDecorate %image DescriptorSet 0
+       %void = OpTypeVoid
+          %3 = OpTypeFunction %void
+       %uint = OpTypeInt 32 0
+   %myBuffer = OpTypeStruct %uint
+%_ptr_Uniform_myBuffer = OpTypePointer Uniform %myBuffer
+          %9 = OpVariable %_ptr_Uniform_myBuffer Uniform
+        %int = OpTypeInt 32 1
+      %int_0 = OpConstant %int 0
+%_ptr_Uniform_uint = OpTypePointer Uniform %uint
+      %float = OpTypeFloat 32
+    %v2float = OpTypeVector %float 2
+%_ptr_Function_v2float = OpTypePointer Function %v2float
+%_ptr_Input_v2float = OpTypePointer Input %v2float
+%vtx_tex_coord = OpVariable %_ptr_Input_v2float Input
+    %float_1 = OpConstant %float 1
+  %float_0_5 = OpConstant %float 0.5
+    %v4float = OpTypeVector %float 4
+%_ptr_Output_v4float = OpTypePointer Output %v4float
+  %out_color = OpVariable %_ptr_Output_v4float Output
+         %48 = OpTypeImage %float 2D 0 0 0 1 Unknown
+         %49 = OpTypeSampledImage %48
+%_ptr_UniformConstant_49 = OpTypePointer UniformConstant %49
+      %image = OpVariable %_ptr_UniformConstant_49 UniformConstant
+      %v2int = OpTypeVector %int 2
+      %int_1 = OpConstant %int 1
+     %int_n1 = OpConstant %int -1
+         %59 = OpConstantComposite %v2int %int_1 %int_n1
+       %main = OpFunction %void None %3
+          %5 = OpLabel
+  %tex_coord = OpVariable %_ptr_Function_v2float Function
+     %grad_x = OpVariable %_ptr_Function_v2float Function
+     %grad_y = OpVariable %_ptr_Function_v2float Function
+         %13 = OpAccessChain %_ptr_Uniform_uint %9 %int_0
+         %14 = OpLoad %uint %13
+               OpSelectionMerge %18 None
+               OpSwitch %14 %18 0 %15 1 %16 2 %17
+         %15 = OpLabel
+         %25 = OpLoad %v2float %vtx_tex_coord
+               OpStore %tex_coord %25
+               OpBranch %18
+         %16 = OpLabel
+         %28 = OpLoad %v2float %vtx_tex_coord
+         %29 = OpCompositeConstruct %v2float %float_1 %float_1
+         %30 = OpFSub %v2float %29 %28
+               OpStore %tex_coord %30
+               OpBranch %18
+         %17 = OpLabel
+         %32 = OpLoad %v2float %vtx_tex_coord
+         %34 = OpVectorTimesScalar %v2float %32 %float_0_5
+         %35 = OpCompositeConstruct %v2float %float_0_5 %float_0_5
+         %36 = OpFAdd %v2float %34 %35
+               OpStore %tex_coord %36
+               OpBranch %18
+         %18 = OpLabel
+         %40 = OpLoad %v2float %tex_coord
+         %41 = OpDPdx %v2float %40
+               OpStore %grad_x %41
+         %43 = OpLoad %v2float %tex_coord
+         %44 = OpDPdy %v2float %43
+               OpStore %grad_y %44
+         %52 = OpLoad %49 %image
+         %53 = OpLoad %v2float %tex_coord
+         %54 = OpLoad %v2float %grad_x
+         %55 = OpLoad %v2float %grad_y
+         %60 = OpImageSampleExplicitLod %v4float %52 %53 Grad|ConstOffset %54 %55 %59
+               OpStore %out_color %60
+               OpReturn
+               OpFunctionEnd

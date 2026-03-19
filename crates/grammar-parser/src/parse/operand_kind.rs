@@ -64,6 +64,7 @@ pub struct Enumerant<'a> {
 mod codegen {
     use super::*;
     use crate::codegen::{EmitRef, OPERAND_ID_RESULT, make_const_ident, ref_ident};
+    use convert_case::{Case, Casing};
     use proc_macro2::{Ident, TokenStream};
     use quote::{format_ident, quote};
 
@@ -78,6 +79,11 @@ mod codegen {
             } else {
                 format_ident!("{}", name)
             }
+        }
+
+        /// Used by parameterized bitmasks
+        pub fn type_bits_ident(name: &str) -> Ident {
+            format_ident!("{}Bits", name)
         }
 
         pub fn emit_def(&self) -> TokenStream {
@@ -153,6 +159,13 @@ mod codegen {
                 // empty string
                 panic!("enumerant symbol must not be an empty string")
             }
+        }
+
+        pub fn parameterized_bitmask_getter_setter(&self) -> (Ident, Ident) {
+            let name = Self::variant_ident(&self.symbol)
+                .to_string()
+                .to_case(Case::Snake);
+            (format_ident!("get_{}", name), format_ident!("set_{}", name))
         }
     }
 

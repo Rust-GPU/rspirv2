@@ -14,6 +14,6 @@ mod tests {
 
     #[test]
     pub fn test_core_size() {
-        expect!["80"].assert_eq(&format!("{}", size_of::<CoreInstSet>()));
+        expect!["120"].assert_eq(&format!("{}", size_of::<CoreInstSet>()));
     }
 }

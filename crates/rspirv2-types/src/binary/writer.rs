@@ -115,3 +115,37 @@ impl WordWriter for WordCounter {
         self.0 += iter.into_iter().count();
     }
 }
+
+pub struct WordSliceWriter<'a> {
+    slice: &'a mut [Word],
+    offset: usize,
+}
+
+impl<'a> WordSliceWriter<'a> {
+    pub fn new(slice: &'a mut [Word]) -> Self {
+        Self { slice, offset: 0 }
+    }
+
+    pub fn finalize(self) {
+        assert_eq!(
+            self.offset,
+            self.slice.len(),
+            "Wrote {} Words but expected {} Words to be written",
+            self.offset,
+            self.slice.len()
+        );
+    }
+}
+
+impl WordWriter for WordSliceWriter<'_> {
+    fn write(&mut self, word: Word) {
+        self.slice[self.offset] = word;
+        self.offset += 1;
+    }
+
+    fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) {
+        for word in iter {
+            self.write(word);
+        }
+    }
+}
