@@ -329,7 +329,7 @@ fn emit_composite(operand_kind: &OperandKind<'_>, bases: &[Cow<'_, str>]) -> Tok
         quote!(OperandEncoding::encode(&self.#i, &mut *writer)?)
     });
     let decode = (0..bases.len()).map(|_| quote!(OperandEncoding::decode(&mut *reader)?));
-    let dis_pat = (0..bases.len()).map(|_| " {}").collect::<String>();
+    let dis_pat = (0..bases.len()).map(|_| "{}").collect::<String>();
     let dis_values = (0..bases.len()).map(|i| {
         let i = proc_macro2::Literal::usize_unsuffixed(i);
         quote!(OperandEncoding::dis(&self.#i, ctx))
