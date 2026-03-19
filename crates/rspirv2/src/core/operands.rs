@@ -6703,7 +6703,7 @@ unsafe impl OperandEncoding for PairLiteralIntegerIdRef {
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         write!(
             f,
-            " {} {}",
+            "{}{}",
             OperandEncoding::dis(&self.0, ctx),
             OperandEncoding::dis(&self.1, ctx)
         )
@@ -6734,7 +6734,7 @@ unsafe impl OperandEncoding for PairIdRefLiteralInteger {
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         write!(
             f,
-            " {} {}",
+            "{}{}",
             OperandEncoding::dis(&self.0, ctx),
             OperandEncoding::dis(&self.1, ctx)
         )
@@ -6765,7 +6765,7 @@ unsafe impl OperandEncoding for PairIdRefIdRef {
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         write!(
             f,
-            " {} {}",
+            "{}{}",
             OperandEncoding::dis(&self.0, ctx),
             OperandEncoding::dis(&self.1, ctx)
         )

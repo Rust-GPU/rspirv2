@@ -43,7 +43,7 @@ pub fn test_dis_composite_types() -> anyhow::Result<()> {
             PairLiteralIntegerIdRef(LiteralInteger::new(69), IdRef(alloc.alloc_id()?)),
         ]),
     };
-    expect!["OpSwitch %0 %1  42  %2  69  %3"].assert_eq(&switch.dis(&ctx).to_string());
+    expect!["OpSwitch %0 %1 42 %2 69 %3"].assert_eq(&switch.dis(&ctx).to_string());
     let phi = OpPhi {
         id_result_type: IdResultType(alloc.alloc_id()?),
         id_result: Some(alloc.alloc_id()?),
@@ -52,7 +52,7 @@ pub fn test_dis_composite_types() -> anyhow::Result<()> {
             PairIdRefIdRef(IdRef(alloc.alloc_id()?), IdRef(alloc.alloc_id()?)),
         ]),
     };
-    expect!["%5 = OpPhi %4  %6  %7  %8  %9"].assert_eq(&phi.dis(&ctx).to_string());
+    expect!["%5 = OpPhi %4 %6 %7 %8 %9"].assert_eq(&phi.dis(&ctx).to_string());
     Ok(())
 }
 
