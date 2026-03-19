@@ -234,6 +234,7 @@ dependencies = [
  "anstream",
  "anyhow",
  "bitflags",
+ "bytemuck",
  "rspirv2-types",
  "smallvec",
  "spv",
