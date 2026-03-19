@@ -6679,7 +6679,7 @@ unsafe impl OperandEncoding for ComponentType {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct PairLiteralIntegerIdRef(LiteralInteger, IdRef);
+pub struct PairLiteralIntegerIdRef(pub LiteralInteger, pub IdRef);
 unsafe impl Operand for PairLiteralIntegerIdRef {
     const KIND: &OperandKind = &OPERAND_KIND_PAIR_LITERAL_INTEGER_ID_REF;
 }
@@ -6710,7 +6710,7 @@ unsafe impl OperandEncoding for PairLiteralIntegerIdRef {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct PairIdRefLiteralInteger(IdRef, LiteralInteger);
+pub struct PairIdRefLiteralInteger(pub IdRef, pub LiteralInteger);
 unsafe impl Operand for PairIdRefLiteralInteger {
     const KIND: &OperandKind = &OPERAND_KIND_PAIR_ID_REF_LITERAL_INTEGER;
 }
@@ -6741,7 +6741,7 @@ unsafe impl OperandEncoding for PairIdRefLiteralInteger {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct PairIdRefIdRef(IdRef, IdRef);
+pub struct PairIdRefIdRef(pub IdRef, pub IdRef);
 unsafe impl Operand for PairIdRefIdRef {
     const KIND: &OperandKind = &OPERAND_KIND_PAIR_ID_REF_ID_REF;
 }
