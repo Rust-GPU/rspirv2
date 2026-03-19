@@ -1,7 +1,7 @@
-use crate::Word;
 use crate::binary::DecodeError;
 use crate::inst::InstEncoding;
 use crate::vec::InstVec;
+use crate::{Word, cast_words_to_ne_bytes};
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 use std::ops::Deref;
@@ -148,8 +148,9 @@ impl<ISA: InstEncoding> Module<ISA> {
         })
     }
 
-    /// Parse a SPIR-V module from bytes, endianness is automatically detected. However, instructions are not checked
-    /// for validity, and you may get panics due to invalid instructions later on.
+    /// Parse a SPIR-V module from bytes, endianness is automatically detected.
+    ///
+    /// Instructions are not checked for validity, and you may get panics due to invalid instructions later on.
     pub fn from_bytes_unchecked(bytes: &[u8]) -> Result<Self, ParseError> {
         let (header, inst_words) = Self::from_bytes_inner(bytes)?;
         Ok(Self {
@@ -158,8 +159,6 @@ impl<ISA: InstEncoding> Module<ISA> {
         })
     }
 
-    /// Parse a SPIR-V module from bytes, endianness is automatically detected. However, instructions are not checked
-    /// for validity, and you may get panics due to invalid instructions later on.
     fn from_bytes_inner(bytes: &[u8]) -> Result<(SpirvHeader, Vec<Word>), ParseError> {
         let (chunks, remainder) = bytes.as_chunks();
         if !remainder.is_empty() {
@@ -196,6 +195,32 @@ impl<ISA: InstEncoding> Module<ISA> {
             })
             .collect::<Vec<_>>();
         Ok((header, inst_words))
+    }
+
+    /// Parse a SPIR-V [`Module`] from a word slice that may or may not contain a [`SpirvHeader`].
+    pub fn from_words_maybe_header(words: &[Word]) -> Result<Self, ParseError> {
+        match Self::from_bytes(cast_words_to_ne_bytes(words)) {
+            Ok(e) => Ok(e),
+            Err(ParseError::MismatchedMagic(..)) => Ok(Self {
+                header: None,
+                inst: InstVec::from_words(words.to_vec())?,
+            }),
+            Err(e) => Err(e),
+        }
+    }
+
+    /// Parse a SPIR-V [`Module`] from a word slice that may or may not contain a [`SpirvHeader`].
+    ///
+    /// Instructions are not checked for validity, and you may get panics due to invalid instructions later on.
+    pub fn from_words_maybe_header_unchecked(words: &[Word]) -> Result<Self, ParseError> {
+        match Self::from_bytes_unchecked(cast_words_to_ne_bytes(words)) {
+            Ok(e) => Ok(e),
+            Err(ParseError::MismatchedMagic(..)) => Ok(Self {
+                header: None,
+                inst: InstVec::from_words_unchecked(words.to_vec()),
+            }),
+            Err(e) => Err(e),
+        }
     }
 }
 
