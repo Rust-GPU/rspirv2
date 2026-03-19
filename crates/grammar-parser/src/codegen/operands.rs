@@ -338,7 +338,7 @@ fn emit_composite(operand_kind: &OperandKind<'_>, bases: &[Cow<'_, str>]) -> Tok
     quote! {
         #doc
         #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-        pub struct #name(#(#member_tys),*);
+        pub struct #name(#(pub #member_tys),*);
 
         unsafe impl Operand for #name {
             const KIND: &OperandKind = &#kind;
