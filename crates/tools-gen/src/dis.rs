@@ -1,7 +1,7 @@
 use clap::{Parser, ValueEnum};
 use rspirv2::dis::{DisOptions, InstSetDisCtx};
 use rspirv2::module::Module;
-use std::io::Write;
+use std::io::{BufWriter, Write};
 use std::path::PathBuf;
 
 #[derive(Clone, Debug, Default, Parser)]
@@ -9,8 +9,11 @@ pub struct Args {
     /// path to SPIR-V file
     path: PathBuf,
     /// Emit disassembly like as if it was emitted by this tool
-    #[clap(short, long)]
+    #[arg(short, long, default_value_t)]
     like: Like,
+    /// color
+    #[clap(long, default_value_t)]
+    color: clap::ColorChoice,
     /// Swap bytes of the SPIR-V module before parsing, for testing
     #[clap(skip)]
     module_swap_bytes: bool,
@@ -24,8 +27,40 @@ pub enum Like {
     SpirvTools,
 }
 
+impl std::fmt::Display for Like {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        self.to_possible_value()
+            .expect("no values are skipped")
+            .get_name()
+            .fmt(f)
+    }
+}
+
 impl Args {
-    pub fn run<ISA: InstSetDisCtx>(&self, stdout: &mut impl Write) -> anyhow::Result<()> {
+    pub fn resolve_auto_color(&mut self, stream: &impl anstream::stream::RawStream) {
+        if self.color == clap::ColorChoice::Auto {
+            self.color = match anstream::AutoStream::choice(stream) {
+                anstream::ColorChoice::Auto => unreachable!(),
+                anstream::ColorChoice::AlwaysAnsi | anstream::ColorChoice::Always => {
+                    clap::ColorChoice::Always
+                }
+                anstream::ColorChoice::Never => clap::ColorChoice::Never,
+            }
+        }
+    }
+}
+
+impl Args {
+    pub fn run<ISA: InstSetDisCtx>(
+        &mut self,
+        stdout: &mut impl anstream::stream::RawStream,
+    ) -> anyhow::Result<()> {
+        self.resolve_auto_color(&*stdout);
+        let mut writer = BufWriter::new(stdout);
+        self.run_inner::<ISA>(&mut writer)
+    }
+
+    pub fn run_inner<ISA: InstSetDisCtx>(&self, stdout: &mut impl Write) -> anyhow::Result<()> {
         let mut slice = std::fs::read(&self.path)?;
         if self.module_swap_bytes {
             for chunk in slice.as_chunks_mut::<4>().0.iter_mut() {
@@ -39,11 +74,12 @@ impl Args {
     }
 
     pub fn to_dis_opts(&self) -> anyhow::Result<DisOptions> {
-        let opt = match self.like {
+        let mut opt = match self.like {
             Like::Default => DisOptions::default(),
             Like::Rspirv => DisOptions::like_rspirv(),
             Like::SpirvTools => DisOptions::like_spirv_tools(),
         };
+        opt.color = matches!(self.color, clap::ColorChoice::Always);
         Ok(opt)
     }
 }
@@ -128,9 +164,10 @@ pub mod test {
             path: spv("dis_reference"),
             like,
             module_swap_bytes,
+            color: clap::ColorChoice::Never,
         };
         let mut stdout = Vec::new();
-        args.run::<CoreInstSet>(&mut anstream::AutoStream::never(&mut stdout))?;
+        args.run_inner::<CoreInstSet>(&mut stdout)?;
         let stdout = String::from_utf8(stdout)?;
         expect.assert_eq(&stdout);
         Ok(())
