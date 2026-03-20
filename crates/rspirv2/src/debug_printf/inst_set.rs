@@ -8,11 +8,13 @@ impl InstEncoding for DebugPrintfInstSet {
         stringify!(DebugPrintfInstSet)
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         match self {
             Self::DebugPrintf(inst) => InstEncoding::encode(inst, writer),
         }
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let opcode = reader.opcode();
         Ok(match opcode {
             1u16 => Self::DebugPrintf(<DebugPrintf as InstEncoding>::decode(reader)?),
@@ -22,6 +24,7 @@ impl InstEncoding for DebugPrintfInstSet {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::DebugPrintf(inst) => InstEncoding::dis_fmt(inst, f, ctx),
         }

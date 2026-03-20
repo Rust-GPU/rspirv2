@@ -43,6 +43,7 @@ anstream = "0.6.21"
 anstyle = "1.0.13"
 expect-test = "1.5.1"
 rustc-hash = "2.1.1"
+profiling = { version = "1.0.17" }
 
 [workspace.lints.rust]
 #missing_docs = "warn"

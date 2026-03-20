@@ -11,6 +11,7 @@ rspirv2.workspace = true
 clap.workspace = true
 anstream.workspace = true
 anyhow.workspace = true
+profiling.workspace = true
 
 [dev-dependencies]
 spv.workspace = true

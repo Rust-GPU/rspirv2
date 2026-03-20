@@ -88,6 +88,7 @@ impl InstEncoding for GlslInstSet {
         stringify!(GlslInstSet)
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         match self {
             Self::Round(inst) => InstEncoding::encode(inst, writer),
             Self::RoundEven(inst) => InstEncoding::encode(inst, writer),
@@ -173,6 +174,7 @@ impl InstEncoding for GlslInstSet {
         }
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let opcode = reader.opcode();
         Ok(match opcode {
             1u16 => Self::Round(<Round as InstEncoding>::decode(reader)?),
@@ -268,6 +270,7 @@ impl InstEncoding for GlslInstSet {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Round(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::RoundEven(inst) => InstEncoding::dis_fmt(inst, f, ctx),

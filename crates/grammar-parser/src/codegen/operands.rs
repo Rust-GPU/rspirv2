@@ -134,6 +134,7 @@ fn emit_rust_like_enum(
             const FIXED_LEN: Option<usize> = None;
 
             fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+                profiling::function_scope!();
                 match self {
                     #(#encode),*
                 }
@@ -141,6 +142,7 @@ fn emit_rust_like_enum(
             }
 
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+                profiling::function_scope!();
                 let variant = reader.pull()?.0;
                 Ok(match variant {
                     #(#decode,)*
@@ -153,6 +155,7 @@ fn emit_rust_like_enum(
 
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+                profiling::function_scope!();
                 match self {
                     #(#dis),*
                 }
@@ -208,11 +211,13 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
             const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl WordWriter)  -> Result<(), EncodeError>{
+                profiling::function_scope!();
                 writer.write(Word(*self as u32));
                 Ok(())
             }
 
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+                profiling::function_scope!();
                 let variant = reader.pull()?.0;
                 Ok(match variant {
                     #(#decode,)*
@@ -225,6 +230,7 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
 
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+                profiling::function_scope!();
                 match self {
                     #(#dis),*
                 }
@@ -306,17 +312,20 @@ fn emit_bitflags_enum_common(
             const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+                profiling::function_scope!();
                 writer.write(Word(self.bits()));
                 Ok(())
             }
 
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+                profiling::function_scope!();
                 let bits = reader.pull()?.0;
                 Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<#name>(stringify!(#name), bits))
             }
 
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+                profiling::function_scope!();
                 if self.is_empty() {
                     write!(f, " None")
                 } else {

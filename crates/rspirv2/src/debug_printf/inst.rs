@@ -13,6 +13,7 @@ impl Inst for DebugPrintf {
 }
 impl InstEncoding for DebugPrintf {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len =
             1 + OperandEncoding::word_len(&self.format) + OperandEncoding::word_len(&self.id_ref);
         writer.write_op(Self::META.opcode, len)?;
@@ -21,6 +22,7 @@ impl InstEncoding for DebugPrintf {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             format: OperandEncoding::decode(&mut op_reader)?,
@@ -28,6 +30,7 @@ impl InstEncoding for DebugPrintf {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,

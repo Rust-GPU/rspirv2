@@ -191,6 +191,7 @@ impl DisContext {
 
     /// Scan the supplied [`InstSlice`] for useful context
     pub fn add_context<ISA: InstSetDisCtx>(&mut self, slice: &InstSlice<ISA>) {
+        profiling::function_scope!();
         ISA::add_context(slice.as_raw(), self);
     }
 
@@ -198,6 +199,7 @@ impl DisContext {
     ///
     /// [`DecodeError`]: crate::binary::DecodeError
     pub fn add_context_raw<ISA: InstSetDisCtx>(&mut self, slice: &RawInstSlice) {
+        profiling::function_scope!();
         ISA::add_context(slice, self);
     }
 
@@ -315,6 +317,7 @@ impl<'a, ISA: InstSetDisCtx> DisInstSlice<'a, ISA> {
 
 impl<'a, ISA: InstSetDisCtx> Display for DisInstSlice<'a, ISA> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         for maybe_reader in self.slice.iter() {
             match maybe_reader.and_then(|reader| ISA::decode(reader)) {
                 Ok(inst) => writeln!(f, "{}", inst.dis(&self.ctx))?,
@@ -327,6 +330,7 @@ impl<'a, ISA: InstSetDisCtx> Display for DisInstSlice<'a, ISA> {
 
 #[allow(clippy::match_same_arms)]
 pub fn escape_id_name(str: &str) -> Option<String> {
+    profiling::function_scope!();
     let escaped = str
         .chars()
         .map(|c| match c {

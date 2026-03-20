@@ -141,6 +141,7 @@ pub struct Module<ISA: InstEncoding> {
 impl<ISA: InstEncoding> Module<ISA> {
     /// Parse a SPIR-V module from bytes, endianness is automatically detected and instructions checked for validity.
     pub fn from_bytes(bytes: &[u8]) -> Result<Self, ParseError> {
+        profiling::function_scope!();
         let (header, inst_words) = Self::from_bytes_inner(bytes)?;
         Ok(Self {
             header: Some(header),
@@ -152,6 +153,7 @@ impl<ISA: InstEncoding> Module<ISA> {
     ///
     /// Instructions are not checked for validity, and you may get panics due to invalid instructions later on.
     pub fn from_bytes_unchecked(bytes: &[u8]) -> Result<Self, ParseError> {
+        profiling::function_scope!();
         let (header, inst_words) = Self::from_bytes_inner(bytes)?;
         Ok(Self {
             header: Some(header),
@@ -160,6 +162,7 @@ impl<ISA: InstEncoding> Module<ISA> {
     }
 
     fn from_bytes_inner(bytes: &[u8]) -> Result<(SpirvHeader, Vec<Word>), ParseError> {
+        profiling::function_scope!();
         let (chunks, remainder) = bytes.as_chunks();
         if !remainder.is_empty() {
             return Err(ParseError::BytesNotMultipleOfFour(chunks.len()));

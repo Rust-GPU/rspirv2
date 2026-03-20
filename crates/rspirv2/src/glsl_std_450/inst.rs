@@ -12,18 +12,21 @@ impl Inst for Round {
 }
 impl InstEncoding for Round {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -45,18 +48,21 @@ impl Inst for RoundEven {
 }
 impl InstEncoding for RoundEven {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -78,18 +84,21 @@ impl Inst for Trunc {
 }
 impl InstEncoding for Trunc {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -111,18 +120,21 @@ impl Inst for FAbs {
 }
 impl InstEncoding for FAbs {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -144,18 +156,21 @@ impl Inst for SAbs {
 }
 impl InstEncoding for SAbs {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -177,18 +192,21 @@ impl Inst for FSign {
 }
 impl InstEncoding for FSign {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -210,18 +228,21 @@ impl Inst for SSign {
 }
 impl InstEncoding for SSign {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -243,18 +264,21 @@ impl Inst for Floor {
 }
 impl InstEncoding for Floor {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -276,18 +300,21 @@ impl Inst for Ceil {
 }
 impl InstEncoding for Ceil {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -309,18 +336,21 @@ impl Inst for Fract {
 }
 impl InstEncoding for Fract {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -342,18 +372,21 @@ impl Inst for Radians {
 }
 impl InstEncoding for Radians {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.degrees);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.degrees, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             degrees: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -380,18 +413,21 @@ impl Inst for Degrees {
 }
 impl InstEncoding for Degrees {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.radians);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.radians, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             radians: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -418,18 +454,21 @@ impl Inst for Sin {
 }
 impl InstEncoding for Sin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -451,18 +490,21 @@ impl Inst for Cos {
 }
 impl InstEncoding for Cos {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -484,18 +526,21 @@ impl Inst for Tan {
 }
 impl InstEncoding for Tan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -517,18 +562,21 @@ impl Inst for Asin {
 }
 impl InstEncoding for Asin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -550,18 +598,21 @@ impl Inst for Acos {
 }
 impl InstEncoding for Acos {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -583,18 +634,21 @@ impl Inst for Atan {
 }
 impl InstEncoding for Atan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.y_over_x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.y_over_x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             y_over_x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -621,18 +675,21 @@ impl Inst for Sinh {
 }
 impl InstEncoding for Sinh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -654,18 +711,21 @@ impl Inst for Cosh {
 }
 impl InstEncoding for Cosh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -687,18 +747,21 @@ impl Inst for Tanh {
 }
 impl InstEncoding for Tanh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -720,18 +783,21 @@ impl Inst for Asinh {
 }
 impl InstEncoding for Asinh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -753,18 +819,21 @@ impl Inst for Acosh {
 }
 impl InstEncoding for Acosh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -786,18 +855,21 @@ impl Inst for Atanh {
 }
 impl InstEncoding for Atanh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -820,6 +892,7 @@ impl Inst for Atan2 {
 }
 impl InstEncoding for Atan2 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.y) + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.y, &mut *writer)?;
@@ -827,6 +900,7 @@ impl InstEncoding for Atan2 {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             y: OperandEncoding::decode(&mut op_reader)?,
@@ -834,6 +908,7 @@ impl InstEncoding for Atan2 {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -862,6 +937,7 @@ impl Inst for Pow {
 }
 impl InstEncoding for Pow {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -869,6 +945,7 @@ impl InstEncoding for Pow {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -876,6 +953,7 @@ impl InstEncoding for Pow {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -903,18 +981,21 @@ impl Inst for Exp {
 }
 impl InstEncoding for Exp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -936,18 +1017,21 @@ impl Inst for Log {
 }
 impl InstEncoding for Log {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -969,18 +1053,21 @@ impl Inst for Exp2 {
 }
 impl InstEncoding for Exp2 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1002,18 +1089,21 @@ impl Inst for Log2 {
 }
 impl InstEncoding for Log2 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1035,18 +1125,21 @@ impl Inst for Sqrt {
 }
 impl InstEncoding for Sqrt {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1068,18 +1161,21 @@ impl Inst for InverseSqrt {
 }
 impl InstEncoding for InverseSqrt {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1106,18 +1202,21 @@ impl Inst for Determinant {
 }
 impl InstEncoding for Determinant {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1144,18 +1243,21 @@ impl Inst for MatrixInverse {
 }
 impl InstEncoding for MatrixInverse {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1183,6 +1285,7 @@ impl Inst for Modf {
 }
 impl InstEncoding for Modf {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.i);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1190,6 +1293,7 @@ impl InstEncoding for Modf {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1197,6 +1301,7 @@ impl InstEncoding for Modf {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1224,18 +1329,21 @@ impl Inst for ModfStruct {
 }
 impl InstEncoding for ModfStruct {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1258,6 +1366,7 @@ impl Inst for FMin {
 }
 impl InstEncoding for FMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1265,6 +1374,7 @@ impl InstEncoding for FMin {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1272,6 +1382,7 @@ impl InstEncoding for FMin {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1300,6 +1411,7 @@ impl Inst for UMin {
 }
 impl InstEncoding for UMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1307,6 +1419,7 @@ impl InstEncoding for UMin {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1314,6 +1427,7 @@ impl InstEncoding for UMin {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1342,6 +1456,7 @@ impl Inst for SMin {
 }
 impl InstEncoding for SMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1349,6 +1464,7 @@ impl InstEncoding for SMin {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1356,6 +1472,7 @@ impl InstEncoding for SMin {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1384,6 +1501,7 @@ impl Inst for FMax {
 }
 impl InstEncoding for FMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1391,6 +1509,7 @@ impl InstEncoding for FMax {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1398,6 +1517,7 @@ impl InstEncoding for FMax {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1426,6 +1546,7 @@ impl Inst for UMax {
 }
 impl InstEncoding for UMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1433,6 +1554,7 @@ impl InstEncoding for UMax {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1440,6 +1562,7 @@ impl InstEncoding for UMax {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1468,6 +1591,7 @@ impl Inst for SMax {
 }
 impl InstEncoding for SMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1475,6 +1599,7 @@ impl InstEncoding for SMax {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1482,6 +1607,7 @@ impl InstEncoding for SMax {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1511,6 +1637,7 @@ impl Inst for FClamp {
 }
 impl InstEncoding for FClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1
             + OperandEncoding::word_len(&self.x)
             + OperandEncoding::word_len(&self.min_val)
@@ -1522,6 +1649,7 @@ impl InstEncoding for FClamp {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1530,6 +1658,7 @@ impl InstEncoding for FClamp {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1560,6 +1689,7 @@ impl Inst for UClamp {
 }
 impl InstEncoding for UClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1
             + OperandEncoding::word_len(&self.x)
             + OperandEncoding::word_len(&self.min_val)
@@ -1571,6 +1701,7 @@ impl InstEncoding for UClamp {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1579,6 +1710,7 @@ impl InstEncoding for UClamp {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1609,6 +1741,7 @@ impl Inst for SClamp {
 }
 impl InstEncoding for SClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1
             + OperandEncoding::word_len(&self.x)
             + OperandEncoding::word_len(&self.min_val)
@@ -1620,6 +1753,7 @@ impl InstEncoding for SClamp {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1628,6 +1762,7 @@ impl InstEncoding for SClamp {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1658,6 +1793,7 @@ impl Inst for FMix {
 }
 impl InstEncoding for FMix {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1
             + OperandEncoding::word_len(&self.x)
             + OperandEncoding::word_len(&self.y)
@@ -1669,6 +1805,7 @@ impl InstEncoding for FMix {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1677,6 +1814,7 @@ impl InstEncoding for FMix {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1707,6 +1845,7 @@ impl Inst for IMix {
 }
 impl InstEncoding for IMix {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1
             + OperandEncoding::word_len(&self.x)
             + OperandEncoding::word_len(&self.y)
@@ -1718,6 +1857,7 @@ impl InstEncoding for IMix {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1726,6 +1866,7 @@ impl InstEncoding for IMix {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1755,6 +1896,7 @@ impl Inst for Step {
 }
 impl InstEncoding for Step {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.edge) + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.edge, &mut *writer)?;
@@ -1762,6 +1904,7 @@ impl InstEncoding for Step {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             edge: OperandEncoding::decode(&mut op_reader)?,
@@ -1769,6 +1912,7 @@ impl InstEncoding for Step {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1798,6 +1942,7 @@ impl Inst for SmoothStep {
 }
 impl InstEncoding for SmoothStep {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1
             + OperandEncoding::word_len(&self.edge_0)
             + OperandEncoding::word_len(&self.edge_1)
@@ -1809,6 +1954,7 @@ impl InstEncoding for SmoothStep {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             edge_0: OperandEncoding::decode(&mut op_reader)?,
@@ -1817,6 +1963,7 @@ impl InstEncoding for SmoothStep {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1847,6 +1994,7 @@ impl Inst for Fma {
 }
 impl InstEncoding for Fma {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1
             + OperandEncoding::word_len(&self.a)
             + OperandEncoding::word_len(&self.b)
@@ -1858,6 +2006,7 @@ impl InstEncoding for Fma {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             a: OperandEncoding::decode(&mut op_reader)?,
@@ -1866,6 +2015,7 @@ impl InstEncoding for Fma {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1895,6 +2045,7 @@ impl Inst for Frexp {
 }
 impl InstEncoding for Frexp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.exp);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1902,6 +2053,7 @@ impl InstEncoding for Frexp {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1909,6 +2061,7 @@ impl InstEncoding for Frexp {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1936,18 +2089,21 @@ impl Inst for FrexpStruct {
 }
 impl InstEncoding for FrexpStruct {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -1975,6 +2131,7 @@ impl Inst for Ldexp {
 }
 impl InstEncoding for Ldexp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.exp);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -1982,6 +2139,7 @@ impl InstEncoding for Ldexp {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1989,6 +2147,7 @@ impl InstEncoding for Ldexp {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2016,18 +2175,21 @@ impl Inst for PackSnorm4x8 {
 }
 impl InstEncoding for PackSnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2054,18 +2216,21 @@ impl Inst for PackUnorm4x8 {
 }
 impl InstEncoding for PackUnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2092,18 +2257,21 @@ impl Inst for PackSnorm2x16 {
 }
 impl InstEncoding for PackSnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2130,18 +2298,21 @@ impl Inst for PackUnorm2x16 {
 }
 impl InstEncoding for PackUnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2168,18 +2339,21 @@ impl Inst for PackHalf2x16 {
 }
 impl InstEncoding for PackHalf2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2206,18 +2380,21 @@ impl Inst for PackDouble2x32 {
 }
 impl InstEncoding for PackDouble2x32 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2244,18 +2421,21 @@ impl Inst for UnpackSnorm2x16 {
 }
 impl InstEncoding for UnpackSnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2282,18 +2462,21 @@ impl Inst for UnpackUnorm2x16 {
 }
 impl InstEncoding for UnpackUnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2320,18 +2503,21 @@ impl Inst for UnpackHalf2x16 {
 }
 impl InstEncoding for UnpackHalf2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2358,18 +2544,21 @@ impl Inst for UnpackSnorm4x8 {
 }
 impl InstEncoding for UnpackSnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2396,18 +2585,21 @@ impl Inst for UnpackUnorm4x8 {
 }
 impl InstEncoding for UnpackUnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             p: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2434,18 +2626,21 @@ impl Inst for UnpackDouble2x32 {
 }
 impl InstEncoding for UnpackDouble2x32 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2472,18 +2667,21 @@ impl Inst for Length {
 }
 impl InstEncoding for Length {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2506,6 +2704,7 @@ impl Inst for Distance {
 }
 impl InstEncoding for Distance {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.p_0) + OperandEncoding::word_len(&self.p_1);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.p_0, &mut *writer)?;
@@ -2513,6 +2712,7 @@ impl InstEncoding for Distance {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             p_0: OperandEncoding::decode(&mut op_reader)?,
@@ -2520,6 +2720,7 @@ impl InstEncoding for Distance {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2548,6 +2749,7 @@ impl Inst for Cross {
 }
 impl InstEncoding for Cross {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -2555,6 +2757,7 @@ impl InstEncoding for Cross {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -2562,6 +2765,7 @@ impl InstEncoding for Cross {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2589,18 +2793,21 @@ impl Inst for Normalize {
 }
 impl InstEncoding for Normalize {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2624,6 +2831,7 @@ impl Inst for FaceForward {
 }
 impl InstEncoding for FaceForward {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1
             + OperandEncoding::word_len(&self.n)
             + OperandEncoding::word_len(&self.i)
@@ -2635,6 +2843,7 @@ impl InstEncoding for FaceForward {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             n: OperandEncoding::decode(&mut op_reader)?,
@@ -2643,6 +2852,7 @@ impl InstEncoding for FaceForward {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2672,6 +2882,7 @@ impl Inst for Reflect {
 }
 impl InstEncoding for Reflect {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.i) + OperandEncoding::word_len(&self.n);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.i, &mut *writer)?;
@@ -2679,6 +2890,7 @@ impl InstEncoding for Reflect {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             i: OperandEncoding::decode(&mut op_reader)?,
@@ -2686,6 +2898,7 @@ impl InstEncoding for Reflect {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2715,6 +2928,7 @@ impl Inst for Refract {
 }
 impl InstEncoding for Refract {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1
             + OperandEncoding::word_len(&self.i)
             + OperandEncoding::word_len(&self.n)
@@ -2726,6 +2940,7 @@ impl InstEncoding for Refract {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             i: OperandEncoding::decode(&mut op_reader)?,
@@ -2734,6 +2949,7 @@ impl InstEncoding for Refract {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2762,18 +2978,21 @@ impl Inst for FindILsb {
 }
 impl InstEncoding for FindILsb {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.value);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2800,18 +3019,21 @@ impl Inst for FindSMsb {
 }
 impl InstEncoding for FindSMsb {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.value);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2838,18 +3060,21 @@ impl Inst for FindUMsb {
 }
 impl InstEncoding for FindUMsb {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.value);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2876,18 +3101,21 @@ impl Inst for InterpolateAtCentroid {
 }
 impl InstEncoding for InterpolateAtCentroid {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.interpolant);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.interpolant, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             interpolant: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2915,6 +3143,7 @@ impl Inst for InterpolateAtSample {
 }
 impl InstEncoding for InterpolateAtSample {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1
             + OperandEncoding::word_len(&self.interpolant)
             + OperandEncoding::word_len(&self.sample);
@@ -2924,6 +3153,7 @@ impl InstEncoding for InterpolateAtSample {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             interpolant: OperandEncoding::decode(&mut op_reader)?,
@@ -2931,6 +3161,7 @@ impl InstEncoding for InterpolateAtSample {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -2959,6 +3190,7 @@ impl Inst for InterpolateAtOffset {
 }
 impl InstEncoding for InterpolateAtOffset {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1
             + OperandEncoding::word_len(&self.interpolant)
             + OperandEncoding::word_len(&self.offset);
@@ -2968,6 +3200,7 @@ impl InstEncoding for InterpolateAtOffset {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             interpolant: OperandEncoding::decode(&mut op_reader)?,
@@ -2975,6 +3208,7 @@ impl InstEncoding for InterpolateAtOffset {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -3003,6 +3237,7 @@ impl Inst for NMin {
 }
 impl InstEncoding for NMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -3010,6 +3245,7 @@ impl InstEncoding for NMin {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -3017,6 +3253,7 @@ impl InstEncoding for NMin {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -3045,6 +3282,7 @@ impl Inst for NMax {
 }
 impl InstEncoding for NMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
@@ -3052,6 +3290,7 @@ impl InstEncoding for NMax {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -3059,6 +3298,7 @@ impl InstEncoding for NMax {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,
@@ -3088,6 +3328,7 @@ impl Inst for NClamp {
 }
 impl InstEncoding for NClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let len = 1
             + OperandEncoding::word_len(&self.x)
             + OperandEncoding::word_len(&self.min_val)
@@ -3099,6 +3340,7 @@ impl InstEncoding for NClamp {
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -3107,6 +3349,7 @@ impl InstEncoding for NClamp {
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         let ctx = &OperandDisContext {
             id_result: None,
             id_result_type: None,

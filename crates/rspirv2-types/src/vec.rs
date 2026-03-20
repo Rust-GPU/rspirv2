@@ -35,6 +35,7 @@ impl<ISA: InstEncoding> InstVec<ISA> {
     /// `ISA`
     #[inline]
     pub fn from_raw(raw: RawInstVec) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         raw.as_slice().verify_valid_in_isa::<ISA>()?;
         Ok(Self::from_raw_unchecked(raw))
     }
@@ -73,6 +74,7 @@ impl<ISA: InstEncoding> InstVec<ISA> {
     /// Moves all the instruction of `other` into `self`, leaving `other` empty. See [`Vec::append`].
     #[inline]
     pub fn append(&mut self, other: &mut Self) {
+        profiling::function_scope!();
         self.raw.append(&mut other.raw);
     }
 
@@ -122,6 +124,7 @@ impl<ISA: InstEncoding> FromIterator<ISA> for InstVec<ISA> {
 impl<ISA: InstEncoding> Clone for InstVec<ISA> {
     #[inline]
     fn clone(&self) -> Self {
+        profiling::function_scope!();
         Self {
             raw: self.raw.clone(),
             _phantom: PhantomData,
@@ -168,6 +171,7 @@ impl RawInstVec {
     /// Appends an instruction to the back of the [`RawInstVec`], like [`Vec::push`].
     #[inline]
     pub fn push(&mut self, inst: impl InstEncoding) -> InstOffset {
+        profiling::function_scope!();
         let offset = InstOffset(self.0.len());
         inst.encode(&mut self.0).expect("error while encoding");
         offset
@@ -184,6 +188,7 @@ impl RawInstVec {
     /// Moves all the instruction of `other` into `self`, leaving `other` empty. See [`Vec::append`].
     #[inline]
     pub fn append(&mut self, other: &mut Self) {
+        profiling::function_scope!();
         self.0.append(&mut other.0);
     }
 
@@ -209,6 +214,7 @@ impl Deref for RawInstVec {
 
 impl<ISA: InstEncoding> Extend<ISA> for RawInstVec {
     fn extend<T: IntoIterator<Item = ISA>>(&mut self, iter: T) {
+        profiling::function_scope!();
         for inst in iter {
             self.push(inst);
         }
@@ -217,6 +223,7 @@ impl<ISA: InstEncoding> Extend<ISA> for RawInstVec {
 
 impl<ISA: InstEncoding> FromIterator<ISA> for RawInstVec {
     fn from_iter<T: IntoIterator<Item = ISA>>(iter: T) -> Self {
+        profiling::function_scope!();
         let mut s = Self::new();
         for inst in iter {
             s.push(inst);

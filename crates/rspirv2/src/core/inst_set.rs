@@ -970,6 +970,7 @@ impl InstEncoding for CoreInstSet {
         stringify!(CoreInstSet)
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         match self {
             Self::Nop(inst) => InstEncoding::encode(inst, writer),
             Self::Undef(inst) => InstEncoding::encode(inst, writer),
@@ -2039,6 +2040,7 @@ impl InstEncoding for CoreInstSet {
         }
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let opcode = reader.opcode();
         Ok(
             match opcode {
@@ -6181,6 +6183,7 @@ impl InstEncoding for CoreInstSet {
         )
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Nop(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::Undef(inst) => InstEncoding::dis_fmt(inst, f, ctx),

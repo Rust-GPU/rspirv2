@@ -16,6 +16,7 @@ bitflags.workspace = true
 smallvec.workspace = true
 anstyle.workspace = true
 rustc-hash.workspace = true
+profiling.workspace = true
 
 [dev-dependencies]
 anyhow.workspace = true
