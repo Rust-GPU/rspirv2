@@ -46,6 +46,7 @@ unsafe impl OperandEncoding for LiteralString {
     }
 
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         let (chunks, remainder) = self.0.as_bytes().as_chunks::<4>();
         let mut last = [0; 4];
         last[..remainder.len()].copy_from_slice(remainder);
@@ -55,6 +56,7 @@ unsafe impl OperandEncoding for LiteralString {
     }
 
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut found_null_terminator = false;
         let bytes = reader
             .flat_map(|w| w.to_le_bytes().into_iter())
@@ -72,6 +74,7 @@ unsafe impl OperandEncoding for LiteralString {
 
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         let color = ctx.color(AnsiColor::Green.on_default());
         let str = ctx.literal_string_escape.escape(&self.0);
         write!(f, " {color}\"{str}\"{color:#}")
@@ -92,6 +95,7 @@ pub enum LiteralStringEscape {
 
 impl LiteralStringEscape {
     pub fn escape<'a>(&self, str: &'a str) -> Cow<'a, str> {
+        profiling::function_scope!();
         match self {
             LiteralStringEscape::Noop => str.into(),
             LiteralStringEscape::EscapeNewlines => str

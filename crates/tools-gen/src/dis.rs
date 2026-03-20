@@ -55,14 +55,20 @@ impl Args {
         &mut self,
         stdout: &mut impl anstream::stream::RawStream,
     ) -> anyhow::Result<()> {
+        profiling::function_scope!();
         self.resolve_auto_color(&*stdout);
         let mut writer = BufWriter::new(stdout);
         self.run_inner::<ISA>(&mut writer)
     }
 
     pub fn run_inner<ISA: InstSetDisCtx>(&self, stdout: &mut impl Write) -> anyhow::Result<()> {
-        let mut bytes = std::fs::read(&self.path)?;
+        profiling::function_scope!();
+        let mut bytes = {
+            profiling::scope!("std::fs::read");
+            std::fs::read(&self.path)?
+        };
         if self.module_swap_bytes {
+            profiling::scope!("module_swap_bytes");
             for chunk in bytes.as_chunks_mut::<4>().0.iter_mut() {
                 *chunk = u32::from_ne_bytes(*chunk).swap_bytes().to_ne_bytes();
             }

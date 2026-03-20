@@ -120,6 +120,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
 
             impl InstEncoding for #struct_ident {
                 fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+                    profiling::function_scope!();
                     let len = 1 #(+OperandEncoding::word_len(&self.#members))*;
                     writer.write_op(Self::META.opcode, len)?;
                     #(OperandEncoding::encode(&self.#members, &mut *writer)?;)*
@@ -127,6 +128,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                 }
 
                 fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+                    profiling::function_scope!();
                     #reader reader.check_opcode(Self::META)?;
                     Ok(Self {
                         #(#members_non_last: OperandEncoding::decode(&mut op_reader)?,)*
@@ -135,6 +137,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                 }
 
                 fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+                    profiling::function_scope!();
                     #dis_operand_ctx
                     #rspirv_spaces_prefix
                     write!(f, #pat, ctx.id_result_writer() #(#dis_operands_value)*)
@@ -201,12 +204,14 @@ pub fn write_inst_enum(
                 }
 
                 fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+                    profiling::function_scope!();
                     match self {
                         #(#encode_match)*
                     }
                 }
 
                 fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+                    profiling::function_scope!();
                     let opcode = reader.opcode();
                     Ok(match opcode {
                         #(#decode_match)*
@@ -215,6 +220,7 @@ pub fn write_inst_enum(
                 }
 
                 fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+                    profiling::function_scope!();
                     match self {
                         #(#dis_match)*
                     }

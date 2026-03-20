@@ -178,11 +178,13 @@ unsafe impl OperandEncoding for LiteralConst {
 
     #[inline]
     fn decode_last(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         Ok(Self(reader.collect()))
     }
 
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         let color = ctx.color(AnsiColor::Red.on_default());
         write!(f, " {color}{}{color:#}", self.fmt_value(ctx))
     }

@@ -80,6 +80,7 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     ///
     /// Several debug assertions to check whether the length is correct are masked behind `cfg!(debug_assertions)`.
     fn word_len(&self) -> usize {
+        profiling::function_scope!();
         fn computed_word_len(op: &impl OperandEncoding) -> usize {
             let mut counter = WordCounter::default();
             // `WordCounter` never fails
@@ -245,11 +246,13 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
 
     #[inline]
     fn word_len(&self) -> usize {
+        profiling::function_scope!();
         self.iter().map(|e| e.word_len()).sum()
     }
 
     #[inline]
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         for x in self {
             x.encode(&mut *writer)?;
         }
@@ -270,6 +273,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     /// [`Quantifier`]: `crate::meta::Quantifier`
     #[inline]
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut vec = if let Some(fixed_len) = T::FIXED_LEN {
             let remaining = reader.remaining();
             if !remaining.is_multiple_of(fixed_len) {
@@ -291,6 +295,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
 
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         for v in self {
             T::dis_fmt(v, &mut *f, ctx)?;
         }
@@ -309,11 +314,13 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
 
     #[inline]
     fn word_len(&self) -> usize {
+        profiling::function_scope!();
         self.iter().map(|e| e.word_len()).sum()
     }
 
     #[inline]
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         for x in self {
             x.encode(&mut *writer)?;
         }
@@ -322,6 +329,7 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
 
     #[inline]
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let mut vec = if let Some(fixed_len) = T::FIXED_LEN {
             let remaining = reader.remaining();
             if !remaining.is_multiple_of(fixed_len) {
@@ -343,6 +351,7 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
 
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         for v in self {
             T::dis_fmt(v, &mut *f, ctx)?;
         }

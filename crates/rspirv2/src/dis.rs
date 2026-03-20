@@ -10,6 +10,7 @@ use rspirv2_types::slice::{RawInstSlice, SkipDecodeErrorIteratorExt, TryDecodeIt
 
 impl InstSetDisCtx for CoreInstSet {
     fn add_context(slice: &RawInstSlice, ctx: &mut DisContext) {
+        profiling::function_scope!();
         for inst in slice.iter().try_decode::<CoreInstSet>().skip_errors() {
             match inst {
                 Self::Name(inst) => {
@@ -60,18 +61,21 @@ impl InstSetDisCtx for CoreInstSet {
 
 impl OpTypeVoid {
     pub fn derive_name(&self, _ctx: &DisContext) -> IdName {
+        profiling::function_scope!();
         IdName::DerivedName("void".to_string())
     }
 }
 
 impl OpTypeBool {
     pub fn derive_name(&self, _ctx: &DisContext) -> IdName {
+        profiling::function_scope!();
         IdName::DerivedName("bool".to_string())
     }
 }
 
 impl OpTypeInt {
     pub fn derive_name(&self, ctx: &DisContext) -> IdName {
+        profiling::function_scope!();
         let signed = self.signedness.to_bool();
         let width = self.width.to_u32();
         IdName::DerivedName(match ctx.type_naming {
@@ -90,6 +94,7 @@ impl OpTypeInt {
 
 impl OpTypeFloat {
     pub fn derive_name(&self, ctx: &DisContext) -> IdName {
+        profiling::function_scope!();
         let width = self.width.to_u32();
         IdName::DerivedName(match ctx.type_naming {
             TypeNaming::Rust => {
@@ -106,6 +111,7 @@ impl OpTypeFloat {
 
 impl OpTypeVector {
     pub fn derive_name(&self, ctx: &DisContext) -> IdName {
+        profiling::function_scope!();
         let ty_name = ctx.id_to_name(self.component_type.0);
         let count = self.component_count.to_u32();
         IdName::DerivedName(format!("v{count}{ty_name}"))
@@ -114,6 +120,7 @@ impl OpTypeVector {
 
 impl OpTypeRuntimeArray {
     pub fn derive_name(&self, ctx: &DisContext) -> IdName {
+        profiling::function_scope!();
         let ty_name = ctx.id_to_name(self.element_type.0);
         IdName::DerivedName(format!("_runtimearr_{ty_name}"))
     }
@@ -121,6 +128,7 @@ impl OpTypeRuntimeArray {
 
 impl OpTypePointer {
     pub fn derive_name(&self, ctx: &DisContext) -> IdName {
+        profiling::function_scope!();
         let ty_name = ctx.id_to_name(self.ty.0);
         let storage_class = self.storage_class;
         IdName::DerivedName(format!("_ptr_{storage_class:?}_{ty_name}"))
@@ -129,12 +137,14 @@ impl OpTypePointer {
 
 impl OpTypeStruct {
     pub fn derive_name(&self, _ctx: &DisContext) -> IdName {
+        profiling::function_scope!();
         IdName::DerivedName(format!("_struct_{}", self.id_result.0.0))
     }
 }
 
 impl OpConstant {
     pub fn derive_name(&self, ctx: &DisContext) -> IdName {
+        profiling::function_scope!();
         let ty_name = ctx.id_to_name(self.id_result_type.0);
         let operand_ctx = OperandDisContext {
             ctx,
@@ -156,6 +166,7 @@ impl OpConstant {
 
 impl OpConstantNull {
     pub fn derive_name(&self, ctx: &DisContext) -> IdName {
+        profiling::function_scope!();
         let ty_name = ctx.id_to_name(self.id_result_type.0);
         IdName::DerivedName(format!("{ty_name}_0"))
     }
@@ -163,12 +174,14 @@ impl OpConstantNull {
 
 impl OpConstantFalse {
     pub fn derive_name(&self, _ctx: &DisContext) -> IdName {
+        profiling::function_scope!();
         IdName::DerivedName("bool_false".to_string())
     }
 }
 
 impl OpConstantTrue {
     pub fn derive_name(&self, _ctx: &DisContext) -> IdName {
+        profiling::function_scope!();
         IdName::DerivedName("bool_true".to_string())
     }
 }

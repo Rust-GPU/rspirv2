@@ -13,10 +13,12 @@ bitflags! {
 unsafe impl OperandEncoding for ImageOperandsBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<ImageOperandsBits>(
             stringify!(ImageOperandsBits),
@@ -25,6 +27,7 @@ unsafe impl OperandEncoding for ImageOperandsBits {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -319,10 +322,12 @@ unsafe impl Operand for FPFastMathMode {
 unsafe impl OperandEncoding for FPFastMathMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FPFastMathMode>(
             stringify!(FPFastMathMode),
@@ -331,6 +336,7 @@ unsafe impl OperandEncoding for FPFastMathMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -375,10 +381,12 @@ unsafe impl Operand for SelectionControl {
 unsafe impl OperandEncoding for SelectionControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<SelectionControl>(
             stringify!(SelectionControl),
@@ -387,6 +395,7 @@ unsafe impl OperandEncoding for SelectionControl {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -420,10 +429,12 @@ bitflags! {
 unsafe impl OperandEncoding for LoopControlBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<LoopControlBits>(
             stringify!(LoopControlBits),
@@ -432,6 +443,7 @@ unsafe impl OperandEncoding for LoopControlBits {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -775,10 +787,12 @@ unsafe impl Operand for FunctionControl {
 unsafe impl OperandEncoding for FunctionControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FunctionControl>(
             stringify!(FunctionControl),
@@ -787,6 +801,7 @@ unsafe impl OperandEncoding for FunctionControl {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -828,10 +843,12 @@ unsafe impl Operand for MemorySemantics {
 unsafe impl OperandEncoding for MemorySemantics {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<MemorySemantics>(
             stringify!(MemorySemantics),
@@ -840,6 +857,7 @@ unsafe impl OperandEncoding for MemorySemantics {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -902,10 +920,12 @@ bitflags! {
 unsafe impl OperandEncoding for MemoryAccessBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<MemoryAccessBits>(
             stringify!(MemoryAccessBits),
@@ -914,6 +934,7 @@ unsafe impl OperandEncoding for MemoryAccessBits {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -1097,10 +1118,12 @@ unsafe impl Operand for KernelProfilingInfo {
 unsafe impl OperandEncoding for KernelProfilingInfo {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<KernelProfilingInfo>(
             stringify!(KernelProfilingInfo),
@@ -1109,6 +1132,7 @@ unsafe impl OperandEncoding for KernelProfilingInfo {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -1135,10 +1159,12 @@ unsafe impl Operand for RayFlags {
 unsafe impl OperandEncoding for RayFlags {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<RayFlags>(
             stringify!(RayFlags),
@@ -1147,6 +1173,7 @@ unsafe impl OperandEncoding for RayFlags {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -1200,10 +1227,12 @@ unsafe impl Operand for FragmentShadingRate {
 unsafe impl OperandEncoding for FragmentShadingRate {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FragmentShadingRate>(
             stringify!(FragmentShadingRate),
@@ -1212,6 +1241,7 @@ unsafe impl OperandEncoding for FragmentShadingRate {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -1244,10 +1274,12 @@ unsafe impl Operand for RawAccessChainOperands {
 unsafe impl OperandEncoding for RawAccessChainOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<RawAccessChainOperands>(
             stringify!(RawAccessChainOperands),
@@ -1256,6 +1288,7 @@ unsafe impl OperandEncoding for RawAccessChainOperands {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -1299,10 +1332,12 @@ unsafe impl Operand for SourceLanguage {
 unsafe impl OperandEncoding for SourceLanguage {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Unknown,
@@ -1330,6 +1365,7 @@ unsafe impl OperandEncoding for SourceLanguage {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Unknown => write!(f, " Unknown"),
             Self::ESSL => write!(f, " ESSL"),
@@ -1379,10 +1415,12 @@ unsafe impl Operand for ExecutionModel {
 unsafe impl OperandEncoding for ExecutionModel {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Vertex,
@@ -1413,6 +1451,7 @@ unsafe impl OperandEncoding for ExecutionModel {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Vertex => write!(f, " Vertex"),
             Self::TessellationControl => write!(f, " TessellationControl"),
@@ -1453,10 +1492,12 @@ unsafe impl Operand for AddressingModel {
 unsafe impl OperandEncoding for AddressingModel {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Logical,
@@ -1474,6 +1515,7 @@ unsafe impl OperandEncoding for AddressingModel {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Logical => write!(f, " Logical"),
             Self::Physical32 => write!(f, " Physical32"),
@@ -1501,10 +1543,12 @@ unsafe impl Operand for MemoryModel {
 unsafe impl OperandEncoding for MemoryModel {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Simple,
@@ -1522,6 +1566,7 @@ unsafe impl OperandEncoding for MemoryModel {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Simple => write!(f, " Simple"),
             Self::GLSL450 => write!(f, " GLSL450"),
@@ -1801,6 +1846,7 @@ unsafe impl Operand for ExecutionMode {
 unsafe impl OperandEncoding for ExecutionMode {
     const FIXED_LEN: Option<usize> = None;
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         match self {
             Self::Invocations(p0) => {
                 writer.write(Word(0u32));
@@ -2038,6 +2084,7 @@ unsafe impl OperandEncoding for ExecutionMode {
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Invocations(OperandEncoding::decode(&mut *reader)?),
@@ -2186,6 +2233,7 @@ unsafe impl OperandEncoding for ExecutionMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Invocations(p0) => write!(f, " Invocations{}", p0.dis(_ctx)),
             Self::SpacingEqual => write!(f, " SpacingEqual"),
@@ -2459,10 +2507,12 @@ unsafe impl Operand for StorageClass {
 unsafe impl OperandEncoding for StorageClass {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::UniformConstant,
@@ -2505,6 +2555,7 @@ unsafe impl OperandEncoding for StorageClass {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::UniformConstant => write!(f, " UniformConstant"),
             Self::Input => write!(f, " Input"),
@@ -2560,10 +2611,12 @@ unsafe impl Operand for Dim {
 unsafe impl OperandEncoding for Dim {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Dim1D,
@@ -2585,6 +2638,7 @@ unsafe impl OperandEncoding for Dim {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Dim1D => write!(f, " 1D"),
             Self::Dim2D => write!(f, " 2D"),
@@ -2616,10 +2670,12 @@ unsafe impl Operand for SamplerAddressingMode {
 unsafe impl OperandEncoding for SamplerAddressingMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::None,
@@ -2638,6 +2694,7 @@ unsafe impl OperandEncoding for SamplerAddressingMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::None => write!(f, " None"),
             Self::ClampToEdge => write!(f, " ClampToEdge"),
@@ -2663,10 +2720,12 @@ unsafe impl Operand for SamplerFilterMode {
 unsafe impl OperandEncoding for SamplerFilterMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Nearest,
@@ -2682,6 +2741,7 @@ unsafe impl OperandEncoding for SamplerFilterMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Nearest => write!(f, " Nearest"),
             Self::Linear => write!(f, " Linear"),
@@ -2744,10 +2804,12 @@ unsafe impl Operand for ImageFormat {
 unsafe impl OperandEncoding for ImageFormat {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Unknown,
@@ -2803,6 +2865,7 @@ unsafe impl OperandEncoding for ImageFormat {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Unknown => write!(f, " Unknown"),
             Self::Rgba32f => write!(f, " Rgba32f"),
@@ -2883,10 +2946,12 @@ unsafe impl Operand for ImageChannelOrder {
 unsafe impl OperandEncoding for ImageChannelOrder {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::R,
@@ -2920,6 +2985,7 @@ unsafe impl OperandEncoding for ImageChannelOrder {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::R => write!(f, " R"),
             Self::A => write!(f, " A"),
@@ -2984,10 +3050,12 @@ unsafe impl Operand for ImageChannelDataType {
 unsafe impl OperandEncoding for ImageChannelDataType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::SnormInt8,
@@ -3027,6 +3095,7 @@ unsafe impl OperandEncoding for ImageChannelDataType {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::SnormInt8 => write!(f, " SnormInt8"),
             Self::SnormInt16 => write!(f, " SnormInt16"),
@@ -3075,10 +3144,12 @@ unsafe impl Operand for FPRoundingMode {
 unsafe impl OperandEncoding for FPRoundingMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RTE,
@@ -3096,6 +3167,7 @@ unsafe impl OperandEncoding for FPRoundingMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::RTE => write!(f, " RTE"),
             Self::RTZ => write!(f, " RTZ"),
@@ -3120,10 +3192,12 @@ unsafe impl Operand for FPDenormMode {
 unsafe impl OperandEncoding for FPDenormMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Preserve,
@@ -3139,6 +3213,7 @@ unsafe impl OperandEncoding for FPDenormMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Preserve => write!(f, " Preserve"),
             Self::FlushToZero => write!(f, " FlushToZero"),
@@ -3167,10 +3242,12 @@ unsafe impl Operand for QuantizationModes {
 unsafe impl OperandEncoding for QuantizationModes {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::TRN,
@@ -3192,6 +3269,7 @@ unsafe impl OperandEncoding for QuantizationModes {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::TRN => write!(f, " TRN"),
             Self::TRN_ZERO => write!(f, " TRN_ZERO"),
@@ -3220,10 +3298,12 @@ unsafe impl Operand for FPOperationMode {
 unsafe impl OperandEncoding for FPOperationMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::IEEE,
@@ -3239,6 +3319,7 @@ unsafe impl OperandEncoding for FPOperationMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::IEEE => write!(f, " IEEE"),
             Self::ALT => write!(f, " ALT"),
@@ -3263,10 +3344,12 @@ unsafe impl Operand for OverflowModes {
 unsafe impl OperandEncoding for OverflowModes {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::WRAP,
@@ -3284,6 +3367,7 @@ unsafe impl OperandEncoding for OverflowModes {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::WRAP => write!(f, " WRAP"),
             Self::SAT => write!(f, " SAT"),
@@ -3309,10 +3393,12 @@ unsafe impl Operand for LinkageType {
 unsafe impl OperandEncoding for LinkageType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Export,
@@ -3329,6 +3415,7 @@ unsafe impl OperandEncoding for LinkageType {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Export => write!(f, " Export"),
             Self::Import => write!(f, " Import"),
@@ -3353,10 +3440,12 @@ unsafe impl Operand for AccessQualifier {
 unsafe impl OperandEncoding for AccessQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::ReadOnly,
@@ -3373,6 +3462,7 @@ unsafe impl OperandEncoding for AccessQualifier {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::ReadOnly => write!(f, " ReadOnly"),
             Self::WriteOnly => write!(f, " WriteOnly"),
@@ -3398,10 +3488,12 @@ unsafe impl Operand for HostAccessQualifier {
 unsafe impl OperandEncoding for HostAccessQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::NoneINTEL,
@@ -3419,6 +3511,7 @@ unsafe impl OperandEncoding for HostAccessQualifier {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::NoneINTEL => write!(f, " NoneINTEL"),
             Self::ReadINTEL => write!(f, " ReadINTEL"),
@@ -3450,10 +3543,12 @@ unsafe impl Operand for FunctionParameterAttribute {
 unsafe impl OperandEncoding for FunctionParameterAttribute {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Zext,
@@ -3476,6 +3571,7 @@ unsafe impl OperandEncoding for FunctionParameterAttribute {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Zext => write!(f, " Zext"),
             Self::Sext => write!(f, " Sext"),
@@ -3913,6 +4009,7 @@ unsafe impl Operand for Decoration {
 unsafe impl OperandEncoding for Decoration {
     const FIXED_LEN: Option<usize> = None;
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         match self {
             Self::RelaxedPrecision => writer.write(Word(0u32)),
             Self::SpecId(p0) => {
@@ -4312,6 +4409,7 @@ unsafe impl OperandEncoding for Decoration {
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RelaxedPrecision,
@@ -4513,6 +4611,7 @@ unsafe impl OperandEncoding for Decoration {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::RelaxedPrecision => write!(f, " RelaxedPrecision"),
             Self::SpecId(p0) => write!(f, " SpecId{}", p0.dis(_ctx)),
@@ -4927,10 +5026,12 @@ unsafe impl Operand for BuiltIn {
 unsafe impl OperandEncoding for BuiltIn {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Position,
@@ -5072,6 +5173,7 @@ unsafe impl OperandEncoding for BuiltIn {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Position => write!(f, " Position"),
             Self::PointSize => write!(f, " PointSize"),
@@ -5242,10 +5344,12 @@ unsafe impl Operand for Scope {
 unsafe impl OperandEncoding for Scope {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::CrossDevice,
@@ -5266,6 +5370,7 @@ unsafe impl OperandEncoding for Scope {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::CrossDevice => write!(f, " CrossDevice"),
             Self::Device => write!(f, " Device"),
@@ -5299,10 +5404,12 @@ unsafe impl Operand for GroupOperation {
 unsafe impl OperandEncoding for GroupOperation {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Reduce,
@@ -5323,6 +5430,7 @@ unsafe impl OperandEncoding for GroupOperation {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Reduce => write!(f, " Reduce"),
             Self::InclusiveScan => write!(f, " InclusiveScan"),
@@ -5355,10 +5463,12 @@ unsafe impl Operand for KernelEnqueueFlags {
 unsafe impl OperandEncoding for KernelEnqueueFlags {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::NoWait,
@@ -5375,6 +5485,7 @@ unsafe impl OperandEncoding for KernelEnqueueFlags {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::NoWait => write!(f, " NoWait"),
             Self::WaitKernel => write!(f, " WaitKernel"),
@@ -5727,10 +5838,12 @@ unsafe impl Operand for Capability {
 unsafe impl OperandEncoding for Capability {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Matrix,
@@ -6024,6 +6137,7 @@ unsafe impl OperandEncoding for Capability {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Matrix => write!(f, " Matrix"),
             Self::Shader => write!(f, " Shader"),
@@ -6482,10 +6596,12 @@ unsafe impl Operand for RayQueryIntersection {
 unsafe impl OperandEncoding for RayQueryIntersection {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RayQueryCandidateIntersectionKHR,
@@ -6501,6 +6617,7 @@ unsafe impl OperandEncoding for RayQueryIntersection {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::RayQueryCandidateIntersectionKHR => {
                 write!(f, " RayQueryCandidateIntersectionKHR")
@@ -6528,10 +6645,12 @@ unsafe impl Operand for RayQueryCommittedIntersectionType {
 unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RayQueryCommittedIntersectionNoneKHR,
@@ -6548,6 +6667,7 @@ unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::RayQueryCommittedIntersectionNoneKHR => {
                 write!(f, " RayQueryCommittedIntersectionNoneKHR")
@@ -6577,10 +6697,12 @@ unsafe impl Operand for RayQueryCandidateIntersectionType {
 unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RayQueryCandidateIntersectionTriangleKHR,
@@ -6596,6 +6718,7 @@ unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::RayQueryCandidateIntersectionTriangleKHR => {
                 write!(f, " RayQueryCandidateIntersectionTriangleKHR")
@@ -6622,10 +6745,12 @@ unsafe impl Operand for PackedVectorFormat {
 unsafe impl OperandEncoding for PackedVectorFormat {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::PackedVectorFormat4x8Bit,
@@ -6640,6 +6765,7 @@ unsafe impl OperandEncoding for PackedVectorFormat {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::PackedVectorFormat4x8Bit => write!(f, " PackedVectorFormat4x8Bit"),
         }
@@ -6658,10 +6784,12 @@ unsafe impl Operand for CooperativeMatrixOperands {
 unsafe impl OperandEncoding for CooperativeMatrixOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<CooperativeMatrixOperands>(
             stringify!(CooperativeMatrixOperands),
@@ -6670,6 +6798,7 @@ unsafe impl OperandEncoding for CooperativeMatrixOperands {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -6712,10 +6841,12 @@ unsafe impl Operand for CooperativeMatrixLayout {
 unsafe impl OperandEncoding for CooperativeMatrixLayout {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RowMajorKHR,
@@ -6733,6 +6864,7 @@ unsafe impl OperandEncoding for CooperativeMatrixLayout {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::RowMajorKHR => write!(f, " RowMajorKHR"),
             Self::ColumnMajorKHR => write!(f, " ColumnMajorKHR"),
@@ -6760,10 +6892,12 @@ unsafe impl Operand for CooperativeMatrixUse {
 unsafe impl OperandEncoding for CooperativeMatrixUse {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::MatrixAKHR,
@@ -6780,6 +6914,7 @@ unsafe impl OperandEncoding for CooperativeMatrixUse {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::MatrixAKHR => write!(f, " MatrixAKHR"),
             Self::MatrixBKHR => write!(f, " MatrixBKHR"),
@@ -6798,10 +6933,12 @@ unsafe impl Operand for CooperativeMatrixReduce {
 unsafe impl OperandEncoding for CooperativeMatrixReduce {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<CooperativeMatrixReduce>(
             stringify!(CooperativeMatrixReduce),
@@ -6810,6 +6947,7 @@ unsafe impl OperandEncoding for CooperativeMatrixReduce {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -6847,10 +6985,12 @@ unsafe impl Operand for TensorClampMode {
 unsafe impl OperandEncoding for TensorClampMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Undefined,
@@ -6869,6 +7009,7 @@ unsafe impl OperandEncoding for TensorClampMode {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Undefined => write!(f, " Undefined"),
             Self::Constant => write!(f, " Constant"),
@@ -6886,10 +7027,12 @@ bitflags! {
 unsafe impl OperandEncoding for TensorAddressingOperandsBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(
             DecodeError::invalid_bitflags::<TensorAddressingOperandsBits>(
@@ -6900,6 +7043,7 @@ unsafe impl OperandEncoding for TensorAddressingOperandsBits {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -7017,10 +7161,12 @@ unsafe impl Operand for InitializationModeQualifier {
 unsafe impl OperandEncoding for InitializationModeQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::InitOnDeviceReprogramALTERA,
@@ -7036,6 +7182,7 @@ unsafe impl OperandEncoding for InitializationModeQualifier {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::InitOnDeviceReprogramALTERA => {
                 write!(f, " InitOnDeviceReprogramALTERA")
@@ -7063,10 +7210,12 @@ unsafe impl Operand for LoadCacheControl {
 unsafe impl OperandEncoding for LoadCacheControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::UncachedINTEL,
@@ -7085,6 +7234,7 @@ unsafe impl OperandEncoding for LoadCacheControl {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::UncachedINTEL => write!(f, " UncachedINTEL"),
             Self::CachedINTEL => write!(f, " CachedINTEL"),
@@ -7112,10 +7262,12 @@ unsafe impl Operand for StoreCacheControl {
 unsafe impl OperandEncoding for StoreCacheControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::UncachedINTEL,
@@ -7133,6 +7285,7 @@ unsafe impl OperandEncoding for StoreCacheControl {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::UncachedINTEL => write!(f, " UncachedINTEL"),
             Self::WriteThroughINTEL => write!(f, " WriteThroughINTEL"),
@@ -7156,10 +7309,12 @@ unsafe impl Operand for NamedMaximumNumberOfRegisters {
 unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::AutoINTEL,
@@ -7174,6 +7329,7 @@ unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::AutoINTEL => write!(f, " AutoINTEL"),
         }
@@ -7196,10 +7352,12 @@ unsafe impl Operand for MatrixMultiplyAccumulateOperands {
 unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<
             MatrixMultiplyAccumulateOperands,
@@ -7207,6 +7365,7 @@ unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {
@@ -7275,10 +7434,12 @@ unsafe impl Operand for FPEncoding {
 unsafe impl OperandEncoding for FPEncoding {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::BFloat16KHR,
@@ -7295,6 +7456,7 @@ unsafe impl OperandEncoding for FPEncoding {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::BFloat16KHR => write!(f, " BFloat16KHR"),
             Self::Float8E4M3EXT => write!(f, " Float8E4M3EXT"),
@@ -7320,10 +7482,12 @@ unsafe impl Operand for CooperativeVectorMatrixLayout {
 unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RowMajorNV,
@@ -7341,6 +7505,7 @@ unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::RowMajorNV => write!(f, " RowMajorNV"),
             Self::ColumnMajorNV => write!(f, " ColumnMajorNV"),
@@ -7378,10 +7543,12 @@ unsafe impl Operand for ComponentType {
 unsafe impl OperandEncoding for ComponentType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(*self as u32));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::Float16NV,
@@ -7410,6 +7577,7 @@ unsafe impl OperandEncoding for ComponentType {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         match self {
             Self::Float16NV => write!(f, " Float16NV"),
             Self::Float32NV => write!(f, " Float32NV"),
@@ -7441,10 +7609,12 @@ bitflags! {
 unsafe impl OperandEncoding for TensorOperandsBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
         writer.write(Word(self.bits()));
         Ok(())
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
         let bits = reader.pull()?.0;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<TensorOperandsBits>(
             stringify!(TensorOperandsBits),
@@ -7453,6 +7623,7 @@ unsafe impl OperandEncoding for TensorOperandsBits {
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
         } else {

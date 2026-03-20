@@ -12,6 +12,7 @@ anstream.workspace = true
 rspirv2-tools-gen.workspace = true
 clap.workspace = true
 anyhow.workspace = true
+profiling.workspace = true
 
 [[bin]]
 name = "rspirv2-dis"
