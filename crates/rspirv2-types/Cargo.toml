@@ -20,4 +20,4 @@ profiling.workspace = true
 
 [dev-dependencies]
 anyhow.workspace = true
-bytemuck.workspace = true
+bytemuck = { workspace = true, features = ["extern_crate_alloc"] }

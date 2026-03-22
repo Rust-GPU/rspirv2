@@ -210,4 +210,11 @@ impl Iterator for OperandReader<'_> {
     fn next(&mut self) -> Option<Self::Item> {
         self.pull().ok()
     }
+
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        let size = self.params.len() - self.offset;
+        (size, Some(size))
+    }
 }
+
+impl ExactSizeIterator for OperandReader<'_> {}

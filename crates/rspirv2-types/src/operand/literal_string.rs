@@ -57,15 +57,17 @@ unsafe impl OperandEncoding for LiteralString {
 
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let mut found_null_terminator = false;
-        let bytes = reader
+        let len_bytes = reader
+            .as_slice()
+            .iter()
             .flat_map(|w| w.to_le_bytes().into_iter())
-            .take_while(|c| {
-                found_null_terminator |= *c == 0;
-                !found_null_terminator
-            })
-            .collect::<Vec<_>>();
-        if found_null_terminator {
+            .enumerate()
+            .find(|(_, c)| *c == 0);
+        if let Some((len_bytes, _)) = len_bytes {
+            let bytes = (0..len_bytes)
+                .map(|i| reader.as_slice()[i / 4].to_le_bytes()[i % 4])
+                .collect();
+            reader.advance_by((len_bytes + 1).div_ceil(4));
             Ok(Self(String::from_utf8(bytes)?))
         } else {
             Err(DecodeErrorKind::StringNotNulTerminated.into())
