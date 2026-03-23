@@ -1,6 +1,6 @@
 use super::preamble::*;
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub enum GlslInstSet {
+pub enum GlslInstSet<'a> {
     Round(Round),
     RoundEven(RoundEven),
     Trunc(Trunc),
@@ -83,7 +83,7 @@ pub enum GlslInstSet {
     NMax(NMax),
     NClamp(NClamp),
 }
-impl InstEncoding for GlslInstSet {
+impl InstEncoding<'a> for GlslInstSet<'a> {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         match self {
             Self::Round(inst) => InstEncoding::encode(inst, writer),

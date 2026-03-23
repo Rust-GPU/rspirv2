@@ -4,8 +4,8 @@ use crate::meta::InstMeta;
 use crate::operand::{IdResult, OptionIdResult};
 use std::fmt::{Debug, Display, Formatter};
 
-pub trait Inst: InstEncoding {
-    const META: &InstMeta;
+pub trait Inst<'a>: InstEncoding<'a> {
+    const META: &'static InstMeta;
 
     /// `MaybeIdResult` is either an [`IdResult`] or `()`, depending on whether this Instruction has an [`IdResult`].
     type MaybeIdResult: MaybeIdResult;
@@ -14,14 +14,14 @@ pub trait Inst: InstEncoding {
     fn id_result(&mut self) -> &mut Self::MaybeIdResult;
 }
 
-pub trait InstEncoding: Sized + Debug + Eq {
+pub trait InstEncoding<'a>: Sized + Debug + Eq {
     /// Encode this instruction to a [`WordWriter`]
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError>;
 
     /// Decode this instruction from an [`InstReader`], error when opcode is unknown.
     ///
     /// See [`Self::try_decode`] for a variant that returns `None` when opcode is unknown.
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError>;
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError>;
 
     /// Try to decode this instruction from an [`InstReader`], return `None` when the opcode is unknown.
     ///
@@ -42,12 +42,12 @@ pub trait InstEncoding: Sized + Debug + Eq {
     ///
     /// You shouldn't overwrite this function but [`Self::dis_fmt`] instead.
     #[inline]
-    fn dis<'a>(&'a self, ctx: &'a DisContext) -> InstDis<'a, Self> {
+    fn dis<'b>(&'b self, ctx: &'b DisContext) -> InstDis<'b, Self> {
         InstDis(self, ctx)
     }
 }
 
-impl InstEncoding for () {
+impl InstEncoding<'static> for () {
     fn encode(&self, _: &mut impl WordWriter) -> Result<(), EncodeError> {
         Ok(())
     }
@@ -63,9 +63,9 @@ impl InstEncoding for () {
     }
 }
 
-pub struct InstDis<'a, T: InstEncoding>(&'a T, &'a DisContext);
+pub struct InstDis<'a, T: InstEncoding<'a>>(&'a T, &'a DisContext);
 
-impl<'a, T: InstEncoding> Display for InstDis<'a, T> {
+impl<'a, T: InstEncoding<'a>> Display for InstDis<'a, T> {
     #[inline]
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, self.1)

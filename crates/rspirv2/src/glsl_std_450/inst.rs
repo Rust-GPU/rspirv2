@@ -3,21 +3,21 @@ use super::preamble::*;
 pub struct Round {
     pub x: IdRef,
 }
-impl Inst for Round {
-    const META: &InstMeta = &ROUND;
+impl<'a> Inst<'a> for Round {
+    const META: &'static InstMeta = &ROUND;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Round {
+impl<'a> InstEncoding<'a> for Round {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -31,21 +31,21 @@ impl InstEncoding for Round {
 pub struct RoundEven {
     pub x: IdRef,
 }
-impl Inst for RoundEven {
-    const META: &InstMeta = &ROUND_EVEN;
+impl<'a> Inst<'a> for RoundEven {
+    const META: &'static InstMeta = &ROUND_EVEN;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for RoundEven {
+impl<'a> InstEncoding<'a> for RoundEven {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -59,21 +59,21 @@ impl InstEncoding for RoundEven {
 pub struct Trunc {
     pub x: IdRef,
 }
-impl Inst for Trunc {
-    const META: &InstMeta = &TRUNC;
+impl<'a> Inst<'a> for Trunc {
+    const META: &'static InstMeta = &TRUNC;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Trunc {
+impl<'a> InstEncoding<'a> for Trunc {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -87,21 +87,21 @@ impl InstEncoding for Trunc {
 pub struct FAbs {
     pub x: IdRef,
 }
-impl Inst for FAbs {
-    const META: &InstMeta = &F_ABS;
+impl<'a> Inst<'a> for FAbs {
+    const META: &'static InstMeta = &F_ABS;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for FAbs {
+impl<'a> InstEncoding<'a> for FAbs {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -115,21 +115,21 @@ impl InstEncoding for FAbs {
 pub struct SAbs {
     pub x: IdRef,
 }
-impl Inst for SAbs {
-    const META: &InstMeta = &S_ABS;
+impl<'a> Inst<'a> for SAbs {
+    const META: &'static InstMeta = &S_ABS;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for SAbs {
+impl<'a> InstEncoding<'a> for SAbs {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -143,21 +143,21 @@ impl InstEncoding for SAbs {
 pub struct FSign {
     pub x: IdRef,
 }
-impl Inst for FSign {
-    const META: &InstMeta = &F_SIGN;
+impl<'a> Inst<'a> for FSign {
+    const META: &'static InstMeta = &F_SIGN;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for FSign {
+impl<'a> InstEncoding<'a> for FSign {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -171,21 +171,21 @@ impl InstEncoding for FSign {
 pub struct SSign {
     pub x: IdRef,
 }
-impl Inst for SSign {
-    const META: &InstMeta = &S_SIGN;
+impl<'a> Inst<'a> for SSign {
+    const META: &'static InstMeta = &S_SIGN;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for SSign {
+impl<'a> InstEncoding<'a> for SSign {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -199,21 +199,21 @@ impl InstEncoding for SSign {
 pub struct Floor {
     pub x: IdRef,
 }
-impl Inst for Floor {
-    const META: &InstMeta = &FLOOR;
+impl<'a> Inst<'a> for Floor {
+    const META: &'static InstMeta = &FLOOR;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Floor {
+impl<'a> InstEncoding<'a> for Floor {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -227,21 +227,21 @@ impl InstEncoding for Floor {
 pub struct Ceil {
     pub x: IdRef,
 }
-impl Inst for Ceil {
-    const META: &InstMeta = &CEIL;
+impl<'a> Inst<'a> for Ceil {
+    const META: &'static InstMeta = &CEIL;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Ceil {
+impl<'a> InstEncoding<'a> for Ceil {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -255,21 +255,21 @@ impl InstEncoding for Ceil {
 pub struct Fract {
     pub x: IdRef,
 }
-impl Inst for Fract {
-    const META: &InstMeta = &FRACT;
+impl<'a> Inst<'a> for Fract {
+    const META: &'static InstMeta = &FRACT;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Fract {
+impl<'a> InstEncoding<'a> for Fract {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -283,21 +283,21 @@ impl InstEncoding for Fract {
 pub struct Radians {
     pub degrees: IdRef,
 }
-impl Inst for Radians {
-    const META: &InstMeta = &RADIANS;
+impl<'a> Inst<'a> for Radians {
+    const META: &'static InstMeta = &RADIANS;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Radians {
+impl<'a> InstEncoding<'a> for Radians {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.degrees);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.degrees, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             degrees: OperandEncoding::decode_last(&mut op_reader)?,
@@ -311,21 +311,21 @@ impl InstEncoding for Radians {
 pub struct Degrees {
     pub radians: IdRef,
 }
-impl Inst for Degrees {
-    const META: &InstMeta = &DEGREES;
+impl<'a> Inst<'a> for Degrees {
+    const META: &'static InstMeta = &DEGREES;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Degrees {
+impl<'a> InstEncoding<'a> for Degrees {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.radians);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.radians, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             radians: OperandEncoding::decode_last(&mut op_reader)?,
@@ -339,21 +339,21 @@ impl InstEncoding for Degrees {
 pub struct Sin {
     pub x: IdRef,
 }
-impl Inst for Sin {
-    const META: &InstMeta = &SIN;
+impl<'a> Inst<'a> for Sin {
+    const META: &'static InstMeta = &SIN;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Sin {
+impl<'a> InstEncoding<'a> for Sin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -367,21 +367,21 @@ impl InstEncoding for Sin {
 pub struct Cos {
     pub x: IdRef,
 }
-impl Inst for Cos {
-    const META: &InstMeta = &COS;
+impl<'a> Inst<'a> for Cos {
+    const META: &'static InstMeta = &COS;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Cos {
+impl<'a> InstEncoding<'a> for Cos {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -395,21 +395,21 @@ impl InstEncoding for Cos {
 pub struct Tan {
     pub x: IdRef,
 }
-impl Inst for Tan {
-    const META: &InstMeta = &TAN;
+impl<'a> Inst<'a> for Tan {
+    const META: &'static InstMeta = &TAN;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Tan {
+impl<'a> InstEncoding<'a> for Tan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -423,21 +423,21 @@ impl InstEncoding for Tan {
 pub struct Asin {
     pub x: IdRef,
 }
-impl Inst for Asin {
-    const META: &InstMeta = &ASIN;
+impl<'a> Inst<'a> for Asin {
+    const META: &'static InstMeta = &ASIN;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Asin {
+impl<'a> InstEncoding<'a> for Asin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -451,21 +451,21 @@ impl InstEncoding for Asin {
 pub struct Acos {
     pub x: IdRef,
 }
-impl Inst for Acos {
-    const META: &InstMeta = &ACOS;
+impl<'a> Inst<'a> for Acos {
+    const META: &'static InstMeta = &ACOS;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Acos {
+impl<'a> InstEncoding<'a> for Acos {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -479,21 +479,21 @@ impl InstEncoding for Acos {
 pub struct Atan {
     pub y_over_x: IdRef,
 }
-impl Inst for Atan {
-    const META: &InstMeta = &ATAN;
+impl<'a> Inst<'a> for Atan {
+    const META: &'static InstMeta = &ATAN;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Atan {
+impl<'a> InstEncoding<'a> for Atan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.y_over_x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.y_over_x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             y_over_x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -507,21 +507,21 @@ impl InstEncoding for Atan {
 pub struct Sinh {
     pub x: IdRef,
 }
-impl Inst for Sinh {
-    const META: &InstMeta = &SINH;
+impl<'a> Inst<'a> for Sinh {
+    const META: &'static InstMeta = &SINH;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Sinh {
+impl<'a> InstEncoding<'a> for Sinh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -535,21 +535,21 @@ impl InstEncoding for Sinh {
 pub struct Cosh {
     pub x: IdRef,
 }
-impl Inst for Cosh {
-    const META: &InstMeta = &COSH;
+impl<'a> Inst<'a> for Cosh {
+    const META: &'static InstMeta = &COSH;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Cosh {
+impl<'a> InstEncoding<'a> for Cosh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -563,21 +563,21 @@ impl InstEncoding for Cosh {
 pub struct Tanh {
     pub x: IdRef,
 }
-impl Inst for Tanh {
-    const META: &InstMeta = &TANH;
+impl<'a> Inst<'a> for Tanh {
+    const META: &'static InstMeta = &TANH;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Tanh {
+impl<'a> InstEncoding<'a> for Tanh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -591,21 +591,21 @@ impl InstEncoding for Tanh {
 pub struct Asinh {
     pub x: IdRef,
 }
-impl Inst for Asinh {
-    const META: &InstMeta = &ASINH;
+impl<'a> Inst<'a> for Asinh {
+    const META: &'static InstMeta = &ASINH;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Asinh {
+impl<'a> InstEncoding<'a> for Asinh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -619,21 +619,21 @@ impl InstEncoding for Asinh {
 pub struct Acosh {
     pub x: IdRef,
 }
-impl Inst for Acosh {
-    const META: &InstMeta = &ACOSH;
+impl<'a> Inst<'a> for Acosh {
+    const META: &'static InstMeta = &ACOSH;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Acosh {
+impl<'a> InstEncoding<'a> for Acosh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -647,21 +647,21 @@ impl InstEncoding for Acosh {
 pub struct Atanh {
     pub x: IdRef,
 }
-impl Inst for Atanh {
-    const META: &InstMeta = &ATANH;
+impl<'a> Inst<'a> for Atanh {
+    const META: &'static InstMeta = &ATANH;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Atanh {
+impl<'a> InstEncoding<'a> for Atanh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -676,14 +676,14 @@ pub struct Atan2 {
     pub y: IdRef,
     pub x: IdRef,
 }
-impl Inst for Atan2 {
-    const META: &InstMeta = &ATAN_2;
+impl<'a> Inst<'a> for Atan2 {
+    const META: &'static InstMeta = &ATAN_2;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Atan2 {
+impl<'a> InstEncoding<'a> for Atan2 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.y) + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -691,7 +691,7 @@ impl InstEncoding for Atan2 {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             y: OperandEncoding::decode(&mut op_reader)?,
@@ -707,14 +707,14 @@ pub struct Pow {
     pub x: IdRef,
     pub y: IdRef,
 }
-impl Inst for Pow {
-    const META: &InstMeta = &POW;
+impl<'a> Inst<'a> for Pow {
+    const META: &'static InstMeta = &POW;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Pow {
+impl<'a> InstEncoding<'a> for Pow {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -722,7 +722,7 @@ impl InstEncoding for Pow {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -737,21 +737,21 @@ impl InstEncoding for Pow {
 pub struct Exp {
     pub x: IdRef,
 }
-impl Inst for Exp {
-    const META: &InstMeta = &EXP;
+impl<'a> Inst<'a> for Exp {
+    const META: &'static InstMeta = &EXP;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Exp {
+impl<'a> InstEncoding<'a> for Exp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -765,21 +765,21 @@ impl InstEncoding for Exp {
 pub struct Log {
     pub x: IdRef,
 }
-impl Inst for Log {
-    const META: &InstMeta = &LOG;
+impl<'a> Inst<'a> for Log {
+    const META: &'static InstMeta = &LOG;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Log {
+impl<'a> InstEncoding<'a> for Log {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -793,21 +793,21 @@ impl InstEncoding for Log {
 pub struct Exp2 {
     pub x: IdRef,
 }
-impl Inst for Exp2 {
-    const META: &InstMeta = &EXP_2;
+impl<'a> Inst<'a> for Exp2 {
+    const META: &'static InstMeta = &EXP_2;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Exp2 {
+impl<'a> InstEncoding<'a> for Exp2 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -821,21 +821,21 @@ impl InstEncoding for Exp2 {
 pub struct Log2 {
     pub x: IdRef,
 }
-impl Inst for Log2 {
-    const META: &InstMeta = &LOG_2;
+impl<'a> Inst<'a> for Log2 {
+    const META: &'static InstMeta = &LOG_2;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Log2 {
+impl<'a> InstEncoding<'a> for Log2 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -849,21 +849,21 @@ impl InstEncoding for Log2 {
 pub struct Sqrt {
     pub x: IdRef,
 }
-impl Inst for Sqrt {
-    const META: &InstMeta = &SQRT;
+impl<'a> Inst<'a> for Sqrt {
+    const META: &'static InstMeta = &SQRT;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Sqrt {
+impl<'a> InstEncoding<'a> for Sqrt {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -877,21 +877,21 @@ impl InstEncoding for Sqrt {
 pub struct InverseSqrt {
     pub x: IdRef,
 }
-impl Inst for InverseSqrt {
-    const META: &InstMeta = &INVERSE_SQRT;
+impl<'a> Inst<'a> for InverseSqrt {
+    const META: &'static InstMeta = &INVERSE_SQRT;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for InverseSqrt {
+impl<'a> InstEncoding<'a> for InverseSqrt {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -905,21 +905,21 @@ impl InstEncoding for InverseSqrt {
 pub struct Determinant {
     pub x: IdRef,
 }
-impl Inst for Determinant {
-    const META: &InstMeta = &DETERMINANT;
+impl<'a> Inst<'a> for Determinant {
+    const META: &'static InstMeta = &DETERMINANT;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Determinant {
+impl<'a> InstEncoding<'a> for Determinant {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -933,21 +933,21 @@ impl InstEncoding for Determinant {
 pub struct MatrixInverse {
     pub x: IdRef,
 }
-impl Inst for MatrixInverse {
-    const META: &InstMeta = &MATRIX_INVERSE;
+impl<'a> Inst<'a> for MatrixInverse {
+    const META: &'static InstMeta = &MATRIX_INVERSE;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for MatrixInverse {
+impl<'a> InstEncoding<'a> for MatrixInverse {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -962,14 +962,14 @@ pub struct Modf {
     pub x: IdRef,
     pub i: IdRef,
 }
-impl Inst for Modf {
-    const META: &InstMeta = &MODF;
+impl<'a> Inst<'a> for Modf {
+    const META: &'static InstMeta = &MODF;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Modf {
+impl<'a> InstEncoding<'a> for Modf {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.i);
         writer.write_op(Self::META.opcode, len)?;
@@ -977,7 +977,7 @@ impl InstEncoding for Modf {
         OperandEncoding::encode(&self.i, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -992,21 +992,21 @@ impl InstEncoding for Modf {
 pub struct ModfStruct {
     pub x: IdRef,
 }
-impl Inst for ModfStruct {
-    const META: &InstMeta = &MODF_STRUCT;
+impl<'a> Inst<'a> for ModfStruct {
+    const META: &'static InstMeta = &MODF_STRUCT;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for ModfStruct {
+impl<'a> InstEncoding<'a> for ModfStruct {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1021,14 +1021,14 @@ pub struct FMin {
     pub x: IdRef,
     pub y: IdRef,
 }
-impl Inst for FMin {
-    const META: &InstMeta = &F_MIN;
+impl<'a> Inst<'a> for FMin {
+    const META: &'static InstMeta = &F_MIN;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for FMin {
+impl<'a> InstEncoding<'a> for FMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -1036,7 +1036,7 @@ impl InstEncoding for FMin {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1052,14 +1052,14 @@ pub struct UMin {
     pub x: IdRef,
     pub y: IdRef,
 }
-impl Inst for UMin {
-    const META: &InstMeta = &U_MIN;
+impl<'a> Inst<'a> for UMin {
+    const META: &'static InstMeta = &U_MIN;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for UMin {
+impl<'a> InstEncoding<'a> for UMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -1067,7 +1067,7 @@ impl InstEncoding for UMin {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1083,14 +1083,14 @@ pub struct SMin {
     pub x: IdRef,
     pub y: IdRef,
 }
-impl Inst for SMin {
-    const META: &InstMeta = &S_MIN;
+impl<'a> Inst<'a> for SMin {
+    const META: &'static InstMeta = &S_MIN;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for SMin {
+impl<'a> InstEncoding<'a> for SMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -1098,7 +1098,7 @@ impl InstEncoding for SMin {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1114,14 +1114,14 @@ pub struct FMax {
     pub x: IdRef,
     pub y: IdRef,
 }
-impl Inst for FMax {
-    const META: &InstMeta = &F_MAX;
+impl<'a> Inst<'a> for FMax {
+    const META: &'static InstMeta = &F_MAX;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for FMax {
+impl<'a> InstEncoding<'a> for FMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -1129,7 +1129,7 @@ impl InstEncoding for FMax {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1145,14 +1145,14 @@ pub struct UMax {
     pub x: IdRef,
     pub y: IdRef,
 }
-impl Inst for UMax {
-    const META: &InstMeta = &U_MAX;
+impl<'a> Inst<'a> for UMax {
+    const META: &'static InstMeta = &U_MAX;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for UMax {
+impl<'a> InstEncoding<'a> for UMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -1160,7 +1160,7 @@ impl InstEncoding for UMax {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1176,14 +1176,14 @@ pub struct SMax {
     pub x: IdRef,
     pub y: IdRef,
 }
-impl Inst for SMax {
-    const META: &InstMeta = &S_MAX;
+impl<'a> Inst<'a> for SMax {
+    const META: &'static InstMeta = &S_MAX;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for SMax {
+impl<'a> InstEncoding<'a> for SMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -1191,7 +1191,7 @@ impl InstEncoding for SMax {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1208,14 +1208,14 @@ pub struct FClamp {
     pub min_val: IdRef,
     pub max_val: IdRef,
 }
-impl Inst for FClamp {
-    const META: &InstMeta = &F_CLAMP;
+impl<'a> Inst<'a> for FClamp {
+    const META: &'static InstMeta = &F_CLAMP;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for FClamp {
+impl<'a> InstEncoding<'a> for FClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1
             + OperandEncoding::word_len(&self.x)
@@ -1227,7 +1227,7 @@ impl InstEncoding for FClamp {
         OperandEncoding::encode(&self.max_val, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1251,14 +1251,14 @@ pub struct UClamp {
     pub min_val: IdRef,
     pub max_val: IdRef,
 }
-impl Inst for UClamp {
-    const META: &InstMeta = &U_CLAMP;
+impl<'a> Inst<'a> for UClamp {
+    const META: &'static InstMeta = &U_CLAMP;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for UClamp {
+impl<'a> InstEncoding<'a> for UClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1
             + OperandEncoding::word_len(&self.x)
@@ -1270,7 +1270,7 @@ impl InstEncoding for UClamp {
         OperandEncoding::encode(&self.max_val, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1294,14 +1294,14 @@ pub struct SClamp {
     pub min_val: IdRef,
     pub max_val: IdRef,
 }
-impl Inst for SClamp {
-    const META: &InstMeta = &S_CLAMP;
+impl<'a> Inst<'a> for SClamp {
+    const META: &'static InstMeta = &S_CLAMP;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for SClamp {
+impl<'a> InstEncoding<'a> for SClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1
             + OperandEncoding::word_len(&self.x)
@@ -1313,7 +1313,7 @@ impl InstEncoding for SClamp {
         OperandEncoding::encode(&self.max_val, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1337,14 +1337,14 @@ pub struct FMix {
     pub y: IdRef,
     pub a: IdRef,
 }
-impl Inst for FMix {
-    const META: &InstMeta = &F_MIX;
+impl<'a> Inst<'a> for FMix {
+    const META: &'static InstMeta = &F_MIX;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for FMix {
+impl<'a> InstEncoding<'a> for FMix {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1
             + OperandEncoding::word_len(&self.x)
@@ -1356,7 +1356,7 @@ impl InstEncoding for FMix {
         OperandEncoding::encode(&self.a, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1380,14 +1380,14 @@ pub struct IMix {
     pub y: IdRef,
     pub a: IdRef,
 }
-impl Inst for IMix {
-    const META: &InstMeta = &I_MIX;
+impl<'a> Inst<'a> for IMix {
+    const META: &'static InstMeta = &I_MIX;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for IMix {
+impl<'a> InstEncoding<'a> for IMix {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1
             + OperandEncoding::word_len(&self.x)
@@ -1399,7 +1399,7 @@ impl InstEncoding for IMix {
         OperandEncoding::encode(&self.a, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1422,14 +1422,14 @@ pub struct Step {
     pub edge: IdRef,
     pub x: IdRef,
 }
-impl Inst for Step {
-    const META: &InstMeta = &STEP;
+impl<'a> Inst<'a> for Step {
+    const META: &'static InstMeta = &STEP;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Step {
+impl<'a> InstEncoding<'a> for Step {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.edge) + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
@@ -1437,7 +1437,7 @@ impl InstEncoding for Step {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             edge: OperandEncoding::decode(&mut op_reader)?,
@@ -1454,14 +1454,14 @@ pub struct SmoothStep {
     pub edge_1: IdRef,
     pub x: IdRef,
 }
-impl Inst for SmoothStep {
-    const META: &InstMeta = &SMOOTH_STEP;
+impl<'a> Inst<'a> for SmoothStep {
+    const META: &'static InstMeta = &SMOOTH_STEP;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for SmoothStep {
+impl<'a> InstEncoding<'a> for SmoothStep {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1
             + OperandEncoding::word_len(&self.edge_0)
@@ -1473,7 +1473,7 @@ impl InstEncoding for SmoothStep {
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             edge_0: OperandEncoding::decode(&mut op_reader)?,
@@ -1497,14 +1497,14 @@ pub struct Fma {
     pub b: IdRef,
     pub c: IdRef,
 }
-impl Inst for Fma {
-    const META: &InstMeta = &FMA;
+impl<'a> Inst<'a> for Fma {
+    const META: &'static InstMeta = &FMA;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Fma {
+impl<'a> InstEncoding<'a> for Fma {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1
             + OperandEncoding::word_len(&self.a)
@@ -1516,7 +1516,7 @@ impl InstEncoding for Fma {
         OperandEncoding::encode(&self.c, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             a: OperandEncoding::decode(&mut op_reader)?,
@@ -1539,14 +1539,14 @@ pub struct Frexp {
     pub x: IdRef,
     pub exp: IdRef,
 }
-impl Inst for Frexp {
-    const META: &InstMeta = &FREXP;
+impl<'a> Inst<'a> for Frexp {
+    const META: &'static InstMeta = &FREXP;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Frexp {
+impl<'a> InstEncoding<'a> for Frexp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.exp);
         writer.write_op(Self::META.opcode, len)?;
@@ -1554,7 +1554,7 @@ impl InstEncoding for Frexp {
         OperandEncoding::encode(&self.exp, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1569,21 +1569,21 @@ impl InstEncoding for Frexp {
 pub struct FrexpStruct {
     pub x: IdRef,
 }
-impl Inst for FrexpStruct {
-    const META: &InstMeta = &FREXP_STRUCT;
+impl<'a> Inst<'a> for FrexpStruct {
+    const META: &'static InstMeta = &FREXP_STRUCT;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for FrexpStruct {
+impl<'a> InstEncoding<'a> for FrexpStruct {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1598,14 +1598,14 @@ pub struct Ldexp {
     pub x: IdRef,
     pub exp: IdRef,
 }
-impl Inst for Ldexp {
-    const META: &InstMeta = &LDEXP;
+impl<'a> Inst<'a> for Ldexp {
+    const META: &'static InstMeta = &LDEXP;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Ldexp {
+impl<'a> InstEncoding<'a> for Ldexp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.exp);
         writer.write_op(Self::META.opcode, len)?;
@@ -1613,7 +1613,7 @@ impl InstEncoding for Ldexp {
         OperandEncoding::encode(&self.exp, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -1628,21 +1628,21 @@ impl InstEncoding for Ldexp {
 pub struct PackSnorm4x8 {
     pub v: IdRef,
 }
-impl Inst for PackSnorm4x8 {
-    const META: &InstMeta = &PACK_SNORM_4_X_8;
+impl<'a> Inst<'a> for PackSnorm4x8 {
+    const META: &'static InstMeta = &PACK_SNORM_4_X_8;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for PackSnorm4x8 {
+impl<'a> InstEncoding<'a> for PackSnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1656,21 +1656,21 @@ impl InstEncoding for PackSnorm4x8 {
 pub struct PackUnorm4x8 {
     pub v: IdRef,
 }
-impl Inst for PackUnorm4x8 {
-    const META: &InstMeta = &PACK_UNORM_4_X_8;
+impl<'a> Inst<'a> for PackUnorm4x8 {
+    const META: &'static InstMeta = &PACK_UNORM_4_X_8;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for PackUnorm4x8 {
+impl<'a> InstEncoding<'a> for PackUnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1684,21 +1684,21 @@ impl InstEncoding for PackUnorm4x8 {
 pub struct PackSnorm2x16 {
     pub v: IdRef,
 }
-impl Inst for PackSnorm2x16 {
-    const META: &InstMeta = &PACK_SNORM_2_X_16;
+impl<'a> Inst<'a> for PackSnorm2x16 {
+    const META: &'static InstMeta = &PACK_SNORM_2_X_16;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for PackSnorm2x16 {
+impl<'a> InstEncoding<'a> for PackSnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1712,21 +1712,21 @@ impl InstEncoding for PackSnorm2x16 {
 pub struct PackUnorm2x16 {
     pub v: IdRef,
 }
-impl Inst for PackUnorm2x16 {
-    const META: &InstMeta = &PACK_UNORM_2_X_16;
+impl<'a> Inst<'a> for PackUnorm2x16 {
+    const META: &'static InstMeta = &PACK_UNORM_2_X_16;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for PackUnorm2x16 {
+impl<'a> InstEncoding<'a> for PackUnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1740,21 +1740,21 @@ impl InstEncoding for PackUnorm2x16 {
 pub struct PackHalf2x16 {
     pub v: IdRef,
 }
-impl Inst for PackHalf2x16 {
-    const META: &InstMeta = &PACK_HALF_2_X_16;
+impl<'a> Inst<'a> for PackHalf2x16 {
+    const META: &'static InstMeta = &PACK_HALF_2_X_16;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for PackHalf2x16 {
+impl<'a> InstEncoding<'a> for PackHalf2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1768,21 +1768,21 @@ impl InstEncoding for PackHalf2x16 {
 pub struct PackDouble2x32 {
     pub v: IdRef,
 }
-impl Inst for PackDouble2x32 {
-    const META: &InstMeta = &PACK_DOUBLE_2_X_32;
+impl<'a> Inst<'a> for PackDouble2x32 {
+    const META: &'static InstMeta = &PACK_DOUBLE_2_X_32;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for PackDouble2x32 {
+impl<'a> InstEncoding<'a> for PackDouble2x32 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1796,21 +1796,21 @@ impl InstEncoding for PackDouble2x32 {
 pub struct UnpackSnorm2x16 {
     pub p: IdRef,
 }
-impl Inst for UnpackSnorm2x16 {
-    const META: &InstMeta = &UNPACK_SNORM_2_X_16;
+impl<'a> Inst<'a> for UnpackSnorm2x16 {
+    const META: &'static InstMeta = &UNPACK_SNORM_2_X_16;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for UnpackSnorm2x16 {
+impl<'a> InstEncoding<'a> for UnpackSnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             p: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1824,21 +1824,21 @@ impl InstEncoding for UnpackSnorm2x16 {
 pub struct UnpackUnorm2x16 {
     pub p: IdRef,
 }
-impl Inst for UnpackUnorm2x16 {
-    const META: &InstMeta = &UNPACK_UNORM_2_X_16;
+impl<'a> Inst<'a> for UnpackUnorm2x16 {
+    const META: &'static InstMeta = &UNPACK_UNORM_2_X_16;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for UnpackUnorm2x16 {
+impl<'a> InstEncoding<'a> for UnpackUnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             p: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1852,21 +1852,21 @@ impl InstEncoding for UnpackUnorm2x16 {
 pub struct UnpackHalf2x16 {
     pub v: IdRef,
 }
-impl Inst for UnpackHalf2x16 {
-    const META: &InstMeta = &UNPACK_HALF_2_X_16;
+impl<'a> Inst<'a> for UnpackHalf2x16 {
+    const META: &'static InstMeta = &UNPACK_HALF_2_X_16;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for UnpackHalf2x16 {
+impl<'a> InstEncoding<'a> for UnpackHalf2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1880,21 +1880,21 @@ impl InstEncoding for UnpackHalf2x16 {
 pub struct UnpackSnorm4x8 {
     pub p: IdRef,
 }
-impl Inst for UnpackSnorm4x8 {
-    const META: &InstMeta = &UNPACK_SNORM_4_X_8;
+impl<'a> Inst<'a> for UnpackSnorm4x8 {
+    const META: &'static InstMeta = &UNPACK_SNORM_4_X_8;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for UnpackSnorm4x8 {
+impl<'a> InstEncoding<'a> for UnpackSnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             p: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1908,21 +1908,21 @@ impl InstEncoding for UnpackSnorm4x8 {
 pub struct UnpackUnorm4x8 {
     pub p: IdRef,
 }
-impl Inst for UnpackUnorm4x8 {
-    const META: &InstMeta = &UNPACK_UNORM_4_X_8;
+impl<'a> Inst<'a> for UnpackUnorm4x8 {
+    const META: &'static InstMeta = &UNPACK_UNORM_4_X_8;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for UnpackUnorm4x8 {
+impl<'a> InstEncoding<'a> for UnpackUnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.p);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.p, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             p: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1936,21 +1936,21 @@ impl InstEncoding for UnpackUnorm4x8 {
 pub struct UnpackDouble2x32 {
     pub v: IdRef,
 }
-impl Inst for UnpackDouble2x32 {
-    const META: &InstMeta = &UNPACK_DOUBLE_2_X_32;
+impl<'a> Inst<'a> for UnpackDouble2x32 {
+    const META: &'static InstMeta = &UNPACK_DOUBLE_2_X_32;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for UnpackDouble2x32 {
+impl<'a> InstEncoding<'a> for UnpackDouble2x32 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.v);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.v, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             v: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1964,21 +1964,21 @@ impl InstEncoding for UnpackDouble2x32 {
 pub struct Length {
     pub x: IdRef,
 }
-impl Inst for Length {
-    const META: &InstMeta = &LENGTH;
+impl<'a> Inst<'a> for Length {
+    const META: &'static InstMeta = &LENGTH;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Length {
+impl<'a> InstEncoding<'a> for Length {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -1993,14 +1993,14 @@ pub struct Distance {
     pub p_0: IdRef,
     pub p_1: IdRef,
 }
-impl Inst for Distance {
-    const META: &InstMeta = &DISTANCE;
+impl<'a> Inst<'a> for Distance {
+    const META: &'static InstMeta = &DISTANCE;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Distance {
+impl<'a> InstEncoding<'a> for Distance {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.p_0) + OperandEncoding::word_len(&self.p_1);
         writer.write_op(Self::META.opcode, len)?;
@@ -2008,7 +2008,7 @@ impl InstEncoding for Distance {
         OperandEncoding::encode(&self.p_1, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             p_0: OperandEncoding::decode(&mut op_reader)?,
@@ -2024,14 +2024,14 @@ pub struct Cross {
     pub x: IdRef,
     pub y: IdRef,
 }
-impl Inst for Cross {
-    const META: &InstMeta = &CROSS;
+impl<'a> Inst<'a> for Cross {
+    const META: &'static InstMeta = &CROSS;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Cross {
+impl<'a> InstEncoding<'a> for Cross {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -2039,7 +2039,7 @@ impl InstEncoding for Cross {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -2054,21 +2054,21 @@ impl InstEncoding for Cross {
 pub struct Normalize {
     pub x: IdRef,
 }
-impl Inst for Normalize {
-    const META: &InstMeta = &NORMALIZE;
+impl<'a> Inst<'a> for Normalize {
+    const META: &'static InstMeta = &NORMALIZE;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Normalize {
+impl<'a> InstEncoding<'a> for Normalize {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.x, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode_last(&mut op_reader)?,
@@ -2084,14 +2084,14 @@ pub struct FaceForward {
     pub i: IdRef,
     pub nref: IdRef,
 }
-impl Inst for FaceForward {
-    const META: &InstMeta = &FACE_FORWARD;
+impl<'a> Inst<'a> for FaceForward {
+    const META: &'static InstMeta = &FACE_FORWARD;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for FaceForward {
+impl<'a> InstEncoding<'a> for FaceForward {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1
             + OperandEncoding::word_len(&self.n)
@@ -2103,7 +2103,7 @@ impl InstEncoding for FaceForward {
         OperandEncoding::encode(&self.nref, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             n: OperandEncoding::decode(&mut op_reader)?,
@@ -2126,14 +2126,14 @@ pub struct Reflect {
     pub i: IdRef,
     pub n: IdRef,
 }
-impl Inst for Reflect {
-    const META: &InstMeta = &REFLECT;
+impl<'a> Inst<'a> for Reflect {
+    const META: &'static InstMeta = &REFLECT;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Reflect {
+impl<'a> InstEncoding<'a> for Reflect {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.i) + OperandEncoding::word_len(&self.n);
         writer.write_op(Self::META.opcode, len)?;
@@ -2141,7 +2141,7 @@ impl InstEncoding for Reflect {
         OperandEncoding::encode(&self.n, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             i: OperandEncoding::decode(&mut op_reader)?,
@@ -2158,14 +2158,14 @@ pub struct Refract {
     pub n: IdRef,
     pub eta: IdRef,
 }
-impl Inst for Refract {
-    const META: &InstMeta = &REFRACT;
+impl<'a> Inst<'a> for Refract {
+    const META: &'static InstMeta = &REFRACT;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for Refract {
+impl<'a> InstEncoding<'a> for Refract {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1
             + OperandEncoding::word_len(&self.i)
@@ -2177,7 +2177,7 @@ impl InstEncoding for Refract {
         OperandEncoding::encode(&self.eta, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             i: OperandEncoding::decode(&mut op_reader)?,
@@ -2199,21 +2199,21 @@ impl InstEncoding for Refract {
 pub struct FindILsb {
     pub value: IdRef,
 }
-impl Inst for FindILsb {
-    const META: &InstMeta = &FIND_I_LSB;
+impl<'a> Inst<'a> for FindILsb {
+    const META: &'static InstMeta = &FIND_I_LSB;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for FindILsb {
+impl<'a> InstEncoding<'a> for FindILsb {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.value);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             value: OperandEncoding::decode_last(&mut op_reader)?,
@@ -2227,21 +2227,21 @@ impl InstEncoding for FindILsb {
 pub struct FindSMsb {
     pub value: IdRef,
 }
-impl Inst for FindSMsb {
-    const META: &InstMeta = &FIND_S_MSB;
+impl<'a> Inst<'a> for FindSMsb {
+    const META: &'static InstMeta = &FIND_S_MSB;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for FindSMsb {
+impl<'a> InstEncoding<'a> for FindSMsb {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.value);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             value: OperandEncoding::decode_last(&mut op_reader)?,
@@ -2255,21 +2255,21 @@ impl InstEncoding for FindSMsb {
 pub struct FindUMsb {
     pub value: IdRef,
 }
-impl Inst for FindUMsb {
-    const META: &InstMeta = &FIND_U_MSB;
+impl<'a> Inst<'a> for FindUMsb {
+    const META: &'static InstMeta = &FIND_U_MSB;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for FindUMsb {
+impl<'a> InstEncoding<'a> for FindUMsb {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.value);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.value, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             value: OperandEncoding::decode_last(&mut op_reader)?,
@@ -2283,21 +2283,21 @@ impl InstEncoding for FindUMsb {
 pub struct InterpolateAtCentroid {
     pub interpolant: IdRef,
 }
-impl Inst for InterpolateAtCentroid {
-    const META: &InstMeta = &INTERPOLATE_AT_CENTROID;
+impl<'a> Inst<'a> for InterpolateAtCentroid {
+    const META: &'static InstMeta = &INTERPOLATE_AT_CENTROID;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for InterpolateAtCentroid {
+impl<'a> InstEncoding<'a> for InterpolateAtCentroid {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.interpolant);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.interpolant, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             interpolant: OperandEncoding::decode_last(&mut op_reader)?,
@@ -2312,14 +2312,14 @@ pub struct InterpolateAtSample {
     pub interpolant: IdRef,
     pub sample: IdRef,
 }
-impl Inst for InterpolateAtSample {
-    const META: &InstMeta = &INTERPOLATE_AT_SAMPLE;
+impl<'a> Inst<'a> for InterpolateAtSample {
+    const META: &'static InstMeta = &INTERPOLATE_AT_SAMPLE;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for InterpolateAtSample {
+impl<'a> InstEncoding<'a> for InterpolateAtSample {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1
             + OperandEncoding::word_len(&self.interpolant)
@@ -2329,7 +2329,7 @@ impl InstEncoding for InterpolateAtSample {
         OperandEncoding::encode(&self.sample, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             interpolant: OperandEncoding::decode(&mut op_reader)?,
@@ -2350,14 +2350,14 @@ pub struct InterpolateAtOffset {
     pub interpolant: IdRef,
     pub offset: IdRef,
 }
-impl Inst for InterpolateAtOffset {
-    const META: &InstMeta = &INTERPOLATE_AT_OFFSET;
+impl<'a> Inst<'a> for InterpolateAtOffset {
+    const META: &'static InstMeta = &INTERPOLATE_AT_OFFSET;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for InterpolateAtOffset {
+impl<'a> InstEncoding<'a> for InterpolateAtOffset {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1
             + OperandEncoding::word_len(&self.interpolant)
@@ -2367,7 +2367,7 @@ impl InstEncoding for InterpolateAtOffset {
         OperandEncoding::encode(&self.offset, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             interpolant: OperandEncoding::decode(&mut op_reader)?,
@@ -2388,14 +2388,14 @@ pub struct NMin {
     pub x: IdRef,
     pub y: IdRef,
 }
-impl Inst for NMin {
-    const META: &InstMeta = &N_MIN;
+impl<'a> Inst<'a> for NMin {
+    const META: &'static InstMeta = &N_MIN;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for NMin {
+impl<'a> InstEncoding<'a> for NMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -2403,7 +2403,7 @@ impl InstEncoding for NMin {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -2419,14 +2419,14 @@ pub struct NMax {
     pub x: IdRef,
     pub y: IdRef,
 }
-impl Inst for NMax {
-    const META: &InstMeta = &N_MAX;
+impl<'a> Inst<'a> for NMax {
+    const META: &'static InstMeta = &N_MAX;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for NMax {
+impl<'a> InstEncoding<'a> for NMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
         writer.write_op(Self::META.opcode, len)?;
@@ -2434,7 +2434,7 @@ impl InstEncoding for NMax {
         OperandEncoding::encode(&self.y, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,
@@ -2451,14 +2451,14 @@ pub struct NClamp {
     pub min_val: IdRef,
     pub max_val: IdRef,
 }
-impl Inst for NClamp {
-    const META: &InstMeta = &N_CLAMP;
+impl<'a> Inst<'a> for NClamp {
+    const META: &'static InstMeta = &N_CLAMP;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for NClamp {
+impl<'a> InstEncoding<'a> for NClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len = 1
             + OperandEncoding::word_len(&self.x)
@@ -2470,7 +2470,7 @@ impl InstEncoding for NClamp {
         OperandEncoding::encode(&self.max_val, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             x: OperandEncoding::decode(&mut op_reader)?,

@@ -87,6 +87,12 @@ mod codegen {
             make_const_ident("", opname)
         }
 
+        pub fn has_lifetime(&self) -> bool {
+            self.operands
+                .iter()
+                .any(|o| OperandKind::has_lifetime(&o.kind))
+        }
+
         pub fn emit_def(&self) -> TokenStream {
             let ident = Self::const_ident(&self.opname);
             let opname = self.opname.emit_ref();

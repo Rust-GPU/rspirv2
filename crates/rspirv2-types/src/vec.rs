@@ -29,12 +29,12 @@ use std::ops::Deref;
 /// # Safety
 /// The referenced words must be an encoded instruction that is valid within the `ISA` instruction set. Encountering an
 /// invalid instruction will panic.
-pub struct InstVec<ISA: InstEncoding> {
+pub struct InstVec<ISA: InstEncoding<'static>> {
     words: Vec<Word>,
     _phantom: PhantomData<ISA>,
 }
 
-impl<ISA: InstEncoding> InstVec<ISA> {
+impl<ISA: InstEncoding<'static>> InstVec<ISA> {
     /// Create a new empty [`InstVec`]
     #[inline]
     pub const fn new() -> Self {

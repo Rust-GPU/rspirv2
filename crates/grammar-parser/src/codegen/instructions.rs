@@ -1,5 +1,5 @@
 use crate::codegen::options::CodegenOptions;
-use crate::codegen::{operand_has_lifetime, GrammarWriter, OPERAND_ID_RESULT, OPERAND_ID_RESULT_TYPE};
+use crate::codegen::{GrammarWriter, OPERAND_ID_RESULT, OPERAND_ID_RESULT_TYPE};
 use crate::parse::{Grammar, InstMeta, Operand, OperandKind, Quantifier};
 use quote::{format_ident, quote};
 
@@ -16,18 +16,31 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
         let id_result_type = member_operands
             .iter()
             .find(|op| op.meta.kind == OPERAND_ID_RESULT_TYPE);
-        let has_lifetime = member_operands.iter().any(|o| OperandKind::has_lifetime(&o.meta.kind));
 
         // struct decl
+        let lifetime = if inst.has_lifetime() {
+            quote!(<'a>)
+        } else {
+            quote!()
+        };
         let member_decls = member_operands.iter().map(
             |&Operand {
                  meta,
                  ref name,
                  ref ty,
-             }| match meta.quantifier {
-                Quantifier::One => quote!(pub #name: #ty),
-                Quantifier::ZeroOrOne => quote!(pub #name: Option<#ty>),
-                Quantifier::ZeroOrMore => quote!(pub #name: SmallVec<[#ty; #SMALLVEC_LEN]>),
+             }| {
+                let lifetime = if OperandKind::has_lifetime(&meta.kind) {
+                    &lifetime
+                } else {
+                    &quote!()
+                };
+                match meta.quantifier {
+                    Quantifier::One => quote!(pub #name: #ty #lifetime),
+                    Quantifier::ZeroOrOne => quote!(pub #name: Option<#ty #lifetime>),
+                    Quantifier::ZeroOrMore => {
+                        quote!(pub #name: SmallVec<[#ty #lifetime; #SMALLVEC_LEN]>)
+                    }
+                }
             },
         );
 
@@ -92,12 +105,12 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
 
         quote! {
             #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-            pub struct #struct_ident {
+            pub struct #struct_ident #lifetime {
                 #(#member_decls),*
             }
 
-            impl Inst for #struct_ident {
-                const META: &InstMeta = &#meta;
+            impl<'a> Inst<'a> for #struct_ident #lifetime {
+                const META: &'static InstMeta = &#meta;
 
                 type MaybeIdResult = #maybe_id_result;
 
@@ -106,7 +119,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                 }
             }
 
-            impl InstEncoding for #struct_ident {
+            impl<'a> InstEncoding<'a> for #struct_ident #lifetime {
                 fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
                     let len = 1 #(+OperandEncoding::word_len(&self.#members))*;
                     writer.write_op(Self::META.opcode, len)?;
@@ -114,7 +127,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                     Ok(())
                 }
 
-                fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+                fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
                     #reader reader.check_opcode(Self::META)?;
                     Ok(Self {
                         #(#members_non_last: OperandEncoding::decode(&mut op_reader)?,)*
@@ -149,26 +162,31 @@ pub fn write_inst_enum(
         .map(|inst| {
             let type_ident = InstMeta::type_ident(&inst.opname);
             let enum_ident = InstMeta::enum_ident(&inst.opname);
-            (inst, type_ident, enum_ident)
+            let lifetime = if inst.has_lifetime() {
+                quote!(<'a>)
+            } else {
+                quote!()
+            };
+            (inst, type_ident, enum_ident, lifetime)
         })
         .collect::<Vec<_>>();
     let enum_variants = insts
         .iter()
-        .map(|(_, type_ident, enum_ident)| quote!(#enum_ident(#type_ident),));
+        .map(|(_, type_ident, enum_ident, lifetime)| quote!(#enum_ident(#type_ident #lifetime),));
     let encode_match = insts.iter().map(
-        |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => InstEncoding::encode(inst, writer),),
+        |(_, _, enum_ident, _)| quote!(Self::#enum_ident(inst) => InstEncoding::encode(inst, writer),),
     );
-    let decode_match = insts.iter().map(|(inst, type_ident, enum_ident)| {
+    let decode_match = insts.iter().map(|(inst, type_ident, enum_ident, lifetime)| {
         let opcode = inst.opcode;
-        quote!(#opcode => Self::#enum_ident(<#type_ident as InstEncoding>::decode(reader)?),)
+        quote!(#opcode => Self::#enum_ident(<#type_ident #lifetime as InstEncoding>::decode(reader)?),)
     });
     let dis_match = insts.iter().map(
-        |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => InstEncoding::dis_fmt(inst, f, ctx),),
+        |(_, _, enum_ident, _)| quote!(Self::#enum_ident(inst) => InstEncoding::dis_fmt(inst, f, ctx),),
     );
-    let from_impls = insts.iter().map(|(_, type_ident, enum_ident)| {
+    let from_impls = insts.iter().map(|(_, type_ident, enum_ident, lifetime)| {
         quote! {
-            impl From<#type_ident> for #name {
-                fn from(inst: #type_ident) -> Self {
+            impl From<#type_ident #lifetime> for #name #lifetime {
+                fn from(inst: #type_ident #lifetime) -> Self {
                     Self::#enum_ident(inst)
                 }
             }
@@ -178,11 +196,11 @@ pub fn write_inst_enum(
         "inst_set",
         quote! {
             #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-            pub enum #name {
+            pub enum #name<'a> {
                 #(#enum_variants)*
             }
 
-            impl InstEncoding for #name {
+            impl InstEncoding<'a> for #name<'a> {
                 fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
                     match self {
                         #(#encode_match)*

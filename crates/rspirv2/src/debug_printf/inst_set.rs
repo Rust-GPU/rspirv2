@@ -1,9 +1,9 @@
 use super::preamble::*;
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub enum DebugPrintfInstSet {
+pub enum DebugPrintfInstSet<'a> {
     DebugPrintf(DebugPrintf),
 }
-impl InstEncoding for DebugPrintfInstSet {
+impl InstEncoding<'a> for DebugPrintfInstSet<'a> {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         match self {
             Self::DebugPrintf(inst) => InstEncoding::encode(inst, writer),

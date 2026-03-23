@@ -4,14 +4,14 @@ pub struct DebugPrintf {
     pub format: IdRef,
     pub id_ref: SmallVec<[IdRef; 4usize]>,
 }
-impl Inst for DebugPrintf {
-    const META: &InstMeta = &DEBUG_PRINTF;
+impl<'a> Inst<'a> for DebugPrintf {
+    const META: &'static InstMeta = &DEBUG_PRINTF;
     type MaybeIdResult = ();
     fn id_result(&mut self) -> &mut Self::MaybeIdResult {
         make_mut_ref_unit()
     }
 }
-impl InstEncoding for DebugPrintf {
+impl<'a> InstEncoding<'a> for DebugPrintf {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         let len =
             1 + OperandEncoding::word_len(&self.format) + OperandEncoding::word_len(&self.id_ref);
@@ -20,7 +20,7 @@ impl InstEncoding for DebugPrintf {
         OperandEncoding::encode(&self.id_ref, &mut *writer)?;
         Ok(())
     }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+    fn decode(reader: InstReader<'a>) -> Result<Self, DecodeError> {
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
             format: OperandEncoding::decode(&mut op_reader)?,

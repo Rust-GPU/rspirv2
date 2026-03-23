@@ -104,13 +104,13 @@ impl DerefMut for DisContext {
 /// A sequence of words that has been pre-processed and may be [`Display`]ed.
 ///
 /// The `ISA: `[`InstEncoding`] generic determines for which instruction set these Words are disassembled.
-pub struct DisModule<'a, ISA: InstEncoding> {
+pub struct DisModule<'a, ISA: InstEncoding<'a>> {
     words: &'a [Word],
     dis: DisContext,
     _phantom: PhantomData<ISA>,
 }
 
-impl<'a, ISA: InstEncoding> DisModule<'a, ISA> {
+impl<'a, ISA: InstEncoding<'a>> DisModule<'a, ISA> {
     pub fn new(words: &'a [Word], opt: DisOptions) -> Result<Self, DecodeError> {
         Ok(Self {
             words,
@@ -120,7 +120,7 @@ impl<'a, ISA: InstEncoding> DisModule<'a, ISA> {
     }
 }
 
-impl<'a, ISA: InstEncoding> Display for DisModule<'a, ISA> {
+impl<'a, ISA: InstEncoding<'a>> Display for DisModule<'a, ISA> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         for inst in InstIter::<ISA>::from_words_unchecked(self.words) {
             writeln!(f, "{}", inst.dis(&self.dis))?;

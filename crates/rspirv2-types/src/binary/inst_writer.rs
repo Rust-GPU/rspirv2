@@ -21,7 +21,7 @@ impl<W: WordWriter, A: IdResultAlloc> InstWriter<W, A> {
     }
 
     #[inline]
-    pub fn push<I: Inst>(
+    pub fn push<I: for<'a> Inst<'a>>(
         &mut self,
         mut inst: I,
     ) -> Result<<I::MaybeIdResult as MaybeIdResult>::IdResult, EncodeError> {
@@ -29,7 +29,7 @@ impl<W: WordWriter, A: IdResultAlloc> InstWriter<W, A> {
     }
 
     #[inline]
-    pub fn push_mut<I: Inst>(
+    pub fn push_mut<I: for<'a> Inst<'a>>(
         &mut self,
         inst: &mut I,
     ) -> Result<<I::MaybeIdResult as MaybeIdResult>::IdResult, EncodeError> {

@@ -1,20 +1,20 @@
 use super::preamble::*;
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub enum CoreInstSet {
+pub enum CoreInstSet<'a> {
     Nop(OpNop),
     Undef(OpUndef),
-    SourceContinued(OpSourceContinued),
-    Source(OpSource),
-    SourceExtension(OpSourceExtension),
-    Name(OpName),
-    MemberName(OpMemberName),
-    String(OpString),
+    SourceContinued(OpSourceContinued<'a>),
+    Source(OpSource<'a>),
+    SourceExtension(OpSourceExtension<'a>),
+    Name(OpName<'a>),
+    MemberName(OpMemberName<'a>),
+    String(OpString<'a>),
     Line(OpLine),
-    Extension(OpExtension),
-    ExtInstImport(OpExtInstImport),
+    Extension(OpExtension<'a>),
+    ExtInstImport(OpExtInstImport<'a>),
     ExtInst(OpExtInst),
     MemoryModel(OpMemoryModel),
-    EntryPoint(OpEntryPoint),
+    EntryPoint(OpEntryPoint<'a>),
     ExecutionMode(OpExecutionMode),
     Capability(OpCapability),
     TypeVoid(OpTypeVoid),
@@ -29,7 +29,7 @@ pub enum CoreInstSet {
     TypeArray(OpTypeArray),
     TypeRuntimeArray(OpTypeRuntimeArray),
     TypeStruct(OpTypeStruct),
-    TypeOpaque(OpTypeOpaque),
+    TypeOpaque(OpTypeOpaque<'a>),
     TypePointer(OpTypePointer),
     TypeFunction(OpTypeFunction),
     TypeEvent(OpTypeEvent),
@@ -304,7 +304,7 @@ pub enum CoreInstSet {
     TypeNamedBarrier(OpTypeNamedBarrier),
     NamedBarrierInitialize(OpNamedBarrierInitialize),
     MemoryNamedBarrier(OpMemoryNamedBarrier),
-    ModuleProcessed(OpModuleProcessed),
+    ModuleProcessed(OpModuleProcessed<'a>),
     ExecutionModeId(OpExecutionModeId),
     DecorateId(OpDecorateId),
     GroupNonUniformElect(OpGroupNonUniformElect),
@@ -353,7 +353,7 @@ pub enum CoreInstSet {
     TensorWriteARM(OpTensorWriteARM),
     TensorQuerySizeARM(OpTensorQuerySizeARM),
     GraphConstantARM(OpGraphConstantARM),
-    GraphEntryPointARM(OpGraphEntryPointARM),
+    GraphEntryPointARM(OpGraphEntryPointARM<'a>),
     GraphARM(OpGraphARM),
     GraphInputARM(OpGraphInputARM),
     GraphSetOutputARM(OpGraphSetOutputARM),
@@ -433,8 +433,8 @@ pub enum CoreInstSet {
     FinishWritingNodePayloadAMDX(OpFinishWritingNodePayloadAMDX),
     NodePayloadArrayLengthAMDX(OpNodePayloadArrayLengthAMDX),
     IsNodePayloadValidAMDX(OpIsNodePayloadValidAMDX),
-    ConstantStringAMDX(OpConstantStringAMDX),
-    SpecConstantStringAMDX(OpSpecConstantStringAMDX),
+    ConstantStringAMDX(OpConstantStringAMDX<'a>),
+    SpecConstantStringAMDX(OpSpecConstantStringAMDX<'a>),
     GroupNonUniformQuadAllKHR(OpGroupNonUniformQuadAllKHR),
     GroupNonUniformQuadAnyKHR(OpGroupNonUniformQuadAnyKHR),
     TypeBufferEXT(OpTypeBufferEXT),
@@ -614,8 +614,8 @@ pub enum CoreInstSet {
     UMul32x16INTEL(OpUMul32x16INTEL),
     ConstantFunctionPointerINTEL(OpConstantFunctionPointerINTEL),
     FunctionPointerCallINTEL(OpFunctionPointerCallINTEL),
-    AsmTargetINTEL(OpAsmTargetINTEL),
-    AsmINTEL(OpAsmINTEL),
+    AsmTargetINTEL(OpAsmTargetINTEL<'a>),
+    AsmINTEL(OpAsmINTEL<'a>),
     AsmCallINTEL(OpAsmCallINTEL),
     AtomicFMinEXT(OpAtomicFMinEXT),
     AtomicFMaxEXT(OpAtomicFMaxEXT),
@@ -943,8 +943,8 @@ pub enum CoreInstSet {
     SubgroupMatrixMultiplyAccumulateINTEL(OpSubgroupMatrixMultiplyAccumulateINTEL),
     BitwiseFunctionINTEL(OpBitwiseFunctionINTEL),
     UntypedVariableLengthArrayINTEL(OpUntypedVariableLengthArrayINTEL),
-    ConditionalExtensionINTEL(OpConditionalExtensionINTEL),
-    ConditionalEntryPointINTEL(OpConditionalEntryPointINTEL),
+    ConditionalExtensionINTEL(OpConditionalExtensionINTEL<'a>),
+    ConditionalEntryPointINTEL(OpConditionalEntryPointINTEL<'a>),
     ConditionalCapabilityINTEL(OpConditionalCapabilityINTEL),
     SpecConstantTargetINTEL(OpSpecConstantTargetINTEL),
     SpecConstantArchitectureINTEL(OpSpecConstantArchitectureINTEL),
@@ -965,7 +965,7 @@ pub enum CoreInstSet {
     ConvertHandleToSamplerINTEL(OpConvertHandleToSamplerINTEL),
     ConvertHandleToSampledImageINTEL(OpConvertHandleToSampledImageINTEL),
 }
-impl InstEncoding for CoreInstSet {
+impl InstEncoding<'a> for CoreInstSet<'a> {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         match self {
             Self::Nop(inst) => InstEncoding::encode(inst, writer),
@@ -2043,23 +2043,27 @@ impl InstEncoding for CoreInstSet {
                 1u16 => Self::Undef(<OpUndef as InstEncoding>::decode(reader)?),
                 2u16 => {
                     Self::SourceContinued(
-                        <OpSourceContinued as InstEncoding>::decode(reader)?,
+                        <OpSourceContinued<'a> as InstEncoding>::decode(reader)?,
                     )
                 }
-                3u16 => Self::Source(<OpSource as InstEncoding>::decode(reader)?),
+                3u16 => Self::Source(<OpSource<'a> as InstEncoding>::decode(reader)?),
                 4u16 => {
                     Self::SourceExtension(
-                        <OpSourceExtension as InstEncoding>::decode(reader)?,
+                        <OpSourceExtension<'a> as InstEncoding>::decode(reader)?,
                     )
                 }
-                5u16 => Self::Name(<OpName as InstEncoding>::decode(reader)?),
-                6u16 => Self::MemberName(<OpMemberName as InstEncoding>::decode(reader)?),
-                7u16 => Self::String(<OpString as InstEncoding>::decode(reader)?),
+                5u16 => Self::Name(<OpName<'a> as InstEncoding>::decode(reader)?),
+                6u16 => {
+                    Self::MemberName(<OpMemberName<'a> as InstEncoding>::decode(reader)?)
+                }
+                7u16 => Self::String(<OpString<'a> as InstEncoding>::decode(reader)?),
                 8u16 => Self::Line(<OpLine as InstEncoding>::decode(reader)?),
-                10u16 => Self::Extension(<OpExtension as InstEncoding>::decode(reader)?),
+                10u16 => {
+                    Self::Extension(<OpExtension<'a> as InstEncoding>::decode(reader)?)
+                }
                 11u16 => {
                     Self::ExtInstImport(
-                        <OpExtInstImport as InstEncoding>::decode(reader)?,
+                        <OpExtInstImport<'a> as InstEncoding>::decode(reader)?,
                     )
                 }
                 12u16 => Self::ExtInst(<OpExtInst as InstEncoding>::decode(reader)?),
@@ -2067,7 +2071,7 @@ impl InstEncoding for CoreInstSet {
                     Self::MemoryModel(<OpMemoryModel as InstEncoding>::decode(reader)?)
                 }
                 15u16 => {
-                    Self::EntryPoint(<OpEntryPoint as InstEncoding>::decode(reader)?)
+                    Self::EntryPoint(<OpEntryPoint<'a> as InstEncoding>::decode(reader)?)
                 }
                 16u16 => {
                     Self::ExecutionMode(
@@ -2106,7 +2110,7 @@ impl InstEncoding for CoreInstSet {
                     Self::TypeStruct(<OpTypeStruct as InstEncoding>::decode(reader)?)
                 }
                 31u16 => {
-                    Self::TypeOpaque(<OpTypeOpaque as InstEncoding>::decode(reader)?)
+                    Self::TypeOpaque(<OpTypeOpaque<'a> as InstEncoding>::decode(reader)?)
                 }
                 32u16 => {
                     Self::TypePointer(<OpTypePointer as InstEncoding>::decode(reader)?)
@@ -3068,7 +3072,7 @@ impl InstEncoding for CoreInstSet {
                 }
                 330u16 => {
                     Self::ModuleProcessed(
-                        <OpModuleProcessed as InstEncoding>::decode(reader)?,
+                        <OpModuleProcessed<'a> as InstEncoding>::decode(reader)?,
                     )
                 }
                 331u16 => {
@@ -3305,7 +3309,7 @@ impl InstEncoding for CoreInstSet {
                 }
                 4182u16 => {
                     Self::GraphEntryPointARM(
-                        <OpGraphEntryPointARM as InstEncoding>::decode(reader)?,
+                        <OpGraphEntryPointARM<'a> as InstEncoding>::decode(reader)?,
                     )
                 }
                 4183u16 => Self::GraphARM(<OpGraphARM as InstEncoding>::decode(reader)?),
@@ -3691,12 +3695,12 @@ impl InstEncoding for CoreInstSet {
                 }
                 5103u16 => {
                     Self::ConstantStringAMDX(
-                        <OpConstantStringAMDX as InstEncoding>::decode(reader)?,
+                        <OpConstantStringAMDX<'a> as InstEncoding>::decode(reader)?,
                     )
                 }
                 5104u16 => {
                     Self::SpecConstantStringAMDX(
-                        <OpSpecConstantStringAMDX as InstEncoding>::decode(reader)?,
+                        <OpSpecConstantStringAMDX<'a> as InstEncoding>::decode(reader)?,
                     )
                 }
                 5110u16 => {
@@ -4640,10 +4644,12 @@ impl InstEncoding for CoreInstSet {
                 }
                 5609u16 => {
                     Self::AsmTargetINTEL(
-                        <OpAsmTargetINTEL as InstEncoding>::decode(reader)?,
+                        <OpAsmTargetINTEL<'a> as InstEncoding>::decode(reader)?,
                     )
                 }
-                5610u16 => Self::AsmINTEL(<OpAsmINTEL as InstEncoding>::decode(reader)?),
+                5610u16 => {
+                    Self::AsmINTEL(<OpAsmINTEL<'a> as InstEncoding>::decode(reader)?)
+                }
                 5611u16 => {
                     Self::AsmCallINTEL(<OpAsmCallINTEL as InstEncoding>::decode(reader)?)
                 }
@@ -6061,12 +6067,16 @@ impl InstEncoding for CoreInstSet {
                 }
                 6248u16 => {
                     Self::ConditionalExtensionINTEL(
-                        <OpConditionalExtensionINTEL as InstEncoding>::decode(reader)?,
+                        <OpConditionalExtensionINTEL<
+                            'a,
+                        > as InstEncoding>::decode(reader)?,
                     )
                 }
                 6249u16 => {
                     Self::ConditionalEntryPointINTEL(
-                        <OpConditionalEntryPointINTEL as InstEncoding>::decode(reader)?,
+                        <OpConditionalEntryPointINTEL<
+                            'a,
+                        > as InstEncoding>::decode(reader)?,
                     )
                 }
                 6250u16 => {
@@ -7284,33 +7294,33 @@ impl From<OpUndef> for CoreInstSet {
         Self::Undef(inst)
     }
 }
-impl From<OpSourceContinued> for CoreInstSet {
-    fn from(inst: OpSourceContinued) -> Self {
+impl From<OpSourceContinued<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpSourceContinued<'a>) -> Self {
         Self::SourceContinued(inst)
     }
 }
-impl From<OpSource> for CoreInstSet {
-    fn from(inst: OpSource) -> Self {
+impl From<OpSource<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpSource<'a>) -> Self {
         Self::Source(inst)
     }
 }
-impl From<OpSourceExtension> for CoreInstSet {
-    fn from(inst: OpSourceExtension) -> Self {
+impl From<OpSourceExtension<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpSourceExtension<'a>) -> Self {
         Self::SourceExtension(inst)
     }
 }
-impl From<OpName> for CoreInstSet {
-    fn from(inst: OpName) -> Self {
+impl From<OpName<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpName<'a>) -> Self {
         Self::Name(inst)
     }
 }
-impl From<OpMemberName> for CoreInstSet {
-    fn from(inst: OpMemberName) -> Self {
+impl From<OpMemberName<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpMemberName<'a>) -> Self {
         Self::MemberName(inst)
     }
 }
-impl From<OpString> for CoreInstSet {
-    fn from(inst: OpString) -> Self {
+impl From<OpString<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpString<'a>) -> Self {
         Self::String(inst)
     }
 }
@@ -7319,13 +7329,13 @@ impl From<OpLine> for CoreInstSet {
         Self::Line(inst)
     }
 }
-impl From<OpExtension> for CoreInstSet {
-    fn from(inst: OpExtension) -> Self {
+impl From<OpExtension<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpExtension<'a>) -> Self {
         Self::Extension(inst)
     }
 }
-impl From<OpExtInstImport> for CoreInstSet {
-    fn from(inst: OpExtInstImport) -> Self {
+impl From<OpExtInstImport<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpExtInstImport<'a>) -> Self {
         Self::ExtInstImport(inst)
     }
 }
@@ -7339,8 +7349,8 @@ impl From<OpMemoryModel> for CoreInstSet {
         Self::MemoryModel(inst)
     }
 }
-impl From<OpEntryPoint> for CoreInstSet {
-    fn from(inst: OpEntryPoint) -> Self {
+impl From<OpEntryPoint<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpEntryPoint<'a>) -> Self {
         Self::EntryPoint(inst)
     }
 }
@@ -7414,8 +7424,8 @@ impl From<OpTypeStruct> for CoreInstSet {
         Self::TypeStruct(inst)
     }
 }
-impl From<OpTypeOpaque> for CoreInstSet {
-    fn from(inst: OpTypeOpaque) -> Self {
+impl From<OpTypeOpaque<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpTypeOpaque<'a>) -> Self {
         Self::TypeOpaque(inst)
     }
 }
@@ -8789,8 +8799,8 @@ impl From<OpMemoryNamedBarrier> for CoreInstSet {
         Self::MemoryNamedBarrier(inst)
     }
 }
-impl From<OpModuleProcessed> for CoreInstSet {
-    fn from(inst: OpModuleProcessed) -> Self {
+impl From<OpModuleProcessed<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpModuleProcessed<'a>) -> Self {
         Self::ModuleProcessed(inst)
     }
 }
@@ -9034,8 +9044,8 @@ impl From<OpGraphConstantARM> for CoreInstSet {
         Self::GraphConstantARM(inst)
     }
 }
-impl From<OpGraphEntryPointARM> for CoreInstSet {
-    fn from(inst: OpGraphEntryPointARM) -> Self {
+impl From<OpGraphEntryPointARM<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpGraphEntryPointARM<'a>) -> Self {
         Self::GraphEntryPointARM(inst)
     }
 }
@@ -9434,13 +9444,13 @@ impl From<OpIsNodePayloadValidAMDX> for CoreInstSet {
         Self::IsNodePayloadValidAMDX(inst)
     }
 }
-impl From<OpConstantStringAMDX> for CoreInstSet {
-    fn from(inst: OpConstantStringAMDX) -> Self {
+impl From<OpConstantStringAMDX<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpConstantStringAMDX<'a>) -> Self {
         Self::ConstantStringAMDX(inst)
     }
 }
-impl From<OpSpecConstantStringAMDX> for CoreInstSet {
-    fn from(inst: OpSpecConstantStringAMDX) -> Self {
+impl From<OpSpecConstantStringAMDX<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpSpecConstantStringAMDX<'a>) -> Self {
         Self::SpecConstantStringAMDX(inst)
     }
 }
@@ -10319,13 +10329,13 @@ impl From<OpFunctionPointerCallINTEL> for CoreInstSet {
         Self::FunctionPointerCallINTEL(inst)
     }
 }
-impl From<OpAsmTargetINTEL> for CoreInstSet {
-    fn from(inst: OpAsmTargetINTEL) -> Self {
+impl From<OpAsmTargetINTEL<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpAsmTargetINTEL<'a>) -> Self {
         Self::AsmTargetINTEL(inst)
     }
 }
-impl From<OpAsmINTEL> for CoreInstSet {
-    fn from(inst: OpAsmINTEL) -> Self {
+impl From<OpAsmINTEL<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpAsmINTEL<'a>) -> Self {
         Self::AsmINTEL(inst)
     }
 }
@@ -11484,13 +11494,13 @@ impl From<OpUntypedVariableLengthArrayINTEL> for CoreInstSet {
         Self::UntypedVariableLengthArrayINTEL(inst)
     }
 }
-impl From<OpConditionalExtensionINTEL> for CoreInstSet {
-    fn from(inst: OpConditionalExtensionINTEL) -> Self {
+impl From<OpConditionalExtensionINTEL<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpConditionalExtensionINTEL<'a>) -> Self {
         Self::ConditionalExtensionINTEL(inst)
     }
 }
-impl From<OpConditionalEntryPointINTEL> for CoreInstSet {
-    fn from(inst: OpConditionalEntryPointINTEL) -> Self {
+impl From<OpConditionalEntryPointINTEL<'a>> for CoreInstSet<'a> {
+    fn from(inst: OpConditionalEntryPointINTEL<'a>) -> Self {
         Self::ConditionalEntryPointINTEL(inst)
     }
 }
