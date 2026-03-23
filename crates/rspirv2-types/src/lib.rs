@@ -6,6 +6,7 @@ pub mod inst;
 pub mod meta;
 pub mod module;
 pub mod operand;
+pub mod slice;
 pub mod vec;
 mod word;
 

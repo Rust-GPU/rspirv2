@@ -28,6 +28,6 @@ fn roundtrip_spv(spv: &[u8]) -> anyhow::Result<()> {
     for inst in module.iter() {
         inst.encode(&mut writer)?;
     }
-    assert_eq!(module.as_slice(), writer.as_slice());
+    assert_eq!(module.as_words(), writer.as_slice());
     Ok(())
 }
