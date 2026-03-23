@@ -10,7 +10,7 @@ use rspirv2::operand::{IdRef, IdResult, IdResultType, LiteralConst, LiteralInteg
 use rspirv2_types::Word;
 use rspirv2_types::binary::EncodeError;
 use rspirv2_types::inst::{Inst, InstEncoding};
-use rspirv2_types::vec::InstIter;
+use rspirv2_types::slice::InstSlice;
 
 fn roundtrip<T: Inst>(inst: T)
 where
@@ -18,7 +18,7 @@ where
 {
     let mut spirv = Vec::<Word>::new();
     inst.encode(&mut spirv).unwrap();
-    let mut iter = InstIter::<CoreInstSet>::from_words_unchecked(&spirv);
+    let mut iter = InstSlice::from_words_unchecked(&spirv).iter();
     let decoded = iter.next().unwrap();
     assert!(iter.next().is_none());
     assert_eq!(CoreInstSet::from(inst), decoded);
@@ -81,7 +81,7 @@ fn test_op_constant_sequence() -> anyhow::Result<()> {
     c2.encode(&mut spirv)?;
     c3.encode(&mut spirv)?;
 
-    let mut iter = InstIter::<OpConstant>::from_words_unchecked(&spirv);
+    let mut iter = InstSlice::from_words_unchecked(&spirv).iter();
     assert_eq!(c1, iter.next().unwrap());
     assert_eq!(c2, iter.next().unwrap());
     assert_eq!(c3, iter.next().unwrap());
@@ -158,7 +158,7 @@ fn test_non_trivial_code() -> anyhow::Result<()> {
     };
     spirv.push_mut(&mut store_op)?;
 
-    let mut iter = InstIter::<CoreInstSet>::from_words_unchecked(&spirv.words);
+    let mut iter = InstSlice::from_words_unchecked(&spirv.words).iter();
     assert_eq!(Some(CoreInstSet::from(u32_op)), iter.next());
     assert_eq!(Some(CoreInstSet::from(u32_1_op)), iter.next());
     assert_eq!(Some(CoreInstSet::from(add_op)), iter.next());

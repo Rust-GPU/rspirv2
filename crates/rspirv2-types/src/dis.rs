@@ -1,14 +1,9 @@
 //! Module for Disassembly
 
-use crate::Word;
-use crate::binary::DecodeError;
-use crate::inst::InstEncoding;
 use crate::operand::LiteralStringEscape;
-use crate::vec::InstIter;
 use anstyle::Style;
 use std::cell::Cell;
 use std::fmt::{Display, Formatter};
-use std::marker::PhantomData;
 use std::ops::{Deref, DerefMut};
 
 /// Options for disassembly
@@ -98,34 +93,6 @@ impl Deref for DisContext {
 impl DerefMut for DisContext {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.opt
-    }
-}
-
-/// A sequence of words that has been pre-processed and may be [`Display`]ed.
-///
-/// The `ISA: `[`InstEncoding`] generic determines for which instruction set these Words are disassembled.
-pub struct DisModule<'a, ISA: InstEncoding> {
-    words: &'a [Word],
-    dis: DisContext,
-    _phantom: PhantomData<ISA>,
-}
-
-impl<'a, ISA: InstEncoding> DisModule<'a, ISA> {
-    pub fn new(words: &'a [Word], opt: DisOptions) -> Result<Self, DecodeError> {
-        Ok(Self {
-            words,
-            dis: DisContext::new(opt),
-            _phantom: PhantomData,
-        })
-    }
-}
-
-impl<'a, ISA: InstEncoding> Display for DisModule<'a, ISA> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        for inst in InstIter::<ISA>::from_words_unchecked(self.words) {
-            writeln!(f, "{}", inst.dis(&self.dis))?;
-        }
-        Ok(())
     }
 }
 

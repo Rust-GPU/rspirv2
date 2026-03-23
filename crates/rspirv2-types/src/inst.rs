@@ -1,8 +1,11 @@
+use crate::Word;
 use crate::binary::{DecodeError, EncodeError, IdResultAlloc, InstReader, WordWriter};
 use crate::dis::DisContext;
 use crate::meta::InstMeta;
 use crate::operand::{IdResult, OptionIdResult};
 use std::fmt::{Debug, Display, Formatter};
+use std::marker::PhantomData;
+use std::ops::Deref;
 
 pub trait Inst: InstEncoding {
     const META: &InstMeta;
@@ -116,4 +119,56 @@ impl MaybeIdResult for OptionIdResult {
 #[inline]
 pub fn make_mut_ref_unit() -> &'static mut () {
     Box::leak(Box::new(()))
+}
+
+/// A reference to a valid instruction encoded in a slice of [`Word`]s.
+///
+/// Call [`Self::get`] to get the underlying instruction, as it unfortunately can't implement [`Deref`].
+///
+/// # Safety
+/// The referenced words must be an encoded instruction that is valid within the `ISA` instruction set. Encountering an
+/// invalid instruction may panic.
+pub struct InstRef<'a, ISA: InstEncoding> {
+    reader: InstReader<'a>,
+    _phantom: PhantomData<ISA>,
+}
+
+impl<'a, ISA: InstEncoding> InstRef<'a, ISA> {
+    #[inline]
+    pub fn from_words_unchecked(words: &'a [Word]) -> Result<Self, DecodeError> {
+        Ok(Self {
+            reader: InstReader::from_words(words)?,
+            _phantom: PhantomData,
+        })
+    }
+
+    #[inline]
+    pub fn get(&self) -> ISA {
+        ISA::decode(**self).unwrap()
+    }
+}
+
+impl<'a, ISA: InstEncoding> Deref for InstRef<'a, ISA> {
+    type Target = InstReader<'a>;
+
+    #[inline]
+    fn deref(&self) -> &Self::Target {
+        &self.reader
+    }
+}
+
+impl<ISA: InstEncoding> Copy for InstRef<'_, ISA> {}
+
+impl<ISA: InstEncoding> Clone for InstRef<'_, ISA> {
+    fn clone(&self) -> Self {
+        *self
+    }
+}
+
+impl<ISA: InstEncoding> Debug for InstRef<'_, ISA> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("InstRef")
+            .field("reader", &self.reader)
+            .finish()
+    }
 }
