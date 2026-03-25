@@ -1,8 +1,8 @@
 use crate::Word;
 use crate::binary::{DecodeError, InstOffset, InstReader};
-use crate::dis::{DisContext, DisOptions, InstSetDisCtx};
+use crate::dis::{DisInstSlice, InstSetDisCtx, IntoDisContext};
 use crate::inst::{InstEncoding, InstRef};
-use std::fmt::{Debug, Display, Formatter};
+use std::fmt::{Debug, Formatter};
 use std::marker::PhantomData;
 use std::ops::Deref;
 
@@ -114,35 +114,8 @@ impl<ISA: InstEncoding> Debug for InstSlice<ISA> {
 impl<ISA: InstSetDisCtx> InstSlice<ISA> {
     /// disassemble
     #[inline]
-    pub fn dis(&self, opt: DisOptions) -> DisInstSlice<'_, ISA> {
-        DisInstSlice::new(self, opt)
-    }
-}
-
-/// A sequence of words that has been pre-processed and may be [`Display`]ed.
-///
-/// The `ISA: `[`InstEncoding`] generic determines for which instruction set these Words are disassembled.
-pub struct DisInstSlice<'a, ISA: InstSetDisCtx> {
-    slice: &'a InstSlice<ISA>,
-    dis: DisContext,
-}
-
-impl<'a, ISA: InstSetDisCtx> DisInstSlice<'a, ISA> {
-    #[inline]
-    pub fn new(slice: &'a InstSlice<ISA>, opt: DisOptions) -> Self {
-        Self {
-            slice,
-            dis: DisContext::new(opt, slice),
-        }
-    }
-}
-
-impl<'a, ISA: InstSetDisCtx> Display for DisInstSlice<'a, ISA> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        for inst in self.slice.iter() {
-            writeln!(f, "{}", inst.dis(&self.dis))?;
-        }
-        Ok(())
+    pub fn dis(&self, ctx: impl IntoDisContext) -> DisInstSlice<'_, ISA> {
+        DisInstSlice::<ISA>::new(self, ctx)
     }
 }
 
@@ -345,6 +318,14 @@ impl<'a, ISA: InstEncoding> From<&'a InstSlice<ISA>> for &'a RawInstSlice {
     }
 }
 
+impl RawInstSlice {
+    /// disassemble
+    #[inline]
+    pub fn dis<ISA: InstSetDisCtx>(&self, ctx: impl IntoDisContext) -> DisInstSlice<'_, ISA> {
+        DisInstSlice::<ISA>::new(self, ctx)
+    }
+}
+
 /// An [`Iterator`] of [`Result`]s yielding either a tuple of [`InstOffset`] and [`InstReader`], or a [`DecodeError`]
 #[derive(Clone, Debug)]
 pub struct RawInstOffsetRefIter<'a> {
@@ -368,14 +349,21 @@ impl<'a> Iterator for RawInstOffsetRefIter<'a> {
 
     #[inline]
     fn next(&mut self) -> Option<Self::Item> {
-        match InstReader::from_words(&self.raw.0[*self.offset..]) {
-            Ok(inst_reader) => {
-                let old_offset = self.offset;
-                *self.offset += inst_reader.len();
-                Some(Ok((old_offset, inst_reader)))
+        let old_offset = self.offset;
+        if let Some(words) = self.raw.0.get(*old_offset..) {
+            match InstReader::from_words(words) {
+                Ok(inst_reader) => {
+                    *self.offset += inst_reader.len();
+                    Some(Ok((old_offset, inst_reader)))
+                }
+                Err(DecodeError::OutOfInstructions) => None,
+                Err(e) => {
+                    self.offset = InstOffset(!0);
+                    Some(Err(e))
+                }
             }
-            Err(DecodeError::OutOfInstructions) => None,
-            Err(e) => Some(Err(e)),
+        } else {
+            None
         }
     }
 }

@@ -61,15 +61,17 @@ impl Args {
     }
 
     pub fn run_inner<ISA: InstSetDisCtx>(&self, stdout: &mut impl Write) -> anyhow::Result<()> {
-        let mut slice = std::fs::read(&self.path)?;
+        let mut bytes = std::fs::read(&self.path)?;
         if self.module_swap_bytes {
-            for chunk in slice.as_chunks_mut::<4>().0.iter_mut() {
+            for chunk in bytes.as_chunks_mut::<4>().0.iter_mut() {
                 *chunk = u32::from_ne_bytes(*chunk).swap_bytes().to_ne_bytes();
             }
         }
 
-        let module = Module::<ISA>::from_bytes(slice.as_slice())?;
-        write!(stdout, "{}", module.dis(self.to_dis_opts()?))?;
+        let module = Module::<ISA>::from_bytes_unchecked(bytes.as_slice())?;
+        drop(bytes);
+        let dis = module.inst.as_raw_slice().dis::<ISA>(self.to_dis_opts()?);
+        write!(stdout, "{}", dis)?;
         Ok(())
     }
 
