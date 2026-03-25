@@ -2,11 +2,12 @@
 
 use crate::inst::InstEncoding;
 use crate::operand::{ConstFmt, IdResult, LiteralStringEscape};
-use crate::slice::InstSlice;
+use crate::slice::{InstSlice, RawInstSlice};
 use anstyle::Style;
 use rustc_hash::FxHashMap;
 use std::cell::Cell;
 use std::fmt::{Display, Formatter};
+use std::marker::PhantomData;
 use std::ops::{Deref, DerefMut};
 
 /// Options for disassembly
@@ -100,15 +101,15 @@ pub struct DisContext {
 }
 
 impl DisContext {
-    /// Create a new [`DisContext`] by scanning the module for useful information, based on the options provided.
-    #[inline]
-    pub fn new<ISA: InstSetDisCtx>(opt: DisOptions, slice: &InstSlice<ISA>) -> Self {
-        let mut context = Self::no_context(opt);
-        context.add_context(slice);
-        context
+    /// Scan the supplied [`InstSlice`] for useful context
+    pub fn add_context<ISA: InstSetDisCtx>(&mut self, slice: &InstSlice<ISA>) {
+        ISA::add_context(slice.as_raw(), self);
     }
 
-    pub fn add_context<ISA: InstSetDisCtx>(&mut self, slice: &InstSlice<ISA>) {
+    /// Scan the supplied [`InstSlice`] for useful context, skip over any [`DecodeError`]s that may arise
+    ///
+    /// [`DecodeError`]: crate::binary::DecodeError
+    pub fn add_context_raw<ISA: InstSetDisCtx>(&mut self, slice: &RawInstSlice) {
         ISA::add_context(slice, self);
     }
 
@@ -126,9 +127,17 @@ impl DisContext {
     }
 }
 
-/// An instruction set that provides additional context information for disassembly, see [`DisContext`].
+/// An instruction set that provides additional context information for disassembly.
 pub trait InstSetDisCtx: InstEncoding {
-    fn add_context(slice: &InstSlice<Self>, ctx: &mut DisContext);
+    /// Add context to the supplied [`DisContext`] by modifying the various public members of it.
+    ///
+    /// Only supplies a [`RawInstSlice`] instead of a full [`InstSlice`] that has been error checked, as to allow
+    /// disassembly of partially corrupt instructions. Any [`DecodeError`] that arrises during decode should be silently
+    /// ignored. We recommend using `slice.iter().try_decode::<CoreInstSet>().skip_errors()` to decode instructions
+    /// from the [`RawInstSlice`].
+    ///
+    /// [`DecodeError`]: crate::binary::DecodeError
+    fn add_context(slice: &RawInstSlice, ctx: &mut DisContext);
 }
 
 impl Deref for DisContext {
@@ -141,6 +150,64 @@ impl Deref for DisContext {
 impl DerefMut for DisContext {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.opt
+    }
+}
+
+/// Either [`DisContext`] or [`DisOptions`] that is turned into one via [`DisContext::no_context`]. Actual context needs
+/// to be gathered yourself, see warning in [`DisContext::no_context`].
+pub trait IntoDisContext {
+    fn into_dis_ctx(self) -> DisContext;
+}
+
+impl IntoDisContext for DisContext {
+    fn into_dis_ctx(self) -> DisContext {
+        self
+    }
+}
+
+impl IntoDisContext for DisOptions {
+    fn into_dis_ctx(self) -> DisContext {
+        DisContext::no_context(self)
+    }
+}
+
+/// A sequence of words that has been pre-processed and may be [`Display`]ed.
+///
+/// The `ISA: `[`InstEncoding`] generic determines for which instruction set these Words are disassembled.
+pub struct DisInstSlice<'a, ISA: InstSetDisCtx> {
+    slice: &'a RawInstSlice,
+    ctx: DisContext,
+    _phantom: PhantomData<ISA>,
+}
+
+impl<'a, ISA: InstSetDisCtx> DisInstSlice<'a, ISA> {
+    #[inline]
+    pub fn new(slice: impl Into<&'a RawInstSlice>, ctx: impl IntoDisContext) -> Self {
+        let slice = slice.into();
+        let mut ctx = ctx.into_dis_ctx();
+        ctx.add_context_raw::<ISA>(slice);
+        Self::new_no_context(slice, ctx)
+    }
+
+    #[inline]
+    pub fn new_no_context(slice: impl Into<&'a RawInstSlice>, ctx: impl IntoDisContext) -> Self {
+        Self {
+            slice: slice.into(),
+            ctx: ctx.into_dis_ctx(),
+            _phantom: PhantomData,
+        }
+    }
+}
+
+impl<'a, ISA: InstSetDisCtx> Display for DisInstSlice<'a, ISA> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        for maybe_reader in self.slice.iter() {
+            match maybe_reader.and_then(|reader| ISA::decode(reader)) {
+                Ok(inst) => writeln!(f, "{}", inst.dis(&self.ctx))?,
+                Err(e) => writeln!(f, "Error: {}", e)?,
+            }
+        }
+        Ok(())
     }
 }
 
