@@ -1,10 +1,10 @@
 use crate::Word;
 use crate::binary::{DecodeError, InstOffset, WordWriter};
-use crate::dis::DisOptions;
-use crate::inst::InstEncoding;
-use crate::slice::{DisInstSlice, InstIter, InstRefIter, InstSlice, RawInstRefIter, RawInstSlice};
+use crate::inst::{Inst, InstEncoding};
+use crate::slice::{InstSlice, RawInstSlice};
 use std::fmt::{Debug, Formatter};
 use std::marker::PhantomData;
+use std::ops::Deref;
 
 /// An `InstVec` works like a `Vec<ISA>`, but stores instructions in the variable-sized SPIR-V binary form to safe
 /// on memory size.
@@ -61,9 +61,13 @@ impl<ISA: InstEncoding> InstVec<ISA> {
     /// Appends an instruction to the back of the [`InstVec`]. See [`Vec::push`].
     #[inline]
     pub fn push(&mut self, inst: impl Into<ISA>) -> InstOffset {
-        let offset = InstOffset(self.raw.0.len());
-        inst.into().encode(&mut self.raw).expect("error while encoding");
-        offset
+        self.raw.push(inst.into())
+    }
+
+    /// Appends an instruction to the back of the [`InstVec`]. See [`Vec::push`].
+    #[inline]
+    pub fn push_inst<I: Inst + Into<ISA>>(&mut self, inst: I) -> I::MaybeIdResult {
+        self.raw.push_inst(inst)
     }
 
     /// Moves all the instruction of `other` into `self`, leaving `other` empty. See [`Vec::append`].
@@ -85,43 +89,21 @@ impl<ISA: InstEncoding> InstVec<ISA> {
     }
 
     /// View this [`InstVec`] as a [`InstSlice`]
-    pub const fn as_slice(&self) -> InstSlice<'_, ISA> {
+    pub const fn as_slice(&self) -> &InstSlice<ISA> {
         InstSlice::from_raw_unchecked(self.raw.as_slice())
     }
 
     /// View this [`InstVec`] as a [`RawInstSlice`]
-    pub const fn as_raw_slice(&self) -> RawInstSlice<'_> {
+    pub const fn as_raw_slice(&self) -> &RawInstSlice {
         self.raw.as_slice()
     }
+}
 
-    // ---------------------------------
-    // below are equivalent to InstSlice
-    // ---------------------------------
+impl<ISA: InstEncoding> Deref for InstVec<ISA> {
+    type Target = InstSlice<ISA>;
 
-    /// View this [`InstVec`] as a slice of words
-    #[inline]
-    pub const fn as_words(&self) -> &[Word] {
-        self.as_slice().as_raw().as_words()
-    }
-
-    /// Iterate over instruction references ([`InstRef`]) without decoding the instruction itself
-    ///
-    /// [`InstRef`]: crate::inst::InstRef
-    #[inline]
-    pub const fn iter_ref(&self) -> InstRefIter<'_, ISA> {
-        InstRefIter::new(self.as_slice())
-    }
-
-    /// Iterate over all instructions
-    #[inline]
-    pub const fn iter(&self) -> InstIter<'_, ISA> {
-        InstIter::new(self.as_slice())
-    }
-
-    /// disassemble
-    #[inline]
-    pub fn dis(&self, opt: DisOptions) -> Result<DisInstSlice<'_, ISA>, DecodeError> {
-        DisInstSlice::new(self.as_slice(), opt)
+    fn deref(&self) -> &Self::Target {
+        self.as_slice()
     }
 }
 
@@ -191,6 +173,14 @@ impl RawInstVec {
         offset
     }
 
+    /// Appends an instruction to the back of the [`RawInstVec`]. See [`Vec::push`].
+    #[inline]
+    pub fn push_inst<I: Inst>(&mut self, mut inst: I) -> I::MaybeIdResult {
+        let id_result = *inst.id_result();
+        self.push(inst);
+        id_result
+    }
+
     /// Moves all the instruction of `other` into `self`, leaving `other` empty. See [`Vec::append`].
     #[inline]
     pub fn append(&mut self, other: &mut Self) {
@@ -204,23 +194,16 @@ impl RawInstVec {
     }
 
     /// View this [`RawInstVec`] as a [`RawInstSlice`]
-    pub const fn as_slice(&self) -> RawInstSlice<'_> {
+    pub const fn as_slice(&self) -> &RawInstSlice {
         RawInstSlice::from_words(self.0.as_slice())
     }
+}
 
-    // ---------------------------------
-    // below are equivalent to InstSlice
-    // ---------------------------------
+impl Deref for RawInstVec {
+    type Target = RawInstSlice;
 
-    /// View this [`RawInstVec`] as a slice of words
-    #[inline]
-    pub const fn as_words(&self) -> &[Word] {
-        self.as_slice().as_words()
-    }
-
-    /// Iterate over instruction references ([`InstRef`]) without decoding the instruction itself
-    pub const fn iter(&self) -> RawInstRefIter<'_> {
-        self.as_slice().iter()
+    fn deref(&self) -> &Self::Target {
+        self.as_slice()
     }
 }
 
