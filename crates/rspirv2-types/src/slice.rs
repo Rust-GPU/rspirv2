@@ -33,15 +33,16 @@ pub fn decode_failed(e: DecodeError) -> ! {
 /// # Safety
 /// The inner slice of words is assumed to contain valid instructions of the generic `ISA` Instruction Set. May panic if
 /// instructions fail to decode, but will not lead to UB, allowing [`Self::from_words_unchecked`] to be safe.
-pub struct InstSlice<'a, ISA: InstEncoding> {
-    raw: RawInstSlice<'a>,
+#[repr(transparent)]
+pub struct InstSlice<ISA: InstEncoding> {
     _phantom: PhantomData<ISA>,
+    raw: RawInstSlice,
 }
 
-impl<'a, ISA: InstEncoding> InstSlice<'a, ISA> {
+impl<ISA: InstEncoding> InstSlice<ISA> {
     /// Create a new [`InstSlice`] from a `&[Word]` safely, by verifying the instructions to be valid in the `ISA`.
     #[inline]
-    pub fn from_words(words: &'a [Word]) -> Result<Self, DecodeError> {
+    pub fn from_words(words: &[Word]) -> Result<&Self, DecodeError> {
         Self::from_raw(RawInstSlice::from_words(words))
     }
 
@@ -49,14 +50,14 @@ impl<'a, ISA: InstEncoding> InstSlice<'a, ISA> {
     ///
     /// See [`crate::vec::InstVec`] # Safety
     #[inline]
-    pub const fn from_words_unchecked(words: &'a [Word]) -> Self {
+    pub const fn from_words_unchecked(words: &[Word]) -> &Self {
         Self::from_raw_unchecked(RawInstSlice::from_words(words))
     }
 
     /// Create a new [`InstSlice`] from a [`RawInstSlice`] safely, by verifying the instructions to be valid in the
     /// `ISA`.
     #[inline]
-    pub fn from_raw(raw: RawInstSlice<'a>) -> Result<Self, DecodeError> {
+    pub fn from_raw(raw: &RawInstSlice) -> Result<&Self, DecodeError> {
         raw.verify_valid_in_isa::<ISA>()?;
         Ok(Self::from_raw_unchecked(raw))
     }
@@ -67,60 +68,51 @@ impl<'a, ISA: InstEncoding> InstSlice<'a, ISA> {
     /// # Safety
     /// See [`InstSlice`] #Safety
     #[inline]
-    pub const fn from_raw_unchecked(raw: RawInstSlice<'a>) -> Self {
-        Self {
-            raw,
-            _phantom: PhantomData,
-        }
+    pub const fn from_raw_unchecked(raw: &RawInstSlice) -> &Self {
+        // Safety:
+        // * slices have the same layout
+        // * Self is `#[repr(transparent)]` to `RawInstSlice`
+        unsafe { core::mem::transmute(raw) }
     }
 
     /// View self as a [`RawInstSlice`]
     #[inline]
-    pub const fn as_raw(&self) -> RawInstSlice<'a> {
-        self.raw
+    pub const fn as_raw(&self) -> &RawInstSlice {
+        &self.raw
     }
 
     /// Iterate over instruction references ([`InstRef`]) without decoding the instruction itself
     #[inline]
-    pub const fn iter_ref(&self) -> InstRefIter<'a, ISA> {
-        InstRefIter::new(*self)
+    pub const fn iter_ref(&self) -> InstRefIter<'_, ISA> {
+        InstRefIter::new(self)
     }
 
     /// Iterate over all instructions
     #[inline]
-    pub const fn iter(&self) -> InstIter<'a, ISA> {
-        InstIter::new(*self)
+    pub const fn iter(&self) -> InstIter<'_, ISA> {
+        InstIter::new(self)
     }
 
     /// disassemble
     #[inline]
-    pub fn dis(&self, opt: DisOptions) -> Result<DisInstSlice<'a, ISA>, DecodeError> {
-        DisInstSlice::new(*self, opt)
+    pub fn dis(&self, opt: DisOptions) -> Result<DisInstSlice<'_, ISA>, DecodeError> {
+        DisInstSlice::new(self, opt)
     }
 }
 
-impl<'a, ISA: InstEncoding> Deref for InstSlice<'a, ISA> {
-    type Target = RawInstSlice<'a>;
+impl<ISA: InstEncoding> Deref for InstSlice<ISA> {
+    type Target = RawInstSlice;
 
     fn deref(&self) -> &Self::Target {
-        &self.raw
+        self.as_raw()
     }
 }
 
-impl<'a, ISA: InstEncoding> Copy for InstSlice<'a, ISA> {}
-
-impl<'a, ISA: InstEncoding> Clone for InstSlice<'a, ISA> {
-    #[inline]
-    fn clone(&self) -> Self {
-        *self
-    }
-}
-
-impl<'a, ISA: InstEncoding> Debug for InstSlice<'a, ISA> {
+impl<ISA: InstEncoding> Debug for InstSlice<ISA> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("InstSlice")
             .field("ISA", &ISA::name())
-            .field("raw", &self.raw)
+            .field("raw", &&self.raw)
             .finish()
     }
 }
@@ -129,13 +121,13 @@ impl<'a, ISA: InstEncoding> Debug for InstSlice<'a, ISA> {
 ///
 /// The `ISA: `[`InstEncoding`] generic determines for which instruction set these Words are disassembled.
 pub struct DisInstSlice<'a, ISA: InstEncoding> {
-    slice: InstSlice<'a, ISA>,
+    slice: &'a InstSlice<ISA>,
     dis: DisContext,
 }
 
 impl<'a, ISA: InstEncoding> DisInstSlice<'a, ISA> {
     #[inline]
-    pub fn new(slice: InstSlice<'a, ISA>, opt: DisOptions) -> Result<Self, DecodeError> {
+    pub fn new(slice: &'a InstSlice<ISA>, opt: DisOptions) -> Result<Self, DecodeError> {
         Ok(Self {
             slice,
             dis: DisContext::new(opt),
@@ -160,7 +152,7 @@ pub struct InstOffsetRefIter<'a, ISA: InstEncoding> {
 
 impl<'a, ISA: InstEncoding> InstOffsetRefIter<'a, ISA> {
     #[inline]
-    pub const fn new(slice: InstSlice<'a, ISA>) -> Self {
+    pub const fn new(slice: &'a InstSlice<ISA>) -> Self {
         Self {
             inner: RawInstOffsetRefIter::new(slice.as_raw()),
             _phantom: PhantomData,
@@ -209,7 +201,7 @@ pub struct InstRefIter<'a, ISA: InstEncoding>(InstOffsetRefIter<'a, ISA>);
 
 impl<'a, ISA: InstEncoding> InstRefIter<'a, ISA> {
     #[inline]
-    pub const fn new(slice: InstSlice<'a, ISA>) -> Self {
+    pub const fn new(slice: &'a InstSlice<ISA>) -> Self {
         Self(InstOffsetRefIter::new(slice))
     }
 }
@@ -240,7 +232,7 @@ pub struct InstOffsetIter<'a, ISA: InstEncoding>(InstOffsetRefIter<'a, ISA>);
 
 impl<'a, ISA: InstEncoding> InstOffsetIter<'a, ISA> {
     #[inline]
-    pub const fn new(slice: InstSlice<'a, ISA>) -> Self {
+    pub const fn new(slice: &'a InstSlice<ISA>) -> Self {
         Self(InstOffsetRefIter::new(slice))
     }
 
@@ -278,7 +270,7 @@ pub struct InstIter<'a, ISA: InstEncoding>(InstOffsetIter<'a, ISA>);
 
 impl<'a, ISA: InstEncoding> InstIter<'a, ISA> {
     #[inline]
-    pub const fn new(slice: InstSlice<'a, ISA>) -> Self {
+    pub const fn new(slice: &'a InstSlice<ISA>) -> Self {
         Self(InstOffsetIter::new(slice))
     }
 
@@ -314,22 +306,26 @@ impl<'a, ISA: InstEncoding> Debug for InstIter<'a, ISA> {
 ///
 /// Compared to [`InstSlice`], does not specify the instruction set nor require the inner words to be valid instructions
 /// in said instruction set.
-#[derive(Copy, Clone, Debug)]
-pub struct RawInstSlice<'a>(pub &'a [Word]);
+#[repr(transparent)]
+#[derive(Debug)]
+pub struct RawInstSlice(pub [Word]);
 
-impl<'a> RawInstSlice<'a> {
-    pub const fn from_words(words: &'a [Word]) -> Self {
-        Self(words)
+impl RawInstSlice {
+    pub const fn from_words(words: &[Word]) -> &Self {
+        // Safety:
+        // * slices have the same layout
+        // * Self is `#[repr(transparent)]` to `[Word]`
+        unsafe { core::mem::transmute(words) }
     }
 
     /// Returns the underlying slice of words
-    pub const fn as_words(&self) -> &'a [Word] {
-        self.0
+    pub const fn as_words(&self) -> &[Word] {
+        &self.0
     }
 
     /// Iterate over instruction references ([`InstRef`]) without decoding the instruction itself
-    pub const fn iter(&self) -> RawInstRefIter<'a> {
-        RawInstRefIter::new(*self)
+    pub const fn iter(&self) -> RawInstRefIter<'_> {
+        RawInstRefIter::new(self)
     }
 
     /// Verify whether the instructions are valid within the generic `ISA` instruction set
@@ -341,23 +337,23 @@ impl<'a> RawInstSlice<'a> {
     }
 }
 
-impl<'a, ISA: InstEncoding> From<InstSlice<'a, ISA>> for RawInstSlice<'a> {
-    fn from(value: InstSlice<'a, ISA>) -> Self {
-        value.raw
+impl<'a, ISA: InstEncoding> From<&'a InstSlice<ISA>> for &'a RawInstSlice {
+    fn from(value: &'a InstSlice<ISA>) -> Self {
+        value.as_raw()
     }
 }
 
 /// An [`Iterator`] of [`Result`]s yielding either a tuple of [`InstOffset`] and [`InstReader`], or a [`DecodeError`]
 #[derive(Clone, Debug)]
 pub struct RawInstOffsetRefIter<'a> {
-    raw: RawInstSlice<'a>,
+    raw: &'a RawInstSlice,
     offset: InstOffset,
 }
 
 impl<'a> RawInstOffsetRefIter<'a> {
     /// Create a new iterator
     #[inline]
-    pub const fn new(raw: RawInstSlice<'a>) -> Self {
+    pub const fn new(raw: &'a RawInstSlice) -> Self {
         Self {
             raw,
             offset: InstOffset(0),
@@ -391,7 +387,7 @@ pub struct RawInstRefIter<'a>(RawInstOffsetRefIter<'a>);
 impl<'a> RawInstRefIter<'a> {
     /// Create a new iterator
     #[inline]
-    pub const fn new(raw: RawInstSlice<'a>) -> Self {
+    pub const fn new(raw: &'a RawInstSlice) -> Self {
         Self(RawInstOffsetRefIter::new(raw))
     }
 
