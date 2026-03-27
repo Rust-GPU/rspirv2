@@ -96,7 +96,7 @@ fn test_zero_len_op() {
     expect![[r#"
         %42 = OpTypeInt 32 0
         OpName %69 "abc"
-        Error: Instruction has an invalid length of 0, must be least 1 word as it includes the opcode itself.
+        Error: Instruction at offset 7: Instruction has an invalid length of 0, must be least 1 word as it includes the opcode itself.
     "#]]
     .assert_eq(&dis(RawInstSlice::from_words(&words)));
 }
@@ -126,7 +126,7 @@ fn test_too_long_op() {
     words[str_offset - 2] = Word::new_op(OpName::META.opcode, 0xDEAD).unwrap();
     expect![[r#"
         %42 = OpTypeInt 32 0
-        Error: Instruction has a supposed length of 57005 but the module only has 8 words remaining.
+        Error: Instruction at offset 4: Instruction has a supposed length of 57005 but the module only has 8 words remaining.
     "#]]
     .assert_eq(&dis(RawInstSlice::from_words(&words)));
 }
@@ -146,7 +146,7 @@ fn test_op_shorter_than_string() {
         %42 = OpTypeInt 32 0
         Error: String is not null-terminated.
         Error: Instruction Set couldn't decode instruction with unknown opcode 26213
-        Error: Instruction has an invalid length of 0, must be least 1 word as it includes the opcode itself.
+        Error: Instruction at offset 9: Instruction has an invalid length of 0, must be least 1 word as it includes the opcode itself.
     "#]]
     .assert_eq(&dis(RawInstSlice::from_words(&words)));
 }

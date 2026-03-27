@@ -1,3 +1,4 @@
+use crate::binary::InstOffset;
 use bitflags::Flags;
 use std::error::Error;
 use std::ffi::FromBytesUntilNulError;
@@ -150,12 +151,22 @@ impl Error for DecodeErrorKind {}
 #[derive(Clone, PartialEq)]
 pub struct DecodeError {
     pub kind: DecodeErrorKind,
+    pub inst_offset: Option<InstOffset>,
 }
 
 impl DecodeError {
     #[inline]
     pub fn new(kind: DecodeErrorKind) -> Self {
-        Self { kind }
+        Self {
+            kind,
+            inst_offset: None,
+        }
+    }
+
+    #[inline]
+    pub fn with_inst_offset(mut self, offset: impl Into<Option<InstOffset>>) -> Self {
+        self.inst_offset = offset.into();
+        self
     }
 
     #[inline]
@@ -194,6 +205,9 @@ impl From<FromUtf8Error> for DecodeError {
 
 impl Display for DecodeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        if let Some(inst_offset) = self.inst_offset {
+            write!(f, "Instruction at offset {inst_offset}: ")?;
+        }
         write!(f, "{}", self.kind)
     }
 }

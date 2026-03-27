@@ -358,10 +358,11 @@ impl<'a> Iterator for RawInstOffsetRefIter<'a> {
                 }
                 Err(DecodeError {
                     kind: DecodeErrorKind::OutOfInstructions,
+                    ..
                 }) => None,
                 Err(e) => {
                     self.offset = InstOffset(!0);
-                    Some(Err(e))
+                    Some(Err(e.with_inst_offset(old_offset)))
                 }
             }
         } else {
