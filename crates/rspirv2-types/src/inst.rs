@@ -42,6 +42,7 @@ pub trait InstEncoding: Sized + Debug + Eq {
             Ok(e) => Ok(Some(e)),
             Err(DecodeError {
                 kind: DecodeErrorKind::WrongOpCode { .. } | DecodeErrorKind::UnknownOpCode { .. },
+                ..
             }) => Ok(None),
             Err(e) => Err(e),
         }
