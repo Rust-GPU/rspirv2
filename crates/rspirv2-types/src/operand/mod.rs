@@ -167,6 +167,10 @@ impl<'a> OperandDisContext<'a> {
             id_result_type: None,
         }
     }
+
+    pub fn id_result_writer(&self) -> IdResultWriter<'_> {
+        IdResultWriter(self)
+    }
 }
 
 impl<'a> Deref for OperandDisContext<'a> {

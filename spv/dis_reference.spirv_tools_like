@@ -1,11 +1,11 @@
-OpCapability Shader
-OpCapability StorageImageWriteWithoutFormat
-OpCapability VulkanMemoryModel
-OpMemoryModel Logical Vulkan
-OpEntryPoint GLCompute %1 "main" %tid %offset_buffer %output_buffer
-OpExecutionMode %1 LocalSize 32 1 1
-%5 = OpString "ui/dis_reference.rs"
-OpSource Unknown 0 %5 "// compile-flags: -C target-feature=+StorageImageWriteWithoutFormat
+               OpCapability Shader
+               OpCapability StorageImageWriteWithoutFormat
+               OpCapability VulkanMemoryModel
+               OpMemoryModel Logical Vulkan
+               OpEntryPoint GLCompute %1 "main" %tid %offset_buffer %output_buffer
+               OpExecutionMode %1 LocalSize 32 1 1
+          %5 = OpString "ui/dis_reference.rs"
+               OpSource Unknown 0 %5 "// compile-flags: -C target-feature=+StorageImageWriteWithoutFormat
 // compile-flags: -C llvm-args=--disassemble
 // normalize-stderr-test \"OpSource .*\\n\" -> \"\"
 // normalize-stderr-test \"OpLine .*\\n\" -> \"\"
@@ -75,94 +75,94 @@ pub unsafe fn atomic_i_add<I: Integer, const SCOPE: u32, const SEMANTICS: u32>(
     }
 }
 "
-OpName %tid "tid"
-OpName %offset_buffer "offset_buffer"
-OpName %output_buffer "output_buffer"
-OpName %dis_reference__compute_offset "dis_reference::compute_offset"
-OpDecorate %_runtimearr_uint ArrayStride 4
-OpDecorate %_struct_8 Block
-OpMemberDecorate %_struct_8 0 Offset 0
-OpDecorate %_struct_9 Block
-OpMemberDecorate %_struct_9 0 Offset 0
-OpDecorate %tid BuiltIn LocalInvocationId
-OpDecorate %offset_buffer NonWritable
-OpDecorate %offset_buffer Binding 42
-OpDecorate %offset_buffer DescriptorSet 0
-OpDecorate %output_buffer Binding 69
-OpDecorate %output_buffer DescriptorSet 1
-%uint = OpTypeInt 32 0
-%v3uint = OpTypeVector %uint 3
+               OpName %tid "tid"
+               OpName %offset_buffer "offset_buffer"
+               OpName %output_buffer "output_buffer"
+               OpName %dis_reference__compute_offset "dis_reference::compute_offset"
+               OpDecorate %_runtimearr_uint ArrayStride 4
+               OpDecorate %_struct_8 Block
+               OpMemberDecorate %_struct_8 0 Offset 0
+               OpDecorate %_struct_9 Block
+               OpMemberDecorate %_struct_9 0 Offset 0
+               OpDecorate %tid BuiltIn LocalInvocationId
+               OpDecorate %offset_buffer NonWritable
+               OpDecorate %offset_buffer Binding 42
+               OpDecorate %offset_buffer DescriptorSet 0
+               OpDecorate %output_buffer Binding 69
+               OpDecorate %output_buffer DescriptorSet 1
+       %uint = OpTypeInt 32 0
+     %v3uint = OpTypeVector %uint 3
 %_ptr_Input_v3uint = OpTypePointer Input %v3uint
 %_runtimearr_uint = OpTypeRuntimeArray %uint
-%_struct_8 = OpTypeStruct %_runtimearr_uint
+  %_struct_8 = OpTypeStruct %_runtimearr_uint
 %_ptr_StorageBuffer__struct_8 = OpTypePointer StorageBuffer %_struct_8
-%_struct_9 = OpTypeStruct %uint
+  %_struct_9 = OpTypeStruct %uint
 %_ptr_StorageBuffer__struct_9 = OpTypePointer StorageBuffer %_struct_9
-%float = OpTypeFloat 32
-%void = OpTypeVoid
-%17 = OpTypeFunction %void
-%tid = OpVariable %_ptr_Input_v3uint Input
+      %float = OpTypeFloat 32
+       %void = OpTypeVoid
+         %17 = OpTypeFunction %void
+        %tid = OpVariable %_ptr_Input_v3uint Input
 %_ptr_StorageBuffer__runtimearr_uint = OpTypePointer StorageBuffer %_runtimearr_uint
 %offset_buffer = OpVariable %_ptr_StorageBuffer__struct_8 StorageBuffer
-%uint_0 = OpConstant %uint 0
+     %uint_0 = OpConstant %uint 0
 %_ptr_StorageBuffer_uint = OpTypePointer StorageBuffer %uint
 %output_buffer = OpVariable %_ptr_StorageBuffer__struct_9 StorageBuffer
-%21 = OpTypeFunction %uint %uint
-%uint_1 = OpConstant %uint 1
-%bool = OpTypeBool
-%float_1_7 = OpConstant %float 1.7
+         %21 = OpTypeFunction %uint %uint
+     %uint_1 = OpConstant %uint 1
+       %bool = OpTypeBool
+  %float_1_7 = OpConstant %float 1.7
 %uint_1333788671 = OpConstant %uint 1333788671
 %uint_4294967295 = OpConstant %uint 4294967295
-%uint_5 = OpConstant %uint 5
-%uint_25096 = OpConstant %uint 25096
-%1 = OpFunction %void None %17
-%29 = OpLabel
-OpLine %5 24 4
-%30 = OpLoad %v3uint %tid
-OpLine %5 25 4
-%31 = OpInBoundsAccessChain %_ptr_StorageBuffer__runtimearr_uint %offset_buffer %uint_0
-%32 = OpArrayLength %uint %offset_buffer 0
-OpLine %5 26 4
-%33 = OpInBoundsAccessChain %_ptr_StorageBuffer_uint %output_buffer %uint_0
-OpLine %5 30 36
-%34 = OpCompositeExtract %uint %30 0
-OpLine %5 30 21
-%35 = OpFunctionCall %uint %dis_reference__compute_offset %34
-OpLine %5 31 26
-%36 = OpULessThan %bool %35 %32
-OpNoLine
-OpSelectionMerge %37 None
-OpBranchConditional %36 %38 %39
-%38 = OpLabel
-OpBranch %37
-%39 = OpLabel
-OpReturn
-%37 = OpLabel
-OpLine %5 31 26
-%40 = OpIAdd %uint %uint_0 %35
-%41 = OpInBoundsAccessChain %_ptr_StorageBuffer_uint %31 %40
-%42 = OpLoad %uint %41
-OpLine %5 32 21
-%43 = OpConvertUToF %float %42
-OpLine %5 32 20
-%44 = OpFMul %float %43 %float_1_7
-%45 = OpBitcast %float %uint_0
-%46 = OpBitcast %float %uint_1333788671
-%47 = OpConvertFToU %uint %44
-%48 = OpFUnordLessThan %bool %44 %45
-%49 = OpFOrdGreaterThan %bool %44 %46
-%50 = OpSelect %uint %48 %uint_0 %47
-%51 = OpSelect %uint %49 %uint_4294967295 %50
-OpLine %5 59 13
-%52 = OpAtomicIAdd %uint %33 %uint_5 %uint_25096 %51
-OpNoLine
-OpReturn
-OpFunctionEnd
+     %uint_5 = OpConstant %uint 5
+ %uint_25096 = OpConstant %uint 25096
+          %1 = OpFunction %void None %17
+         %29 = OpLabel
+               OpLine %5 24 4
+         %30 = OpLoad %v3uint %tid
+               OpLine %5 25 4
+         %31 = OpInBoundsAccessChain %_ptr_StorageBuffer__runtimearr_uint %offset_buffer %uint_0
+         %32 = OpArrayLength %uint %offset_buffer 0
+               OpLine %5 26 4
+         %33 = OpInBoundsAccessChain %_ptr_StorageBuffer_uint %output_buffer %uint_0
+               OpLine %5 30 36
+         %34 = OpCompositeExtract %uint %30 0
+               OpLine %5 30 21
+         %35 = OpFunctionCall %uint %dis_reference__compute_offset %34
+               OpLine %5 31 26
+         %36 = OpULessThan %bool %35 %32
+               OpNoLine
+               OpSelectionMerge %37 None
+               OpBranchConditional %36 %38 %39
+         %38 = OpLabel
+               OpBranch %37
+         %39 = OpLabel
+               OpReturn
+         %37 = OpLabel
+               OpLine %5 31 26
+         %40 = OpIAdd %uint %uint_0 %35
+         %41 = OpInBoundsAccessChain %_ptr_StorageBuffer_uint %31 %40
+         %42 = OpLoad %uint %41
+               OpLine %5 32 21
+         %43 = OpConvertUToF %float %42
+               OpLine %5 32 20
+         %44 = OpFMul %float %43 %float_1_7
+         %45 = OpBitcast %float %uint_0
+         %46 = OpBitcast %float %uint_1333788671
+         %47 = OpConvertFToU %uint %44
+         %48 = OpFUnordLessThan %bool %44 %45
+         %49 = OpFOrdGreaterThan %bool %44 %46
+         %50 = OpSelect %uint %48 %uint_0 %47
+         %51 = OpSelect %uint %49 %uint_4294967295 %50
+               OpLine %5 59 13
+         %52 = OpAtomicIAdd %uint %33 %uint_5 %uint_25096 %51
+               OpNoLine
+               OpReturn
+               OpFunctionEnd
 %dis_reference__compute_offset = OpFunction %uint DontInline|Const %21
-%53 = OpFunctionParameter %uint
-%54 = OpLabel
-OpLine %5 43 4
-%55 = OpIAdd %uint %uint_1 %53
-OpNoLine
-OpReturnValue %55
-OpFunctionEnd
+         %53 = OpFunctionParameter %uint
+         %54 = OpLabel
+               OpLine %5 43 4
+         %55 = OpIAdd %uint %uint_1 %53
+               OpNoLine
+               OpReturnValue %55
+               OpFunctionEnd

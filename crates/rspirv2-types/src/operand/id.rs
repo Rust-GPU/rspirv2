@@ -2,10 +2,11 @@
 
 use crate::Word;
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
+use crate::dis::ResolvedIdName;
 use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandDisContext, OperandEncoding};
 use anstyle::AnsiColor;
-use std::fmt::Formatter;
+use std::fmt::{Display, Formatter};
 
 pub const OPERAND_KIND_ID_RESULT_TYPE: OperandKind = OperandKind {
     name: "IdResultType",
@@ -74,9 +75,11 @@ unsafe impl OperandEncoding for IdResult {
 
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
-        self.dis_fmt_color(f, ctx, AnsiColor::Blue.on_default(), false)
+        self.dis_fmt_color(f, ctx, ID_RESULT_COLOR, false)
     }
 }
+
+pub const ID_RESULT_COLOR: anstyle::Style = AnsiColor::Blue.on_default();
 
 impl IdResult {
     pub fn dis_fmt_color(
@@ -90,6 +93,26 @@ impl IdResult {
         let prepend_space = if prepend_space { " " } else { "" };
         let name = ctx.id_to_name(*self);
         write!(f, "{prepend_space}{style}%{name}{style:#}")
+    }
+}
+
+pub struct IdResultWriter<'a>(pub &'a OperandDisContext<'a>);
+
+impl Display for IdResultWriter<'_> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let ctx = self.0;
+        if let Some(id_result) = self.0.id_result {
+            let name = ctx.id_to_name(id_result);
+            let name_len = match name {
+                ResolvedIdName::Named(name) => name.len(),
+                ResolvedIdName::Raw(id) => id.0.0.checked_ilog10().unwrap_or(1) as usize + 1,
+            };
+            let pad_len = ctx.padding.len().saturating_sub(name_len + 4);
+            let style = ctx.color(ID_RESULT_COLOR);
+            write!(f, "{}{style}%{}{style:#} = ", &ctx.padding[..pad_len], name)
+        } else {
+            write!(f, "{}", &ctx.padding)
+        }
     }
 }
 

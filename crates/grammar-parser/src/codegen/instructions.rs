@@ -48,7 +48,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
         let reader = (!members.is_empty()).then(|| quote!(let mut op_reader = ));
 
         // disassembly
-        let dis_operand_ctx = if !member_operands.is_empty() {
+        let dis_operand_ctx = {
             let id_result_opt = if let Some(id_result) = id_result {
                 let name = &id_result.name;
                 quote!(self.#name)
@@ -65,17 +65,9 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                 let ctx = &OperandDisContext {
                     id_result: #id_result_opt,
                     id_result_type: #id_result_type_opt,
-                    ctx: _ctx,
+                    ctx,
                 };
             }
-        } else {
-            quote!()
-        };
-        let (dis_id_result_pat, dis_id_result_value) = if let Some(id_result) = id_result {
-            let name = &id_result.name;
-            ("{} = ", Some(quote!(, self.#name.dis(ctx))))
-        } else {
-            ("", None)
         };
         // `name: Ident` is a good key to filter out the id_result, as names must be unique anyway
         let operands_without_result_id = member_operands
@@ -89,7 +81,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                 quote!(, self.#name.dis(ctx))
             })
             .collect::<Vec<_>>();
-        let pat = [dis_id_result_pat, inst.opname.as_ref()]
+        let pat = ["{}", inst.opname.as_ref()]
             .into_iter()
             .chain(
                 operands_without_result_id
@@ -144,10 +136,10 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                     })
                 }
 
-                fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &DisContext) -> std::fmt::Result {
+                fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
                     #dis_operand_ctx
                     #rspirv_spaces_prefix
-                    write!(f, #pat #dis_id_result_value #(#dis_operands_value)*)
+                    write!(f, #pat, ctx.id_result_writer() #(#dis_operands_value)*)
                 }
             }
         }
