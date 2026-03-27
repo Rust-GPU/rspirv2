@@ -239,7 +239,7 @@ unsafe impl<T: Operand> OperandSpec for Option<T> {
     const QUANTIFIER: Quantifier = Quantifier::ZeroOrOne;
 }
 
-pub type ZeroOrMore<T> = SmallVec<[T; 4]>;
+pub type ZeroOrMore<T> = SmallVec<[T; 6]>;
 
 unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     const FIXED_LEN: Option<usize> = None;
