@@ -6,6 +6,7 @@ use crate::slice::{InstSlice, RawInstSlice};
 use anstyle::Style;
 use rustc_hash::FxHashMap;
 use std::cell::Cell;
+use std::collections::hash_map::Entry;
 use std::fmt::{Display, Formatter};
 use std::marker::PhantomData;
 use std::ops::{Deref, DerefMut};
@@ -24,6 +25,37 @@ pub struct DisOptions {
     ///
     /// **REQUIRED** for correct disassembly
     pub const_fmt: bool,
+    /// Defines whether to use raw ids (`%53`) or named ids (`%my_name`) resolved from `OpName` descriptors or other
+    /// sources of metadata. See [`IdNaming`].
+    pub id_naming: IdNaming,
+    /// How to derive names for types
+    pub type_naming: TypeNaming,
+}
+
+/// Defines where names of types should be derived from.
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+pub enum IdNaming {
+    /// Only use raw ids (`%53`)
+    RawId,
+    /// Only use names for explicitly named types (`OpName`)
+    ExplicitNames,
+    /// Use names from both explicit naming (`OpName`) and other sources of metadata.
+    ///
+    /// Typical sources of names, besides `OpName`:
+    /// * `OpType*`: `%u32 = OpTypeInt 32 0`
+    /// * `OpConstant`: `%u32_42 = OpConstant %u32 42`
+    All,
+}
+
+/// Defines how to derive names for types
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+pub enum TypeNaming {
+    /// Rust naming conventions, eg. `u32`, `i32`, `f32`
+    Rust,
+    /// C naming conventions, eg. `uint`, `int`, `float`
+    ///
+    /// should match spirv-dis
+    C,
 }
 
 impl Default for DisOptions {
@@ -34,6 +66,8 @@ impl Default for DisOptions {
             literal_string_escape: LiteralStringEscape::default(),
             rspirv_space: false,
             const_fmt: true,
+            id_naming: IdNaming::All,
+            type_naming: TypeNaming::Rust,
         }
     }
 }
@@ -54,6 +88,8 @@ impl DisOptions {
             literal_string_escape: LiteralStringEscape::EscapeNewlines,
             rspirv_space: true,
             const_fmt: true,
+            id_naming: IdNaming::RawId,
+            type_naming: TypeNaming::Rust,
         }
     }
 
@@ -64,6 +100,8 @@ impl DisOptions {
             literal_string_escape: LiteralStringEscape::MultiLine,
             rspirv_space: false,
             const_fmt: true,
+            id_naming: IdNaming::All,
+            type_naming: TypeNaming::C,
         }
     }
 
@@ -98,6 +136,34 @@ pub struct DisContext {
     /// Maps an [`IdResult`] of a type declaration to a [`ConstFmt`] to tell `OpConstant` instructions how to format
     /// the untyped constant value
     pub id_to_const_fmt: FxHashMap<IdResult, ConstFmt>,
+    /// Maps an [`IdResult`] to the "highest priority" [`IdName`]
+    pub id_to_name: FxHashMap<IdResult, IdName>,
+}
+
+#[derive(Clone, Debug, Default)]
+pub enum IdName {
+    /// Use the raw id
+    #[default]
+    RawId,
+    /// Use this explicitly assigned name, has priority over [`Self::DerivedName`]
+    ExplicitName(String),
+    /// Derived name from the definition of the id
+    DerivedName(String),
+}
+
+#[derive(Copy, Clone, Debug)]
+pub enum ResolvedIdName<'a> {
+    Named(&'a str),
+    Raw(IdResult),
+}
+
+impl Display for ResolvedIdName<'_> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ResolvedIdName::Named(name) => write!(f, "{name}"),
+            ResolvedIdName::Raw(id) => write!(f, "{}", id.0.0),
+        }
+    }
 }
 
 impl DisContext {
@@ -111,6 +177,45 @@ impl DisContext {
     /// [`DecodeError`]: crate::binary::DecodeError
     pub fn add_context_raw<ISA: InstSetDisCtx>(&mut self, slice: &RawInstSlice) {
         ISA::add_context(slice, self);
+    }
+
+    /// Add a mapping from an [`IdResult`] to an [`IdName`]
+    pub fn add_id_to_name(&mut self, id: IdResult, name: IdName) {
+        // In the name of Hades, I accept this message!
+        #[allow(clippy::match_same_arms)]
+        let accept = match (self.opt.id_naming, &name) {
+            // no need to store anything, default is `RawId`
+            (_, IdName::RawId) => false,
+            (IdNaming::RawId, _) => false,
+
+            (IdNaming::All, _) => true,
+            (IdNaming::ExplicitNames, IdName::ExplicitName(..)) => true,
+            (IdNaming::ExplicitNames, IdName::DerivedName(..)) => false,
+        };
+        if accept {
+            match self.id_to_name.entry(id) {
+                Entry::Occupied(mut slot) => {
+                    let overwrite = match (&name, slot.get()) {
+                        // don't overwrite an explicit name
+                        (IdName::DerivedName(..), IdName::ExplicitName(..)) => false,
+                        (_, _) => true,
+                    };
+                    if overwrite {
+                        slot.insert(name);
+                    }
+                }
+                Entry::Vacant(slot) => {
+                    slot.insert(name);
+                }
+            }
+        }
+    }
+
+    pub fn id_to_name(&self, id: IdResult) -> ResolvedIdName<'_> {
+        match self.id_to_name.get(&id).unwrap_or(&IdName::RawId) {
+            IdName::RawId => ResolvedIdName::Raw(id),
+            IdName::ExplicitName(name) | IdName::DerivedName(name) => ResolvedIdName::Named(name),
+        }
     }
 
     /// Creates a new [`DisContext`] without having scanned the module for the required extra information.
@@ -208,6 +313,24 @@ impl<'a, ISA: InstSetDisCtx> Display for DisInstSlice<'a, ISA> {
             }
         }
         Ok(())
+    }
+}
+
+#[allow(clippy::match_same_arms)]
+pub fn escape_id_name(str: &str) -> Option<String> {
+    let escaped = str
+        .chars()
+        .map(|c| match c {
+            'A'..='Z' => c,
+            'a'..='z' => c,
+            '0'..='9' => c,
+            _ => '_',
+        })
+        .collect::<String>();
+    if escaped.chars().all(|c| c == ' ') {
+        None
+    } else {
+        Some(escaped)
     }
 }
 

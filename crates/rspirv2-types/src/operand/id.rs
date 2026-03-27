@@ -88,7 +88,8 @@ impl IdResult {
     ) -> std::fmt::Result {
         let style = ctx.color(style);
         let prepend_space = if prepend_space { " " } else { "" };
-        write!(f, "{prepend_space}{style}%{}{style:#}", self.0.0)
+        let name = ctx.id_to_name(*self);
+        write!(f, "{prepend_space}{style}%{name}{style:#}")
     }
 }
 
