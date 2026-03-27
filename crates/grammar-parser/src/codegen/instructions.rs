@@ -29,11 +29,11 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
         );
 
         // id_result(&mut self) -> &mut OptionIdResult
-        let (maybe_id_result, id_result_mut_ref) = if let Some(id_result) = id_result {
+        let (id_result_ty, id_result_get) = if let Some(id_result) = id_result {
             let name = &id_result.name;
-            (quote!(OptionIdResult), quote!(&mut self.#name))
+            (quote!(IdResult), quote!(self.#name))
         } else {
-            (quote!(()), quote!(make_mut_ref_unit()))
+            (quote!(()), quote!(()))
         };
 
         // encode decode
@@ -49,7 +49,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
         let dis_operand_ctx = {
             let id_result_opt = if let Some(id_result) = id_result {
                 let name = &id_result.name;
-                quote!(self.#name)
+                quote!(Some(self.#name))
             } else {
                 quote!(None)
             };
@@ -111,10 +111,10 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             impl Inst for #struct_ident {
                 const META: &InstMeta = &#meta;
 
-                type MaybeIdResult = #maybe_id_result;
+                type MaybeIdResult = #id_result_ty;
 
-                fn id_result(&mut self) -> &mut Self::MaybeIdResult {
-                    #id_result_mut_ref
+                fn id_result(&self) -> Self::MaybeIdResult {
+                    #id_result_get
                 }
             }
 

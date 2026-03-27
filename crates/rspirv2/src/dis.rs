@@ -17,24 +17,16 @@ impl InstSetDisCtx for CoreInstSet {
                         ctx.add_id_to_name(inst.target.0, IdName::ExplicitName(name));
                     }
                 }
-                Self::TypeVoid(inst) => {
-                    let def = inst.id_result.unwrap();
-                    ctx.add_id_to_name(def, inst.derive_name(ctx));
-                }
-                Self::TypeBool(inst) => {
-                    let def = inst.id_result.unwrap();
-                    ctx.add_id_to_name(def, inst.derive_name(ctx));
-                }
+                Self::TypeVoid(inst) => ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx)),
+                Self::TypeBool(inst) => ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx)),
                 Self::TypeFloat(inst) => {
-                    let def = inst.id_result.unwrap();
-                    ctx.add_id_to_name(def, inst.derive_name(ctx));
-                    ctx.id_to_const_fmt.insert(def, ConstFmt::Float);
+                    ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx));
+                    ctx.id_to_const_fmt.insert(inst.id_result, ConstFmt::Float);
                 }
                 Self::TypeInt(inst) => {
-                    let def = inst.id_result.unwrap();
-                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                    ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx));
                     ctx.id_to_const_fmt.insert(
-                        def,
+                        inst.id_result,
                         if inst.signedness.to_bool() {
                             ConstFmt::Signed
                         } else {
@@ -42,37 +34,23 @@ impl InstSetDisCtx for CoreInstSet {
                         },
                     );
                 }
-                Self::TypeVector(inst) => {
-                    let def = inst.id_result.unwrap();
-                    ctx.add_id_to_name(def, inst.derive_name(ctx));
-                }
+                Self::TypeVector(inst) => ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx)),
                 Self::TypeRuntimeArray(inst) => {
-                    let def = inst.id_result.unwrap();
-                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                    ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx));
                 }
                 Self::TypePointer(inst) => {
-                    let def = inst.id_result.unwrap();
-                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                    ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx));
                 }
-                Self::TypeStruct(inst) => {
-                    let def = inst.id_result.unwrap();
-                    ctx.add_id_to_name(def, inst.derive_name(ctx));
-                }
-                Self::Constant(inst) => {
-                    let def = inst.id_result.unwrap();
-                    ctx.add_id_to_name(def, inst.derive_name(ctx));
-                }
+                Self::TypeStruct(inst) => ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx)),
+                Self::Constant(inst) => ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx)),
                 Self::ConstantNull(inst) => {
-                    let def = inst.id_result.unwrap();
-                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                    ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx));
                 }
                 Self::ConstantFalse(inst) => {
-                    let def = inst.id_result.unwrap();
-                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                    ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx));
                 }
                 Self::ConstantTrue(inst) => {
-                    let def = inst.id_result.unwrap();
-                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                    ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx));
                 }
                 _ => {}
             }
@@ -151,7 +129,7 @@ impl OpTypePointer {
 
 impl OpTypeStruct {
     pub fn derive_name(&self, _ctx: &DisContext) -> IdName {
-        IdName::DerivedName(format!("_struct_{}", self.id_result.unwrap().0.0))
+        IdName::DerivedName(format!("_struct_{}", self.id_result.0.0))
     }
 }
 
@@ -160,7 +138,7 @@ impl OpConstant {
         let ty_name = ctx.id_to_name(self.id_result_type.0);
         let operand_ctx = OperandDisContext {
             ctx,
-            id_result: self.id_result,
+            id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
         };
         let value = self.value.fmt_value(&operand_ctx).to_string();

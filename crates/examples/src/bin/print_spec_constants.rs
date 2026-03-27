@@ -25,7 +25,7 @@ impl Args {
         let mut spec_const_name_to_value = HashMap::<String, _>::new();
         for inst in module.iter() {
             if let CoreInstSet::SpecConstant(inst) = inst
-                && let Some(name) = names.get(&inst.id_result.unwrap())
+                && let Some(name) = names.get(&inst.id_result)
             {
                 spec_const_name_to_value.insert(name.clone(), inst.value.as_u32()?);
             }

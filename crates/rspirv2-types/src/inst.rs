@@ -1,10 +1,8 @@
 use crate::Word;
-use crate::binary::{
-    DecodeError, DecodeErrorKind, EncodeError, IdResultAlloc, InstReader, WordWriter,
-};
+use crate::binary::{DecodeError, DecodeErrorKind, EncodeError, InstReader, WordWriter};
 use crate::dis::DisContext;
 use crate::meta::InstMeta;
-use crate::operand::{IdResult, OptionIdResult};
+use crate::operand::IdResult;
 use std::fmt::{Debug, Display, Formatter};
 use std::marker::PhantomData;
 use std::ops::Deref;
@@ -16,7 +14,7 @@ pub trait Inst: InstEncoding {
     type MaybeIdResult: MaybeIdResult;
 
     /// Query the potential [`IdResult`] of this Instruction, or `()` if it has none.
-    fn id_result(&mut self) -> &mut Self::MaybeIdResult;
+    fn id_result(&self) -> Self::MaybeIdResult;
 }
 
 pub trait InstEncoding: Sized + Debug + Eq {
@@ -91,41 +89,11 @@ impl<'a, T: InstEncoding> Display for InstDis<'a, T> {
 }
 
 /// A type that may be an [`IdResult`] or `()`.
-pub trait MaybeIdResult: Copy {
-    type IdResult;
-    fn alloc(&mut self, alloc: &mut impl IdResultAlloc) -> Result<Self::IdResult, EncodeError>;
-}
+pub trait MaybeIdResult: Copy {}
 
-impl MaybeIdResult for () {
-    type IdResult = ();
+impl MaybeIdResult for () {}
 
-    #[inline]
-    fn alloc(&mut self, _: &mut impl IdResultAlloc) -> Result<Self::IdResult, EncodeError> {
-        Ok(())
-    }
-}
-
-impl MaybeIdResult for OptionIdResult {
-    type IdResult = IdResult;
-
-    #[inline]
-    fn alloc(&mut self, alloc: &mut impl IdResultAlloc) -> Result<Self::IdResult, EncodeError> {
-        Ok(match self {
-            None => {
-                let id = alloc.alloc_id()?;
-                *self = Some(id);
-                id
-            }
-            Some(id) => *id,
-        })
-    }
-}
-
-/// as `()` is a ZST, this should optimize away into `ptr::dangling()`
-#[inline]
-pub fn make_mut_ref_unit() -> &'static mut () {
-    Box::leak(Box::new(()))
-}
+impl MaybeIdResult for IdResult {}
 
 /// A reference to a valid instruction encoded in a slice of [`Word`]s.
 ///

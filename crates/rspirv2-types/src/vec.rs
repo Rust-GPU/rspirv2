@@ -175,8 +175,8 @@ impl RawInstVec {
 
     /// Appends an instruction to the back of the [`RawInstVec`]. See [`Vec::push`].
     #[inline]
-    pub fn push_inst<I: Inst>(&mut self, mut inst: I) -> I::MaybeIdResult {
-        let id_result = *inst.id_result();
+    pub fn push_inst<I: Inst>(&mut self, inst: I) -> I::MaybeIdResult {
+        let id_result = inst.id_result();
         self.push(inst);
         id_result
     }
