@@ -30,6 +30,8 @@ pub struct DisOptions {
     pub id_naming: IdNaming,
     /// How to derive names for types
     pub type_naming: TypeNaming,
+    /// The padding to add before each instruction to make the `=` be on the same line. Usually N-many spaces.
+    pub padding: String,
 }
 
 /// Defines where names of types should be derived from.
@@ -58,6 +60,9 @@ pub enum TypeNaming {
     C,
 }
 
+/// `&str` of 15 spaces, the default padding in spirv-tools
+pub const STR_15_SPACES: &str = "               ";
+
 impl Default for DisOptions {
     #[inline]
     fn default() -> Self {
@@ -68,6 +73,7 @@ impl Default for DisOptions {
             const_fmt: true,
             id_naming: IdNaming::All,
             type_naming: TypeNaming::Rust,
+            padding: STR_15_SPACES.into(),
         }
     }
 }
@@ -77,6 +83,7 @@ impl DisOptions {
     pub fn simple() -> Self {
         Self {
             color: false,
+            padding: "".to_string(),
             ..Default::default()
         }
     }
@@ -90,6 +97,7 @@ impl DisOptions {
             const_fmt: true,
             id_naming: IdNaming::RawId,
             type_naming: TypeNaming::Rust,
+            padding: String::new(),
         }
     }
 
@@ -102,6 +110,7 @@ impl DisOptions {
             const_fmt: true,
             id_naming: IdNaming::All,
             type_naming: TypeNaming::C,
+            padding: STR_15_SPACES.into(),
         }
     }
 
@@ -167,6 +176,19 @@ impl Display for ResolvedIdName<'_> {
 }
 
 impl DisContext {
+    /// Creates a new [`DisContext`] without having scanned the module for the required extra information.
+    ///
+    /// **WARNING**: You need to [`Self::add_context`] the instructions you want to decode before disassembling,
+    /// as the disassembly generated may be invalid without the required context. For example, `OpConstant` needs to
+    /// query the type of constant their value is to format it correctly as a float or an int.
+    #[inline]
+    pub fn no_context(opt: DisOptions) -> Self {
+        Self {
+            opt,
+            ..Default::default()
+        }
+    }
+
     /// Scan the supplied [`InstSlice`] for useful context
     pub fn add_context<ISA: InstSetDisCtx>(&mut self, slice: &InstSlice<ISA>) {
         ISA::add_context(slice.as_raw(), self);
@@ -215,19 +237,6 @@ impl DisContext {
         match self.id_to_name.get(&id).unwrap_or(&IdName::RawId) {
             IdName::RawId => ResolvedIdName::Raw(id),
             IdName::ExplicitName(name) | IdName::DerivedName(name) => ResolvedIdName::Named(name),
-        }
-    }
-
-    /// Creates a new [`DisContext`] without having scanned the module for the required extra information.
-    ///
-    /// **WARNING**: You need to [`Self::add_context`] the instructions you want to decode before disassembling,
-    /// as the disassembly generated may be invalid without the required context. For example, `OpConstant` needs to
-    /// query the type of constant their value is to format it correctly as a float or an int.
-    #[inline]
-    pub fn no_context(opt: DisOptions) -> Self {
-        Self {
-            opt,
-            ..Default::default()
         }
     }
 }

@@ -1,11 +1,11 @@
-OpCapability Shader
-OpCapability StorageImageWriteWithoutFormat
-OpCapability VulkanMemoryModel
-OpMemoryModel Logical Vulkan
-OpEntryPoint GLCompute %1 "main" %tid %offset_buffer %output_buffer
-OpExecutionMode %1 LocalSize 32 1 1
-%5 = OpString "ui/dis_reference.rs"
-OpSource Unknown 0 %5 "// compile-flags: -C target-feature=+StorageImageWriteWithoutFormat
+               OpCapability Shader
+               OpCapability StorageImageWriteWithoutFormat
+               OpCapability VulkanMemoryModel
+               OpMemoryModel Logical Vulkan
+               OpEntryPoint GLCompute %1 "main" %tid %offset_buffer %output_buffer
+               OpExecutionMode %1 LocalSize 32 1 1
+          %5 = OpString "ui/dis_reference.rs"
+               OpSource Unknown 0 %5 "// compile-flags: -C target-feature=+StorageImageWriteWithoutFormat
 // compile-flags: -C llvm-args=--disassemble
 // normalize-stderr-test \"OpSource .*\\n\" -> \"\"
 // normalize-stderr-test \"OpLine .*\\n\" -> \"\"
@@ -75,94 +75,94 @@ pub unsafe fn atomic_i_add<I: Integer, const SCOPE: u32, const SEMANTICS: u32>(
     }
 }
 "
-OpName %tid "tid"
-OpName %offset_buffer "offset_buffer"
-OpName %output_buffer "output_buffer"
-OpName %dis_reference__compute_offset "dis_reference::compute_offset"
-OpDecorate %_runtimearr_u32 ArrayStride 4
-OpDecorate %_struct_8 Block
-OpMemberDecorate %_struct_8 0 Offset 0
-OpDecorate %_struct_9 Block
-OpMemberDecorate %_struct_9 0 Offset 0
-OpDecorate %tid BuiltIn LocalInvocationId
-OpDecorate %offset_buffer NonWritable
-OpDecorate %offset_buffer Binding 42
-OpDecorate %offset_buffer DescriptorSet 0
-OpDecorate %output_buffer Binding 69
-OpDecorate %output_buffer DescriptorSet 1
-%u32 = OpTypeInt 32 0
-%v3u32 = OpTypeVector %u32 3
+               OpName %tid "tid"
+               OpName %offset_buffer "offset_buffer"
+               OpName %output_buffer "output_buffer"
+               OpName %dis_reference__compute_offset "dis_reference::compute_offset"
+               OpDecorate %_runtimearr_u32 ArrayStride 4
+               OpDecorate %_struct_8 Block
+               OpMemberDecorate %_struct_8 0 Offset 0
+               OpDecorate %_struct_9 Block
+               OpMemberDecorate %_struct_9 0 Offset 0
+               OpDecorate %tid BuiltIn LocalInvocationId
+               OpDecorate %offset_buffer NonWritable
+               OpDecorate %offset_buffer Binding 42
+               OpDecorate %offset_buffer DescriptorSet 0
+               OpDecorate %output_buffer Binding 69
+               OpDecorate %output_buffer DescriptorSet 1
+        %u32 = OpTypeInt 32 0
+      %v3u32 = OpTypeVector %u32 3
 %_ptr_Input_v3u32 = OpTypePointer Input %v3u32
 %_runtimearr_u32 = OpTypeRuntimeArray %u32
-%_struct_8 = OpTypeStruct %_runtimearr_u32
+  %_struct_8 = OpTypeStruct %_runtimearr_u32
 %_ptr_StorageBuffer__struct_8 = OpTypePointer StorageBuffer %_struct_8
-%_struct_9 = OpTypeStruct %u32
+  %_struct_9 = OpTypeStruct %u32
 %_ptr_StorageBuffer__struct_9 = OpTypePointer StorageBuffer %_struct_9
-%f32 = OpTypeFloat 32
-%void = OpTypeVoid
-%17 = OpTypeFunction %void
-%tid = OpVariable %_ptr_Input_v3u32 Input
+        %f32 = OpTypeFloat 32
+       %void = OpTypeVoid
+         %17 = OpTypeFunction %void
+        %tid = OpVariable %_ptr_Input_v3u32 Input
 %_ptr_StorageBuffer__runtimearr_u32 = OpTypePointer StorageBuffer %_runtimearr_u32
 %offset_buffer = OpVariable %_ptr_StorageBuffer__struct_8 StorageBuffer
-%u32_0 = OpConstant %u32 0
+      %u32_0 = OpConstant %u32 0
 %_ptr_StorageBuffer_u32 = OpTypePointer StorageBuffer %u32
 %output_buffer = OpVariable %_ptr_StorageBuffer__struct_9 StorageBuffer
-%21 = OpTypeFunction %u32 %u32
-%u32_1 = OpConstant %u32 1
-%bool = OpTypeBool
-%f32_1_7 = OpConstant %f32 1.7
+         %21 = OpTypeFunction %u32 %u32
+      %u32_1 = OpConstant %u32 1
+       %bool = OpTypeBool
+    %f32_1_7 = OpConstant %f32 1.7
 %u32_1333788671 = OpConstant %u32 1333788671
 %u32_4294967295 = OpConstant %u32 4294967295
-%u32_5 = OpConstant %u32 5
-%u32_25096 = OpConstant %u32 25096
-%1 = OpFunction %void None %17
-%29 = OpLabel
-OpLine %5 24 4
-%30 = OpLoad %v3u32 %tid
-OpLine %5 25 4
-%31 = OpInBoundsAccessChain %_ptr_StorageBuffer__runtimearr_u32 %offset_buffer %u32_0
-%32 = OpArrayLength %u32 %offset_buffer 0
-OpLine %5 26 4
-%33 = OpInBoundsAccessChain %_ptr_StorageBuffer_u32 %output_buffer %u32_0
-OpLine %5 30 36
-%34 = OpCompositeExtract %u32 %30 0
-OpLine %5 30 21
-%35 = OpFunctionCall %u32 %dis_reference__compute_offset %34
-OpLine %5 31 26
-%36 = OpULessThan %bool %35 %32
-OpNoLine
-OpSelectionMerge %37 None
-OpBranchConditional %36 %38 %39
-%38 = OpLabel
-OpBranch %37
-%39 = OpLabel
-OpReturn
-%37 = OpLabel
-OpLine %5 31 26
-%40 = OpIAdd %u32 %u32_0 %35
-%41 = OpInBoundsAccessChain %_ptr_StorageBuffer_u32 %31 %40
-%42 = OpLoad %u32 %41
-OpLine %5 32 21
-%43 = OpConvertUToF %f32 %42
-OpLine %5 32 20
-%44 = OpFMul %f32 %43 %f32_1_7
-%45 = OpBitcast %f32 %u32_0
-%46 = OpBitcast %f32 %u32_1333788671
-%47 = OpConvertFToU %u32 %44
-%48 = OpFUnordLessThan %bool %44 %45
-%49 = OpFOrdGreaterThan %bool %44 %46
-%50 = OpSelect %u32 %48 %u32_0 %47
-%51 = OpSelect %u32 %49 %u32_4294967295 %50
-OpLine %5 59 13
-%52 = OpAtomicIAdd %u32 %33 %u32_5 %u32_25096 %51
-OpNoLine
-OpReturn
-OpFunctionEnd
+      %u32_5 = OpConstant %u32 5
+  %u32_25096 = OpConstant %u32 25096
+          %1 = OpFunction %void None %17
+         %29 = OpLabel
+               OpLine %5 24 4
+         %30 = OpLoad %v3u32 %tid
+               OpLine %5 25 4
+         %31 = OpInBoundsAccessChain %_ptr_StorageBuffer__runtimearr_u32 %offset_buffer %u32_0
+         %32 = OpArrayLength %u32 %offset_buffer 0
+               OpLine %5 26 4
+         %33 = OpInBoundsAccessChain %_ptr_StorageBuffer_u32 %output_buffer %u32_0
+               OpLine %5 30 36
+         %34 = OpCompositeExtract %u32 %30 0
+               OpLine %5 30 21
+         %35 = OpFunctionCall %u32 %dis_reference__compute_offset %34
+               OpLine %5 31 26
+         %36 = OpULessThan %bool %35 %32
+               OpNoLine
+               OpSelectionMerge %37 None
+               OpBranchConditional %36 %38 %39
+         %38 = OpLabel
+               OpBranch %37
+         %39 = OpLabel
+               OpReturn
+         %37 = OpLabel
+               OpLine %5 31 26
+         %40 = OpIAdd %u32 %u32_0 %35
+         %41 = OpInBoundsAccessChain %_ptr_StorageBuffer_u32 %31 %40
+         %42 = OpLoad %u32 %41
+               OpLine %5 32 21
+         %43 = OpConvertUToF %f32 %42
+               OpLine %5 32 20
+         %44 = OpFMul %f32 %43 %f32_1_7
+         %45 = OpBitcast %f32 %u32_0
+         %46 = OpBitcast %f32 %u32_1333788671
+         %47 = OpConvertFToU %u32 %44
+         %48 = OpFUnordLessThan %bool %44 %45
+         %49 = OpFOrdGreaterThan %bool %44 %46
+         %50 = OpSelect %u32 %48 %u32_0 %47
+         %51 = OpSelect %u32 %49 %u32_4294967295 %50
+               OpLine %5 59 13
+         %52 = OpAtomicIAdd %u32 %33 %u32_5 %u32_25096 %51
+               OpNoLine
+               OpReturn
+               OpFunctionEnd
 %dis_reference__compute_offset = OpFunction %u32 DontInline|Const %21
-%53 = OpFunctionParameter %u32
-%54 = OpLabel
-OpLine %5 43 4
-%55 = OpIAdd %u32 %u32_1 %53
-OpNoLine
-OpReturnValue %55
-OpFunctionEnd
+         %53 = OpFunctionParameter %u32
+         %54 = OpLabel
+               OpLine %5 43 4
+         %55 = OpIAdd %u32 %u32_1 %53
+               OpNoLine
+               OpReturnValue %55
+               OpFunctionEnd
