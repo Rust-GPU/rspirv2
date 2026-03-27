@@ -6,6 +6,9 @@ edition.workspace = true
 [lints]
 workspace = true
 
+[features]
+tracy = ["rspirv2-tools-gen/tracy"]
+
 [dependencies]
 rspirv2.workspace = true
 anstream.workspace = true

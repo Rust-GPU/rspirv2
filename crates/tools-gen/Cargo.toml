@@ -6,6 +6,9 @@ edition.workspace = true
 [lints]
 workspace = true
 
+[features]
+tracy = ["profiling/profile-with-tracy"]
+
 [dependencies]
 rspirv2.workspace = true
 clap.workspace = true
