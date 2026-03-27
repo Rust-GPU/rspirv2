@@ -184,6 +184,8 @@ impl<'a> Deref for OperandDisContext<'a> {
     }
 }
 
+pub type ZeroOrOne<T> = Option<T>;
+
 unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
     const FIXED_LEN: Option<usize> = None;
 
@@ -235,6 +237,8 @@ unsafe impl<T: Operand> OperandSpec for Option<T> {
     type Operand = T;
     const QUANTIFIER: Quantifier = Quantifier::ZeroOrOne;
 }
+
+pub type ZeroOrMore<T> = SmallVec<[T; 4]>;
 
 unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     const FIXED_LEN: Option<usize> = None;

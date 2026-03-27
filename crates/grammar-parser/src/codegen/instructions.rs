@@ -3,8 +3,6 @@ use crate::codegen::{GrammarWriter, OPERAND_ID_RESULT, OPERAND_ID_RESULT_TYPE};
 use crate::parse::{Grammar, InstMeta, Operand, Quantifier};
 use quote::{format_ident, quote};
 
-pub const SMALLVEC_LEN: usize = 4;
-
 pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     let insts = grammar.insts.iter().map(|inst| {
         let struct_ident = InstMeta::type_ident(&inst.opname);
@@ -25,8 +23,8 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                  ref ty,
              }| match meta.quantifier {
                 Quantifier::One => quote!(pub #name: #ty),
-                Quantifier::ZeroOrOne => quote!(pub #name: Option<#ty>),
-                Quantifier::ZeroOrMore => quote!(pub #name: SmallVec<[#ty; #SMALLVEC_LEN]>),
+                Quantifier::ZeroOrOne => quote!(pub #name: ZeroOrOne<#ty>),
+                Quantifier::ZeroOrMore => quote!(pub #name: ZeroOrMore<#ty>),
             },
         );
 
