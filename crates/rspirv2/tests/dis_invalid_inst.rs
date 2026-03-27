@@ -18,7 +18,7 @@ fn record_inst() -> InstVec<CoreInstSet> {
     let id_u32 = IdResult(Word(42));
     let id_var = IdResult(Word(69));
     vec.push(OpTypeInt {
-        id_result: Some(id_u32),
+        id_result: id_u32,
         width: LiteralInteger::new(32),
         signedness: LiteralInteger::new(0),
     });
@@ -28,7 +28,7 @@ fn record_inst() -> InstVec<CoreInstSet> {
     });
     vec.push(OpVariable {
         id_result_type: IdResultType(id_u32),
-        id_result: Some(id_var),
+        id_result: id_var,
         storage_class: StorageClass::StorageBuffer,
         initializer: None,
     });

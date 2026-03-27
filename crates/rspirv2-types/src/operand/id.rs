@@ -116,8 +116,6 @@ impl Display for IdResultWriter<'_> {
     }
 }
 
-pub type OptionIdResult = Option<IdResult>;
-
 macro_rules! id_ref {
     ($name:ident; $kind:expr; $docs:literal) => {
         #[doc = concat!("A `", stringify!($name), "` is a reference to a [`IdResult`] of another operation.")]
