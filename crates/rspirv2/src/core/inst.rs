@@ -113,8 +113,8 @@ impl InstEncoding for OpSourceContinued {
 pub struct OpSource {
     pub source_language: SourceLanguage,
     pub version: LiteralInteger,
-    pub file: Option<IdRef>,
-    pub source: Option<LiteralString>,
+    pub file: ZeroOrOne<IdRef>,
+    pub source: ZeroOrOne<LiteralString>,
 }
 impl Inst for OpSource {
     const META: &InstMeta = &OP_SOURCE;
@@ -471,7 +471,7 @@ pub struct OpExtInst {
     pub id_result: OptionIdResult,
     pub set: IdRef,
     pub instruction: LiteralExtInstInteger,
-    pub id_ref: SmallVec<[IdRef; 4usize]>,
+    pub id_ref: ZeroOrMore<IdRef>,
 }
 impl Inst for OpExtInst {
     const META: &InstMeta = &OP_EXT_INST;
@@ -573,7 +573,7 @@ pub struct OpEntryPoint {
     pub execution_model: ExecutionModel,
     pub entry_point: IdRef,
     pub name: LiteralString,
-    pub interface: SmallVec<[IdRef; 4usize]>,
+    pub interface: ZeroOrMore<IdRef>,
 }
 impl Inst for OpEntryPoint {
     const META: &InstMeta = &OP_ENTRY_POINT;
@@ -822,7 +822,7 @@ impl InstEncoding for OpTypeInt {
 pub struct OpTypeFloat {
     pub id_result: OptionIdResult,
     pub width: LiteralInteger,
-    pub floating_point_encoding: Option<FPEncoding>,
+    pub floating_point_encoding: ZeroOrOne<FPEncoding>,
 }
 impl Inst for OpTypeFloat {
     const META: &InstMeta = &OP_TYPE_FLOAT;
@@ -972,7 +972,7 @@ pub struct OpTypeImage {
     pub ms: LiteralInteger,
     pub sampled: LiteralInteger,
     pub image_format: ImageFormat,
-    pub access_qualifier: Option<AccessQualifier>,
+    pub access_qualifier: ZeroOrOne<AccessQualifier>,
 }
 impl Inst for OpTypeImage {
     const META: &InstMeta = &OP_TYPE_IMAGE;
@@ -1210,7 +1210,7 @@ impl InstEncoding for OpTypeRuntimeArray {
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeStruct {
     pub id_result: OptionIdResult,
-    pub id_ref: SmallVec<[IdRef; 4usize]>,
+    pub id_ref: ZeroOrMore<IdRef>,
 }
 impl Inst for OpTypeStruct {
     const META: &InstMeta = &OP_TYPE_STRUCT;
@@ -1345,7 +1345,7 @@ impl InstEncoding for OpTypePointer {
 pub struct OpTypeFunction {
     pub id_result: OptionIdResult,
     pub return_type: IdRef,
-    pub id_ref: SmallVec<[IdRef; 4usize]>,
+    pub id_ref: ZeroOrMore<IdRef>,
 }
 impl Inst for OpTypeFunction {
     const META: &InstMeta = &OP_TYPE_FUNCTION;
@@ -1749,7 +1749,7 @@ impl InstEncoding for OpConstant {
 pub struct OpConstantComposite {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
-    pub constituents: SmallVec<[IdRef; 4usize]>,
+    pub constituents: ZeroOrMore<IdRef>,
 }
 impl Inst for OpConstantComposite {
     const META: &InstMeta = &OP_CONSTANT_COMPOSITE;
@@ -2038,7 +2038,7 @@ impl InstEncoding for OpSpecConstant {
 pub struct OpSpecConstantComposite {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
-    pub constituents: SmallVec<[IdRef; 4usize]>,
+    pub constituents: ZeroOrMore<IdRef>,
 }
 impl Inst for OpSpecConstantComposite {
     const META: &InstMeta = &OP_SPEC_CONSTANT_COMPOSITE;
@@ -2263,7 +2263,7 @@ pub struct OpFunctionCall {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub function: IdRef,
-    pub id_ref: SmallVec<[IdRef; 4usize]>,
+    pub id_ref: ZeroOrMore<IdRef>,
 }
 impl Inst for OpFunctionCall {
     const META: &InstMeta = &OP_FUNCTION_CALL;
@@ -2317,7 +2317,7 @@ pub struct OpVariable {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub storage_class: StorageClass,
-    pub initializer: Option<IdRef>,
+    pub initializer: ZeroOrOne<IdRef>,
 }
 impl Inst for OpVariable {
     const META: &InstMeta = &OP_VARIABLE;
@@ -2430,7 +2430,7 @@ pub struct OpLoad {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub pointer: IdRef,
-    pub memory_access: Option<MemoryAccess>,
+    pub memory_access: ZeroOrOne<MemoryAccess>,
 }
 impl Inst for OpLoad {
     const META: &InstMeta = &OP_LOAD;
@@ -2483,7 +2483,7 @@ impl InstEncoding for OpLoad {
 pub struct OpStore {
     pub pointer: IdRef,
     pub object: IdRef,
-    pub memory_access: Option<MemoryAccess>,
+    pub memory_access: ZeroOrOne<MemoryAccess>,
 }
 impl Inst for OpStore {
     const META: &InstMeta = &OP_STORE;
@@ -2532,8 +2532,8 @@ impl InstEncoding for OpStore {
 pub struct OpCopyMemory {
     pub target: IdRef,
     pub source: IdRef,
-    pub memory_access_0: Option<MemoryAccess>,
-    pub memory_access_1: Option<MemoryAccess>,
+    pub memory_access_0: ZeroOrOne<MemoryAccess>,
+    pub memory_access_1: ZeroOrOne<MemoryAccess>,
 }
 impl Inst for OpCopyMemory {
     const META: &InstMeta = &OP_COPY_MEMORY;
@@ -2587,8 +2587,8 @@ pub struct OpCopyMemorySized {
     pub target: IdRef,
     pub source: IdRef,
     pub size: IdRef,
-    pub memory_access_0: Option<MemoryAccess>,
-    pub memory_access_1: Option<MemoryAccess>,
+    pub memory_access_0: ZeroOrOne<MemoryAccess>,
+    pub memory_access_1: ZeroOrOne<MemoryAccess>,
 }
 impl Inst for OpCopyMemorySized {
     const META: &InstMeta = &OP_COPY_MEMORY_SIZED;
@@ -2646,7 +2646,7 @@ pub struct OpAccessChain {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub base: IdRef,
-    pub indexes: SmallVec<[IdRef; 4usize]>,
+    pub indexes: ZeroOrMore<IdRef>,
 }
 impl Inst for OpAccessChain {
     const META: &InstMeta = &OP_ACCESS_CHAIN;
@@ -2700,7 +2700,7 @@ pub struct OpInBoundsAccessChain {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub base: IdRef,
-    pub indexes: SmallVec<[IdRef; 4usize]>,
+    pub indexes: ZeroOrMore<IdRef>,
 }
 impl Inst for OpInBoundsAccessChain {
     const META: &InstMeta = &OP_IN_BOUNDS_ACCESS_CHAIN;
@@ -2755,7 +2755,7 @@ pub struct OpPtrAccessChain {
     pub id_result: OptionIdResult,
     pub base: IdRef,
     pub element: IdRef,
-    pub indexes: SmallVec<[IdRef; 4usize]>,
+    pub indexes: ZeroOrMore<IdRef>,
 }
 impl Inst for OpPtrAccessChain {
     const META: &InstMeta = &OP_PTR_ACCESS_CHAIN;
@@ -2917,7 +2917,7 @@ pub struct OpInBoundsPtrAccessChain {
     pub id_result: OptionIdResult,
     pub base: IdRef,
     pub element: IdRef,
-    pub indexes: SmallVec<[IdRef; 4usize]>,
+    pub indexes: ZeroOrMore<IdRef>,
 }
 impl Inst for OpInBoundsPtrAccessChain {
     const META: &InstMeta = &OP_IN_BOUNDS_PTR_ACCESS_CHAIN;
@@ -3099,7 +3099,7 @@ impl InstEncoding for OpDecorationGroup {
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupDecorate {
     pub decoration_group: IdRef,
-    pub targets: SmallVec<[IdRef; 4usize]>,
+    pub targets: ZeroOrMore<IdRef>,
 }
 impl Inst for OpGroupDecorate {
     const META: &InstMeta = &OP_GROUP_DECORATE;
@@ -3143,7 +3143,7 @@ impl InstEncoding for OpGroupDecorate {
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupMemberDecorate {
     pub decoration_group: IdRef,
-    pub targets: SmallVec<[PairIdRefLiteralInteger; 4usize]>,
+    pub targets: ZeroOrMore<PairIdRefLiteralInteger>,
 }
 impl Inst for OpGroupMemberDecorate {
     const META: &InstMeta = &OP_GROUP_MEMBER_DECORATE;
@@ -3303,7 +3303,7 @@ pub struct OpVectorShuffle {
     pub id_result: OptionIdResult,
     pub vector_1: IdRef,
     pub vector_2: IdRef,
-    pub components: SmallVec<[LiteralInteger; 4usize]>,
+    pub components: ZeroOrMore<LiteralInteger>,
 }
 impl Inst for OpVectorShuffle {
     const META: &InstMeta = &OP_VECTOR_SHUFFLE;
@@ -3360,7 +3360,7 @@ impl InstEncoding for OpVectorShuffle {
 pub struct OpCompositeConstruct {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
-    pub constituents: SmallVec<[IdRef; 4usize]>,
+    pub constituents: ZeroOrMore<IdRef>,
 }
 impl Inst for OpCompositeConstruct {
     const META: &InstMeta = &OP_COMPOSITE_CONSTRUCT;
@@ -3410,7 +3410,7 @@ pub struct OpCompositeExtract {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub composite: IdRef,
-    pub indexes: SmallVec<[LiteralInteger; 4usize]>,
+    pub indexes: ZeroOrMore<LiteralInteger>,
 }
 impl Inst for OpCompositeExtract {
     const META: &InstMeta = &OP_COMPOSITE_EXTRACT;
@@ -3465,7 +3465,7 @@ pub struct OpCompositeInsert {
     pub id_result: OptionIdResult,
     pub object: IdRef,
     pub composite: IdRef,
-    pub indexes: SmallVec<[LiteralInteger; 4usize]>,
+    pub indexes: ZeroOrMore<LiteralInteger>,
 }
 impl Inst for OpCompositeInsert {
     const META: &InstMeta = &OP_COMPOSITE_INSERT;
@@ -3676,7 +3676,7 @@ pub struct OpImageSampleImplicitLod {
     pub id_result: OptionIdResult,
     pub sampled_image: IdRef,
     pub coordinate: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageSampleImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_IMPLICIT_LOD;
@@ -3795,7 +3795,7 @@ pub struct OpImageSampleDrefImplicitLod {
     pub sampled_image: IdRef,
     pub coordinate: IdRef,
     pub id_ref: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageSampleDrefImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_DREF_IMPLICIT_LOD;
@@ -3922,7 +3922,7 @@ pub struct OpImageSampleProjImplicitLod {
     pub id_result: OptionIdResult,
     pub sampled_image: IdRef,
     pub coordinate: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageSampleProjImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_PROJ_IMPLICIT_LOD;
@@ -4041,7 +4041,7 @@ pub struct OpImageSampleProjDrefImplicitLod {
     pub sampled_image: IdRef,
     pub coordinate: IdRef,
     pub id_ref: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageSampleProjDrefImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_PROJ_DREF_IMPLICIT_LOD;
@@ -4168,7 +4168,7 @@ pub struct OpImageFetch {
     pub id_result: OptionIdResult,
     pub image: IdRef,
     pub coordinate: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageFetch {
     const META: &InstMeta = &OP_IMAGE_FETCH;
@@ -4228,7 +4228,7 @@ pub struct OpImageGather {
     pub sampled_image: IdRef,
     pub coordinate: IdRef,
     pub component: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageGather {
     const META: &InstMeta = &OP_IMAGE_GATHER;
@@ -4292,7 +4292,7 @@ pub struct OpImageDrefGather {
     pub sampled_image: IdRef,
     pub coordinate: IdRef,
     pub id_ref: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageDrefGather {
     const META: &InstMeta = &OP_IMAGE_DREF_GATHER;
@@ -4355,7 +4355,7 @@ pub struct OpImageRead {
     pub id_result: OptionIdResult,
     pub image: IdRef,
     pub coordinate: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageRead {
     const META: &InstMeta = &OP_IMAGE_READ;
@@ -4413,7 +4413,7 @@ pub struct OpImageWrite {
     pub image: IdRef,
     pub coordinate: IdRef,
     pub texel: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageWrite {
     const META: &InstMeta = &OP_IMAGE_WRITE;
@@ -11460,7 +11460,7 @@ impl InstEncoding for OpAtomicXor {
 pub struct OpPhi {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
-    pub pair_id_ref_id_ref: SmallVec<[PairIdRefIdRef; 4usize]>,
+    pub pair_id_ref_id_ref: ZeroOrMore<PairIdRefIdRef>,
 }
 impl Inst for OpPhi {
     const META: &InstMeta = &OP_PHI;
@@ -11674,7 +11674,7 @@ pub struct OpBranchConditional {
     pub condition: IdRef,
     pub true_label: IdRef,
     pub false_label: IdRef,
-    pub branch_weights: SmallVec<[LiteralInteger; 4usize]>,
+    pub branch_weights: ZeroOrMore<LiteralInteger>,
 }
 impl Inst for OpBranchConditional {
     const META: &InstMeta = &OP_BRANCH_CONDITIONAL;
@@ -11727,7 +11727,7 @@ impl InstEncoding for OpBranchConditional {
 pub struct OpSwitch {
     pub selector: IdRef,
     pub default: IdRef,
-    pub target: SmallVec<[PairLiteralIntegerIdRef; 4usize]>,
+    pub target: ZeroOrMore<PairLiteralIntegerIdRef>,
 }
 impl Inst for OpSwitch {
     const META: &InstMeta = &OP_SWITCH;
@@ -13755,7 +13755,7 @@ pub struct OpEnqueueKernel {
     pub param: IdRef,
     pub param_size: IdRef,
     pub param_align: IdRef,
-    pub local_size: SmallVec<[IdRef; 4usize]>,
+    pub local_size: ZeroOrMore<IdRef>,
 }
 impl Inst for OpEnqueueKernel {
     const META: &InstMeta = &OP_ENQUEUE_KERNEL;
@@ -14476,7 +14476,7 @@ pub struct OpImageSparseSampleImplicitLod {
     pub id_result: OptionIdResult,
     pub sampled_image: IdRef,
     pub coordinate: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageSparseSampleImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_IMPLICIT_LOD;
@@ -14595,7 +14595,7 @@ pub struct OpImageSparseSampleDrefImplicitLod {
     pub sampled_image: IdRef,
     pub coordinate: IdRef,
     pub id_ref: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageSparseSampleDrefImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_DREF_IMPLICIT_LOD;
@@ -14722,7 +14722,7 @@ pub struct OpImageSparseSampleProjImplicitLod {
     pub id_result: OptionIdResult,
     pub sampled_image: IdRef,
     pub coordinate: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageSparseSampleProjImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_PROJ_IMPLICIT_LOD;
@@ -14841,7 +14841,7 @@ pub struct OpImageSparseSampleProjDrefImplicitLod {
     pub sampled_image: IdRef,
     pub coordinate: IdRef,
     pub id_ref: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageSparseSampleProjDrefImplicitLod {
     const META: &InstMeta = &OP_IMAGE_SPARSE_SAMPLE_PROJ_DREF_IMPLICIT_LOD;
@@ -14968,7 +14968,7 @@ pub struct OpImageSparseFetch {
     pub id_result: OptionIdResult,
     pub image: IdRef,
     pub coordinate: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageSparseFetch {
     const META: &InstMeta = &OP_IMAGE_SPARSE_FETCH;
@@ -15028,7 +15028,7 @@ pub struct OpImageSparseGather {
     pub sampled_image: IdRef,
     pub coordinate: IdRef,
     pub component: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageSparseGather {
     const META: &InstMeta = &OP_IMAGE_SPARSE_GATHER;
@@ -15092,7 +15092,7 @@ pub struct OpImageSparseDrefGather {
     pub sampled_image: IdRef,
     pub coordinate: IdRef,
     pub id_ref: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageSparseDrefGather {
     const META: &InstMeta = &OP_IMAGE_SPARSE_DREF_GATHER;
@@ -15340,7 +15340,7 @@ pub struct OpImageSparseRead {
     pub id_result: OptionIdResult,
     pub image: IdRef,
     pub coordinate: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageSparseRead {
     const META: &InstMeta = &OP_IMAGE_SPARSE_READ;
@@ -16874,7 +16874,7 @@ pub struct OpGroupNonUniformIAdd {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformIAdd {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_I_ADD;
@@ -16938,7 +16938,7 @@ pub struct OpGroupNonUniformFAdd {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformFAdd {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_F_ADD;
@@ -17002,7 +17002,7 @@ pub struct OpGroupNonUniformIMul {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformIMul {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_I_MUL;
@@ -17066,7 +17066,7 @@ pub struct OpGroupNonUniformFMul {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformFMul {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_F_MUL;
@@ -17130,7 +17130,7 @@ pub struct OpGroupNonUniformSMin {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformSMin {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_S_MIN;
@@ -17194,7 +17194,7 @@ pub struct OpGroupNonUniformUMin {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformUMin {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_U_MIN;
@@ -17258,7 +17258,7 @@ pub struct OpGroupNonUniformFMin {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformFMin {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_F_MIN;
@@ -17322,7 +17322,7 @@ pub struct OpGroupNonUniformSMax {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformSMax {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_S_MAX;
@@ -17386,7 +17386,7 @@ pub struct OpGroupNonUniformUMax {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformUMax {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_U_MAX;
@@ -17450,7 +17450,7 @@ pub struct OpGroupNonUniformFMax {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformFMax {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_F_MAX;
@@ -17514,7 +17514,7 @@ pub struct OpGroupNonUniformBitwiseAnd {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformBitwiseAnd {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BITWISE_AND;
@@ -17578,7 +17578,7 @@ pub struct OpGroupNonUniformBitwiseOr {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformBitwiseOr {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BITWISE_OR;
@@ -17642,7 +17642,7 @@ pub struct OpGroupNonUniformBitwiseXor {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformBitwiseXor {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_BITWISE_XOR;
@@ -17706,7 +17706,7 @@ pub struct OpGroupNonUniformLogicalAnd {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformLogicalAnd {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_LOGICAL_AND;
@@ -17770,7 +17770,7 @@ pub struct OpGroupNonUniformLogicalOr {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformLogicalOr {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_LOGICAL_OR;
@@ -17834,7 +17834,7 @@ pub struct OpGroupNonUniformLogicalXor {
     pub execution: IdScope,
     pub operation: GroupOperation,
     pub value: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformLogicalXor {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_LOGICAL_XOR;
@@ -18225,7 +18225,7 @@ pub struct OpColorAttachmentReadEXT {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub attachment: IdRef,
-    pub sample: Option<IdRef>,
+    pub sample: ZeroOrOne<IdRef>,
 }
 impl Inst for OpColorAttachmentReadEXT {
     const META: &InstMeta = &OP_COLOR_ATTACHMENT_READ_EXT;
@@ -18278,7 +18278,7 @@ impl InstEncoding for OpColorAttachmentReadEXT {
 pub struct OpDepthAttachmentReadEXT {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
-    pub sample: Option<IdRef>,
+    pub sample: ZeroOrOne<IdRef>,
 }
 impl Inst for OpDepthAttachmentReadEXT {
     const META: &InstMeta = &OP_DEPTH_ATTACHMENT_READ_EXT;
@@ -18327,7 +18327,7 @@ impl InstEncoding for OpDepthAttachmentReadEXT {
 pub struct OpStencilAttachmentReadEXT {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
-    pub sample: Option<IdRef>,
+    pub sample: ZeroOrOne<IdRef>,
 }
 impl Inst for OpStencilAttachmentReadEXT {
     const META: &InstMeta = &OP_STENCIL_ATTACHMENT_READ_EXT;
@@ -18376,8 +18376,8 @@ impl InstEncoding for OpStencilAttachmentReadEXT {
 pub struct OpTypeTensorARM {
     pub id_result: OptionIdResult,
     pub element_type: IdRef,
-    pub rank: Option<IdRef>,
-    pub shape: Option<IdRef>,
+    pub rank: ZeroOrOne<IdRef>,
+    pub shape: ZeroOrOne<IdRef>,
 }
 impl Inst for OpTypeTensorARM {
     const META: &InstMeta = &OP_TYPE_TENSOR_ARM;
@@ -18431,7 +18431,7 @@ pub struct OpTensorReadARM {
     pub id_result: OptionIdResult,
     pub tensor: IdRef,
     pub coordinates: IdRef,
-    pub tensor_operands: Option<TensorOperands>,
+    pub tensor_operands: ZeroOrOne<TensorOperands>,
 }
 impl Inst for OpTensorReadARM {
     const META: &InstMeta = &OP_TENSOR_READ_ARM;
@@ -18489,7 +18489,7 @@ pub struct OpTensorWriteARM {
     pub tensor: IdRef,
     pub coordinates: IdRef,
     pub object: IdRef,
-    pub tensor_operands: Option<TensorOperands>,
+    pub tensor_operands: ZeroOrOne<TensorOperands>,
 }
 impl Inst for OpTensorWriteARM {
     const META: &InstMeta = &OP_TENSOR_WRITE_ARM;
@@ -18645,7 +18645,7 @@ impl InstEncoding for OpGraphConstantARM {
 pub struct OpGraphEntryPointARM {
     pub graph: IdRef,
     pub name: LiteralString,
-    pub interface: SmallVec<[IdRef; 4usize]>,
+    pub interface: ZeroOrMore<IdRef>,
 }
 impl Inst for OpGraphEntryPointARM {
     const META: &InstMeta = &OP_GRAPH_ENTRY_POINT_ARM;
@@ -18739,7 +18739,7 @@ pub struct OpGraphInputARM {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub input_index: IdRef,
-    pub element_index: SmallVec<[IdRef; 4usize]>,
+    pub element_index: ZeroOrMore<IdRef>,
 }
 impl Inst for OpGraphInputARM {
     const META: &InstMeta = &OP_GRAPH_INPUT_ARM;
@@ -18792,7 +18792,7 @@ impl InstEncoding for OpGraphInputARM {
 pub struct OpGraphSetOutputARM {
     pub value: IdRef,
     pub output_index: IdRef,
-    pub element_index: SmallVec<[IdRef; 4usize]>,
+    pub element_index: ZeroOrMore<IdRef>,
 }
 impl Inst for OpGraphSetOutputARM {
     const META: &InstMeta = &OP_GRAPH_SET_OUTPUT_ARM;
@@ -18869,7 +18869,7 @@ impl InstEncoding for OpGraphEndARM {
 pub struct OpTypeGraphARM {
     pub id_result: OptionIdResult,
     pub num_inputs: LiteralInteger,
-    pub in_out_types: SmallVec<[IdRef; 4usize]>,
+    pub in_out_types: ZeroOrMore<IdRef>,
 }
 impl Inst for OpTypeGraphARM {
     const META: &InstMeta = &OP_TYPE_GRAPH_ARM;
@@ -18989,8 +18989,8 @@ pub struct OpUntypedVariableKHR {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub storage_class: StorageClass,
-    pub data_type: Option<IdRef>,
-    pub initializer: Option<IdRef>,
+    pub data_type: ZeroOrOne<IdRef>,
+    pub initializer: ZeroOrOne<IdRef>,
 }
 impl Inst for OpUntypedVariableKHR {
     const META: &InstMeta = &OP_UNTYPED_VARIABLE_KHR;
@@ -19049,7 +19049,7 @@ pub struct OpUntypedAccessChainKHR {
     pub id_result: OptionIdResult,
     pub base_type: IdRef,
     pub base: IdRef,
-    pub indexes: SmallVec<[IdRef; 4usize]>,
+    pub indexes: ZeroOrMore<IdRef>,
 }
 impl Inst for OpUntypedAccessChainKHR {
     const META: &InstMeta = &OP_UNTYPED_ACCESS_CHAIN_KHR;
@@ -19108,7 +19108,7 @@ pub struct OpUntypedInBoundsAccessChainKHR {
     pub id_result: OptionIdResult,
     pub base_type: IdRef,
     pub base: IdRef,
-    pub indexes: SmallVec<[IdRef; 4usize]>,
+    pub indexes: ZeroOrMore<IdRef>,
 }
 impl Inst for OpUntypedInBoundsAccessChainKHR {
     const META: &InstMeta = &OP_UNTYPED_IN_BOUNDS_ACCESS_CHAIN_KHR;
@@ -19266,7 +19266,7 @@ pub struct OpUntypedPtrAccessChainKHR {
     pub base_type: IdRef,
     pub base: IdRef,
     pub element: IdRef,
-    pub indexes: SmallVec<[IdRef; 4usize]>,
+    pub indexes: ZeroOrMore<IdRef>,
 }
 impl Inst for OpUntypedPtrAccessChainKHR {
     const META: &InstMeta = &OP_UNTYPED_PTR_ACCESS_CHAIN_KHR;
@@ -19330,7 +19330,7 @@ pub struct OpUntypedInBoundsPtrAccessChainKHR {
     pub base_type: IdRef,
     pub base: IdRef,
     pub element: IdRef,
-    pub indexes: SmallVec<[IdRef; 4usize]>,
+    pub indexes: ZeroOrMore<IdRef>,
 }
 impl Inst for OpUntypedInBoundsPtrAccessChainKHR {
     const META: &InstMeta = &OP_UNTYPED_IN_BOUNDS_PTR_ACCESS_CHAIN_KHR;
@@ -19450,9 +19450,9 @@ impl InstEncoding for OpUntypedArrayLengthKHR {
 pub struct OpUntypedPrefetchKHR {
     pub pointer_type: IdRef,
     pub num_bytes: IdRef,
-    pub rw: Option<IdRef>,
-    pub locality: Option<IdRef>,
-    pub cache_type: Option<IdRef>,
+    pub rw: ZeroOrOne<IdRef>,
+    pub locality: ZeroOrOne<IdRef>,
+    pub cache_type: ZeroOrOne<IdRef>,
 }
 impl Inst for OpUntypedPrefetchKHR {
     const META: &InstMeta = &OP_UNTYPED_PREFETCH_KHR;
@@ -19718,7 +19718,7 @@ pub struct OpGroupNonUniformRotateKHR {
     pub execution: IdScope,
     pub value: IdRef,
     pub delta: IdRef,
-    pub cluster_size: Option<IdRef>,
+    pub cluster_size: ZeroOrOne<IdRef>,
 }
 impl Inst for OpGroupNonUniformRotateKHR {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_ROTATE_KHR;
@@ -19835,7 +19835,7 @@ pub struct OpExtInstWithForwardRefsKHR {
     pub id_result: OptionIdResult,
     pub set: IdRef,
     pub instruction: LiteralExtInstInteger,
-    pub id_ref: SmallVec<[IdRef; 4usize]>,
+    pub id_ref: ZeroOrMore<IdRef>,
 }
 impl Inst for OpExtInstWithForwardRefsKHR {
     const META: &InstMeta = &OP_EXT_INST_WITH_FORWARD_REFS_KHR;
@@ -19899,8 +19899,8 @@ pub struct OpUntypedGroupAsyncCopyKHR {
     pub num_elements: IdRef,
     pub stride: IdRef,
     pub event: IdRef,
-    pub destination_memory_operands: Option<MemoryAccess>,
-    pub source_memory_operands: Option<MemoryAccess>,
+    pub destination_memory_operands: ZeroOrOne<MemoryAccess>,
+    pub source_memory_operands: ZeroOrOne<MemoryAccess>,
 }
 impl Inst for OpUntypedGroupAsyncCopyKHR {
     const META: &InstMeta = &OP_UNTYPED_GROUP_ASYNC_COPY_KHR;
@@ -20221,7 +20221,7 @@ pub struct OpSDot {
     pub id_result: OptionIdResult,
     pub vector_1: IdRef,
     pub vector_2: IdRef,
-    pub packed_vector_format: Option<PackedVectorFormat>,
+    pub packed_vector_format: ZeroOrOne<PackedVectorFormat>,
 }
 impl Inst for OpSDot {
     const META: &InstMeta = &OP_S_DOT;
@@ -20280,7 +20280,7 @@ pub struct OpUDot {
     pub id_result: OptionIdResult,
     pub vector_1: IdRef,
     pub vector_2: IdRef,
-    pub packed_vector_format: Option<PackedVectorFormat>,
+    pub packed_vector_format: ZeroOrOne<PackedVectorFormat>,
 }
 impl Inst for OpUDot {
     const META: &InstMeta = &OP_U_DOT;
@@ -20339,7 +20339,7 @@ pub struct OpSUDot {
     pub id_result: OptionIdResult,
     pub vector_1: IdRef,
     pub vector_2: IdRef,
-    pub packed_vector_format: Option<PackedVectorFormat>,
+    pub packed_vector_format: ZeroOrOne<PackedVectorFormat>,
 }
 impl Inst for OpSUDot {
     const META: &InstMeta = &OP_SU_DOT;
@@ -20399,7 +20399,7 @@ pub struct OpSDotAccSat {
     pub vector_1: IdRef,
     pub vector_2: IdRef,
     pub accumulator: IdRef,
-    pub packed_vector_format: Option<PackedVectorFormat>,
+    pub packed_vector_format: ZeroOrOne<PackedVectorFormat>,
 }
 impl Inst for OpSDotAccSat {
     const META: &InstMeta = &OP_S_DOT_ACC_SAT;
@@ -20463,7 +20463,7 @@ pub struct OpUDotAccSat {
     pub vector_1: IdRef,
     pub vector_2: IdRef,
     pub accumulator: IdRef,
-    pub packed_vector_format: Option<PackedVectorFormat>,
+    pub packed_vector_format: ZeroOrOne<PackedVectorFormat>,
 }
 impl Inst for OpUDotAccSat {
     const META: &InstMeta = &OP_U_DOT_ACC_SAT;
@@ -20527,7 +20527,7 @@ pub struct OpSUDotAccSat {
     pub vector_1: IdRef,
     pub vector_2: IdRef,
     pub accumulator: IdRef,
-    pub packed_vector_format: Option<PackedVectorFormat>,
+    pub packed_vector_format: ZeroOrOne<PackedVectorFormat>,
 }
 impl Inst for OpSUDotAccSat {
     const META: &InstMeta = &OP_SU_DOT_ACC_SAT;
@@ -20653,8 +20653,8 @@ pub struct OpCooperativeMatrixLoadKHR {
     pub id_result: OptionIdResult,
     pub pointer: IdRef,
     pub memory_layout: IdRef,
-    pub stride: Option<IdRef>,
-    pub memory_operand: Option<MemoryAccess>,
+    pub stride: ZeroOrOne<IdRef>,
+    pub memory_operand: ZeroOrOne<MemoryAccess>,
 }
 impl Inst for OpCooperativeMatrixLoadKHR {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_LOAD_KHR;
@@ -20716,8 +20716,8 @@ pub struct OpCooperativeMatrixStoreKHR {
     pub pointer: IdRef,
     pub object: IdRef,
     pub memory_layout: IdRef,
-    pub stride: Option<IdRef>,
-    pub memory_operand: Option<MemoryAccess>,
+    pub stride: ZeroOrOne<IdRef>,
+    pub memory_operand: ZeroOrOne<MemoryAccess>,
 }
 impl Inst for OpCooperativeMatrixStoreKHR {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_STORE_KHR;
@@ -20777,7 +20777,7 @@ pub struct OpCooperativeMatrixMulAddKHR {
     pub a: IdRef,
     pub b: IdRef,
     pub c: IdRef,
-    pub cooperative_matrix_operands: Option<CooperativeMatrixOperands>,
+    pub cooperative_matrix_operands: ZeroOrOne<CooperativeMatrixOperands>,
 }
 impl Inst for OpCooperativeMatrixMulAddKHR {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_MUL_ADD_KHR;
@@ -25238,8 +25238,8 @@ impl InstEncoding for OpHitObjectIsMissNV {
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpReorderThreadWithHitObjectNV {
     pub hit_object: IdRef,
-    pub hint: Option<IdRef>,
-    pub bits: Option<IdRef>,
+    pub hint: ZeroOrOne<IdRef>,
+    pub bits: ZeroOrOne<IdRef>,
 }
 impl Inst for OpReorderThreadWithHitObjectNV {
     const META: &InstMeta = &OP_REORDER_THREAD_WITH_HIT_OBJECT_NV;
@@ -25367,7 +25367,7 @@ pub struct OpImageSampleFootprintNV {
     pub coordinate: IdRef,
     pub granularity: IdRef,
     pub coarse: IdRef,
-    pub image_operands: Option<ImageOperands>,
+    pub image_operands: ZeroOrOne<ImageOperands>,
 }
 impl Inst for OpImageSampleFootprintNV {
     const META: &InstMeta = &OP_IMAGE_SAMPLE_FOOTPRINT_NV;
@@ -25489,8 +25489,8 @@ pub struct OpCooperativeVectorMatrixMulNV {
     pub k: IdRef,
     pub memory_layout: IdRef,
     pub transpose: IdRef,
-    pub matrix_stride: Option<IdRef>,
-    pub cooperative_matrix_operands: Option<CooperativeMatrixOperands>,
+    pub matrix_stride: ZeroOrOne<IdRef>,
+    pub cooperative_matrix_operands: ZeroOrOne<CooperativeMatrixOperands>,
 }
 impl Inst for OpCooperativeVectorMatrixMulNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_MATRIX_MUL_NV;
@@ -25583,7 +25583,7 @@ pub struct OpCooperativeVectorOuterProductAccumulateNV {
     pub b: IdRef,
     pub memory_layout: IdRef,
     pub matrix_interpretation: IdRef,
-    pub matrix_stride: Option<IdRef>,
+    pub matrix_stride: ZeroOrOne<IdRef>,
 }
 impl Inst for OpCooperativeVectorOuterProductAccumulateNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_OUTER_PRODUCT_ACCUMULATE_NV;
@@ -25709,8 +25709,8 @@ pub struct OpCooperativeVectorMatrixMulAddNV {
     pub k: IdRef,
     pub memory_layout: IdRef,
     pub transpose: IdRef,
-    pub matrix_stride: Option<IdRef>,
-    pub cooperative_matrix_operands: Option<CooperativeMatrixOperands>,
+    pub matrix_stride: ZeroOrOne<IdRef>,
+    pub cooperative_matrix_operands: ZeroOrOne<CooperativeMatrixOperands>,
 }
 impl Inst for OpCooperativeVectorMatrixMulAddNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_MATRIX_MUL_ADD_NV;
@@ -25861,7 +25861,7 @@ pub struct OpEmitMeshTasksEXT {
     pub group_count_x: IdRef,
     pub group_count_y: IdRef,
     pub group_count_z: IdRef,
-    pub payload: Option<IdRef>,
+    pub payload: ZeroOrOne<IdRef>,
 }
 impl Inst for OpEmitMeshTasksEXT {
     const META: &InstMeta = &OP_EMIT_MESH_TASKS_EXT;
@@ -26191,7 +26191,7 @@ pub struct OpCooperativeVectorLoadNV {
     pub id_result: OptionIdResult,
     pub pointer: IdRef,
     pub offset: IdRef,
-    pub memory_access: Option<MemoryAccess>,
+    pub memory_access: ZeroOrOne<MemoryAccess>,
 }
 impl Inst for OpCooperativeVectorLoadNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_LOAD_NV;
@@ -26249,7 +26249,7 @@ pub struct OpCooperativeVectorStoreNV {
     pub pointer: IdRef,
     pub offset: IdRef,
     pub object: IdRef,
-    pub memory_access: Option<MemoryAccess>,
+    pub memory_access: ZeroOrOne<MemoryAccess>,
 }
 impl Inst for OpCooperativeVectorStoreNV {
     const META: &InstMeta = &OP_COOPERATIVE_VECTOR_STORE_NV;
@@ -26641,8 +26641,8 @@ impl InstEncoding for OpHitObjectSetShaderBindingTableRecordIndexEXT {
 pub struct OpHitObjectReorderExecuteShaderEXT {
     pub hit_object: IdRef,
     pub payload: IdRef,
-    pub hint: Option<IdRef>,
-    pub bits: Option<IdRef>,
+    pub hint: ZeroOrOne<IdRef>,
+    pub bits: ZeroOrOne<IdRef>,
 }
 impl Inst for OpHitObjectReorderExecuteShaderEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_REORDER_EXECUTE_SHADER_EXT;
@@ -26705,8 +26705,8 @@ pub struct OpHitObjectTraceReorderExecuteEXT {
     pub ray_direction: IdRef,
     pub ray_tmax: IdRef,
     pub payload: IdRef,
-    pub hint: Option<IdRef>,
-    pub bits: Option<IdRef>,
+    pub hint: ZeroOrOne<IdRef>,
+    pub bits: ZeroOrOne<IdRef>,
 }
 impl Inst for OpHitObjectTraceReorderExecuteEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_TRACE_REORDER_EXECUTE_EXT;
@@ -26810,8 +26810,8 @@ pub struct OpHitObjectTraceMotionReorderExecuteEXT {
     pub ray_tmax: IdRef,
     pub current_time: IdRef,
     pub payload: IdRef,
-    pub hint: Option<IdRef>,
-    pub bits: Option<IdRef>,
+    pub hint: ZeroOrOne<IdRef>,
+    pub bits: ZeroOrOne<IdRef>,
 }
 impl Inst for OpHitObjectTraceMotionReorderExecuteEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_TRACE_MOTION_REORDER_EXECUTE_EXT;
@@ -26982,8 +26982,8 @@ impl InstEncoding for OpReorderThreadWithHintEXT {
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpReorderThreadWithHitObjectEXT {
     pub hit_object: IdRef,
-    pub hint: Option<IdRef>,
-    pub bits: Option<IdRef>,
+    pub hint: ZeroOrOne<IdRef>,
+    pub bits: ZeroOrOne<IdRef>,
 }
 impl Inst for OpReorderThreadWithHitObjectEXT {
     const META: &InstMeta = &OP_REORDER_THREAD_WITH_HIT_OBJECT_EXT;
@@ -28968,7 +28968,7 @@ pub struct OpCooperativeMatrixLoadNV {
     pub pointer: IdRef,
     pub stride: IdRef,
     pub column_major: IdRef,
-    pub memory_access: Option<MemoryAccess>,
+    pub memory_access: ZeroOrOne<MemoryAccess>,
 }
 impl Inst for OpCooperativeMatrixLoadNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_LOAD_NV;
@@ -29031,7 +29031,7 @@ pub struct OpCooperativeMatrixStoreNV {
     pub object: IdRef,
     pub stride: IdRef,
     pub column_major: IdRef,
-    pub memory_access: Option<MemoryAccess>,
+    pub memory_access: ZeroOrOne<MemoryAccess>,
 }
 impl Inst for OpCooperativeMatrixStoreNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_STORE_NV;
@@ -29441,7 +29441,7 @@ pub struct OpCooperativeMatrixPerElementOpNV {
     pub id_result: OptionIdResult,
     pub matrix: IdRef,
     pub func: IdRef,
-    pub operands: SmallVec<[IdRef; 4usize]>,
+    pub operands: ZeroOrMore<IdRef>,
 }
 impl Inst for OpCooperativeMatrixPerElementOpNV {
     const META: &InstMeta = &OP_COOPERATIVE_MATRIX_PER_ELEMENT_OP_NV;
@@ -29547,7 +29547,7 @@ pub struct OpTypeTensorViewNV {
     pub id_result: OptionIdResult,
     pub dim: IdRef,
     pub has_dimensions: IdRef,
-    pub p: SmallVec<[IdRef; 4usize]>,
+    pub p: ZeroOrMore<IdRef>,
 }
 impl Inst for OpTypeTensorViewNV {
     const META: &InstMeta = &OP_TYPE_TENSOR_VIEW_NV;
@@ -29644,7 +29644,7 @@ pub struct OpTensorLayoutSetDimensionNV {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub tensor_layout: IdRef,
-    pub dim: SmallVec<[IdRef; 4usize]>,
+    pub dim: ZeroOrMore<IdRef>,
 }
 impl Inst for OpTensorLayoutSetDimensionNV {
     const META: &InstMeta = &OP_TENSOR_LAYOUT_SET_DIMENSION_NV;
@@ -29698,7 +29698,7 @@ pub struct OpTensorLayoutSetStrideNV {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub tensor_layout: IdRef,
-    pub stride: SmallVec<[IdRef; 4usize]>,
+    pub stride: ZeroOrMore<IdRef>,
 }
 impl Inst for OpTensorLayoutSetStrideNV {
     const META: &InstMeta = &OP_TENSOR_LAYOUT_SET_STRIDE_NV;
@@ -29752,7 +29752,7 @@ pub struct OpTensorLayoutSliceNV {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub tensor_layout: IdRef,
-    pub operands: SmallVec<[IdRef; 4usize]>,
+    pub operands: ZeroOrMore<IdRef>,
 }
 impl Inst for OpTensorLayoutSliceNV {
     const META: &InstMeta = &OP_TENSOR_LAYOUT_SLICE_NV;
@@ -29904,7 +29904,7 @@ pub struct OpTensorViewSetDimensionNV {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub tensor_view: IdRef,
-    pub dim: SmallVec<[IdRef; 4usize]>,
+    pub dim: ZeroOrMore<IdRef>,
 }
 impl Inst for OpTensorViewSetDimensionNV {
     const META: &InstMeta = &OP_TENSOR_VIEW_SET_DIMENSION_NV;
@@ -29958,7 +29958,7 @@ pub struct OpTensorViewSetStrideNV {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub tensor_view: IdRef,
-    pub stride: SmallVec<[IdRef; 4usize]>,
+    pub stride: ZeroOrMore<IdRef>,
 }
 impl Inst for OpTensorViewSetStrideNV {
     const META: &InstMeta = &OP_TENSOR_VIEW_SET_STRIDE_NV;
@@ -30153,7 +30153,7 @@ pub struct OpTensorLayoutSetBlockSizeNV {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub tensor_layout: IdRef,
-    pub block_size: SmallVec<[IdRef; 4usize]>,
+    pub block_size: ZeroOrMore<IdRef>,
 }
 impl Inst for OpTensorLayoutSetBlockSizeNV {
     const META: &InstMeta = &OP_TENSOR_LAYOUT_SET_BLOCK_SIZE_NV;
@@ -30591,7 +30591,7 @@ pub struct OpRawAccessChainNV {
     pub byte_stride: IdRef,
     pub element_index: IdRef,
     pub byte_offset: IdRef,
-    pub raw_access_chain_operands: Option<RawAccessChainOperands>,
+    pub raw_access_chain_operands: ZeroOrOne<RawAccessChainOperands>,
 }
 impl Inst for OpRawAccessChainNV {
     const META: &InstMeta = &OP_RAW_ACCESS_CHAIN_NV;
@@ -32666,7 +32666,7 @@ impl InstEncoding for OpConstantFunctionPointerINTEL {
 pub struct OpFunctionPointerCallINTEL {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
-    pub operand_1: SmallVec<[IdRef; 4usize]>,
+    pub operand_1: ZeroOrMore<IdRef>,
 }
 impl Inst for OpFunctionPointerCallINTEL {
     const META: &InstMeta = &OP_FUNCTION_POINTER_CALL_INTEL;
@@ -32823,7 +32823,7 @@ pub struct OpAsmCallINTEL {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub asm: IdRef,
-    pub argument: SmallVec<[IdRef; 4usize]>,
+    pub argument: ZeroOrMore<IdRef>,
 }
 impl Inst for OpAsmCallINTEL {
     const META: &InstMeta = &OP_ASM_CALL_INTEL;
@@ -42635,7 +42635,7 @@ impl InstEncoding for OpArbitraryFloatPowNINTEL {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpLoopControlINTEL {
-    pub loop_control_parameters: SmallVec<[LiteralInteger; 4usize]>,
+    pub loop_control_parameters: ZeroOrMore<LiteralInteger>,
 }
 impl Inst for OpLoopControlINTEL {
     const META: &InstMeta = &OP_LOOP_CONTROL_INTEL;
@@ -42674,7 +42674,7 @@ impl InstEncoding for OpLoopControlINTEL {
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAliasDomainDeclINTEL {
     pub id_result: OptionIdResult,
-    pub name: Option<IdRef>,
+    pub name: ZeroOrOne<IdRef>,
 }
 impl Inst for OpAliasDomainDeclINTEL {
     const META: &InstMeta = &OP_ALIAS_DOMAIN_DECL_INTEL;
@@ -42717,7 +42717,7 @@ impl InstEncoding for OpAliasDomainDeclINTEL {
 pub struct OpAliasScopeDeclINTEL {
     pub id_result: OptionIdResult,
     pub alias_domain: IdRef,
-    pub name: Option<IdRef>,
+    pub name: ZeroOrOne<IdRef>,
 }
 impl Inst for OpAliasScopeDeclINTEL {
     const META: &InstMeta = &OP_ALIAS_SCOPE_DECL_INTEL;
@@ -42764,7 +42764,7 @@ impl InstEncoding for OpAliasScopeDeclINTEL {
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpAliasScopeListDeclINTEL {
     pub id_result: OptionIdResult,
-    pub id_ref: SmallVec<[IdRef; 4usize]>,
+    pub id_ref: ZeroOrMore<IdRef>,
 }
 impl Inst for OpAliasScopeListDeclINTEL {
     const META: &InstMeta = &OP_ALIAS_SCOPE_LIST_DECL_INTEL;
@@ -44876,7 +44876,7 @@ impl InstEncoding for OpTypeBufferSurfaceINTEL {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTypeStructContinuedINTEL {
-    pub id_ref: SmallVec<[IdRef; 4usize]>,
+    pub id_ref: ZeroOrMore<IdRef>,
 }
 impl Inst for OpTypeStructContinuedINTEL {
     const META: &InstMeta = &OP_TYPE_STRUCT_CONTINUED_INTEL;
@@ -44914,7 +44914,7 @@ impl InstEncoding for OpTypeStructContinuedINTEL {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConstantCompositeContinuedINTEL {
-    pub constituents: SmallVec<[IdRef; 4usize]>,
+    pub constituents: ZeroOrMore<IdRef>,
 }
 impl Inst for OpConstantCompositeContinuedINTEL {
     const META: &InstMeta = &OP_CONSTANT_COMPOSITE_CONTINUED_INTEL;
@@ -44952,7 +44952,7 @@ impl InstEncoding for OpConstantCompositeContinuedINTEL {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSpecConstantCompositeContinuedINTEL {
-    pub constituents: SmallVec<[IdRef; 4usize]>,
+    pub constituents: ZeroOrMore<IdRef>,
 }
 impl Inst for OpSpecConstantCompositeContinuedINTEL {
     const META: &InstMeta = &OP_SPEC_CONSTANT_COMPOSITE_CONTINUED_INTEL;
@@ -44992,7 +44992,7 @@ impl InstEncoding for OpSpecConstantCompositeContinuedINTEL {
 pub struct OpCompositeConstructContinuedINTEL {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
-    pub constituents: SmallVec<[IdRef; 4usize]>,
+    pub constituents: ZeroOrMore<IdRef>,
 }
 impl Inst for OpCompositeConstructContinuedINTEL {
     const META: &InstMeta = &OP_COMPOSITE_CONSTRUCT_CONTINUED_INTEL;
@@ -45354,7 +45354,7 @@ impl InstEncoding for OpTaskSequenceCreateALTERA {
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTaskSequenceAsyncALTERA {
     pub sequence: IdRef,
-    pub arguments: SmallVec<[IdRef; 4usize]>,
+    pub arguments: ZeroOrMore<IdRef>,
 }
 impl Inst for OpTaskSequenceAsyncALTERA {
     const META: &InstMeta = &OP_TASK_SEQUENCE_ASYNC_ALTERA;
@@ -45519,7 +45519,7 @@ impl InstEncoding for OpTypeTaskSequenceALTERA {
 pub struct OpSubgroupBlockPrefetchINTEL {
     pub ptr: IdRef,
     pub num_bytes: IdRef,
-    pub memory_access: Option<MemoryAccess>,
+    pub memory_access: ZeroOrOne<MemoryAccess>,
 }
 impl Inst for OpSubgroupBlockPrefetchINTEL {
     const META: &InstMeta = &OP_SUBGROUP_BLOCK_PREFETCH_INTEL;
@@ -45987,7 +45987,7 @@ pub struct OpSubgroupMatrixMultiplyAccumulateINTEL {
     pub matrix_a: IdRef,
     pub matrix_b: IdRef,
     pub matrix_c: IdRef,
-    pub matrix_multiply_accumulate_operands: Option<MatrixMultiplyAccumulateOperands>,
+    pub matrix_multiply_accumulate_operands: ZeroOrOne<MatrixMultiplyAccumulateOperands>,
 }
 impl Inst for OpSubgroupMatrixMultiplyAccumulateINTEL {
     const META: &InstMeta = &OP_SUBGROUP_MATRIX_MULTIPLY_ACCUMULATE_INTEL;
@@ -46215,7 +46215,7 @@ pub struct OpConditionalEntryPointINTEL {
     pub execution_model: ExecutionModel,
     pub entry_point: IdRef,
     pub name: LiteralString,
-    pub interface: SmallVec<[IdRef; 4usize]>,
+    pub interface: ZeroOrMore<IdRef>,
 }
 impl Inst for OpConditionalEntryPointINTEL {
     const META: &InstMeta = &OP_CONDITIONAL_ENTRY_POINT_INTEL;
@@ -46317,7 +46317,7 @@ pub struct OpSpecConstantTargetINTEL {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
     pub target: LiteralInteger,
-    pub features: SmallVec<[LiteralInteger; 4usize]>,
+    pub features: ZeroOrMore<LiteralInteger>,
 }
 impl Inst for OpSpecConstantTargetINTEL {
     const META: &InstMeta = &OP_SPEC_CONSTANT_TARGET_INTEL;
@@ -46434,7 +46434,7 @@ impl InstEncoding for OpSpecConstantArchitectureINTEL {
 pub struct OpSpecConstantCapabilitiesINTEL {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
-    pub capabilities: SmallVec<[Capability; 4usize]>,
+    pub capabilities: ZeroOrMore<Capability>,
 }
 impl Inst for OpSpecConstantCapabilitiesINTEL {
     const META: &InstMeta = &OP_SPEC_CONSTANT_CAPABILITIES_INTEL;
@@ -46483,7 +46483,7 @@ impl InstEncoding for OpSpecConstantCapabilitiesINTEL {
 pub struct OpConditionalCopyObjectINTEL {
     pub id_result_type: IdResultType,
     pub id_result: OptionIdResult,
-    pub id_ref: SmallVec<[IdRef; 4usize]>,
+    pub id_ref: ZeroOrMore<IdRef>,
 }
 impl Inst for OpConditionalCopyObjectINTEL {
     const META: &InstMeta = &OP_CONDITIONAL_COPY_OBJECT_INTEL;
