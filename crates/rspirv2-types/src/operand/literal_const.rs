@@ -4,7 +4,7 @@ use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandDisContext, OperandEncoding};
 use anstyle::AnsiColor;
 use smallvec::SmallVec;
-use std::fmt::Formatter;
+use std::fmt::{Display, Formatter};
 
 pub const OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER: OperandKind = OperandKind {
     name: "LiteralContextDependentNumber",
@@ -184,23 +184,38 @@ unsafe impl OperandEncoding for LiteralConst {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         let color = ctx.color(AnsiColor::Red.on_default());
-        let fmt = ctx
+        write!(f, " {color}{}{color:#}", self.fmt_value(ctx))
+    }
+}
+
+impl LiteralConst {
+    pub fn fmt_value<'a>(&'a self, ctx: &'a OperandDisContext<'a>) -> FormattedValue<'a> {
+        FormattedValue(self, ctx)
+    }
+}
+
+pub struct FormattedValue<'a>(&'a LiteralConst, &'a OperandDisContext<'a>);
+
+impl Display for FormattedValue<'_> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let fmt = self
+            .1
             .id_result_type
-            .and_then(|ty| ctx.id_to_const_fmt.get(&ty.0))
+            .and_then(|ty| self.1.id_to_const_fmt.get(&ty.0))
             .copied()
             .unwrap_or_default();
-        match (self.0.len(), fmt) {
-            (1, ConstFmt::Unsigned) => write!(f, " {color}{}{color:#}", self.as_u32().unwrap()),
-            (2, ConstFmt::Unsigned) => write!(f, " {color}{}{color:#}", self.as_u64().unwrap()),
-            (1, ConstFmt::Signed) => write!(f, " {color}{}{color:#}", self.as_i32().unwrap()),
-            (2, ConstFmt::Signed) => write!(f, " {color}{}{color:#}", self.as_i64().unwrap()),
-            (1, ConstFmt::LowerHex) => write!(f, " {color}{:x}{color:#}", self.as_u32().unwrap()),
-            (2, ConstFmt::LowerHex) => write!(f, " {color}{:x}{color:#}", self.as_u64().unwrap()),
-            (1, ConstFmt::UpperHex) => write!(f, " {color}{:X}{color:#}", self.as_u32().unwrap()),
-            (2, ConstFmt::UpperHex) => write!(f, " {color}{:X}{color:#}", self.as_u64().unwrap()),
-            (1, ConstFmt::Float) => write!(f, " {color}{}{color:#}", self.as_f32().unwrap()),
-            (2, ConstFmt::Float) => write!(f, " {color}{}{color:#}", self.as_f64().unwrap()),
-            (_, _) => write!(f, " {color}{:?}{color:#}", self.0.as_slice()),
+        match (self.0.0.len(), fmt) {
+            (1, ConstFmt::Unsigned) => write!(f, "{}", self.0.as_u32().unwrap()),
+            (2, ConstFmt::Unsigned) => write!(f, "{}", self.0.as_u64().unwrap()),
+            (1, ConstFmt::Signed) => write!(f, "{}", self.0.as_i32().unwrap()),
+            (2, ConstFmt::Signed) => write!(f, "{}", self.0.as_i64().unwrap()),
+            (1, ConstFmt::LowerHex) => write!(f, "{:x}", self.0.as_u32().unwrap()),
+            (2, ConstFmt::LowerHex) => write!(f, "{:x}", self.0.as_u64().unwrap()),
+            (1, ConstFmt::UpperHex) => write!(f, "{:X}", self.0.as_u32().unwrap()),
+            (2, ConstFmt::UpperHex) => write!(f, "{:X}", self.0.as_u64().unwrap()),
+            (1, ConstFmt::Float) => write!(f, "{}", self.0.as_f32().unwrap()),
+            (2, ConstFmt::Float) => write!(f, "{}", self.0.as_f64().unwrap()),
+            (_, _) => write!(f, "{:?}", self.0.0.as_slice()),
         }
     }
 }

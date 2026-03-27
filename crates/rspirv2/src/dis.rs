@@ -1,20 +1,40 @@
+use crate::core::inst::{
+    OpConstant, OpConstantFalse, OpConstantNull, OpConstantTrue, OpTypeBool, OpTypeFloat,
+    OpTypeInt, OpTypePointer, OpTypeStruct, OpTypeVector, OpTypeVoid,
+};
 use crate::core::inst_set::CoreInstSet;
-use crate::core::inst_set::CoreInstSet::{TypeFloat, TypeInt};
+use crate::core::preamble::OpTypeRuntimeArray;
 pub use rspirv2_types::dis::*;
-use rspirv2_types::operand::ConstFmt;
+use rspirv2_types::operand::{ConstFmt, OperandDisContext};
 use rspirv2_types::slice::{RawInstSlice, SkipDecodeErrorIteratorExt, TryDecodeIteratorExt};
 
 impl InstSetDisCtx for CoreInstSet {
     fn add_context(slice: &RawInstSlice, ctx: &mut DisContext) {
         for inst in slice.iter().try_decode::<CoreInstSet>().skip_errors() {
             match inst {
-                TypeFloat(inst) => {
-                    ctx.id_to_const_fmt
-                        .insert(inst.id_result.unwrap(), ConstFmt::Float);
+                Self::Name(inst) => {
+                    if let Some(name) = escape_id_name(&inst.name.0) {
+                        ctx.add_id_to_name(inst.target.0, IdName::ExplicitName(name));
+                    }
                 }
-                TypeInt(inst) => {
+                Self::TypeVoid(inst) => {
+                    let def = inst.id_result.unwrap();
+                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                }
+                Self::TypeBool(inst) => {
+                    let def = inst.id_result.unwrap();
+                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                }
+                Self::TypeFloat(inst) => {
+                    let def = inst.id_result.unwrap();
+                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                    ctx.id_to_const_fmt.insert(def, ConstFmt::Float);
+                }
+                Self::TypeInt(inst) => {
+                    let def = inst.id_result.unwrap();
+                    ctx.add_id_to_name(def, inst.derive_name(ctx));
                     ctx.id_to_const_fmt.insert(
-                        inst.id_result.unwrap(),
+                        def,
                         if inst.signedness.to_bool() {
                             ConstFmt::Signed
                         } else {
@@ -22,8 +42,155 @@ impl InstSetDisCtx for CoreInstSet {
                         },
                     );
                 }
+                Self::TypeVector(inst) => {
+                    let def = inst.id_result.unwrap();
+                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                }
+                Self::TypeRuntimeArray(inst) => {
+                    let def = inst.id_result.unwrap();
+                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                }
+                Self::TypePointer(inst) => {
+                    let def = inst.id_result.unwrap();
+                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                }
+                Self::TypeStruct(inst) => {
+                    let def = inst.id_result.unwrap();
+                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                }
+                Self::Constant(inst) => {
+                    let def = inst.id_result.unwrap();
+                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                }
+                Self::ConstantNull(inst) => {
+                    let def = inst.id_result.unwrap();
+                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                }
+                Self::ConstantFalse(inst) => {
+                    let def = inst.id_result.unwrap();
+                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                }
+                Self::ConstantTrue(inst) => {
+                    let def = inst.id_result.unwrap();
+                    ctx.add_id_to_name(def, inst.derive_name(ctx));
+                }
                 _ => {}
             }
         }
+    }
+}
+
+impl OpTypeVoid {
+    pub fn derive_name(&self, _ctx: &DisContext) -> IdName {
+        IdName::DerivedName("void".to_string())
+    }
+}
+
+impl OpTypeBool {
+    pub fn derive_name(&self, _ctx: &DisContext) -> IdName {
+        IdName::DerivedName("bool".to_string())
+    }
+}
+
+impl OpTypeInt {
+    pub fn derive_name(&self, ctx: &DisContext) -> IdName {
+        let signed = self.signedness.to_bool();
+        let width = self.width.to_u32();
+        IdName::DerivedName(match ctx.type_naming {
+            TypeNaming::Rust => {
+                format!("{}{width}", if signed { "i" } else { "u" })
+            }
+            TypeNaming::C => match (signed, width) {
+                (false, 32) => "uint".to_string(),
+                (true, 32) => "int".to_string(),
+                (false, _) => format!("uint{width}_t"),
+                (true, _) => format!("int{width}_t"),
+            },
+        })
+    }
+}
+
+impl OpTypeFloat {
+    pub fn derive_name(&self, ctx: &DisContext) -> IdName {
+        let width = self.width.to_u32();
+        IdName::DerivedName(match ctx.type_naming {
+            TypeNaming::Rust => {
+                format!("f{width}")
+            }
+            TypeNaming::C => match width {
+                32 => "float".to_string(),
+                64 => "double".to_string(),
+                _ => format!("float{width}_t"),
+            },
+        })
+    }
+}
+
+impl OpTypeVector {
+    pub fn derive_name(&self, ctx: &DisContext) -> IdName {
+        let ty_name = ctx.id_to_name(self.component_type.0);
+        let count = self.component_count.to_u32();
+        IdName::DerivedName(format!("v{count}{ty_name}"))
+    }
+}
+
+impl OpTypeRuntimeArray {
+    pub fn derive_name(&self, ctx: &DisContext) -> IdName {
+        let ty_name = ctx.id_to_name(self.element_type.0);
+        IdName::DerivedName(format!("_runtimearr_{ty_name}"))
+    }
+}
+
+impl OpTypePointer {
+    pub fn derive_name(&self, ctx: &DisContext) -> IdName {
+        let ty_name = ctx.id_to_name(self.ty.0);
+        let storage_class = self.storage_class;
+        IdName::DerivedName(format!("_ptr_{storage_class:?}_{ty_name}"))
+    }
+}
+
+impl OpTypeStruct {
+    pub fn derive_name(&self, _ctx: &DisContext) -> IdName {
+        IdName::DerivedName(format!("_struct_{}", self.id_result.unwrap().0.0))
+    }
+}
+
+impl OpConstant {
+    pub fn derive_name(&self, ctx: &DisContext) -> IdName {
+        let ty_name = ctx.id_to_name(self.id_result_type.0);
+        let operand_ctx = OperandDisContext {
+            ctx,
+            id_result: self.id_result,
+            id_result_type: Some(self.id_result_type),
+        };
+        let value = self.value.fmt_value(&operand_ctx).to_string();
+        let value = value
+            .chars()
+            .map(|c| match c {
+                '0'..='9' => c,
+                '-' => 'n',
+                _ => '_',
+            })
+            .collect::<String>();
+        IdName::DerivedName(format!("{ty_name}_{value}"))
+    }
+}
+
+impl OpConstantNull {
+    pub fn derive_name(&self, ctx: &DisContext) -> IdName {
+        let ty_name = ctx.id_to_name(self.id_result_type.0);
+        IdName::DerivedName(format!("{ty_name}_0"))
+    }
+}
+
+impl OpConstantFalse {
+    pub fn derive_name(&self, _ctx: &DisContext) -> IdName {
+        IdName::DerivedName("bool_false".to_string())
+    }
+}
+
+impl OpConstantTrue {
+    pub fn derive_name(&self, _ctx: &DisContext) -> IdName {
+        IdName::DerivedName("bool_true".to_string())
     }
 }
