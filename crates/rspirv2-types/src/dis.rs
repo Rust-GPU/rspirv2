@@ -351,7 +351,10 @@ pub fn escape_cow(str: Cow<'_, str>, map: impl Fn(char) -> char) -> Cow<'_, str>
     if no_escape_needed {
         str
     } else {
-        Cow::Owned(str.chars().map(map).collect())
+        // We can assume names are (mostly) ascii, so this capacity should match. If not, it'll just be one realloc.
+        let mut ret = String::with_capacity(str.len());
+        ret.extend(str.chars().map(map));
+        Cow::Owned(ret)
     }
 }
 
