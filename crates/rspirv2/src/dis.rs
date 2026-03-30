@@ -7,6 +7,7 @@ use crate::core::preamble::OpTypeRuntimeArray;
 pub use rspirv2_types::dis::*;
 use rspirv2_types::operand::{ConstFmt, OperandDisContext};
 use rspirv2_types::slice::{RawInstSlice, SkipDecodeErrorIteratorExt, TryDecodeIteratorExt};
+use std::borrow::Cow;
 
 impl InstSetDisCtx for CoreInstSet {
     fn add_context(slice: &RawInstSlice, ctx: &mut DisContext) {
@@ -14,8 +15,8 @@ impl InstSetDisCtx for CoreInstSet {
         for inst in slice.iter().try_decode::<CoreInstSet>().skip_errors() {
             match inst {
                 Self::Name(inst) => {
-                    if let Some(name) = escape_id_name(&inst.name.0) {
-                        ctx.add_id_to_name(inst.target.0, IdName::ExplicitName(name));
+                    if let Some(name) = escape_id_name(Cow::Owned(inst.name.0)) {
+                        ctx.add_id_to_name(inst.target.0, IdName::ExplicitName(name.into_owned()));
                     }
                 }
                 Self::TypeVoid(inst) => ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx)),
@@ -152,14 +153,12 @@ impl OpConstant {
             id_result_type: Some(self.id_result_type),
         };
         let value = self.value.fmt_value(&operand_ctx).to_string();
-        let value = value
-            .chars()
-            .map(|c| match c {
-                '0'..='9' => c,
-                '-' => 'n',
-                _ => '_',
-            })
-            .collect::<String>();
+        let value = escape_cow(Cow::Owned(value), |c| match c {
+            '0'..='9' => c,
+            '-' => 'n',
+            _ => '_',
+        })
+        .into_owned();
         IdName::DerivedName(format!("{ty_name}_{value}"))
     }
 }
