@@ -10,7 +10,7 @@ pub struct Args {
     path: PathBuf,
     /// Emit disassembly like as if it was emitted by this tool
     #[arg(short, long, default_value_t)]
-    like: Like,
+    profile: Profile,
     /// color
     #[clap(long, default_value_t)]
     color: clap::ColorChoice,
@@ -20,14 +20,14 @@ pub struct Args {
 }
 
 #[derive(Clone, Debug, Default, ValueEnum)]
-pub enum Like {
+pub enum Profile {
     #[default]
     Default,
     Rspirv,
     SpirvTools,
 }
 
-impl std::fmt::Display for Like {
+impl std::fmt::Display for Profile {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         self.to_possible_value()
             .expect("no values are skipped")
@@ -76,10 +76,10 @@ impl Args {
     }
 
     pub fn to_dis_opts(&self) -> anyhow::Result<DisOptions> {
-        let mut opt = match self.like {
-            Like::Default => DisOptions::default(),
-            Like::Rspirv => DisOptions::like_rspirv(),
-            Like::SpirvTools => DisOptions::like_spirv_tools(),
+        let mut opt = match self.profile {
+            Profile::Default => DisOptions::default(),
+            Profile::Rspirv => DisOptions::like_rspirv(),
+            Profile::SpirvTools => DisOptions::like_spirv_tools(),
         };
         opt.color = matches!(self.color, clap::ColorChoice::Always);
         Ok(opt)
@@ -107,7 +107,7 @@ pub mod test {
     fn test_dis_reference_default() -> anyhow::Result<()> {
         test_dis_reference(
             expect_file!["../../../spv/dis_reference.rspirv2"],
-            Like::Default,
+            Profile::Default,
             false,
         )
     }
@@ -116,7 +116,7 @@ pub mod test {
     fn test_dis_reference_default_be() -> anyhow::Result<()> {
         test_dis_reference(
             expect_file!["../../../spv/dis_reference.rspirv2"],
-            Like::Default,
+            Profile::Default,
             true,
         )
     }
@@ -125,7 +125,7 @@ pub mod test {
     fn test_dis_reference_rspirv() -> anyhow::Result<()> {
         test_dis_reference(
             expect_file!["../../../spv/dis_reference.rspirv_like"],
-            Like::Rspirv,
+            Profile::Rspirv,
             false,
         )
     }
@@ -134,7 +134,7 @@ pub mod test {
     fn test_dis_reference_rspirv_be() -> anyhow::Result<()> {
         test_dis_reference(
             expect_file!["../../../spv/dis_reference.rspirv_like"],
-            Like::Rspirv,
+            Profile::Rspirv,
             true,
         )
     }
@@ -143,7 +143,7 @@ pub mod test {
     fn test_dis_reference_spirv_tools() -> anyhow::Result<()> {
         test_dis_reference(
             expect_file!["../../../spv/dis_reference.spirv_tools_like"],
-            Like::SpirvTools,
+            Profile::SpirvTools,
             false,
         )
     }
@@ -152,19 +152,19 @@ pub mod test {
     fn test_dis_reference_spirv_tools_be() -> anyhow::Result<()> {
         test_dis_reference(
             expect_file!["../../../spv/dis_reference.spirv_tools_like"],
-            Like::SpirvTools,
+            Profile::SpirvTools,
             true,
         )
     }
 
     fn test_dis_reference(
         expect: ExpectFile,
-        like: Like,
+        profile: Profile,
         module_swap_bytes: bool,
     ) -> anyhow::Result<()> {
         let args = Args {
             path: spv("dis_reference"),
-            like,
+            profile,
             module_swap_bytes,
             color: clap::ColorChoice::Never,
         };
