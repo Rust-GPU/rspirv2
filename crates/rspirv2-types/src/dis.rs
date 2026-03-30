@@ -5,6 +5,7 @@ use crate::operand::{ConstFmt, IdResult, LiteralStringEscape};
 use crate::slice::{InstSlice, RawInstSlice};
 use anstyle::Style;
 use rustc_hash::FxHashMap;
+use std::borrow::Cow;
 use std::cell::Cell;
 use std::collections::hash_map::Entry;
 use std::fmt::{Display, Formatter};
@@ -329,21 +330,28 @@ impl<'a, ISA: InstSetDisCtx> Display for DisInstSlice<'a, ISA> {
 }
 
 #[allow(clippy::match_same_arms)]
-pub fn escape_id_name(str: &str) -> Option<String> {
+pub fn escape_id_name(str: Cow<'_, str>) -> Option<Cow<'_, str>> {
     profiling::function_scope!();
-    let escaped = str
-        .chars()
-        .map(|c| match c {
-            'A'..='Z' => c,
-            'a'..='z' => c,
-            '0'..='9' => c,
-            _ => '_',
-        })
-        .collect::<String>();
-    if escaped.chars().all(|c| c == ' ') {
+    let escaped = escape_cow(str, |c| match c {
+        'A'..='Z' => c,
+        'a'..='z' => c,
+        '0'..='9' => c,
+        _ => '_',
+    });
+    if escaped.chars().all(|c| c == '_') {
         None
     } else {
         Some(escaped)
+    }
+}
+
+pub fn escape_cow(str: Cow<'_, str>, map: impl Fn(char) -> char) -> Cow<'_, str> {
+    profiling::function_scope!();
+    let no_escape_needed = str.chars().all(|c| map(c) == c);
+    if no_escape_needed {
+        str
+    } else {
+        Cow::Owned(str.chars().map(map).collect())
     }
 }
 
