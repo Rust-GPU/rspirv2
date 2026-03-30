@@ -345,6 +345,7 @@ pub fn escape_id_name(str: Cow<'_, str>) -> Option<Cow<'_, str>> {
     }
 }
 
+/// escape chars individually with another char
 pub fn escape_cow(str: Cow<'_, str>, map: impl Fn(char) -> char) -> Cow<'_, str> {
     profiling::function_scope!();
     let no_escape_needed = str.chars().all(|c| map(c) == c);
@@ -355,6 +356,45 @@ pub fn escape_cow(str: Cow<'_, str>, map: impl Fn(char) -> char) -> Cow<'_, str>
         let mut ret = String::with_capacity(str.len());
         ret.extend(str.chars().map(map));
         Cow::Owned(ret)
+    }
+}
+
+/// escape chars individually with a `&str` that may contain multiple chars
+pub fn escape_cow_str(str: Cow<'_, str>, map: impl Fn(&str) -> &str) -> Cow<'_, str> {
+    profiling::function_scope!();
+
+    let no_escape_needed = StrCharIter::new(&str).all(|c| map(c) == c);
+    if no_escape_needed {
+        str
+    } else {
+        // We can assume names are (mostly) ascii, so this capacity should match. If not, it'll just be one realloc.
+        let mut ret = String::with_capacity(str.len());
+        ret.extend(StrCharIter::new(&str).map(map));
+        Cow::Owned(ret)
+    }
+}
+
+/// Like a [`str::chars`] Iterator, but yields `&str` of the original `&str` instead
+pub struct StrCharIter<'a> {
+    str: &'a str,
+}
+
+impl<'a> StrCharIter<'a> {
+    pub fn new(str: &'a str) -> Self {
+        Self {
+            str,
+        }
+    }
+}
+
+impl<'a> Iterator for StrCharIter<'a> {
+    type Item = &'a str;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let len = self.str.chars().next()?.len_utf8();
+        let (char_str, remaining) = self.str.split_at(len);
+        self.str = remaining;
+        Some(char_str)
     }
 }
 

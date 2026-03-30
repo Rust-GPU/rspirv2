@@ -1,5 +1,6 @@
 use crate::Word;
 use crate::binary::{DecodeError, DecodeErrorKind, EncodeError, OperandReader, WordWriter};
+use crate::dis::escape_cow_str;
 use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandDisContext, OperandEncoding};
 use anstyle::AnsiColor;
@@ -78,7 +79,7 @@ unsafe impl OperandEncoding for LiteralString {
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         let color = ctx.color(AnsiColor::Green.on_default());
-        let str = ctx.literal_string_escape.escape(&self.0);
+        let str = ctx.literal_string_escape.escape(Cow::Borrowed(&self.0));
         write!(f, " {color}\"{str}\"{color:#}")
     }
 }
@@ -96,18 +97,21 @@ pub enum LiteralStringEscape {
 }
 
 impl LiteralStringEscape {
-    pub fn escape<'a>(&self, str: &'a str) -> Cow<'a, str> {
+    pub fn escape<'a>(&self, str: Cow<'a, str>) -> Cow<'a, str> {
         profiling::function_scope!();
         match self {
-            LiteralStringEscape::Noop => str.into(),
-            LiteralStringEscape::EscapeNewlines => str
-                .replace("\\", "\\\\")
-                .replace("\"", "\\\"")
-                .replace("\n", "\\n")
-                .into(),
-            LiteralStringEscape::MultiLine => {
-                str.replace("\\", "\\\\").replace("\"", "\\\"").into()
-            }
+            LiteralStringEscape::Noop => str,
+            LiteralStringEscape::EscapeNewlines => escape_cow_str(str, |s| match s {
+                "\\" => "\\\\",
+                "\"" => "\\\"",
+                "\n" => "\\n",
+                e => e,
+            }),
+            LiteralStringEscape::MultiLine => escape_cow_str(str, |s| match s {
+                "\\" => "\\\\",
+                "\"" => "\\\"",
+                e => e,
+            }),
         }
     }
 }
