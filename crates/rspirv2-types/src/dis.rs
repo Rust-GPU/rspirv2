@@ -381,9 +381,7 @@ pub struct StrCharIter<'a> {
 
 impl<'a> StrCharIter<'a> {
     pub fn new(str: &'a str) -> Self {
-        Self {
-            str,
-        }
+        Self { str }
     }
 }
 
