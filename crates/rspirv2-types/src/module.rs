@@ -1,4 +1,4 @@
-use crate::binary::DecodeError;
+use crate::binary::{DecodeError, WordWriter};
 use crate::inst::InstEncoding;
 use crate::vec::InstVec;
 use crate::{Word, cast_words_to_ne_bytes};
@@ -224,6 +224,23 @@ impl<ISA: InstEncoding> Module<ISA> {
             }),
             Err(e) => Err(e),
         }
+    }
+
+    /// Write this module including the header to a [`WordWriter`]
+    pub fn write_words(&self, writer: &mut impl WordWriter) {
+        if let Some(header) = self.header {
+            writer.write_iter(header.to_array());
+        }
+        writer.write_iter(self.inst.as_words().iter().copied());
+    }
+
+    /// Write this module including the header to a [`std::io::Write`], which could be a [`std::fs::File`]
+    pub fn write_bytes(&self, writer: &mut impl std::io::Write) -> std::io::Result<()> {
+        if let Some(header) = self.header {
+            writer.write_all(cast_words_to_ne_bytes(&header.to_array()))?;
+        }
+        writer.write_all(cast_words_to_ne_bytes(self.inst.as_words()))?;
+        Ok(())
     }
 }
 
