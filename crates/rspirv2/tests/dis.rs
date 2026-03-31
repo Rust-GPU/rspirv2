@@ -1,7 +1,7 @@
 use expect_test::expect;
 use rspirv2::core::inst::{OpLoad, OpPhi, OpSwitch, OpTypeFloat};
 use rspirv2::core::operands::{CooperativeMatrixReduce, Dim};
-use rspirv2_types::binary::{IdResultAlloc};
+use rspirv2_types::binary::IdResultAlloc;
 use rspirv2_types::dis::{DisContext, DisOptions};
 use rspirv2_types::inst::InstEncoding;
 use rspirv2_types::operand::{

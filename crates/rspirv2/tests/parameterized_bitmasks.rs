@@ -2,9 +2,7 @@ use expect_test::expect;
 use rspirv2::core::operands::ImageOperands;
 use rspirv2_types::Word;
 use rspirv2_types::dis::{DisContext, DisOptions};
-use rspirv2_types::operand::{
-    IdRef, IdResult, OperandDisContext, OperandEncoding,
-};
+use rspirv2_types::operand::{IdRef, IdResult, OperandDisContext, OperandEncoding};
 
 #[test]
 pub fn test_param_bitmask() -> anyhow::Result<()> {
@@ -33,13 +31,16 @@ pub fn test_param_bitmask() -> anyhow::Result<()> {
 
     // enabling them again changes params
     operand.set_nontemporal(true);
-    expect![" Bias|Lod|Grad|Nontemporal|Offsets %1 %2 %3 %4 %5"].assert_eq(&operand.dis(&ctx).to_string());
+    expect![" Bias|Lod|Grad|Nontemporal|Offsets %1 %2 %3 %4 %5"]
+        .assert_eq(&operand.dis(&ctx).to_string());
     operand.set_grad(Some((IdRef(IdResult(Word(30))), IdRef(IdResult(Word(40))))));
-    expect![" Bias|Lod|Grad|Nontemporal|Offsets %1 %2 %30 %40 %5"].assert_eq(&operand.dis(&ctx).to_string());
+    expect![" Bias|Lod|Grad|Nontemporal|Offsets %1 %2 %30 %40 %5"]
+        .assert_eq(&operand.dis(&ctx).to_string());
 
     // disable 5 bits in random order
     operand.set_lod(None);
-    expect![" Bias|Grad|Nontemporal|Offsets %1 %30 %40 %5"].assert_eq(&operand.dis(&ctx).to_string());
+    expect![" Bias|Grad|Nontemporal|Offsets %1 %30 %40 %5"]
+        .assert_eq(&operand.dis(&ctx).to_string());
     operand.set_nontemporal(false);
     expect![" Bias|Grad|Offsets %1 %30 %40 %5"].assert_eq(&operand.dis(&ctx).to_string());
     operand.set_grad(None);
