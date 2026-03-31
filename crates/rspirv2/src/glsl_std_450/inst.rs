@@ -6,9 +6,7 @@ pub struct Round {
 impl Inst for Round {
     const META: &InstMeta = &ROUND;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Round {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -42,9 +40,7 @@ pub struct RoundEven {
 impl Inst for RoundEven {
     const META: &InstMeta = &ROUND_EVEN;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for RoundEven {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -78,9 +74,7 @@ pub struct Trunc {
 impl Inst for Trunc {
     const META: &InstMeta = &TRUNC;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Trunc {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -114,9 +108,7 @@ pub struct FAbs {
 impl Inst for FAbs {
     const META: &InstMeta = &F_ABS;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FAbs {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -150,9 +142,7 @@ pub struct SAbs {
 impl Inst for SAbs {
     const META: &InstMeta = &S_ABS;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for SAbs {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -186,9 +176,7 @@ pub struct FSign {
 impl Inst for FSign {
     const META: &InstMeta = &F_SIGN;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FSign {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -222,9 +210,7 @@ pub struct SSign {
 impl Inst for SSign {
     const META: &InstMeta = &S_SIGN;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for SSign {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -258,9 +244,7 @@ pub struct Floor {
 impl Inst for Floor {
     const META: &InstMeta = &FLOOR;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Floor {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -294,9 +278,7 @@ pub struct Ceil {
 impl Inst for Ceil {
     const META: &InstMeta = &CEIL;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Ceil {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -330,9 +312,7 @@ pub struct Fract {
 impl Inst for Fract {
     const META: &InstMeta = &FRACT;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Fract {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -366,9 +346,7 @@ pub struct Radians {
 impl Inst for Radians {
     const META: &InstMeta = &RADIANS;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Radians {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -407,9 +385,7 @@ pub struct Degrees {
 impl Inst for Degrees {
     const META: &InstMeta = &DEGREES;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Degrees {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -448,9 +424,7 @@ pub struct Sin {
 impl Inst for Sin {
     const META: &InstMeta = &SIN;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Sin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -484,9 +458,7 @@ pub struct Cos {
 impl Inst for Cos {
     const META: &InstMeta = &COS;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Cos {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -520,9 +492,7 @@ pub struct Tan {
 impl Inst for Tan {
     const META: &InstMeta = &TAN;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Tan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -556,9 +526,7 @@ pub struct Asin {
 impl Inst for Asin {
     const META: &InstMeta = &ASIN;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Asin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -592,9 +560,7 @@ pub struct Acos {
 impl Inst for Acos {
     const META: &InstMeta = &ACOS;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Acos {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -628,9 +594,7 @@ pub struct Atan {
 impl Inst for Atan {
     const META: &InstMeta = &ATAN;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Atan {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -669,9 +633,7 @@ pub struct Sinh {
 impl Inst for Sinh {
     const META: &InstMeta = &SINH;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Sinh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -705,9 +667,7 @@ pub struct Cosh {
 impl Inst for Cosh {
     const META: &InstMeta = &COSH;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Cosh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -741,9 +701,7 @@ pub struct Tanh {
 impl Inst for Tanh {
     const META: &InstMeta = &TANH;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Tanh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -777,9 +735,7 @@ pub struct Asinh {
 impl Inst for Asinh {
     const META: &InstMeta = &ASINH;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Asinh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -813,9 +769,7 @@ pub struct Acosh {
 impl Inst for Acosh {
     const META: &InstMeta = &ACOSH;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Acosh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -849,9 +803,7 @@ pub struct Atanh {
 impl Inst for Atanh {
     const META: &InstMeta = &ATANH;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Atanh {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -886,9 +838,7 @@ pub struct Atan2 {
 impl Inst for Atan2 {
     const META: &InstMeta = &ATAN_2;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Atan2 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -931,9 +881,7 @@ pub struct Pow {
 impl Inst for Pow {
     const META: &InstMeta = &POW;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Pow {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -975,9 +923,7 @@ pub struct Exp {
 impl Inst for Exp {
     const META: &InstMeta = &EXP;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Exp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1011,9 +957,7 @@ pub struct Log {
 impl Inst for Log {
     const META: &InstMeta = &LOG;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Log {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1047,9 +991,7 @@ pub struct Exp2 {
 impl Inst for Exp2 {
     const META: &InstMeta = &EXP_2;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Exp2 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1083,9 +1025,7 @@ pub struct Log2 {
 impl Inst for Log2 {
     const META: &InstMeta = &LOG_2;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Log2 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1119,9 +1059,7 @@ pub struct Sqrt {
 impl Inst for Sqrt {
     const META: &InstMeta = &SQRT;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Sqrt {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1155,9 +1093,7 @@ pub struct InverseSqrt {
 impl Inst for InverseSqrt {
     const META: &InstMeta = &INVERSE_SQRT;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for InverseSqrt {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1196,9 +1132,7 @@ pub struct Determinant {
 impl Inst for Determinant {
     const META: &InstMeta = &DETERMINANT;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Determinant {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1237,9 +1171,7 @@ pub struct MatrixInverse {
 impl Inst for MatrixInverse {
     const META: &InstMeta = &MATRIX_INVERSE;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for MatrixInverse {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1279,9 +1211,7 @@ pub struct Modf {
 impl Inst for Modf {
     const META: &InstMeta = &MODF;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Modf {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1323,9 +1253,7 @@ pub struct ModfStruct {
 impl Inst for ModfStruct {
     const META: &InstMeta = &MODF_STRUCT;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for ModfStruct {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1360,9 +1288,7 @@ pub struct FMin {
 impl Inst for FMin {
     const META: &InstMeta = &F_MIN;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1405,9 +1331,7 @@ pub struct UMin {
 impl Inst for UMin {
     const META: &InstMeta = &U_MIN;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1450,9 +1374,7 @@ pub struct SMin {
 impl Inst for SMin {
     const META: &InstMeta = &S_MIN;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for SMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1495,9 +1417,7 @@ pub struct FMax {
 impl Inst for FMax {
     const META: &InstMeta = &F_MAX;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1540,9 +1460,7 @@ pub struct UMax {
 impl Inst for UMax {
     const META: &InstMeta = &U_MAX;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1585,9 +1503,7 @@ pub struct SMax {
 impl Inst for SMax {
     const META: &InstMeta = &S_MAX;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for SMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1631,9 +1547,7 @@ pub struct FClamp {
 impl Inst for FClamp {
     const META: &InstMeta = &F_CLAMP;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1683,9 +1597,7 @@ pub struct UClamp {
 impl Inst for UClamp {
     const META: &InstMeta = &U_CLAMP;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1735,9 +1647,7 @@ pub struct SClamp {
 impl Inst for SClamp {
     const META: &InstMeta = &S_CLAMP;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for SClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1787,9 +1697,7 @@ pub struct FMix {
 impl Inst for FMix {
     const META: &InstMeta = &F_MIX;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FMix {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1839,9 +1747,7 @@ pub struct IMix {
 impl Inst for IMix {
     const META: &InstMeta = &I_MIX;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for IMix {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1890,9 +1796,7 @@ pub struct Step {
 impl Inst for Step {
     const META: &InstMeta = &STEP;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Step {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1936,9 +1840,7 @@ pub struct SmoothStep {
 impl Inst for SmoothStep {
     const META: &InstMeta = &SMOOTH_STEP;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for SmoothStep {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -1988,9 +1890,7 @@ pub struct Fma {
 impl Inst for Fma {
     const META: &InstMeta = &FMA;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Fma {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2039,9 +1939,7 @@ pub struct Frexp {
 impl Inst for Frexp {
     const META: &InstMeta = &FREXP;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Frexp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2083,9 +1981,7 @@ pub struct FrexpStruct {
 impl Inst for FrexpStruct {
     const META: &InstMeta = &FREXP_STRUCT;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FrexpStruct {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2125,9 +2021,7 @@ pub struct Ldexp {
 impl Inst for Ldexp {
     const META: &InstMeta = &LDEXP;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Ldexp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2169,9 +2063,7 @@ pub struct PackSnorm4x8 {
 impl Inst for PackSnorm4x8 {
     const META: &InstMeta = &PACK_SNORM_4_X_8;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for PackSnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2210,9 +2102,7 @@ pub struct PackUnorm4x8 {
 impl Inst for PackUnorm4x8 {
     const META: &InstMeta = &PACK_UNORM_4_X_8;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for PackUnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2251,9 +2141,7 @@ pub struct PackSnorm2x16 {
 impl Inst for PackSnorm2x16 {
     const META: &InstMeta = &PACK_SNORM_2_X_16;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for PackSnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2292,9 +2180,7 @@ pub struct PackUnorm2x16 {
 impl Inst for PackUnorm2x16 {
     const META: &InstMeta = &PACK_UNORM_2_X_16;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for PackUnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2333,9 +2219,7 @@ pub struct PackHalf2x16 {
 impl Inst for PackHalf2x16 {
     const META: &InstMeta = &PACK_HALF_2_X_16;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for PackHalf2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2374,9 +2258,7 @@ pub struct PackDouble2x32 {
 impl Inst for PackDouble2x32 {
     const META: &InstMeta = &PACK_DOUBLE_2_X_32;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for PackDouble2x32 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2415,9 +2297,7 @@ pub struct UnpackSnorm2x16 {
 impl Inst for UnpackSnorm2x16 {
     const META: &InstMeta = &UNPACK_SNORM_2_X_16;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UnpackSnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2456,9 +2336,7 @@ pub struct UnpackUnorm2x16 {
 impl Inst for UnpackUnorm2x16 {
     const META: &InstMeta = &UNPACK_UNORM_2_X_16;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UnpackUnorm2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2497,9 +2375,7 @@ pub struct UnpackHalf2x16 {
 impl Inst for UnpackHalf2x16 {
     const META: &InstMeta = &UNPACK_HALF_2_X_16;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UnpackHalf2x16 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2538,9 +2414,7 @@ pub struct UnpackSnorm4x8 {
 impl Inst for UnpackSnorm4x8 {
     const META: &InstMeta = &UNPACK_SNORM_4_X_8;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UnpackSnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2579,9 +2453,7 @@ pub struct UnpackUnorm4x8 {
 impl Inst for UnpackUnorm4x8 {
     const META: &InstMeta = &UNPACK_UNORM_4_X_8;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UnpackUnorm4x8 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2620,9 +2492,7 @@ pub struct UnpackDouble2x32 {
 impl Inst for UnpackDouble2x32 {
     const META: &InstMeta = &UNPACK_DOUBLE_2_X_32;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UnpackDouble2x32 {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2661,9 +2531,7 @@ pub struct Length {
 impl Inst for Length {
     const META: &InstMeta = &LENGTH;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Length {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2698,9 +2566,7 @@ pub struct Distance {
 impl Inst for Distance {
     const META: &InstMeta = &DISTANCE;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Distance {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2743,9 +2609,7 @@ pub struct Cross {
 impl Inst for Cross {
     const META: &InstMeta = &CROSS;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Cross {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2787,9 +2651,7 @@ pub struct Normalize {
 impl Inst for Normalize {
     const META: &InstMeta = &NORMALIZE;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Normalize {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2825,9 +2687,7 @@ pub struct FaceForward {
 impl Inst for FaceForward {
     const META: &InstMeta = &FACE_FORWARD;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FaceForward {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2876,9 +2736,7 @@ pub struct Reflect {
 impl Inst for Reflect {
     const META: &InstMeta = &REFLECT;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Reflect {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2922,9 +2780,7 @@ pub struct Refract {
 impl Inst for Refract {
     const META: &InstMeta = &REFRACT;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Refract {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -2972,9 +2828,7 @@ pub struct FindILsb {
 impl Inst for FindILsb {
     const META: &InstMeta = &FIND_I_LSB;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FindILsb {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -3013,9 +2867,7 @@ pub struct FindSMsb {
 impl Inst for FindSMsb {
     const META: &InstMeta = &FIND_S_MSB;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FindSMsb {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -3054,9 +2906,7 @@ pub struct FindUMsb {
 impl Inst for FindUMsb {
     const META: &InstMeta = &FIND_U_MSB;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FindUMsb {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -3095,9 +2945,7 @@ pub struct InterpolateAtCentroid {
 impl Inst for InterpolateAtCentroid {
     const META: &InstMeta = &INTERPOLATE_AT_CENTROID;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for InterpolateAtCentroid {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -3137,9 +2985,7 @@ pub struct InterpolateAtSample {
 impl Inst for InterpolateAtSample {
     const META: &InstMeta = &INTERPOLATE_AT_SAMPLE;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for InterpolateAtSample {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -3184,9 +3030,7 @@ pub struct InterpolateAtOffset {
 impl Inst for InterpolateAtOffset {
     const META: &InstMeta = &INTERPOLATE_AT_OFFSET;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for InterpolateAtOffset {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -3231,9 +3075,7 @@ pub struct NMin {
 impl Inst for NMin {
     const META: &InstMeta = &N_MIN;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for NMin {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -3276,9 +3118,7 @@ pub struct NMax {
 impl Inst for NMax {
     const META: &InstMeta = &N_MAX;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for NMax {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -3322,9 +3162,7 @@ pub struct NClamp {
 impl Inst for NClamp {
     const META: &InstMeta = &N_CLAMP;
     type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {
-        ()
-    }
+    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for NClamp {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {

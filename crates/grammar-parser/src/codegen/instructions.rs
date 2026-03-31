@@ -33,7 +33,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             let name = &id_result.name;
             (quote!(IdResult), quote!(self.#name))
         } else {
-            (quote!(()), quote!(()))
+            (quote!(()), quote!())
         };
 
         // encode decode
