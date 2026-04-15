@@ -1,11 +1,12 @@
 use expect_test::expect;
 use rspirv2::core::inst::{OpLoad, OpPhi, OpSwitch, OpTypeFloat};
 use rspirv2::core::operands::{CooperativeMatrixReduce, Dim};
+use rspirv2::custom_inst::{OpSwitchResolvedTarget, OpSwitchTarget, OpSwitchTargetLen};
 use rspirv2_types::binary::IdResultAlloc;
 use rspirv2_types::dis::{DisContext, DisOptions};
 use rspirv2_types::inst::InstEncoding;
 use rspirv2_types::operand::{
-    IdRef, IdResultType, LiteralInteger, OperandDisContext, OperandEncoding,
+    IdRef, IdResultType, LiteralConst, LiteralInteger, OperandDisContext, OperandEncoding,
 };
 use smallvec::SmallVec;
 
@@ -36,10 +37,13 @@ pub fn test_dis_composite_types() -> anyhow::Result<()> {
     let switch = OpSwitch {
         selector: IdRef(alloc.alloc_id()),
         default: IdRef(alloc.alloc_id()),
-        target: SmallVec::from_iter([
-            (LiteralInteger::new(42), IdRef(alloc.alloc_id())),
-            (LiteralInteger::new(69), IdRef(alloc.alloc_id())),
-        ]),
+        target: OpSwitchTarget::Resolved(OpSwitchResolvedTarget::from_iter(
+            OpSwitchTargetLen::One,
+            [
+                (LiteralConst::from(42u32), IdRef(alloc.alloc_id())),
+                (LiteralConst::from(69u32), IdRef(alloc.alloc_id())),
+            ],
+        )?),
     };
     expect!["OpSwitch %0 %1 42 %2 69 %3"].assert_eq(&switch.dis(&ctx).to_string());
     let phi = OpPhi {

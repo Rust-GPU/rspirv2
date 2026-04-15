@@ -13146,58 +13146,7 @@ impl InstEncoding for OpBranchConditional {
         )
     }
 }
-#[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpSwitch {
-    pub selector: IdRef,
-    pub default: IdRef,
-    pub target: ZeroOrMore<PairLiteralIntegerIdRef>,
-}
-impl Inst for OpSwitch {
-    const META: &InstMeta = &OP_SWITCH;
-}
-impl InstEncoding for OpSwitch {
-    type IdResult = ();
-    type IdResultType = ();
-    fn id_result(&self) -> Self::IdResult {}
-    fn id_result_type(&self) -> Self::IdResultType {}
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
-        profiling::function_scope!();
-        let len = 1
-            + OperandEncoding::word_len(&self.selector)
-            + OperandEncoding::word_len(&self.default)
-            + OperandEncoding::word_len(&self.target);
-        writer.write_op(Self::META.opcode, len)?;
-        OperandEncoding::encode(&self.selector, &mut *writer)?;
-        OperandEncoding::encode(&self.default, &mut *writer)?;
-        OperandEncoding::encode(&self.target, &mut *writer)?;
-        Ok(())
-    }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
-        profiling::function_scope!();
-        let mut op_reader = reader.check_opcode(Self::META)?;
-        Ok(Self {
-            selector: OperandEncoding::decode(&mut op_reader)?,
-            default: OperandEncoding::decode(&mut op_reader)?,
-            target: OperandEncoding::decode_last(&mut op_reader)?,
-        })
-    }
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
-        profiling::function_scope!();
-        let ctx = &OperandDisContext {
-            id_result: None,
-            id_result_type: None,
-            ctx,
-        };
-        write!(
-            f,
-            "{}OpSwitch{}{}{}",
-            ctx.id_result_writer(),
-            self.selector.dis(ctx),
-            self.default.dis(ctx),
-            self.target.dis(ctx)
-        )
-    }
-}
+pub use super::preamble::OpSwitch;
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpKill {}
 impl Inst for OpKill {

@@ -149,3 +149,17 @@ impl WordWriter for WordSliceWriter<'_> {
         }
     }
 }
+
+pub struct FnWriter<F: FnMut(Word)>(pub F);
+
+impl<F: FnMut(Word)> WordWriter for FnWriter<F> {
+    fn write(&mut self, word: Word) {
+        self.0(word);
+    }
+
+    fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>) {
+        for word in iter {
+            self.write(word);
+        }
+    }
+}
