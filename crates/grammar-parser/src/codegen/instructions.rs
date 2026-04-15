@@ -6,6 +6,10 @@ use quote::{format_ident, quote};
 pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     let insts = grammar.insts.iter().map(|inst| {
         let struct_ident = InstMeta::type_ident(&inst.opname);
+        if !inst.source.codegen_impl() {
+            return quote!(pub use super::preamble::#struct_ident;);
+        }
+
         let meta = InstMeta::const_ident(&inst.opname);
         let member_operands = inst.compute_operands();
         let id_result = member_operands

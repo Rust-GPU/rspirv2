@@ -6,6 +6,11 @@ use std::borrow::Cow;
 
 pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     let operands = grammar.operand_kinds.iter().map(|o| {
+        if !o.source.codegen_impl() {
+            let name = OperandKind::type_ident(&o.name);
+            return quote!(pub use super::preamble::#name;);
+        }
+
         let has_no_params =
             |enumerants: &[Enumerant<'_>]| enumerants.iter().all(|e| e.parameters.is_empty());
         match &o.category {
