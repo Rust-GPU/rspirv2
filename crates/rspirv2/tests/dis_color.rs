@@ -5,6 +5,7 @@ use spv::spv;
 use std::io::Write;
 
 #[test]
+#[cfg_attr(miri, ignore)]
 pub fn test_disabled_color() -> anyhow::Result<()> {
     let module =
         Module::<CoreInstSet>::from_bytes(std::fs::read(spv("dis_reference"))?.as_slice())?;

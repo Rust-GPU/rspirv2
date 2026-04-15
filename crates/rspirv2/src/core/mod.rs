@@ -14,7 +14,22 @@ pub mod inst_set;
 pub mod operand_kinds;
 pub mod operands;
 
-impl preamble::AnyCapability for preamble::Capability {}
+impl preamble::AnyCapability for preamble::Capability {
+    fn name(&self) -> String {
+        let name = format!(
+            "{}",
+            preamble::OperandEncoding::dis(
+                self,
+                &preamble::OperandDisContext {
+                    ctx: &Default::default(),
+                    id_result: None,
+                    id_result_type: None,
+                }
+            )
+        );
+        name.trim().to_string()
+    }
+}
 
 pub mod preamble {
     pub use super::extensions::*;

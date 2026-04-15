@@ -1,6 +1,6 @@
 use crate::parse::serde_helper::num_or_hex;
-use crate::parse::{InstClass, InstMeta, OperandKind};
-use std::ops::Deref;
+use crate::parse::{Import, InstClass, InstMeta, OperandKind};
+use std::ops::{Deref, DerefMut};
 
 /// See `rspirv2_types::meta::Grammar`
 #[derive(Clone, Debug, Default, serde::Deserialize)]
@@ -36,6 +36,12 @@ impl<'a> Deref for CoreGrammar<'a> {
     }
 }
 
+impl<'a> DerefMut for CoreGrammar<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.grammar
+    }
+}
+
 /// See `rspirv2_types::meta::ExtInstSetGrammar`
 #[derive(Clone, Debug, serde::Deserialize)]
 pub struct ExtInstSetGrammar<'a> {
@@ -50,6 +56,50 @@ impl<'a> Deref for ExtInstSetGrammar<'a> {
 
     fn deref(&self) -> &Self::Target {
         &self.grammar
+    }
+}
+
+impl<'a> DerefMut for ExtInstSetGrammar<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.grammar
+    }
+}
+
+impl Import for rspirv2_types::meta::Grammar {
+    type Imported = Grammar<'static>;
+
+    fn import(&self) -> Self::Imported {
+        Grammar {
+            insts: self.insts.iter().map(|i| i.import()).collect(),
+            operand_kinds: self.operand_kinds.iter().map(|i| i.import()).collect(),
+            inst_class: self.inst_class.iter().map(|i| i.import()).collect(),
+        }
+    }
+}
+
+impl Import for rspirv2_types::meta::CoreGrammar {
+    type Imported = CoreGrammar<'static>;
+
+    fn import(&self) -> Self::Imported {
+        CoreGrammar {
+            grammar: self.grammar.import(),
+            magic_number: self.magic_number,
+            major_version: self.major_version,
+            minor_version: self.minor_version,
+            revision: self.revision,
+        }
+    }
+}
+
+impl Import for rspirv2_types::meta::ExtInstSetGrammar {
+    type Imported = ExtInstSetGrammar<'static>;
+
+    fn import(&self) -> Self::Imported {
+        ExtInstSetGrammar {
+            grammar: self.grammar.import(),
+            version: self.version,
+            revision: self.revision,
+        }
     }
 }
 

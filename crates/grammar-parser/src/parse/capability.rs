@@ -1,3 +1,4 @@
+use rspirv2_types::meta::AnyCapability;
 use std::borrow::Cow;
 use std::fmt::{Debug, Display, Formatter};
 
@@ -8,6 +9,10 @@ pub struct Capability<'a>(#[serde(borrow)] Cow<'a, str>);
 impl<'a> Capability<'a> {
     pub const fn new(name: Cow<'a, str>) -> Self {
         Self(name)
+    }
+
+    pub fn import(cap: &(impl AnyCapability + ?Sized)) -> Self {
+        Self(Cow::Owned(cap.name()))
     }
 
     pub fn name(&self) -> &str {
