@@ -1,4 +1,4 @@
-use crate::parse::{Capability, Extension};
+use crate::parse::{Capability, Extension, Source};
 use smallvec::SmallVec;
 use std::borrow::Cow;
 
@@ -25,6 +25,8 @@ pub struct InstMeta<'a> {
     pub aliases: SmallVec<[Cow<'a, str>; 1]>,
     #[serde(default)]
     pub provisional: bool,
+    #[serde(skip)]
+    pub source: Source,
 }
 
 /// See `rspirv2_types::meta::OperandSpecMeta`
@@ -59,6 +61,8 @@ pub struct InstClass<'a> {
     pub tag: Cow<'a, str>,
     #[serde(borrow)]
     pub heading: Option<Cow<'a, str>>,
+    #[serde(skip)]
+    pub source: Source,
 }
 
 #[cfg(feature = "codegen")]
@@ -88,6 +92,10 @@ mod codegen {
         }
 
         pub fn emit_def(&self) -> TokenStream {
+            if !self.source.codegen_meta() {
+                return quote!();
+            }
+
             let ident = Self::const_ident(&self.opname);
             let opname = self.opname.emit_ref();
             let class = match &self.class {
@@ -246,6 +254,10 @@ mod codegen {
         }
 
         pub fn emit_def(&self) -> TokenStream {
+            if !self.source.codegen_meta() {
+                return quote!();
+            }
+
             let ident = Self::const_ident(&self.tag);
             let tag = self.tag.emit_ref();
             let heading = self.heading.emit_ref();

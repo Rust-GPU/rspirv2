@@ -1,5 +1,5 @@
 use crate::parse::serde_helper::num_or_hex;
-use crate::parse::{Capability, Extension, OperandSpecMeta};
+use crate::parse::{Capability, Extension, OperandSpecMeta, Source};
 use smallvec::SmallVec;
 use std::borrow::Cow;
 
@@ -12,6 +12,8 @@ pub struct OperandKind<'a> {
     pub category: Category<'a>,
     #[serde(borrow, default)]
     pub doc: Cow<'a, str>,
+    #[serde(skip)]
+    pub source: Source,
 }
 
 /// See `rspirv2_types::meta::Category`
@@ -83,6 +85,10 @@ mod codegen {
         }
 
         pub fn emit_def(&self) -> TokenStream {
+            if !self.source.codegen_meta() {
+                return quote!();
+            }
+
             match self.category {
                 Category::Id | Category::Literal => quote!(),
                 _ => {
