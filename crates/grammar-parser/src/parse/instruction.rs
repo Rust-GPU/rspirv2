@@ -1,4 +1,4 @@
-use crate::parse::{Capability, Extension, Source};
+use crate::parse::{Capability, Extension, Import, Source};
 use smallvec::SmallVec;
 use std::borrow::Cow;
 
@@ -63,6 +63,67 @@ pub struct InstClass<'a> {
     pub heading: Option<Cow<'a, str>>,
     #[serde(skip)]
     pub source: Source,
+}
+
+impl Import for rspirv2_types::meta::InstMeta {
+    type Imported = InstMeta<'static>;
+
+    fn import(&self) -> Self::Imported {
+        InstMeta {
+            opname: self.opname.into(),
+            class: self.class.map(|class| Cow::Borrowed(class.tag)),
+            opcode: self.opcode,
+            operands: self.operands.iter().map(|op| op.import()).collect(),
+            capabilities: self
+                .capabilities
+                .iter()
+                .map(|cap| Capability::import(*cap))
+                .collect(),
+            extensions: self.extensions.iter().map(|ext| ext.import()).collect(),
+            version: self.version.map(Cow::Borrowed),
+            last_version: self.last_version.map(Cow::Borrowed),
+            aliases: self.aliases.iter().map(|s| Cow::Borrowed(*s)).collect(),
+            provisional: self.provisional,
+            source: Source::Import,
+        }
+    }
+}
+
+impl Import for rspirv2_types::meta::OperandSpecMeta {
+    type Imported = OperandSpecMeta<'static>;
+
+    fn import(&self) -> Self::Imported {
+        OperandSpecMeta {
+            name: self.name.map(Cow::Borrowed),
+            kind: Cow::Borrowed(self.kind.name),
+            quantifier: self.quantifier.import(),
+        }
+    }
+}
+
+impl Import for rspirv2_types::meta::Quantifier {
+    type Imported = Quantifier;
+
+    fn import(&self) -> Self::Imported {
+        use rspirv2_types::meta::Quantifier as QuantifierTy;
+        match self {
+            QuantifierTy::One => Quantifier::One,
+            QuantifierTy::ZeroOrOne => Quantifier::ZeroOrOne,
+            QuantifierTy::ZeroOrMore => Quantifier::ZeroOrMore,
+        }
+    }
+}
+
+impl Import for rspirv2_types::meta::InstClass {
+    type Imported = InstClass<'static>;
+
+    fn import(&self) -> Self::Imported {
+        InstClass {
+            tag: Cow::Borrowed(self.tag),
+            heading: self.heading.map(Cow::Borrowed),
+            source: Source::Import,
+        }
+    }
 }
 
 #[cfg(feature = "codegen")]

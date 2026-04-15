@@ -1,5 +1,5 @@
 use crate::parse::serde_helper::num_or_hex;
-use crate::parse::{Capability, Extension, OperandSpecMeta, Source};
+use crate::parse::{Capability, Extension, Import, OperandSpecMeta, Source};
 use smallvec::SmallVec;
 use std::borrow::Cow;
 
@@ -60,6 +60,53 @@ pub struct Enumerant<'a> {
     pub aliases: SmallVec<[Cow<'a, str>; 1]>,
     #[serde(default)]
     pub provisional: bool,
+}
+
+impl Import for rspirv2_types::meta::OperandKind {
+    type Imported = OperandKind<'static>;
+
+    fn import(&self) -> Self::Imported {
+        use rspirv2_types::meta::Category as CategoryTy;
+        OperandKind {
+            name: Cow::Borrowed(self.name),
+            category: match self.category {
+                CategoryTy::BitEnum { enumerants } => Category::BitEnum {
+                    enumerants: import_enumerants(enumerants),
+                },
+                CategoryTy::ValueEnum { enumerants } => Category::ValueEnum {
+                    enumerants: import_enumerants(enumerants),
+                },
+                CategoryTy::Composite { bases } => Category::Composite {
+                    bases: bases.iter().map(|b| Cow::Borrowed(b.name)).collect(),
+                },
+                CategoryTy::Id => Category::Id,
+                CategoryTy::Literal => Category::Literal,
+            },
+            doc: Cow::Borrowed(self.doc),
+            source: Source::Import,
+        }
+    }
+}
+
+fn import_enumerants(enumerants: &[rspirv2_types::meta::Enumerant]) -> Vec<Enumerant<'static>> {
+    enumerants
+        .iter()
+        .map(|e| Enumerant {
+            symbol: Cow::Borrowed(e.symbol),
+            value: e.value,
+            parameters: e.parameters.iter().map(|op| op.import()).collect(),
+            capabilities: e
+                .capabilities
+                .iter()
+                .map(|cap| Capability::import(*cap))
+                .collect(),
+            extensions: e.extensions.iter().map(|ext| ext.import()).collect(),
+            version: e.version.map(Cow::Borrowed),
+            last_version: e.last_version.map(Cow::Borrowed),
+            aliases: e.aliases.iter().map(|s| Cow::Borrowed(*s)).collect(),
+            provisional: e.provisional,
+        })
+        .collect()
 }
 
 #[cfg(feature = "codegen")]

@@ -19,5 +19,7 @@ profiling.workspace = true
 [dev-dependencies]
 anyhow.workspace = true
 spv.workspace = true
+rspirv2-grammar.workspace = true
+rspirv2-grammar-parser.workspace = true
 anstream.workspace = true
 expect-test.workspace = true

@@ -55,3 +55,10 @@ impl Source {
         }
     }
 }
+
+/// A type declared at compile-time that can be imported into some runtime object
+pub trait Import {
+    type Imported: Sized;
+
+    fn import(&self) -> Self::Imported;
+}

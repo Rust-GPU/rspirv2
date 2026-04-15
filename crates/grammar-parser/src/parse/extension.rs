@@ -1,3 +1,4 @@
+use crate::parse::Import;
 use std::borrow::Cow;
 use std::fmt::{Debug, Display, Formatter};
 
@@ -8,6 +9,10 @@ pub struct Extension<'a>(#[serde(borrow)] Cow<'a, str>);
 impl<'a> Extension<'a> {
     pub const fn new(name: Cow<'a, str>) -> Self {
         Self(name)
+    }
+
+    pub const fn import(name: &'a str) -> Self {
+        Self(Cow::Borrowed(name))
     }
 
     pub fn name(&self) -> &str {
@@ -24,6 +29,14 @@ impl Display for Extension<'_> {
 impl Debug for Extension<'_> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         Display::fmt(self, f)
+    }
+}
+
+impl Import for rspirv2_types::meta::Extension {
+    type Imported = Extension<'static>;
+
+    fn import(&self) -> Self::Imported {
+        Extension::import(self.name())
     }
 }
 
