@@ -46,6 +46,12 @@ const _: () = {
 
 pub type LiteralContextDependentNumber = LiteralConst;
 
+impl LiteralConst {
+    pub fn words(&self) -> usize {
+        self.0.len()
+    }
+}
+
 impl From<u64> for LiteralConst {
     #[inline]
     fn from(value: u64) -> Self {
