@@ -7,7 +7,6 @@ pub enum EncodeError {
     CustomError(String),
     OpTooLong,
     OutOfIdResults,
-    MissingIdResult,
 }
 
 impl Display for EncodeError {
@@ -16,11 +15,6 @@ impl Display for EncodeError {
             EncodeError::CustomError(err) => write!(f, "{}", err),
             EncodeError::OpTooLong => write!(f, "Op too long, u16 overflow"),
             EncodeError::OutOfIdResults => write!(f, "Ran out of IdResults, danger of overflow!"),
-            EncodeError::MissingIdResult => write!(
-                f,
-                "Instruction has an IdResult that is None \
-                 and hasn't been assigned a valid IdResult!"
-            ),
         }
     }
 }
