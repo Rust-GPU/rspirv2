@@ -13,7 +13,9 @@ pub mod inst_meta;
 pub mod inst_set;
 pub mod operand_kinds;
 pub mod operands;
+
 impl preamble::AnyCapability for preamble::Capability {}
+
 pub mod preamble {
     pub use super::extensions::*;
     pub use super::grammar::*;
@@ -23,12 +25,14 @@ pub mod preamble {
     pub use super::inst_set::*;
     pub use super::operand_kinds::*;
     pub use super::operands::*;
+
     pub use crate::binary::*;
     pub use crate::dis::*;
     pub use crate::inst::*;
     pub use crate::meta::*;
     pub use crate::operand::*;
     pub use crate::*;
+
     pub use bitflags::bitflags;
     pub use smallvec::SmallVec;
     pub use std::fmt::Formatter;
