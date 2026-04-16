@@ -19,23 +19,10 @@ impl InstSetDisCtx for CoreInstSet {
                         ctx.add_id_to_name(inst.target.0, IdName::ExplicitName(name.into_owned()));
                     }
                 }
-                Self::TypeVoid(inst) => ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx)),
-                Self::TypeBool(inst) => ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx)),
-                Self::TypeFloat(inst) => {
-                    ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx));
-                    ctx.id_to_const_fmt.insert(inst.id_result, ConstFmt::Float);
-                }
-                Self::TypeInt(inst) => {
-                    ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx));
-                    ctx.id_to_const_fmt.insert(
-                        inst.id_result,
-                        if inst.signedness.to_bool() {
-                            ConstFmt::Signed
-                        } else {
-                            ConstFmt::Unsigned
-                        },
-                    );
-                }
+                Self::TypeVoid(inst) => inst.add_context(ctx),
+                Self::TypeBool(inst) => inst.add_context(ctx),
+                Self::TypeInt(inst) => inst.add_context(ctx),
+                Self::TypeFloat(inst) => inst.add_context(ctx),
                 Self::TypeVector(inst) => ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx)),
                 Self::TypeRuntimeArray(inst) => {
                     ctx.add_id_to_name(inst.id_result, inst.derive_name(ctx));
@@ -61,6 +48,11 @@ impl InstSetDisCtx for CoreInstSet {
 }
 
 impl OpTypeVoid {
+    pub fn add_context(&self, ctx: &mut DisContext) {
+        profiling::function_scope!();
+        ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
+    }
+
     pub fn derive_name(&self, _ctx: &DisContext) -> IdName {
         profiling::function_scope!();
         IdName::DerivedName("void".to_string())
@@ -68,6 +60,11 @@ impl OpTypeVoid {
 }
 
 impl OpTypeBool {
+    pub fn add_context(&self, ctx: &mut DisContext) {
+        profiling::function_scope!();
+        ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
+    }
+
     pub fn derive_name(&self, _ctx: &DisContext) -> IdName {
         profiling::function_scope!();
         IdName::DerivedName("bool".to_string())
@@ -75,6 +72,19 @@ impl OpTypeBool {
 }
 
 impl OpTypeInt {
+    pub fn add_context(&self, ctx: &mut DisContext) {
+        profiling::function_scope!();
+        ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
+        ctx.id_to_const_fmt.insert(
+            self.id_result,
+            if self.signedness.to_bool() {
+                ConstFmt::Signed
+            } else {
+                ConstFmt::Unsigned
+            },
+        );
+    }
+
     pub fn derive_name(&self, ctx: &DisContext) -> IdName {
         profiling::function_scope!();
         let signed = self.signedness.to_bool();
@@ -94,6 +104,12 @@ impl OpTypeInt {
 }
 
 impl OpTypeFloat {
+    pub fn add_context(&self, ctx: &mut DisContext) {
+        profiling::function_scope!();
+        ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
+        ctx.id_to_const_fmt.insert(self.id_result, ConstFmt::Float);
+    }
+
     pub fn derive_name(&self, ctx: &DisContext) -> IdName {
         profiling::function_scope!();
         let width = self.width.to_u32();
