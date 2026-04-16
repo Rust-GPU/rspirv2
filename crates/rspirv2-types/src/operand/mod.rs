@@ -268,7 +268,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
             let remaining = reader.remaining();
             if !remaining.is_multiple_of(fixed_len) {
                 return Err(DecodeErrorKind::InstructionWithMismatchedVariableOperants {
-                    op_len: reader.remaining(),
+                    op_len: remaining,
                     expected_multiple: fixed_len,
                 }
                 .into());
@@ -324,7 +324,7 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
             let remaining = reader.remaining();
             if !remaining.is_multiple_of(fixed_len) {
                 return Err(DecodeErrorKind::InstructionWithMismatchedVariableOperants {
-                    op_len: reader.remaining(),
+                    op_len: remaining,
                     expected_multiple: fixed_len,
                 }
                 .into());
