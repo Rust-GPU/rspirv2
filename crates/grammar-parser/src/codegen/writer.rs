@@ -1,6 +1,5 @@
-use crate::codegen::options::CodegenOptions;
 use proc_macro2::TokenStream;
-use quote::{format_ident, quote};
+use quote::quote;
 use std::fs;
 use std::path::PathBuf;
 use std::process::Command;
@@ -61,44 +60,9 @@ impl GrammarWriter {
     }
 
     /// Finish writing the grammar
-    pub fn finish(self, mod_options: &CodegenOptions<'_>) -> anyhow::Result<()> {
-        self.write_mod_rs(mod_options)?;
+    pub fn finish(self) -> anyhow::Result<()> {
         self.format_submodules()?;
         Ok(())
-    }
-
-    /// always write mod.rs and don't add to `submodules`
-    fn write_mod_rs(&self, mod_options: &CodegenOptions<'_>) -> anyhow::Result<()> {
-        fs::write(
-            self.submodule_file("mod"),
-            self.codegen_mod_rs(mod_options)?.to_string(),
-        )?;
-        Ok(())
-    }
-
-    /// see [`use_super`]
-    fn codegen_mod_rs(&self, mod_options: &CodegenOptions<'_>) -> anyhow::Result<TokenStream> {
-        let (mods, imports): (Vec<_>, Vec<_>) = self
-            .submodules
-            .iter()
-            .map(|s| format_ident!("{}", s))
-            .map(|s| (quote!(pub mod #s;), quote!(pub use super::#s::*;)))
-            .unzip();
-        let CodegenOptions {
-            mod_attr,
-            mod_extra,
-            preamble,
-            ..
-        } = mod_options;
-        Ok(quote! {
-            #mod_attr
-            #(#mods)*
-            #mod_extra
-            pub mod preamble {
-                #preamble
-                #(#imports)*
-            }
-        })
     }
 
     fn format_submodules(&self) -> anyhow::Result<()> {

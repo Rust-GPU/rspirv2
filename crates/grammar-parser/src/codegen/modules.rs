@@ -40,7 +40,7 @@ pub fn write_grammar<'a>(
     write_inst(&mut writer, grammar)?;
     write_inst_enum(&mut writer, grammar, opt)?;
     write_grammar_mod(&mut writer, grammar)?;
-    writer.finish(opt)?;
+    writer.finish()?;
     Ok(())
 }
 
