@@ -106,15 +106,6 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     /// Encode this `Operand` to a sequence of words.
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError>;
 
-    /// Validate this `Option<Operand>` before encoding.
-    ///
-    /// May implement special behavior for failing, like [`IdResult`] does to validate it has been initialized.
-    #[inline]
-    fn validate_optional(opt: &Option<Self>) -> Result<(), EncodeError> {
-        let _ = opt;
-        Ok(())
-    }
-
     /// Parse the `Operand` from the supplied [`Iterator`] of words, advancing it in the process.
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError>;
 
@@ -200,7 +191,6 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
 
     #[inline]
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
-        T::validate_optional(self)?;
         match self {
             None => Ok(()),
             Some(e) => e.encode(writer),
