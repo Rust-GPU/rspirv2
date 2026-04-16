@@ -143,11 +143,23 @@ impl DisOptions {
 pub struct DisContext {
     /// Options
     opt: DisOptions,
+    /// Maps an [`IdResult`] of a type declaration to a [`PrimitiveType`], primarily for `OpSwitch` resolve during
+    /// disassembly, but may also be used by others
+    pub id_to_primitive_type: FxHashMap<IdResult, PrimitiveType>,
     /// Maps an [`IdResult`] of a type declaration to a [`ConstFmt`] to tell `OpConstant` instructions how to format
     /// the untyped constant value
     pub id_to_const_fmt: FxHashMap<IdResult, ConstFmt>,
     /// Maps an [`IdResult`] to the "highest priority" [`IdName`]
     pub id_to_name: FxHashMap<IdResult, IdName>,
+}
+
+/// An enum for representing primitive types
+#[derive(Copy, Clone, Debug)]
+pub enum PrimitiveType {
+    Void,
+    Bool,
+    Int { width: u32, signedness: bool },
+    Float { width: u32 },
 }
 
 #[derive(Clone, Debug, Default)]

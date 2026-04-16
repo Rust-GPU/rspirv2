@@ -50,6 +50,8 @@ impl InstSetDisCtx for CoreInstSet {
 impl OpTypeVoid {
     pub fn add_context(&self, ctx: &mut DisContext) {
         profiling::function_scope!();
+        ctx.id_to_primitive_type
+            .insert(self.id_result, PrimitiveType::Void);
         ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
     }
 
@@ -62,6 +64,8 @@ impl OpTypeVoid {
 impl OpTypeBool {
     pub fn add_context(&self, ctx: &mut DisContext) {
         profiling::function_scope!();
+        ctx.id_to_primitive_type
+            .insert(self.id_result, PrimitiveType::Bool);
         ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
     }
 
@@ -74,10 +78,18 @@ impl OpTypeBool {
 impl OpTypeInt {
     pub fn add_context(&self, ctx: &mut DisContext) {
         profiling::function_scope!();
+        let signedness = self.signedness.to_bool();
         ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
+        ctx.id_to_primitive_type.insert(
+            self.id_result,
+            PrimitiveType::Int {
+                width: self.width.to_u32(),
+                signedness,
+            },
+        );
         ctx.id_to_const_fmt.insert(
             self.id_result,
-            if self.signedness.to_bool() {
+            if signedness {
                 ConstFmt::Signed
             } else {
                 ConstFmt::Unsigned
@@ -107,6 +119,12 @@ impl OpTypeFloat {
     pub fn add_context(&self, ctx: &mut DisContext) {
         profiling::function_scope!();
         ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
+        ctx.id_to_primitive_type.insert(
+            self.id_result,
+            PrimitiveType::Float {
+                width: self.width.to_u32(),
+            },
+        );
         ctx.id_to_const_fmt.insert(self.id_result, ConstFmt::Float);
     }
 
