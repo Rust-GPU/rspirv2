@@ -9,7 +9,8 @@ use crate::operand::{IdRef, OperandDisContext, OperandEncoding};
 use OpSwitchTargetLen::{One, Two};
 use rspirv2_types::Word;
 use rspirv2_types::binary::{DecodeErrorKind, FnWriter, OperandReader};
-use rspirv2_types::operand::LiteralConst;
+use rspirv2_types::dis::PrimitiveType;
+use rspirv2_types::operand::{IdResult, LiteralConst};
 use smallvec::SmallVec;
 use std::borrow::Cow;
 use std::error::Error;
@@ -271,12 +272,51 @@ unsafe impl OperandEncoding for OpSwitchTarget {
         Ok(Self::Unresolved(reader.collect()))
     }
 
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, _f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+        unreachable!()
+    }
+}
+
+impl OpSwitchTarget {
+    fn dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        selector: IdResult,
+        ctx: &DisContext,
+    ) -> std::fmt::Result {
         profiling::function_scope!();
-        match self {
-            OpSwitchTarget::Unresolved(_) => todo!(),
-            OpSwitchTarget::Resolved(resolved) => resolved.dis_fmt(f, ctx),
-        }
+        let resolved = match self {
+            OpSwitchTarget::Unresolved(_) => {
+                let len = (|| {
+                    let selector_type_id = ctx.id_to_id_type.get(&selector)?;
+                    let primitive_type = *ctx.id_to_primitive_type.get(selector_type_id)?;
+                    match primitive_type {
+                        PrimitiveType::Int { width: 64, .. } => Some(Two),
+                        PrimitiveType::Int {
+                            width: 32 | 16 | 8, ..
+                        } => Some(One),
+                        _ => None,
+                    }
+                })()
+                // TODO How to handle this error nicely? All other cases we could just get away with not erroring
+                .expect("Disassembly missing context");
+                self.resolve_ref(len).unwrap()
+            }
+            OpSwitchTarget::Resolved(r) => Cow::Borrowed(r),
+        };
+        resolved.dis_fmt(f, &OperandDisContext::new(ctx))
+    }
+}
+
+pub struct OpSwitchTargetDis<'a> {
+    target: &'a OpSwitchTarget,
+    selector: IdResult,
+    ctx: &'a DisContext,
+}
+
+impl Display for OpSwitchTargetDis<'_> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        self.target.dis_fmt(f, self.selector, self.ctx)
     }
 }
 
@@ -360,7 +400,11 @@ impl InstEncoding for OpSwitch {
             ctx.id_result_writer(),
             self.selector.dis(ctx),
             self.default.dis(ctx),
-            self.target.dis(ctx)
+            OpSwitchTargetDis {
+                target: &self.target,
+                selector: self.selector.0,
+                ctx,
+            }
         )
     }
 }
