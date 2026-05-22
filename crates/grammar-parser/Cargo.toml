@@ -8,6 +8,7 @@ workspace = true
 
 [features]
 codegen = ["quote", "proc-macro2", "convert_case", "unicode-ident"]
+isle = ["codegen"]
 prettyplease = ["dep:prettyplease", "dep:syn"]
 
 [dependencies]

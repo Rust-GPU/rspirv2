@@ -9,5 +9,5 @@ workspace = true
 
 [dependencies]
 rspirv2-grammar = { workspace = true }
-rspirv2-grammar-parser = { workspace = true, features = ["codegen", "prettyplease"] }
+rspirv2-grammar-parser = { workspace = true, features = ["codegen", "prettyplease", "isle"] }
 anyhow.workspace = true

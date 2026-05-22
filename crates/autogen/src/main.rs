@@ -2,6 +2,7 @@
 
 use rspirv2_grammar::PATH_GRAMMAR_CORE;
 use rspirv2_grammar_parser::codegen::{CodegenOptions, GrammarWriter, write_grammar};
+use rspirv2_grammar_parser::isle::isle;
 use rspirv2_grammar_parser::parse::Source;
 use rspirv2_grammar_parser::timer::TimerPrintOnDrop;
 use std::path::Path;
@@ -20,12 +21,12 @@ pub fn autogen() -> anyhow::Result<()> {
         .iter_mut()
         .filter(|i| i.opname == "OpSwitch")
         .for_each(|i| i.source = Source::MetaOnly);
-    write_grammar(
-        GrammarWriter::new(Path::new(PATH_GRAMMAR_CRATE_SRC).join("core"))?,
-        &core,
-        &CodegenOptions {
-            name_suffix_type: "Core",
-        },
-    )?;
+
+    let out_dir = Path::new(PATH_GRAMMAR_CRATE_SRC).join("core");
+    let core_opt = CodegenOptions {
+        name_suffix_type: "Core",
+    };
+    write_grammar(GrammarWriter::new(out_dir.clone())?, &core, &core_opt)?;
+    std::fs::write(out_dir.join("core.isle"), isle(&core, &core_opt)?)?;
     Ok(())
 }

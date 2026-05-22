@@ -21,6 +21,7 @@ smallvec.workspace = true
 rspirv2-tools-gen.workspace = true
 clap.workspace = true
 criterion.workspace = true
+cranelift-isle.workspace = true
 
 [[bench]]
 name = "dis"
