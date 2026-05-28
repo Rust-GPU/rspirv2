@@ -1,16 +1,20 @@
 use rspirv2::core::inst::{
-    OpConstant, OpConvertUToF, OpDecorate, OpIAdd, OpNop, OpStore, OpTypeFloat, OpTypeInt,
-    OpTypePointer, OpVariable,
+    OpConstant, OpConvertUToF, OpDecorate, OpIAdd, OpNop, OpStore, OpSwitch, OpTypeFloat,
+    OpTypeInt, OpTypePointer, OpVariable,
 };
 use rspirv2::core::inst_set::CoreInstSet;
 use rspirv2::core::operands::{Decoration, StorageClass};
 use rspirv2::core::preamble::OpAccessChain;
-use rspirv2::operand::{IdRef, IdResult, IdResultType, LiteralConst, LiteralInteger};
-use rspirv2_types::Word;
-use rspirv2_types::binary::IdResultAlloc;
+use rspirv2::operand::{
+    IdRef, IdResult, IdResultType, LiteralConst, LiteralInteger, SwitchCase, SwitchLiteral32,
+    SwitchLiteral64, SwitchTargets,
+};
+use rspirv2_types::binary::{DecodeErrorKind, IdResultAlloc, InstReader};
 use rspirv2_types::inst::{Inst, InstEncoding};
+use rspirv2_types::module::{Module, SPIRV_MAGIC};
 use rspirv2_types::slice::InstSlice;
 use rspirv2_types::vec::InstVec;
+use rspirv2_types::{Word, cast_words_to_ne_bytes};
 
 fn roundtrip<T: Inst>(inst: T)
 where
@@ -56,6 +60,111 @@ fn test_op_with_array() {
     test(&[1, 2, 3, 4, 5]);
     test(&[1, 2, 3]);
     test(&[]);
+}
+
+#[test]
+fn test_op_switch_32_bit_targets() -> anyhow::Result<()> {
+    roundtrip(OpSwitch {
+        selector: IdRef(IdResult(Word(1))),
+        default: IdRef(IdResult(Word(2))),
+        target: SwitchTargets::from_cases([
+            SwitchCase::new(SwitchLiteral32::new(42), IdRef(IdResult(Word(3)))),
+            SwitchCase::new(SwitchLiteral32::new(69), IdRef(IdResult(Word(4)))),
+        ]),
+    });
+    Ok(())
+}
+
+#[test]
+fn test_op_switch_accepts_64_bit_targets_from_bytes() -> anyhow::Result<()> {
+    let switch_words = op_switch_words(
+        IdRef(IdResult(Word(34_589))),
+        IdRef(IdResult(Word(34_594))),
+        [
+            Word(4_607_561),
+            Word(0),
+            Word(34_595),
+            Word(1_229_344_329),
+            Word(1_498_696_014),
+            Word(34_596),
+            Word(5_128_526),
+            Word(0),
+            Word(34_597),
+        ],
+    )?;
+    let module_words = module_words_with_insts(switch_words);
+
+    let module = Module::<CoreInstSet>::from_bytes(cast_words_to_ne_bytes(&module_words))?;
+    let mut iter = module.iter();
+    let Some(CoreInstSet::Switch(switch)) = iter.next() else {
+        panic!("expected OpSwitch");
+    };
+    assert!(iter.next().is_none());
+
+    let cases = switch
+        .target
+        .cases::<SwitchLiteral64>()?
+        .collect::<Vec<_>>();
+    assert_eq!(
+        cases.as_slice(),
+        &[
+            SwitchCase::new(
+                SwitchLiteral64::new(4_607_561),
+                IdRef(IdResult(Word(34_595)))
+            ),
+            SwitchCase::new(
+                SwitchLiteral64::from_words_array([Word(1_229_344_329), Word(1_498_696_014)]),
+                IdRef(IdResult(Word(34_596))),
+            ),
+            SwitchCase::new(
+                SwitchLiteral64::new(5_128_526),
+                IdRef(IdResult(Word(34_597)))
+            ),
+        ]
+    );
+    assert_eq!(&module_words[5..], module.inst.as_raw_slice().as_words());
+
+    Ok(())
+}
+
+#[test]
+fn test_op_switch_rejects_invalid_target_word_count() -> anyhow::Result<()> {
+    let words = op_switch_words(
+        IdRef(IdResult(Word(1))),
+        IdRef(IdResult(Word(2))),
+        [Word(3), Word(4), Word(5), Word(6), Word(7)],
+    )?;
+
+    let err = CoreInstSet::decode(InstReader::from_words(&words)?).unwrap_err();
+    assert_eq!(
+        err.kind,
+        DecodeErrorKind::InvalidSwitchTargets { word_len: 5 }
+    );
+
+    Ok(())
+}
+
+fn op_switch_words(
+    selector: IdRef,
+    default: IdRef,
+    targets: impl IntoIterator<Item = Word>,
+) -> Result<Vec<Word>, rspirv2_types::binary::EncodeError> {
+    let mut words = Vec::from([Word(0), selector.0.0, default.0.0]);
+    words.extend(targets);
+    words[0] = Word::new_op(251, words.len())?;
+    Ok(words)
+}
+
+fn module_words_with_insts(insts: Vec<Word>) -> Vec<Word> {
+    let mut module = Vec::from([
+        SPIRV_MAGIC,
+        Word(0x0001_0000),
+        Word(0),
+        Word(34_598),
+        Word(0),
+    ]);
+    module.extend(insts);
+    module
 }
 
 #[test]

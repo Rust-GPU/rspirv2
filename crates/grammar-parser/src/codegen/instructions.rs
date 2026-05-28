@@ -3,6 +3,9 @@ use crate::codegen::{GrammarWriter, OPERAND_ID_RESULT, OPERAND_ID_RESULT_TYPE};
 use crate::parse::{Grammar, InstMeta, Operand, Quantifier};
 use quote::{format_ident, quote};
 
+const OP_SWITCH: &str = "OpSwitch";
+const OPERAND_PAIR_LITERAL_INTEGER_ID_REF: &str = "PairLiteralIntegerIdRef";
+
 pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     let insts = grammar.insts.iter().map(|inst| {
         let struct_ident = InstMeta::type_ident(&inst.opname);
@@ -25,10 +28,15 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                  meta,
                  ref name,
                  ref ty,
-             }| match meta.quantifier {
-                Quantifier::One => quote!(pub #name: #ty),
-                Quantifier::ZeroOrOne => quote!(pub #name: ZeroOrOne<#ty>),
-                Quantifier::ZeroOrMore => quote!(pub #name: ZeroOrMore<#ty>),
+             }| {
+                if is_op_switch_targets(inst.opname.as_ref(), meta.kind.as_ref(), meta.quantifier) {
+                    return quote!(pub #name: SwitchTargets);
+                }
+                match meta.quantifier {
+                    Quantifier::One => quote!(pub #name: #ty),
+                    Quantifier::ZeroOrOne => quote!(pub #name: ZeroOrOne<#ty>),
+                    Quantifier::ZeroOrMore => quote!(pub #name: ZeroOrMore<#ty>),
+                }
             },
         );
 
@@ -155,6 +163,12 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             #(#insts)*
         },
     )
+}
+
+fn is_op_switch_targets(opname: &str, operand_kind: &str, quantifier: Quantifier) -> bool {
+    opname == OP_SWITCH
+        && operand_kind == OPERAND_PAIR_LITERAL_INTEGER_ID_REF
+        && quantifier == Quantifier::ZeroOrMore
 }
 
 pub fn write_inst_enum(

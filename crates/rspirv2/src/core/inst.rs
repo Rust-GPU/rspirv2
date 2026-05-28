@@ -12348,7 +12348,7 @@ impl InstEncoding for OpBranchConditional {
 pub struct OpSwitch {
     pub selector: IdRef,
     pub default: IdRef,
-    pub target: ZeroOrMore<PairLiteralIntegerIdRef>,
+    pub target: SwitchTargets,
 }
 impl Inst for OpSwitch {
     const META: &InstMeta = &OP_SWITCH;

@@ -5,7 +5,8 @@ use rspirv2_types::binary::IdResultAlloc;
 use rspirv2_types::dis::{DisContext, DisOptions};
 use rspirv2_types::inst::InstEncoding;
 use rspirv2_types::operand::{
-    IdRef, IdResultType, LiteralInteger, OperandDisContext, OperandEncoding,
+    IdRef, IdResultType, LiteralInteger, OperandDisContext, OperandEncoding, SwitchCase,
+    SwitchLiteral32, SwitchTargets,
 };
 use smallvec::SmallVec;
 
@@ -36,9 +37,9 @@ pub fn test_dis_composite_types() -> anyhow::Result<()> {
     let switch = OpSwitch {
         selector: IdRef(alloc.alloc_id()),
         default: IdRef(alloc.alloc_id()),
-        target: SmallVec::from_iter([
-            (LiteralInteger::new(42), IdRef(alloc.alloc_id())),
-            (LiteralInteger::new(69), IdRef(alloc.alloc_id())),
+        target: SwitchTargets::from_cases([
+            SwitchCase::new(SwitchLiteral32::new(42), IdRef(alloc.alloc_id())),
+            SwitchCase::new(SwitchLiteral32::new(69), IdRef(alloc.alloc_id())),
         ]),
     };
     expect!["OpSwitch %0 %1 42 %2 69 %3"].assert_eq(&switch.dis(&ctx).to_string());

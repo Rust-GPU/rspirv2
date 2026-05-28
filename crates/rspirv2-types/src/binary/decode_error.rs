@@ -38,6 +38,9 @@ pub enum DecodeErrorKind {
         op_len: usize,
         expected_multiple: usize,
     },
+    InvalidSwitchTargets {
+        word_len: usize,
+    },
     InstructionTooLong {
         op_len: usize,
         module_remaining: usize,
@@ -110,6 +113,10 @@ impl Display for DecodeErrorKind {
                 f,
                 "The variable-sized Instruction has an unexpected operand length {op_len} \
                 which was expected to be a multiple of {expected_multiple}."
+            ),
+            Self::InvalidSwitchTargets { word_len } => write!(
+                f,
+                "OpSwitch target table has {word_len} words, which is neither valid 32-bit nor 64-bit case encoding."
             ),
             Self::InstructionTooLong {
                 op_len,

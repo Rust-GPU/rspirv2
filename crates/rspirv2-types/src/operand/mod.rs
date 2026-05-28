@@ -4,6 +4,7 @@ mod literal_float;
 mod literal_integer;
 mod literal_string;
 mod parameterized_bitmask;
+mod switch;
 mod tuple;
 
 use crate::binary::{
@@ -20,6 +21,7 @@ pub use parameterized_bitmask::*;
 use smallvec::SmallVec;
 use std::fmt::{Debug, Display, Formatter};
 use std::ops::Deref;
+pub use switch::*;
 pub use tuple::*;
 
 /// A SPIR-V operand. The associated const [`Self::KIND`] links to it's [`OperandKind`].
@@ -126,10 +128,14 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     /// Disassemble this operand
     ///
     /// Returns a type that impl [`Display`], so it's usable with `format!`:
-    /// ```no_run
-    /// # use rspirv2_types::operand::IdResult;
+    /// ```
+    /// # use rspirv2_types::Word;
+    /// # use rspirv2_types::dis::{DisContext, DisOptions};
+    /// # use rspirv2_types::operand::{IdResult, OperandDisContext, OperandEncoding};
+    /// let ctx = DisContext::no_context(DisOptions::simple());
+    /// let ctx = OperandDisContext::new(&ctx);
     /// let my_op = IdResult(Word(42));
-    /// let dis = format!("OpMyInst {}", my_op.dis());
+    /// let dis = format!("OpMyInst {}", my_op.dis(&ctx));
     /// assert_eq!(dis, "OpMyInst %42");
     /// ```
     #[inline]
