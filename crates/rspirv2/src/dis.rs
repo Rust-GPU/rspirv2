@@ -5,6 +5,7 @@ use crate::core::inst::{
 use crate::core::inst_set::CoreInstSet;
 use crate::core::preamble::OpTypeRuntimeArray;
 pub use rspirv2_types::dis::*;
+use rspirv2_types::inst::InstEncoding;
 use rspirv2_types::operand::{ConstFmt, OperandDisContext};
 use rspirv2_types::slice::{RawInstSlice, SkipDecodeErrorIteratorExt, TryDecodeIteratorExt};
 use std::borrow::Cow;
@@ -13,6 +14,11 @@ impl InstSetDisCtx for CoreInstSet {
     fn add_context(slice: &RawInstSlice, ctx: &mut DisContext) {
         profiling::function_scope!();
         for inst in slice.iter().try_decode::<CoreInstSet>().skip_errors() {
+            if let (Some(id_result), Some(id_result_type)) =
+                (inst.id_result(), inst.id_result_type())
+            {
+                ctx.id_to_id_type.insert(id_result, id_result_type);
+            }
             match inst {
                 Self::Name(inst) => {
                     if let Some(name) = escape_id_name(Cow::Owned(inst.name.0)) {

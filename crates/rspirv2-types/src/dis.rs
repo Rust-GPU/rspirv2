@@ -143,8 +143,12 @@ impl DisOptions {
 pub struct DisContext {
     /// Options
     opt: DisOptions,
-    /// Maps an [`IdResult`] of a type declaration to a [`PrimitiveType`], primarily for `OpSwitch` resolve during
-    /// disassembly, but may also be used by others
+    /// Maps an [`IdResult`] of an arbitrary instruction to it's `IdResultType`. By looking up
+    /// `id_to_primitive_type[id_to_id_type[id]]` one can resolve the type of an `OpSwitch`, and whether the contained
+    /// constants consume one or two words.
+    pub id_to_id_type: FxHashMap<IdResult, IdResult>,
+    /// Maps an [`IdResult`] of a type declaration to a [`PrimitiveType`]. Primarily for `OpSwitch`, but such a lookup
+    /// may be useful for other instructions as well.
     pub id_to_primitive_type: FxHashMap<IdResult, PrimitiveType>,
     /// Maps an [`IdResult`] of a type declaration to a [`ConstFmt`] to tell `OpConstant` instructions how to format
     /// the untyped constant value
