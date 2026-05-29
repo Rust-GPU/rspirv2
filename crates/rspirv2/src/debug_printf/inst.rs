@@ -9,7 +9,9 @@ impl Inst for DebugPrintf {
 }
 impl InstEncoding for DebugPrintf {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len =

@@ -14,9 +14,15 @@ pub trait Inst: InstEncoding {
 pub trait InstEncoding: Sized + Debug + Eq {
     /// `IdResult` is either an [`IdResult`] or `()`, depending on whether this Instruction has an [`IdResult`].
     type IdResult: MaybeIdResult;
+    /// `IdResult` is either an [`IdResult`] or `()`, depending on whether this Instruction has an
+    /// [`crate::operand::IdResultType`].
+    type IdResultType: MaybeIdResult;
 
     /// Query the potential [`IdResult`] of this Instruction, or `()` if it has none.
     fn id_result(&self) -> Self::IdResult;
+
+    /// Query the potential [`IdResult`] of this Instruction, or `()` if it has none.
+    fn id_result_type(&self) -> Self::IdResultType;
 
     /// Name of the instruction set, for debug printing
     fn name() -> &'static str {
@@ -60,8 +66,10 @@ pub trait InstEncoding: Sized + Debug + Eq {
 
 impl InstEncoding for () {
     type IdResult = ();
+    type IdResultType = ();
 
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
 
     fn name() -> &'static str {
         "()"

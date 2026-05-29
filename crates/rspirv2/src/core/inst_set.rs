@@ -967,6 +967,7 @@ pub enum CoreInstSet {
 }
 impl InstEncoding for CoreInstSet {
     type IdResult = Option<IdResult>;
+    type IdResultType = Option<IdResult>;
     fn id_result(&self) -> Self::IdResult {
         profiling::function_scope!();
         match self {
@@ -2232,6 +2233,1554 @@ impl InstEncoding for CoreInstSet {
             Self::ConvertHandleToSamplerINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::ConvertHandleToSampledImageINTEL(inst) => {
                 InstEncoding::id_result(inst).to_optional()
+            }
+        }
+    }
+    fn id_result_type(&self) -> Self::IdResult {
+        profiling::function_scope!();
+        match self {
+            Self::Nop(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Undef(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SourceContinued(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Source(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SourceExtension(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Name(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::MemberName(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::String(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Line(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Extension(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ExtInstImport(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ExtInst(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::MemoryModel(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::EntryPoint(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ExecutionMode(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Capability(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeVoid(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeBool(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeInt(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeFloat(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeVector(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeMatrix(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeImage(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeSampler(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeSampledImage(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeArray(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeRuntimeArray(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeStruct(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeOpaque(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypePointer(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeFunction(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeEvent(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeDeviceEvent(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeReserveId(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeQueue(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypePipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeForwardPointer(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConstantTrue(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConstantFalse(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Constant(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConstantComposite(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConstantSampler(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConstantNull(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SpecConstantTrue(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SpecConstantFalse(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SpecConstant(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SpecConstantComposite(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SpecConstantOp(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Function(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FunctionParameter(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FunctionEnd(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FunctionCall(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Variable(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageTexelPointer(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Load(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Store(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CopyMemory(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CopyMemorySized(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AccessChain(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::InBoundsAccessChain(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::PtrAccessChain(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArrayLength(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GenericPtrMemSemantics(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::InBoundsPtrAccessChain(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Decorate(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::MemberDecorate(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::DecorationGroup(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupDecorate(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupMemberDecorate(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::VectorExtractDynamic(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::VectorInsertDynamic(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::VectorShuffle(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CompositeConstruct(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CompositeExtract(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CompositeInsert(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CopyObject(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Transpose(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SampledImage(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageSampleImplicitLod(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageSampleExplicitLod(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageSampleDrefImplicitLod(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageSampleDrefExplicitLod(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageSampleProjImplicitLod(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageSampleProjExplicitLod(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageSampleProjDrefImplicitLod(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageSampleProjDrefExplicitLod(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageFetch(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageGather(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageDrefGather(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageRead(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageWrite(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Image(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageQueryFormat(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageQueryOrder(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageQuerySizeLod(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageQuerySize(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageQueryLod(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageQueryLevels(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageQuerySamples(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConvertFToU(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConvertFToS(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConvertSToF(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConvertUToF(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UConvert(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SConvert(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FConvert(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::QuantizeToF16(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConvertPtrToU(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SatConvertSToU(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SatConvertUToS(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConvertUToPtr(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::PtrCastToGeneric(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GenericCastToPtr(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GenericCastToPtrExplicit(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::Bitcast(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SNegate(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FNegate(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IAdd(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FAdd(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ISub(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FSub(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IMul(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FMul(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UDiv(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SDiv(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FDiv(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UMod(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SRem(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SMod(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FRem(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FMod(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::VectorTimesScalar(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::MatrixTimesScalar(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::VectorTimesMatrix(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::MatrixTimesVector(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::MatrixTimesMatrix(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::OuterProduct(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Dot(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IAddCarry(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ISubBorrow(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UMulExtended(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SMulExtended(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Any(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::All(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IsNan(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IsInf(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IsFinite(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IsNormal(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SignBitSet(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::LessOrGreater(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Ordered(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Unordered(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::LogicalEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::LogicalNotEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::LogicalOr(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::LogicalAnd(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::LogicalNot(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Select(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::INotEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UGreaterThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SGreaterThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UGreaterThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SGreaterThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ULessThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SLessThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ULessThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SLessThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FOrdEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FUnordEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FOrdNotEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FUnordNotEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FOrdLessThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FUnordLessThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FOrdGreaterThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FUnordGreaterThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FOrdLessThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FUnordLessThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FOrdGreaterThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FUnordGreaterThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ShiftRightLogical(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ShiftRightArithmetic(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ShiftLeftLogical(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::BitwiseOr(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::BitwiseXor(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::BitwiseAnd(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Not(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::BitFieldInsert(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::BitFieldSExtract(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::BitFieldUExtract(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::BitReverse(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::BitCount(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::DPdx(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::DPdy(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Fwidth(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::DPdxFine(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::DPdyFine(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FwidthFine(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::DPdxCoarse(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::DPdyCoarse(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FwidthCoarse(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::EmitVertex(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::EndPrimitive(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::EmitStreamVertex(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::EndStreamPrimitive(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ControlBarrier(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::MemoryBarrier(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicLoad(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicStore(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicExchange(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicCompareExchange(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicCompareExchangeWeak(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::AtomicIIncrement(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicIDecrement(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicIAdd(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicISub(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicSMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicUMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicSMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicUMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicAnd(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicOr(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicXor(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Phi(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::LoopMerge(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SelectionMerge(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Label(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Branch(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::BranchConditional(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Switch(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Kill(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Return(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ReturnValue(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Unreachable(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::LifetimeStart(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::LifetimeStop(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupAsyncCopy(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupWaitEvents(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupAll(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupAny(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupBroadcast(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupIAdd(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupFAdd(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupFMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupUMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupSMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupFMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupUMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupSMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ReadPipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::WritePipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ReservedReadPipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ReservedWritePipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ReserveReadPipePackets(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ReserveWritePipePackets(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CommitReadPipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CommitWritePipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IsValidReserveId(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GetNumPipePackets(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GetMaxPipePackets(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupReserveReadPipePackets(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupReserveWritePipePackets(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupCommitReadPipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupCommitWritePipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::EnqueueMarker(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::EnqueueKernel(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GetKernelNDrangeSubGroupCount(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GetKernelNDrangeMaxSubGroupSize(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GetKernelWorkGroupSize(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GetKernelPreferredWorkGroupSizeMultiple(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RetainEvent(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ReleaseEvent(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CreateUserEvent(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IsValidEvent(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SetUserEventStatus(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CaptureEventProfilingInfo(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GetDefaultQueue(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::BuildNDRange(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageSparseSampleImplicitLod(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageSparseSampleExplicitLod(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageSparseSampleDrefImplicitLod(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageSparseSampleDrefExplicitLod(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageSparseSampleProjImplicitLod(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageSparseSampleProjExplicitLod(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageSparseSampleProjDrefImplicitLod(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageSparseSampleProjDrefExplicitLod(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageSparseFetch(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageSparseGather(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageSparseDrefGather(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageSparseTexelsResident(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::NoLine(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicFlagTestAndSet(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicFlagClear(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageSparseRead(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SizeOf(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypePipeStorage(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConstantPipeStorage(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CreatePipeFromPipeStorage(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GetKernelLocalSizeForSubgroupCount(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GetKernelMaxNumSubgroups(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TypeNamedBarrier(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::NamedBarrierInitialize(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::MemoryNamedBarrier(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ModuleProcessed(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ExecutionModeId(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::DecorateId(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformElect(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformAll(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformAny(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformAllEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformBroadcast(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformBroadcastFirst(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformBallot(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformInverseBallot(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformBallotBitExtract(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformBallotBitCount(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformBallotFindLSB(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformBallotFindMSB(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformShuffle(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformShuffleXor(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformShuffleUp(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformShuffleDown(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformIAdd(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformFAdd(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformIMul(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformFMul(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformSMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformUMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformFMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformSMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformUMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformFMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformBitwiseAnd(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformBitwiseOr(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformBitwiseXor(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformLogicalAnd(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformLogicalOr(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformLogicalXor(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformQuadBroadcast(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformQuadSwap(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CopyLogical(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::PtrEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::PtrNotEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::PtrDiff(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ColorAttachmentReadEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::DepthAttachmentReadEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::StencilAttachmentReadEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TypeTensorARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TensorReadARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TensorWriteARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TensorQuerySizeARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GraphConstantARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GraphEntryPointARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GraphARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GraphInputARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GraphSetOutputARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GraphEndARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeGraphARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TerminateInvocation(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeUntypedPointerKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UntypedVariableKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UntypedAccessChainKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UntypedInBoundsAccessChainKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupBallotKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SubgroupFirstInvocationKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::UntypedPtrAccessChainKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::UntypedInBoundsPtrAccessChainKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::UntypedArrayLengthKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UntypedPrefetchKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FmaKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SubgroupAllKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SubgroupAnyKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SubgroupAllEqualKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformRotateKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupReadInvocationKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ExtInstWithForwardRefsKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::UntypedGroupAsyncCopyKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TraceRayKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ExecuteCallableKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConvertUToAccelerationStructureKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::IgnoreIntersectionKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TerminateRayKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SDot(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UDot(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SUDot(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SDotAccSat(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UDotAccSat(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SUDotAccSat(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeCooperativeMatrixKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeMatrixLoadKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeMatrixStoreKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeMatrixMulAddKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeMatrixLengthKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ConstantCompositeReplicateEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SpecConstantCompositeReplicateEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CompositeConstructReplicateEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TypeRayQueryKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RayQueryInitializeKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RayQueryTerminateKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RayQueryGenerateIntersectionKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryConfirmIntersectionKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryProceedKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RayQueryGetIntersectionTypeKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageSampleWeightedQCOM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageBoxFilterQCOM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageBlockMatchSSDQCOM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageBlockMatchSADQCOM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::BitCastArrayQCOM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageBlockMatchWindowSSDQCOM(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageBlockMatchWindowSADQCOM(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageBlockMatchGatherSSDQCOM(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ImageBlockMatchGatherSADQCOM(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CompositeConstructCoopMatQCOM(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CompositeExtractCoopMatQCOM(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ExtractSubArrayQCOM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupIAddNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupFAddNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupFMinNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupUMinNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupSMinNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupFMaxNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupUMaxNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupSMaxNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FragmentMaskFetchAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FragmentFetchAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ReadClockKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AllocateNodePayloadsAMDX(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::EnqueueNodePayloadsAMDX(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeNodePayloadArrayAMDX(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::FinishWritingNodePayloadAMDX(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::NodePayloadArrayLengthAMDX(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::IsNodePayloadValidAMDX(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConstantStringAMDX(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SpecConstantStringAMDX(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformQuadAllKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupNonUniformQuadAnyKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TypeBufferEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::BufferPointerEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UntypedImageTexelPointerEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::MemberDecorateIdEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConstantSizeOfEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectRecordHitMotionNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectRecordHitWithIndexMotionNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectRecordMissMotionNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetWorldToObjectNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetObjectToWorldNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetObjectRayDirectionNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetObjectRayOriginNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectTraceRayMotionNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetShaderRecordBufferHandleNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetShaderBindingTableRecordIndexNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectRecordEmptyNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectTraceRayNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectRecordHitNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectRecordHitWithIndexNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectRecordMissNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectExecuteShaderNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetCurrentTimeNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetAttributesNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetHitKindNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectGetPrimitiveIndexNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetGeometryIndexNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetInstanceIdNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetInstanceCustomIndexNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetWorldRayDirectionNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetWorldRayOriginNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetRayTMaxNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectGetRayTMinNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectIsEmptyNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectIsHitNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectIsMissNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ReorderThreadWithHitObjectNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ReorderThreadWithHintNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeHitObjectNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageSampleFootprintNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeVectorIdEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CooperativeVectorMatrixMulNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeVectorOuterProductAccumulateNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeVectorReduceSumAccumulateNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeVectorMatrixMulAddNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeMatrixConvertNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::EmitMeshTasksEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SetMeshOutputsEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformPartitionEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::WritePackedPrimitiveIndices4x8NV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::FetchMicroTriangleVertexPositionNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::FetchMicroTriangleVertexBarycentricNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeVectorLoadNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CooperativeVectorStoreNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectRecordFromQueryEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectRecordMissEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectRecordMissMotionEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetIntersectionTriangleVertexPositionsEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetRayFlagsEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectSetShaderBindingTableRecordIndexEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectReorderExecuteShaderEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectTraceReorderExecuteEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectTraceMotionReorderExecuteEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TypeHitObjectEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ReorderThreadWithHintEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ReorderThreadWithHitObjectEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectTraceRayEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectTraceRayMotionEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectRecordEmptyEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectExecuteShaderEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetCurrentTimeEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetAttributesEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetHitKindEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectGetPrimitiveIndexEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetGeometryIndexEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetInstanceIdEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetInstanceCustomIndexEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetObjectRayOriginEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetObjectRayDirectionEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetWorldRayDirectionEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetWorldRayOriginEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetObjectToWorldEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetWorldToObjectEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetRayTMaxEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ReportIntersectionKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IgnoreIntersectionNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TerminateRayNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TraceNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TraceMotionNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TraceRayMotionNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RayQueryGetIntersectionTriangleVertexPositionsKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TypeAccelerationStructureKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ExecuteCallableNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RayQueryGetIntersectionClusterIdNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetClusterIdNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectGetRayTMinEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectGetShaderBindingTableRecordIndexEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetShaderRecordBufferHandleEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectIsEmptyEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectIsHitEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectIsMissEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeCooperativeMatrixNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CooperativeMatrixLoadNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CooperativeMatrixStoreNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeMatrixMulAddNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeMatrixLengthNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::BeginInvocationInterlockEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::EndInvocationInterlockEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeMatrixReduceNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeMatrixLoadTensorNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeMatrixStoreTensorNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeMatrixPerElementOpNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TypeTensorLayoutNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeTensorViewNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CreateTensorLayoutNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TensorLayoutSetDimensionNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TensorLayoutSetStrideNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TensorLayoutSliceNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TensorLayoutSetClampValueNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CreateTensorViewNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TensorViewSetDimensionNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TensorViewSetStrideNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::DemoteToHelperInvocation(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::IsHelperInvocationEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TensorViewSetClipNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TensorLayoutSetBlockSizeNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeMatrixTransposeNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ConvertUToImageNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConvertUToSamplerNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConvertImageToUNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConvertSamplerToUNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConvertUToSampledImageNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ConvertSampledImageToUNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SamplerImageAddressingModeNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RawAccessChainNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RayQueryGetIntersectionSpherePositionNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionSphereRadiusNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionLSSPositionsNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionLSSRadiiNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionLSSHitValueNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetSpherePositionNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetSphereRadiusNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetLSSPositionsNV(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetLSSRadiiNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectIsSphereHitNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectIsLSSHitNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RayQueryIsSphereHitNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RayQueryIsLSSHitNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SubgroupShuffleINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SubgroupShuffleDownINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupShuffleUpINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SubgroupShuffleXorINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SubgroupBlockReadINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SubgroupBlockWriteINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SubgroupImageBlockReadINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupImageBlockWriteINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupImageMediaBlockReadINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupImageMediaBlockWriteINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::UCountLeadingZerosINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UCountTrailingZerosINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::AbsISubINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AbsUSubINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IAddSatINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UAddSatINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IAverageINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UAverageINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IAverageRoundedINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UAverageRoundedINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ISubSatINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::USubSatINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IMul32x16INTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UMul32x16INTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConstantFunctionPointerINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::FunctionPointerCallINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::AsmTargetINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AsmINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AsmCallINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicFMinEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicFMaxEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AssumeTrueKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ExpectKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::DecorateString(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::MemberDecorateString(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::VmeImageINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeVmeImageINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeAvcImePayloadINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeAvcRefPayloadINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeAvcSicPayloadINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeAvcMcePayloadINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeAvcMceResultINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeAvcImeResultINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeAvcImeResultSingleReferenceStreamoutINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TypeAvcImeResultDualReferenceStreamoutINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TypeAvcImeSingleReferenceStreaminINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TypeAvcImeDualReferenceStreaminINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TypeAvcRefResultINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeAvcSicResultINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetDefaultInterShapePenaltyINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceSetInterShapePenaltyINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceSetInterDirectionPenaltyINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceSetMotionVectorCostFunctionINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceSetAcOnlyHaarINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceConvertToImePayloadINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceConvertToImeResultINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceConvertToRefPayloadINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceConvertToRefResultINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceConvertToSicPayloadINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceConvertToSicResultINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetMotionVectorsINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetInterDistortionsINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetBestInterDistortionsINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetInterMajorShapeINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetInterMinorShapeINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetInterDirectionsINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetInterMotionVectorCountINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetInterReferenceIdsINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeInitializeINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeSetSingleReferenceINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeSetDualReferenceINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeRefWindowSizeINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeAdjustRefOffsetINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeConvertToMcePayloadINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeSetMaxMotionVectorCountINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeSetUnidirectionalMixDisableINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeSetWeightedSadINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeEvaluateWithSingleReferenceINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeEvaluateWithDualReferenceINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeConvertToMceResultINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeGetSingleReferenceStreaminINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeGetDualReferenceStreaminINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeStripSingleReferenceStreamoutINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeStripDualReferenceStreamoutINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeGetBorderReachedINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeGetTruncatedSearchIndicationINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcFmeInitializeINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcBmeInitializeINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcRefConvertToMcePayloadINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcRefSetBidirectionalMixDisableINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcRefSetBilinearFilterEnableINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcRefEvaluateWithSingleReferenceINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcRefEvaluateWithDualReferenceINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcRefEvaluateWithMultiReferenceINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcRefConvertToMceResultINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicInitializeINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicConfigureSkcINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicConfigureIpeLumaINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicConfigureIpeLumaChromaINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicGetMotionVectorMaskINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicConvertToMcePayloadINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicSetIntraLumaShapePenaltyINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicSetBilinearFilterEnableINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicSetSkcForwardTransformEnableINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicSetBlockBasedRawSkipSadINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicEvaluateIpeINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicEvaluateWithSingleReferenceINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicEvaluateWithDualReferenceINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicEvaluateWithMultiReferenceINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicConvertToMceResultINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicGetIpeLumaShapeINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicGetBestIpeLumaDistortionINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicGetBestIpeChromaDistortionINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicGetPackedIpeLumaModesINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicGetIpeChromaModeINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupAvcSicGetInterRawSadsINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::VariableLengthArrayINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SaveMemoryINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RestoreMemoryINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatSinCosPiALTERA(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatCastALTERA(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatCastFromIntALTERA(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatCastToIntALTERA(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatAddALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatSubALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatMulALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatDivALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatGTALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatGEALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatLTALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatLEALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatEQALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatRecipALTERA(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatRSqrtALTERA(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatCbrtALTERA(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatHypotALTERA(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatSqrtALTERA(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatLogINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatLog2INTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatLog10INTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatLog1pINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatExpINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatExp2INTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatExp10INTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatExpm1INTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatSinINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatCosINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatSinCosINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatSinPiINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatCosPiINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatASinINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatASinPiINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatACosINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatACosPiINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatATanINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatATanPiINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatATan2INTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatPowINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatPowRINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatPowNINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::LoopControlINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AliasDomainDeclINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AliasScopeDeclINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AliasScopeListDeclINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FixedSqrtALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FixedRecipALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FixedRsqrtALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FixedSinALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FixedCosALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FixedSinCosALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FixedSinPiALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FixedCosPiALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FixedSinCosPiALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FixedLogALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FixedExpALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::PtrCastToCrossWorkgroupALTERA(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CrossWorkgroupCastToPtrALTERA(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ReadPipeBlockingALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::WritePipeBlockingALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FPGARegALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RayQueryGetRayTMinKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RayQueryGetRayFlagsKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RayQueryGetIntersectionTKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionInstanceCustomIndexKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionInstanceIdKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionGeometryIndexKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionPrimitiveIndexKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionBarycentricsKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionFrontFaceKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionCandidateAABBOpaqueKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionObjectRayDirectionKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionObjectRayOriginKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetWorldRayDirectionKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetWorldRayOriginKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionObjectToWorldKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::RayQueryGetIntersectionWorldToObjectKHR(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::AtomicFAddEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeBufferSurfaceINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeStructContinuedINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ConstantCompositeContinuedINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SpecConstantCompositeContinuedINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::CompositeConstructContinuedINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ConvertFToBF16INTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConvertBF16ToFINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ControlBarrierArriveINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ControlBarrierWaitINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArithmeticFenceEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TaskSequenceCreateALTERA(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TaskSequenceAsyncALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TaskSequenceGetALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TaskSequenceReleaseALTERA(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::TypeTaskSequenceALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SubgroupBlockPrefetchINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::Subgroup2DBlockLoadINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::Subgroup2DBlockLoadTransformINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::Subgroup2DBlockLoadTransposeINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::Subgroup2DBlockPrefetchINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::Subgroup2DBlockStoreINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupMatrixMultiplyAccumulateINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::BitwiseFunctionINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UntypedVariableLengthArrayINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ConditionalExtensionINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ConditionalEntryPointINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ConditionalCapabilityINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SpecConstantTargetINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SpecConstantArchitectureINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::SpecConstantCapabilitiesINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ConditionalCopyObjectINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::GroupIMulKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupFMulKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupBitwiseAndKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupBitwiseOrKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupBitwiseXorKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupLogicalAndKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupLogicalOrKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupLogicalXorKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RoundFToTF32INTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::MaskedGatherINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::MaskedScatterINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConvertHandleToImageINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ConvertHandleToSamplerINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
+            Self::ConvertHandleToSampledImageINTEL(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
             }
         }
     }

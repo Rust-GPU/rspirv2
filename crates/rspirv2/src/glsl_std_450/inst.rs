@@ -8,7 +8,9 @@ impl Inst for Round {
 }
 impl InstEncoding for Round {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -42,7 +44,9 @@ impl Inst for RoundEven {
 }
 impl InstEncoding for RoundEven {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -76,7 +80,9 @@ impl Inst for Trunc {
 }
 impl InstEncoding for Trunc {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -110,7 +116,9 @@ impl Inst for FAbs {
 }
 impl InstEncoding for FAbs {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -144,7 +152,9 @@ impl Inst for SAbs {
 }
 impl InstEncoding for SAbs {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -178,7 +188,9 @@ impl Inst for FSign {
 }
 impl InstEncoding for FSign {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -212,7 +224,9 @@ impl Inst for SSign {
 }
 impl InstEncoding for SSign {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -246,7 +260,9 @@ impl Inst for Floor {
 }
 impl InstEncoding for Floor {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -280,7 +296,9 @@ impl Inst for Ceil {
 }
 impl InstEncoding for Ceil {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -314,7 +332,9 @@ impl Inst for Fract {
 }
 impl InstEncoding for Fract {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -348,7 +368,9 @@ impl Inst for Radians {
 }
 impl InstEncoding for Radians {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.degrees);
@@ -387,7 +409,9 @@ impl Inst for Degrees {
 }
 impl InstEncoding for Degrees {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.radians);
@@ -426,7 +450,9 @@ impl Inst for Sin {
 }
 impl InstEncoding for Sin {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -460,7 +486,9 @@ impl Inst for Cos {
 }
 impl InstEncoding for Cos {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -494,7 +522,9 @@ impl Inst for Tan {
 }
 impl InstEncoding for Tan {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -528,7 +558,9 @@ impl Inst for Asin {
 }
 impl InstEncoding for Asin {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -562,7 +594,9 @@ impl Inst for Acos {
 }
 impl InstEncoding for Acos {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -596,7 +630,9 @@ impl Inst for Atan {
 }
 impl InstEncoding for Atan {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.y_over_x);
@@ -635,7 +671,9 @@ impl Inst for Sinh {
 }
 impl InstEncoding for Sinh {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -669,7 +707,9 @@ impl Inst for Cosh {
 }
 impl InstEncoding for Cosh {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -703,7 +743,9 @@ impl Inst for Tanh {
 }
 impl InstEncoding for Tanh {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -737,7 +779,9 @@ impl Inst for Asinh {
 }
 impl InstEncoding for Asinh {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -771,7 +815,9 @@ impl Inst for Acosh {
 }
 impl InstEncoding for Acosh {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -805,7 +851,9 @@ impl Inst for Atanh {
 }
 impl InstEncoding for Atanh {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -840,7 +888,9 @@ impl Inst for Atan2 {
 }
 impl InstEncoding for Atan2 {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.y) + OperandEncoding::word_len(&self.x);
@@ -883,7 +933,9 @@ impl Inst for Pow {
 }
 impl InstEncoding for Pow {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -925,7 +977,9 @@ impl Inst for Exp {
 }
 impl InstEncoding for Exp {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -959,7 +1013,9 @@ impl Inst for Log {
 }
 impl InstEncoding for Log {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -993,7 +1049,9 @@ impl Inst for Exp2 {
 }
 impl InstEncoding for Exp2 {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -1027,7 +1085,9 @@ impl Inst for Log2 {
 }
 impl InstEncoding for Log2 {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -1061,7 +1121,9 @@ impl Inst for Sqrt {
 }
 impl InstEncoding for Sqrt {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -1095,7 +1157,9 @@ impl Inst for InverseSqrt {
 }
 impl InstEncoding for InverseSqrt {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -1134,7 +1198,9 @@ impl Inst for Determinant {
 }
 impl InstEncoding for Determinant {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -1173,7 +1239,9 @@ impl Inst for MatrixInverse {
 }
 impl InstEncoding for MatrixInverse {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -1213,7 +1281,9 @@ impl Inst for Modf {
 }
 impl InstEncoding for Modf {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.i);
@@ -1255,7 +1325,9 @@ impl Inst for ModfStruct {
 }
 impl InstEncoding for ModfStruct {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -1290,7 +1362,9 @@ impl Inst for FMin {
 }
 impl InstEncoding for FMin {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -1333,7 +1407,9 @@ impl Inst for UMin {
 }
 impl InstEncoding for UMin {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -1376,7 +1452,9 @@ impl Inst for SMin {
 }
 impl InstEncoding for SMin {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -1419,7 +1497,9 @@ impl Inst for FMax {
 }
 impl InstEncoding for FMax {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -1462,7 +1542,9 @@ impl Inst for UMax {
 }
 impl InstEncoding for UMax {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -1505,7 +1587,9 @@ impl Inst for SMax {
 }
 impl InstEncoding for SMax {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -1549,7 +1633,9 @@ impl Inst for FClamp {
 }
 impl InstEncoding for FClamp {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1599,7 +1685,9 @@ impl Inst for UClamp {
 }
 impl InstEncoding for UClamp {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1649,7 +1737,9 @@ impl Inst for SClamp {
 }
 impl InstEncoding for SClamp {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1699,7 +1789,9 @@ impl Inst for FMix {
 }
 impl InstEncoding for FMix {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1749,7 +1841,9 @@ impl Inst for IMix {
 }
 impl InstEncoding for IMix {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1798,7 +1892,9 @@ impl Inst for Step {
 }
 impl InstEncoding for Step {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.edge) + OperandEncoding::word_len(&self.x);
@@ -1842,7 +1938,9 @@ impl Inst for SmoothStep {
 }
 impl InstEncoding for SmoothStep {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1892,7 +1990,9 @@ impl Inst for Fma {
 }
 impl InstEncoding for Fma {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1941,7 +2041,9 @@ impl Inst for Frexp {
 }
 impl InstEncoding for Frexp {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.exp);
@@ -1983,7 +2085,9 @@ impl Inst for FrexpStruct {
 }
 impl InstEncoding for FrexpStruct {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -2023,7 +2127,9 @@ impl Inst for Ldexp {
 }
 impl InstEncoding for Ldexp {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.exp);
@@ -2065,7 +2171,9 @@ impl Inst for PackSnorm4x8 {
 }
 impl InstEncoding for PackSnorm4x8 {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2104,7 +2212,9 @@ impl Inst for PackUnorm4x8 {
 }
 impl InstEncoding for PackUnorm4x8 {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2143,7 +2253,9 @@ impl Inst for PackSnorm2x16 {
 }
 impl InstEncoding for PackSnorm2x16 {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2182,7 +2294,9 @@ impl Inst for PackUnorm2x16 {
 }
 impl InstEncoding for PackUnorm2x16 {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2221,7 +2335,9 @@ impl Inst for PackHalf2x16 {
 }
 impl InstEncoding for PackHalf2x16 {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2260,7 +2376,9 @@ impl Inst for PackDouble2x32 {
 }
 impl InstEncoding for PackDouble2x32 {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2299,7 +2417,9 @@ impl Inst for UnpackSnorm2x16 {
 }
 impl InstEncoding for UnpackSnorm2x16 {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.p);
@@ -2338,7 +2458,9 @@ impl Inst for UnpackUnorm2x16 {
 }
 impl InstEncoding for UnpackUnorm2x16 {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.p);
@@ -2377,7 +2499,9 @@ impl Inst for UnpackHalf2x16 {
 }
 impl InstEncoding for UnpackHalf2x16 {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2416,7 +2540,9 @@ impl Inst for UnpackSnorm4x8 {
 }
 impl InstEncoding for UnpackSnorm4x8 {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.p);
@@ -2455,7 +2581,9 @@ impl Inst for UnpackUnorm4x8 {
 }
 impl InstEncoding for UnpackUnorm4x8 {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.p);
@@ -2494,7 +2622,9 @@ impl Inst for UnpackDouble2x32 {
 }
 impl InstEncoding for UnpackDouble2x32 {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2533,7 +2663,9 @@ impl Inst for Length {
 }
 impl InstEncoding for Length {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -2568,7 +2700,9 @@ impl Inst for Distance {
 }
 impl InstEncoding for Distance {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.p_0) + OperandEncoding::word_len(&self.p_1);
@@ -2611,7 +2745,9 @@ impl Inst for Cross {
 }
 impl InstEncoding for Cross {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -2653,7 +2789,9 @@ impl Inst for Normalize {
 }
 impl InstEncoding for Normalize {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -2689,7 +2827,9 @@ impl Inst for FaceForward {
 }
 impl InstEncoding for FaceForward {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -2738,7 +2878,9 @@ impl Inst for Reflect {
 }
 impl InstEncoding for Reflect {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.i) + OperandEncoding::word_len(&self.n);
@@ -2782,7 +2924,9 @@ impl Inst for Refract {
 }
 impl InstEncoding for Refract {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -2830,7 +2974,9 @@ impl Inst for FindILsb {
 }
 impl InstEncoding for FindILsb {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.value);
@@ -2869,7 +3015,9 @@ impl Inst for FindSMsb {
 }
 impl InstEncoding for FindSMsb {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.value);
@@ -2908,7 +3056,9 @@ impl Inst for FindUMsb {
 }
 impl InstEncoding for FindUMsb {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.value);
@@ -2947,7 +3097,9 @@ impl Inst for InterpolateAtCentroid {
 }
 impl InstEncoding for InterpolateAtCentroid {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.interpolant);
@@ -2987,7 +3139,9 @@ impl Inst for InterpolateAtSample {
 }
 impl InstEncoding for InterpolateAtSample {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -3032,7 +3186,9 @@ impl Inst for InterpolateAtOffset {
 }
 impl InstEncoding for InterpolateAtOffset {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -3077,7 +3233,9 @@ impl Inst for NMin {
 }
 impl InstEncoding for NMin {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -3120,7 +3278,9 @@ impl Inst for NMax {
 }
 impl InstEncoding for NMax {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -3164,7 +3324,9 @@ impl Inst for NClamp {
 }
 impl InstEncoding for NClamp {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1

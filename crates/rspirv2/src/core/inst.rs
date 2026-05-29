@@ -6,7 +6,9 @@ impl Inst for OpNop {
 }
 impl InstEncoding for OpNop {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -38,8 +40,12 @@ impl Inst for OpUndef {
 }
 impl InstEncoding for OpUndef {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -84,7 +90,9 @@ impl Inst for OpSourceContinued {
 }
 impl InstEncoding for OpSourceContinued {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.continued_source);
@@ -126,7 +134,9 @@ impl Inst for OpSource {
 }
 impl InstEncoding for OpSource {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -178,7 +188,9 @@ impl Inst for OpSourceExtension {
 }
 impl InstEncoding for OpSourceExtension {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.extension);
@@ -218,7 +230,9 @@ impl Inst for OpName {
 }
 impl InstEncoding for OpName {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len =
@@ -263,7 +277,9 @@ impl Inst for OpMemberName {
 }
 impl InstEncoding for OpMemberName {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -312,9 +328,11 @@ impl Inst for OpString {
 }
 impl InstEncoding for OpString {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -359,7 +377,9 @@ impl Inst for OpLine {
 }
 impl InstEncoding for OpLine {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -407,7 +427,9 @@ impl Inst for OpExtension {
 }
 impl InstEncoding for OpExtension {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.name);
@@ -447,9 +469,11 @@ impl Inst for OpExtInstImport {
 }
 impl InstEncoding for OpExtInstImport {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len =
@@ -495,8 +519,12 @@ impl Inst for OpExtInst {
 }
 impl InstEncoding for OpExtInst {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -554,7 +582,9 @@ impl Inst for OpMemoryModel {
 }
 impl InstEncoding for OpMemoryModel {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -601,7 +631,9 @@ impl Inst for OpEntryPoint {
 }
 impl InstEncoding for OpEntryPoint {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -654,7 +686,9 @@ impl Inst for OpExecutionMode {
 }
 impl InstEncoding for OpExecutionMode {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -698,7 +732,9 @@ impl Inst for OpCapability {
 }
 impl InstEncoding for OpCapability {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.capability);
@@ -737,9 +773,11 @@ impl Inst for OpTypeVoid {
 }
 impl InstEncoding for OpTypeVoid {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -773,9 +811,11 @@ impl Inst for OpTypeBool {
 }
 impl InstEncoding for OpTypeBool {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -811,9 +851,11 @@ impl Inst for OpTypeInt {
 }
 impl InstEncoding for OpTypeInt {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -862,9 +904,11 @@ impl Inst for OpTypeFloat {
 }
 impl InstEncoding for OpTypeFloat {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -913,9 +957,11 @@ impl Inst for OpTypeVector {
 }
 impl InstEncoding for OpTypeVector {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -964,9 +1010,11 @@ impl Inst for OpTypeMatrix {
 }
 impl InstEncoding for OpTypeMatrix {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1021,9 +1069,11 @@ impl Inst for OpTypeImage {
 }
 impl InstEncoding for OpTypeImage {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1094,9 +1144,11 @@ impl Inst for OpTypeSampler {
 }
 impl InstEncoding for OpTypeSampler {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -1131,9 +1183,11 @@ impl Inst for OpTypeSampledImage {
 }
 impl InstEncoding for OpTypeSampledImage {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1178,9 +1232,11 @@ impl Inst for OpTypeArray {
 }
 impl InstEncoding for OpTypeArray {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1228,9 +1284,11 @@ impl Inst for OpTypeRuntimeArray {
 }
 impl InstEncoding for OpTypeRuntimeArray {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1274,9 +1332,11 @@ impl Inst for OpTypeStruct {
 }
 impl InstEncoding for OpTypeStruct {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1320,9 +1380,11 @@ impl Inst for OpTypeOpaque {
 }
 impl InstEncoding for OpTypeOpaque {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1367,9 +1429,11 @@ impl Inst for OpTypePointer {
 }
 impl InstEncoding for OpTypePointer {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1418,9 +1482,11 @@ impl Inst for OpTypeFunction {
 }
 impl InstEncoding for OpTypeFunction {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1467,9 +1533,11 @@ impl Inst for OpTypeEvent {
 }
 impl InstEncoding for OpTypeEvent {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -1503,9 +1571,11 @@ impl Inst for OpTypeDeviceEvent {
 }
 impl InstEncoding for OpTypeDeviceEvent {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -1539,9 +1609,11 @@ impl Inst for OpTypeReserveId {
 }
 impl InstEncoding for OpTypeReserveId {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -1575,9 +1647,11 @@ impl Inst for OpTypeQueue {
 }
 impl InstEncoding for OpTypeQueue {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -1612,9 +1686,11 @@ impl Inst for OpTypePipe {
 }
 impl InstEncoding for OpTypePipe {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1658,7 +1734,9 @@ impl Inst for OpTypeForwardPointer {
 }
 impl InstEncoding for OpTypeForwardPointer {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1703,8 +1781,12 @@ impl Inst for OpConstantTrue {
 }
 impl InstEncoding for OpConstantTrue {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -1750,8 +1832,12 @@ impl Inst for OpConstantFalse {
 }
 impl InstEncoding for OpConstantFalse {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -1798,8 +1884,12 @@ impl Inst for OpConstant {
 }
 impl InstEncoding for OpConstant {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -1850,8 +1940,12 @@ impl Inst for OpConstantComposite {
 }
 impl InstEncoding for OpConstantComposite {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -1904,8 +1998,12 @@ impl Inst for OpConstantSampler {
 }
 impl InstEncoding for OpConstantSampler {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -1963,8 +2061,12 @@ impl Inst for OpConstantNull {
 }
 impl InstEncoding for OpConstantNull {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2010,8 +2112,12 @@ impl Inst for OpSpecConstantTrue {
 }
 impl InstEncoding for OpSpecConstantTrue {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2057,8 +2163,12 @@ impl Inst for OpSpecConstantFalse {
 }
 impl InstEncoding for OpSpecConstantFalse {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2105,8 +2215,12 @@ impl Inst for OpSpecConstant {
 }
 impl InstEncoding for OpSpecConstant {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2157,8 +2271,12 @@ impl Inst for OpSpecConstantComposite {
 }
 impl InstEncoding for OpSpecConstantComposite {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2209,8 +2327,12 @@ impl Inst for OpSpecConstantOp {
 }
 impl InstEncoding for OpSpecConstantOp {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2262,8 +2384,12 @@ impl Inst for OpFunction {
 }
 impl InstEncoding for OpFunction {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2317,8 +2443,12 @@ impl Inst for OpFunctionParameter {
 }
 impl InstEncoding for OpFunctionParameter {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2361,7 +2491,9 @@ impl Inst for OpFunctionEnd {
 }
 impl InstEncoding for OpFunctionEnd {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -2395,8 +2527,12 @@ impl Inst for OpFunctionCall {
 }
 impl InstEncoding for OpFunctionCall {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2452,8 +2588,12 @@ impl Inst for OpVariable {
 }
 impl InstEncoding for OpVariable {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2510,8 +2650,12 @@ impl Inst for OpImageTexelPointer {
 }
 impl InstEncoding for OpImageTexelPointer {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2571,8 +2715,12 @@ impl Inst for OpLoad {
 }
 impl InstEncoding for OpLoad {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2627,7 +2775,9 @@ impl Inst for OpStore {
 }
 impl InstEncoding for OpStore {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -2678,7 +2828,9 @@ impl Inst for OpCopyMemory {
 }
 impl InstEncoding for OpCopyMemory {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -2734,7 +2886,9 @@ impl Inst for OpCopyMemorySized {
 }
 impl InstEncoding for OpCopyMemorySized {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -2793,8 +2947,12 @@ impl Inst for OpAccessChain {
 }
 impl InstEncoding for OpAccessChain {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2850,8 +3008,12 @@ impl Inst for OpInBoundsAccessChain {
 }
 impl InstEncoding for OpInBoundsAccessChain {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2908,8 +3070,12 @@ impl Inst for OpPtrAccessChain {
 }
 impl InstEncoding for OpPtrAccessChain {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2969,8 +3135,12 @@ impl Inst for OpArrayLength {
 }
 impl InstEncoding for OpArrayLength {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3025,8 +3195,12 @@ impl Inst for OpGenericPtrMemSemantics {
 }
 impl InstEncoding for OpGenericPtrMemSemantics {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3079,8 +3253,12 @@ impl Inst for OpInBoundsPtrAccessChain {
 }
 impl InstEncoding for OpInBoundsPtrAccessChain {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3138,7 +3316,9 @@ impl Inst for OpDecorate {
 }
 impl InstEncoding for OpDecorate {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -3184,7 +3364,9 @@ impl Inst for OpMemberDecorate {
 }
 impl InstEncoding for OpMemberDecorate {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -3232,9 +3414,11 @@ impl Inst for OpDecorationGroup {
 }
 impl InstEncoding for OpDecorationGroup {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -3269,7 +3453,9 @@ impl Inst for OpGroupDecorate {
 }
 impl InstEncoding for OpGroupDecorate {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -3314,7 +3500,9 @@ impl Inst for OpGroupMemberDecorate {
 }
 impl InstEncoding for OpGroupMemberDecorate {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -3361,8 +3549,12 @@ impl Inst for OpVectorExtractDynamic {
 }
 impl InstEncoding for OpVectorExtractDynamic {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3419,8 +3611,12 @@ impl Inst for OpVectorInsertDynamic {
 }
 impl InstEncoding for OpVectorInsertDynamic {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3481,8 +3677,12 @@ impl Inst for OpVectorShuffle {
 }
 impl InstEncoding for OpVectorShuffle {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3541,8 +3741,12 @@ impl Inst for OpCompositeConstruct {
 }
 impl InstEncoding for OpCompositeConstruct {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3594,8 +3798,12 @@ impl Inst for OpCompositeExtract {
 }
 impl InstEncoding for OpCompositeExtract {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3652,8 +3860,12 @@ impl Inst for OpCompositeInsert {
 }
 impl InstEncoding for OpCompositeInsert {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3712,8 +3924,12 @@ impl Inst for OpCopyObject {
 }
 impl InstEncoding for OpCopyObject {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3764,8 +3980,12 @@ impl Inst for OpTranspose {
 }
 impl InstEncoding for OpTranspose {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3817,8 +4037,12 @@ impl Inst for OpSampledImage {
 }
 impl InstEncoding for OpSampledImage {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3875,8 +4099,12 @@ impl Inst for OpImageSampleImplicitLod {
 }
 impl InstEncoding for OpImageSampleImplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3937,8 +4165,12 @@ impl Inst for OpImageSampleExplicitLod {
 }
 impl InstEncoding for OpImageSampleExplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4000,8 +4232,12 @@ impl Inst for OpImageSampleDrefImplicitLod {
 }
 impl InstEncoding for OpImageSampleDrefImplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4067,8 +4303,12 @@ impl Inst for OpImageSampleDrefExplicitLod {
 }
 impl InstEncoding for OpImageSampleDrefExplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4133,8 +4373,12 @@ impl Inst for OpImageSampleProjImplicitLod {
 }
 impl InstEncoding for OpImageSampleProjImplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4195,8 +4439,12 @@ impl Inst for OpImageSampleProjExplicitLod {
 }
 impl InstEncoding for OpImageSampleProjExplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4258,8 +4506,12 @@ impl Inst for OpImageSampleProjDrefImplicitLod {
 }
 impl InstEncoding for OpImageSampleProjDrefImplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4325,8 +4577,12 @@ impl Inst for OpImageSampleProjDrefExplicitLod {
 }
 impl InstEncoding for OpImageSampleProjDrefExplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4391,8 +4647,12 @@ impl Inst for OpImageFetch {
 }
 impl InstEncoding for OpImageFetch {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4454,8 +4714,12 @@ impl Inst for OpImageGather {
 }
 impl InstEncoding for OpImageGather {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4521,8 +4785,12 @@ impl Inst for OpImageDrefGather {
 }
 impl InstEncoding for OpImageDrefGather {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4587,8 +4855,12 @@ impl Inst for OpImageRead {
 }
 impl InstEncoding for OpImageRead {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4648,7 +4920,9 @@ impl Inst for OpImageWrite {
 }
 impl InstEncoding for OpImageWrite {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -4702,8 +4976,12 @@ impl Inst for OpImage {
 }
 impl InstEncoding for OpImage {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4754,8 +5032,12 @@ impl Inst for OpImageQueryFormat {
 }
 impl InstEncoding for OpImageQueryFormat {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4806,8 +5088,12 @@ impl Inst for OpImageQueryOrder {
 }
 impl InstEncoding for OpImageQueryOrder {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4859,8 +5145,12 @@ impl Inst for OpImageQuerySizeLod {
 }
 impl InstEncoding for OpImageQuerySizeLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4915,8 +5205,12 @@ impl Inst for OpImageQuerySize {
 }
 impl InstEncoding for OpImageQuerySize {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4968,8 +5262,12 @@ impl Inst for OpImageQueryLod {
 }
 impl InstEncoding for OpImageQueryLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5024,8 +5322,12 @@ impl Inst for OpImageQueryLevels {
 }
 impl InstEncoding for OpImageQueryLevels {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5076,8 +5378,12 @@ impl Inst for OpImageQuerySamples {
 }
 impl InstEncoding for OpImageQuerySamples {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5128,8 +5434,12 @@ impl Inst for OpConvertFToU {
 }
 impl InstEncoding for OpConvertFToU {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5180,8 +5490,12 @@ impl Inst for OpConvertFToS {
 }
 impl InstEncoding for OpConvertFToS {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5232,8 +5546,12 @@ impl Inst for OpConvertSToF {
 }
 impl InstEncoding for OpConvertSToF {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5284,8 +5602,12 @@ impl Inst for OpConvertUToF {
 }
 impl InstEncoding for OpConvertUToF {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5336,8 +5658,12 @@ impl Inst for OpUConvert {
 }
 impl InstEncoding for OpUConvert {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5388,8 +5714,12 @@ impl Inst for OpSConvert {
 }
 impl InstEncoding for OpSConvert {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5440,8 +5770,12 @@ impl Inst for OpFConvert {
 }
 impl InstEncoding for OpFConvert {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5492,8 +5826,12 @@ impl Inst for OpQuantizeToF16 {
 }
 impl InstEncoding for OpQuantizeToF16 {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5544,8 +5882,12 @@ impl Inst for OpConvertPtrToU {
 }
 impl InstEncoding for OpConvertPtrToU {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5596,8 +5938,12 @@ impl Inst for OpSatConvertSToU {
 }
 impl InstEncoding for OpSatConvertSToU {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5648,8 +5994,12 @@ impl Inst for OpSatConvertUToS {
 }
 impl InstEncoding for OpSatConvertUToS {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5700,8 +6050,12 @@ impl Inst for OpConvertUToPtr {
 }
 impl InstEncoding for OpConvertUToPtr {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5752,8 +6106,12 @@ impl Inst for OpPtrCastToGeneric {
 }
 impl InstEncoding for OpPtrCastToGeneric {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5804,8 +6162,12 @@ impl Inst for OpGenericCastToPtr {
 }
 impl InstEncoding for OpGenericCastToPtr {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5857,8 +6219,12 @@ impl Inst for OpGenericCastToPtrExplicit {
 }
 impl InstEncoding for OpGenericCastToPtrExplicit {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5913,8 +6279,12 @@ impl Inst for OpBitcast {
 }
 impl InstEncoding for OpBitcast {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5965,8 +6335,12 @@ impl Inst for OpSNegate {
 }
 impl InstEncoding for OpSNegate {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6017,8 +6391,12 @@ impl Inst for OpFNegate {
 }
 impl InstEncoding for OpFNegate {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6070,8 +6448,12 @@ impl Inst for OpIAdd {
 }
 impl InstEncoding for OpIAdd {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6127,8 +6509,12 @@ impl Inst for OpFAdd {
 }
 impl InstEncoding for OpFAdd {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6184,8 +6570,12 @@ impl Inst for OpISub {
 }
 impl InstEncoding for OpISub {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6241,8 +6631,12 @@ impl Inst for OpFSub {
 }
 impl InstEncoding for OpFSub {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6298,8 +6692,12 @@ impl Inst for OpIMul {
 }
 impl InstEncoding for OpIMul {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6355,8 +6753,12 @@ impl Inst for OpFMul {
 }
 impl InstEncoding for OpFMul {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6412,8 +6814,12 @@ impl Inst for OpUDiv {
 }
 impl InstEncoding for OpUDiv {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6469,8 +6875,12 @@ impl Inst for OpSDiv {
 }
 impl InstEncoding for OpSDiv {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6526,8 +6936,12 @@ impl Inst for OpFDiv {
 }
 impl InstEncoding for OpFDiv {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6583,8 +6997,12 @@ impl Inst for OpUMod {
 }
 impl InstEncoding for OpUMod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6640,8 +7058,12 @@ impl Inst for OpSRem {
 }
 impl InstEncoding for OpSRem {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6697,8 +7119,12 @@ impl Inst for OpSMod {
 }
 impl InstEncoding for OpSMod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6754,8 +7180,12 @@ impl Inst for OpFRem {
 }
 impl InstEncoding for OpFRem {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6811,8 +7241,12 @@ impl Inst for OpFMod {
 }
 impl InstEncoding for OpFMod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6868,8 +7302,12 @@ impl Inst for OpVectorTimesScalar {
 }
 impl InstEncoding for OpVectorTimesScalar {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6925,8 +7363,12 @@ impl Inst for OpMatrixTimesScalar {
 }
 impl InstEncoding for OpMatrixTimesScalar {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6982,8 +7424,12 @@ impl Inst for OpVectorTimesMatrix {
 }
 impl InstEncoding for OpVectorTimesMatrix {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7039,8 +7485,12 @@ impl Inst for OpMatrixTimesVector {
 }
 impl InstEncoding for OpMatrixTimesVector {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7096,8 +7546,12 @@ impl Inst for OpMatrixTimesMatrix {
 }
 impl InstEncoding for OpMatrixTimesMatrix {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7153,8 +7607,12 @@ impl Inst for OpOuterProduct {
 }
 impl InstEncoding for OpOuterProduct {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7210,8 +7668,12 @@ impl Inst for OpDot {
 }
 impl InstEncoding for OpDot {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7267,8 +7729,12 @@ impl Inst for OpIAddCarry {
 }
 impl InstEncoding for OpIAddCarry {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7324,8 +7790,12 @@ impl Inst for OpISubBorrow {
 }
 impl InstEncoding for OpISubBorrow {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7381,8 +7851,12 @@ impl Inst for OpUMulExtended {
 }
 impl InstEncoding for OpUMulExtended {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7438,8 +7912,12 @@ impl Inst for OpSMulExtended {
 }
 impl InstEncoding for OpSMulExtended {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7494,8 +7972,12 @@ impl Inst for OpAny {
 }
 impl InstEncoding for OpAny {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7546,8 +8028,12 @@ impl Inst for OpAll {
 }
 impl InstEncoding for OpAll {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7598,8 +8084,12 @@ impl Inst for OpIsNan {
 }
 impl InstEncoding for OpIsNan {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7650,8 +8140,12 @@ impl Inst for OpIsInf {
 }
 impl InstEncoding for OpIsInf {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7702,8 +8196,12 @@ impl Inst for OpIsFinite {
 }
 impl InstEncoding for OpIsFinite {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7754,8 +8252,12 @@ impl Inst for OpIsNormal {
 }
 impl InstEncoding for OpIsNormal {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7806,8 +8308,12 @@ impl Inst for OpSignBitSet {
 }
 impl InstEncoding for OpSignBitSet {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7859,8 +8365,12 @@ impl Inst for OpLessOrGreater {
 }
 impl InstEncoding for OpLessOrGreater {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7916,8 +8426,12 @@ impl Inst for OpOrdered {
 }
 impl InstEncoding for OpOrdered {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7973,8 +8487,12 @@ impl Inst for OpUnordered {
 }
 impl InstEncoding for OpUnordered {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8030,8 +8548,12 @@ impl Inst for OpLogicalEqual {
 }
 impl InstEncoding for OpLogicalEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8087,8 +8609,12 @@ impl Inst for OpLogicalNotEqual {
 }
 impl InstEncoding for OpLogicalNotEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8144,8 +8670,12 @@ impl Inst for OpLogicalOr {
 }
 impl InstEncoding for OpLogicalOr {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8201,8 +8731,12 @@ impl Inst for OpLogicalAnd {
 }
 impl InstEncoding for OpLogicalAnd {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8257,8 +8791,12 @@ impl Inst for OpLogicalNot {
 }
 impl InstEncoding for OpLogicalNot {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8311,8 +8849,12 @@ impl Inst for OpSelect {
 }
 impl InstEncoding for OpSelect {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8372,8 +8914,12 @@ impl Inst for OpIEqual {
 }
 impl InstEncoding for OpIEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8429,8 +8975,12 @@ impl Inst for OpINotEqual {
 }
 impl InstEncoding for OpINotEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8486,8 +9036,12 @@ impl Inst for OpUGreaterThan {
 }
 impl InstEncoding for OpUGreaterThan {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8543,8 +9097,12 @@ impl Inst for OpSGreaterThan {
 }
 impl InstEncoding for OpSGreaterThan {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8600,8 +9158,12 @@ impl Inst for OpUGreaterThanEqual {
 }
 impl InstEncoding for OpUGreaterThanEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8657,8 +9219,12 @@ impl Inst for OpSGreaterThanEqual {
 }
 impl InstEncoding for OpSGreaterThanEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8714,8 +9280,12 @@ impl Inst for OpULessThan {
 }
 impl InstEncoding for OpULessThan {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8771,8 +9341,12 @@ impl Inst for OpSLessThan {
 }
 impl InstEncoding for OpSLessThan {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8828,8 +9402,12 @@ impl Inst for OpULessThanEqual {
 }
 impl InstEncoding for OpULessThanEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8885,8 +9463,12 @@ impl Inst for OpSLessThanEqual {
 }
 impl InstEncoding for OpSLessThanEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8942,8 +9524,12 @@ impl Inst for OpFOrdEqual {
 }
 impl InstEncoding for OpFOrdEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -8999,8 +9585,12 @@ impl Inst for OpFUnordEqual {
 }
 impl InstEncoding for OpFUnordEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9056,8 +9646,12 @@ impl Inst for OpFOrdNotEqual {
 }
 impl InstEncoding for OpFOrdNotEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9113,8 +9707,12 @@ impl Inst for OpFUnordNotEqual {
 }
 impl InstEncoding for OpFUnordNotEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9170,8 +9768,12 @@ impl Inst for OpFOrdLessThan {
 }
 impl InstEncoding for OpFOrdLessThan {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9227,8 +9829,12 @@ impl Inst for OpFUnordLessThan {
 }
 impl InstEncoding for OpFUnordLessThan {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9284,8 +9890,12 @@ impl Inst for OpFOrdGreaterThan {
 }
 impl InstEncoding for OpFOrdGreaterThan {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9341,8 +9951,12 @@ impl Inst for OpFUnordGreaterThan {
 }
 impl InstEncoding for OpFUnordGreaterThan {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9398,8 +10012,12 @@ impl Inst for OpFOrdLessThanEqual {
 }
 impl InstEncoding for OpFOrdLessThanEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9455,8 +10073,12 @@ impl Inst for OpFUnordLessThanEqual {
 }
 impl InstEncoding for OpFUnordLessThanEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9512,8 +10134,12 @@ impl Inst for OpFOrdGreaterThanEqual {
 }
 impl InstEncoding for OpFOrdGreaterThanEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9569,8 +10195,12 @@ impl Inst for OpFUnordGreaterThanEqual {
 }
 impl InstEncoding for OpFUnordGreaterThanEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9626,8 +10256,12 @@ impl Inst for OpShiftRightLogical {
 }
 impl InstEncoding for OpShiftRightLogical {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9683,8 +10317,12 @@ impl Inst for OpShiftRightArithmetic {
 }
 impl InstEncoding for OpShiftRightArithmetic {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9740,8 +10378,12 @@ impl Inst for OpShiftLeftLogical {
 }
 impl InstEncoding for OpShiftLeftLogical {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9797,8 +10439,12 @@ impl Inst for OpBitwiseOr {
 }
 impl InstEncoding for OpBitwiseOr {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9854,8 +10500,12 @@ impl Inst for OpBitwiseXor {
 }
 impl InstEncoding for OpBitwiseXor {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9911,8 +10561,12 @@ impl Inst for OpBitwiseAnd {
 }
 impl InstEncoding for OpBitwiseAnd {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -9967,8 +10621,12 @@ impl Inst for OpNot {
 }
 impl InstEncoding for OpNot {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -10022,8 +10680,12 @@ impl Inst for OpBitFieldInsert {
 }
 impl InstEncoding for OpBitFieldInsert {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -10088,8 +10750,12 @@ impl Inst for OpBitFieldSExtract {
 }
 impl InstEncoding for OpBitFieldSExtract {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -10150,8 +10816,12 @@ impl Inst for OpBitFieldUExtract {
 }
 impl InstEncoding for OpBitFieldUExtract {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -10210,8 +10880,12 @@ impl Inst for OpBitReverse {
 }
 impl InstEncoding for OpBitReverse {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -10262,8 +10936,12 @@ impl Inst for OpBitCount {
 }
 impl InstEncoding for OpBitCount {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -10314,8 +10992,12 @@ impl Inst for OpDPdx {
 }
 impl InstEncoding for OpDPdx {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -10366,8 +11048,12 @@ impl Inst for OpDPdy {
 }
 impl InstEncoding for OpDPdy {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -10418,8 +11104,12 @@ impl Inst for OpFwidth {
 }
 impl InstEncoding for OpFwidth {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -10470,8 +11160,12 @@ impl Inst for OpDPdxFine {
 }
 impl InstEncoding for OpDPdxFine {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -10522,8 +11216,12 @@ impl Inst for OpDPdyFine {
 }
 impl InstEncoding for OpDPdyFine {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -10574,8 +11272,12 @@ impl Inst for OpFwidthFine {
 }
 impl InstEncoding for OpFwidthFine {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -10626,8 +11328,12 @@ impl Inst for OpDPdxCoarse {
 }
 impl InstEncoding for OpDPdxCoarse {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -10678,8 +11384,12 @@ impl Inst for OpDPdyCoarse {
 }
 impl InstEncoding for OpDPdyCoarse {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -10730,8 +11440,12 @@ impl Inst for OpFwidthCoarse {
 }
 impl InstEncoding for OpFwidthCoarse {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -10778,7 +11492,9 @@ impl Inst for OpEmitVertex {
 }
 impl InstEncoding for OpEmitVertex {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -10807,7 +11523,9 @@ impl Inst for OpEndPrimitive {
 }
 impl InstEncoding for OpEndPrimitive {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -10838,7 +11556,9 @@ impl Inst for OpEmitStreamVertex {
 }
 impl InstEncoding for OpEmitStreamVertex {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.stream);
@@ -10877,7 +11597,9 @@ impl Inst for OpEndStreamPrimitive {
 }
 impl InstEncoding for OpEndStreamPrimitive {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.stream);
@@ -10918,7 +11640,9 @@ impl Inst for OpControlBarrier {
 }
 impl InstEncoding for OpControlBarrier {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -10967,7 +11691,9 @@ impl Inst for OpMemoryBarrier {
 }
 impl InstEncoding for OpMemoryBarrier {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -11015,8 +11741,12 @@ impl Inst for OpAtomicLoad {
 }
 impl InstEncoding for OpAtomicLoad {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -11076,7 +11806,9 @@ impl Inst for OpAtomicStore {
 }
 impl InstEncoding for OpAtomicStore {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -11133,8 +11865,12 @@ impl Inst for OpAtomicExchange {
 }
 impl InstEncoding for OpAtomicExchange {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -11202,8 +11938,12 @@ impl Inst for OpAtomicCompareExchange {
 }
 impl InstEncoding for OpAtomicCompareExchange {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -11279,8 +12019,12 @@ impl Inst for OpAtomicCompareExchangeWeak {
 }
 impl InstEncoding for OpAtomicCompareExchangeWeak {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -11353,8 +12097,12 @@ impl Inst for OpAtomicIIncrement {
 }
 impl InstEncoding for OpAtomicIIncrement {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -11415,8 +12163,12 @@ impl Inst for OpAtomicIDecrement {
 }
 impl InstEncoding for OpAtomicIDecrement {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -11478,8 +12230,12 @@ impl Inst for OpAtomicIAdd {
 }
 impl InstEncoding for OpAtomicIAdd {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -11545,8 +12301,12 @@ impl Inst for OpAtomicISub {
 }
 impl InstEncoding for OpAtomicISub {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -11612,8 +12372,12 @@ impl Inst for OpAtomicSMin {
 }
 impl InstEncoding for OpAtomicSMin {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -11679,8 +12443,12 @@ impl Inst for OpAtomicUMin {
 }
 impl InstEncoding for OpAtomicUMin {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -11746,8 +12514,12 @@ impl Inst for OpAtomicSMax {
 }
 impl InstEncoding for OpAtomicSMax {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -11813,8 +12585,12 @@ impl Inst for OpAtomicUMax {
 }
 impl InstEncoding for OpAtomicUMax {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -11880,8 +12656,12 @@ impl Inst for OpAtomicAnd {
 }
 impl InstEncoding for OpAtomicAnd {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -11947,8 +12727,12 @@ impl Inst for OpAtomicOr {
 }
 impl InstEncoding for OpAtomicOr {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -12014,8 +12798,12 @@ impl Inst for OpAtomicXor {
 }
 impl InstEncoding for OpAtomicXor {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -12078,8 +12866,12 @@ impl Inst for OpPhi {
 }
 impl InstEncoding for OpPhi {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -12130,7 +12922,9 @@ impl Inst for OpLoopMerge {
 }
 impl InstEncoding for OpLoopMerge {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -12179,7 +12973,9 @@ impl Inst for OpSelectionMerge {
 }
 impl InstEncoding for OpSelectionMerge {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -12223,9 +13019,11 @@ impl Inst for OpLabel {
 }
 impl InstEncoding for OpLabel {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -12259,7 +13057,9 @@ impl Inst for OpBranch {
 }
 impl InstEncoding for OpBranch {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.target_label);
@@ -12301,7 +13101,9 @@ impl Inst for OpBranchConditional {
 }
 impl InstEncoding for OpBranchConditional {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -12355,7 +13157,9 @@ impl Inst for OpSwitch {
 }
 impl InstEncoding for OpSwitch {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -12401,7 +13205,9 @@ impl Inst for OpKill {
 }
 impl InstEncoding for OpKill {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -12430,7 +13236,9 @@ impl Inst for OpReturn {
 }
 impl InstEncoding for OpReturn {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -12461,7 +13269,9 @@ impl Inst for OpReturnValue {
 }
 impl InstEncoding for OpReturnValue {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.value);
@@ -12498,7 +13308,9 @@ impl Inst for OpUnreachable {
 }
 impl InstEncoding for OpUnreachable {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -12530,7 +13342,9 @@ impl Inst for OpLifetimeStart {
 }
 impl InstEncoding for OpLifetimeStart {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len =
@@ -12574,7 +13388,9 @@ impl Inst for OpLifetimeStop {
 }
 impl InstEncoding for OpLifetimeStop {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len =
@@ -12624,8 +13440,12 @@ impl Inst for OpGroupAsyncCopy {
 }
 impl InstEncoding for OpGroupAsyncCopy {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -12696,7 +13516,9 @@ impl Inst for OpGroupWaitEvents {
 }
 impl InstEncoding for OpGroupWaitEvents {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -12747,8 +13569,12 @@ impl Inst for OpGroupAll {
 }
 impl InstEncoding for OpGroupAll {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -12804,8 +13630,12 @@ impl Inst for OpGroupAny {
 }
 impl InstEncoding for OpGroupAny {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -12862,8 +13692,12 @@ impl Inst for OpGroupBroadcast {
 }
 impl InstEncoding for OpGroupBroadcast {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -12924,8 +13758,12 @@ impl Inst for OpGroupIAdd {
 }
 impl InstEncoding for OpGroupIAdd {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -12986,8 +13824,12 @@ impl Inst for OpGroupFAdd {
 }
 impl InstEncoding for OpGroupFAdd {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -13048,8 +13890,12 @@ impl Inst for OpGroupFMin {
 }
 impl InstEncoding for OpGroupFMin {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -13110,8 +13956,12 @@ impl Inst for OpGroupUMin {
 }
 impl InstEncoding for OpGroupUMin {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -13172,8 +14022,12 @@ impl Inst for OpGroupSMin {
 }
 impl InstEncoding for OpGroupSMin {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -13234,8 +14088,12 @@ impl Inst for OpGroupFMax {
 }
 impl InstEncoding for OpGroupFMax {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -13296,8 +14154,12 @@ impl Inst for OpGroupUMax {
 }
 impl InstEncoding for OpGroupUMax {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -13358,8 +14220,12 @@ impl Inst for OpGroupSMax {
 }
 impl InstEncoding for OpGroupSMax {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -13421,8 +14287,12 @@ impl Inst for OpReadPipe {
 }
 impl InstEncoding for OpReadPipe {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -13488,8 +14358,12 @@ impl Inst for OpWritePipe {
 }
 impl InstEncoding for OpWritePipe {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -13557,8 +14431,12 @@ impl Inst for OpReservedReadPipe {
 }
 impl InstEncoding for OpReservedReadPipe {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -13634,8 +14512,12 @@ impl Inst for OpReservedWritePipe {
 }
 impl InstEncoding for OpReservedWritePipe {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -13709,8 +14591,12 @@ impl Inst for OpReserveReadPipePackets {
 }
 impl InstEncoding for OpReserveReadPipePackets {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -13776,8 +14662,12 @@ impl Inst for OpReserveWritePipePackets {
 }
 impl InstEncoding for OpReserveWritePipePackets {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -13841,7 +14731,9 @@ impl Inst for OpCommitReadPipe {
 }
 impl InstEncoding for OpCommitReadPipe {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -13896,7 +14788,9 @@ impl Inst for OpCommitWritePipe {
 }
 impl InstEncoding for OpCommitWritePipe {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -13950,8 +14844,12 @@ impl Inst for OpIsValidReserveId {
 }
 impl InstEncoding for OpIsValidReserveId {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -14004,8 +14902,12 @@ impl Inst for OpGetNumPipePackets {
 }
 impl InstEncoding for OpGetNumPipePackets {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -14066,8 +14968,12 @@ impl Inst for OpGetMaxPipePackets {
 }
 impl InstEncoding for OpGetMaxPipePackets {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -14130,8 +15036,12 @@ impl Inst for OpGroupReserveReadPipePackets {
 }
 impl InstEncoding for OpGroupReserveReadPipePackets {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -14202,8 +15112,12 @@ impl Inst for OpGroupReserveWritePipePackets {
 }
 impl InstEncoding for OpGroupReserveWritePipePackets {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -14272,7 +15186,9 @@ impl Inst for OpGroupCommitReadPipe {
 }
 impl InstEncoding for OpGroupCommitReadPipe {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -14332,7 +15248,9 @@ impl Inst for OpGroupCommitWritePipe {
 }
 impl InstEncoding for OpGroupCommitWritePipe {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -14393,8 +15311,12 @@ impl Inst for OpEnqueueMarker {
 }
 impl InstEncoding for OpEnqueueMarker {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -14467,8 +15389,12 @@ impl Inst for OpEnqueueKernel {
 }
 impl InstEncoding for OpEnqueueKernel {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -14563,8 +15489,12 @@ impl Inst for OpGetKernelNDrangeSubGroupCount {
 }
 impl InstEncoding for OpGetKernelNDrangeSubGroupCount {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -14635,8 +15565,12 @@ impl Inst for OpGetKernelNDrangeMaxSubGroupSize {
 }
 impl InstEncoding for OpGetKernelNDrangeMaxSubGroupSize {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -14706,8 +15640,12 @@ impl Inst for OpGetKernelWorkGroupSize {
 }
 impl InstEncoding for OpGetKernelWorkGroupSize {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -14773,8 +15711,12 @@ impl Inst for OpGetKernelPreferredWorkGroupSizeMultiple {
 }
 impl InstEncoding for OpGetKernelPreferredWorkGroupSizeMultiple {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -14835,7 +15777,9 @@ impl Inst for OpRetainEvent {
 }
 impl InstEncoding for OpRetainEvent {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.event);
@@ -14874,7 +15818,9 @@ impl Inst for OpReleaseEvent {
 }
 impl InstEncoding for OpReleaseEvent {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.event);
@@ -14914,8 +15860,12 @@ impl Inst for OpCreateUserEvent {
 }
 impl InstEncoding for OpCreateUserEvent {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -14962,8 +15912,12 @@ impl Inst for OpIsValidEvent {
 }
 impl InstEncoding for OpIsValidEvent {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -15013,7 +15967,9 @@ impl Inst for OpSetUserEventStatus {
 }
 impl InstEncoding for OpSetUserEventStatus {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len =
@@ -15058,7 +16014,9 @@ impl Inst for OpCaptureEventProfilingInfo {
 }
 impl InstEncoding for OpCaptureEventProfilingInfo {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -15107,8 +16065,12 @@ impl Inst for OpGetDefaultQueue {
 }
 impl InstEncoding for OpGetDefaultQueue {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -15157,8 +16119,12 @@ impl Inst for OpBuildNDRange {
 }
 impl InstEncoding for OpBuildNDRange {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -15219,8 +16185,12 @@ impl Inst for OpImageSparseSampleImplicitLod {
 }
 impl InstEncoding for OpImageSparseSampleImplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -15281,8 +16251,12 @@ impl Inst for OpImageSparseSampleExplicitLod {
 }
 impl InstEncoding for OpImageSparseSampleExplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -15344,8 +16318,12 @@ impl Inst for OpImageSparseSampleDrefImplicitLod {
 }
 impl InstEncoding for OpImageSparseSampleDrefImplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -15411,8 +16389,12 @@ impl Inst for OpImageSparseSampleDrefExplicitLod {
 }
 impl InstEncoding for OpImageSparseSampleDrefExplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -15477,8 +16459,12 @@ impl Inst for OpImageSparseSampleProjImplicitLod {
 }
 impl InstEncoding for OpImageSparseSampleProjImplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -15539,8 +16525,12 @@ impl Inst for OpImageSparseSampleProjExplicitLod {
 }
 impl InstEncoding for OpImageSparseSampleProjExplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -15602,8 +16592,12 @@ impl Inst for OpImageSparseSampleProjDrefImplicitLod {
 }
 impl InstEncoding for OpImageSparseSampleProjDrefImplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -15669,8 +16663,12 @@ impl Inst for OpImageSparseSampleProjDrefExplicitLod {
 }
 impl InstEncoding for OpImageSparseSampleProjDrefExplicitLod {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -15735,8 +16733,12 @@ impl Inst for OpImageSparseFetch {
 }
 impl InstEncoding for OpImageSparseFetch {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -15798,8 +16800,12 @@ impl Inst for OpImageSparseGather {
 }
 impl InstEncoding for OpImageSparseGather {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -15865,8 +16871,12 @@ impl Inst for OpImageSparseDrefGather {
 }
 impl InstEncoding for OpImageSparseDrefGather {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -15929,8 +16939,12 @@ impl Inst for OpImageSparseTexelsResident {
 }
 impl InstEncoding for OpImageSparseTexelsResident {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -15977,7 +16991,9 @@ impl Inst for OpNoLine {
 }
 impl InstEncoding for OpNoLine {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -16012,8 +17028,12 @@ impl Inst for OpAtomicFlagTestAndSet {
 }
 impl InstEncoding for OpAtomicFlagTestAndSet {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -16072,7 +17092,9 @@ impl Inst for OpAtomicFlagClear {
 }
 impl InstEncoding for OpAtomicFlagClear {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -16124,8 +17146,12 @@ impl Inst for OpImageSparseRead {
 }
 impl InstEncoding for OpImageSparseRead {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -16184,8 +17210,12 @@ impl Inst for OpSizeOf {
 }
 impl InstEncoding for OpSizeOf {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -16234,9 +17264,11 @@ impl Inst for OpTypePipeStorage {
 }
 impl InstEncoding for OpTypePipeStorage {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -16274,8 +17306,12 @@ impl Inst for OpConstantPipeStorage {
 }
 impl InstEncoding for OpConstantPipeStorage {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -16334,8 +17370,12 @@ impl Inst for OpCreatePipeFromPipeStorage {
 }
 impl InstEncoding for OpCreatePipeFromPipeStorage {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -16390,8 +17430,12 @@ impl Inst for OpGetKernelLocalSizeForSubgroupCount {
 }
 impl InstEncoding for OpGetKernelLocalSizeForSubgroupCount {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -16461,8 +17505,12 @@ impl Inst for OpGetKernelMaxNumSubgroups {
 }
 impl InstEncoding for OpGetKernelMaxNumSubgroups {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -16523,9 +17571,11 @@ impl Inst for OpTypeNamedBarrier {
 }
 impl InstEncoding for OpTypeNamedBarrier {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -16561,8 +17611,12 @@ impl Inst for OpNamedBarrierInitialize {
 }
 impl InstEncoding for OpNamedBarrierInitialize {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -16613,7 +17667,9 @@ impl Inst for OpMemoryNamedBarrier {
 }
 impl InstEncoding for OpMemoryNamedBarrier {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -16661,7 +17717,9 @@ impl Inst for OpModuleProcessed {
 }
 impl InstEncoding for OpModuleProcessed {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.process);
@@ -16701,7 +17759,9 @@ impl Inst for OpExecutionModeId {
 }
 impl InstEncoding for OpExecutionModeId {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -16746,7 +17806,9 @@ impl Inst for OpDecorateId {
 }
 impl InstEncoding for OpDecorateId {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -16792,8 +17854,12 @@ impl Inst for OpGroupNonUniformElect {
 }
 impl InstEncoding for OpGroupNonUniformElect {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -16845,8 +17911,12 @@ impl Inst for OpGroupNonUniformAll {
 }
 impl InstEncoding for OpGroupNonUniformAll {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -16902,8 +17972,12 @@ impl Inst for OpGroupNonUniformAny {
 }
 impl InstEncoding for OpGroupNonUniformAny {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -16959,8 +18033,12 @@ impl Inst for OpGroupNonUniformAllEqual {
 }
 impl InstEncoding for OpGroupNonUniformAllEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17017,8 +18095,12 @@ impl Inst for OpGroupNonUniformBroadcast {
 }
 impl InstEncoding for OpGroupNonUniformBroadcast {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17078,8 +18160,12 @@ impl Inst for OpGroupNonUniformBroadcastFirst {
 }
 impl InstEncoding for OpGroupNonUniformBroadcastFirst {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17135,8 +18221,12 @@ impl Inst for OpGroupNonUniformBallot {
 }
 impl InstEncoding for OpGroupNonUniformBallot {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17192,8 +18282,12 @@ impl Inst for OpGroupNonUniformInverseBallot {
 }
 impl InstEncoding for OpGroupNonUniformInverseBallot {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17250,8 +18344,12 @@ impl Inst for OpGroupNonUniformBallotBitExtract {
 }
 impl InstEncoding for OpGroupNonUniformBallotBitExtract {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17312,8 +18410,12 @@ impl Inst for OpGroupNonUniformBallotBitCount {
 }
 impl InstEncoding for OpGroupNonUniformBallotBitCount {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17373,8 +18475,12 @@ impl Inst for OpGroupNonUniformBallotFindLSB {
 }
 impl InstEncoding for OpGroupNonUniformBallotFindLSB {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17430,8 +18536,12 @@ impl Inst for OpGroupNonUniformBallotFindMSB {
 }
 impl InstEncoding for OpGroupNonUniformBallotFindMSB {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17488,8 +18598,12 @@ impl Inst for OpGroupNonUniformShuffle {
 }
 impl InstEncoding for OpGroupNonUniformShuffle {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17550,8 +18664,12 @@ impl Inst for OpGroupNonUniformShuffleXor {
 }
 impl InstEncoding for OpGroupNonUniformShuffleXor {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17612,8 +18730,12 @@ impl Inst for OpGroupNonUniformShuffleUp {
 }
 impl InstEncoding for OpGroupNonUniformShuffleUp {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17674,8 +18796,12 @@ impl Inst for OpGroupNonUniformShuffleDown {
 }
 impl InstEncoding for OpGroupNonUniformShuffleDown {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17737,8 +18863,12 @@ impl Inst for OpGroupNonUniformIAdd {
 }
 impl InstEncoding for OpGroupNonUniformIAdd {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17804,8 +18934,12 @@ impl Inst for OpGroupNonUniformFAdd {
 }
 impl InstEncoding for OpGroupNonUniformFAdd {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17871,8 +19005,12 @@ impl Inst for OpGroupNonUniformIMul {
 }
 impl InstEncoding for OpGroupNonUniformIMul {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -17938,8 +19076,12 @@ impl Inst for OpGroupNonUniformFMul {
 }
 impl InstEncoding for OpGroupNonUniformFMul {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18005,8 +19147,12 @@ impl Inst for OpGroupNonUniformSMin {
 }
 impl InstEncoding for OpGroupNonUniformSMin {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18072,8 +19218,12 @@ impl Inst for OpGroupNonUniformUMin {
 }
 impl InstEncoding for OpGroupNonUniformUMin {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18139,8 +19289,12 @@ impl Inst for OpGroupNonUniformFMin {
 }
 impl InstEncoding for OpGroupNonUniformFMin {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18206,8 +19360,12 @@ impl Inst for OpGroupNonUniformSMax {
 }
 impl InstEncoding for OpGroupNonUniformSMax {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18273,8 +19431,12 @@ impl Inst for OpGroupNonUniformUMax {
 }
 impl InstEncoding for OpGroupNonUniformUMax {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18340,8 +19502,12 @@ impl Inst for OpGroupNonUniformFMax {
 }
 impl InstEncoding for OpGroupNonUniformFMax {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18407,8 +19573,12 @@ impl Inst for OpGroupNonUniformBitwiseAnd {
 }
 impl InstEncoding for OpGroupNonUniformBitwiseAnd {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18474,8 +19644,12 @@ impl Inst for OpGroupNonUniformBitwiseOr {
 }
 impl InstEncoding for OpGroupNonUniformBitwiseOr {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18541,8 +19715,12 @@ impl Inst for OpGroupNonUniformBitwiseXor {
 }
 impl InstEncoding for OpGroupNonUniformBitwiseXor {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18608,8 +19786,12 @@ impl Inst for OpGroupNonUniformLogicalAnd {
 }
 impl InstEncoding for OpGroupNonUniformLogicalAnd {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18675,8 +19857,12 @@ impl Inst for OpGroupNonUniformLogicalOr {
 }
 impl InstEncoding for OpGroupNonUniformLogicalOr {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18742,8 +19928,12 @@ impl Inst for OpGroupNonUniformLogicalXor {
 }
 impl InstEncoding for OpGroupNonUniformLogicalXor {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18808,8 +19998,12 @@ impl Inst for OpGroupNonUniformQuadBroadcast {
 }
 impl InstEncoding for OpGroupNonUniformQuadBroadcast {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18870,8 +20064,12 @@ impl Inst for OpGroupNonUniformQuadSwap {
 }
 impl InstEncoding for OpGroupNonUniformQuadSwap {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18930,8 +20128,12 @@ impl Inst for OpCopyLogical {
 }
 impl InstEncoding for OpCopyLogical {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -18983,8 +20185,12 @@ impl Inst for OpPtrEqual {
 }
 impl InstEncoding for OpPtrEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -19040,8 +20246,12 @@ impl Inst for OpPtrNotEqual {
 }
 impl InstEncoding for OpPtrNotEqual {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -19097,8 +20307,12 @@ impl Inst for OpPtrDiff {
 }
 impl InstEncoding for OpPtrDiff {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -19154,8 +20368,12 @@ impl Inst for OpColorAttachmentReadEXT {
 }
 impl InstEncoding for OpColorAttachmentReadEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -19210,8 +20428,12 @@ impl Inst for OpDepthAttachmentReadEXT {
 }
 impl InstEncoding for OpDepthAttachmentReadEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -19262,8 +20484,12 @@ impl Inst for OpStencilAttachmentReadEXT {
 }
 impl InstEncoding for OpStencilAttachmentReadEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -19315,9 +20541,11 @@ impl Inst for OpTypeTensorARM {
 }
 impl InstEncoding for OpTypeTensorARM {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -19372,8 +20600,12 @@ impl Inst for OpTensorReadARM {
 }
 impl InstEncoding for OpTensorReadARM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -19433,7 +20665,9 @@ impl Inst for OpTensorWriteARM {
 }
 impl InstEncoding for OpTensorWriteARM {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -19488,8 +20722,12 @@ impl Inst for OpTensorQuerySizeARM {
 }
 impl InstEncoding for OpTensorQuerySizeARM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -19544,8 +20782,12 @@ impl Inst for OpGraphConstantARM {
 }
 impl InstEncoding for OpGraphConstantARM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -19596,7 +20838,9 @@ impl Inst for OpGraphEntryPointARM {
 }
 impl InstEncoding for OpGraphEntryPointARM {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -19645,8 +20889,12 @@ impl Inst for OpGraphARM {
 }
 impl InstEncoding for OpGraphARM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -19694,8 +20942,12 @@ impl Inst for OpGraphInputARM {
 }
 impl InstEncoding for OpGraphInputARM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -19750,7 +21002,9 @@ impl Inst for OpGraphSetOutputARM {
 }
 impl InstEncoding for OpGraphSetOutputARM {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -19796,7 +21050,9 @@ impl Inst for OpGraphEndARM {
 }
 impl InstEncoding for OpGraphEndARM {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -19829,9 +21085,11 @@ impl Inst for OpTypeGraphARM {
 }
 impl InstEncoding for OpTypeGraphARM {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -19876,7 +21134,9 @@ impl Inst for OpTerminateInvocation {
 }
 impl InstEncoding for OpTerminateInvocation {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -19908,9 +21168,11 @@ impl Inst for OpTypeUntypedPointerKHR {
 }
 impl InstEncoding for OpTypeUntypedPointerKHR {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -19957,8 +21219,12 @@ impl Inst for OpUntypedVariableKHR {
 }
 impl InstEncoding for OpUntypedVariableKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -20019,8 +21285,12 @@ impl Inst for OpUntypedAccessChainKHR {
 }
 impl InstEncoding for OpUntypedAccessChainKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -20081,8 +21351,12 @@ impl Inst for OpUntypedInBoundsAccessChainKHR {
 }
 impl InstEncoding for OpUntypedInBoundsAccessChainKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -20141,8 +21415,12 @@ impl Inst for OpSubgroupBallotKHR {
 }
 impl InstEncoding for OpSubgroupBallotKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -20193,8 +21471,12 @@ impl Inst for OpSubgroupFirstInvocationKHR {
 }
 impl InstEncoding for OpSubgroupFirstInvocationKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -20248,8 +21530,12 @@ impl Inst for OpUntypedPtrAccessChainKHR {
 }
 impl InstEncoding for OpUntypedPtrAccessChainKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -20315,8 +21601,12 @@ impl Inst for OpUntypedInBoundsPtrAccessChainKHR {
 }
 impl InstEncoding for OpUntypedInBoundsPtrAccessChainKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -20381,8 +21671,12 @@ impl Inst for OpUntypedArrayLengthKHR {
 }
 impl InstEncoding for OpUntypedArrayLengthKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -20443,7 +21737,9 @@ impl Inst for OpUntypedPrefetchKHR {
 }
 impl InstEncoding for OpUntypedPrefetchKHR {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -20503,8 +21799,12 @@ impl Inst for OpFmaKHR {
 }
 impl InstEncoding for OpFmaKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -20563,8 +21863,12 @@ impl Inst for OpSubgroupAllKHR {
 }
 impl InstEncoding for OpSubgroupAllKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -20615,8 +21919,12 @@ impl Inst for OpSubgroupAnyKHR {
 }
 impl InstEncoding for OpSubgroupAnyKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -20667,8 +21975,12 @@ impl Inst for OpSubgroupAllEqualKHR {
 }
 impl InstEncoding for OpSubgroupAllEqualKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -20722,8 +22034,12 @@ impl Inst for OpGroupNonUniformRotateKHR {
 }
 impl InstEncoding for OpGroupNonUniformRotateKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -20787,8 +22103,12 @@ impl Inst for OpSubgroupReadInvocationKHR {
 }
 impl InstEncoding for OpSubgroupReadInvocationKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -20845,8 +22165,12 @@ impl Inst for OpExtInstWithForwardRefsKHR {
 }
 impl InstEncoding for OpExtInstWithForwardRefsKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -20913,8 +22237,12 @@ impl Inst for OpUntypedGroupAsyncCopyKHR {
 }
 impl InstEncoding for OpUntypedGroupAsyncCopyKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -21005,7 +22333,9 @@ impl Inst for OpTraceRayKHR {
 }
 impl InstEncoding for OpTraceRayKHR {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -21086,7 +22416,9 @@ impl Inst for OpExecuteCallableKHR {
 }
 impl InstEncoding for OpExecuteCallableKHR {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -21132,8 +22464,12 @@ impl Inst for OpConvertUToAccelerationStructureKHR {
 }
 impl InstEncoding for OpConvertUToAccelerationStructureKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -21180,7 +22516,9 @@ impl Inst for OpIgnoreIntersectionKHR {
 }
 impl InstEncoding for OpIgnoreIntersectionKHR {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -21209,7 +22547,9 @@ impl Inst for OpTerminateRayKHR {
 }
 impl InstEncoding for OpTerminateRayKHR {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -21244,8 +22584,12 @@ impl Inst for OpSDot {
 }
 impl InstEncoding for OpSDot {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -21306,8 +22650,12 @@ impl Inst for OpUDot {
 }
 impl InstEncoding for OpUDot {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -21368,8 +22716,12 @@ impl Inst for OpSUDot {
 }
 impl InstEncoding for OpSUDot {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -21431,8 +22783,12 @@ impl Inst for OpSDotAccSat {
 }
 impl InstEncoding for OpSDotAccSat {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -21498,8 +22854,12 @@ impl Inst for OpUDotAccSat {
 }
 impl InstEncoding for OpUDotAccSat {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -21565,8 +22925,12 @@ impl Inst for OpSUDotAccSat {
 }
 impl InstEncoding for OpSUDotAccSat {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -21632,9 +22996,11 @@ impl Inst for OpTypeCooperativeMatrixKHR {
 }
 impl InstEncoding for OpTypeCooperativeMatrixKHR {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -21698,8 +23064,12 @@ impl Inst for OpCooperativeMatrixLoadKHR {
 }
 impl InstEncoding for OpCooperativeMatrixLoadKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -21764,7 +23134,9 @@ impl Inst for OpCooperativeMatrixStoreKHR {
 }
 impl InstEncoding for OpCooperativeMatrixStoreKHR {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -21825,8 +23197,12 @@ impl Inst for OpCooperativeMatrixMulAddKHR {
 }
 impl InstEncoding for OpCooperativeMatrixMulAddKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -21889,8 +23265,12 @@ impl Inst for OpCooperativeMatrixLengthKHR {
 }
 impl InstEncoding for OpCooperativeMatrixLengthKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -21941,8 +23321,12 @@ impl Inst for OpConstantCompositeReplicateEXT {
 }
 impl InstEncoding for OpConstantCompositeReplicateEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -21993,8 +23377,12 @@ impl Inst for OpSpecConstantCompositeReplicateEXT {
 }
 impl InstEncoding for OpSpecConstantCompositeReplicateEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -22045,8 +23433,12 @@ impl Inst for OpCompositeConstructReplicateEXT {
 }
 impl InstEncoding for OpCompositeConstructReplicateEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -22095,9 +23487,11 @@ impl Inst for OpTypeRayQueryKHR {
 }
 impl InstEncoding for OpTypeRayQueryKHR {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -22138,7 +23532,9 @@ impl Inst for OpRayQueryInitializeKHR {
 }
 impl InstEncoding for OpRayQueryInitializeKHR {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -22206,7 +23602,9 @@ impl Inst for OpRayQueryTerminateKHR {
 }
 impl InstEncoding for OpRayQueryTerminateKHR {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.ray_query);
@@ -22246,7 +23644,9 @@ impl Inst for OpRayQueryGenerateIntersectionKHR {
 }
 impl InstEncoding for OpRayQueryGenerateIntersectionKHR {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len =
@@ -22289,7 +23689,9 @@ impl Inst for OpRayQueryConfirmIntersectionKHR {
 }
 impl InstEncoding for OpRayQueryConfirmIntersectionKHR {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.ray_query);
@@ -22330,8 +23732,12 @@ impl Inst for OpRayQueryProceedKHR {
 }
 impl InstEncoding for OpRayQueryProceedKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -22383,8 +23789,12 @@ impl Inst for OpRayQueryGetIntersectionTypeKHR {
 }
 impl InstEncoding for OpRayQueryGetIntersectionTypeKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -22441,8 +23851,12 @@ impl Inst for OpImageSampleWeightedQCOM {
 }
 impl InstEncoding for OpImageSampleWeightedQCOM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -22503,8 +23917,12 @@ impl Inst for OpImageBoxFilterQCOM {
 }
 impl InstEncoding for OpImageBoxFilterQCOM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -22567,8 +23985,12 @@ impl Inst for OpImageBlockMatchSSDQCOM {
 }
 impl InstEncoding for OpImageBlockMatchSSDQCOM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -22639,8 +24061,12 @@ impl Inst for OpImageBlockMatchSADQCOM {
 }
 impl InstEncoding for OpImageBlockMatchSADQCOM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -22707,8 +24133,12 @@ impl Inst for OpBitCastArrayQCOM {
 }
 impl InstEncoding for OpBitCastArrayQCOM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -22763,8 +24193,12 @@ impl Inst for OpImageBlockMatchWindowSSDQCOM {
 }
 impl InstEncoding for OpImageBlockMatchWindowSSDQCOM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -22835,8 +24269,12 @@ impl Inst for OpImageBlockMatchWindowSADQCOM {
 }
 impl InstEncoding for OpImageBlockMatchWindowSADQCOM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -22907,8 +24345,12 @@ impl Inst for OpImageBlockMatchGatherSSDQCOM {
 }
 impl InstEncoding for OpImageBlockMatchGatherSSDQCOM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -22979,8 +24421,12 @@ impl Inst for OpImageBlockMatchGatherSADQCOM {
 }
 impl InstEncoding for OpImageBlockMatchGatherSADQCOM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23047,8 +24493,12 @@ impl Inst for OpCompositeConstructCoopMatQCOM {
 }
 impl InstEncoding for OpCompositeConstructCoopMatQCOM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23099,8 +24549,12 @@ impl Inst for OpCompositeExtractCoopMatQCOM {
 }
 impl InstEncoding for OpCompositeExtractCoopMatQCOM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23152,8 +24606,12 @@ impl Inst for OpExtractSubArrayQCOM {
 }
 impl InstEncoding for OpExtractSubArrayQCOM {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23210,8 +24668,12 @@ impl Inst for OpGroupIAddNonUniformAMD {
 }
 impl InstEncoding for OpGroupIAddNonUniformAMD {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23272,8 +24734,12 @@ impl Inst for OpGroupFAddNonUniformAMD {
 }
 impl InstEncoding for OpGroupFAddNonUniformAMD {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23334,8 +24800,12 @@ impl Inst for OpGroupFMinNonUniformAMD {
 }
 impl InstEncoding for OpGroupFMinNonUniformAMD {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23396,8 +24866,12 @@ impl Inst for OpGroupUMinNonUniformAMD {
 }
 impl InstEncoding for OpGroupUMinNonUniformAMD {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23458,8 +24932,12 @@ impl Inst for OpGroupSMinNonUniformAMD {
 }
 impl InstEncoding for OpGroupSMinNonUniformAMD {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23520,8 +24998,12 @@ impl Inst for OpGroupFMaxNonUniformAMD {
 }
 impl InstEncoding for OpGroupFMaxNonUniformAMD {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23582,8 +25064,12 @@ impl Inst for OpGroupUMaxNonUniformAMD {
 }
 impl InstEncoding for OpGroupUMaxNonUniformAMD {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23644,8 +25130,12 @@ impl Inst for OpGroupSMaxNonUniformAMD {
 }
 impl InstEncoding for OpGroupSMaxNonUniformAMD {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23705,8 +25195,12 @@ impl Inst for OpFragmentMaskFetchAMD {
 }
 impl InstEncoding for OpFragmentMaskFetchAMD {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23763,8 +25257,12 @@ impl Inst for OpFragmentFetchAMD {
 }
 impl InstEncoding for OpFragmentFetchAMD {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23823,8 +25321,12 @@ impl Inst for OpReadClockKHR {
 }
 impl InstEncoding for OpReadClockKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23877,8 +25379,12 @@ impl Inst for OpAllocateNodePayloadsAMDX {
 }
 impl InstEncoding for OpAllocateNodePayloadsAMDX {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -23935,7 +25441,9 @@ impl Inst for OpEnqueueNodePayloadsAMDX {
 }
 impl InstEncoding for OpEnqueueNodePayloadsAMDX {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.payload_array);
@@ -23975,9 +25483,11 @@ impl Inst for OpTypeNodePayloadArrayAMDX {
 }
 impl InstEncoding for OpTypeNodePayloadArrayAMDX {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -24022,8 +25532,12 @@ impl Inst for OpFinishWritingNodePayloadAMDX {
 }
 impl InstEncoding for OpFinishWritingNodePayloadAMDX {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -24074,8 +25588,12 @@ impl Inst for OpNodePayloadArrayLengthAMDX {
 }
 impl InstEncoding for OpNodePayloadArrayLengthAMDX {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -24127,8 +25645,12 @@ impl Inst for OpIsNodePayloadValidAMDX {
 }
 impl InstEncoding for OpIsNodePayloadValidAMDX {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -24182,9 +25704,11 @@ impl Inst for OpConstantStringAMDX {
 }
 impl InstEncoding for OpConstantStringAMDX {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -24228,9 +25752,11 @@ impl Inst for OpSpecConstantStringAMDX {
 }
 impl InstEncoding for OpSpecConstantStringAMDX {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -24275,8 +25801,12 @@ impl Inst for OpGroupNonUniformQuadAllKHR {
 }
 impl InstEncoding for OpGroupNonUniformQuadAllKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -24327,8 +25857,12 @@ impl Inst for OpGroupNonUniformQuadAnyKHR {
 }
 impl InstEncoding for OpGroupNonUniformQuadAnyKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -24378,9 +25912,11 @@ impl Inst for OpTypeBufferEXT {
 }
 impl InstEncoding for OpTypeBufferEXT {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -24425,8 +25961,12 @@ impl Inst for OpBufferPointerEXT {
 }
 impl InstEncoding for OpBufferPointerEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -24480,8 +26020,12 @@ impl Inst for OpUntypedImageTexelPointerEXT {
 }
 impl InstEncoding for OpUntypedImageTexelPointerEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -24544,7 +26088,9 @@ impl Inst for OpMemberDecorateIdEXT {
 }
 impl InstEncoding for OpMemberDecorateIdEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -24594,8 +26140,12 @@ impl Inst for OpConstantSizeOfEXT {
 }
 impl InstEncoding for OpConstantSizeOfEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -24657,7 +26207,9 @@ impl Inst for OpHitObjectRecordHitMotionNV {
 }
 impl InstEncoding for OpHitObjectRecordHitMotionNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -24761,7 +26313,9 @@ impl Inst for OpHitObjectRecordHitWithIndexMotionNV {
 }
 impl InstEncoding for OpHitObjectRecordHitWithIndexMotionNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -24855,7 +26409,9 @@ impl Inst for OpHitObjectRecordMissMotionNV {
 }
 impl InstEncoding for OpHitObjectRecordMissMotionNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -24921,8 +26477,12 @@ impl Inst for OpHitObjectGetWorldToObjectNV {
 }
 impl InstEncoding for OpHitObjectGetWorldToObjectNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -24973,8 +26533,12 @@ impl Inst for OpHitObjectGetObjectToWorldNV {
 }
 impl InstEncoding for OpHitObjectGetObjectToWorldNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -25025,8 +26589,12 @@ impl Inst for OpHitObjectGetObjectRayDirectionNV {
 }
 impl InstEncoding for OpHitObjectGetObjectRayDirectionNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -25077,8 +26645,12 @@ impl Inst for OpHitObjectGetObjectRayOriginNV {
 }
 impl InstEncoding for OpHitObjectGetObjectRayOriginNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -25139,7 +26711,9 @@ impl Inst for OpHitObjectTraceRayMotionNV {
 }
 impl InstEncoding for OpHitObjectTraceRayMotionNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -25229,8 +26803,12 @@ impl Inst for OpHitObjectGetShaderRecordBufferHandleNV {
 }
 impl InstEncoding for OpHitObjectGetShaderRecordBufferHandleNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -25281,8 +26859,12 @@ impl Inst for OpHitObjectGetShaderBindingTableRecordIndexNV {
 }
 impl InstEncoding for OpHitObjectGetShaderBindingTableRecordIndexNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -25331,7 +26913,9 @@ impl Inst for OpHitObjectRecordEmptyNV {
 }
 impl InstEncoding for OpHitObjectRecordEmptyNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.hit_object);
@@ -25381,7 +26965,9 @@ impl Inst for OpHitObjectTraceRayNV {
 }
 impl InstEncoding for OpHitObjectTraceRayNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -25477,7 +27063,9 @@ impl Inst for OpHitObjectRecordHitNV {
 }
 impl InstEncoding for OpHitObjectRecordHitNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -25576,7 +27164,9 @@ impl Inst for OpHitObjectRecordHitWithIndexNV {
 }
 impl InstEncoding for OpHitObjectRecordHitWithIndexNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -25665,7 +27255,9 @@ impl Inst for OpHitObjectRecordMissNV {
 }
 impl InstEncoding for OpHitObjectRecordMissNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -25726,7 +27318,9 @@ impl Inst for OpHitObjectExecuteShaderNV {
 }
 impl InstEncoding for OpHitObjectExecuteShaderNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -25772,8 +27366,12 @@ impl Inst for OpHitObjectGetCurrentTimeNV {
 }
 impl InstEncoding for OpHitObjectGetCurrentTimeNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -25823,7 +27421,9 @@ impl Inst for OpHitObjectGetAttributesNV {
 }
 impl InstEncoding for OpHitObjectGetAttributesNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -25869,8 +27469,12 @@ impl Inst for OpHitObjectGetHitKindNV {
 }
 impl InstEncoding for OpHitObjectGetHitKindNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -25921,8 +27525,12 @@ impl Inst for OpHitObjectGetPrimitiveIndexNV {
 }
 impl InstEncoding for OpHitObjectGetPrimitiveIndexNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -25973,8 +27581,12 @@ impl Inst for OpHitObjectGetGeometryIndexNV {
 }
 impl InstEncoding for OpHitObjectGetGeometryIndexNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -26025,8 +27637,12 @@ impl Inst for OpHitObjectGetInstanceIdNV {
 }
 impl InstEncoding for OpHitObjectGetInstanceIdNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -26077,8 +27693,12 @@ impl Inst for OpHitObjectGetInstanceCustomIndexNV {
 }
 impl InstEncoding for OpHitObjectGetInstanceCustomIndexNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -26129,8 +27749,12 @@ impl Inst for OpHitObjectGetWorldRayDirectionNV {
 }
 impl InstEncoding for OpHitObjectGetWorldRayDirectionNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -26181,8 +27805,12 @@ impl Inst for OpHitObjectGetWorldRayOriginNV {
 }
 impl InstEncoding for OpHitObjectGetWorldRayOriginNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -26233,8 +27861,12 @@ impl Inst for OpHitObjectGetRayTMaxNV {
 }
 impl InstEncoding for OpHitObjectGetRayTMaxNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -26285,8 +27917,12 @@ impl Inst for OpHitObjectGetRayTMinNV {
 }
 impl InstEncoding for OpHitObjectGetRayTMinNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -26337,8 +27973,12 @@ impl Inst for OpHitObjectIsEmptyNV {
 }
 impl InstEncoding for OpHitObjectIsEmptyNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -26389,8 +28029,12 @@ impl Inst for OpHitObjectIsHitNV {
 }
 impl InstEncoding for OpHitObjectIsHitNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -26441,8 +28085,12 @@ impl Inst for OpHitObjectIsMissNV {
 }
 impl InstEncoding for OpHitObjectIsMissNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -26493,7 +28141,9 @@ impl Inst for OpReorderThreadWithHitObjectNV {
 }
 impl InstEncoding for OpReorderThreadWithHitObjectNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -26542,7 +28192,9 @@ impl Inst for OpReorderThreadWithHintNV {
 }
 impl InstEncoding for OpReorderThreadWithHintNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.hint) + OperandEncoding::word_len(&self.bits);
@@ -26584,9 +28236,11 @@ impl Inst for OpTypeHitObjectNV {
 }
 impl InstEncoding for OpTypeHitObjectNV {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -26626,8 +28280,12 @@ impl Inst for OpImageSampleFootprintNV {
 }
 impl InstEncoding for OpImageSampleFootprintNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -26694,9 +28352,11 @@ impl Inst for OpTypeVectorIdEXT {
 }
 impl InstEncoding for OpTypeVectorIdEXT {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -26755,8 +28415,12 @@ impl Inst for OpCooperativeVectorMatrixMulNV {
 }
 impl InstEncoding for OpCooperativeVectorMatrixMulNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -26851,7 +28515,9 @@ impl Inst for OpCooperativeVectorOuterProductAccumulateNV {
 }
 impl InstEncoding for OpCooperativeVectorOuterProductAccumulateNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -26917,7 +28583,9 @@ impl Inst for OpCooperativeVectorReduceSumAccumulateNV {
 }
 impl InstEncoding for OpCooperativeVectorReduceSumAccumulateNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -26980,8 +28648,12 @@ impl Inst for OpCooperativeVectorMatrixMulAddNV {
 }
 impl InstEncoding for OpCooperativeVectorMatrixMulAddNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -27084,8 +28756,12 @@ impl Inst for OpCooperativeMatrixConvertNV {
 }
 impl InstEncoding for OpCooperativeMatrixConvertNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -27137,7 +28813,9 @@ impl Inst for OpEmitMeshTasksEXT {
 }
 impl InstEncoding for OpEmitMeshTasksEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -27190,7 +28868,9 @@ impl Inst for OpSetMeshOutputsEXT {
 }
 impl InstEncoding for OpSetMeshOutputsEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -27236,8 +28916,12 @@ impl Inst for OpGroupNonUniformPartitionEXT {
 }
 impl InstEncoding for OpGroupNonUniformPartitionEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -27287,7 +28971,9 @@ impl Inst for OpWritePackedPrimitiveIndices4x8NV {
 }
 impl InstEncoding for OpWritePackedPrimitiveIndices4x8NV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -27337,8 +29023,12 @@ impl Inst for OpFetchMicroTriangleVertexPositionNV {
 }
 impl InstEncoding for OpFetchMicroTriangleVertexPositionNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -27409,8 +29099,12 @@ impl Inst for OpFetchMicroTriangleVertexBarycentricNV {
 }
 impl InstEncoding for OpFetchMicroTriangleVertexBarycentricNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -27479,8 +29173,12 @@ impl Inst for OpCooperativeVectorLoadNV {
 }
 impl InstEncoding for OpCooperativeVectorLoadNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -27540,7 +29238,9 @@ impl Inst for OpCooperativeVectorStoreNV {
 }
 impl InstEncoding for OpCooperativeVectorStoreNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -27595,7 +29295,9 @@ impl Inst for OpHitObjectRecordFromQueryEXT {
 }
 impl InstEncoding for OpHitObjectRecordFromQueryEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -27653,7 +29355,9 @@ impl Inst for OpHitObjectRecordMissEXT {
 }
 impl InstEncoding for OpHitObjectRecordMissEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -27724,7 +29428,9 @@ impl Inst for OpHitObjectRecordMissMotionEXT {
 }
 impl InstEncoding for OpHitObjectRecordMissMotionEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -27794,8 +29500,12 @@ impl Inst for OpHitObjectGetIntersectionTriangleVertexPositionsEXT {
 }
 impl InstEncoding for OpHitObjectGetIntersectionTriangleVertexPositionsEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -27846,8 +29556,12 @@ impl Inst for OpHitObjectGetRayFlagsEXT {
 }
 impl InstEncoding for OpHitObjectGetRayFlagsEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -27897,7 +29611,9 @@ impl Inst for OpHitObjectSetShaderBindingTableRecordIndexEXT {
 }
 impl InstEncoding for OpHitObjectSetShaderBindingTableRecordIndexEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -27944,7 +29660,9 @@ impl Inst for OpHitObjectReorderExecuteShaderEXT {
 }
 impl InstEncoding for OpHitObjectReorderExecuteShaderEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -28009,7 +29727,9 @@ impl Inst for OpHitObjectTraceReorderExecuteEXT {
 }
 impl InstEncoding for OpHitObjectTraceReorderExecuteEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -28115,7 +29835,9 @@ impl Inst for OpHitObjectTraceMotionReorderExecuteEXT {
 }
 impl InstEncoding for OpHitObjectTraceMotionReorderExecuteEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -28211,9 +29933,11 @@ impl Inst for OpTypeHitObjectEXT {
 }
 impl InstEncoding for OpTypeHitObjectEXT {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -28248,7 +29972,9 @@ impl Inst for OpReorderThreadWithHintEXT {
 }
 impl InstEncoding for OpReorderThreadWithHintEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.hint) + OperandEncoding::word_len(&self.bits);
@@ -28292,7 +30018,9 @@ impl Inst for OpReorderThreadWithHitObjectEXT {
 }
 impl InstEncoding for OpReorderThreadWithHitObjectEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -28351,7 +30079,9 @@ impl Inst for OpHitObjectTraceRayEXT {
 }
 impl InstEncoding for OpHitObjectTraceRayEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -28447,7 +30177,9 @@ impl Inst for OpHitObjectTraceRayMotionEXT {
 }
 impl InstEncoding for OpHitObjectTraceRayMotionEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -28535,7 +30267,9 @@ impl Inst for OpHitObjectRecordEmptyEXT {
 }
 impl InstEncoding for OpHitObjectRecordEmptyEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.hit_object);
@@ -28575,7 +30309,9 @@ impl Inst for OpHitObjectExecuteShaderEXT {
 }
 impl InstEncoding for OpHitObjectExecuteShaderEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -28621,8 +30357,12 @@ impl Inst for OpHitObjectGetCurrentTimeEXT {
 }
 impl InstEncoding for OpHitObjectGetCurrentTimeEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -28672,7 +30412,9 @@ impl Inst for OpHitObjectGetAttributesEXT {
 }
 impl InstEncoding for OpHitObjectGetAttributesEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -28718,8 +30460,12 @@ impl Inst for OpHitObjectGetHitKindEXT {
 }
 impl InstEncoding for OpHitObjectGetHitKindEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -28770,8 +30516,12 @@ impl Inst for OpHitObjectGetPrimitiveIndexEXT {
 }
 impl InstEncoding for OpHitObjectGetPrimitiveIndexEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -28822,8 +30572,12 @@ impl Inst for OpHitObjectGetGeometryIndexEXT {
 }
 impl InstEncoding for OpHitObjectGetGeometryIndexEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -28874,8 +30628,12 @@ impl Inst for OpHitObjectGetInstanceIdEXT {
 }
 impl InstEncoding for OpHitObjectGetInstanceIdEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -28926,8 +30684,12 @@ impl Inst for OpHitObjectGetInstanceCustomIndexEXT {
 }
 impl InstEncoding for OpHitObjectGetInstanceCustomIndexEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -28978,8 +30740,12 @@ impl Inst for OpHitObjectGetObjectRayOriginEXT {
 }
 impl InstEncoding for OpHitObjectGetObjectRayOriginEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -29030,8 +30796,12 @@ impl Inst for OpHitObjectGetObjectRayDirectionEXT {
 }
 impl InstEncoding for OpHitObjectGetObjectRayDirectionEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -29082,8 +30852,12 @@ impl Inst for OpHitObjectGetWorldRayDirectionEXT {
 }
 impl InstEncoding for OpHitObjectGetWorldRayDirectionEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -29134,8 +30908,12 @@ impl Inst for OpHitObjectGetWorldRayOriginEXT {
 }
 impl InstEncoding for OpHitObjectGetWorldRayOriginEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -29186,8 +30964,12 @@ impl Inst for OpHitObjectGetObjectToWorldEXT {
 }
 impl InstEncoding for OpHitObjectGetObjectToWorldEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -29238,8 +31020,12 @@ impl Inst for OpHitObjectGetWorldToObjectEXT {
 }
 impl InstEncoding for OpHitObjectGetWorldToObjectEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -29290,8 +31076,12 @@ impl Inst for OpHitObjectGetRayTMaxEXT {
 }
 impl InstEncoding for OpHitObjectGetRayTMaxEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -29343,8 +31133,12 @@ impl Inst for OpReportIntersectionKHR {
 }
 impl InstEncoding for OpReportIntersectionKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -29395,7 +31189,9 @@ impl Inst for OpIgnoreIntersectionNV {
 }
 impl InstEncoding for OpIgnoreIntersectionNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -29424,7 +31220,9 @@ impl Inst for OpTerminateRayNV {
 }
 impl InstEncoding for OpTerminateRayNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -29465,7 +31263,9 @@ impl Inst for OpTraceNV {
 }
 impl InstEncoding for OpTraceNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -29556,7 +31356,9 @@ impl Inst for OpTraceMotionNV {
 }
 impl InstEncoding for OpTraceMotionNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -29651,7 +31453,9 @@ impl Inst for OpTraceRayMotionNV {
 }
 impl InstEncoding for OpTraceRayMotionNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -29738,8 +31542,12 @@ impl Inst for OpRayQueryGetIntersectionTriangleVertexPositionsKHR {
 }
 impl InstEncoding for OpRayQueryGetIntersectionTriangleVertexPositionsKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -29792,9 +31600,11 @@ impl Inst for OpTypeAccelerationStructureKHR {
 }
 impl InstEncoding for OpTypeAccelerationStructureKHR {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -29833,7 +31643,9 @@ impl Inst for OpExecuteCallableNV {
 }
 impl InstEncoding for OpExecuteCallableNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -29880,8 +31692,12 @@ impl Inst for OpRayQueryGetIntersectionClusterIdNV {
 }
 impl InstEncoding for OpRayQueryGetIntersectionClusterIdNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -29936,8 +31752,12 @@ impl Inst for OpHitObjectGetClusterIdNV {
 }
 impl InstEncoding for OpHitObjectGetClusterIdNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -29988,8 +31808,12 @@ impl Inst for OpHitObjectGetRayTMinEXT {
 }
 impl InstEncoding for OpHitObjectGetRayTMinEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -30040,8 +31864,12 @@ impl Inst for OpHitObjectGetShaderBindingTableRecordIndexEXT {
 }
 impl InstEncoding for OpHitObjectGetShaderBindingTableRecordIndexEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -30092,8 +31920,12 @@ impl Inst for OpHitObjectGetShaderRecordBufferHandleEXT {
 }
 impl InstEncoding for OpHitObjectGetShaderRecordBufferHandleEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -30144,8 +31976,12 @@ impl Inst for OpHitObjectIsEmptyEXT {
 }
 impl InstEncoding for OpHitObjectIsEmptyEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -30196,8 +32032,12 @@ impl Inst for OpHitObjectIsHitEXT {
 }
 impl InstEncoding for OpHitObjectIsHitEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -30248,8 +32088,12 @@ impl Inst for OpHitObjectIsMissEXT {
 }
 impl InstEncoding for OpHitObjectIsMissEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -30302,9 +32146,11 @@ impl Inst for OpTypeCooperativeMatrixNV {
 }
 impl InstEncoding for OpTypeCooperativeMatrixNV {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -30364,8 +32210,12 @@ impl Inst for OpCooperativeMatrixLoadNV {
 }
 impl InstEncoding for OpCooperativeMatrixLoadNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -30430,7 +32280,9 @@ impl Inst for OpCooperativeMatrixStoreNV {
 }
 impl InstEncoding for OpCooperativeMatrixStoreNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -30490,8 +32342,12 @@ impl Inst for OpCooperativeMatrixMulAddNV {
 }
 impl InstEncoding for OpCooperativeMatrixMulAddNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -30550,8 +32406,12 @@ impl Inst for OpCooperativeMatrixLengthNV {
 }
 impl InstEncoding for OpCooperativeMatrixLengthNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -30598,7 +32458,9 @@ impl Inst for OpBeginInvocationInterlockEXT {
 }
 impl InstEncoding for OpBeginInvocationInterlockEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -30627,7 +32489,9 @@ impl Inst for OpEndInvocationInterlockEXT {
 }
 impl InstEncoding for OpEndInvocationInterlockEXT {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -30662,8 +32526,12 @@ impl Inst for OpCooperativeMatrixReduceNV {
 }
 impl InstEncoding for OpCooperativeMatrixReduceNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -30726,8 +32594,12 @@ impl Inst for OpCooperativeMatrixLoadTensorNV {
 }
 impl InstEncoding for OpCooperativeMatrixLoadTensorNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -30796,7 +32668,9 @@ impl Inst for OpCooperativeMatrixStoreTensorNV {
 }
 impl InstEncoding for OpCooperativeMatrixStoreTensorNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -30856,8 +32730,12 @@ impl Inst for OpCooperativeMatrixPerElementOpNV {
 }
 impl InstEncoding for OpCooperativeMatrixPerElementOpNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -30916,9 +32794,11 @@ impl Inst for OpTypeTensorLayoutNV {
 }
 impl InstEncoding for OpTypeTensorLayoutNV {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -30968,9 +32848,11 @@ impl Inst for OpTypeTensorViewNV {
 }
 impl InstEncoding for OpTypeTensorViewNV {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -31022,8 +32904,12 @@ impl Inst for OpCreateTensorLayoutNV {
 }
 impl InstEncoding for OpCreateTensorLayoutNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31071,8 +32957,12 @@ impl Inst for OpTensorLayoutSetDimensionNV {
 }
 impl InstEncoding for OpTensorLayoutSetDimensionNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31128,8 +33018,12 @@ impl Inst for OpTensorLayoutSetStrideNV {
 }
 impl InstEncoding for OpTensorLayoutSetStrideNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31185,8 +33079,12 @@ impl Inst for OpTensorLayoutSliceNV {
 }
 impl InstEncoding for OpTensorLayoutSliceNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31242,8 +33140,12 @@ impl Inst for OpTensorLayoutSetClampValueNV {
 }
 impl InstEncoding for OpTensorLayoutSetClampValueNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31297,8 +33199,12 @@ impl Inst for OpCreateTensorViewNV {
 }
 impl InstEncoding for OpCreateTensorViewNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31346,8 +33252,12 @@ impl Inst for OpTensorViewSetDimensionNV {
 }
 impl InstEncoding for OpTensorViewSetDimensionNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31403,8 +33313,12 @@ impl Inst for OpTensorViewSetStrideNV {
 }
 impl InstEncoding for OpTensorViewSetStrideNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31455,7 +33369,9 @@ impl Inst for OpDemoteToHelperInvocation {
 }
 impl InstEncoding for OpDemoteToHelperInvocation {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1;
@@ -31487,8 +33403,12 @@ impl Inst for OpIsHelperInvocationEXT {
 }
 impl InstEncoding for OpIsHelperInvocationEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31539,8 +33459,12 @@ impl Inst for OpTensorViewSetClipNV {
 }
 impl InstEncoding for OpTensorViewSetClipNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31608,8 +33532,12 @@ impl Inst for OpTensorLayoutSetBlockSizeNV {
 }
 impl InstEncoding for OpTensorLayoutSetBlockSizeNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31664,8 +33592,12 @@ impl Inst for OpCooperativeMatrixTransposeNV {
 }
 impl InstEncoding for OpCooperativeMatrixTransposeNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31716,8 +33648,12 @@ impl Inst for OpConvertUToImageNV {
 }
 impl InstEncoding for OpConvertUToImageNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31768,8 +33704,12 @@ impl Inst for OpConvertUToSamplerNV {
 }
 impl InstEncoding for OpConvertUToSamplerNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31820,8 +33760,12 @@ impl Inst for OpConvertImageToUNV {
 }
 impl InstEncoding for OpConvertImageToUNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31872,8 +33816,12 @@ impl Inst for OpConvertSamplerToUNV {
 }
 impl InstEncoding for OpConvertSamplerToUNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31924,8 +33872,12 @@ impl Inst for OpConvertUToSampledImageNV {
 }
 impl InstEncoding for OpConvertUToSampledImageNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -31976,8 +33928,12 @@ impl Inst for OpConvertSampledImageToUNV {
 }
 impl InstEncoding for OpConvertSampledImageToUNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32026,7 +33982,9 @@ impl Inst for OpSamplerImageAddressingModeNV {
 }
 impl InstEncoding for OpSamplerImageAddressingModeNV {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.bit_width);
@@ -32071,8 +34029,12 @@ impl Inst for OpRawAccessChainNV {
 }
 impl InstEncoding for OpRawAccessChainNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32140,8 +34102,12 @@ impl Inst for OpRayQueryGetIntersectionSpherePositionNV {
 }
 impl InstEncoding for OpRayQueryGetIntersectionSpherePositionNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32197,8 +34163,12 @@ impl Inst for OpRayQueryGetIntersectionSphereRadiusNV {
 }
 impl InstEncoding for OpRayQueryGetIntersectionSphereRadiusNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32254,8 +34224,12 @@ impl Inst for OpRayQueryGetIntersectionLSSPositionsNV {
 }
 impl InstEncoding for OpRayQueryGetIntersectionLSSPositionsNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32311,8 +34285,12 @@ impl Inst for OpRayQueryGetIntersectionLSSRadiiNV {
 }
 impl InstEncoding for OpRayQueryGetIntersectionLSSRadiiNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32368,8 +34346,12 @@ impl Inst for OpRayQueryGetIntersectionLSSHitValueNV {
 }
 impl InstEncoding for OpRayQueryGetIntersectionLSSHitValueNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32424,8 +34406,12 @@ impl Inst for OpHitObjectGetSpherePositionNV {
 }
 impl InstEncoding for OpHitObjectGetSpherePositionNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32476,8 +34462,12 @@ impl Inst for OpHitObjectGetSphereRadiusNV {
 }
 impl InstEncoding for OpHitObjectGetSphereRadiusNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32528,8 +34518,12 @@ impl Inst for OpHitObjectGetLSSPositionsNV {
 }
 impl InstEncoding for OpHitObjectGetLSSPositionsNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32580,8 +34574,12 @@ impl Inst for OpHitObjectGetLSSRadiiNV {
 }
 impl InstEncoding for OpHitObjectGetLSSRadiiNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32632,8 +34630,12 @@ impl Inst for OpHitObjectIsSphereHitNV {
 }
 impl InstEncoding for OpHitObjectIsSphereHitNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32684,8 +34686,12 @@ impl Inst for OpHitObjectIsLSSHitNV {
 }
 impl InstEncoding for OpHitObjectIsLSSHitNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32737,8 +34743,12 @@ impl Inst for OpRayQueryIsSphereHitNV {
 }
 impl InstEncoding for OpRayQueryIsSphereHitNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32794,8 +34804,12 @@ impl Inst for OpRayQueryIsLSSHitNV {
 }
 impl InstEncoding for OpRayQueryIsLSSHitNV {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32851,8 +34865,12 @@ impl Inst for OpSubgroupShuffleINTEL {
 }
 impl InstEncoding for OpSubgroupShuffleINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32909,8 +34927,12 @@ impl Inst for OpSubgroupShuffleDownINTEL {
 }
 impl InstEncoding for OpSubgroupShuffleDownINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -32971,8 +34993,12 @@ impl Inst for OpSubgroupShuffleUpINTEL {
 }
 impl InstEncoding for OpSubgroupShuffleUpINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -33032,8 +35058,12 @@ impl Inst for OpSubgroupShuffleXorINTEL {
 }
 impl InstEncoding for OpSubgroupShuffleXorINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -33088,8 +35118,12 @@ impl Inst for OpSubgroupBlockReadINTEL {
 }
 impl InstEncoding for OpSubgroupBlockReadINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -33139,7 +35173,9 @@ impl Inst for OpSubgroupBlockWriteINTEL {
 }
 impl InstEncoding for OpSubgroupBlockWriteINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.ptr) + OperandEncoding::word_len(&self.data);
@@ -33184,8 +35220,12 @@ impl Inst for OpSubgroupImageBlockReadINTEL {
 }
 impl InstEncoding for OpSubgroupImageBlockReadINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -33240,7 +35280,9 @@ impl Inst for OpSubgroupImageBlockWriteINTEL {
 }
 impl InstEncoding for OpSubgroupImageBlockWriteINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -33293,8 +35335,12 @@ impl Inst for OpSubgroupImageMediaBlockReadINTEL {
 }
 impl InstEncoding for OpSubgroupImageMediaBlockReadINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -33359,7 +35405,9 @@ impl Inst for OpSubgroupImageMediaBlockWriteINTEL {
 }
 impl InstEncoding for OpSubgroupImageMediaBlockWriteINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -33417,8 +35465,12 @@ impl Inst for OpUCountLeadingZerosINTEL {
 }
 impl InstEncoding for OpUCountLeadingZerosINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -33469,8 +35521,12 @@ impl Inst for OpUCountTrailingZerosINTEL {
 }
 impl InstEncoding for OpUCountTrailingZerosINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -33522,8 +35578,12 @@ impl Inst for OpAbsISubINTEL {
 }
 impl InstEncoding for OpAbsISubINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -33579,8 +35639,12 @@ impl Inst for OpAbsUSubINTEL {
 }
 impl InstEncoding for OpAbsUSubINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -33636,8 +35700,12 @@ impl Inst for OpIAddSatINTEL {
 }
 impl InstEncoding for OpIAddSatINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -33693,8 +35761,12 @@ impl Inst for OpUAddSatINTEL {
 }
 impl InstEncoding for OpUAddSatINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -33750,8 +35822,12 @@ impl Inst for OpIAverageINTEL {
 }
 impl InstEncoding for OpIAverageINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -33807,8 +35883,12 @@ impl Inst for OpUAverageINTEL {
 }
 impl InstEncoding for OpUAverageINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -33864,8 +35944,12 @@ impl Inst for OpIAverageRoundedINTEL {
 }
 impl InstEncoding for OpIAverageRoundedINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -33921,8 +36005,12 @@ impl Inst for OpUAverageRoundedINTEL {
 }
 impl InstEncoding for OpUAverageRoundedINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -33978,8 +36066,12 @@ impl Inst for OpISubSatINTEL {
 }
 impl InstEncoding for OpISubSatINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -34035,8 +36127,12 @@ impl Inst for OpUSubSatINTEL {
 }
 impl InstEncoding for OpUSubSatINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -34092,8 +36188,12 @@ impl Inst for OpIMul32x16INTEL {
 }
 impl InstEncoding for OpIMul32x16INTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -34149,8 +36249,12 @@ impl Inst for OpUMul32x16INTEL {
 }
 impl InstEncoding for OpUMul32x16INTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -34205,8 +36309,12 @@ impl Inst for OpConstantFunctionPointerINTEL {
 }
 impl InstEncoding for OpConstantFunctionPointerINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -34257,8 +36365,12 @@ impl Inst for OpFunctionPointerCallINTEL {
 }
 impl InstEncoding for OpFunctionPointerCallINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -34308,9 +36420,11 @@ impl Inst for OpAsmTargetINTEL {
 }
 impl InstEncoding for OpAsmTargetINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -34358,8 +36472,12 @@ impl Inst for OpAsmINTEL {
 }
 impl InstEncoding for OpAsmINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -34423,8 +36541,12 @@ impl Inst for OpAsmCallINTEL {
 }
 impl InstEncoding for OpAsmCallINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -34482,8 +36604,12 @@ impl Inst for OpAtomicFMinEXT {
 }
 impl InstEncoding for OpAtomicFMinEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -34549,8 +36675,12 @@ impl Inst for OpAtomicFMaxEXT {
 }
 impl InstEncoding for OpAtomicFMaxEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -34611,7 +36741,9 @@ impl Inst for OpAssumeTrueKHR {
 }
 impl InstEncoding for OpAssumeTrueKHR {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.condition);
@@ -34653,8 +36785,12 @@ impl Inst for OpExpectKHR {
 }
 impl InstEncoding for OpExpectKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -34708,7 +36844,9 @@ impl Inst for OpDecorateString {
 }
 impl InstEncoding for OpDecorateString {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -34754,7 +36892,9 @@ impl Inst for OpMemberDecorateString {
 }
 impl InstEncoding for OpMemberDecorateString {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -34805,8 +36945,12 @@ impl Inst for OpVmeImageINTEL {
 }
 impl InstEncoding for OpVmeImageINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -34860,9 +37004,11 @@ impl Inst for OpTypeVmeImageINTEL {
 }
 impl InstEncoding for OpTypeVmeImageINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -34905,9 +37051,11 @@ impl Inst for OpTypeAvcImePayloadINTEL {
 }
 impl InstEncoding for OpTypeAvcImePayloadINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -34941,9 +37089,11 @@ impl Inst for OpTypeAvcRefPayloadINTEL {
 }
 impl InstEncoding for OpTypeAvcRefPayloadINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -34977,9 +37127,11 @@ impl Inst for OpTypeAvcSicPayloadINTEL {
 }
 impl InstEncoding for OpTypeAvcSicPayloadINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -35013,9 +37165,11 @@ impl Inst for OpTypeAvcMcePayloadINTEL {
 }
 impl InstEncoding for OpTypeAvcMcePayloadINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -35049,9 +37203,11 @@ impl Inst for OpTypeAvcMceResultINTEL {
 }
 impl InstEncoding for OpTypeAvcMceResultINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -35085,9 +37241,11 @@ impl Inst for OpTypeAvcImeResultINTEL {
 }
 impl InstEncoding for OpTypeAvcImeResultINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -35121,9 +37279,11 @@ impl Inst for OpTypeAvcImeResultSingleReferenceStreamoutINTEL {
 }
 impl InstEncoding for OpTypeAvcImeResultSingleReferenceStreamoutINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -35161,9 +37321,11 @@ impl Inst for OpTypeAvcImeResultDualReferenceStreamoutINTEL {
 }
 impl InstEncoding for OpTypeAvcImeResultDualReferenceStreamoutINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -35201,9 +37363,11 @@ impl Inst for OpTypeAvcImeSingleReferenceStreaminINTEL {
 }
 impl InstEncoding for OpTypeAvcImeSingleReferenceStreaminINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -35241,9 +37405,11 @@ impl Inst for OpTypeAvcImeDualReferenceStreaminINTEL {
 }
 impl InstEncoding for OpTypeAvcImeDualReferenceStreaminINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -35281,9 +37447,11 @@ impl Inst for OpTypeAvcRefResultINTEL {
 }
 impl InstEncoding for OpTypeAvcRefResultINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -35317,9 +37485,11 @@ impl Inst for OpTypeAvcSicResultINTEL {
 }
 impl InstEncoding for OpTypeAvcSicResultINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -35357,8 +37527,12 @@ impl Inst for OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -35414,8 +37588,12 @@ impl Inst for OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -35471,8 +37649,12 @@ impl Inst for OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -35528,8 +37710,12 @@ impl Inst for OpSubgroupAvcMceSetInterShapePenaltyINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceSetInterShapePenaltyINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -35585,8 +37771,12 @@ impl Inst for OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -35642,8 +37832,12 @@ impl Inst for OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -35699,8 +37893,12 @@ impl Inst for OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -35756,8 +37954,12 @@ impl Inst for OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -35811,8 +38013,12 @@ impl Inst for OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -35858,8 +38064,12 @@ impl Inst for OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -35905,8 +38115,12 @@ impl Inst for OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -35956,8 +38170,12 @@ impl Inst for OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36021,8 +38239,12 @@ impl Inst for OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36076,8 +38298,12 @@ impl Inst for OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36123,8 +38349,12 @@ impl Inst for OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36171,8 +38401,12 @@ impl Inst for OpSubgroupAvcMceSetAcOnlyHaarINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceSetAcOnlyHaarINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36224,8 +38458,12 @@ impl Inst for OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36282,8 +38520,12 @@ impl Inst for OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36341,8 +38583,12 @@ impl Inst for OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36401,8 +38647,12 @@ impl Inst for OpSubgroupAvcMceConvertToImePayloadINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceConvertToImePayloadINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36453,8 +38703,12 @@ impl Inst for OpSubgroupAvcMceConvertToImeResultINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceConvertToImeResultINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36505,8 +38759,12 @@ impl Inst for OpSubgroupAvcMceConvertToRefPayloadINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceConvertToRefPayloadINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36557,8 +38815,12 @@ impl Inst for OpSubgroupAvcMceConvertToRefResultINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceConvertToRefResultINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36609,8 +38871,12 @@ impl Inst for OpSubgroupAvcMceConvertToSicPayloadINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceConvertToSicPayloadINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36661,8 +38927,12 @@ impl Inst for OpSubgroupAvcMceConvertToSicResultINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceConvertToSicResultINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36713,8 +38983,12 @@ impl Inst for OpSubgroupAvcMceGetMotionVectorsINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetMotionVectorsINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36765,8 +39039,12 @@ impl Inst for OpSubgroupAvcMceGetInterDistortionsINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetInterDistortionsINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36817,8 +39095,12 @@ impl Inst for OpSubgroupAvcMceGetBestInterDistortionsINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetBestInterDistortionsINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36869,8 +39151,12 @@ impl Inst for OpSubgroupAvcMceGetInterMajorShapeINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetInterMajorShapeINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36921,8 +39207,12 @@ impl Inst for OpSubgroupAvcMceGetInterMinorShapeINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetInterMinorShapeINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -36973,8 +39263,12 @@ impl Inst for OpSubgroupAvcMceGetInterDirectionsINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetInterDirectionsINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37025,8 +39319,12 @@ impl Inst for OpSubgroupAvcMceGetInterMotionVectorCountINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetInterMotionVectorCountINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37077,8 +39375,12 @@ impl Inst for OpSubgroupAvcMceGetInterReferenceIdsINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetInterReferenceIdsINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37132,8 +39434,12 @@ impl Inst for OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL {
 }
 impl InstEncoding for OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37197,8 +39503,12 @@ impl Inst for OpSubgroupAvcImeInitializeINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeInitializeINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37259,8 +39569,12 @@ impl Inst for OpSubgroupAvcImeSetSingleReferenceINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeSetSingleReferenceINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37322,8 +39636,12 @@ impl Inst for OpSubgroupAvcImeSetDualReferenceINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeSetDualReferenceINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37387,8 +39705,12 @@ impl Inst for OpSubgroupAvcImeRefWindowSizeINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeRefWindowSizeINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37446,8 +39768,12 @@ impl Inst for OpSubgroupAvcImeAdjustRefOffsetINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeAdjustRefOffsetINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37510,8 +39836,12 @@ impl Inst for OpSubgroupAvcImeConvertToMcePayloadINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeConvertToMcePayloadINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37563,8 +39893,12 @@ impl Inst for OpSubgroupAvcImeSetMaxMotionVectorCountINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeSetMaxMotionVectorCountINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37619,8 +39953,12 @@ impl Inst for OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37672,8 +40010,12 @@ impl Inst for OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37729,8 +40071,12 @@ impl Inst for OpSubgroupAvcImeSetWeightedSadINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeSetWeightedSadINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37787,8 +40133,12 @@ impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37850,8 +40200,12 @@ impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37917,8 +40271,12 @@ impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -37985,8 +40343,12 @@ impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38055,8 +40417,12 @@ impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38118,8 +40484,12 @@ impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38185,8 +40555,12 @@ impl Inst for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38253,8 +40627,12 @@ impl Inst for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38321,8 +40699,12 @@ impl Inst for OpSubgroupAvcImeConvertToMceResultINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeConvertToMceResultINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38373,8 +40755,12 @@ impl Inst for OpSubgroupAvcImeGetSingleReferenceStreaminINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeGetSingleReferenceStreaminINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38425,8 +40811,12 @@ impl Inst for OpSubgroupAvcImeGetDualReferenceStreaminINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeGetDualReferenceStreaminINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38477,8 +40867,12 @@ impl Inst for OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38529,8 +40923,12 @@ impl Inst for OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38583,8 +40981,12 @@ impl Inst for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectors
 }
 impl InstEncoding for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38641,8 +41043,12 @@ impl Inst for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsIN
 }
 impl InstEncoding for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38699,8 +41105,12 @@ impl Inst for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsI
 }
 impl InstEncoding for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38758,8 +41168,12 @@ impl Inst for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsIN
 }
 impl InstEncoding for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38821,8 +41235,12 @@ impl Inst for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTE
 }
 impl InstEncoding for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38884,8 +41302,12 @@ impl Inst for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINT
 }
 impl InstEncoding for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -38945,8 +41367,12 @@ impl Inst for OpSubgroupAvcImeGetBorderReachedINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeGetBorderReachedINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39001,8 +41427,12 @@ impl Inst for OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39053,8 +41483,12 @@ impl Inst for OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39105,8 +41539,12 @@ impl Inst for OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39157,8 +41595,12 @@ impl Inst for OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {
 }
 impl InstEncoding for OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39215,8 +41657,12 @@ impl Inst for OpSubgroupAvcFmeInitializeINTEL {
 }
 impl InstEncoding for OpSubgroupAvcFmeInitializeINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39298,8 +41744,12 @@ impl Inst for OpSubgroupAvcBmeInitializeINTEL {
 }
 impl InstEncoding for OpSubgroupAvcBmeInitializeINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39378,8 +41828,12 @@ impl Inst for OpSubgroupAvcRefConvertToMcePayloadINTEL {
 }
 impl InstEncoding for OpSubgroupAvcRefConvertToMcePayloadINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39430,8 +41884,12 @@ impl Inst for OpSubgroupAvcRefSetBidirectionalMixDisableINTEL {
 }
 impl InstEncoding for OpSubgroupAvcRefSetBidirectionalMixDisableINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39482,8 +41940,12 @@ impl Inst for OpSubgroupAvcRefSetBilinearFilterEnableINTEL {
 }
 impl InstEncoding for OpSubgroupAvcRefSetBilinearFilterEnableINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39536,8 +41998,12 @@ impl Inst for OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL {
 }
 impl InstEncoding for OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39599,8 +42065,12 @@ impl Inst for OpSubgroupAvcRefEvaluateWithDualReferenceINTEL {
 }
 impl InstEncoding for OpSubgroupAvcRefEvaluateWithDualReferenceINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39665,8 +42135,12 @@ impl Inst for OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {
 }
 impl InstEncoding for OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39728,8 +42202,12 @@ impl Inst for OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL {
 }
 impl InstEncoding for OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39792,8 +42270,12 @@ impl Inst for OpSubgroupAvcRefConvertToMceResultINTEL {
 }
 impl InstEncoding for OpSubgroupAvcRefConvertToMceResultINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39844,8 +42326,12 @@ impl Inst for OpSubgroupAvcSicInitializeINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicInitializeINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39901,8 +42387,12 @@ impl Inst for OpSubgroupAvcSicConfigureSkcINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicConfigureSkcINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -39980,8 +42470,12 @@ impl Inst for OpSubgroupAvcSicConfigureIpeLumaINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicConfigureIpeLumaINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40070,8 +42564,12 @@ impl Inst for OpSubgroupAvcSicConfigureIpeLumaChromaINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicConfigureIpeLumaChromaINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40163,8 +42661,12 @@ impl Inst for OpSubgroupAvcSicGetMotionVectorMaskINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicGetMotionVectorMaskINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40219,8 +42721,12 @@ impl Inst for OpSubgroupAvcSicConvertToMcePayloadINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicConvertToMcePayloadINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40272,8 +42778,12 @@ impl Inst for OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40331,8 +42841,12 @@ impl Inst for OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40396,8 +42910,12 @@ impl Inst for OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40452,8 +42970,12 @@ impl Inst for OpSubgroupAvcSicSetBilinearFilterEnableINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicSetBilinearFilterEnableINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40505,8 +43027,12 @@ impl Inst for OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40562,8 +43088,12 @@ impl Inst for OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40619,8 +43149,12 @@ impl Inst for OpSubgroupAvcSicEvaluateIpeINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicEvaluateIpeINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40677,8 +43211,12 @@ impl Inst for OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40740,8 +43278,12 @@ impl Inst for OpSubgroupAvcSicEvaluateWithDualReferenceINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicEvaluateWithDualReferenceINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40806,8 +43348,12 @@ impl Inst for OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40869,8 +43415,12 @@ impl Inst for OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40933,8 +43483,12 @@ impl Inst for OpSubgroupAvcSicConvertToMceResultINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicConvertToMceResultINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -40985,8 +43539,12 @@ impl Inst for OpSubgroupAvcSicGetIpeLumaShapeINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicGetIpeLumaShapeINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -41037,8 +43595,12 @@ impl Inst for OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -41089,8 +43651,12 @@ impl Inst for OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -41141,8 +43707,12 @@ impl Inst for OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -41193,8 +43763,12 @@ impl Inst for OpSubgroupAvcSicGetIpeChromaModeINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicGetIpeChromaModeINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -41245,8 +43819,12 @@ impl Inst for OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -41297,8 +43875,12 @@ impl Inst for OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -41349,8 +43931,12 @@ impl Inst for OpSubgroupAvcSicGetInterRawSadsINTEL {
 }
 impl InstEncoding for OpSubgroupAvcSicGetInterRawSadsINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -41401,8 +43987,12 @@ impl Inst for OpVariableLengthArrayINTEL {
 }
 impl InstEncoding for OpVariableLengthArrayINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -41452,8 +44042,12 @@ impl Inst for OpSaveMemoryINTEL {
 }
 impl InstEncoding for OpSaveMemoryINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -41498,7 +44092,9 @@ impl Inst for OpRestoreMemoryINTEL {
 }
 impl InstEncoding for OpRestoreMemoryINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.ptr);
@@ -41544,8 +44140,12 @@ impl Inst for OpArbitraryFloatSinCosPiALTERA {
 }
 impl InstEncoding for OpArbitraryFloatSinCosPiALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -41621,8 +44221,12 @@ impl Inst for OpArbitraryFloatCastALTERA {
 }
 impl InstEncoding for OpArbitraryFloatCastALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -41698,8 +44302,12 @@ impl Inst for OpArbitraryFloatCastFromIntALTERA {
 }
 impl InstEncoding for OpArbitraryFloatCastFromIntALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -41775,8 +44383,12 @@ impl Inst for OpArbitraryFloatCastToIntALTERA {
 }
 impl InstEncoding for OpArbitraryFloatCastToIntALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -41854,8 +44466,12 @@ impl Inst for OpArbitraryFloatAddALTERA {
 }
 impl InstEncoding for OpArbitraryFloatAddALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -41941,8 +44557,12 @@ impl Inst for OpArbitraryFloatSubALTERA {
 }
 impl InstEncoding for OpArbitraryFloatSubALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -42028,8 +44648,12 @@ impl Inst for OpArbitraryFloatMulALTERA {
 }
 impl InstEncoding for OpArbitraryFloatMulALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -42115,8 +44739,12 @@ impl Inst for OpArbitraryFloatDivALTERA {
 }
 impl InstEncoding for OpArbitraryFloatDivALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -42198,8 +44826,12 @@ impl Inst for OpArbitraryFloatGTALTERA {
 }
 impl InstEncoding for OpArbitraryFloatGTALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -42265,8 +44897,12 @@ impl Inst for OpArbitraryFloatGEALTERA {
 }
 impl InstEncoding for OpArbitraryFloatGEALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -42332,8 +44968,12 @@ impl Inst for OpArbitraryFloatLTALTERA {
 }
 impl InstEncoding for OpArbitraryFloatLTALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -42399,8 +45039,12 @@ impl Inst for OpArbitraryFloatLEALTERA {
 }
 impl InstEncoding for OpArbitraryFloatLEALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -42466,8 +45110,12 @@ impl Inst for OpArbitraryFloatEQALTERA {
 }
 impl InstEncoding for OpArbitraryFloatEQALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -42535,8 +45183,12 @@ impl Inst for OpArbitraryFloatRecipALTERA {
 }
 impl InstEncoding for OpArbitraryFloatRecipALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -42612,8 +45264,12 @@ impl Inst for OpArbitraryFloatRSqrtALTERA {
 }
 impl InstEncoding for OpArbitraryFloatRSqrtALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -42689,8 +45345,12 @@ impl Inst for OpArbitraryFloatCbrtALTERA {
 }
 impl InstEncoding for OpArbitraryFloatCbrtALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -42768,8 +45428,12 @@ impl Inst for OpArbitraryFloatHypotALTERA {
 }
 impl InstEncoding for OpArbitraryFloatHypotALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -42853,8 +45517,12 @@ impl Inst for OpArbitraryFloatSqrtALTERA {
 }
 impl InstEncoding for OpArbitraryFloatSqrtALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -42930,8 +45598,12 @@ impl Inst for OpArbitraryFloatLogINTEL {
 }
 impl InstEncoding for OpArbitraryFloatLogINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -43007,8 +45679,12 @@ impl Inst for OpArbitraryFloatLog2INTEL {
 }
 impl InstEncoding for OpArbitraryFloatLog2INTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -43084,8 +45760,12 @@ impl Inst for OpArbitraryFloatLog10INTEL {
 }
 impl InstEncoding for OpArbitraryFloatLog10INTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -43161,8 +45841,12 @@ impl Inst for OpArbitraryFloatLog1pINTEL {
 }
 impl InstEncoding for OpArbitraryFloatLog1pINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -43238,8 +45922,12 @@ impl Inst for OpArbitraryFloatExpINTEL {
 }
 impl InstEncoding for OpArbitraryFloatExpINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -43315,8 +46003,12 @@ impl Inst for OpArbitraryFloatExp2INTEL {
 }
 impl InstEncoding for OpArbitraryFloatExp2INTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -43392,8 +46084,12 @@ impl Inst for OpArbitraryFloatExp10INTEL {
 }
 impl InstEncoding for OpArbitraryFloatExp10INTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -43469,8 +46165,12 @@ impl Inst for OpArbitraryFloatExpm1INTEL {
 }
 impl InstEncoding for OpArbitraryFloatExpm1INTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -43546,8 +46246,12 @@ impl Inst for OpArbitraryFloatSinINTEL {
 }
 impl InstEncoding for OpArbitraryFloatSinINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -43623,8 +46327,12 @@ impl Inst for OpArbitraryFloatCosINTEL {
 }
 impl InstEncoding for OpArbitraryFloatCosINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -43700,8 +46408,12 @@ impl Inst for OpArbitraryFloatSinCosINTEL {
 }
 impl InstEncoding for OpArbitraryFloatSinCosINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -43777,8 +46489,12 @@ impl Inst for OpArbitraryFloatSinPiINTEL {
 }
 impl InstEncoding for OpArbitraryFloatSinPiINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -43854,8 +46570,12 @@ impl Inst for OpArbitraryFloatCosPiINTEL {
 }
 impl InstEncoding for OpArbitraryFloatCosPiINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -43931,8 +46651,12 @@ impl Inst for OpArbitraryFloatASinINTEL {
 }
 impl InstEncoding for OpArbitraryFloatASinINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -44008,8 +46732,12 @@ impl Inst for OpArbitraryFloatASinPiINTEL {
 }
 impl InstEncoding for OpArbitraryFloatASinPiINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -44085,8 +46813,12 @@ impl Inst for OpArbitraryFloatACosINTEL {
 }
 impl InstEncoding for OpArbitraryFloatACosINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -44162,8 +46894,12 @@ impl Inst for OpArbitraryFloatACosPiINTEL {
 }
 impl InstEncoding for OpArbitraryFloatACosPiINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -44239,8 +46975,12 @@ impl Inst for OpArbitraryFloatATanINTEL {
 }
 impl InstEncoding for OpArbitraryFloatATanINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -44316,8 +47056,12 @@ impl Inst for OpArbitraryFloatATanPiINTEL {
 }
 impl InstEncoding for OpArbitraryFloatATanPiINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -44395,8 +47139,12 @@ impl Inst for OpArbitraryFloatATan2INTEL {
 }
 impl InstEncoding for OpArbitraryFloatATan2INTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -44482,8 +47230,12 @@ impl Inst for OpArbitraryFloatPowINTEL {
 }
 impl InstEncoding for OpArbitraryFloatPowINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -44569,8 +47321,12 @@ impl Inst for OpArbitraryFloatPowRINTEL {
 }
 impl InstEncoding for OpArbitraryFloatPowRINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -44656,8 +47412,12 @@ impl Inst for OpArbitraryFloatPowNINTEL {
 }
 impl InstEncoding for OpArbitraryFloatPowNINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -44734,7 +47494,9 @@ impl Inst for OpLoopControlINTEL {
 }
 impl InstEncoding for OpLoopControlINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.loop_control_parameters);
@@ -44774,9 +47536,11 @@ impl Inst for OpAliasDomainDeclINTEL {
 }
 impl InstEncoding for OpAliasDomainDeclINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len =
@@ -44820,9 +47584,11 @@ impl Inst for OpAliasScopeDeclINTEL {
 }
 impl InstEncoding for OpAliasScopeDeclINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -44870,9 +47636,11 @@ impl Inst for OpAliasScopeListDeclINTEL {
 }
 impl InstEncoding for OpAliasScopeListDeclINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -44922,8 +47690,12 @@ impl Inst for OpFixedSqrtALTERA {
 }
 impl InstEncoding for OpFixedSqrtALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -44999,8 +47771,12 @@ impl Inst for OpFixedRecipALTERA {
 }
 impl InstEncoding for OpFixedRecipALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -45076,8 +47852,12 @@ impl Inst for OpFixedRsqrtALTERA {
 }
 impl InstEncoding for OpFixedRsqrtALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -45153,8 +47933,12 @@ impl Inst for OpFixedSinALTERA {
 }
 impl InstEncoding for OpFixedSinALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -45230,8 +48014,12 @@ impl Inst for OpFixedCosALTERA {
 }
 impl InstEncoding for OpFixedCosALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -45307,8 +48095,12 @@ impl Inst for OpFixedSinCosALTERA {
 }
 impl InstEncoding for OpFixedSinCosALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -45384,8 +48176,12 @@ impl Inst for OpFixedSinPiALTERA {
 }
 impl InstEncoding for OpFixedSinPiALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -45461,8 +48257,12 @@ impl Inst for OpFixedCosPiALTERA {
 }
 impl InstEncoding for OpFixedCosPiALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -45538,8 +48338,12 @@ impl Inst for OpFixedSinCosPiALTERA {
 }
 impl InstEncoding for OpFixedSinCosPiALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -45615,8 +48419,12 @@ impl Inst for OpFixedLogALTERA {
 }
 impl InstEncoding for OpFixedLogALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -45692,8 +48500,12 @@ impl Inst for OpFixedExpALTERA {
 }
 impl InstEncoding for OpFixedExpALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -45764,8 +48576,12 @@ impl Inst for OpPtrCastToCrossWorkgroupALTERA {
 }
 impl InstEncoding for OpPtrCastToCrossWorkgroupALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -45816,8 +48632,12 @@ impl Inst for OpCrossWorkgroupCastToPtrALTERA {
 }
 impl InstEncoding for OpCrossWorkgroupCastToPtrALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -45869,8 +48689,12 @@ impl Inst for OpReadPipeBlockingALTERA {
 }
 impl InstEncoding for OpReadPipeBlockingALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -45926,8 +48750,12 @@ impl Inst for OpWritePipeBlockingALTERA {
 }
 impl InstEncoding for OpWritePipeBlockingALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -45982,8 +48810,12 @@ impl Inst for OpFPGARegALTERA {
 }
 impl InstEncoding for OpFPGARegALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46034,8 +48866,12 @@ impl Inst for OpRayQueryGetRayTMinKHR {
 }
 impl InstEncoding for OpRayQueryGetRayTMinKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46086,8 +48922,12 @@ impl Inst for OpRayQueryGetRayFlagsKHR {
 }
 impl InstEncoding for OpRayQueryGetRayFlagsKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46139,8 +48979,12 @@ impl Inst for OpRayQueryGetIntersectionTKHR {
 }
 impl InstEncoding for OpRayQueryGetIntersectionTKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46196,8 +49040,12 @@ impl Inst for OpRayQueryGetIntersectionInstanceCustomIndexKHR {
 }
 impl InstEncoding for OpRayQueryGetIntersectionInstanceCustomIndexKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46253,8 +49101,12 @@ impl Inst for OpRayQueryGetIntersectionInstanceIdKHR {
 }
 impl InstEncoding for OpRayQueryGetIntersectionInstanceIdKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46311,8 +49163,12 @@ impl Inst for OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR
 }
 impl InstEncoding for OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46368,8 +49224,12 @@ impl Inst for OpRayQueryGetIntersectionGeometryIndexKHR {
 }
 impl InstEncoding for OpRayQueryGetIntersectionGeometryIndexKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46425,8 +49285,12 @@ impl Inst for OpRayQueryGetIntersectionPrimitiveIndexKHR {
 }
 impl InstEncoding for OpRayQueryGetIntersectionPrimitiveIndexKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46482,8 +49346,12 @@ impl Inst for OpRayQueryGetIntersectionBarycentricsKHR {
 }
 impl InstEncoding for OpRayQueryGetIntersectionBarycentricsKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46539,8 +49407,12 @@ impl Inst for OpRayQueryGetIntersectionFrontFaceKHR {
 }
 impl InstEncoding for OpRayQueryGetIntersectionFrontFaceKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46595,8 +49467,12 @@ impl Inst for OpRayQueryGetIntersectionCandidateAABBOpaqueKHR {
 }
 impl InstEncoding for OpRayQueryGetIntersectionCandidateAABBOpaqueKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46648,8 +49524,12 @@ impl Inst for OpRayQueryGetIntersectionObjectRayDirectionKHR {
 }
 impl InstEncoding for OpRayQueryGetIntersectionObjectRayDirectionKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46705,8 +49585,12 @@ impl Inst for OpRayQueryGetIntersectionObjectRayOriginKHR {
 }
 impl InstEncoding for OpRayQueryGetIntersectionObjectRayOriginKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46761,8 +49645,12 @@ impl Inst for OpRayQueryGetWorldRayDirectionKHR {
 }
 impl InstEncoding for OpRayQueryGetWorldRayDirectionKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46813,8 +49701,12 @@ impl Inst for OpRayQueryGetWorldRayOriginKHR {
 }
 impl InstEncoding for OpRayQueryGetWorldRayOriginKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46866,8 +49758,12 @@ impl Inst for OpRayQueryGetIntersectionObjectToWorldKHR {
 }
 impl InstEncoding for OpRayQueryGetIntersectionObjectToWorldKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46923,8 +49819,12 @@ impl Inst for OpRayQueryGetIntersectionWorldToObjectKHR {
 }
 impl InstEncoding for OpRayQueryGetIntersectionWorldToObjectKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -46982,8 +49882,12 @@ impl Inst for OpAtomicFAddEXT {
 }
 impl InstEncoding for OpAtomicFAddEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -47045,9 +49949,11 @@ impl Inst for OpTypeBufferSurfaceINTEL {
 }
 impl InstEncoding for OpTypeBufferSurfaceINTEL {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -47090,7 +49996,9 @@ impl Inst for OpTypeStructContinuedINTEL {
 }
 impl InstEncoding for OpTypeStructContinuedINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_ref);
@@ -47129,7 +50037,9 @@ impl Inst for OpConstantCompositeContinuedINTEL {
 }
 impl InstEncoding for OpConstantCompositeContinuedINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.constituents);
@@ -47168,7 +50078,9 @@ impl Inst for OpSpecConstantCompositeContinuedINTEL {
 }
 impl InstEncoding for OpSpecConstantCompositeContinuedINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.constituents);
@@ -47209,8 +50121,12 @@ impl Inst for OpCompositeConstructContinuedINTEL {
 }
 impl InstEncoding for OpCompositeConstructContinuedINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -47261,8 +50177,12 @@ impl Inst for OpConvertFToBF16INTEL {
 }
 impl InstEncoding for OpConvertFToBF16INTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -47313,8 +50233,12 @@ impl Inst for OpConvertBF16ToFINTEL {
 }
 impl InstEncoding for OpConvertBF16ToFINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -47365,7 +50289,9 @@ impl Inst for OpControlBarrierArriveINTEL {
 }
 impl InstEncoding for OpControlBarrierArriveINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -47415,7 +50341,9 @@ impl Inst for OpControlBarrierWaitINTEL {
 }
 impl InstEncoding for OpControlBarrierWaitINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -47465,8 +50393,12 @@ impl Inst for OpArithmeticFenceEXT {
 }
 impl InstEncoding for OpArithmeticFenceEXT {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -47521,8 +50453,12 @@ impl Inst for OpTaskSequenceCreateALTERA {
 }
 impl InstEncoding for OpTaskSequenceCreateALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -47588,7 +50524,9 @@ impl Inst for OpTaskSequenceAsyncALTERA {
 }
 impl InstEncoding for OpTaskSequenceAsyncALTERA {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -47634,8 +50572,12 @@ impl Inst for OpTaskSequenceGetALTERA {
 }
 impl InstEncoding for OpTaskSequenceGetALTERA {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -47684,7 +50626,9 @@ impl Inst for OpTaskSequenceReleaseALTERA {
 }
 impl InstEncoding for OpTaskSequenceReleaseALTERA {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.sequence);
@@ -47723,9 +50667,11 @@ impl Inst for OpTypeTaskSequenceALTERA {
 }
 impl InstEncoding for OpTypeTaskSequenceALTERA {
     type IdResult = IdResult;
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {
         self.id_result
     }
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.id_result);
@@ -47761,7 +50707,9 @@ impl Inst for OpSubgroupBlockPrefetchINTEL {
 }
 impl InstEncoding for OpSubgroupBlockPrefetchINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -47818,7 +50766,9 @@ impl Inst for OpSubgroup2DBlockLoadINTEL {
 }
 impl InstEncoding for OpSubgroup2DBlockLoadINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -47903,7 +50853,9 @@ impl Inst for OpSubgroup2DBlockLoadTransformINTEL {
 }
 impl InstEncoding for OpSubgroup2DBlockLoadTransformINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -47988,7 +50940,9 @@ impl Inst for OpSubgroup2DBlockLoadTransposeINTEL {
 }
 impl InstEncoding for OpSubgroup2DBlockLoadTransposeINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -48072,7 +51026,9 @@ impl Inst for OpSubgroup2DBlockPrefetchINTEL {
 }
 impl InstEncoding for OpSubgroup2DBlockPrefetchINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -48153,7 +51109,9 @@ impl Inst for OpSubgroup2DBlockStoreINTEL {
 }
 impl InstEncoding for OpSubgroup2DBlockStoreINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -48235,8 +51193,12 @@ impl Inst for OpSubgroupMatrixMultiplyAccumulateINTEL {
 }
 impl InstEncoding for OpSubgroupMatrixMultiplyAccumulateINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -48306,8 +51268,12 @@ impl Inst for OpBitwiseFunctionINTEL {
 }
 impl InstEncoding for OpBitwiseFunctionINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -48371,8 +51337,12 @@ impl Inst for OpUntypedVariableLengthArrayINTEL {
 }
 impl InstEncoding for OpUntypedVariableLengthArrayINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -48426,7 +51396,9 @@ impl Inst for OpConditionalExtensionINTEL {
 }
 impl InstEncoding for OpConditionalExtensionINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len =
@@ -48473,7 +51445,9 @@ impl Inst for OpConditionalEntryPointINTEL {
 }
 impl InstEncoding for OpConditionalEntryPointINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -48530,7 +51504,9 @@ impl Inst for OpConditionalCapabilityINTEL {
 }
 impl InstEncoding for OpConditionalCapabilityINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -48577,8 +51553,12 @@ impl Inst for OpSpecConstantTargetINTEL {
 }
 impl InstEncoding for OpSpecConstantTargetINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -48636,8 +51616,12 @@ impl Inst for OpSpecConstantArchitectureINTEL {
 }
 impl InstEncoding for OpSpecConstantArchitectureINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -48700,8 +51684,12 @@ impl Inst for OpSpecConstantCapabilitiesINTEL {
 }
 impl InstEncoding for OpSpecConstantCapabilitiesINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -48752,8 +51740,12 @@ impl Inst for OpConditionalCopyObjectINTEL {
 }
 impl InstEncoding for OpConditionalCopyObjectINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -48806,8 +51798,12 @@ impl Inst for OpGroupIMulKHR {
 }
 impl InstEncoding for OpGroupIMulKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -48868,8 +51864,12 @@ impl Inst for OpGroupFMulKHR {
 }
 impl InstEncoding for OpGroupFMulKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -48930,8 +51930,12 @@ impl Inst for OpGroupBitwiseAndKHR {
 }
 impl InstEncoding for OpGroupBitwiseAndKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -48992,8 +51996,12 @@ impl Inst for OpGroupBitwiseOrKHR {
 }
 impl InstEncoding for OpGroupBitwiseOrKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -49054,8 +52062,12 @@ impl Inst for OpGroupBitwiseXorKHR {
 }
 impl InstEncoding for OpGroupBitwiseXorKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -49116,8 +52128,12 @@ impl Inst for OpGroupLogicalAndKHR {
 }
 impl InstEncoding for OpGroupLogicalAndKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -49178,8 +52194,12 @@ impl Inst for OpGroupLogicalOrKHR {
 }
 impl InstEncoding for OpGroupLogicalOrKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -49240,8 +52260,12 @@ impl Inst for OpGroupLogicalXorKHR {
 }
 impl InstEncoding for OpGroupLogicalXorKHR {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -49300,8 +52324,12 @@ impl Inst for OpRoundFToTF32INTEL {
 }
 impl InstEncoding for OpRoundFToTF32INTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -49355,8 +52383,12 @@ impl Inst for OpMaskedGatherINTEL {
 }
 impl InstEncoding for OpMaskedGatherINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -49420,7 +52452,9 @@ impl Inst for OpMaskedScatterINTEL {
 }
 impl InstEncoding for OpMaskedScatterINTEL {
     type IdResult = ();
+    type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -49474,8 +52508,12 @@ impl Inst for OpConvertHandleToImageINTEL {
 }
 impl InstEncoding for OpConvertHandleToImageINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -49526,8 +52564,12 @@ impl Inst for OpConvertHandleToSamplerINTEL {
 }
 impl InstEncoding for OpConvertHandleToSamplerINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -49578,8 +52620,12 @@ impl Inst for OpConvertHandleToSampledImageINTEL {
 }
 impl InstEncoding for OpConvertHandleToSampledImageINTEL {
     type IdResult = IdResult;
+    type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
         self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
