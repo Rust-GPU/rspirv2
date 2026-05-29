@@ -5,10 +5,17 @@ pub enum DebugPrintfInstSet {
 }
 impl InstEncoding for DebugPrintfInstSet {
     type IdResult = Option<IdResult>;
+    type IdResultType = Option<IdResult>;
     fn id_result(&self) -> Self::IdResult {
         profiling::function_scope!();
         match self {
             Self::DebugPrintf(inst) => InstEncoding::id_result(inst).to_optional(),
+        }
+    }
+    fn id_result_type(&self) -> Self::IdResult {
+        profiling::function_scope!();
+        match self {
+            Self::DebugPrintf(inst) => InstEncoding::id_result_type(inst).to_optional(),
         }
     }
     fn name() -> &'static str {

@@ -31,10 +31,18 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             },
         );
 
-        // id_result(&mut self) -> &mut OptionIdResult
+        // id_result
         let (id_result_ty, id_result_get) = if let Some(id_result) = id_result {
             let name = &id_result.name;
             (quote!(IdResult), quote!(self.#name))
+        } else {
+            (quote!(()), quote!())
+        };
+
+        // id_result_type
+        let (id_result_type_ty, id_result_type_get) = if let Some(id_result_type) = id_result_type {
+            let name = &id_result_type.name;
+            (quote!(IdResult), quote!(self.#name.0))
         } else {
             (quote!(()), quote!())
         };
@@ -117,9 +125,14 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
 
             impl InstEncoding for #struct_ident {
                 type IdResult = #id_result_ty;
+                type IdResultType = #id_result_type_ty;
 
                 fn id_result(&self) -> Self::IdResult {
                     #id_result_get
+                }
+
+                fn id_result_type(&self) -> Self::IdResultType {
+                    #id_result_type_get
                 }
 
                 fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {

@@ -23,6 +23,9 @@ pub fn write_inst_enum(
     let id_result_match = insts.iter().map(
         |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => InstEncoding::id_result(inst).to_optional(),),
     );
+    let id_result_type_match = insts.iter().map(
+        |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => InstEncoding::id_result_type(inst).to_optional(),),
+    );
     let encode_match = insts.iter().map(
         |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => InstEncoding::encode(inst, writer),),
     );
@@ -52,11 +55,19 @@ pub fn write_inst_enum(
 
             impl InstEncoding for #name {
                 type IdResult = Option<IdResult>;
+                type IdResultType = Option<IdResult>;
 
                 fn id_result(&self) -> Self::IdResult {
                     profiling::function_scope!();
                     match self {
                         #(#id_result_match)*
+                    }
+                }
+
+                fn id_result_type(&self) -> Self::IdResult {
+                    profiling::function_scope!();
+                    match self {
+                        #(#id_result_type_match)*
                     }
                 }
 
