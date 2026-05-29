@@ -67,7 +67,7 @@ impl<ISA: InstEncoding> InstVec<ISA> {
 
     /// Appends an instruction to the back of the [`InstVec`]. See [`Vec::push`].
     #[inline]
-    pub fn push_inst<I: Inst + Into<ISA>>(&mut self, inst: I) -> I::MaybeIdResult {
+    pub fn push_inst<I: Inst + Into<ISA>>(&mut self, inst: I) -> I::IdResult {
         self.raw.push_inst(inst)
     }
 
@@ -179,7 +179,7 @@ impl RawInstVec {
 
     /// Appends an instruction to the back of the [`RawInstVec`]. See [`Vec::push`].
     #[inline]
-    pub fn push_inst<I: Inst>(&mut self, inst: I) -> I::MaybeIdResult {
+    pub fn push_inst<I: Inst>(&mut self, inst: I) -> I::IdResult {
         let id_result = inst.id_result();
         self.push(inst);
         id_result

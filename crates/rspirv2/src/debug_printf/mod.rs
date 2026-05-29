@@ -5,6 +5,8 @@
 #![allow(clippy::identity_op)]
 #![allow(clippy::semicolon_if_nothing_returned)]
 #![allow(clippy::doc_markdown)]
+#![allow(clippy::unit_arg)]
+
 pub mod grammar;
 pub mod inst;
 pub mod inst_meta;
