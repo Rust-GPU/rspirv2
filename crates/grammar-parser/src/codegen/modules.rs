@@ -1,4 +1,5 @@
-use crate::codegen::instructions::{write_inst, write_inst_enum};
+use crate::codegen::inst::write_inst;
+use crate::codegen::inst_set::write_inst_enum;
 use crate::codegen::operands::write_operands;
 use crate::codegen::options::CodegenOptions;
 use crate::codegen::{EmitRef, GrammarWriter};
