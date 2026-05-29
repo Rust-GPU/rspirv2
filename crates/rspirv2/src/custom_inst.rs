@@ -9,7 +9,7 @@ use crate::operand::{IdRef, OperandDisContext, OperandEncoding};
 use OpSwitchTargetLen::{One, Two};
 use rspirv2_types::Word;
 use rspirv2_types::binary::{DecodeErrorKind, FnWriter, OperandReader};
-use rspirv2_types::operand::{IdResult, LiteralConst};
+use rspirv2_types::operand::LiteralConst;
 use smallvec::SmallVec;
 use std::borrow::Cow;
 use std::error::Error;
@@ -272,47 +272,7 @@ unsafe impl OperandEncoding for OpSwitchTarget {
     }
 
     fn dis_fmt(&self, _f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
-        unreachable!()
-    }
-}
-
-impl OpSwitchTarget {
-    fn dis_fmt(
-        &self,
-        f: &mut Formatter<'_>,
-        selector: IdResult,
-        ctx: &DisContext,
-    ) -> std::fmt::Result {
-        profiling::function_scope!();
-        let resolved = match self {
-            OpSwitchTarget::Unresolved(_) => {
-                let len = {
-                    let width = ctx.id_to_int_width.get(&selector).copied();
-                    match width {
-                        Some(64) => Some(Two),
-                        Some(32 | 16 | 8) => Some(One),
-                        _ => None,
-                    }
-                }
-                // TODO How to handle this error nicely? All other cases we could just get away with not erroring
-                .expect("Disassembly missing context");
-                self.resolve_ref(len).unwrap()
-            }
-            OpSwitchTarget::Resolved(r) => Cow::Borrowed(r),
-        };
-        resolved.dis_fmt(f, &OperandDisContext::new(ctx))
-    }
-}
-
-pub struct OpSwitchTargetDis<'a> {
-    target: &'a OpSwitchTarget,
-    selector: IdResult,
-    ctx: &'a DisContext,
-}
-
-impl Display for OpSwitchTargetDis<'_> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        self.target.dis_fmt(f, self.selector, self.ctx)
+        panic!("OpSwitchTarget can't be trivially disassembled")
     }
 }
 
@@ -390,17 +350,64 @@ impl InstEncoding for OpSwitch {
             id_result_type: None,
             ctx,
         };
+        let resolved = match &self.target {
+            OpSwitchTarget::Unresolved(words) => {
+                let width = ctx.id_to_int_width.get(&self.selector.0).copied();
+                let len = match width {
+                    Some(64) => Two,
+                    Some(32 | 16 | 8) => One,
+                    _ => {
+                        // we're missing context to know how to decode this OpSwitch...
+                        // The best we can do is take an educated guess
+                        let prefix = "# ERROR: Missing context to resolve whether OpSwitch has 32 or 64bit constants!";
+                        let words = words.len();
+                        let can_be_64 = words % 3 == 0;
+                        let can_be_32 = words % 2 == 0;
+                        match (can_be_32, can_be_64) {
+                            (false, false) => {
+                                writeln!(
+                                    f,
+                                    "{prefix} With {words} words neither 32bit or 64bit make sense, refusing to decode entry table!"
+                                )?;
+                                write!(
+                                    f,
+                                    "{}OpSwitch{}{} ???",
+                                    ctx.id_result_writer(),
+                                    self.selector.dis(ctx),
+                                    self.default.dis(ctx)
+                                )?;
+                                return Ok(());
+                            }
+                            (true, false) => {
+                                writeln!(f, "{prefix} With {words} words must be 32bit")?;
+                                One
+                            }
+                            (false, true) => {
+                                writeln!(f, "{prefix} With {words} words must be 64bit")?;
+                                Two
+                            }
+                            (true, true) => {
+                                writeln!(
+                                    f,
+                                    "{prefix} With {words} words can be 32 or 64bit, *guessing 32bit*"
+                                )?;
+                                One
+                            }
+                        }
+                    }
+                };
+                // panic is unreachable: can only panic if `target` is `Self::Resolved`
+                self.resolve_ref(len).unwrap()
+            }
+            OpSwitchTarget::Resolved(r) => Cow::Borrowed(r),
+        };
         write!(
             f,
             "{}OpSwitch{}{}{}",
             ctx.id_result_writer(),
             self.selector.dis(ctx),
             self.default.dis(ctx),
-            OpSwitchTargetDis {
-                target: &self.target,
-                selector: self.selector.0,
-                ctx,
-            }
+            resolved.dis(ctx),
         )
     }
 }
