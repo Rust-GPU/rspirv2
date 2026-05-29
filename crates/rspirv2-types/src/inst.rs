@@ -9,15 +9,15 @@ use std::ops::Deref;
 
 pub trait Inst: InstEncoding {
     const META: &InstMeta;
-
-    /// `MaybeIdResult` is either an [`IdResult`] or `()`, depending on whether this Instruction has an [`IdResult`].
-    type MaybeIdResult: MaybeIdResult;
-
-    /// Query the potential [`IdResult`] of this Instruction, or `()` if it has none.
-    fn id_result(&self) -> Self::MaybeIdResult;
 }
 
 pub trait InstEncoding: Sized + Debug + Eq {
+    /// `IdResult` is either an [`IdResult`] or `()`, depending on whether this Instruction has an [`IdResult`].
+    type IdResult: MaybeIdResult;
+
+    /// Query the potential [`IdResult`] of this Instruction, or `()` if it has none.
+    fn id_result(&self) -> Self::IdResult;
+
     /// Name of the instruction set, for debug printing
     fn name() -> &'static str {
         "unknown"
@@ -59,6 +59,10 @@ pub trait InstEncoding: Sized + Debug + Eq {
 }
 
 impl InstEncoding for () {
+    type IdResult = ();
+
+    fn id_result(&self) -> Self::IdResult {}
+
     fn name() -> &'static str {
         "()"
     }
@@ -89,11 +93,27 @@ impl<'a, T: InstEncoding> Display for InstDis<'a, T> {
 }
 
 /// A type that may be an [`IdResult`] or `()`.
-pub trait MaybeIdResult: Copy {}
+pub trait MaybeIdResult: Copy {
+    fn to_optional(&self) -> Option<IdResult>;
+}
 
-impl MaybeIdResult for () {}
+impl MaybeIdResult for () {
+    fn to_optional(&self) -> Option<IdResult> {
+        None
+    }
+}
 
-impl MaybeIdResult for IdResult {}
+impl MaybeIdResult for IdResult {
+    fn to_optional(&self) -> Option<IdResult> {
+        Some(*self)
+    }
+}
+
+impl MaybeIdResult for Option<IdResult> {
+    fn to_optional(&self) -> Option<IdResult> {
+        *self
+    }
+}
 
 /// A reference to a valid instruction encoded in a slice of [`Word`]s.
 ///

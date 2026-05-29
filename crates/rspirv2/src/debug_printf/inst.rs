@@ -6,10 +6,10 @@ pub struct DebugPrintf {
 }
 impl Inst for DebugPrintf {
     const META: &InstMeta = &DEBUG_PRINTF;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for DebugPrintf {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len =

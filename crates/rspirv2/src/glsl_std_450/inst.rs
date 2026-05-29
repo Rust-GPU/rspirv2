@@ -5,10 +5,10 @@ pub struct Round {
 }
 impl Inst for Round {
     const META: &InstMeta = &ROUND;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Round {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -39,10 +39,10 @@ pub struct RoundEven {
 }
 impl Inst for RoundEven {
     const META: &InstMeta = &ROUND_EVEN;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for RoundEven {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -73,10 +73,10 @@ pub struct Trunc {
 }
 impl Inst for Trunc {
     const META: &InstMeta = &TRUNC;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Trunc {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -107,10 +107,10 @@ pub struct FAbs {
 }
 impl Inst for FAbs {
     const META: &InstMeta = &F_ABS;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FAbs {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -141,10 +141,10 @@ pub struct SAbs {
 }
 impl Inst for SAbs {
     const META: &InstMeta = &S_ABS;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for SAbs {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -175,10 +175,10 @@ pub struct FSign {
 }
 impl Inst for FSign {
     const META: &InstMeta = &F_SIGN;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FSign {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -209,10 +209,10 @@ pub struct SSign {
 }
 impl Inst for SSign {
     const META: &InstMeta = &S_SIGN;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for SSign {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -243,10 +243,10 @@ pub struct Floor {
 }
 impl Inst for Floor {
     const META: &InstMeta = &FLOOR;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Floor {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -277,10 +277,10 @@ pub struct Ceil {
 }
 impl Inst for Ceil {
     const META: &InstMeta = &CEIL;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Ceil {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -311,10 +311,10 @@ pub struct Fract {
 }
 impl Inst for Fract {
     const META: &InstMeta = &FRACT;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Fract {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -345,10 +345,10 @@ pub struct Radians {
 }
 impl Inst for Radians {
     const META: &InstMeta = &RADIANS;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Radians {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.degrees);
@@ -384,10 +384,10 @@ pub struct Degrees {
 }
 impl Inst for Degrees {
     const META: &InstMeta = &DEGREES;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Degrees {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.radians);
@@ -423,10 +423,10 @@ pub struct Sin {
 }
 impl Inst for Sin {
     const META: &InstMeta = &SIN;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Sin {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -457,10 +457,10 @@ pub struct Cos {
 }
 impl Inst for Cos {
     const META: &InstMeta = &COS;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Cos {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -491,10 +491,10 @@ pub struct Tan {
 }
 impl Inst for Tan {
     const META: &InstMeta = &TAN;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Tan {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -525,10 +525,10 @@ pub struct Asin {
 }
 impl Inst for Asin {
     const META: &InstMeta = &ASIN;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Asin {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -559,10 +559,10 @@ pub struct Acos {
 }
 impl Inst for Acos {
     const META: &InstMeta = &ACOS;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Acos {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -593,10 +593,10 @@ pub struct Atan {
 }
 impl Inst for Atan {
     const META: &InstMeta = &ATAN;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Atan {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.y_over_x);
@@ -632,10 +632,10 @@ pub struct Sinh {
 }
 impl Inst for Sinh {
     const META: &InstMeta = &SINH;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Sinh {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -666,10 +666,10 @@ pub struct Cosh {
 }
 impl Inst for Cosh {
     const META: &InstMeta = &COSH;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Cosh {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -700,10 +700,10 @@ pub struct Tanh {
 }
 impl Inst for Tanh {
     const META: &InstMeta = &TANH;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Tanh {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -734,10 +734,10 @@ pub struct Asinh {
 }
 impl Inst for Asinh {
     const META: &InstMeta = &ASINH;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Asinh {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -768,10 +768,10 @@ pub struct Acosh {
 }
 impl Inst for Acosh {
     const META: &InstMeta = &ACOSH;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Acosh {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -802,10 +802,10 @@ pub struct Atanh {
 }
 impl Inst for Atanh {
     const META: &InstMeta = &ATANH;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Atanh {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -837,10 +837,10 @@ pub struct Atan2 {
 }
 impl Inst for Atan2 {
     const META: &InstMeta = &ATAN_2;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Atan2 {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.y) + OperandEncoding::word_len(&self.x);
@@ -880,10 +880,10 @@ pub struct Pow {
 }
 impl Inst for Pow {
     const META: &InstMeta = &POW;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Pow {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -922,10 +922,10 @@ pub struct Exp {
 }
 impl Inst for Exp {
     const META: &InstMeta = &EXP;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Exp {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -956,10 +956,10 @@ pub struct Log {
 }
 impl Inst for Log {
     const META: &InstMeta = &LOG;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Log {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -990,10 +990,10 @@ pub struct Exp2 {
 }
 impl Inst for Exp2 {
     const META: &InstMeta = &EXP_2;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Exp2 {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -1024,10 +1024,10 @@ pub struct Log2 {
 }
 impl Inst for Log2 {
     const META: &InstMeta = &LOG_2;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Log2 {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -1058,10 +1058,10 @@ pub struct Sqrt {
 }
 impl Inst for Sqrt {
     const META: &InstMeta = &SQRT;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Sqrt {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -1092,10 +1092,10 @@ pub struct InverseSqrt {
 }
 impl Inst for InverseSqrt {
     const META: &InstMeta = &INVERSE_SQRT;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for InverseSqrt {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -1131,10 +1131,10 @@ pub struct Determinant {
 }
 impl Inst for Determinant {
     const META: &InstMeta = &DETERMINANT;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Determinant {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -1170,10 +1170,10 @@ pub struct MatrixInverse {
 }
 impl Inst for MatrixInverse {
     const META: &InstMeta = &MATRIX_INVERSE;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for MatrixInverse {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -1210,10 +1210,10 @@ pub struct Modf {
 }
 impl Inst for Modf {
     const META: &InstMeta = &MODF;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Modf {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.i);
@@ -1252,10 +1252,10 @@ pub struct ModfStruct {
 }
 impl Inst for ModfStruct {
     const META: &InstMeta = &MODF_STRUCT;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for ModfStruct {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -1287,10 +1287,10 @@ pub struct FMin {
 }
 impl Inst for FMin {
     const META: &InstMeta = &F_MIN;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FMin {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -1330,10 +1330,10 @@ pub struct UMin {
 }
 impl Inst for UMin {
     const META: &InstMeta = &U_MIN;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UMin {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -1373,10 +1373,10 @@ pub struct SMin {
 }
 impl Inst for SMin {
     const META: &InstMeta = &S_MIN;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for SMin {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -1416,10 +1416,10 @@ pub struct FMax {
 }
 impl Inst for FMax {
     const META: &InstMeta = &F_MAX;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FMax {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -1459,10 +1459,10 @@ pub struct UMax {
 }
 impl Inst for UMax {
     const META: &InstMeta = &U_MAX;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UMax {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -1502,10 +1502,10 @@ pub struct SMax {
 }
 impl Inst for SMax {
     const META: &InstMeta = &S_MAX;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for SMax {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -1546,10 +1546,10 @@ pub struct FClamp {
 }
 impl Inst for FClamp {
     const META: &InstMeta = &F_CLAMP;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FClamp {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1596,10 +1596,10 @@ pub struct UClamp {
 }
 impl Inst for UClamp {
     const META: &InstMeta = &U_CLAMP;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UClamp {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1646,10 +1646,10 @@ pub struct SClamp {
 }
 impl Inst for SClamp {
     const META: &InstMeta = &S_CLAMP;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for SClamp {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1696,10 +1696,10 @@ pub struct FMix {
 }
 impl Inst for FMix {
     const META: &InstMeta = &F_MIX;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FMix {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1746,10 +1746,10 @@ pub struct IMix {
 }
 impl Inst for IMix {
     const META: &InstMeta = &I_MIX;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for IMix {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1795,10 +1795,10 @@ pub struct Step {
 }
 impl Inst for Step {
     const META: &InstMeta = &STEP;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Step {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.edge) + OperandEncoding::word_len(&self.x);
@@ -1839,10 +1839,10 @@ pub struct SmoothStep {
 }
 impl Inst for SmoothStep {
     const META: &InstMeta = &SMOOTH_STEP;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for SmoothStep {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1889,10 +1889,10 @@ pub struct Fma {
 }
 impl Inst for Fma {
     const META: &InstMeta = &FMA;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Fma {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -1938,10 +1938,10 @@ pub struct Frexp {
 }
 impl Inst for Frexp {
     const META: &InstMeta = &FREXP;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Frexp {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.exp);
@@ -1980,10 +1980,10 @@ pub struct FrexpStruct {
 }
 impl Inst for FrexpStruct {
     const META: &InstMeta = &FREXP_STRUCT;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FrexpStruct {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -2020,10 +2020,10 @@ pub struct Ldexp {
 }
 impl Inst for Ldexp {
     const META: &InstMeta = &LDEXP;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Ldexp {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.exp);
@@ -2062,10 +2062,10 @@ pub struct PackSnorm4x8 {
 }
 impl Inst for PackSnorm4x8 {
     const META: &InstMeta = &PACK_SNORM_4_X_8;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for PackSnorm4x8 {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2101,10 +2101,10 @@ pub struct PackUnorm4x8 {
 }
 impl Inst for PackUnorm4x8 {
     const META: &InstMeta = &PACK_UNORM_4_X_8;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for PackUnorm4x8 {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2140,10 +2140,10 @@ pub struct PackSnorm2x16 {
 }
 impl Inst for PackSnorm2x16 {
     const META: &InstMeta = &PACK_SNORM_2_X_16;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for PackSnorm2x16 {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2179,10 +2179,10 @@ pub struct PackUnorm2x16 {
 }
 impl Inst for PackUnorm2x16 {
     const META: &InstMeta = &PACK_UNORM_2_X_16;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for PackUnorm2x16 {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2218,10 +2218,10 @@ pub struct PackHalf2x16 {
 }
 impl Inst for PackHalf2x16 {
     const META: &InstMeta = &PACK_HALF_2_X_16;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for PackHalf2x16 {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2257,10 +2257,10 @@ pub struct PackDouble2x32 {
 }
 impl Inst for PackDouble2x32 {
     const META: &InstMeta = &PACK_DOUBLE_2_X_32;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for PackDouble2x32 {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2296,10 +2296,10 @@ pub struct UnpackSnorm2x16 {
 }
 impl Inst for UnpackSnorm2x16 {
     const META: &InstMeta = &UNPACK_SNORM_2_X_16;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UnpackSnorm2x16 {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.p);
@@ -2335,10 +2335,10 @@ pub struct UnpackUnorm2x16 {
 }
 impl Inst for UnpackUnorm2x16 {
     const META: &InstMeta = &UNPACK_UNORM_2_X_16;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UnpackUnorm2x16 {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.p);
@@ -2374,10 +2374,10 @@ pub struct UnpackHalf2x16 {
 }
 impl Inst for UnpackHalf2x16 {
     const META: &InstMeta = &UNPACK_HALF_2_X_16;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UnpackHalf2x16 {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2413,10 +2413,10 @@ pub struct UnpackSnorm4x8 {
 }
 impl Inst for UnpackSnorm4x8 {
     const META: &InstMeta = &UNPACK_SNORM_4_X_8;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UnpackSnorm4x8 {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.p);
@@ -2452,10 +2452,10 @@ pub struct UnpackUnorm4x8 {
 }
 impl Inst for UnpackUnorm4x8 {
     const META: &InstMeta = &UNPACK_UNORM_4_X_8;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UnpackUnorm4x8 {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.p);
@@ -2491,10 +2491,10 @@ pub struct UnpackDouble2x32 {
 }
 impl Inst for UnpackDouble2x32 {
     const META: &InstMeta = &UNPACK_DOUBLE_2_X_32;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for UnpackDouble2x32 {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.v);
@@ -2530,10 +2530,10 @@ pub struct Length {
 }
 impl Inst for Length {
     const META: &InstMeta = &LENGTH;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Length {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -2565,10 +2565,10 @@ pub struct Distance {
 }
 impl Inst for Distance {
     const META: &InstMeta = &DISTANCE;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Distance {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.p_0) + OperandEncoding::word_len(&self.p_1);
@@ -2608,10 +2608,10 @@ pub struct Cross {
 }
 impl Inst for Cross {
     const META: &InstMeta = &CROSS;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Cross {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -2650,10 +2650,10 @@ pub struct Normalize {
 }
 impl Inst for Normalize {
     const META: &InstMeta = &NORMALIZE;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Normalize {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x);
@@ -2686,10 +2686,10 @@ pub struct FaceForward {
 }
 impl Inst for FaceForward {
     const META: &InstMeta = &FACE_FORWARD;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FaceForward {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -2735,10 +2735,10 @@ pub struct Reflect {
 }
 impl Inst for Reflect {
     const META: &InstMeta = &REFLECT;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Reflect {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.i) + OperandEncoding::word_len(&self.n);
@@ -2779,10 +2779,10 @@ pub struct Refract {
 }
 impl Inst for Refract {
     const META: &InstMeta = &REFRACT;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for Refract {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -2827,10 +2827,10 @@ pub struct FindILsb {
 }
 impl Inst for FindILsb {
     const META: &InstMeta = &FIND_I_LSB;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FindILsb {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.value);
@@ -2866,10 +2866,10 @@ pub struct FindSMsb {
 }
 impl Inst for FindSMsb {
     const META: &InstMeta = &FIND_S_MSB;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FindSMsb {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.value);
@@ -2905,10 +2905,10 @@ pub struct FindUMsb {
 }
 impl Inst for FindUMsb {
     const META: &InstMeta = &FIND_U_MSB;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for FindUMsb {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.value);
@@ -2944,10 +2944,10 @@ pub struct InterpolateAtCentroid {
 }
 impl Inst for InterpolateAtCentroid {
     const META: &InstMeta = &INTERPOLATE_AT_CENTROID;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for InterpolateAtCentroid {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.interpolant);
@@ -2984,10 +2984,10 @@ pub struct InterpolateAtSample {
 }
 impl Inst for InterpolateAtSample {
     const META: &InstMeta = &INTERPOLATE_AT_SAMPLE;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for InterpolateAtSample {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -3029,10 +3029,10 @@ pub struct InterpolateAtOffset {
 }
 impl Inst for InterpolateAtOffset {
     const META: &InstMeta = &INTERPOLATE_AT_OFFSET;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for InterpolateAtOffset {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -3074,10 +3074,10 @@ pub struct NMin {
 }
 impl Inst for NMin {
     const META: &InstMeta = &N_MIN;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for NMin {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -3117,10 +3117,10 @@ pub struct NMax {
 }
 impl Inst for NMax {
     const META: &InstMeta = &N_MAX;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for NMax {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1 + OperandEncoding::word_len(&self.x) + OperandEncoding::word_len(&self.y);
@@ -3161,10 +3161,10 @@ pub struct NClamp {
 }
 impl Inst for NClamp {
     const META: &InstMeta = &N_CLAMP;
-    type MaybeIdResult = ();
-    fn id_result(&self) -> Self::MaybeIdResult {}
 }
 impl InstEncoding for NClamp {
+    type IdResult = ();
+    fn id_result(&self) -> Self::IdResult {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1

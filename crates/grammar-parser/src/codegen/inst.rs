@@ -113,15 +113,15 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
 
             impl Inst for #struct_ident {
                 const META: &InstMeta = &#meta;
-
-                type MaybeIdResult = #id_result_ty;
-
-                fn id_result(&self) -> Self::MaybeIdResult {
-                    #id_result_get
-                }
             }
 
             impl InstEncoding for #struct_ident {
+                type IdResult = #id_result_ty;
+
+                fn id_result(&self) -> Self::IdResult {
+                    #id_result_get
+                }
+
                 fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
                     profiling::function_scope!();
                     let len = 1 #(+OperandEncoding::word_len(&self.#members))*;
