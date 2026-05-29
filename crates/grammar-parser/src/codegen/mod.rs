@@ -1,5 +1,6 @@
 mod emit;
-mod instructions;
+mod inst;
+mod inst_set;
 mod modules;
 mod operands;
 mod options;
