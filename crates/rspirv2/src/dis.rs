@@ -16,8 +16,10 @@ impl InstSetDisCtx for CoreInstSet {
         for inst in slice.iter().try_decode::<CoreInstSet>().skip_errors() {
             if let (Some(id_result), Some(id_result_type)) =
                 (inst.id_result(), inst.id_result_type())
+                && let Some(PrimitiveType::Int { width, .. }) =
+                    ctx.id_type_to_primitive_type.get(&id_result_type).copied()
             {
-                ctx.id_to_id_type.insert(id_result, id_result_type);
+                ctx.id_to_int_width.insert(id_result, width);
             }
             match inst {
                 Self::Name(inst) => {
@@ -56,7 +58,7 @@ impl InstSetDisCtx for CoreInstSet {
 impl OpTypeVoid {
     pub fn add_context(&self, ctx: &mut DisContext) {
         profiling::function_scope!();
-        ctx.id_to_primitive_type
+        ctx.id_type_to_primitive_type
             .insert(self.id_result, PrimitiveType::Void);
         ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
     }
@@ -70,7 +72,7 @@ impl OpTypeVoid {
 impl OpTypeBool {
     pub fn add_context(&self, ctx: &mut DisContext) {
         profiling::function_scope!();
-        ctx.id_to_primitive_type
+        ctx.id_type_to_primitive_type
             .insert(self.id_result, PrimitiveType::Bool);
         ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
     }
@@ -86,7 +88,7 @@ impl OpTypeInt {
         profiling::function_scope!();
         let signedness = self.signedness.to_bool();
         ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
-        ctx.id_to_primitive_type.insert(
+        ctx.id_type_to_primitive_type.insert(
             self.id_result,
             PrimitiveType::Int {
                 width: self.width.to_u32(),
@@ -125,7 +127,7 @@ impl OpTypeFloat {
     pub fn add_context(&self, ctx: &mut DisContext) {
         profiling::function_scope!();
         ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
-        ctx.id_to_primitive_type.insert(
+        ctx.id_type_to_primitive_type.insert(
             self.id_result,
             PrimitiveType::Float {
                 width: self.width.to_u32(),

@@ -9,7 +9,6 @@ use crate::operand::{IdRef, OperandDisContext, OperandEncoding};
 use OpSwitchTargetLen::{One, Two};
 use rspirv2_types::Word;
 use rspirv2_types::binary::{DecodeErrorKind, FnWriter, OperandReader};
-use rspirv2_types::dis::PrimitiveType;
 use rspirv2_types::operand::{IdResult, LiteralConst};
 use smallvec::SmallVec;
 use std::borrow::Cow;
@@ -287,17 +286,14 @@ impl OpSwitchTarget {
         profiling::function_scope!();
         let resolved = match self {
             OpSwitchTarget::Unresolved(_) => {
-                let len = (|| {
-                    let selector_type_id = ctx.id_to_id_type.get(&selector)?;
-                    let primitive_type = *ctx.id_to_primitive_type.get(selector_type_id)?;
-                    match primitive_type {
-                        PrimitiveType::Int { width: 64, .. } => Some(Two),
-                        PrimitiveType::Int {
-                            width: 32 | 16 | 8, ..
-                        } => Some(One),
+                let len = {
+                    let width = ctx.id_to_int_width.get(&selector).copied();
+                    match width {
+                        Some(64) => Some(Two),
+                        Some(32 | 16 | 8) => Some(One),
                         _ => None,
                     }
-                })()
+                }
                 // TODO How to handle this error nicely? All other cases we could just get away with not erroring
                 .expect("Disassembly missing context");
                 self.resolve_ref(len).unwrap()

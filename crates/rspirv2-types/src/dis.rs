@@ -143,13 +143,13 @@ impl DisOptions {
 pub struct DisContext {
     /// Options
     opt: DisOptions,
-    /// Maps an [`IdResult`] of an arbitrary instruction to it's `IdResultType`. By looking up
-    /// `id_to_primitive_type[id_to_id_type[id]]` one can resolve the type of an `OpSwitch`, and whether the contained
-    /// constants consume one or two words.
-    pub id_to_id_type: FxHashMap<IdResult, IdResult>,
+    /// Maps an [`IdResult`] of an arbitrary instruction to its integer width, if it is an integer.
+    /// To decode an `OpSwitch`, one needs to know from context whether the selector is 32 or 64bit, as it determines
+    /// whether the label constants consume one or two words.
+    pub id_to_int_width: FxHashMap<IdResult, u32>,
     /// Maps an [`IdResult`] of a type declaration to a [`PrimitiveType`]. Primarily for `OpSwitch`, but such a lookup
     /// may be useful for other instructions as well.
-    pub id_to_primitive_type: FxHashMap<IdResult, PrimitiveType>,
+    pub id_type_to_primitive_type: FxHashMap<IdResult, PrimitiveType>,
     /// Maps an [`IdResult`] of a type declaration to a [`ConstFmt`] to tell `OpConstant` instructions how to format
     /// the untyped constant value
     pub id_to_const_fmt: FxHashMap<IdResult, ConstFmt>,
