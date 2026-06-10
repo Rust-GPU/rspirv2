@@ -31,9 +31,12 @@ mod tests {
 
     #[test]
     pub fn test() -> anyhow::Result<()> {
-        Args { path: spv("bla") }.run()?;
         Args {
-            path: spv("const_specs"),
+            path: spv("bla").spv(),
+        }
+        .run()?;
+        Args {
+            path: spv("const_specs").spv(),
         }
         .run()?;
         Ok(())

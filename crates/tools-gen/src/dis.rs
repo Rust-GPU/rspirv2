@@ -95,15 +95,15 @@ impl Args {
 #[cfg(test)]
 pub mod test {
     use super::*;
-    use expect_test::{ExpectFile, expect_file};
+    use expect_test::ExpectFile;
     use rspirv2::core::inst_set::CoreInstSet;
-    use spv::spv;
+    use spv::{BLA, DIS_REFERENCE, TEXTURE_GRAD_OFFSET};
     use std::io::stdout;
 
     #[test]
     fn test_bla() -> anyhow::Result<()> {
         Args {
-            path: spv("bla"),
+            path: BLA.spv(),
             ..Default::default()
         }
         .run::<CoreInstSet>(&mut stdout())
@@ -112,8 +112,8 @@ pub mod test {
     #[test]
     fn test_dis_reference_default() -> anyhow::Result<()> {
         test_disassembly(
-            spv("dis_reference"),
-            expect_file!["../../../spv/dis_reference.rspirv2"],
+            DIS_REFERENCE.spv(),
+            DIS_REFERENCE.expect("rspirv2"),
             Profile::Default,
             false,
         )
@@ -122,8 +122,8 @@ pub mod test {
     #[test]
     fn test_dis_reference_default_be() -> anyhow::Result<()> {
         test_disassembly(
-            spv("dis_reference"),
-            expect_file!["../../../spv/dis_reference.rspirv2"],
+            DIS_REFERENCE.spv(),
+            DIS_REFERENCE.expect("rspirv2"),
             Profile::Default,
             true,
         )
@@ -132,8 +132,8 @@ pub mod test {
     #[test]
     fn test_dis_reference_rspirv() -> anyhow::Result<()> {
         test_disassembly(
-            spv("dis_reference"),
-            expect_file!["../../../spv/dis_reference.rspirv_like"],
+            DIS_REFERENCE.spv(),
+            DIS_REFERENCE.expect("rspirv_like"),
             Profile::Rspirv,
             false,
         )
@@ -142,8 +142,8 @@ pub mod test {
     #[test]
     fn test_dis_reference_rspirv_be() -> anyhow::Result<()> {
         test_disassembly(
-            spv("dis_reference"),
-            expect_file!["../../../spv/dis_reference.rspirv_like"],
+            DIS_REFERENCE.spv(),
+            DIS_REFERENCE.expect("rspirv_like"),
             Profile::Rspirv,
             true,
         )
@@ -152,8 +152,8 @@ pub mod test {
     #[test]
     fn test_dis_reference_spirv_tools() -> anyhow::Result<()> {
         test_disassembly(
-            spv("dis_reference"),
-            expect_file!["../../../spv/dis_reference.spirv_tools_like"],
+            DIS_REFERENCE.spv(),
+            DIS_REFERENCE.expect("spirv_tools_like"),
             Profile::SpirvTools,
             false,
         )
@@ -162,8 +162,8 @@ pub mod test {
     #[test]
     fn test_dis_reference_spirv_tools_be() -> anyhow::Result<()> {
         test_disassembly(
-            spv("dis_reference"),
-            expect_file!["../../../spv/dis_reference.spirv_tools_like"],
+            DIS_REFERENCE.spv(),
+            DIS_REFERENCE.expect("spirv_tools_like"),
             Profile::SpirvTools,
             true,
         )
@@ -172,8 +172,8 @@ pub mod test {
     #[test]
     fn test_texture_grad_offset_default() -> anyhow::Result<()> {
         test_disassembly(
-            spv("textureGradOffset"),
-            expect_file!["../../../spv/textureGradOffset.rspirv2"],
+            TEXTURE_GRAD_OFFSET.spv(),
+            TEXTURE_GRAD_OFFSET.expect("rspirv2"),
             Profile::Default,
             false,
         )
@@ -182,8 +182,8 @@ pub mod test {
     #[test]
     fn test_texture_grad_offset_default_be() -> anyhow::Result<()> {
         test_disassembly(
-            spv("textureGradOffset"),
-            expect_file!["../../../spv/textureGradOffset.rspirv2"],
+            TEXTURE_GRAD_OFFSET.spv(),
+            TEXTURE_GRAD_OFFSET.expect("rspirv2"),
             Profile::Default,
             true,
         )
@@ -192,8 +192,8 @@ pub mod test {
     #[test]
     fn test_texture_grad_offset_rspirv() -> anyhow::Result<()> {
         test_disassembly(
-            spv("textureGradOffset"),
-            expect_file!["../../../spv/textureGradOffset.rspirv_like"],
+            TEXTURE_GRAD_OFFSET.spv(),
+            TEXTURE_GRAD_OFFSET.expect("rspirv_like"),
             Profile::Rspirv,
             false,
         )
@@ -202,8 +202,8 @@ pub mod test {
     #[test]
     fn test_texture_grad_offset_rspirv_be() -> anyhow::Result<()> {
         test_disassembly(
-            spv("textureGradOffset"),
-            expect_file!["../../../spv/textureGradOffset.rspirv_like"],
+            TEXTURE_GRAD_OFFSET.spv(),
+            TEXTURE_GRAD_OFFSET.expect("rspirv_like"),
             Profile::Rspirv,
             true,
         )
@@ -212,8 +212,8 @@ pub mod test {
     #[test]
     fn test_texture_grad_offset_spirv_tools() -> anyhow::Result<()> {
         test_disassembly(
-            spv("textureGradOffset"),
-            expect_file!["../../../spv/textureGradOffset.spirv_tools_like"],
+            TEXTURE_GRAD_OFFSET.spv(),
+            TEXTURE_GRAD_OFFSET.expect("spirv_tools_like"),
             Profile::SpirvTools,
             false,
         )
@@ -222,8 +222,8 @@ pub mod test {
     #[test]
     fn test_texture_grad_offset_spirv_tools_be() -> anyhow::Result<()> {
         test_disassembly(
-            spv("textureGradOffset"),
-            expect_file!["../../../spv/textureGradOffset.spirv_tools_like"],
+            TEXTURE_GRAD_OFFSET.spv(),
+            TEXTURE_GRAD_OFFSET.expect("spirv_tools_like"),
             Profile::SpirvTools,
             false,
         )
