@@ -9,3 +9,14 @@ workspace = true
 
 [dependencies]
 expect-test.workspace = true
+
+[dev-dependencies]
+anyhow.workspace = true
+rspirv2.workspace = true
+rspirv2-types.workspace = true
+rspirv2-grammar.workspace = true
+rspirv2-grammar-parser.workspace = true
+anstream.workspace = true
+smallvec.workspace = true
+rspirv2-tools-gen.workspace = true
+clap.workspace = true
