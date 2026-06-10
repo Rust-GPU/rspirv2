@@ -7,16 +7,16 @@ use std::path::PathBuf;
 #[derive(Clone, Debug, Default, Parser)]
 pub struct Args {
     /// path to SPIR-V file
-    path: PathBuf,
+    pub path: PathBuf,
     /// Emit disassembly like as if it was emitted by this tool
     #[arg(short, long, default_value_t)]
-    profile: Profile,
+    pub profile: Profile,
     /// color
     #[clap(long, default_value_t)]
-    color: clap::ColorChoice,
+    pub color: clap::ColorChoice,
     /// Swap bytes of the SPIR-V module before parsing, for testing
     #[clap(skip)]
-    module_swap_bytes: bool,
+    pub module_swap_bytes: bool,
 }
 
 #[derive(Clone, Debug, Default, ValueEnum)]
@@ -89,162 +89,5 @@ impl Args {
         };
         opt.color = matches!(self.color, clap::ColorChoice::Always);
         Ok(opt)
-    }
-}
-
-#[cfg(test)]
-pub mod test {
-    use super::*;
-    use expect_test::ExpectFile;
-    use rspirv2::core::inst_set::CoreInstSet;
-    use spv::{BLA, DIS_REFERENCE, TEXTURE_GRAD_OFFSET};
-    use std::io::stdout;
-
-    #[test]
-    fn test_bla() -> anyhow::Result<()> {
-        Args {
-            path: BLA.spv(),
-            ..Default::default()
-        }
-        .run::<CoreInstSet>(&mut stdout())
-    }
-
-    #[test]
-    fn test_dis_reference_default() -> anyhow::Result<()> {
-        test_disassembly(
-            DIS_REFERENCE.spv(),
-            DIS_REFERENCE.expect("rspirv2"),
-            Profile::Default,
-            false,
-        )
-    }
-
-    #[test]
-    fn test_dis_reference_default_be() -> anyhow::Result<()> {
-        test_disassembly(
-            DIS_REFERENCE.spv(),
-            DIS_REFERENCE.expect("rspirv2"),
-            Profile::Default,
-            true,
-        )
-    }
-
-    #[test]
-    fn test_dis_reference_rspirv() -> anyhow::Result<()> {
-        test_disassembly(
-            DIS_REFERENCE.spv(),
-            DIS_REFERENCE.expect("rspirv_like"),
-            Profile::Rspirv,
-            false,
-        )
-    }
-
-    #[test]
-    fn test_dis_reference_rspirv_be() -> anyhow::Result<()> {
-        test_disassembly(
-            DIS_REFERENCE.spv(),
-            DIS_REFERENCE.expect("rspirv_like"),
-            Profile::Rspirv,
-            true,
-        )
-    }
-
-    #[test]
-    fn test_dis_reference_spirv_tools() -> anyhow::Result<()> {
-        test_disassembly(
-            DIS_REFERENCE.spv(),
-            DIS_REFERENCE.expect("spirv_tools_like"),
-            Profile::SpirvTools,
-            false,
-        )
-    }
-
-    #[test]
-    fn test_dis_reference_spirv_tools_be() -> anyhow::Result<()> {
-        test_disassembly(
-            DIS_REFERENCE.spv(),
-            DIS_REFERENCE.expect("spirv_tools_like"),
-            Profile::SpirvTools,
-            true,
-        )
-    }
-
-    #[test]
-    fn test_texture_grad_offset_default() -> anyhow::Result<()> {
-        test_disassembly(
-            TEXTURE_GRAD_OFFSET.spv(),
-            TEXTURE_GRAD_OFFSET.expect("rspirv2"),
-            Profile::Default,
-            false,
-        )
-    }
-
-    #[test]
-    fn test_texture_grad_offset_default_be() -> anyhow::Result<()> {
-        test_disassembly(
-            TEXTURE_GRAD_OFFSET.spv(),
-            TEXTURE_GRAD_OFFSET.expect("rspirv2"),
-            Profile::Default,
-            true,
-        )
-    }
-
-    #[test]
-    fn test_texture_grad_offset_rspirv() -> anyhow::Result<()> {
-        test_disassembly(
-            TEXTURE_GRAD_OFFSET.spv(),
-            TEXTURE_GRAD_OFFSET.expect("rspirv_like"),
-            Profile::Rspirv,
-            false,
-        )
-    }
-
-    #[test]
-    fn test_texture_grad_offset_rspirv_be() -> anyhow::Result<()> {
-        test_disassembly(
-            TEXTURE_GRAD_OFFSET.spv(),
-            TEXTURE_GRAD_OFFSET.expect("rspirv_like"),
-            Profile::Rspirv,
-            true,
-        )
-    }
-
-    #[test]
-    fn test_texture_grad_offset_spirv_tools() -> anyhow::Result<()> {
-        test_disassembly(
-            TEXTURE_GRAD_OFFSET.spv(),
-            TEXTURE_GRAD_OFFSET.expect("spirv_tools_like"),
-            Profile::SpirvTools,
-            false,
-        )
-    }
-
-    #[test]
-    fn test_texture_grad_offset_spirv_tools_be() -> anyhow::Result<()> {
-        test_disassembly(
-            TEXTURE_GRAD_OFFSET.spv(),
-            TEXTURE_GRAD_OFFSET.expect("spirv_tools_like"),
-            Profile::SpirvTools,
-            false,
-        )
-    }
-
-    fn test_disassembly(
-        path: PathBuf,
-        expect: ExpectFile,
-        profile: Profile,
-        module_swap_bytes: bool,
-    ) -> anyhow::Result<()> {
-        let args = Args {
-            path,
-            profile,
-            module_swap_bytes,
-            color: clap::ColorChoice::Never,
-        };
-        let mut stdout = Vec::new();
-        args.run_inner::<CoreInstSet>(&mut stdout)?;
-        let stdout = String::from_utf8(stdout)?;
-        expect.assert_eq(&stdout);
-        Ok(())
     }
 }
