@@ -76,6 +76,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: cargo fetch --locked
         run: cargo fetch --locked --target ${{ matrix.target }}
+      - name: apt install s390x compilers
+        if: ${{ matrix.target == 's390x-unknown-linux-gnu' }}
+        run: sudo apt install gcc-s390x-linux-gnu
 
       # miri tests
       - name: miri test
