@@ -45,6 +45,7 @@ expect-test = "1.5.1"
 rustc-hash = "2.1.1"
 profiling = { version = "1.0.17" }
 tracy-client = { version = "0.18.4", features = ["flush-on-exit"] }
+criterion = "0.8.2"
 
 [workspace.lints.rust]
 #missing_docs = "warn"
