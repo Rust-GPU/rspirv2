@@ -2,16 +2,16 @@ use rspirv2::core::inst_set::CoreInstSet;
 use rspirv2::module::Module;
 use rspirv2_types::inst::InstEncoding;
 use rspirv2_types::module::SPIRV_MAGIC;
-use spv::spv;
+use spv::BLA;
 
 #[test]
 fn test_bla() -> anyhow::Result<()> {
-    roundtrip_spv(&std::fs::read(spv("bla"))?)
+    roundtrip_spv(&std::fs::read(BLA.spv())?)
 }
 
 #[test]
 fn test_bla_be() -> anyhow::Result<()> {
-    let vec = std::fs::read(spv("bla"))?;
+    let vec = std::fs::read(BLA.spv())?;
     let vec = vec
         .as_chunks()
         .0

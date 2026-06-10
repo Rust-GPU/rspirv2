@@ -48,12 +48,13 @@ pub fn main() -> anyhow::Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use spv::spv;
+    use spv::CONST_SPECS;
+
     #[test]
     pub fn test() -> anyhow::Result<()> {
         let mut stdout = Vec::new();
         Args {
-            path: spv("const_specs"),
+            path: CONST_SPECS.spv(),
         }
         .run(&mut stdout)?;
         assert_eq!(

@@ -1,14 +1,13 @@
 use rspirv2::core::inst_set::CoreInstSet;
 use rspirv2_types::dis::DisOptions;
 use rspirv2_types::module::Module;
-use spv::spv;
+use spv::DIS_REFERENCE;
 use std::io::Write;
 
 #[test]
 #[cfg_attr(miri, ignore)]
 pub fn test_disabled_color() -> anyhow::Result<()> {
-    let module =
-        Module::<CoreInstSet>::from_bytes(std::fs::read(spv("dis_reference"))?.as_slice())?;
+    let module = Module::<CoreInstSet>::from_bytes(std::fs::read(DIS_REFERENCE.spv())?.as_slice())?;
 
     let mut color_stripped = Vec::new();
     write!(
