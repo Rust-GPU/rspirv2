@@ -20,3 +20,8 @@ anstream.workspace = true
 smallvec.workspace = true
 rspirv2-tools-gen.workspace = true
 clap.workspace = true
+criterion.workspace = true
+
+[[bench]]
+name = "dis"
+harness = false

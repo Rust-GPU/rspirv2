@@ -32,3 +32,4 @@ pub const BLA: SpvFolder<'_> = spv("bla");
 pub const DIS_REFERENCE: SpvFolder<'_> = spv("dis_reference");
 pub const TEXTURE_GRAD_OFFSET: SpvFolder<'_> = spv("textureGradOffset");
 pub const CONST_SPECS: SpvFolder<'_> = spv("const_specs");
+pub const CORE_PRE_LINK: SpvFolder<'_> = spv("core_pre_link");
