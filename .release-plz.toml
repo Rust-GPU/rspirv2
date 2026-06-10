@@ -1,0 +1,19 @@
+[changelog]
+body = """
+## [{{ version }}]{%- if release_link -%}({{ release_link }}){% endif %} - {{ timestamp | date(format="%Y-%m-%d") }}\n
+"""
+
+[workspace]
+changelog_update = false
+git_tag_enable = false
+git_release_enable = false
+
+[[package]]
+name = "rspirv2"
+changelog_update = true
+changelog_include = ["rspirv2-types", "rspirv2-grammar-parser", "rspirv2-grammar", "rspirv2-tools", "rspirv2-tools-gen"]
+changelog_path = "CHANGELOG.md"
+git_tag_enable = true
+git_tag_name = "v{{ version }}"
+git_release_enable = true
+git_release_name = "v{{ version }}"
