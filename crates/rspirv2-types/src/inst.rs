@@ -7,11 +7,15 @@ use std::fmt::{Debug, Display, Formatter};
 use std::marker::PhantomData;
 use std::ops::Deref;
 
-pub trait Inst: InstEncoding {
+pub trait SpvInst: SpvInstEncoding + SpvInstDis + SpvInstDefUse {}
+
+impl<T> SpvInst for T where T: SpvInstEncoding + SpvInstDis + SpvInstDefUse {}
+
+pub trait SpvInstMeta {
     const META: &InstMeta;
 }
 
-pub trait InstEncoding: Sized + Debug + Eq {
+pub trait SpvInstDefUse: Sized {
     /// `IdResult` is either an [`IdResult`] or `()`, depending on whether this Instruction has an [`IdResult`].
     type IdResult: MaybeIdResult;
     /// `IdResult` is either an [`IdResult`] or `()`, depending on whether this Instruction has an
@@ -23,7 +27,9 @@ pub trait InstEncoding: Sized + Debug + Eq {
 
     /// Query the potential [`IdResult`] of this Instruction, or `()` if it has none.
     fn id_result_type(&self) -> Self::IdResultType;
+}
 
+pub trait SpvInstEncoding: Sized {
     /// Name of the instruction set, for debug printing
     fn name() -> &'static str {
         "unknown"
@@ -51,7 +57,9 @@ pub trait InstEncoding: Sized + Debug + Eq {
             Err(e) => Err(e),
         }
     }
+}
 
+pub trait SpvInstDis: Sized {
     /// Disassemble this instruction to the supplied [`Formatter`] `f`
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result;
 
@@ -64,13 +72,15 @@ pub trait InstEncoding: Sized + Debug + Eq {
     }
 }
 
-impl InstEncoding for () {
+impl SpvInstDefUse for () {
     type IdResult = ();
     type IdResultType = ();
 
     fn id_result(&self) -> Self::IdResult {}
     fn id_result_type(&self) -> Self::IdResultType {}
+}
 
+impl SpvInstEncoding for () {
     fn name() -> &'static str {
         "()"
     }
@@ -85,15 +95,17 @@ impl InstEncoding for () {
         }
         .into())
     }
+}
 
+impl SpvInstDis for () {
     fn dis_fmt(&self, _: &mut Formatter<'_>, _: &DisContext) -> std::fmt::Result {
         Ok(())
     }
 }
 
-pub struct InstDis<'a, T: InstEncoding>(&'a T, &'a DisContext);
+pub struct InstDis<'a, T: SpvInstDis>(&'a T, &'a DisContext);
 
-impl<'a, T: InstEncoding> Display for InstDis<'a, T> {
+impl<'a, T: SpvInstDis> Display for InstDis<'a, T> {
     #[inline]
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, self.1)
@@ -130,12 +142,12 @@ impl MaybeIdResult for Option<IdResult> {
 /// # Safety
 /// The referenced words must be an encoded instruction that is valid within the `ISA` instruction set. Encountering an
 /// invalid instruction may panic.
-pub struct InstRef<'a, ISA: InstEncoding> {
+pub struct InstRef<'a, ISA: SpvInstEncoding> {
     reader: InstReader<'a>,
     _phantom: PhantomData<ISA>,
 }
 
-impl<'a, ISA: InstEncoding> InstRef<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> InstRef<'a, ISA> {
     #[inline]
     pub fn from_words_unchecked(words: &'a [Word]) -> Result<Self, DecodeError> {
         Ok(Self {
@@ -150,7 +162,7 @@ impl<'a, ISA: InstEncoding> InstRef<'a, ISA> {
     }
 }
 
-impl<'a, ISA: InstEncoding> Deref for InstRef<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> Deref for InstRef<'a, ISA> {
     type Target = InstReader<'a>;
 
     #[inline]
@@ -159,15 +171,15 @@ impl<'a, ISA: InstEncoding> Deref for InstRef<'a, ISA> {
     }
 }
 
-impl<ISA: InstEncoding> Copy for InstRef<'_, ISA> {}
+impl<ISA: SpvInstEncoding> Copy for InstRef<'_, ISA> {}
 
-impl<ISA: InstEncoding> Clone for InstRef<'_, ISA> {
+impl<ISA: SpvInstEncoding> Clone for InstRef<'_, ISA> {
     fn clone(&self) -> Self {
         *self
     }
 }
 
-impl<ISA: InstEncoding> Debug for InstRef<'_, ISA> {
+impl<ISA: SpvInstEncoding> Debug for InstRef<'_, ISA> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("InstRef")
             .field("reader", &self.reader)

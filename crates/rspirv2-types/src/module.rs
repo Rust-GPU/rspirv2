@@ -1,5 +1,5 @@
 use crate::binary::{DecodeError, WordWriter};
-use crate::inst::InstEncoding;
+use crate::inst::SpvInstEncoding;
 use crate::vec::InstVec;
 use crate::{Word, cast_words_to_ne_bytes};
 use std::error::Error;
@@ -133,12 +133,12 @@ impl SpirvHeader {
 ///
 /// See <https://registry.khronos.org/SPIR-V/specs/unified1/SPIRV.html#_physical_layout_of_a_spir_v_module_and_instruction>
 #[derive(Clone, Debug, Default)]
-pub struct Module<ISA: InstEncoding> {
+pub struct Module<ISA: SpvInstEncoding> {
     pub header: Option<SpirvHeader>,
     pub inst: InstVec<ISA>,
 }
 
-impl<ISA: InstEncoding> Module<ISA> {
+impl<ISA: SpvInstEncoding> Module<ISA> {
     /// Parse a SPIR-V module from bytes, endianness is automatically detected and instructions checked for validity.
     pub fn from_bytes(bytes: &[u8]) -> Result<Self, ParseError> {
         profiling::function_scope!();
@@ -244,7 +244,7 @@ impl<ISA: InstEncoding> Module<ISA> {
     }
 }
 
-impl<ISA: InstEncoding> Deref for Module<ISA> {
+impl<ISA: SpvInstEncoding> Deref for Module<ISA> {
     type Target = InstVec<ISA>;
 
     fn deref(&self) -> &Self::Target {

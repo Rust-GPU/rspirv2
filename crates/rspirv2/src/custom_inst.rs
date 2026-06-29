@@ -3,12 +3,13 @@
 use crate::binary::{DecodeError, EncodeError, InstReader, WordWriter};
 use crate::core::inst_meta::OP_SWITCH;
 use crate::dis::DisContext;
-use crate::inst::{Inst, InstEncoding};
+use crate::inst::SpvInstEncoding;
 use crate::meta::InstMeta;
 use crate::operand::{IdRef, OperandDisContext, OperandEncoding};
 use OpSwitchTargetLen::{One, Two};
 use rspirv2_types::Word;
 use rspirv2_types::binary::{DecodeErrorKind, FnWriter, OperandReader};
+use rspirv2_types::inst::{SpvInstDefUse, SpvInstDis, SpvInstMeta};
 use rspirv2_types::operand::LiteralConst;
 use smallvec::SmallVec;
 use std::borrow::Cow;
@@ -309,19 +310,21 @@ impl PartialEq<Self> for OpSwitchTarget {
 impl Eq for OpSwitchTarget {}
 
 /// copied from autogen
-impl Inst for OpSwitch {
+impl SpvInstMeta for OpSwitch {
     const META: &InstMeta = &OP_SWITCH;
 }
 
 /// copied from autogen
-impl InstEncoding for OpSwitch {
+impl SpvInstDefUse for OpSwitch {
     type IdResult = ();
     type IdResultType = ();
 
     fn id_result(&self) -> Self::IdResult {}
 
     fn id_result_type(&self) -> Self::IdResultType {}
+}
 
+impl SpvInstEncoding for OpSwitch {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
@@ -343,6 +346,9 @@ impl InstEncoding for OpSwitch {
             target: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+}
+
+impl SpvInstDis for OpSwitch {
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
         let ctx = &OperandDisContext {

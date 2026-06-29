@@ -1,7 +1,7 @@
 use crate::Word;
 use crate::binary::{DecodeError, DecodeErrorKind, InstOffset, InstReader};
-use crate::dis::{DisInstSlice, InstSetDisCtx, IntoDisContext};
-use crate::inst::{InstEncoding, InstRef};
+use crate::dis::{DisInstSlice, IntoDisContext, SpvInstDisCtx};
+use crate::inst::{InstRef, SpvInstEncoding};
 use std::fmt::{Debug, Formatter};
 use std::marker::PhantomData;
 use std::ops::Deref;
@@ -34,12 +34,12 @@ pub fn decode_failed(e: DecodeError) -> ! {
 /// The inner slice of words is assumed to contain valid instructions of the generic `ISA` Instruction Set. May panic if
 /// instructions fail to decode, but will not lead to UB, allowing [`Self::from_words_unchecked`] to be safe.
 #[repr(transparent)]
-pub struct InstSlice<ISA: InstEncoding> {
+pub struct InstSlice<ISA: SpvInstEncoding> {
     _phantom: PhantomData<ISA>,
     raw: RawInstSlice,
 }
 
-impl<ISA: InstEncoding> InstSlice<ISA> {
+impl<ISA: SpvInstEncoding> InstSlice<ISA> {
     /// Create a new [`InstSlice`] from a `&[Word]` safely, by verifying the instructions to be valid in the `ISA`.
     #[inline]
     pub fn from_words(words: &[Word]) -> Result<&Self, DecodeError> {
@@ -94,7 +94,7 @@ impl<ISA: InstEncoding> InstSlice<ISA> {
     }
 }
 
-impl<ISA: InstEncoding> Deref for InstSlice<ISA> {
+impl<ISA: SpvInstEncoding> Deref for InstSlice<ISA> {
     type Target = RawInstSlice;
 
     fn deref(&self) -> &Self::Target {
@@ -102,7 +102,7 @@ impl<ISA: InstEncoding> Deref for InstSlice<ISA> {
     }
 }
 
-impl<ISA: InstEncoding> Debug for InstSlice<ISA> {
+impl<ISA: SpvInstEncoding> Debug for InstSlice<ISA> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("InstSlice")
             .field("ISA", &ISA::name())
@@ -111,7 +111,7 @@ impl<ISA: InstEncoding> Debug for InstSlice<ISA> {
     }
 }
 
-impl<ISA: InstSetDisCtx> InstSlice<ISA> {
+impl<ISA: SpvInstEncoding + SpvInstDisCtx> InstSlice<ISA> {
     /// disassemble
     #[inline]
     pub fn dis(&self, ctx: impl IntoDisContext) -> DisInstSlice<'_, ISA> {
@@ -120,12 +120,12 @@ impl<ISA: InstSetDisCtx> InstSlice<ISA> {
 }
 
 /// An [`Iterator`] yielding a tuple of [`InstOffset`] and [`InstRef`]
-pub struct InstOffsetRefIter<'a, ISA: InstEncoding> {
+pub struct InstOffsetRefIter<'a, ISA: SpvInstEncoding> {
     inner: RawInstOffsetRefIter<'a>,
     _phantom: PhantomData<ISA>,
 }
 
-impl<'a, ISA: InstEncoding> InstOffsetRefIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> InstOffsetRefIter<'a, ISA> {
     #[inline]
     pub const fn new(slice: &'a InstSlice<ISA>) -> Self {
         Self {
@@ -135,7 +135,7 @@ impl<'a, ISA: InstEncoding> InstOffsetRefIter<'a, ISA> {
     }
 }
 
-impl<'a, ISA: InstEncoding> Iterator for InstOffsetRefIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> Iterator for InstOffsetRefIter<'a, ISA> {
     type Item = (InstOffset, InstRef<'a, ISA>);
 
     #[inline]
@@ -153,7 +153,7 @@ impl<'a, ISA: InstEncoding> Iterator for InstOffsetRefIter<'a, ISA> {
     }
 }
 
-impl<'a, ISA: InstEncoding> Clone for InstOffsetRefIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> Clone for InstOffsetRefIter<'a, ISA> {
     fn clone(&self) -> Self {
         Self {
             inner: self.inner.clone(),
@@ -162,7 +162,7 @@ impl<'a, ISA: InstEncoding> Clone for InstOffsetRefIter<'a, ISA> {
     }
 }
 
-impl<'a, ISA: InstEncoding> Debug for InstOffsetRefIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> Debug for InstOffsetRefIter<'a, ISA> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("InstOffsetRefIter")
             .field("ISA", &ISA::name())
@@ -172,16 +172,16 @@ impl<'a, ISA: InstEncoding> Debug for InstOffsetRefIter<'a, ISA> {
 }
 
 /// An [`Iterator`] yielding [`InstRef`]
-pub struct InstRefIter<'a, ISA: InstEncoding>(InstOffsetRefIter<'a, ISA>);
+pub struct InstRefIter<'a, ISA: SpvInstEncoding>(InstOffsetRefIter<'a, ISA>);
 
-impl<'a, ISA: InstEncoding> InstRefIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> InstRefIter<'a, ISA> {
     #[inline]
     pub const fn new(slice: &'a InstSlice<ISA>) -> Self {
         Self(InstOffsetRefIter::new(slice))
     }
 }
 
-impl<'a, ISA: InstEncoding> Iterator for InstRefIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> Iterator for InstRefIter<'a, ISA> {
     type Item = InstRef<'a, ISA>;
 
     #[inline]
@@ -190,22 +190,22 @@ impl<'a, ISA: InstEncoding> Iterator for InstRefIter<'a, ISA> {
     }
 }
 
-impl<'a, ISA: InstEncoding> Clone for InstRefIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> Clone for InstRefIter<'a, ISA> {
     fn clone(&self) -> Self {
         Self(self.0.clone())
     }
 }
 
-impl<'a, ISA: InstEncoding> Debug for InstRefIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> Debug for InstRefIter<'a, ISA> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.debug_tuple("InstRefIter").field(&self.0).finish()
     }
 }
 
 /// An [`Iterator`] yielding `ISA`
-pub struct InstOffsetIter<'a, ISA: InstEncoding>(InstOffsetRefIter<'a, ISA>);
+pub struct InstOffsetIter<'a, ISA: SpvInstEncoding>(InstOffsetRefIter<'a, ISA>);
 
-impl<'a, ISA: InstEncoding> InstOffsetIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> InstOffsetIter<'a, ISA> {
     #[inline]
     pub const fn new(slice: &'a InstSlice<ISA>) -> Self {
         Self(InstOffsetRefIter::new(slice))
@@ -218,7 +218,7 @@ impl<'a, ISA: InstEncoding> InstOffsetIter<'a, ISA> {
     }
 }
 
-impl<'a, ISA: InstEncoding> Iterator for InstOffsetIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> Iterator for InstOffsetIter<'a, ISA> {
     type Item = (InstOffset, ISA);
 
     #[inline]
@@ -228,22 +228,22 @@ impl<'a, ISA: InstEncoding> Iterator for InstOffsetIter<'a, ISA> {
     }
 }
 
-impl<'a, ISA: InstEncoding> Clone for InstOffsetIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> Clone for InstOffsetIter<'a, ISA> {
     fn clone(&self) -> Self {
         Self(self.0.clone())
     }
 }
 
-impl<'a, ISA: InstEncoding> Debug for InstOffsetIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> Debug for InstOffsetIter<'a, ISA> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.debug_tuple("InstOffsetIter").field(&self.0).finish()
     }
 }
 
 /// An [`Iterator`] yielding `ISA`
-pub struct InstIter<'a, ISA: InstEncoding>(InstOffsetIter<'a, ISA>);
+pub struct InstIter<'a, ISA: SpvInstEncoding>(InstOffsetIter<'a, ISA>);
 
-impl<'a, ISA: InstEncoding> InstIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> InstIter<'a, ISA> {
     #[inline]
     pub const fn new(slice: &'a InstSlice<ISA>) -> Self {
         Self(InstOffsetIter::new(slice))
@@ -256,7 +256,7 @@ impl<'a, ISA: InstEncoding> InstIter<'a, ISA> {
     }
 }
 
-impl<'a, ISA: InstEncoding> Iterator for InstIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> Iterator for InstIter<'a, ISA> {
     type Item = ISA;
 
     #[inline]
@@ -265,13 +265,13 @@ impl<'a, ISA: InstEncoding> Iterator for InstIter<'a, ISA> {
     }
 }
 
-impl<'a, ISA: InstEncoding> Clone for InstIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> Clone for InstIter<'a, ISA> {
     fn clone(&self) -> Self {
         Self(self.0.clone())
     }
 }
 
-impl<'a, ISA: InstEncoding> Debug for InstIter<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding> Debug for InstIter<'a, ISA> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.debug_tuple("InstIter").field(&self.0).finish()
     }
@@ -304,7 +304,7 @@ impl RawInstSlice {
     }
 
     /// Verify whether the instructions are valid within the generic `ISA` instruction set
-    pub fn verify_valid_in_isa<ISA: InstEncoding>(&self) -> Result<(), DecodeError> {
+    pub fn verify_valid_in_isa<ISA: SpvInstEncoding>(&self) -> Result<(), DecodeError> {
         self.iter().try_for_each(|result| {
             ISA::decode(result?)?;
             Ok(())
@@ -312,7 +312,7 @@ impl RawInstSlice {
     }
 }
 
-impl<'a, ISA: InstEncoding> From<&'a InstSlice<ISA>> for &'a RawInstSlice {
+impl<'a, ISA: SpvInstEncoding> From<&'a InstSlice<ISA>> for &'a RawInstSlice {
     fn from(value: &'a InstSlice<ISA>) -> Self {
         value.as_raw()
     }
@@ -321,7 +321,7 @@ impl<'a, ISA: InstEncoding> From<&'a InstSlice<ISA>> for &'a RawInstSlice {
 impl RawInstSlice {
     /// disassemble
     #[inline]
-    pub fn dis<ISA: InstSetDisCtx>(&self, ctx: impl IntoDisContext) -> DisInstSlice<'_, ISA> {
+    pub fn dis<ISA: SpvInstDisCtx>(&self, ctx: impl IntoDisContext) -> DisInstSlice<'_, ISA> {
         DisInstSlice::<ISA>::new(self, ctx)
     }
 }
@@ -416,22 +416,22 @@ impl<T, I: Iterator<Item = Result<T, DecodeError>>> SkipDecodeErrorIteratorExt<T
 
 pub trait DecodeIteratorExt {
     /// Decode the [`InstReader`]s in this stream into `ISA` Instructions
-    fn decode<ISA: InstEncoding>(self) -> impl Iterator<Item = Result<ISA, DecodeError>>;
+    fn decode<ISA: SpvInstEncoding>(self) -> impl Iterator<Item = Result<ISA, DecodeError>>;
 }
 
 impl<'a, I: Iterator<Item = InstReader<'a>>> DecodeIteratorExt for I {
-    fn decode<ISA: InstEncoding>(self) -> impl Iterator<Item = Result<ISA, DecodeError>> {
+    fn decode<ISA: SpvInstEncoding>(self) -> impl Iterator<Item = Result<ISA, DecodeError>> {
         self.map(|reader| ISA::decode(reader))
     }
 }
 
 pub trait TryDecodeIteratorExt {
     /// Decode the [`InstReader`]s in this stream into `ISA` Instructions, and forward any [`DecodeError`]s
-    fn try_decode<ISA: InstEncoding>(self) -> impl Iterator<Item = Result<ISA, DecodeError>>;
+    fn try_decode<ISA: SpvInstEncoding>(self) -> impl Iterator<Item = Result<ISA, DecodeError>>;
 }
 
 impl<'a, I: Iterator<Item = Result<InstReader<'a>, DecodeError>>> TryDecodeIteratorExt for I {
-    fn try_decode<ISA: InstEncoding>(self) -> impl Iterator<Item = Result<ISA, DecodeError>> {
+    fn try_decode<ISA: SpvInstEncoding>(self) -> impl Iterator<Item = Result<ISA, DecodeError>> {
         self.map(|reader| ISA::decode(reader?))
     }
 }

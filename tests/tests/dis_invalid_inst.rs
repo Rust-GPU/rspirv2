@@ -4,7 +4,7 @@ use rspirv2::core::inst_set::CoreInstSet;
 use rspirv2::core::operands::StorageClass;
 use rspirv2_types::Word;
 use rspirv2_types::dis::{DisInstSlice, DisOptions};
-use rspirv2_types::inst::Inst;
+use rspirv2_types::inst::SpvInstMeta;
 use rspirv2_types::operand::{IdRef, IdResult, IdResultType, LiteralInteger, LiteralString};
 use rspirv2_types::slice::RawInstSlice;
 use rspirv2_types::vec::InstVec;

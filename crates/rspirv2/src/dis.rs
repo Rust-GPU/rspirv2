@@ -5,12 +5,12 @@ use crate::core::inst::{
 use crate::core::inst_set::CoreInstSet;
 use crate::core::preamble::OpTypeRuntimeArray;
 pub use rspirv2_types::dis::*;
-use rspirv2_types::inst::InstEncoding;
+use rspirv2_types::inst::SpvInstDefUse;
 use rspirv2_types::operand::{ConstFmt, OperandDisContext};
 use rspirv2_types::slice::{RawInstSlice, SkipDecodeErrorIteratorExt, TryDecodeIteratorExt};
 use std::borrow::Cow;
 
-impl InstSetDisCtx for CoreInstSet {
+impl SpvInstDisCtx for CoreInstSet {
     fn add_context(slice: &RawInstSlice, ctx: &mut DisContext) {
         profiling::function_scope!();
         for inst in slice.iter().try_decode::<CoreInstSet>().skip_errors() {

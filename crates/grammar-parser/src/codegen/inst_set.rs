@@ -21,20 +21,20 @@ pub fn write_inst_enum(
         .iter()
         .map(|(_, type_ident, enum_ident)| quote!(#enum_ident(#type_ident),));
     let id_result_match = insts.iter().map(
-        |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => InstEncoding::id_result(inst).to_optional(),),
+        |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => SpvInstDefUse::id_result(inst).to_optional(),),
     );
     let id_result_type_match = insts.iter().map(
-        |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => InstEncoding::id_result_type(inst).to_optional(),),
+        |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),),
     );
     let encode_match = insts.iter().map(
-        |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => InstEncoding::encode(inst, writer),),
+        |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => SpvInstEncoding::encode(inst, writer),),
     );
     let decode_match = insts.iter().map(|(inst, type_ident, enum_ident)| {
         let opcode = inst.opcode;
-        quote!(#opcode => Self::#enum_ident(<#type_ident as InstEncoding>::decode(reader)?),)
+        quote!(#opcode => Self::#enum_ident(<#type_ident as SpvInstEncoding>::decode(reader)?),)
     });
     let dis_match = insts.iter().map(
-        |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => InstEncoding::dis_fmt(inst, f, ctx),),
+        |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => SpvInstDis::dis_fmt(inst, f, ctx),),
     );
     let from_impls = insts.iter().map(|(_, type_ident, enum_ident)| {
         quote! {
@@ -53,7 +53,7 @@ pub fn write_inst_enum(
                 #(#enum_variants)*
             }
 
-            impl InstEncoding for #name {
+            impl SpvInstDefUse for #name {
                 type IdResult = Option<IdResult>;
                 type IdResultType = Option<IdResult>;
 
@@ -70,7 +70,9 @@ pub fn write_inst_enum(
                         #(#id_result_type_match)*
                     }
                 }
+            }
 
+            impl SpvInstEncoding for #name {
                 fn name() -> &'static str {
                     stringify!(#name)
                 }
@@ -90,7 +92,9 @@ pub fn write_inst_enum(
                         _ => return Err(DecodeErrorKind::UnknownOpCode { opcode }.into()),
                     })
                 }
+            }
 
+            impl SpvInstDis for #name {
                 fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
                     profiling::function_scope!();
                     match self {

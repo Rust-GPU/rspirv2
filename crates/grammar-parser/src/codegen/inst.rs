@@ -119,11 +119,11 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                 #(#member_decls),*
             }
 
-            impl Inst for #struct_ident {
+            impl SpvInstMeta for #struct_ident {
                 const META: &InstMeta = &#meta;
             }
 
-            impl InstEncoding for #struct_ident {
+            impl SpvInstDefUse for #struct_ident {
                 type IdResult = #id_result_ty;
                 type IdResultType = #id_result_type_ty;
 
@@ -134,7 +134,9 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                 fn id_result_type(&self) -> Self::IdResultType {
                     #id_result_type_get
                 }
+            }
 
+            impl SpvInstEncoding for #struct_ident {
                 fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
                     profiling::function_scope!();
                     let len = 1 #(+OperandEncoding::word_len(&self.#members))*;
@@ -151,7 +153,9 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                         #(#members_last: OperandEncoding::decode_last(&mut op_reader)?,)*
                     })
                 }
+            }
 
+            impl SpvInstDis for #struct_ident {
                 fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
                     profiling::function_scope!();
                     #dis_operand_ctx

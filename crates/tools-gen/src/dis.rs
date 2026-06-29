@@ -1,5 +1,6 @@
 use clap::{Parser, ValueEnum};
-use rspirv2::dis::{DisOptions, InstSetDisCtx};
+use rspirv2::dis::{DisOptions, SpvInstDisCtx};
+use rspirv2::inst::SpvInstEncoding;
 use rspirv2::module::Module;
 use std::io::{BufWriter, Write};
 use std::path::PathBuf;
@@ -51,7 +52,7 @@ impl Args {
 }
 
 impl Args {
-    pub fn run<ISA: InstSetDisCtx>(
+    pub fn run<ISA: SpvInstDisCtx + SpvInstEncoding>(
         &mut self,
         stdout: &mut impl anstream::stream::RawStream,
     ) -> anyhow::Result<()> {
@@ -61,7 +62,10 @@ impl Args {
         self.run_inner::<ISA>(&mut writer)
     }
 
-    pub fn run_inner<ISA: InstSetDisCtx>(&self, stdout: &mut impl Write) -> anyhow::Result<()> {
+    pub fn run_inner<ISA: SpvInstDisCtx + SpvInstEncoding>(
+        &self,
+        stdout: &mut impl Write,
+    ) -> anyhow::Result<()> {
         profiling::function_scope!();
         let mut bytes = {
             profiling::scope!("std::fs::read");

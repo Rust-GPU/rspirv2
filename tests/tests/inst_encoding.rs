@@ -8,11 +8,11 @@ use rspirv2::core::preamble::OpAccessChain;
 use rspirv2::operand::{IdRef, IdResult, IdResultType, LiteralConst, LiteralInteger};
 use rspirv2_types::Word;
 use rspirv2_types::binary::IdResultAlloc;
-use rspirv2_types::inst::{Inst, InstEncoding};
+use rspirv2_types::inst::SpvInstEncoding;
 use rspirv2_types::slice::InstSlice;
 use rspirv2_types::vec::InstVec;
 
-fn roundtrip<T: Inst>(inst: T)
+fn roundtrip<T: SpvInstEncoding>(inst: T)
 where
     CoreInstSet: From<T>,
 {

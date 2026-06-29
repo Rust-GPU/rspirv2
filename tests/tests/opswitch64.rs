@@ -5,7 +5,7 @@ use rspirv2::custom_inst::{OpSwitch, OpSwitchResolvedTarget, OpSwitchTarget, OpS
 use rspirv2_types::Word;
 use rspirv2_types::binary::IdResultAlloc;
 use rspirv2_types::dis::{DisContext, DisOptions};
-use rspirv2_types::inst::InstEncoding;
+use rspirv2_types::inst::SpvInstDis;
 use rspirv2_types::operand::{IdRef, IdResultType, LiteralConst, LiteralInteger};
 use rspirv2_types::vec::InstVec;
 

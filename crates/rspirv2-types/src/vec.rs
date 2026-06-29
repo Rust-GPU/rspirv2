@@ -1,6 +1,6 @@
 use crate::Word;
 use crate::binary::{DecodeError, InstOffset, WordWriter};
-use crate::inst::{Inst, InstEncoding};
+use crate::inst::{SpvInstDefUse, SpvInstEncoding};
 use crate::slice::{InstSlice, RawInstSlice};
 use std::fmt::{Debug, Formatter};
 use std::marker::PhantomData;
@@ -10,12 +10,12 @@ use std::ops::Deref;
 /// on memory size.
 ///
 /// See [`InstSlice`] for details.
-pub struct InstVec<ISA: InstEncoding> {
+pub struct InstVec<ISA: SpvInstEncoding> {
     raw: RawInstVec,
     _phantom: PhantomData<ISA>,
 }
 
-impl<ISA: InstEncoding> InstVec<ISA> {
+impl<ISA: SpvInstEncoding> InstVec<ISA> {
     /// Create a new empty [`InstVec`]
     #[inline]
     pub const fn new() -> Self {
@@ -67,7 +67,10 @@ impl<ISA: InstEncoding> InstVec<ISA> {
 
     /// Appends an instruction to the back of the [`InstVec`]. See [`Vec::push`].
     #[inline]
-    pub fn push_inst<I: Inst + Into<ISA>>(&mut self, inst: I) -> I::IdResult {
+    pub fn push_inst<I: SpvInstEncoding + SpvInstDefUse + Into<ISA>>(
+        &mut self,
+        inst: I,
+    ) -> I::IdResult {
         self.raw.push_inst(inst)
     }
 
@@ -101,7 +104,7 @@ impl<ISA: InstEncoding> InstVec<ISA> {
     }
 }
 
-impl<ISA: InstEncoding> Deref for InstVec<ISA> {
+impl<ISA: SpvInstEncoding> Deref for InstVec<ISA> {
     type Target = InstSlice<ISA>;
 
     fn deref(&self) -> &Self::Target {
@@ -109,19 +112,19 @@ impl<ISA: InstEncoding> Deref for InstVec<ISA> {
     }
 }
 
-impl<ISA: InstEncoding> Extend<ISA> for InstVec<ISA> {
+impl<ISA: SpvInstEncoding> Extend<ISA> for InstVec<ISA> {
     fn extend<T: IntoIterator<Item = ISA>>(&mut self, iter: T) {
         self.raw.extend(iter);
     }
 }
 
-impl<ISA: InstEncoding> FromIterator<ISA> for InstVec<ISA> {
+impl<ISA: SpvInstEncoding> FromIterator<ISA> for InstVec<ISA> {
     fn from_iter<T: IntoIterator<Item = ISA>>(iter: T) -> Self {
         Self::from_raw_unchecked(RawInstVec::from_iter(iter))
     }
 }
 
-impl<ISA: InstEncoding> Clone for InstVec<ISA> {
+impl<ISA: SpvInstEncoding> Clone for InstVec<ISA> {
     #[inline]
     fn clone(&self) -> Self {
         profiling::function_scope!();
@@ -132,7 +135,7 @@ impl<ISA: InstEncoding> Clone for InstVec<ISA> {
     }
 }
 
-impl<ISA: InstEncoding> Debug for InstVec<ISA> {
+impl<ISA: SpvInstEncoding> Debug for InstVec<ISA> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("InstVec")
             .field("ISA", &ISA::name())
@@ -141,7 +144,7 @@ impl<ISA: InstEncoding> Debug for InstVec<ISA> {
     }
 }
 
-impl<ISA: InstEncoding> Default for InstVec<ISA> {
+impl<ISA: SpvInstEncoding> Default for InstVec<ISA> {
     #[inline]
     fn default() -> Self {
         Self::new()
@@ -170,7 +173,7 @@ impl RawInstVec {
 
     /// Appends an instruction to the back of the [`RawInstVec`], like [`Vec::push`].
     #[inline]
-    pub fn push(&mut self, inst: impl InstEncoding) -> InstOffset {
+    pub fn push(&mut self, inst: impl SpvInstEncoding) -> InstOffset {
         profiling::function_scope!();
         let offset = InstOffset(self.0.len());
         inst.encode(&mut self.0).expect("error while encoding");
@@ -179,7 +182,7 @@ impl RawInstVec {
 
     /// Appends an instruction to the back of the [`RawInstVec`]. See [`Vec::push`].
     #[inline]
-    pub fn push_inst<I: Inst>(&mut self, inst: I) -> I::IdResult {
+    pub fn push_inst<I: SpvInstEncoding + SpvInstDefUse>(&mut self, inst: I) -> I::IdResult {
         let id_result = inst.id_result();
         self.push(inst);
         id_result
@@ -212,7 +215,7 @@ impl Deref for RawInstVec {
     }
 }
 
-impl<ISA: InstEncoding> Extend<ISA> for RawInstVec {
+impl<ISA: SpvInstEncoding> Extend<ISA> for RawInstVec {
     fn extend<T: IntoIterator<Item = ISA>>(&mut self, iter: T) {
         profiling::function_scope!();
         for inst in iter {
@@ -221,7 +224,7 @@ impl<ISA: InstEncoding> Extend<ISA> for RawInstVec {
     }
 }
 
-impl<ISA: InstEncoding> FromIterator<ISA> for RawInstVec {
+impl<ISA: SpvInstEncoding> FromIterator<ISA> for RawInstVec {
     fn from_iter<T: IntoIterator<Item = ISA>>(iter: T) -> Self {
         profiling::function_scope!();
         let mut s = Self::new();

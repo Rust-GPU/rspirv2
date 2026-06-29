@@ -1,6 +1,6 @@
 //! Module for Disassembly
 
-use crate::inst::InstEncoding;
+use crate::inst::{SpvInstDis, SpvInstEncoding};
 use crate::operand::{ConstFmt, IdResult, LiteralStringEscape};
 use crate::slice::{InstSlice, RawInstSlice};
 use anstyle::Style;
@@ -137,7 +137,7 @@ impl DisOptions {
 /// **required** to generate correct disassembly that `spirv-as` can read, otherwise, we'll generate the best possible
 /// disassembly we can. Since instructions are not available within the `rspirv2-types` crate, we can't actually
 /// implement the context information retrieval here. Instead, it needs to be implemented for each instruction set with
-/// the [`InstSetDisCtx`] trait, which may delegate to our default implementation in
+/// the [`SpvInstDisCtx`] trait, which may delegate to our default implementation in
 /// `rspirv2::dis::create_dis_context_core`.
 #[derive(Clone, Debug, Default)]
 pub struct DisContext {
@@ -207,7 +207,7 @@ impl DisContext {
     }
 
     /// Scan the supplied [`InstSlice`] for useful context
-    pub fn add_context<ISA: InstSetDisCtx>(&mut self, slice: &InstSlice<ISA>) {
+    pub fn add_context<ISA: SpvInstEncoding + SpvInstDisCtx>(&mut self, slice: &InstSlice<ISA>) {
         profiling::function_scope!();
         ISA::add_context(slice.as_raw(), self);
     }
@@ -215,7 +215,7 @@ impl DisContext {
     /// Scan the supplied [`InstSlice`] for useful context, skip over any [`DecodeError`]s that may arise
     ///
     /// [`DecodeError`]: crate::binary::DecodeError
-    pub fn add_context_raw<ISA: InstSetDisCtx>(&mut self, slice: &RawInstSlice) {
+    pub fn add_context_raw<ISA: SpvInstDisCtx>(&mut self, slice: &RawInstSlice) {
         profiling::function_scope!();
         ISA::add_context(slice, self);
     }
@@ -261,7 +261,7 @@ impl DisContext {
 }
 
 /// An instruction set that provides additional context information for disassembly.
-pub trait InstSetDisCtx: InstEncoding {
+pub trait SpvInstDisCtx: SpvInstDis {
     /// Add context to the supplied [`DisContext`] by modifying the various public members of it.
     ///
     /// Only supplies a [`RawInstSlice`] instead of a full [`InstSlice`] that has been error checked, as to allow
@@ -307,13 +307,13 @@ impl IntoDisContext for DisOptions {
 /// A sequence of words that has been pre-processed and may be [`Display`]ed.
 ///
 /// The `ISA: `[`InstEncoding`] generic determines for which instruction set these Words are disassembled.
-pub struct DisInstSlice<'a, ISA: InstSetDisCtx> {
+pub struct DisInstSlice<'a, ISA: SpvInstDisCtx> {
     slice: &'a RawInstSlice,
     ctx: DisContext,
     _phantom: PhantomData<ISA>,
 }
 
-impl<'a, ISA: InstSetDisCtx> DisInstSlice<'a, ISA> {
+impl<'a, ISA: SpvInstDisCtx> DisInstSlice<'a, ISA> {
     #[inline]
     pub fn new(slice: impl Into<&'a RawInstSlice>, ctx: impl IntoDisContext) -> Self {
         let slice = slice.into();
@@ -332,7 +332,7 @@ impl<'a, ISA: InstSetDisCtx> DisInstSlice<'a, ISA> {
     }
 }
 
-impl<'a, ISA: InstSetDisCtx> Display for DisInstSlice<'a, ISA> {
+impl<'a, ISA: SpvInstEncoding + SpvInstDisCtx> Display for DisInstSlice<'a, ISA> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         for maybe_reader in self.slice.iter() {

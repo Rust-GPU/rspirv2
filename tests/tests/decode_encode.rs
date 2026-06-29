@@ -1,6 +1,6 @@
 use rspirv2::core::inst_set::CoreInstSet;
 use rspirv2::module::Module;
-use rspirv2_types::inst::InstEncoding;
+use rspirv2_types::inst::SpvInstEncoding;
 use rspirv2_types::module::SPIRV_MAGIC;
 use spv::BLA;
 

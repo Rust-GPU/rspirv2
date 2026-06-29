@@ -965,3896 +965,4076 @@ pub enum CoreInstSet {
     ConvertHandleToSamplerINTEL(OpConvertHandleToSamplerINTEL),
     ConvertHandleToSampledImageINTEL(OpConvertHandleToSampledImageINTEL),
 }
-impl InstEncoding for CoreInstSet {
+impl SpvInstDefUse for CoreInstSet {
     type IdResult = Option<IdResult>;
     type IdResultType = Option<IdResult>;
     fn id_result(&self) -> Self::IdResult {
         profiling::function_scope!();
         match self {
-            Self::Nop(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Undef(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SourceContinued(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Source(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SourceExtension(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Name(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::MemberName(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::String(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Line(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Extension(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ExtInstImport(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ExtInst(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::MemoryModel(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::EntryPoint(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ExecutionMode(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Capability(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeVoid(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeBool(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeInt(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeFloat(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeVector(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeMatrix(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeImage(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeSampler(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeSampledImage(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeArray(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeRuntimeArray(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeStruct(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeOpaque(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypePointer(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeFunction(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeEvent(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeDeviceEvent(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeReserveId(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeQueue(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypePipe(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeForwardPointer(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConstantTrue(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConstantFalse(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Constant(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConstantComposite(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConstantSampler(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConstantNull(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SpecConstantTrue(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SpecConstantFalse(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SpecConstant(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SpecConstantComposite(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SpecConstantOp(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Function(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FunctionParameter(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FunctionEnd(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FunctionCall(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Variable(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageTexelPointer(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Load(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Store(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CopyMemory(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CopyMemorySized(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AccessChain(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::InBoundsAccessChain(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::PtrAccessChain(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArrayLength(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GenericPtrMemSemantics(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::InBoundsPtrAccessChain(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Decorate(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::MemberDecorate(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::DecorationGroup(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupDecorate(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupMemberDecorate(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::VectorExtractDynamic(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::VectorInsertDynamic(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::VectorShuffle(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CompositeConstruct(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CompositeExtract(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CompositeInsert(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CopyObject(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Transpose(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SampledImage(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageSampleImplicitLod(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageSampleExplicitLod(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageSampleDrefImplicitLod(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageSampleDrefExplicitLod(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageSampleProjImplicitLod(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageSampleProjExplicitLod(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::Nop(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Undef(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SourceContinued(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Source(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SourceExtension(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Name(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::MemberName(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::String(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Line(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Extension(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ExtInstImport(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ExtInst(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::MemoryModel(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::EntryPoint(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ExecutionMode(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Capability(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeVoid(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeBool(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeInt(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeFloat(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeVector(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeMatrix(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeImage(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeSampler(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeSampledImage(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeArray(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeRuntimeArray(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeStruct(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeOpaque(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypePointer(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeFunction(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeEvent(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeDeviceEvent(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeReserveId(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeQueue(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypePipe(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeForwardPointer(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConstantTrue(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConstantFalse(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Constant(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConstantComposite(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConstantSampler(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConstantNull(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SpecConstantTrue(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SpecConstantFalse(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SpecConstant(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SpecConstantComposite(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SpecConstantOp(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Function(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FunctionParameter(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FunctionEnd(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FunctionCall(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Variable(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageTexelPointer(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Load(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Store(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CopyMemory(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CopyMemorySized(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AccessChain(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::InBoundsAccessChain(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::PtrAccessChain(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArrayLength(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GenericPtrMemSemantics(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::InBoundsPtrAccessChain(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Decorate(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::MemberDecorate(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::DecorationGroup(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupDecorate(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupMemberDecorate(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::VectorExtractDynamic(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::VectorInsertDynamic(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::VectorShuffle(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CompositeConstruct(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CompositeExtract(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CompositeInsert(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CopyObject(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Transpose(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SampledImage(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageSampleImplicitLod(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageSampleExplicitLod(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageSampleDrefImplicitLod(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageSampleDrefExplicitLod(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageSampleProjImplicitLod(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageSampleProjExplicitLod(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::ImageSampleProjDrefImplicitLod(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::ImageSampleProjDrefExplicitLod(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::ImageFetch(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageGather(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageDrefGather(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageRead(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageWrite(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Image(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageQueryFormat(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageQueryOrder(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageQuerySizeLod(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageQuerySize(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageQueryLod(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageQueryLevels(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageQuerySamples(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConvertFToU(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConvertFToS(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConvertSToF(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConvertUToF(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UConvert(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SConvert(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FConvert(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::QuantizeToF16(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConvertPtrToU(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SatConvertSToU(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SatConvertUToS(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConvertUToPtr(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::PtrCastToGeneric(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GenericCastToPtr(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GenericCastToPtrExplicit(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Bitcast(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SNegate(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FNegate(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IAdd(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FAdd(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ISub(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FSub(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IMul(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FMul(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UDiv(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SDiv(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FDiv(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UMod(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SRem(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SMod(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FRem(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FMod(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::VectorTimesScalar(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::MatrixTimesScalar(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::VectorTimesMatrix(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::MatrixTimesVector(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::MatrixTimesMatrix(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::OuterProduct(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Dot(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IAddCarry(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ISubBorrow(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UMulExtended(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SMulExtended(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Any(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::All(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IsNan(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IsInf(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IsFinite(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IsNormal(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SignBitSet(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::LessOrGreater(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Ordered(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Unordered(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::LogicalEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::LogicalNotEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::LogicalOr(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::LogicalAnd(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::LogicalNot(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Select(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::INotEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UGreaterThan(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SGreaterThan(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UGreaterThanEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SGreaterThanEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ULessThan(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SLessThan(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ULessThanEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SLessThanEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FOrdEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FUnordEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FOrdNotEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FUnordNotEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FOrdLessThan(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FUnordLessThan(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FOrdGreaterThan(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FUnordGreaterThan(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FOrdLessThanEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FUnordLessThanEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FOrdGreaterThanEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FUnordGreaterThanEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ShiftRightLogical(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ShiftRightArithmetic(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ShiftLeftLogical(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::BitwiseOr(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::BitwiseXor(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::BitwiseAnd(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Not(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::BitFieldInsert(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::BitFieldSExtract(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::BitFieldUExtract(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::BitReverse(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::BitCount(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::DPdx(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::DPdy(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Fwidth(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::DPdxFine(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::DPdyFine(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FwidthFine(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::DPdxCoarse(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::DPdyCoarse(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FwidthCoarse(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::EmitVertex(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::EndPrimitive(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::EmitStreamVertex(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::EndStreamPrimitive(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ControlBarrier(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::MemoryBarrier(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicLoad(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicStore(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicExchange(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicCompareExchange(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicCompareExchangeWeak(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicIIncrement(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicIDecrement(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicIAdd(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicISub(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicSMin(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicUMin(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicSMax(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicUMax(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicAnd(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicOr(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicXor(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Phi(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::LoopMerge(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SelectionMerge(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Label(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Branch(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::BranchConditional(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Switch(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Kill(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Return(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ReturnValue(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Unreachable(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::LifetimeStart(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::LifetimeStop(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupAsyncCopy(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupWaitEvents(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupAll(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupAny(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupBroadcast(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupIAdd(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupFAdd(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupFMin(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupUMin(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupSMin(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupFMax(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupUMax(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupSMax(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ReadPipe(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::WritePipe(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ReservedReadPipe(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ReservedWritePipe(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ReserveReadPipePackets(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ReserveWritePipePackets(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CommitReadPipe(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CommitWritePipe(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IsValidReserveId(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GetNumPipePackets(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GetMaxPipePackets(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupReserveReadPipePackets(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupReserveWritePipePackets(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupCommitReadPipe(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupCommitWritePipe(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::EnqueueMarker(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::EnqueueKernel(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::ImageFetch(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageGather(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageDrefGather(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageRead(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageWrite(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Image(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageQueryFormat(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageQueryOrder(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageQuerySizeLod(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageQuerySize(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageQueryLod(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageQueryLevels(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageQuerySamples(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConvertFToU(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConvertFToS(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConvertSToF(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConvertUToF(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UConvert(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SConvert(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FConvert(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::QuantizeToF16(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConvertPtrToU(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SatConvertSToU(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SatConvertUToS(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConvertUToPtr(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::PtrCastToGeneric(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GenericCastToPtr(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GenericCastToPtrExplicit(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Bitcast(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SNegate(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FNegate(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IAdd(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FAdd(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ISub(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FSub(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IMul(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FMul(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UDiv(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SDiv(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FDiv(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UMod(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SRem(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SMod(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FRem(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FMod(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::VectorTimesScalar(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::MatrixTimesScalar(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::VectorTimesMatrix(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::MatrixTimesVector(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::MatrixTimesMatrix(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::OuterProduct(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Dot(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IAddCarry(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ISubBorrow(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UMulExtended(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SMulExtended(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Any(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::All(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IsNan(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IsInf(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IsFinite(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IsNormal(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SignBitSet(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::LessOrGreater(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Ordered(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Unordered(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::LogicalEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::LogicalNotEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::LogicalOr(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::LogicalAnd(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::LogicalNot(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Select(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::INotEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UGreaterThan(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SGreaterThan(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UGreaterThanEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SGreaterThanEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ULessThan(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SLessThan(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ULessThanEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SLessThanEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FOrdEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FUnordEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FOrdNotEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FUnordNotEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FOrdLessThan(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FUnordLessThan(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FOrdGreaterThan(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FUnordGreaterThan(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FOrdLessThanEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FUnordLessThanEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FOrdGreaterThanEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FUnordGreaterThanEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ShiftRightLogical(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ShiftRightArithmetic(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ShiftLeftLogical(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::BitwiseOr(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::BitwiseXor(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::BitwiseAnd(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Not(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::BitFieldInsert(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::BitFieldSExtract(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::BitFieldUExtract(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::BitReverse(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::BitCount(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::DPdx(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::DPdy(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Fwidth(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::DPdxFine(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::DPdyFine(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FwidthFine(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::DPdxCoarse(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::DPdyCoarse(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FwidthCoarse(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::EmitVertex(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::EndPrimitive(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::EmitStreamVertex(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::EndStreamPrimitive(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ControlBarrier(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::MemoryBarrier(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicLoad(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicStore(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicExchange(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicCompareExchange(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicCompareExchangeWeak(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicIIncrement(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicIDecrement(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicIAdd(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicISub(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicSMin(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicUMin(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicSMax(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicUMax(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicAnd(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicOr(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicXor(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Phi(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::LoopMerge(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SelectionMerge(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Label(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Branch(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::BranchConditional(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Switch(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Kill(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Return(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ReturnValue(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Unreachable(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::LifetimeStart(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::LifetimeStop(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupAsyncCopy(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupWaitEvents(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupAll(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupAny(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupBroadcast(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupIAdd(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupFAdd(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupFMin(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupUMin(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupSMin(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupFMax(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupUMax(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupSMax(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ReadPipe(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::WritePipe(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ReservedReadPipe(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ReservedWritePipe(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ReserveReadPipePackets(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ReserveWritePipePackets(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CommitReadPipe(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CommitWritePipe(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IsValidReserveId(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GetNumPipePackets(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GetMaxPipePackets(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupReserveReadPipePackets(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupReserveWritePipePackets(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::GroupCommitReadPipe(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupCommitWritePipe(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::EnqueueMarker(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::EnqueueKernel(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::GetKernelNDrangeSubGroupCount(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::GetKernelNDrangeMaxSubGroupSize(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::GetKernelWorkGroupSize(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::GetKernelWorkGroupSize(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::GetKernelPreferredWorkGroupSizeMultiple(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::RetainEvent(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ReleaseEvent(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CreateUserEvent(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IsValidEvent(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SetUserEventStatus(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CaptureEventProfilingInfo(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GetDefaultQueue(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::BuildNDRange(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageSparseSampleImplicitLod(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageSparseSampleExplicitLod(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::RetainEvent(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ReleaseEvent(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CreateUserEvent(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IsValidEvent(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SetUserEventStatus(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CaptureEventProfilingInfo(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GetDefaultQueue(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::BuildNDRange(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageSparseSampleImplicitLod(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::ImageSparseSampleExplicitLod(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
             Self::ImageSparseSampleDrefImplicitLod(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::ImageSparseSampleDrefExplicitLod(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::ImageSparseSampleProjImplicitLod(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::ImageSparseSampleProjExplicitLod(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::ImageSparseSampleProjDrefImplicitLod(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::ImageSparseSampleProjDrefExplicitLod(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::ImageSparseFetch(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageSparseGather(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageSparseDrefGather(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageSparseTexelsResident(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::NoLine(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicFlagTestAndSet(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicFlagClear(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageSparseRead(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SizeOf(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypePipeStorage(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConstantPipeStorage(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CreatePipeFromPipeStorage(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::ImageSparseFetch(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageSparseGather(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageSparseDrefGather(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageSparseTexelsResident(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::NoLine(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicFlagTestAndSet(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicFlagClear(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageSparseRead(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SizeOf(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypePipeStorage(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConstantPipeStorage(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CreatePipeFromPipeStorage(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::GetKernelLocalSizeForSubgroupCount(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::GetKernelMaxNumSubgroups(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeNamedBarrier(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::NamedBarrierInitialize(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::MemoryNamedBarrier(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ModuleProcessed(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ExecutionModeId(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::DecorateId(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformElect(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformAll(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformAny(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformAllEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformBroadcast(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::GetKernelMaxNumSubgroups(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeNamedBarrier(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::NamedBarrierInitialize(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::MemoryNamedBarrier(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ModuleProcessed(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ExecutionModeId(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::DecorateId(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformElect(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformAll(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformAny(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformAllEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformBroadcast(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::GroupNonUniformBroadcastFirst(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::GroupNonUniformBallot(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformInverseBallot(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::GroupNonUniformBallot(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformInverseBallot(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
             Self::GroupNonUniformBallotBitExtract(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::GroupNonUniformBallotBitCount(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::GroupNonUniformBallotFindLSB(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformBallotFindMSB(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformShuffle(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformShuffleXor(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformShuffleUp(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformShuffleDown(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformIAdd(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformFAdd(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformIMul(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformFMul(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformSMin(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformUMin(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformFMin(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformSMax(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformUMax(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformFMax(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformBitwiseAnd(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformBitwiseOr(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformBitwiseXor(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformLogicalAnd(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformLogicalOr(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformLogicalXor(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformQuadBroadcast(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformQuadSwap(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CopyLogical(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::PtrEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::PtrNotEqual(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::PtrDiff(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ColorAttachmentReadEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::DepthAttachmentReadEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::StencilAttachmentReadEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeTensorARM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TensorReadARM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TensorWriteARM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TensorQuerySizeARM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GraphConstantARM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GraphEntryPointARM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GraphARM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GraphInputARM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GraphSetOutputARM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GraphEndARM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeGraphARM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TerminateInvocation(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeUntypedPointerKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UntypedVariableKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UntypedAccessChainKHR(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::GroupNonUniformBallotFindLSB(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::GroupNonUniformBallotFindMSB(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::GroupNonUniformShuffle(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformShuffleXor(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformShuffleUp(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformShuffleDown(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformIAdd(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformFAdd(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformIMul(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformFMul(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformSMin(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformUMin(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformFMin(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformSMax(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformUMax(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformFMax(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformBitwiseAnd(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformBitwiseOr(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformBitwiseXor(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformLogicalAnd(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformLogicalOr(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformLogicalXor(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformQuadBroadcast(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::GroupNonUniformQuadSwap(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CopyLogical(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::PtrEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::PtrNotEqual(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::PtrDiff(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ColorAttachmentReadEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::DepthAttachmentReadEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::StencilAttachmentReadEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeTensorARM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TensorReadARM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TensorWriteARM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TensorQuerySizeARM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GraphConstantARM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GraphEntryPointARM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GraphARM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GraphInputARM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GraphSetOutputARM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GraphEndARM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeGraphARM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TerminateInvocation(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeUntypedPointerKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UntypedVariableKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UntypedAccessChainKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::UntypedInBoundsAccessChainKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::SubgroupBallotKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SubgroupFirstInvocationKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UntypedPtrAccessChainKHR(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::SubgroupBallotKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SubgroupFirstInvocationKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UntypedPtrAccessChainKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::UntypedInBoundsPtrAccessChainKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::UntypedArrayLengthKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UntypedPrefetchKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FmaKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SubgroupAllKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SubgroupAnyKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SubgroupAllEqualKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformRotateKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SubgroupReadInvocationKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ExtInstWithForwardRefsKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UntypedGroupAsyncCopyKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TraceRayKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ExecuteCallableKHR(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::UntypedArrayLengthKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UntypedPrefetchKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FmaKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SubgroupAllKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SubgroupAnyKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SubgroupAllEqualKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformRotateKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SubgroupReadInvocationKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ExtInstWithForwardRefsKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UntypedGroupAsyncCopyKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TraceRayKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ExecuteCallableKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::ConvertUToAccelerationStructureKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::IgnoreIntersectionKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TerminateRayKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SDot(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UDot(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SUDot(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SDotAccSat(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UDotAccSat(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SUDotAccSat(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeCooperativeMatrixKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CooperativeMatrixLoadKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CooperativeMatrixStoreKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CooperativeMatrixMulAddKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CooperativeMatrixLengthKHR(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::IgnoreIntersectionKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TerminateRayKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SDot(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UDot(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SUDot(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SDotAccSat(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UDotAccSat(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SUDotAccSat(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeCooperativeMatrixKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CooperativeMatrixLoadKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CooperativeMatrixStoreKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CooperativeMatrixMulAddKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CooperativeMatrixLengthKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::ConstantCompositeReplicateEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SpecConstantCompositeReplicateEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::CompositeConstructReplicateEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::TypeRayQueryKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::RayQueryInitializeKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::RayQueryTerminateKHR(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::TypeRayQueryKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::RayQueryInitializeKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::RayQueryTerminateKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::RayQueryGenerateIntersectionKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryConfirmIntersectionKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::RayQueryProceedKHR(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::RayQueryProceedKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::RayQueryGetIntersectionTypeKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::ImageSampleWeightedQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageBoxFilterQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageBlockMatchSSDQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageBlockMatchSADQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::BitCastArrayQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageBlockMatchWindowSSDQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageBlockMatchWindowSADQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageBlockMatchGatherSSDQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageBlockMatchGatherSADQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::ImageSampleWeightedQCOM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageBoxFilterQCOM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageBlockMatchSSDQCOM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageBlockMatchSADQCOM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::BitCastArrayQCOM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageBlockMatchWindowSSDQCOM(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::ImageBlockMatchWindowSADQCOM(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::ImageBlockMatchGatherSSDQCOM(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::ImageBlockMatchGatherSADQCOM(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
             Self::CompositeConstructCoopMatQCOM(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::CompositeExtractCoopMatQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ExtractSubArrayQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupIAddNonUniformAMD(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupFAddNonUniformAMD(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupFMinNonUniformAMD(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupUMinNonUniformAMD(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupSMinNonUniformAMD(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupFMaxNonUniformAMD(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupUMaxNonUniformAMD(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupSMaxNonUniformAMD(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FragmentMaskFetchAMD(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FragmentFetchAMD(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ReadClockKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AllocateNodePayloadsAMDX(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::EnqueueNodePayloadsAMDX(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeNodePayloadArrayAMDX(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FinishWritingNodePayloadAMDX(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::NodePayloadArrayLengthAMDX(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IsNodePayloadValidAMDX(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConstantStringAMDX(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SpecConstantStringAMDX(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformQuadAllKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformQuadAnyKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeBufferEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::BufferPointerEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UntypedImageTexelPointerEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::MemberDecorateIdEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConstantSizeOfEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectRecordHitMotionNV(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::CompositeExtractCoopMatQCOM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ExtractSubArrayQCOM(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupIAddNonUniformAMD(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupFAddNonUniformAMD(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupFMinNonUniformAMD(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupUMinNonUniformAMD(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupSMinNonUniformAMD(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupFMaxNonUniformAMD(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupUMaxNonUniformAMD(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupSMaxNonUniformAMD(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FragmentMaskFetchAMD(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FragmentFetchAMD(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ReadClockKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AllocateNodePayloadsAMDX(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::EnqueueNodePayloadsAMDX(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeNodePayloadArrayAMDX(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FinishWritingNodePayloadAMDX(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::NodePayloadArrayLengthAMDX(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IsNodePayloadValidAMDX(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConstantStringAMDX(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SpecConstantStringAMDX(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformQuadAllKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformQuadAnyKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeBufferEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::BufferPointerEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UntypedImageTexelPointerEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::MemberDecorateIdEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConstantSizeOfEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectRecordHitMotionNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::HitObjectRecordHitWithIndexMotionNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::HitObjectRecordMissMotionNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetWorldToObjectNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetObjectToWorldNV(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::HitObjectRecordMissMotionNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectGetWorldToObjectNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectGetObjectToWorldNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::HitObjectGetObjectRayDirectionNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::HitObjectGetObjectRayOriginNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::HitObjectTraceRayMotionNV(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::HitObjectTraceRayMotionNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::HitObjectGetShaderRecordBufferHandleNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::HitObjectGetShaderBindingTableRecordIndexNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::HitObjectRecordEmptyNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectTraceRayNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectRecordHitNV(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::HitObjectRecordEmptyNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectTraceRayNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectRecordHitNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::HitObjectRecordHitWithIndexNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::HitObjectRecordMissNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectExecuteShaderNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetCurrentTimeNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetAttributesNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetHitKindNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetPrimitiveIndexNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetGeometryIndexNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetInstanceIdNV(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::HitObjectRecordMissNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectExecuteShaderNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectGetCurrentTimeNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectGetAttributesNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectGetHitKindNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectGetPrimitiveIndexNV(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::HitObjectGetGeometryIndexNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectGetInstanceIdNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::HitObjectGetInstanceCustomIndexNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::HitObjectGetWorldRayDirectionNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::HitObjectGetWorldRayOriginNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetRayTMaxNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetRayTMinNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectIsEmptyNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectIsHitNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectIsMissNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ReorderThreadWithHitObjectNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ReorderThreadWithHintNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeHitObjectNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ImageSampleFootprintNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeVectorIdEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CooperativeVectorMatrixMulNV(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::HitObjectGetWorldRayOriginNV(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::HitObjectGetRayTMaxNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectGetRayTMinNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectIsEmptyNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectIsHitNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectIsMissNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ReorderThreadWithHitObjectNV(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::ReorderThreadWithHintNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeHitObjectNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ImageSampleFootprintNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeVectorIdEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CooperativeVectorMatrixMulNV(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
             Self::CooperativeVectorOuterProductAccumulateNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::CooperativeVectorReduceSumAccumulateNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::CooperativeVectorMatrixMulAddNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::CooperativeMatrixConvertNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::EmitMeshTasksEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SetMeshOutputsEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupNonUniformPartitionEXT(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::CooperativeMatrixConvertNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::EmitMeshTasksEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SetMeshOutputsEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupNonUniformPartitionEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::WritePackedPrimitiveIndices4x8NV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::FetchMicroTriangleVertexPositionNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::FetchMicroTriangleVertexBarycentricNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::CooperativeVectorLoadNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CooperativeVectorStoreNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectRecordFromQueryEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectRecordMissEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectRecordMissMotionEXT(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::CooperativeVectorLoadNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CooperativeVectorStoreNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectRecordFromQueryEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectRecordMissEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectRecordMissMotionEXT(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
             Self::HitObjectGetIntersectionTriangleVertexPositionsEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::HitObjectGetRayFlagsEXT(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::HitObjectGetRayFlagsEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::HitObjectSetShaderBindingTableRecordIndexEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::HitObjectReorderExecuteShaderEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::HitObjectTraceReorderExecuteEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::HitObjectTraceMotionReorderExecuteEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::TypeHitObjectEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ReorderThreadWithHintEXT(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::TypeHitObjectEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ReorderThreadWithHintEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::ReorderThreadWithHitObjectEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::HitObjectTraceRayEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectTraceRayMotionEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectRecordEmptyEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectExecuteShaderEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetCurrentTimeEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetAttributesEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetHitKindEXT(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::HitObjectTraceRayEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectTraceRayMotionEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectRecordEmptyEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectExecuteShaderEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectGetCurrentTimeEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectGetAttributesEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectGetHitKindEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::HitObjectGetPrimitiveIndexEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::HitObjectGetGeometryIndexEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetInstanceIdEXT(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::HitObjectGetGeometryIndexEXT(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::HitObjectGetInstanceIdEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::HitObjectGetInstanceCustomIndexEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::HitObjectGetObjectRayOriginEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::HitObjectGetObjectRayDirectionEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::HitObjectGetWorldRayDirectionEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::HitObjectGetWorldRayOriginEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::HitObjectGetObjectToWorldEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetWorldToObjectEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetRayTMaxEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ReportIntersectionKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IgnoreIntersectionNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TerminateRayNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TraceNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TraceMotionNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TraceRayMotionNV(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::HitObjectGetObjectToWorldEXT(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::HitObjectGetWorldToObjectEXT(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::HitObjectGetRayTMaxEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ReportIntersectionKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IgnoreIntersectionNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TerminateRayNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TraceNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TraceMotionNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TraceRayMotionNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::RayQueryGetIntersectionTriangleVertexPositionsKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::TypeAccelerationStructureKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ExecuteCallableNV(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::TypeAccelerationStructureKHR(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::ExecuteCallableNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::RayQueryGetIntersectionClusterIdNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::HitObjectGetClusterIdNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetRayTMinEXT(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::HitObjectGetClusterIdNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectGetRayTMinEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::HitObjectGetShaderBindingTableRecordIndexEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::HitObjectGetShaderRecordBufferHandleEXT(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::HitObjectIsEmptyEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectIsHitEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectIsMissEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeCooperativeMatrixNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CooperativeMatrixLoadNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CooperativeMatrixStoreNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CooperativeMatrixMulAddNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CooperativeMatrixLengthNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::BeginInvocationInterlockEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::EndInvocationInterlockEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CooperativeMatrixReduceNV(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::HitObjectIsEmptyEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectIsHitEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectIsMissEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeCooperativeMatrixNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CooperativeMatrixLoadNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CooperativeMatrixStoreNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CooperativeMatrixMulAddNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CooperativeMatrixLengthNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::BeginInvocationInterlockEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::EndInvocationInterlockEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CooperativeMatrixReduceNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::CooperativeMatrixLoadTensorNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::CooperativeMatrixStoreTensorNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::CooperativeMatrixPerElementOpNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::TypeTensorLayoutNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeTensorViewNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CreateTensorLayoutNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TensorLayoutSetDimensionNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TensorLayoutSetStrideNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TensorLayoutSliceNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TensorLayoutSetClampValueNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CreateTensorViewNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TensorViewSetDimensionNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TensorViewSetStrideNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::DemoteToHelperInvocation(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IsHelperInvocationEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TensorViewSetClipNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TensorLayoutSetBlockSizeNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CooperativeMatrixTransposeNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConvertUToImageNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConvertUToSamplerNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConvertImageToUNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConvertSamplerToUNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConvertUToSampledImageNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConvertSampledImageToUNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SamplerImageAddressingModeNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::RawAccessChainNV(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::TypeTensorLayoutNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeTensorViewNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CreateTensorLayoutNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TensorLayoutSetDimensionNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TensorLayoutSetStrideNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TensorLayoutSliceNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TensorLayoutSetClampValueNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CreateTensorViewNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TensorViewSetDimensionNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TensorViewSetStrideNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::DemoteToHelperInvocation(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IsHelperInvocationEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TensorViewSetClipNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TensorLayoutSetBlockSizeNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::CooperativeMatrixTransposeNV(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::ConvertUToImageNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConvertUToSamplerNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConvertImageToUNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConvertSamplerToUNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConvertUToSampledImageNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConvertSampledImageToUNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SamplerImageAddressingModeNV(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::RawAccessChainNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::RayQueryGetIntersectionSpherePositionNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryGetIntersectionSphereRadiusNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryGetIntersectionLSSPositionsNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryGetIntersectionLSSRadiiNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryGetIntersectionLSSHitValueNV(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::HitObjectGetSpherePositionNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetSphereRadiusNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetLSSPositionsNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectGetLSSRadiiNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectIsSphereHitNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::HitObjectIsLSSHitNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::RayQueryIsSphereHitNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::RayQueryIsLSSHitNV(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SubgroupShuffleINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SubgroupShuffleDownINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SubgroupShuffleUpINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SubgroupShuffleXorINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SubgroupBlockReadINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SubgroupBlockWriteINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SubgroupImageBlockReadINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SubgroupImageBlockWriteINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::HitObjectGetSpherePositionNV(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::HitObjectGetSphereRadiusNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectGetLSSPositionsNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectGetLSSRadiiNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectIsSphereHitNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::HitObjectIsLSSHitNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::RayQueryIsSphereHitNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::RayQueryIsLSSHitNV(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SubgroupShuffleINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SubgroupShuffleDownINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SubgroupShuffleUpINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SubgroupShuffleXorINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SubgroupBlockReadINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SubgroupBlockWriteINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SubgroupImageBlockReadINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SubgroupImageBlockWriteINTEL(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
             Self::SubgroupImageMediaBlockReadINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupImageMediaBlockWriteINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::UCountLeadingZerosINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UCountTrailingZerosINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AbsISubINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AbsUSubINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IAddSatINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UAddSatINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IAverageINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UAverageINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IAverageRoundedINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UAverageRoundedINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ISubSatINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::USubSatINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::IMul32x16INTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::UMul32x16INTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConstantFunctionPointerINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FunctionPointerCallINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AsmTargetINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AsmINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AsmCallINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicFMinEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AtomicFMaxEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AssumeTrueKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ExpectKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::DecorateString(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::MemberDecorateString(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::VmeImageINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeVmeImageINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeAvcImePayloadINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeAvcRefPayloadINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeAvcSicPayloadINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeAvcMcePayloadINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeAvcMceResultINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeAvcImeResultINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::UCountLeadingZerosINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UCountTrailingZerosINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AbsISubINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AbsUSubINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IAddSatINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UAddSatINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IAverageINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UAverageINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IAverageRoundedINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UAverageRoundedINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ISubSatINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::USubSatINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::IMul32x16INTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::UMul32x16INTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConstantFunctionPointerINTEL(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::FunctionPointerCallINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AsmTargetINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AsmINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AsmCallINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicFMinEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AtomicFMaxEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AssumeTrueKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ExpectKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::DecorateString(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::MemberDecorateString(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::VmeImageINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeVmeImageINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeAvcImePayloadINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeAvcRefPayloadINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeAvcSicPayloadINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeAvcMcePayloadINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeAvcMceResultINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeAvcImeResultINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::TypeAvcImeResultSingleReferenceStreamoutINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::TypeAvcImeResultDualReferenceStreamoutINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::TypeAvcImeSingleReferenceStreaminINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::TypeAvcImeDualReferenceStreaminINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::TypeAvcRefResultINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeAvcSicResultINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::TypeAvcRefResultINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeAvcSicResultINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultInterShapePenaltyINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceSetInterShapePenaltyINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceSetInterDirectionPenaltyINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceSetMotionVectorCostFunctionINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceSetAcOnlyHaarINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceConvertToImePayloadINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceConvertToImeResultINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceConvertToRefPayloadINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceConvertToRefResultINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceConvertToSicPayloadINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceConvertToSicResultINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetMotionVectorsINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetInterDistortionsINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetBestInterDistortionsINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetInterMajorShapeINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetInterMinorShapeINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetInterDirectionsINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetInterMotionVectorCountINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetInterReferenceIdsINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeInitializeINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeSetSingleReferenceINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeSetDualReferenceINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeRefWindowSizeINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeAdjustRefOffsetINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeConvertToMcePayloadINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeSetMaxMotionVectorCountINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeSetUnidirectionalMixDisableINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeSetWeightedSadINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithSingleReferenceINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeConvertToMceResultINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeGetSingleReferenceStreaminINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeGetDualReferenceStreaminINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeStripSingleReferenceStreamoutINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeStripDualReferenceStreamoutINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeGetBorderReachedINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeGetTruncatedSearchIndicationINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcFmeInitializeINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcBmeInitializeINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcRefConvertToMcePayloadINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcRefSetBidirectionalMixDisableINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcRefSetBilinearFilterEnableINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcRefEvaluateWithSingleReferenceINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcRefEvaluateWithDualReferenceINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcRefEvaluateWithMultiReferenceINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcRefConvertToMceResultINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicInitializeINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicConfigureSkcINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicConfigureIpeLumaINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicConfigureIpeLumaChromaINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicGetMotionVectorMaskINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicConvertToMcePayloadINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicSetIntraLumaShapePenaltyINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicSetBilinearFilterEnableINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicSetSkcForwardTransformEnableINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicSetBlockBasedRawSkipSadINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicEvaluateIpeINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicEvaluateWithSingleReferenceINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicEvaluateWithDualReferenceINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicEvaluateWithMultiReferenceINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicConvertToMceResultINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicGetIpeLumaShapeINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicGetBestIpeLumaDistortionINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicGetBestIpeChromaDistortionINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicGetPackedIpeLumaModesINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicGetIpeChromaModeINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SubgroupAvcSicGetInterRawSadsINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::VariableLengthArrayINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SaveMemoryINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::RestoreMemoryINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatSinCosPiALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatCastALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::VariableLengthArrayINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SaveMemoryINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::RestoreMemoryINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatSinCosPiALTERA(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::ArbitraryFloatCastALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::ArbitraryFloatCastFromIntALTERA(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::ArbitraryFloatCastToIntALTERA(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::ArbitraryFloatAddALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatSubALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatMulALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatDivALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatGTALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatGEALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatLTALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatLEALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatEQALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatRecipALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatRSqrtALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatCbrtALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatHypotALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatSqrtALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatLogINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatLog2INTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatLog10INTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatLog1pINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatExpINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatExp2INTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatExp10INTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatExpm1INTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatSinINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatCosINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatSinCosINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatSinPiINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatCosPiINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatASinINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatASinPiINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatACosINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatACosPiINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatATanINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatATanPiINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatATan2INTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatPowINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatPowRINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArbitraryFloatPowNINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::LoopControlINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AliasDomainDeclINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AliasScopeDeclINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::AliasScopeListDeclINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FixedSqrtALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FixedRecipALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FixedRsqrtALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FixedSinALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FixedCosALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FixedSinCosALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FixedSinPiALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FixedCosPiALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FixedSinCosPiALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FixedLogALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FixedExpALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::ArbitraryFloatAddALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatSubALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatMulALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatDivALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatGTALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatGEALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatLTALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatLEALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatEQALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatRecipALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatRSqrtALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatCbrtALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatHypotALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatSqrtALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatLogINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatLog2INTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatLog10INTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatLog1pINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatExpINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatExp2INTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatExp10INTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatExpm1INTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatSinINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatCosINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatSinCosINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatSinPiINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatCosPiINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatASinINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatASinPiINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatACosINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatACosPiINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatATanINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatATanPiINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatATan2INTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatPowINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatPowRINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArbitraryFloatPowNINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::LoopControlINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AliasDomainDeclINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AliasScopeDeclINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::AliasScopeListDeclINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FixedSqrtALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FixedRecipALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FixedRsqrtALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FixedSinALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FixedCosALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FixedSinCosALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FixedSinPiALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FixedCosPiALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FixedSinCosPiALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FixedLogALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FixedExpALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::PtrCastToCrossWorkgroupALTERA(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::CrossWorkgroupCastToPtrALTERA(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::ReadPipeBlockingALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::WritePipeBlockingALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::FPGARegALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::RayQueryGetRayTMinKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::RayQueryGetRayFlagsKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::RayQueryGetIntersectionTKHR(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::ReadPipeBlockingALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::WritePipeBlockingALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::FPGARegALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::RayQueryGetRayTMinKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::RayQueryGetRayFlagsKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::RayQueryGetIntersectionTKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::RayQueryGetIntersectionInstanceCustomIndexKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryGetIntersectionInstanceIdKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryGetIntersectionGeometryIndexKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryGetIntersectionPrimitiveIndexKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryGetIntersectionBarycentricsKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryGetIntersectionFrontFaceKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryGetIntersectionCandidateAABBOpaqueKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryGetIntersectionObjectRayDirectionKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryGetIntersectionObjectRayOriginKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryGetWorldRayDirectionKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::RayQueryGetWorldRayOriginKHR(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::RayQueryGetWorldRayOriginKHR(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
             Self::RayQueryGetIntersectionObjectToWorldKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::RayQueryGetIntersectionWorldToObjectKHR(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::AtomicFAddEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeBufferSurfaceINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeStructContinuedINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::AtomicFAddEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeBufferSurfaceINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeStructContinuedINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::ConstantCompositeContinuedINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SpecConstantCompositeContinuedINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::CompositeConstructContinuedINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::ConvertFToBF16INTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConvertBF16ToFINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ControlBarrierArriveINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ControlBarrierWaitINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ArithmeticFenceEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TaskSequenceCreateALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TaskSequenceAsyncALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TaskSequenceGetALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TaskSequenceReleaseALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::TypeTaskSequenceALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SubgroupBlockPrefetchINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Subgroup2DBlockLoadINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::ConvertFToBF16INTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConvertBF16ToFINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ControlBarrierArriveINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ControlBarrierWaitINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ArithmeticFenceEXT(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TaskSequenceCreateALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TaskSequenceAsyncALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TaskSequenceGetALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TaskSequenceReleaseALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::TypeTaskSequenceALTERA(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SubgroupBlockPrefetchINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::Subgroup2DBlockLoadINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::Subgroup2DBlockLoadTransformINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::Subgroup2DBlockLoadTransposeINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::Subgroup2DBlockPrefetchINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::Subgroup2DBlockStoreINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::Subgroup2DBlockPrefetchINTEL(inst) => {
+                SpvInstDefUse::id_result(inst).to_optional()
+            }
+            Self::Subgroup2DBlockStoreINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::SubgroupMatrixMultiplyAccumulateINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::BitwiseFunctionINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::BitwiseFunctionINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::UntypedVariableLengthArrayINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::ConditionalExtensionINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConditionalEntryPointINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConditionalCapabilityINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::SpecConstantTargetINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::ConditionalExtensionINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConditionalEntryPointINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConditionalCapabilityINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::SpecConstantTargetINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::SpecConstantArchitectureINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
             Self::SpecConstantCapabilitiesINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
-            Self::ConditionalCopyObjectINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupIMulKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupFMulKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupBitwiseAndKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupBitwiseOrKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupBitwiseXorKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupLogicalAndKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupLogicalOrKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::GroupLogicalXorKHR(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::RoundFToTF32INTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::MaskedGatherINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::MaskedScatterINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConvertHandleToImageINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ConvertHandleToSamplerINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::ConditionalCopyObjectINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupIMulKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupFMulKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupBitwiseAndKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupBitwiseOrKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupBitwiseXorKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupLogicalAndKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupLogicalOrKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::GroupLogicalXorKHR(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::RoundFToTF32INTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::MaskedGatherINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::MaskedScatterINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConvertHandleToImageINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
+            Self::ConvertHandleToSamplerINTEL(inst) => SpvInstDefUse::id_result(inst).to_optional(),
             Self::ConvertHandleToSampledImageINTEL(inst) => {
-                InstEncoding::id_result(inst).to_optional()
+                SpvInstDefUse::id_result(inst).to_optional()
             }
         }
     }
     fn id_result_type(&self) -> Self::IdResult {
         profiling::function_scope!();
         match self {
-            Self::Nop(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Undef(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SourceContinued(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Source(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SourceExtension(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Name(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::MemberName(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::String(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Line(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Extension(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ExtInstImport(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ExtInst(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::MemoryModel(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::EntryPoint(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ExecutionMode(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Capability(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeVoid(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeBool(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeInt(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeFloat(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeVector(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeMatrix(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeImage(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeSampler(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeSampledImage(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeArray(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeRuntimeArray(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeStruct(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeOpaque(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypePointer(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeFunction(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeEvent(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeDeviceEvent(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeReserveId(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeQueue(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypePipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeForwardPointer(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConstantTrue(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConstantFalse(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Constant(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConstantComposite(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConstantSampler(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConstantNull(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SpecConstantTrue(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SpecConstantFalse(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SpecConstant(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SpecConstantComposite(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SpecConstantOp(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Function(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FunctionParameter(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FunctionEnd(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FunctionCall(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Variable(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageTexelPointer(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Load(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Store(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::CopyMemory(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::CopyMemorySized(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AccessChain(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::InBoundsAccessChain(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::PtrAccessChain(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ArrayLength(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GenericPtrMemSemantics(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::InBoundsPtrAccessChain(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Decorate(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::MemberDecorate(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::DecorationGroup(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupDecorate(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupMemberDecorate(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::VectorExtractDynamic(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::VectorInsertDynamic(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::VectorShuffle(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::CompositeConstruct(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::CompositeExtract(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::CompositeInsert(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::CopyObject(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Transpose(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SampledImage(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageSampleImplicitLod(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageSampleExplicitLod(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Nop(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Undef(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SourceContinued(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Source(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SourceExtension(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Name(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::MemberName(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::String(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Line(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Extension(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ExtInstImport(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ExtInst(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::MemoryModel(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::EntryPoint(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ExecutionMode(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Capability(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeVoid(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeBool(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeInt(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeFloat(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeVector(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeMatrix(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeImage(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeSampler(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeSampledImage(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeArray(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeRuntimeArray(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeStruct(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeOpaque(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypePointer(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeFunction(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeEvent(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeDeviceEvent(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeReserveId(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeQueue(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypePipe(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeForwardPointer(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConstantTrue(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConstantFalse(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Constant(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConstantComposite(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConstantSampler(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConstantNull(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SpecConstantTrue(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SpecConstantFalse(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SpecConstant(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SpecConstantComposite(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SpecConstantOp(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Function(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FunctionParameter(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FunctionEnd(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FunctionCall(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Variable(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageTexelPointer(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Load(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Store(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::CopyMemory(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::CopyMemorySized(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AccessChain(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::InBoundsAccessChain(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::PtrAccessChain(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ArrayLength(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GenericPtrMemSemantics(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::InBoundsPtrAccessChain(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Decorate(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::MemberDecorate(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::DecorationGroup(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupDecorate(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupMemberDecorate(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::VectorExtractDynamic(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::VectorInsertDynamic(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::VectorShuffle(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::CompositeConstruct(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::CompositeExtract(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::CompositeInsert(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::CopyObject(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Transpose(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SampledImage(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageSampleImplicitLod(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageSampleExplicitLod(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::ImageSampleDrefImplicitLod(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ImageSampleDrefExplicitLod(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ImageSampleProjImplicitLod(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ImageSampleProjExplicitLod(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ImageSampleProjDrefImplicitLod(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ImageSampleProjDrefExplicitLod(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ImageFetch(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageGather(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageDrefGather(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageRead(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageWrite(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Image(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageQueryFormat(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageQueryOrder(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageQuerySizeLod(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageQuerySize(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageQueryLod(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageQueryLevels(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageQuerySamples(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConvertFToU(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConvertFToS(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConvertSToF(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConvertUToF(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::UConvert(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SConvert(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FConvert(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::QuantizeToF16(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConvertPtrToU(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SatConvertSToU(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SatConvertUToS(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConvertUToPtr(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::PtrCastToGeneric(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GenericCastToPtr(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageFetch(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageGather(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageDrefGather(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageRead(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageWrite(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Image(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageQueryFormat(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageQueryOrder(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageQuerySizeLod(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageQuerySize(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageQueryLod(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageQueryLevels(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageQuerySamples(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConvertFToU(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConvertFToS(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConvertSToF(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConvertUToF(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::UConvert(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SConvert(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FConvert(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::QuantizeToF16(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConvertPtrToU(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SatConvertSToU(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SatConvertUToS(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConvertUToPtr(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::PtrCastToGeneric(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GenericCastToPtr(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::GenericCastToPtrExplicit(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::Bitcast(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SNegate(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FNegate(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::IAdd(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FAdd(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ISub(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FSub(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::IMul(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FMul(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::UDiv(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SDiv(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FDiv(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::UMod(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SRem(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SMod(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FRem(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FMod(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::VectorTimesScalar(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::MatrixTimesScalar(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::VectorTimesMatrix(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::MatrixTimesVector(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::MatrixTimesMatrix(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::OuterProduct(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Dot(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::IAddCarry(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ISubBorrow(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::UMulExtended(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SMulExtended(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Any(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::All(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::IsNan(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::IsInf(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::IsFinite(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::IsNormal(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SignBitSet(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::LessOrGreater(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Ordered(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Unordered(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::LogicalEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::LogicalNotEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::LogicalOr(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::LogicalAnd(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::LogicalNot(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Select(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::IEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::INotEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::UGreaterThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SGreaterThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::UGreaterThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SGreaterThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ULessThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SLessThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ULessThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SLessThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FOrdEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FUnordEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FOrdNotEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FUnordNotEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FOrdLessThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FUnordLessThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FOrdGreaterThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FUnordGreaterThan(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FOrdLessThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FUnordLessThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FOrdGreaterThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FUnordGreaterThanEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ShiftRightLogical(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ShiftRightArithmetic(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ShiftLeftLogical(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::BitwiseOr(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::BitwiseXor(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::BitwiseAnd(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Not(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::BitFieldInsert(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::BitFieldSExtract(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::BitFieldUExtract(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::BitReverse(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::BitCount(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::DPdx(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::DPdy(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Fwidth(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::DPdxFine(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::DPdyFine(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FwidthFine(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::DPdxCoarse(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::DPdyCoarse(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FwidthCoarse(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::EmitVertex(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::EndPrimitive(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::EmitStreamVertex(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::EndStreamPrimitive(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ControlBarrier(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::MemoryBarrier(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicLoad(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicStore(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicExchange(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicCompareExchange(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::Bitcast(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SNegate(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FNegate(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::IAdd(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FAdd(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ISub(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FSub(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::IMul(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FMul(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::UDiv(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SDiv(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FDiv(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::UMod(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SRem(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SMod(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FRem(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FMod(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::VectorTimesScalar(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::MatrixTimesScalar(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::VectorTimesMatrix(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::MatrixTimesVector(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::MatrixTimesMatrix(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::OuterProduct(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Dot(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::IAddCarry(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ISubBorrow(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::UMulExtended(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SMulExtended(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Any(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::All(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::IsNan(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::IsInf(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::IsFinite(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::IsNormal(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SignBitSet(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::LessOrGreater(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Ordered(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Unordered(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::LogicalEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::LogicalNotEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::LogicalOr(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::LogicalAnd(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::LogicalNot(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Select(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::IEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::INotEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::UGreaterThan(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SGreaterThan(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::UGreaterThanEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SGreaterThanEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ULessThan(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SLessThan(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ULessThanEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SLessThanEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FOrdEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FUnordEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FOrdNotEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FUnordNotEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FOrdLessThan(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FUnordLessThan(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FOrdGreaterThan(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FUnordGreaterThan(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FOrdLessThanEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FUnordLessThanEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FOrdGreaterThanEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FUnordGreaterThanEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ShiftRightLogical(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ShiftRightArithmetic(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ShiftLeftLogical(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::BitwiseOr(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::BitwiseXor(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::BitwiseAnd(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Not(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::BitFieldInsert(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::BitFieldSExtract(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::BitFieldUExtract(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::BitReverse(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::BitCount(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::DPdx(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::DPdy(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Fwidth(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::DPdxFine(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::DPdyFine(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FwidthFine(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::DPdxCoarse(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::DPdyCoarse(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FwidthCoarse(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::EmitVertex(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::EndPrimitive(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::EmitStreamVertex(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::EndStreamPrimitive(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ControlBarrier(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::MemoryBarrier(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicLoad(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicStore(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicExchange(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicCompareExchange(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::AtomicCompareExchangeWeak(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::AtomicIIncrement(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicIDecrement(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicIAdd(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicISub(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicSMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicUMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicSMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicUMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicAnd(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicOr(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicXor(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Phi(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::LoopMerge(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SelectionMerge(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Label(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Branch(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::BranchConditional(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Switch(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Kill(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Return(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ReturnValue(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::Unreachable(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::LifetimeStart(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::LifetimeStop(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupAsyncCopy(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupWaitEvents(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupAll(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupAny(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupBroadcast(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupIAdd(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupFAdd(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupFMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupUMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupSMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupFMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupUMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupSMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ReadPipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::WritePipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ReservedReadPipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ReservedWritePipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ReserveReadPipePackets(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ReserveWritePipePackets(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::CommitReadPipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::CommitWritePipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::IsValidReserveId(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GetNumPipePackets(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GetMaxPipePackets(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicIIncrement(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicIDecrement(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicIAdd(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicISub(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicSMin(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicUMin(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicSMax(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicUMax(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicAnd(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicOr(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicXor(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Phi(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::LoopMerge(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SelectionMerge(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Label(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Branch(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::BranchConditional(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Switch(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Kill(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Return(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ReturnValue(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::Unreachable(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::LifetimeStart(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::LifetimeStop(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupAsyncCopy(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupWaitEvents(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupAll(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupAny(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupBroadcast(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupIAdd(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupFAdd(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupFMin(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupUMin(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupSMin(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupFMax(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupUMax(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupSMax(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ReadPipe(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::WritePipe(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ReservedReadPipe(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ReservedWritePipe(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ReserveReadPipePackets(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ReserveWritePipePackets(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::CommitReadPipe(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::CommitWritePipe(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::IsValidReserveId(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GetNumPipePackets(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GetMaxPipePackets(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::GroupReserveReadPipePackets(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GroupReserveWritePipePackets(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::GroupCommitReadPipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupCommitWritePipe(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::EnqueueMarker(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::EnqueueKernel(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupCommitReadPipe(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupCommitWritePipe(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::EnqueueMarker(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::EnqueueKernel(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::GetKernelNDrangeSubGroupCount(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GetKernelNDrangeMaxSubGroupSize(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::GetKernelWorkGroupSize(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GetKernelWorkGroupSize(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::GetKernelPreferredWorkGroupSizeMultiple(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::RetainEvent(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ReleaseEvent(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::CreateUserEvent(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::IsValidEvent(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SetUserEventStatus(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RetainEvent(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ReleaseEvent(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::CreateUserEvent(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::IsValidEvent(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SetUserEventStatus(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::CaptureEventProfilingInfo(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::GetDefaultQueue(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::BuildNDRange(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GetDefaultQueue(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::BuildNDRange(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::ImageSparseSampleImplicitLod(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ImageSparseSampleExplicitLod(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ImageSparseSampleDrefImplicitLod(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ImageSparseSampleDrefExplicitLod(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ImageSparseSampleProjImplicitLod(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ImageSparseSampleProjExplicitLod(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ImageSparseSampleProjDrefImplicitLod(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ImageSparseSampleProjDrefExplicitLod(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ImageSparseFetch(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageSparseGather(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageSparseDrefGather(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageSparseFetch(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageSparseGather(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageSparseDrefGather(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::ImageSparseTexelsResident(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::NoLine(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicFlagTestAndSet(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicFlagClear(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageSparseRead(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SizeOf(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypePipeStorage(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConstantPipeStorage(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::NoLine(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicFlagTestAndSet(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicFlagClear(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageSparseRead(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SizeOf(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypePipeStorage(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConstantPipeStorage(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::CreatePipeFromPipeStorage(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GetKernelLocalSizeForSubgroupCount(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GetKernelMaxNumSubgroups(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::TypeNamedBarrier(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::NamedBarrierInitialize(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::MemoryNamedBarrier(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ModuleProcessed(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ExecutionModeId(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::DecorateId(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupNonUniformElect(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupNonUniformAll(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupNonUniformAny(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupNonUniformAllEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeNamedBarrier(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::NamedBarrierInitialize(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::MemoryNamedBarrier(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ModuleProcessed(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ExecutionModeId(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::DecorateId(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformElect(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformAll(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformAny(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformAllEqual(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
             Self::GroupNonUniformBroadcast(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GroupNonUniformBroadcastFirst(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::GroupNonUniformBallot(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformBallot(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::GroupNonUniformInverseBallot(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GroupNonUniformBallotBitExtract(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GroupNonUniformBallotBitCount(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GroupNonUniformBallotFindLSB(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GroupNonUniformBallotFindMSB(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::GroupNonUniformShuffle(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformShuffle(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::GroupNonUniformShuffleXor(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GroupNonUniformShuffleUp(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GroupNonUniformShuffleDown(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::GroupNonUniformIAdd(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupNonUniformFAdd(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupNonUniformIMul(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupNonUniformFMul(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupNonUniformSMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupNonUniformUMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupNonUniformFMin(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupNonUniformSMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupNonUniformUMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupNonUniformFMax(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformIAdd(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformFAdd(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformIMul(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformFMul(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformSMin(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformUMin(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformFMin(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformSMax(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformUMax(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformFMax(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::GroupNonUniformBitwiseAnd(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GroupNonUniformBitwiseOr(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GroupNonUniformBitwiseXor(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GroupNonUniformLogicalAnd(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GroupNonUniformLogicalOr(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GroupNonUniformLogicalXor(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GroupNonUniformQuadBroadcast(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::GroupNonUniformQuadSwap(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::CopyLogical(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::PtrEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::PtrNotEqual(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::PtrDiff(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ColorAttachmentReadEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::DepthAttachmentReadEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupNonUniformQuadSwap(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::CopyLogical(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::PtrEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::PtrNotEqual(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::PtrDiff(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ColorAttachmentReadEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::DepthAttachmentReadEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::StencilAttachmentReadEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::TypeTensorARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TensorReadARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TensorWriteARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TensorQuerySizeARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GraphConstantARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GraphEntryPointARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GraphARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GraphInputARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GraphSetOutputARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GraphEndARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeGraphARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TerminateInvocation(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeUntypedPointerKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::UntypedVariableKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::UntypedAccessChainKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeTensorARM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TensorReadARM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TensorWriteARM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TensorQuerySizeARM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GraphConstantARM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GraphEntryPointARM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GraphARM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GraphInputARM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GraphSetOutputARM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GraphEndARM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeGraphARM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TerminateInvocation(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeUntypedPointerKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::UntypedVariableKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::UntypedAccessChainKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::UntypedInBoundsAccessChainKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::SubgroupBallotKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SubgroupBallotKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::SubgroupFirstInvocationKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::UntypedPtrAccessChainKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::UntypedInBoundsPtrAccessChainKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::UntypedArrayLengthKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::UntypedPrefetchKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FmaKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SubgroupAllKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SubgroupAnyKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SubgroupAllEqualKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UntypedArrayLengthKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::UntypedPrefetchKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FmaKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SubgroupAllKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SubgroupAnyKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SubgroupAllEqualKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::GroupNonUniformRotateKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupReadInvocationKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ExtInstWithForwardRefsKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::UntypedGroupAsyncCopyKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::TraceRayKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ExecuteCallableKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TraceRayKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ExecuteCallableKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::ConvertUToAccelerationStructureKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::IgnoreIntersectionKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TerminateRayKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SDot(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::UDot(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SUDot(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SDotAccSat(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::UDotAccSat(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SUDotAccSat(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IgnoreIntersectionKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TerminateRayKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SDot(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::UDot(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SUDot(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SDotAccSat(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::UDotAccSat(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SUDotAccSat(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::TypeCooperativeMatrixKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CooperativeMatrixLoadKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CooperativeMatrixStoreKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CooperativeMatrixMulAddKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CooperativeMatrixLengthKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ConstantCompositeReplicateEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SpecConstantCompositeReplicateEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CompositeConstructReplicateEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::TypeRayQueryKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::RayQueryInitializeKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::RayQueryTerminateKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeRayQueryKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::RayQueryInitializeKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::RayQueryTerminateKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::RayQueryGenerateIntersectionKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryConfirmIntersectionKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::RayQueryProceedKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RayQueryProceedKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::RayQueryGetIntersectionTypeKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ImageSampleWeightedQCOM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageBoxFilterQCOM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageBlockMatchSSDQCOM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageBlockMatchSADQCOM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::BitCastArrayQCOM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageSampleWeightedQCOM(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::ImageBoxFilterQCOM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageBlockMatchSSDQCOM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageBlockMatchSADQCOM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::BitCastArrayQCOM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::ImageBlockMatchWindowSSDQCOM(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ImageBlockMatchWindowSADQCOM(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ImageBlockMatchGatherSSDQCOM(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ImageBlockMatchGatherSADQCOM(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CompositeConstructCoopMatQCOM(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CompositeExtractCoopMatQCOM(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ExtractSubArrayQCOM(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupIAddNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupFAddNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupFMinNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupUMinNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupSMinNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupFMaxNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupUMaxNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupSMaxNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FragmentMaskFetchAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FragmentFetchAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ReadClockKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ExtractSubArrayQCOM(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupIAddNonUniformAMD(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupFAddNonUniformAMD(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupFMinNonUniformAMD(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupUMinNonUniformAMD(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupSMinNonUniformAMD(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupFMaxNonUniformAMD(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupUMaxNonUniformAMD(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupSMaxNonUniformAMD(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FragmentMaskFetchAMD(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FragmentFetchAMD(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ReadClockKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::AllocateNodePayloadsAMDX(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::EnqueueNodePayloadsAMDX(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::EnqueueNodePayloadsAMDX(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
             Self::TypeNodePayloadArrayAMDX(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::FinishWritingNodePayloadAMDX(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::NodePayloadArrayLengthAMDX(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::IsNodePayloadValidAMDX(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConstantStringAMDX(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SpecConstantStringAMDX(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IsNodePayloadValidAMDX(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConstantStringAMDX(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SpecConstantStringAMDX(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::GroupNonUniformQuadAllKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::GroupNonUniformQuadAnyKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::TypeBufferEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::BufferPointerEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeBufferEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::BufferPointerEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::UntypedImageTexelPointerEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::MemberDecorateIdEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConstantSizeOfEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::MemberDecorateIdEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConstantSizeOfEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::HitObjectRecordHitMotionNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectRecordHitWithIndexMotionNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectRecordMissMotionNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetWorldToObjectNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetObjectToWorldNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetObjectRayDirectionNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetObjectRayOriginNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectTraceRayMotionNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetShaderRecordBufferHandleNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetShaderBindingTableRecordIndexNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::HitObjectRecordEmptyNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::HitObjectTraceRayNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::HitObjectRecordHitNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectRecordEmptyNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::HitObjectTraceRayNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::HitObjectRecordHitNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::HitObjectRecordHitWithIndexNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::HitObjectRecordMissNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectRecordMissNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::HitObjectExecuteShaderNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetCurrentTimeNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetAttributesNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::HitObjectGetHitKindNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectGetHitKindNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::HitObjectGetPrimitiveIndexNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetGeometryIndexNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetInstanceIdNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetInstanceCustomIndexNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetWorldRayDirectionNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetWorldRayOriginNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::HitObjectGetRayTMaxNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::HitObjectGetRayTMinNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::HitObjectIsEmptyNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::HitObjectIsHitNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::HitObjectIsMissNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectGetRayTMaxNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::HitObjectGetRayTMinNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::HitObjectIsEmptyNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::HitObjectIsHitNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::HitObjectIsMissNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::ReorderThreadWithHitObjectNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ReorderThreadWithHintNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeHitObjectNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ImageSampleFootprintNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeVectorIdEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ReorderThreadWithHintNV(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::TypeHitObjectNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ImageSampleFootprintNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeVectorIdEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::CooperativeVectorMatrixMulNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CooperativeVectorOuterProductAccumulateNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CooperativeVectorReduceSumAccumulateNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CooperativeVectorMatrixMulAddNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CooperativeMatrixConvertNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::EmitMeshTasksEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SetMeshOutputsEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::EmitMeshTasksEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SetMeshOutputsEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::GroupNonUniformPartitionEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::WritePackedPrimitiveIndices4x8NV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::FetchMicroTriangleVertexPositionNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::FetchMicroTriangleVertexBarycentricNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::CooperativeVectorLoadNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CooperativeVectorLoadNV(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
             Self::CooperativeVectorStoreNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectRecordFromQueryEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::HitObjectRecordMissEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectRecordMissEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::HitObjectRecordMissMotionEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetIntersectionTriangleVertexPositionsEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::HitObjectGetRayFlagsEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectGetRayFlagsEXT(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
             Self::HitObjectSetShaderBindingTableRecordIndexEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectReorderExecuteShaderEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectTraceReorderExecuteEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectTraceMotionReorderExecuteEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::TypeHitObjectEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeHitObjectEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::ReorderThreadWithHintEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ReorderThreadWithHitObjectEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::HitObjectTraceRayEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectTraceRayEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::HitObjectTraceRayMotionEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::HitObjectRecordEmptyEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectRecordEmptyEXT(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
             Self::HitObjectExecuteShaderEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetCurrentTimeEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetAttributesEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::HitObjectGetHitKindEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectGetHitKindEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::HitObjectGetPrimitiveIndexEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetGeometryIndexEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetInstanceIdEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetInstanceCustomIndexEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetObjectRayOriginEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetObjectRayDirectionEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetWorldRayDirectionEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetWorldRayOriginEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetObjectToWorldEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetWorldToObjectEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::HitObjectGetRayTMaxEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ReportIntersectionKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::IgnoreIntersectionNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TerminateRayNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TraceNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TraceMotionNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TraceRayMotionNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectGetRayTMaxEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ReportIntersectionKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::IgnoreIntersectionNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TerminateRayNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TraceNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TraceMotionNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TraceRayMotionNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::RayQueryGetIntersectionTriangleVertexPositionsKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::TypeAccelerationStructureKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ExecuteCallableNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ExecuteCallableNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::RayQueryGetIntersectionClusterIdNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::HitObjectGetClusterIdNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::HitObjectGetRayTMinEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectGetClusterIdNV(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::HitObjectGetRayTMinEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::HitObjectGetShaderBindingTableRecordIndexEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetShaderRecordBufferHandleEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::HitObjectIsEmptyEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::HitObjectIsHitEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::HitObjectIsMissEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeCooperativeMatrixNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::CooperativeMatrixLoadNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectIsEmptyEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::HitObjectIsHitEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::HitObjectIsMissEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeCooperativeMatrixNV(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::CooperativeMatrixLoadNV(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
             Self::CooperativeMatrixStoreNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CooperativeMatrixMulAddNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CooperativeMatrixLengthNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::BeginInvocationInterlockEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::EndInvocationInterlockEXT(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CooperativeMatrixReduceNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CooperativeMatrixLoadTensorNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CooperativeMatrixStoreTensorNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CooperativeMatrixPerElementOpNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::TypeTensorLayoutNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeTensorViewNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::CreateTensorLayoutNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeTensorLayoutNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeTensorViewNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::CreateTensorLayoutNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::TensorLayoutSetDimensionNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::TensorLayoutSetStrideNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TensorLayoutSliceNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TensorLayoutSetStrideNV(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::TensorLayoutSliceNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::TensorLayoutSetClampValueNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::CreateTensorViewNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::CreateTensorViewNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::TensorViewSetDimensionNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::TensorViewSetStrideNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TensorViewSetStrideNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::DemoteToHelperInvocation(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::IsHelperInvocationEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TensorViewSetClipNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::IsHelperInvocationEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TensorViewSetClipNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::TensorLayoutSetBlockSizeNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CooperativeMatrixTransposeNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ConvertUToImageNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConvertUToSamplerNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConvertImageToUNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConvertSamplerToUNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConvertUToImageNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConvertUToSamplerNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConvertImageToUNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConvertSamplerToUNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::ConvertUToSampledImageNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ConvertSampledImageToUNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SamplerImageAddressingModeNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::RawAccessChainNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::RawAccessChainNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::RayQueryGetIntersectionSpherePositionNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionSphereRadiusNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionLSSPositionsNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionLSSRadiiNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionLSSHitValueNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetSpherePositionNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetSphereRadiusNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::HitObjectGetLSSPositionsNV(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::HitObjectGetLSSRadiiNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::HitObjectIsSphereHitNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::HitObjectIsLSSHitNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::RayQueryIsSphereHitNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::RayQueryIsLSSHitNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SubgroupShuffleINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::HitObjectGetLSSRadiiNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::HitObjectIsSphereHitNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::HitObjectIsLSSHitNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::RayQueryIsSphereHitNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::RayQueryIsLSSHitNV(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SubgroupShuffleINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::SubgroupShuffleDownINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::SubgroupShuffleUpINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SubgroupShuffleXorINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SubgroupBlockReadINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::SubgroupBlockWriteINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SubgroupShuffleUpINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SubgroupShuffleXorINTEL(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::SubgroupBlockReadINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::SubgroupBlockWriteINTEL(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
             Self::SubgroupImageBlockReadINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupImageBlockWriteINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupImageMediaBlockReadINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupImageMediaBlockWriteINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::UCountLeadingZerosINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::UCountLeadingZerosINTEL(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
             Self::UCountTrailingZerosINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::AbsISubINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AbsUSubINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::IAddSatINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::UAddSatINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::IAverageINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::UAverageINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::IAverageRoundedINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::UAverageRoundedINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ISubSatINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::USubSatINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::IMul32x16INTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::UMul32x16INTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AbsISubINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AbsUSubINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::IAddSatINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::UAddSatINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::IAverageINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::UAverageINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::IAverageRoundedINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::UAverageRoundedINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ISubSatINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::USubSatINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::IMul32x16INTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::UMul32x16INTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::ConstantFunctionPointerINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::FunctionPointerCallINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::AsmTargetINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AsmINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AsmCallINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicFMinEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AtomicFMaxEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AssumeTrueKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ExpectKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::DecorateString(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::MemberDecorateString(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::VmeImageINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeVmeImageINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeAvcImePayloadINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeAvcRefPayloadINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeAvcSicPayloadINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeAvcMcePayloadINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeAvcMceResultINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeAvcImeResultINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AsmTargetINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AsmINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AsmCallINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicFMinEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AtomicFMaxEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AssumeTrueKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ExpectKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::DecorateString(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::MemberDecorateString(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::VmeImageINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeVmeImageINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeAvcImePayloadINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeAvcRefPayloadINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeAvcSicPayloadINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeAvcMcePayloadINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeAvcMceResultINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeAvcImeResultINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::TypeAvcImeResultSingleReferenceStreamoutINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::TypeAvcImeResultDualReferenceStreamoutINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::TypeAvcImeSingleReferenceStreaminINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::TypeAvcImeDualReferenceStreaminINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::TypeAvcRefResultINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeAvcSicResultINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeAvcRefResultINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeAvcSicResultINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultInterShapePenaltyINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceSetInterShapePenaltyINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceSetInterDirectionPenaltyINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceSetMotionVectorCostFunctionINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceSetAcOnlyHaarINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceConvertToImePayloadINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceConvertToImeResultINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceConvertToRefPayloadINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceConvertToRefResultINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceConvertToSicPayloadINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceConvertToSicResultINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetMotionVectorsINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetInterDistortionsINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetBestInterDistortionsINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetInterMajorShapeINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetInterMinorShapeINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetInterDirectionsINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetInterMotionVectorCountINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetInterReferenceIdsINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeInitializeINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeSetSingleReferenceINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeSetDualReferenceINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeRefWindowSizeINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeAdjustRefOffsetINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeConvertToMcePayloadINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeSetMaxMotionVectorCountINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeSetUnidirectionalMixDisableINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeSetWeightedSadINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithSingleReferenceINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeConvertToMceResultINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeGetSingleReferenceStreaminINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeGetDualReferenceStreaminINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeStripSingleReferenceStreamoutINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeStripDualReferenceStreamoutINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeGetBorderReachedINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeGetTruncatedSearchIndicationINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcFmeInitializeINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcBmeInitializeINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcRefConvertToMcePayloadINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcRefSetBidirectionalMixDisableINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcRefSetBilinearFilterEnableINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcRefEvaluateWithSingleReferenceINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcRefEvaluateWithDualReferenceINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcRefEvaluateWithMultiReferenceINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcRefConvertToMceResultINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicInitializeINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicConfigureSkcINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicConfigureIpeLumaINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicConfigureIpeLumaChromaINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicGetMotionVectorMaskINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicConvertToMcePayloadINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicSetIntraLumaShapePenaltyINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicSetBilinearFilterEnableINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicSetSkcForwardTransformEnableINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicSetBlockBasedRawSkipSadINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicEvaluateIpeINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicEvaluateWithSingleReferenceINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicEvaluateWithDualReferenceINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicEvaluateWithMultiReferenceINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicConvertToMceResultINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicGetIpeLumaShapeINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicGetBestIpeLumaDistortionINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicGetBestIpeChromaDistortionINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicGetPackedIpeLumaModesINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicGetIpeChromaModeINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupAvcSicGetInterRawSadsINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::VariableLengthArrayINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::SaveMemoryINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::RestoreMemoryINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SaveMemoryINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::RestoreMemoryINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::ArbitraryFloatSinCosPiALTERA(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ArbitraryFloatCastALTERA(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ArbitraryFloatCastFromIntALTERA(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ArbitraryFloatCastToIntALTERA(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ArbitraryFloatAddALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ArbitraryFloatSubALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ArbitraryFloatMulALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ArbitraryFloatDivALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ArbitraryFloatGTALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ArbitraryFloatGEALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ArbitraryFloatLTALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ArbitraryFloatLEALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ArbitraryFloatEQALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatAddALTERA(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatSubALTERA(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatMulALTERA(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatDivALTERA(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatGTALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatGEALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatLTALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatLEALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatEQALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::ArbitraryFloatRecipALTERA(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ArbitraryFloatRSqrtALTERA(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ArbitraryFloatCbrtALTERA(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ArbitraryFloatHypotALTERA(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ArbitraryFloatSqrtALTERA(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ArbitraryFloatLogINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ArbitraryFloatLog2INTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatLogINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatLog2INTEL(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
             Self::ArbitraryFloatLog10INTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ArbitraryFloatLog1pINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ArbitraryFloatExpINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ArbitraryFloatExp2INTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatExpINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatExp2INTEL(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
             Self::ArbitraryFloatExp10INTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ArbitraryFloatExpm1INTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ArbitraryFloatSinINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ArbitraryFloatCosINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatSinINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatCosINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::ArbitraryFloatSinCosINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ArbitraryFloatSinPiINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ArbitraryFloatCosPiINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ArbitraryFloatASinINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatASinINTEL(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
             Self::ArbitraryFloatASinPiINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ArbitraryFloatACosINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatACosINTEL(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
             Self::ArbitraryFloatACosPiINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ArbitraryFloatATanINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatATanINTEL(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
             Self::ArbitraryFloatATanPiINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ArbitraryFloatATan2INTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ArbitraryFloatPowINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ArbitraryFloatPowRINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ArbitraryFloatPowNINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::LoopControlINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AliasDomainDeclINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AliasScopeDeclINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::AliasScopeListDeclINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FixedSqrtALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FixedRecipALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FixedRsqrtALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FixedSinALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FixedCosALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FixedSinCosALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FixedSinPiALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FixedCosPiALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FixedSinCosPiALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FixedLogALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FixedExpALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatPowINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ArbitraryFloatPowRINTEL(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::ArbitraryFloatPowNINTEL(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::LoopControlINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AliasDomainDeclINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AliasScopeDeclINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::AliasScopeListDeclINTEL(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::FixedSqrtALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FixedRecipALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FixedRsqrtALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FixedSinALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FixedCosALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FixedSinCosALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FixedSinPiALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FixedCosPiALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FixedSinCosPiALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FixedLogALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::FixedExpALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::PtrCastToCrossWorkgroupALTERA(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CrossWorkgroupCastToPtrALTERA(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ReadPipeBlockingALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::WritePipeBlockingALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::FPGARegALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::RayQueryGetRayTMinKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::RayQueryGetRayFlagsKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ReadPipeBlockingALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::WritePipeBlockingALTERA(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::FPGARegALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::RayQueryGetRayTMinKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::RayQueryGetRayFlagsKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::RayQueryGetIntersectionTKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionInstanceCustomIndexKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionInstanceIdKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionGeometryIndexKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionPrimitiveIndexKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionBarycentricsKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionFrontFaceKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionCandidateAABBOpaqueKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionObjectRayDirectionKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionObjectRayOriginKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetWorldRayDirectionKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetWorldRayOriginKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionObjectToWorldKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::RayQueryGetIntersectionWorldToObjectKHR(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::AtomicFAddEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TypeBufferSurfaceINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AtomicFAddEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::TypeBufferSurfaceINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::TypeStructContinuedINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ConstantCompositeContinuedINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SpecConstantCompositeContinuedINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::CompositeConstructContinuedINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ConvertFToBF16INTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ConvertBF16ToFINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConvertFToBF16INTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::ConvertBF16ToFINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::ControlBarrierArriveINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::ControlBarrierWaitINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ArithmeticFenceEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ControlBarrierWaitINTEL(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::ArithmeticFenceEXT(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::TaskSequenceCreateALTERA(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::TaskSequenceAsyncALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::TaskSequenceGetALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TaskSequenceAsyncALTERA(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
+            Self::TaskSequenceGetALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::TaskSequenceReleaseALTERA(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::TypeTaskSequenceALTERA(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::TypeTaskSequenceALTERA(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::SubgroupBlockPrefetchINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::Subgroup2DBlockLoadINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::Subgroup2DBlockLoadTransformINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::Subgroup2DBlockLoadTransposeINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::Subgroup2DBlockPrefetchINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::Subgroup2DBlockStoreINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SubgroupMatrixMultiplyAccumulateINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::BitwiseFunctionINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::BitwiseFunctionINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::UntypedVariableLengthArrayINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ConditionalExtensionINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ConditionalEntryPointINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ConditionalCapabilityINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::SpecConstantTargetINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SpecConstantTargetINTEL(inst) => {
+                SpvInstDefUse::id_result_type(inst).to_optional()
+            }
             Self::SpecConstantArchitectureINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::SpecConstantCapabilitiesINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ConditionalCopyObjectINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
-            Self::GroupIMulKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupFMulKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupBitwiseAndKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupBitwiseOrKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupBitwiseXorKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupLogicalAndKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupLogicalOrKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::GroupLogicalXorKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::RoundFToTF32INTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::MaskedGatherINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::MaskedScatterINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::GroupIMulKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupFMulKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupBitwiseAndKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupBitwiseOrKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupBitwiseXorKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupLogicalAndKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupLogicalOrKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::GroupLogicalXorKHR(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::RoundFToTF32INTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::MaskedGatherINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
+            Self::MaskedScatterINTEL(inst) => SpvInstDefUse::id_result_type(inst).to_optional(),
             Self::ConvertHandleToImageINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ConvertHandleToSamplerINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
             Self::ConvertHandleToSampledImageINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
+                SpvInstDefUse::id_result_type(inst).to_optional()
             }
         }
     }
+}
+impl SpvInstEncoding for CoreInstSet {
     fn name() -> &'static str {
         stringify!(CoreInstSet)
     }
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         match self {
-            Self::Nop(inst) => InstEncoding::encode(inst, writer),
-            Self::Undef(inst) => InstEncoding::encode(inst, writer),
-            Self::SourceContinued(inst) => InstEncoding::encode(inst, writer),
-            Self::Source(inst) => InstEncoding::encode(inst, writer),
-            Self::SourceExtension(inst) => InstEncoding::encode(inst, writer),
-            Self::Name(inst) => InstEncoding::encode(inst, writer),
-            Self::MemberName(inst) => InstEncoding::encode(inst, writer),
-            Self::String(inst) => InstEncoding::encode(inst, writer),
-            Self::Line(inst) => InstEncoding::encode(inst, writer),
-            Self::Extension(inst) => InstEncoding::encode(inst, writer),
-            Self::ExtInstImport(inst) => InstEncoding::encode(inst, writer),
-            Self::ExtInst(inst) => InstEncoding::encode(inst, writer),
-            Self::MemoryModel(inst) => InstEncoding::encode(inst, writer),
-            Self::EntryPoint(inst) => InstEncoding::encode(inst, writer),
-            Self::ExecutionMode(inst) => InstEncoding::encode(inst, writer),
-            Self::Capability(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeVoid(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeBool(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeInt(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeFloat(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeVector(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeMatrix(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeImage(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeSampler(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeSampledImage(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeArray(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeRuntimeArray(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeStruct(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeOpaque(inst) => InstEncoding::encode(inst, writer),
-            Self::TypePointer(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeFunction(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeEvent(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeDeviceEvent(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeReserveId(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeQueue(inst) => InstEncoding::encode(inst, writer),
-            Self::TypePipe(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeForwardPointer(inst) => InstEncoding::encode(inst, writer),
-            Self::ConstantTrue(inst) => InstEncoding::encode(inst, writer),
-            Self::ConstantFalse(inst) => InstEncoding::encode(inst, writer),
-            Self::Constant(inst) => InstEncoding::encode(inst, writer),
-            Self::ConstantComposite(inst) => InstEncoding::encode(inst, writer),
-            Self::ConstantSampler(inst) => InstEncoding::encode(inst, writer),
-            Self::ConstantNull(inst) => InstEncoding::encode(inst, writer),
-            Self::SpecConstantTrue(inst) => InstEncoding::encode(inst, writer),
-            Self::SpecConstantFalse(inst) => InstEncoding::encode(inst, writer),
-            Self::SpecConstant(inst) => InstEncoding::encode(inst, writer),
-            Self::SpecConstantComposite(inst) => InstEncoding::encode(inst, writer),
-            Self::SpecConstantOp(inst) => InstEncoding::encode(inst, writer),
-            Self::Function(inst) => InstEncoding::encode(inst, writer),
-            Self::FunctionParameter(inst) => InstEncoding::encode(inst, writer),
-            Self::FunctionEnd(inst) => InstEncoding::encode(inst, writer),
-            Self::FunctionCall(inst) => InstEncoding::encode(inst, writer),
-            Self::Variable(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageTexelPointer(inst) => InstEncoding::encode(inst, writer),
-            Self::Load(inst) => InstEncoding::encode(inst, writer),
-            Self::Store(inst) => InstEncoding::encode(inst, writer),
-            Self::CopyMemory(inst) => InstEncoding::encode(inst, writer),
-            Self::CopyMemorySized(inst) => InstEncoding::encode(inst, writer),
-            Self::AccessChain(inst) => InstEncoding::encode(inst, writer),
-            Self::InBoundsAccessChain(inst) => InstEncoding::encode(inst, writer),
-            Self::PtrAccessChain(inst) => InstEncoding::encode(inst, writer),
-            Self::ArrayLength(inst) => InstEncoding::encode(inst, writer),
-            Self::GenericPtrMemSemantics(inst) => InstEncoding::encode(inst, writer),
-            Self::InBoundsPtrAccessChain(inst) => InstEncoding::encode(inst, writer),
-            Self::Decorate(inst) => InstEncoding::encode(inst, writer),
-            Self::MemberDecorate(inst) => InstEncoding::encode(inst, writer),
-            Self::DecorationGroup(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupDecorate(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupMemberDecorate(inst) => InstEncoding::encode(inst, writer),
-            Self::VectorExtractDynamic(inst) => InstEncoding::encode(inst, writer),
-            Self::VectorInsertDynamic(inst) => InstEncoding::encode(inst, writer),
-            Self::VectorShuffle(inst) => InstEncoding::encode(inst, writer),
-            Self::CompositeConstruct(inst) => InstEncoding::encode(inst, writer),
-            Self::CompositeExtract(inst) => InstEncoding::encode(inst, writer),
-            Self::CompositeInsert(inst) => InstEncoding::encode(inst, writer),
-            Self::CopyObject(inst) => InstEncoding::encode(inst, writer),
-            Self::Transpose(inst) => InstEncoding::encode(inst, writer),
-            Self::SampledImage(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSampleImplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSampleExplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSampleDrefImplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSampleDrefExplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSampleProjImplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSampleProjExplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSampleProjDrefImplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSampleProjDrefExplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageFetch(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageGather(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageDrefGather(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageRead(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageWrite(inst) => InstEncoding::encode(inst, writer),
-            Self::Image(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageQueryFormat(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageQueryOrder(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageQuerySizeLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageQuerySize(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageQueryLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageQueryLevels(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageQuerySamples(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertFToU(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertFToS(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertSToF(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertUToF(inst) => InstEncoding::encode(inst, writer),
-            Self::UConvert(inst) => InstEncoding::encode(inst, writer),
-            Self::SConvert(inst) => InstEncoding::encode(inst, writer),
-            Self::FConvert(inst) => InstEncoding::encode(inst, writer),
-            Self::QuantizeToF16(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertPtrToU(inst) => InstEncoding::encode(inst, writer),
-            Self::SatConvertSToU(inst) => InstEncoding::encode(inst, writer),
-            Self::SatConvertUToS(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertUToPtr(inst) => InstEncoding::encode(inst, writer),
-            Self::PtrCastToGeneric(inst) => InstEncoding::encode(inst, writer),
-            Self::GenericCastToPtr(inst) => InstEncoding::encode(inst, writer),
-            Self::GenericCastToPtrExplicit(inst) => InstEncoding::encode(inst, writer),
-            Self::Bitcast(inst) => InstEncoding::encode(inst, writer),
-            Self::SNegate(inst) => InstEncoding::encode(inst, writer),
-            Self::FNegate(inst) => InstEncoding::encode(inst, writer),
-            Self::IAdd(inst) => InstEncoding::encode(inst, writer),
-            Self::FAdd(inst) => InstEncoding::encode(inst, writer),
-            Self::ISub(inst) => InstEncoding::encode(inst, writer),
-            Self::FSub(inst) => InstEncoding::encode(inst, writer),
-            Self::IMul(inst) => InstEncoding::encode(inst, writer),
-            Self::FMul(inst) => InstEncoding::encode(inst, writer),
-            Self::UDiv(inst) => InstEncoding::encode(inst, writer),
-            Self::SDiv(inst) => InstEncoding::encode(inst, writer),
-            Self::FDiv(inst) => InstEncoding::encode(inst, writer),
-            Self::UMod(inst) => InstEncoding::encode(inst, writer),
-            Self::SRem(inst) => InstEncoding::encode(inst, writer),
-            Self::SMod(inst) => InstEncoding::encode(inst, writer),
-            Self::FRem(inst) => InstEncoding::encode(inst, writer),
-            Self::FMod(inst) => InstEncoding::encode(inst, writer),
-            Self::VectorTimesScalar(inst) => InstEncoding::encode(inst, writer),
-            Self::MatrixTimesScalar(inst) => InstEncoding::encode(inst, writer),
-            Self::VectorTimesMatrix(inst) => InstEncoding::encode(inst, writer),
-            Self::MatrixTimesVector(inst) => InstEncoding::encode(inst, writer),
-            Self::MatrixTimesMatrix(inst) => InstEncoding::encode(inst, writer),
-            Self::OuterProduct(inst) => InstEncoding::encode(inst, writer),
-            Self::Dot(inst) => InstEncoding::encode(inst, writer),
-            Self::IAddCarry(inst) => InstEncoding::encode(inst, writer),
-            Self::ISubBorrow(inst) => InstEncoding::encode(inst, writer),
-            Self::UMulExtended(inst) => InstEncoding::encode(inst, writer),
-            Self::SMulExtended(inst) => InstEncoding::encode(inst, writer),
-            Self::Any(inst) => InstEncoding::encode(inst, writer),
-            Self::All(inst) => InstEncoding::encode(inst, writer),
-            Self::IsNan(inst) => InstEncoding::encode(inst, writer),
-            Self::IsInf(inst) => InstEncoding::encode(inst, writer),
-            Self::IsFinite(inst) => InstEncoding::encode(inst, writer),
-            Self::IsNormal(inst) => InstEncoding::encode(inst, writer),
-            Self::SignBitSet(inst) => InstEncoding::encode(inst, writer),
-            Self::LessOrGreater(inst) => InstEncoding::encode(inst, writer),
-            Self::Ordered(inst) => InstEncoding::encode(inst, writer),
-            Self::Unordered(inst) => InstEncoding::encode(inst, writer),
-            Self::LogicalEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::LogicalNotEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::LogicalOr(inst) => InstEncoding::encode(inst, writer),
-            Self::LogicalAnd(inst) => InstEncoding::encode(inst, writer),
-            Self::LogicalNot(inst) => InstEncoding::encode(inst, writer),
-            Self::Select(inst) => InstEncoding::encode(inst, writer),
-            Self::IEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::INotEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::UGreaterThan(inst) => InstEncoding::encode(inst, writer),
-            Self::SGreaterThan(inst) => InstEncoding::encode(inst, writer),
-            Self::UGreaterThanEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::SGreaterThanEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::ULessThan(inst) => InstEncoding::encode(inst, writer),
-            Self::SLessThan(inst) => InstEncoding::encode(inst, writer),
-            Self::ULessThanEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::SLessThanEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::FOrdEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::FUnordEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::FOrdNotEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::FUnordNotEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::FOrdLessThan(inst) => InstEncoding::encode(inst, writer),
-            Self::FUnordLessThan(inst) => InstEncoding::encode(inst, writer),
-            Self::FOrdGreaterThan(inst) => InstEncoding::encode(inst, writer),
-            Self::FUnordGreaterThan(inst) => InstEncoding::encode(inst, writer),
-            Self::FOrdLessThanEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::FUnordLessThanEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::FOrdGreaterThanEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::FUnordGreaterThanEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::ShiftRightLogical(inst) => InstEncoding::encode(inst, writer),
-            Self::ShiftRightArithmetic(inst) => InstEncoding::encode(inst, writer),
-            Self::ShiftLeftLogical(inst) => InstEncoding::encode(inst, writer),
-            Self::BitwiseOr(inst) => InstEncoding::encode(inst, writer),
-            Self::BitwiseXor(inst) => InstEncoding::encode(inst, writer),
-            Self::BitwiseAnd(inst) => InstEncoding::encode(inst, writer),
-            Self::Not(inst) => InstEncoding::encode(inst, writer),
-            Self::BitFieldInsert(inst) => InstEncoding::encode(inst, writer),
-            Self::BitFieldSExtract(inst) => InstEncoding::encode(inst, writer),
-            Self::BitFieldUExtract(inst) => InstEncoding::encode(inst, writer),
-            Self::BitReverse(inst) => InstEncoding::encode(inst, writer),
-            Self::BitCount(inst) => InstEncoding::encode(inst, writer),
-            Self::DPdx(inst) => InstEncoding::encode(inst, writer),
-            Self::DPdy(inst) => InstEncoding::encode(inst, writer),
-            Self::Fwidth(inst) => InstEncoding::encode(inst, writer),
-            Self::DPdxFine(inst) => InstEncoding::encode(inst, writer),
-            Self::DPdyFine(inst) => InstEncoding::encode(inst, writer),
-            Self::FwidthFine(inst) => InstEncoding::encode(inst, writer),
-            Self::DPdxCoarse(inst) => InstEncoding::encode(inst, writer),
-            Self::DPdyCoarse(inst) => InstEncoding::encode(inst, writer),
-            Self::FwidthCoarse(inst) => InstEncoding::encode(inst, writer),
-            Self::EmitVertex(inst) => InstEncoding::encode(inst, writer),
-            Self::EndPrimitive(inst) => InstEncoding::encode(inst, writer),
-            Self::EmitStreamVertex(inst) => InstEncoding::encode(inst, writer),
-            Self::EndStreamPrimitive(inst) => InstEncoding::encode(inst, writer),
-            Self::ControlBarrier(inst) => InstEncoding::encode(inst, writer),
-            Self::MemoryBarrier(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicLoad(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicStore(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicExchange(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicCompareExchange(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicCompareExchangeWeak(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicIIncrement(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicIDecrement(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicIAdd(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicISub(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicSMin(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicUMin(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicSMax(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicUMax(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicAnd(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicOr(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicXor(inst) => InstEncoding::encode(inst, writer),
-            Self::Phi(inst) => InstEncoding::encode(inst, writer),
-            Self::LoopMerge(inst) => InstEncoding::encode(inst, writer),
-            Self::SelectionMerge(inst) => InstEncoding::encode(inst, writer),
-            Self::Label(inst) => InstEncoding::encode(inst, writer),
-            Self::Branch(inst) => InstEncoding::encode(inst, writer),
-            Self::BranchConditional(inst) => InstEncoding::encode(inst, writer),
-            Self::Switch(inst) => InstEncoding::encode(inst, writer),
-            Self::Kill(inst) => InstEncoding::encode(inst, writer),
-            Self::Return(inst) => InstEncoding::encode(inst, writer),
-            Self::ReturnValue(inst) => InstEncoding::encode(inst, writer),
-            Self::Unreachable(inst) => InstEncoding::encode(inst, writer),
-            Self::LifetimeStart(inst) => InstEncoding::encode(inst, writer),
-            Self::LifetimeStop(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupAsyncCopy(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupWaitEvents(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupAll(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupAny(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupBroadcast(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupIAdd(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupFAdd(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupFMin(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupUMin(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupSMin(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupFMax(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupUMax(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupSMax(inst) => InstEncoding::encode(inst, writer),
-            Self::ReadPipe(inst) => InstEncoding::encode(inst, writer),
-            Self::WritePipe(inst) => InstEncoding::encode(inst, writer),
-            Self::ReservedReadPipe(inst) => InstEncoding::encode(inst, writer),
-            Self::ReservedWritePipe(inst) => InstEncoding::encode(inst, writer),
-            Self::ReserveReadPipePackets(inst) => InstEncoding::encode(inst, writer),
-            Self::ReserveWritePipePackets(inst) => InstEncoding::encode(inst, writer),
-            Self::CommitReadPipe(inst) => InstEncoding::encode(inst, writer),
-            Self::CommitWritePipe(inst) => InstEncoding::encode(inst, writer),
-            Self::IsValidReserveId(inst) => InstEncoding::encode(inst, writer),
-            Self::GetNumPipePackets(inst) => InstEncoding::encode(inst, writer),
-            Self::GetMaxPipePackets(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupReserveReadPipePackets(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupReserveWritePipePackets(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupCommitReadPipe(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupCommitWritePipe(inst) => InstEncoding::encode(inst, writer),
-            Self::EnqueueMarker(inst) => InstEncoding::encode(inst, writer),
-            Self::EnqueueKernel(inst) => InstEncoding::encode(inst, writer),
-            Self::GetKernelNDrangeSubGroupCount(inst) => InstEncoding::encode(inst, writer),
-            Self::GetKernelNDrangeMaxSubGroupSize(inst) => InstEncoding::encode(inst, writer),
-            Self::GetKernelWorkGroupSize(inst) => InstEncoding::encode(inst, writer),
+            Self::Nop(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Undef(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SourceContinued(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Source(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SourceExtension(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Name(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::MemberName(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::String(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Line(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Extension(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ExtInstImport(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ExtInst(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::MemoryModel(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::EntryPoint(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ExecutionMode(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Capability(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeVoid(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeBool(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeInt(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeFloat(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeVector(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeMatrix(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeImage(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeSampler(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeSampledImage(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeArray(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeRuntimeArray(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeStruct(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeOpaque(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypePointer(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeFunction(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeEvent(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeDeviceEvent(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeReserveId(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeQueue(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypePipe(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeForwardPointer(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConstantTrue(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConstantFalse(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Constant(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConstantComposite(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConstantSampler(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConstantNull(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SpecConstantTrue(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SpecConstantFalse(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SpecConstant(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SpecConstantComposite(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SpecConstantOp(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Function(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FunctionParameter(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FunctionEnd(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FunctionCall(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Variable(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageTexelPointer(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Load(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Store(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CopyMemory(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CopyMemorySized(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AccessChain(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::InBoundsAccessChain(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::PtrAccessChain(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArrayLength(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GenericPtrMemSemantics(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::InBoundsPtrAccessChain(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Decorate(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::MemberDecorate(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::DecorationGroup(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupDecorate(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupMemberDecorate(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::VectorExtractDynamic(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::VectorInsertDynamic(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::VectorShuffle(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CompositeConstruct(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CompositeExtract(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CompositeInsert(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CopyObject(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Transpose(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SampledImage(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSampleImplicitLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSampleExplicitLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSampleDrefImplicitLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSampleDrefExplicitLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSampleProjImplicitLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSampleProjExplicitLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSampleProjDrefImplicitLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSampleProjDrefExplicitLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageFetch(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageGather(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageDrefGather(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageRead(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageWrite(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Image(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageQueryFormat(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageQueryOrder(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageQuerySizeLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageQuerySize(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageQueryLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageQueryLevels(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageQuerySamples(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertFToU(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertFToS(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertSToF(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertUToF(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UConvert(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SConvert(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FConvert(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::QuantizeToF16(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertPtrToU(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SatConvertSToU(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SatConvertUToS(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertUToPtr(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::PtrCastToGeneric(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GenericCastToPtr(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GenericCastToPtrExplicit(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Bitcast(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SNegate(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FNegate(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IAdd(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FAdd(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ISub(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FSub(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IMul(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FMul(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UDiv(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SDiv(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FDiv(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UMod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SRem(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SMod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FRem(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FMod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::VectorTimesScalar(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::MatrixTimesScalar(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::VectorTimesMatrix(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::MatrixTimesVector(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::MatrixTimesMatrix(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::OuterProduct(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Dot(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IAddCarry(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ISubBorrow(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UMulExtended(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SMulExtended(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Any(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::All(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IsNan(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IsInf(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IsFinite(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IsNormal(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SignBitSet(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::LessOrGreater(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Ordered(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Unordered(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::LogicalEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::LogicalNotEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::LogicalOr(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::LogicalAnd(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::LogicalNot(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Select(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::INotEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UGreaterThan(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SGreaterThan(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UGreaterThanEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SGreaterThanEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ULessThan(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SLessThan(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ULessThanEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SLessThanEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FOrdEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FUnordEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FOrdNotEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FUnordNotEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FOrdLessThan(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FUnordLessThan(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FOrdGreaterThan(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FUnordGreaterThan(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FOrdLessThanEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FUnordLessThanEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FOrdGreaterThanEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FUnordGreaterThanEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ShiftRightLogical(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ShiftRightArithmetic(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ShiftLeftLogical(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::BitwiseOr(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::BitwiseXor(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::BitwiseAnd(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Not(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::BitFieldInsert(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::BitFieldSExtract(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::BitFieldUExtract(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::BitReverse(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::BitCount(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::DPdx(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::DPdy(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Fwidth(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::DPdxFine(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::DPdyFine(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FwidthFine(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::DPdxCoarse(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::DPdyCoarse(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FwidthCoarse(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::EmitVertex(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::EndPrimitive(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::EmitStreamVertex(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::EndStreamPrimitive(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ControlBarrier(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::MemoryBarrier(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicLoad(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicStore(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicExchange(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicCompareExchange(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicCompareExchangeWeak(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicIIncrement(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicIDecrement(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicIAdd(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicISub(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicSMin(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicUMin(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicSMax(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicUMax(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicAnd(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicOr(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicXor(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Phi(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::LoopMerge(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SelectionMerge(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Label(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Branch(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::BranchConditional(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Switch(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Kill(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Return(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ReturnValue(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Unreachable(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::LifetimeStart(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::LifetimeStop(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupAsyncCopy(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupWaitEvents(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupAll(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupAny(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupBroadcast(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupIAdd(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupFAdd(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupFMin(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupUMin(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupSMin(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupFMax(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupUMax(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupSMax(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ReadPipe(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::WritePipe(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ReservedReadPipe(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ReservedWritePipe(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ReserveReadPipePackets(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ReserveWritePipePackets(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CommitReadPipe(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CommitWritePipe(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IsValidReserveId(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GetNumPipePackets(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GetMaxPipePackets(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupReserveReadPipePackets(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupReserveWritePipePackets(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupCommitReadPipe(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupCommitWritePipe(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::EnqueueMarker(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::EnqueueKernel(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GetKernelNDrangeSubGroupCount(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GetKernelNDrangeMaxSubGroupSize(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GetKernelWorkGroupSize(inst) => SpvInstEncoding::encode(inst, writer),
             Self::GetKernelPreferredWorkGroupSizeMultiple(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::RetainEvent(inst) => InstEncoding::encode(inst, writer),
-            Self::ReleaseEvent(inst) => InstEncoding::encode(inst, writer),
-            Self::CreateUserEvent(inst) => InstEncoding::encode(inst, writer),
-            Self::IsValidEvent(inst) => InstEncoding::encode(inst, writer),
-            Self::SetUserEventStatus(inst) => InstEncoding::encode(inst, writer),
-            Self::CaptureEventProfilingInfo(inst) => InstEncoding::encode(inst, writer),
-            Self::GetDefaultQueue(inst) => InstEncoding::encode(inst, writer),
-            Self::BuildNDRange(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSparseSampleImplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSparseSampleExplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSparseSampleDrefImplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSparseSampleDrefExplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSparseSampleProjImplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSparseSampleProjExplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSparseSampleProjDrefImplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSparseSampleProjDrefExplicitLod(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSparseFetch(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSparseGather(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSparseDrefGather(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSparseTexelsResident(inst) => InstEncoding::encode(inst, writer),
-            Self::NoLine(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicFlagTestAndSet(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicFlagClear(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSparseRead(inst) => InstEncoding::encode(inst, writer),
-            Self::SizeOf(inst) => InstEncoding::encode(inst, writer),
-            Self::TypePipeStorage(inst) => InstEncoding::encode(inst, writer),
-            Self::ConstantPipeStorage(inst) => InstEncoding::encode(inst, writer),
-            Self::CreatePipeFromPipeStorage(inst) => InstEncoding::encode(inst, writer),
-            Self::GetKernelLocalSizeForSubgroupCount(inst) => InstEncoding::encode(inst, writer),
-            Self::GetKernelMaxNumSubgroups(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeNamedBarrier(inst) => InstEncoding::encode(inst, writer),
-            Self::NamedBarrierInitialize(inst) => InstEncoding::encode(inst, writer),
-            Self::MemoryNamedBarrier(inst) => InstEncoding::encode(inst, writer),
-            Self::ModuleProcessed(inst) => InstEncoding::encode(inst, writer),
-            Self::ExecutionModeId(inst) => InstEncoding::encode(inst, writer),
-            Self::DecorateId(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformElect(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformAll(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformAny(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformAllEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformBroadcast(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformBroadcastFirst(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformBallot(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformInverseBallot(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformBallotBitExtract(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformBallotBitCount(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformBallotFindLSB(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformBallotFindMSB(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformShuffle(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformShuffleXor(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformShuffleUp(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformShuffleDown(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformIAdd(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformFAdd(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformIMul(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformFMul(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformSMin(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformUMin(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformFMin(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformSMax(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformUMax(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformFMax(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformBitwiseAnd(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformBitwiseOr(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformBitwiseXor(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformLogicalAnd(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformLogicalOr(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformLogicalXor(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformQuadBroadcast(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformQuadSwap(inst) => InstEncoding::encode(inst, writer),
-            Self::CopyLogical(inst) => InstEncoding::encode(inst, writer),
-            Self::PtrEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::PtrNotEqual(inst) => InstEncoding::encode(inst, writer),
-            Self::PtrDiff(inst) => InstEncoding::encode(inst, writer),
-            Self::ColorAttachmentReadEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::DepthAttachmentReadEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::StencilAttachmentReadEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeTensorARM(inst) => InstEncoding::encode(inst, writer),
-            Self::TensorReadARM(inst) => InstEncoding::encode(inst, writer),
-            Self::TensorWriteARM(inst) => InstEncoding::encode(inst, writer),
-            Self::TensorQuerySizeARM(inst) => InstEncoding::encode(inst, writer),
-            Self::GraphConstantARM(inst) => InstEncoding::encode(inst, writer),
-            Self::GraphEntryPointARM(inst) => InstEncoding::encode(inst, writer),
-            Self::GraphARM(inst) => InstEncoding::encode(inst, writer),
-            Self::GraphInputARM(inst) => InstEncoding::encode(inst, writer),
-            Self::GraphSetOutputARM(inst) => InstEncoding::encode(inst, writer),
-            Self::GraphEndARM(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeGraphARM(inst) => InstEncoding::encode(inst, writer),
-            Self::TerminateInvocation(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeUntypedPointerKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::UntypedVariableKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::UntypedAccessChainKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::UntypedInBoundsAccessChainKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupBallotKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupFirstInvocationKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::UntypedPtrAccessChainKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::UntypedInBoundsPtrAccessChainKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::UntypedArrayLengthKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::UntypedPrefetchKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::FmaKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupAllKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupAnyKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupAllEqualKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformRotateKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupReadInvocationKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::ExtInstWithForwardRefsKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::UntypedGroupAsyncCopyKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::TraceRayKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::ExecuteCallableKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertUToAccelerationStructureKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::IgnoreIntersectionKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::TerminateRayKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::SDot(inst) => InstEncoding::encode(inst, writer),
-            Self::UDot(inst) => InstEncoding::encode(inst, writer),
-            Self::SUDot(inst) => InstEncoding::encode(inst, writer),
-            Self::SDotAccSat(inst) => InstEncoding::encode(inst, writer),
-            Self::UDotAccSat(inst) => InstEncoding::encode(inst, writer),
-            Self::SUDotAccSat(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeCooperativeMatrixKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixLoadKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixStoreKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixMulAddKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixLengthKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::ConstantCompositeReplicateEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::SpecConstantCompositeReplicateEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::CompositeConstructReplicateEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeRayQueryKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryInitializeKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryTerminateKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryGenerateIntersectionKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryConfirmIntersectionKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryProceedKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryGetIntersectionTypeKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSampleWeightedQCOM(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageBoxFilterQCOM(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageBlockMatchSSDQCOM(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageBlockMatchSADQCOM(inst) => InstEncoding::encode(inst, writer),
-            Self::BitCastArrayQCOM(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageBlockMatchWindowSSDQCOM(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageBlockMatchWindowSADQCOM(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageBlockMatchGatherSSDQCOM(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageBlockMatchGatherSADQCOM(inst) => InstEncoding::encode(inst, writer),
-            Self::CompositeConstructCoopMatQCOM(inst) => InstEncoding::encode(inst, writer),
-            Self::CompositeExtractCoopMatQCOM(inst) => InstEncoding::encode(inst, writer),
-            Self::ExtractSubArrayQCOM(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupIAddNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupFAddNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupFMinNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupUMinNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupSMinNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupFMaxNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupUMaxNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupSMaxNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
-            Self::FragmentMaskFetchAMD(inst) => InstEncoding::encode(inst, writer),
-            Self::FragmentFetchAMD(inst) => InstEncoding::encode(inst, writer),
-            Self::ReadClockKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::AllocateNodePayloadsAMDX(inst) => InstEncoding::encode(inst, writer),
-            Self::EnqueueNodePayloadsAMDX(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeNodePayloadArrayAMDX(inst) => InstEncoding::encode(inst, writer),
-            Self::FinishWritingNodePayloadAMDX(inst) => InstEncoding::encode(inst, writer),
-            Self::NodePayloadArrayLengthAMDX(inst) => InstEncoding::encode(inst, writer),
-            Self::IsNodePayloadValidAMDX(inst) => InstEncoding::encode(inst, writer),
-            Self::ConstantStringAMDX(inst) => InstEncoding::encode(inst, writer),
-            Self::SpecConstantStringAMDX(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformQuadAllKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformQuadAnyKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeBufferEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::BufferPointerEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::UntypedImageTexelPointerEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::MemberDecorateIdEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::ConstantSizeOfEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectRecordHitMotionNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectRecordHitWithIndexMotionNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectRecordMissMotionNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetWorldToObjectNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetObjectToWorldNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetObjectRayDirectionNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetObjectRayOriginNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectTraceRayMotionNV(inst) => InstEncoding::encode(inst, writer),
+            Self::RetainEvent(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ReleaseEvent(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CreateUserEvent(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IsValidEvent(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SetUserEventStatus(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CaptureEventProfilingInfo(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GetDefaultQueue(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::BuildNDRange(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSparseSampleImplicitLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSparseSampleExplicitLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSparseSampleDrefImplicitLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSparseSampleDrefExplicitLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSparseSampleProjImplicitLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSparseSampleProjExplicitLod(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSparseSampleProjDrefImplicitLod(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::ImageSparseSampleProjDrefExplicitLod(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::ImageSparseFetch(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSparseGather(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSparseDrefGather(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSparseTexelsResident(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::NoLine(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicFlagTestAndSet(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicFlagClear(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSparseRead(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SizeOf(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypePipeStorage(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConstantPipeStorage(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CreatePipeFromPipeStorage(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GetKernelLocalSizeForSubgroupCount(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GetKernelMaxNumSubgroups(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeNamedBarrier(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::NamedBarrierInitialize(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::MemoryNamedBarrier(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ModuleProcessed(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ExecutionModeId(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::DecorateId(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformElect(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformAll(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformAny(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformAllEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBroadcast(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBroadcastFirst(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBallot(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformInverseBallot(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBallotBitExtract(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBallotBitCount(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBallotFindLSB(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBallotFindMSB(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformShuffle(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformShuffleXor(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformShuffleUp(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformShuffleDown(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformIAdd(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformFAdd(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformIMul(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformFMul(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformSMin(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformUMin(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformFMin(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformSMax(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformUMax(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformFMax(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBitwiseAnd(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBitwiseOr(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformBitwiseXor(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformLogicalAnd(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformLogicalOr(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformLogicalXor(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformQuadBroadcast(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformQuadSwap(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CopyLogical(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::PtrEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::PtrNotEqual(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::PtrDiff(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ColorAttachmentReadEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::DepthAttachmentReadEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::StencilAttachmentReadEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeTensorARM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TensorReadARM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TensorWriteARM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TensorQuerySizeARM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GraphConstantARM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GraphEntryPointARM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GraphARM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GraphInputARM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GraphSetOutputARM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GraphEndARM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeGraphARM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TerminateInvocation(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeUntypedPointerKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UntypedVariableKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UntypedAccessChainKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UntypedInBoundsAccessChainKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupBallotKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupFirstInvocationKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UntypedPtrAccessChainKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UntypedInBoundsPtrAccessChainKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UntypedArrayLengthKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UntypedPrefetchKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FmaKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupAllKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupAnyKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupAllEqualKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformRotateKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupReadInvocationKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ExtInstWithForwardRefsKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UntypedGroupAsyncCopyKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TraceRayKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ExecuteCallableKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertUToAccelerationStructureKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IgnoreIntersectionKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TerminateRayKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SDot(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UDot(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SUDot(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SDotAccSat(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UDotAccSat(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SUDotAccSat(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeCooperativeMatrixKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixLoadKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixStoreKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixMulAddKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixLengthKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConstantCompositeReplicateEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SpecConstantCompositeReplicateEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CompositeConstructReplicateEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeRayQueryKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RayQueryInitializeKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RayQueryTerminateKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RayQueryGenerateIntersectionKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RayQueryConfirmIntersectionKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RayQueryProceedKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionTypeKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSampleWeightedQCOM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageBoxFilterQCOM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageBlockMatchSSDQCOM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageBlockMatchSADQCOM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::BitCastArrayQCOM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageBlockMatchWindowSSDQCOM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageBlockMatchWindowSADQCOM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageBlockMatchGatherSSDQCOM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageBlockMatchGatherSADQCOM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CompositeConstructCoopMatQCOM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CompositeExtractCoopMatQCOM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ExtractSubArrayQCOM(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupIAddNonUniformAMD(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupFAddNonUniformAMD(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupFMinNonUniformAMD(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupUMinNonUniformAMD(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupSMinNonUniformAMD(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupFMaxNonUniformAMD(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupUMaxNonUniformAMD(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupSMaxNonUniformAMD(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FragmentMaskFetchAMD(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FragmentFetchAMD(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ReadClockKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AllocateNodePayloadsAMDX(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::EnqueueNodePayloadsAMDX(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeNodePayloadArrayAMDX(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FinishWritingNodePayloadAMDX(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::NodePayloadArrayLengthAMDX(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IsNodePayloadValidAMDX(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConstantStringAMDX(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SpecConstantStringAMDX(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformQuadAllKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformQuadAnyKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeBufferEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::BufferPointerEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UntypedImageTexelPointerEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::MemberDecorateIdEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConstantSizeOfEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectRecordHitMotionNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectRecordHitWithIndexMotionNV(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::HitObjectRecordMissMotionNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetWorldToObjectNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetObjectToWorldNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetObjectRayDirectionNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetObjectRayOriginNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectTraceRayMotionNV(inst) => SpvInstEncoding::encode(inst, writer),
             Self::HitObjectGetShaderRecordBufferHandleNV(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::HitObjectGetShaderBindingTableRecordIndexNV(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::HitObjectRecordEmptyNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectTraceRayNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectRecordHitNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectRecordHitWithIndexNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectRecordMissNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectExecuteShaderNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetCurrentTimeNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetAttributesNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetHitKindNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetPrimitiveIndexNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetGeometryIndexNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetInstanceIdNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetInstanceCustomIndexNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetWorldRayDirectionNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetWorldRayOriginNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetRayTMaxNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetRayTMinNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectIsEmptyNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectIsHitNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectIsMissNV(inst) => InstEncoding::encode(inst, writer),
-            Self::ReorderThreadWithHitObjectNV(inst) => InstEncoding::encode(inst, writer),
-            Self::ReorderThreadWithHintNV(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeHitObjectNV(inst) => InstEncoding::encode(inst, writer),
-            Self::ImageSampleFootprintNV(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeVectorIdEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeVectorMatrixMulNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectRecordEmptyNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectTraceRayNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectRecordHitNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectRecordHitWithIndexNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectRecordMissNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectExecuteShaderNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetCurrentTimeNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetAttributesNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetHitKindNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetPrimitiveIndexNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetGeometryIndexNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetInstanceIdNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetInstanceCustomIndexNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetWorldRayDirectionNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetWorldRayOriginNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetRayTMaxNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetRayTMinNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectIsEmptyNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectIsHitNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectIsMissNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ReorderThreadWithHitObjectNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ReorderThreadWithHintNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeHitObjectNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ImageSampleFootprintNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeVectorIdEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeVectorMatrixMulNV(inst) => SpvInstEncoding::encode(inst, writer),
             Self::CooperativeVectorOuterProductAccumulateNV(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::CooperativeVectorReduceSumAccumulateNV(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::CooperativeVectorMatrixMulAddNV(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixConvertNV(inst) => InstEncoding::encode(inst, writer),
-            Self::EmitMeshTasksEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::SetMeshOutputsEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupNonUniformPartitionEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::WritePackedPrimitiveIndices4x8NV(inst) => InstEncoding::encode(inst, writer),
-            Self::FetchMicroTriangleVertexPositionNV(inst) => InstEncoding::encode(inst, writer),
-            Self::FetchMicroTriangleVertexBarycentricNV(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeVectorLoadNV(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeVectorStoreNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectRecordFromQueryEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectRecordMissEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectRecordMissMotionEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeVectorMatrixMulAddNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixConvertNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::EmitMeshTasksEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SetMeshOutputsEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupNonUniformPartitionEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::WritePackedPrimitiveIndices4x8NV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FetchMicroTriangleVertexPositionNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FetchMicroTriangleVertexBarycentricNV(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::CooperativeVectorLoadNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeVectorStoreNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectRecordFromQueryEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectRecordMissEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectRecordMissMotionEXT(inst) => SpvInstEncoding::encode(inst, writer),
             Self::HitObjectGetIntersectionTriangleVertexPositionsEXT(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::HitObjectGetRayFlagsEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectGetRayFlagsEXT(inst) => SpvInstEncoding::encode(inst, writer),
             Self::HitObjectSetShaderBindingTableRecordIndexEXT(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::HitObjectReorderExecuteShaderEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectTraceReorderExecuteEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectTraceMotionReorderExecuteEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeHitObjectEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::ReorderThreadWithHintEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::ReorderThreadWithHitObjectEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectTraceRayEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectTraceRayMotionEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectRecordEmptyEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectExecuteShaderEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetCurrentTimeEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetAttributesEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetHitKindEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetPrimitiveIndexEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetGeometryIndexEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetInstanceIdEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetInstanceCustomIndexEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetObjectRayOriginEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetObjectRayDirectionEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetWorldRayDirectionEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetWorldRayOriginEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetObjectToWorldEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetWorldToObjectEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetRayTMaxEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::ReportIntersectionKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::IgnoreIntersectionNV(inst) => InstEncoding::encode(inst, writer),
-            Self::TerminateRayNV(inst) => InstEncoding::encode(inst, writer),
-            Self::TraceNV(inst) => InstEncoding::encode(inst, writer),
-            Self::TraceMotionNV(inst) => InstEncoding::encode(inst, writer),
-            Self::TraceRayMotionNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectReorderExecuteShaderEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectTraceReorderExecuteEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectTraceMotionReorderExecuteEXT(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::TypeHitObjectEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ReorderThreadWithHintEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ReorderThreadWithHitObjectEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectTraceRayEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectTraceRayMotionEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectRecordEmptyEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectExecuteShaderEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetCurrentTimeEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetAttributesEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetHitKindEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetPrimitiveIndexEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetGeometryIndexEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetInstanceIdEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetInstanceCustomIndexEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetObjectRayOriginEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetObjectRayDirectionEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetWorldRayDirectionEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetWorldRayOriginEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetObjectToWorldEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetWorldToObjectEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetRayTMaxEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ReportIntersectionKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IgnoreIntersectionNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TerminateRayNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TraceNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TraceMotionNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TraceRayMotionNV(inst) => SpvInstEncoding::encode(inst, writer),
             Self::RayQueryGetIntersectionTriangleVertexPositionsKHR(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::TypeAccelerationStructureKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::ExecuteCallableNV(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryGetIntersectionClusterIdNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetClusterIdNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetRayTMinEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeAccelerationStructureKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ExecuteCallableNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionClusterIdNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetClusterIdNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetRayTMinEXT(inst) => SpvInstEncoding::encode(inst, writer),
             Self::HitObjectGetShaderBindingTableRecordIndexEXT(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::HitObjectGetShaderRecordBufferHandleEXT(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::HitObjectIsEmptyEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectIsHitEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectIsMissEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeCooperativeMatrixNV(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixLoadNV(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixStoreNV(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixMulAddNV(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixLengthNV(inst) => InstEncoding::encode(inst, writer),
-            Self::BeginInvocationInterlockEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::EndInvocationInterlockEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixReduceNV(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixLoadTensorNV(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixStoreTensorNV(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixPerElementOpNV(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeTensorLayoutNV(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeTensorViewNV(inst) => InstEncoding::encode(inst, writer),
-            Self::CreateTensorLayoutNV(inst) => InstEncoding::encode(inst, writer),
-            Self::TensorLayoutSetDimensionNV(inst) => InstEncoding::encode(inst, writer),
-            Self::TensorLayoutSetStrideNV(inst) => InstEncoding::encode(inst, writer),
-            Self::TensorLayoutSliceNV(inst) => InstEncoding::encode(inst, writer),
-            Self::TensorLayoutSetClampValueNV(inst) => InstEncoding::encode(inst, writer),
-            Self::CreateTensorViewNV(inst) => InstEncoding::encode(inst, writer),
-            Self::TensorViewSetDimensionNV(inst) => InstEncoding::encode(inst, writer),
-            Self::TensorViewSetStrideNV(inst) => InstEncoding::encode(inst, writer),
-            Self::DemoteToHelperInvocation(inst) => InstEncoding::encode(inst, writer),
-            Self::IsHelperInvocationEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::TensorViewSetClipNV(inst) => InstEncoding::encode(inst, writer),
-            Self::TensorLayoutSetBlockSizeNV(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixTransposeNV(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertUToImageNV(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertUToSamplerNV(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertImageToUNV(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertSamplerToUNV(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertUToSampledImageNV(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertSampledImageToUNV(inst) => InstEncoding::encode(inst, writer),
-            Self::SamplerImageAddressingModeNV(inst) => InstEncoding::encode(inst, writer),
-            Self::RawAccessChainNV(inst) => InstEncoding::encode(inst, writer),
+            Self::HitObjectIsEmptyEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectIsHitEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectIsMissEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeCooperativeMatrixNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixLoadNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixStoreNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixMulAddNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixLengthNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::BeginInvocationInterlockEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::EndInvocationInterlockEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixReduceNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixLoadTensorNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixStoreTensorNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixPerElementOpNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeTensorLayoutNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeTensorViewNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CreateTensorLayoutNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TensorLayoutSetDimensionNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TensorLayoutSetStrideNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TensorLayoutSliceNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TensorLayoutSetClampValueNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CreateTensorViewNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TensorViewSetDimensionNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TensorViewSetStrideNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::DemoteToHelperInvocation(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IsHelperInvocationEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TensorViewSetClipNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TensorLayoutSetBlockSizeNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixTransposeNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertUToImageNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertUToSamplerNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertImageToUNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertSamplerToUNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertUToSampledImageNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertSampledImageToUNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SamplerImageAddressingModeNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RawAccessChainNV(inst) => SpvInstEncoding::encode(inst, writer),
             Self::RayQueryGetIntersectionSpherePositionNV(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::RayQueryGetIntersectionSphereRadiusNV(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryGetIntersectionLSSPositionsNV(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryGetIntersectionLSSRadiiNV(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryGetIntersectionLSSHitValueNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetSpherePositionNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetSphereRadiusNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetLSSPositionsNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectGetLSSRadiiNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectIsSphereHitNV(inst) => InstEncoding::encode(inst, writer),
-            Self::HitObjectIsLSSHitNV(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryIsSphereHitNV(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryIsLSSHitNV(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupShuffleINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupShuffleDownINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupShuffleUpINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupShuffleXorINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupBlockReadINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupBlockWriteINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupImageBlockReadINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupImageBlockWriteINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupImageMediaBlockReadINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupImageMediaBlockWriteINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::UCountLeadingZerosINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::UCountTrailingZerosINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::AbsISubINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::AbsUSubINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::IAddSatINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::UAddSatINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::IAverageINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::UAverageINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::IAverageRoundedINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::UAverageRoundedINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ISubSatINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::USubSatINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::IMul32x16INTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::UMul32x16INTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ConstantFunctionPointerINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::FunctionPointerCallINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::AsmTargetINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::AsmINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::AsmCallINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicFMinEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::AtomicFMaxEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::AssumeTrueKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::ExpectKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::DecorateString(inst) => InstEncoding::encode(inst, writer),
-            Self::MemberDecorateString(inst) => InstEncoding::encode(inst, writer),
-            Self::VmeImageINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeVmeImageINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeAvcImePayloadINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeAvcRefPayloadINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeAvcSicPayloadINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeAvcMcePayloadINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeAvcMceResultINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeAvcImeResultINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionSphereRadiusNV(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::RayQueryGetIntersectionLSSPositionsNV(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::RayQueryGetIntersectionLSSRadiiNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionLSSHitValueNV(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::HitObjectGetSpherePositionNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetSphereRadiusNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetLSSPositionsNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectGetLSSRadiiNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectIsSphereHitNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::HitObjectIsLSSHitNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RayQueryIsSphereHitNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RayQueryIsLSSHitNV(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupShuffleINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupShuffleDownINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupShuffleUpINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupShuffleXorINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupBlockReadINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupBlockWriteINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupImageBlockReadINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupImageBlockWriteINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupImageMediaBlockReadINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupImageMediaBlockWriteINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UCountLeadingZerosINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UCountTrailingZerosINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AbsISubINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AbsUSubINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IAddSatINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UAddSatINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IAverageINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UAverageINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IAverageRoundedINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UAverageRoundedINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ISubSatINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::USubSatINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::IMul32x16INTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UMul32x16INTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConstantFunctionPointerINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FunctionPointerCallINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AsmTargetINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AsmINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AsmCallINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicFMinEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AtomicFMaxEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AssumeTrueKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ExpectKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::DecorateString(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::MemberDecorateString(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::VmeImageINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeVmeImageINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeAvcImePayloadINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeAvcRefPayloadINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeAvcSicPayloadINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeAvcMcePayloadINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeAvcMceResultINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeAvcImeResultINTEL(inst) => SpvInstEncoding::encode(inst, writer),
             Self::TypeAvcImeResultSingleReferenceStreamoutINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::TypeAvcImeResultDualReferenceStreamoutINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::TypeAvcImeSingleReferenceStreaminINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::TypeAvcImeDualReferenceStreaminINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeAvcRefResultINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeAvcSicResultINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::TypeAvcImeDualReferenceStreaminINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::TypeAvcRefResultINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeAvcSicResultINTEL(inst) => SpvInstEncoding::encode(inst, writer),
             Self::SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceGetDefaultInterShapePenaltyINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceSetInterShapePenaltyINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceSetInterDirectionPenaltyINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceSetMotionVectorCostFunctionINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::SubgroupAvcMceSetAcOnlyHaarINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcMceSetAcOnlyHaarINTEL(inst) => SpvInstEncoding::encode(inst, writer),
             Self::SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceConvertToImePayloadINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::SubgroupAvcMceConvertToImeResultINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcMceConvertToImeResultINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
             Self::SubgroupAvcMceConvertToRefPayloadINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::SubgroupAvcMceConvertToRefResultINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcMceConvertToRefResultINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
             Self::SubgroupAvcMceConvertToSicPayloadINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::SubgroupAvcMceConvertToSicResultINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupAvcMceGetMotionVectorsINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcMceConvertToSicResultINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetMotionVectorsINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
             Self::SubgroupAvcMceGetInterDistortionsINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceGetBestInterDistortionsINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::SubgroupAvcMceGetInterMajorShapeINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupAvcMceGetInterMinorShapeINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupAvcMceGetInterDirectionsINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcMceGetInterMajorShapeINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetInterMinorShapeINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcMceGetInterDirectionsINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
             Self::SubgroupAvcMceGetInterMotionVectorCountINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceGetInterReferenceIdsINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::SubgroupAvcImeInitializeINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupAvcImeSetSingleReferenceINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupAvcImeSetDualReferenceINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupAvcImeRefWindowSizeINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupAvcImeAdjustRefOffsetINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcImeInitializeINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupAvcImeSetSingleReferenceINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeSetDualReferenceINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcImeRefWindowSizeINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupAvcImeAdjustRefOffsetINTEL(inst) => SpvInstEncoding::encode(inst, writer),
             Self::SubgroupAvcImeConvertToMcePayloadINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeSetMaxMotionVectorCountINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeSetUnidirectionalMixDisableINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::SubgroupAvcImeSetWeightedSadINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcImeSetWeightedSadINTEL(inst) => SpvInstEncoding::encode(inst, writer),
             Self::SubgroupAvcImeEvaluateWithSingleReferenceINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::SubgroupAvcImeConvertToMceResultINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcImeConvertToMceResultINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
             Self::SubgroupAvcImeGetSingleReferenceStreaminINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeGetDualReferenceStreaminINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeStripSingleReferenceStreamoutINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeStripDualReferenceStreamoutINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::SubgroupAvcImeGetBorderReachedINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcImeGetBorderReachedINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
             Self::SubgroupAvcImeGetTruncatedSearchIndicationINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::SubgroupAvcFmeInitializeINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupAvcBmeInitializeINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcFmeInitializeINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupAvcBmeInitializeINTEL(inst) => SpvInstEncoding::encode(inst, writer),
             Self::SubgroupAvcRefConvertToMcePayloadINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcRefSetBidirectionalMixDisableINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcRefSetBilinearFilterEnableINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcRefEvaluateWithSingleReferenceINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcRefEvaluateWithDualReferenceINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcRefEvaluateWithMultiReferenceINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::SubgroupAvcRefConvertToMceResultINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupAvcSicInitializeINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupAvcSicConfigureSkcINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupAvcSicConfigureIpeLumaINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcRefConvertToMceResultINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicInitializeINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupAvcSicConfigureSkcINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupAvcSicConfigureIpeLumaINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
             Self::SubgroupAvcSicConfigureIpeLumaChromaINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcSicGetMotionVectorMaskINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcSicConvertToMcePayloadINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcSicSetIntraLumaShapePenaltyINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcSicSetBilinearFilterEnableINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcSicSetSkcForwardTransformEnableINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcSicSetBlockBasedRawSkipSadINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::SubgroupAvcSicEvaluateIpeINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcSicEvaluateIpeINTEL(inst) => SpvInstEncoding::encode(inst, writer),
             Self::SubgroupAvcSicEvaluateWithSingleReferenceINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcSicEvaluateWithDualReferenceINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcSicEvaluateWithMultiReferenceINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::SubgroupAvcSicConvertToMceResultINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupAvcSicGetIpeLumaShapeINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcSicConvertToMceResultINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::SubgroupAvcSicGetIpeLumaShapeINTEL(inst) => SpvInstEncoding::encode(inst, writer),
             Self::SubgroupAvcSicGetBestIpeLumaDistortionINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcSicGetBestIpeChromaDistortionINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcSicGetPackedIpeLumaModesINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::SubgroupAvcSicGetIpeChromaModeINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcSicGetIpeChromaModeINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
             Self::SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::SubgroupAvcSicGetInterRawSadsINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::VariableLengthArrayINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SaveMemoryINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::RestoreMemoryINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatSinCosPiALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatCastALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatCastFromIntALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatCastToIntALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatAddALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatSubALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatMulALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatDivALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatGTALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatGEALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatLTALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatLEALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatEQALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatRecipALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatRSqrtALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatCbrtALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatHypotALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatSqrtALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatLogINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatLog2INTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatLog10INTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatLog1pINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatExpINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatExp2INTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatExp10INTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatExpm1INTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatSinINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatCosINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatSinCosINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatSinPiINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatCosPiINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatASinINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatASinPiINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatACosINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatACosPiINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatATanINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatATanPiINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatATan2INTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatPowINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatPowRINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArbitraryFloatPowNINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::LoopControlINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::AliasDomainDeclINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::AliasScopeDeclINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::AliasScopeListDeclINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::FixedSqrtALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::FixedRecipALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::FixedRsqrtALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::FixedSinALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::FixedCosALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::FixedSinCosALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::FixedSinPiALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::FixedCosPiALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::FixedSinCosPiALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::FixedLogALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::FixedExpALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::PtrCastToCrossWorkgroupALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::CrossWorkgroupCastToPtrALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::ReadPipeBlockingALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::WritePipeBlockingALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::FPGARegALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryGetRayTMinKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryGetRayFlagsKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryGetIntersectionTKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::SubgroupAvcSicGetInterRawSadsINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::VariableLengthArrayINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SaveMemoryINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RestoreMemoryINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatSinCosPiALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatCastALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatCastFromIntALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatCastToIntALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatAddALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatSubALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatMulALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatDivALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatGTALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatGEALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatLTALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatLEALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatEQALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatRecipALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatRSqrtALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatCbrtALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatHypotALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatSqrtALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatLogINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatLog2INTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatLog10INTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatLog1pINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatExpINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatExp2INTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatExp10INTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatExpm1INTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatSinINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatCosINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatSinCosINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatSinPiINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatCosPiINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatASinINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatASinPiINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatACosINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatACosPiINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatATanINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatATanPiINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatATan2INTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatPowINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatPowRINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArbitraryFloatPowNINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::LoopControlINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AliasDomainDeclINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AliasScopeDeclINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::AliasScopeListDeclINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FixedSqrtALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FixedRecipALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FixedRsqrtALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FixedSinALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FixedCosALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FixedSinCosALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FixedSinPiALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FixedCosPiALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FixedSinCosPiALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FixedLogALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FixedExpALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::PtrCastToCrossWorkgroupALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::CrossWorkgroupCastToPtrALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ReadPipeBlockingALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::WritePipeBlockingALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::FPGARegALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RayQueryGetRayTMinKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RayQueryGetRayFlagsKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionTKHR(inst) => SpvInstEncoding::encode(inst, writer),
             Self::RayQueryGetIntersectionInstanceCustomIndexKHR(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::RayQueryGetIntersectionInstanceIdKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionInstanceIdKHR(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
             Self::RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::RayQueryGetIntersectionGeometryIndexKHR(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::RayQueryGetIntersectionPrimitiveIndexKHR(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::RayQueryGetIntersectionBarycentricsKHR(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::RayQueryGetIntersectionFrontFaceKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetIntersectionFrontFaceKHR(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
             Self::RayQueryGetIntersectionCandidateAABBOpaqueKHR(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::RayQueryGetIntersectionObjectRayDirectionKHR(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::RayQueryGetIntersectionObjectRayOriginKHR(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::RayQueryGetWorldRayDirectionKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::RayQueryGetWorldRayOriginKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::RayQueryGetWorldRayDirectionKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RayQueryGetWorldRayOriginKHR(inst) => SpvInstEncoding::encode(inst, writer),
             Self::RayQueryGetIntersectionObjectToWorldKHR(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
             Self::RayQueryGetIntersectionWorldToObjectKHR(inst) => {
-                InstEncoding::encode(inst, writer)
+                SpvInstEncoding::encode(inst, writer)
             }
-            Self::AtomicFAddEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeBufferSurfaceINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeStructContinuedINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ConstantCompositeContinuedINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SpecConstantCompositeContinuedINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::CompositeConstructContinuedINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertFToBF16INTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertBF16ToFINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ControlBarrierArriveINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ControlBarrierWaitINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ArithmeticFenceEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::TaskSequenceCreateALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::TaskSequenceAsyncALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::TaskSequenceGetALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::TaskSequenceReleaseALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::TypeTaskSequenceALTERA(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupBlockPrefetchINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::Subgroup2DBlockLoadINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::Subgroup2DBlockLoadTransformINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::Subgroup2DBlockLoadTransposeINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::Subgroup2DBlockPrefetchINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::Subgroup2DBlockStoreINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SubgroupMatrixMultiplyAccumulateINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::BitwiseFunctionINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::UntypedVariableLengthArrayINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ConditionalExtensionINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ConditionalEntryPointINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ConditionalCapabilityINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SpecConstantTargetINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SpecConstantArchitectureINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::SpecConstantCapabilitiesINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ConditionalCopyObjectINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupIMulKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupFMulKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupBitwiseAndKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupBitwiseOrKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupBitwiseXorKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupLogicalAndKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupLogicalOrKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::GroupLogicalXorKHR(inst) => InstEncoding::encode(inst, writer),
-            Self::RoundFToTF32INTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::MaskedGatherINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::MaskedScatterINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertHandleToImageINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertHandleToSamplerINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ConvertHandleToSampledImageINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::AtomicFAddEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeBufferSurfaceINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeStructContinuedINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConstantCompositeContinuedINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SpecConstantCompositeContinuedINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::CompositeConstructContinuedINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertFToBF16INTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertBF16ToFINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ControlBarrierArriveINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ControlBarrierWaitINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ArithmeticFenceEXT(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TaskSequenceCreateALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TaskSequenceAsyncALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TaskSequenceGetALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TaskSequenceReleaseALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::TypeTaskSequenceALTERA(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupBlockPrefetchINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Subgroup2DBlockLoadINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Subgroup2DBlockLoadTransformINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Subgroup2DBlockLoadTransposeINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Subgroup2DBlockPrefetchINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::Subgroup2DBlockStoreINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SubgroupMatrixMultiplyAccumulateINTEL(inst) => {
+                SpvInstEncoding::encode(inst, writer)
+            }
+            Self::BitwiseFunctionINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::UntypedVariableLengthArrayINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConditionalExtensionINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConditionalEntryPointINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConditionalCapabilityINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SpecConstantTargetINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SpecConstantArchitectureINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::SpecConstantCapabilitiesINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConditionalCopyObjectINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupIMulKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupFMulKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupBitwiseAndKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupBitwiseOrKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupBitwiseXorKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupLogicalAndKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupLogicalOrKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::GroupLogicalXorKHR(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::RoundFToTF32INTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::MaskedGatherINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::MaskedScatterINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertHandleToImageINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertHandleToSamplerINTEL(inst) => SpvInstEncoding::encode(inst, writer),
+            Self::ConvertHandleToSampledImageINTEL(inst) => SpvInstEncoding::encode(inst, writer),
         }
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
@@ -4862,4129 +5042,4449 @@ impl InstEncoding for CoreInstSet {
         let opcode = reader.opcode();
         Ok(
             match opcode {
-                0u16 => Self::Nop(<OpNop as InstEncoding>::decode(reader)?),
-                1u16 => Self::Undef(<OpUndef as InstEncoding>::decode(reader)?),
+                0u16 => Self::Nop(<OpNop as SpvInstEncoding>::decode(reader)?),
+                1u16 => Self::Undef(<OpUndef as SpvInstEncoding>::decode(reader)?),
                 2u16 => {
                     Self::SourceContinued(
-                        <OpSourceContinued as InstEncoding>::decode(reader)?,
+                        <OpSourceContinued as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                3u16 => Self::Source(<OpSource as InstEncoding>::decode(reader)?),
+                3u16 => Self::Source(<OpSource as SpvInstEncoding>::decode(reader)?),
                 4u16 => {
                     Self::SourceExtension(
-                        <OpSourceExtension as InstEncoding>::decode(reader)?,
+                        <OpSourceExtension as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                5u16 => Self::Name(<OpName as InstEncoding>::decode(reader)?),
-                6u16 => Self::MemberName(<OpMemberName as InstEncoding>::decode(reader)?),
-                7u16 => Self::String(<OpString as InstEncoding>::decode(reader)?),
-                8u16 => Self::Line(<OpLine as InstEncoding>::decode(reader)?),
-                10u16 => Self::Extension(<OpExtension as InstEncoding>::decode(reader)?),
+                5u16 => Self::Name(<OpName as SpvInstEncoding>::decode(reader)?),
+                6u16 => {
+                    Self::MemberName(<OpMemberName as SpvInstEncoding>::decode(reader)?)
+                }
+                7u16 => Self::String(<OpString as SpvInstEncoding>::decode(reader)?),
+                8u16 => Self::Line(<OpLine as SpvInstEncoding>::decode(reader)?),
+                10u16 => {
+                    Self::Extension(<OpExtension as SpvInstEncoding>::decode(reader)?)
+                }
                 11u16 => {
                     Self::ExtInstImport(
-                        <OpExtInstImport as InstEncoding>::decode(reader)?,
+                        <OpExtInstImport as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                12u16 => Self::ExtInst(<OpExtInst as InstEncoding>::decode(reader)?),
+                12u16 => Self::ExtInst(<OpExtInst as SpvInstEncoding>::decode(reader)?),
                 14u16 => {
-                    Self::MemoryModel(<OpMemoryModel as InstEncoding>::decode(reader)?)
+                    Self::MemoryModel(
+                        <OpMemoryModel as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 15u16 => {
-                    Self::EntryPoint(<OpEntryPoint as InstEncoding>::decode(reader)?)
+                    Self::EntryPoint(<OpEntryPoint as SpvInstEncoding>::decode(reader)?)
                 }
                 16u16 => {
                     Self::ExecutionMode(
-                        <OpExecutionMode as InstEncoding>::decode(reader)?,
+                        <OpExecutionMode as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 17u16 => {
-                    Self::Capability(<OpCapability as InstEncoding>::decode(reader)?)
+                    Self::Capability(<OpCapability as SpvInstEncoding>::decode(reader)?)
                 }
-                19u16 => Self::TypeVoid(<OpTypeVoid as InstEncoding>::decode(reader)?),
-                20u16 => Self::TypeBool(<OpTypeBool as InstEncoding>::decode(reader)?),
-                21u16 => Self::TypeInt(<OpTypeInt as InstEncoding>::decode(reader)?),
-                22u16 => Self::TypeFloat(<OpTypeFloat as InstEncoding>::decode(reader)?),
+                19u16 => Self::TypeVoid(<OpTypeVoid as SpvInstEncoding>::decode(reader)?),
+                20u16 => Self::TypeBool(<OpTypeBool as SpvInstEncoding>::decode(reader)?),
+                21u16 => Self::TypeInt(<OpTypeInt as SpvInstEncoding>::decode(reader)?),
+                22u16 => {
+                    Self::TypeFloat(<OpTypeFloat as SpvInstEncoding>::decode(reader)?)
+                }
                 23u16 => {
-                    Self::TypeVector(<OpTypeVector as InstEncoding>::decode(reader)?)
+                    Self::TypeVector(<OpTypeVector as SpvInstEncoding>::decode(reader)?)
                 }
                 24u16 => {
-                    Self::TypeMatrix(<OpTypeMatrix as InstEncoding>::decode(reader)?)
+                    Self::TypeMatrix(<OpTypeMatrix as SpvInstEncoding>::decode(reader)?)
                 }
-                25u16 => Self::TypeImage(<OpTypeImage as InstEncoding>::decode(reader)?),
+                25u16 => {
+                    Self::TypeImage(<OpTypeImage as SpvInstEncoding>::decode(reader)?)
+                }
                 26u16 => {
-                    Self::TypeSampler(<OpTypeSampler as InstEncoding>::decode(reader)?)
+                    Self::TypeSampler(
+                        <OpTypeSampler as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 27u16 => {
                     Self::TypeSampledImage(
-                        <OpTypeSampledImage as InstEncoding>::decode(reader)?,
+                        <OpTypeSampledImage as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                28u16 => Self::TypeArray(<OpTypeArray as InstEncoding>::decode(reader)?),
+                28u16 => {
+                    Self::TypeArray(<OpTypeArray as SpvInstEncoding>::decode(reader)?)
+                }
                 29u16 => {
                     Self::TypeRuntimeArray(
-                        <OpTypeRuntimeArray as InstEncoding>::decode(reader)?,
+                        <OpTypeRuntimeArray as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 30u16 => {
-                    Self::TypeStruct(<OpTypeStruct as InstEncoding>::decode(reader)?)
+                    Self::TypeStruct(<OpTypeStruct as SpvInstEncoding>::decode(reader)?)
                 }
                 31u16 => {
-                    Self::TypeOpaque(<OpTypeOpaque as InstEncoding>::decode(reader)?)
+                    Self::TypeOpaque(<OpTypeOpaque as SpvInstEncoding>::decode(reader)?)
                 }
                 32u16 => {
-                    Self::TypePointer(<OpTypePointer as InstEncoding>::decode(reader)?)
+                    Self::TypePointer(
+                        <OpTypePointer as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 33u16 => {
-                    Self::TypeFunction(<OpTypeFunction as InstEncoding>::decode(reader)?)
+                    Self::TypeFunction(
+                        <OpTypeFunction as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
-                34u16 => Self::TypeEvent(<OpTypeEvent as InstEncoding>::decode(reader)?),
+                34u16 => {
+                    Self::TypeEvent(<OpTypeEvent as SpvInstEncoding>::decode(reader)?)
+                }
                 35u16 => {
                     Self::TypeDeviceEvent(
-                        <OpTypeDeviceEvent as InstEncoding>::decode(reader)?,
+                        <OpTypeDeviceEvent as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 36u16 => {
                     Self::TypeReserveId(
-                        <OpTypeReserveId as InstEncoding>::decode(reader)?,
+                        <OpTypeReserveId as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                37u16 => Self::TypeQueue(<OpTypeQueue as InstEncoding>::decode(reader)?),
-                38u16 => Self::TypePipe(<OpTypePipe as InstEncoding>::decode(reader)?),
+                37u16 => {
+                    Self::TypeQueue(<OpTypeQueue as SpvInstEncoding>::decode(reader)?)
+                }
+                38u16 => Self::TypePipe(<OpTypePipe as SpvInstEncoding>::decode(reader)?),
                 39u16 => {
                     Self::TypeForwardPointer(
-                        <OpTypeForwardPointer as InstEncoding>::decode(reader)?,
+                        <OpTypeForwardPointer as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 41u16 => {
-                    Self::ConstantTrue(<OpConstantTrue as InstEncoding>::decode(reader)?)
+                    Self::ConstantTrue(
+                        <OpConstantTrue as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 42u16 => {
                     Self::ConstantFalse(
-                        <OpConstantFalse as InstEncoding>::decode(reader)?,
+                        <OpConstantFalse as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                43u16 => Self::Constant(<OpConstant as InstEncoding>::decode(reader)?),
+                43u16 => Self::Constant(<OpConstant as SpvInstEncoding>::decode(reader)?),
                 44u16 => {
                     Self::ConstantComposite(
-                        <OpConstantComposite as InstEncoding>::decode(reader)?,
+                        <OpConstantComposite as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 45u16 => {
                     Self::ConstantSampler(
-                        <OpConstantSampler as InstEncoding>::decode(reader)?,
+                        <OpConstantSampler as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 46u16 => {
-                    Self::ConstantNull(<OpConstantNull as InstEncoding>::decode(reader)?)
+                    Self::ConstantNull(
+                        <OpConstantNull as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 48u16 => {
                     Self::SpecConstantTrue(
-                        <OpSpecConstantTrue as InstEncoding>::decode(reader)?,
+                        <OpSpecConstantTrue as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 49u16 => {
                     Self::SpecConstantFalse(
-                        <OpSpecConstantFalse as InstEncoding>::decode(reader)?,
+                        <OpSpecConstantFalse as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 50u16 => {
-                    Self::SpecConstant(<OpSpecConstant as InstEncoding>::decode(reader)?)
+                    Self::SpecConstant(
+                        <OpSpecConstant as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 51u16 => {
                     Self::SpecConstantComposite(
-                        <OpSpecConstantComposite as InstEncoding>::decode(reader)?,
+                        <OpSpecConstantComposite as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 52u16 => {
                     Self::SpecConstantOp(
-                        <OpSpecConstantOp as InstEncoding>::decode(reader)?,
+                        <OpSpecConstantOp as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                54u16 => Self::Function(<OpFunction as InstEncoding>::decode(reader)?),
+                54u16 => Self::Function(<OpFunction as SpvInstEncoding>::decode(reader)?),
                 55u16 => {
                     Self::FunctionParameter(
-                        <OpFunctionParameter as InstEncoding>::decode(reader)?,
+                        <OpFunctionParameter as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 56u16 => {
-                    Self::FunctionEnd(<OpFunctionEnd as InstEncoding>::decode(reader)?)
-                }
-                57u16 => {
-                    Self::FunctionCall(<OpFunctionCall as InstEncoding>::decode(reader)?)
-                }
-                59u16 => Self::Variable(<OpVariable as InstEncoding>::decode(reader)?),
-                60u16 => {
-                    Self::ImageTexelPointer(
-                        <OpImageTexelPointer as InstEncoding>::decode(reader)?,
+                    Self::FunctionEnd(
+                        <OpFunctionEnd as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                61u16 => Self::Load(<OpLoad as InstEncoding>::decode(reader)?),
-                62u16 => Self::Store(<OpStore as InstEncoding>::decode(reader)?),
+                57u16 => {
+                    Self::FunctionCall(
+                        <OpFunctionCall as SpvInstEncoding>::decode(reader)?,
+                    )
+                }
+                59u16 => Self::Variable(<OpVariable as SpvInstEncoding>::decode(reader)?),
+                60u16 => {
+                    Self::ImageTexelPointer(
+                        <OpImageTexelPointer as SpvInstEncoding>::decode(reader)?,
+                    )
+                }
+                61u16 => Self::Load(<OpLoad as SpvInstEncoding>::decode(reader)?),
+                62u16 => Self::Store(<OpStore as SpvInstEncoding>::decode(reader)?),
                 63u16 => {
-                    Self::CopyMemory(<OpCopyMemory as InstEncoding>::decode(reader)?)
+                    Self::CopyMemory(<OpCopyMemory as SpvInstEncoding>::decode(reader)?)
                 }
                 64u16 => {
                     Self::CopyMemorySized(
-                        <OpCopyMemorySized as InstEncoding>::decode(reader)?,
+                        <OpCopyMemorySized as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 65u16 => {
-                    Self::AccessChain(<OpAccessChain as InstEncoding>::decode(reader)?)
+                    Self::AccessChain(
+                        <OpAccessChain as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 66u16 => {
                     Self::InBoundsAccessChain(
-                        <OpInBoundsAccessChain as InstEncoding>::decode(reader)?,
+                        <OpInBoundsAccessChain as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 67u16 => {
                     Self::PtrAccessChain(
-                        <OpPtrAccessChain as InstEncoding>::decode(reader)?,
+                        <OpPtrAccessChain as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 68u16 => {
-                    Self::ArrayLength(<OpArrayLength as InstEncoding>::decode(reader)?)
+                    Self::ArrayLength(
+                        <OpArrayLength as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 69u16 => {
                     Self::GenericPtrMemSemantics(
-                        <OpGenericPtrMemSemantics as InstEncoding>::decode(reader)?,
+                        <OpGenericPtrMemSemantics as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 70u16 => {
                     Self::InBoundsPtrAccessChain(
-                        <OpInBoundsPtrAccessChain as InstEncoding>::decode(reader)?,
+                        <OpInBoundsPtrAccessChain as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                71u16 => Self::Decorate(<OpDecorate as InstEncoding>::decode(reader)?),
+                71u16 => Self::Decorate(<OpDecorate as SpvInstEncoding>::decode(reader)?),
                 72u16 => {
                     Self::MemberDecorate(
-                        <OpMemberDecorate as InstEncoding>::decode(reader)?,
+                        <OpMemberDecorate as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 73u16 => {
                     Self::DecorationGroup(
-                        <OpDecorationGroup as InstEncoding>::decode(reader)?,
+                        <OpDecorationGroup as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 74u16 => {
                     Self::GroupDecorate(
-                        <OpGroupDecorate as InstEncoding>::decode(reader)?,
+                        <OpGroupDecorate as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 75u16 => {
                     Self::GroupMemberDecorate(
-                        <OpGroupMemberDecorate as InstEncoding>::decode(reader)?,
+                        <OpGroupMemberDecorate as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 77u16 => {
                     Self::VectorExtractDynamic(
-                        <OpVectorExtractDynamic as InstEncoding>::decode(reader)?,
+                        <OpVectorExtractDynamic as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 78u16 => {
                     Self::VectorInsertDynamic(
-                        <OpVectorInsertDynamic as InstEncoding>::decode(reader)?,
+                        <OpVectorInsertDynamic as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 79u16 => {
                     Self::VectorShuffle(
-                        <OpVectorShuffle as InstEncoding>::decode(reader)?,
+                        <OpVectorShuffle as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 80u16 => {
                     Self::CompositeConstruct(
-                        <OpCompositeConstruct as InstEncoding>::decode(reader)?,
+                        <OpCompositeConstruct as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 81u16 => {
                     Self::CompositeExtract(
-                        <OpCompositeExtract as InstEncoding>::decode(reader)?,
+                        <OpCompositeExtract as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 82u16 => {
                     Self::CompositeInsert(
-                        <OpCompositeInsert as InstEncoding>::decode(reader)?,
+                        <OpCompositeInsert as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 83u16 => {
-                    Self::CopyObject(<OpCopyObject as InstEncoding>::decode(reader)?)
+                    Self::CopyObject(<OpCopyObject as SpvInstEncoding>::decode(reader)?)
                 }
-                84u16 => Self::Transpose(<OpTranspose as InstEncoding>::decode(reader)?),
+                84u16 => {
+                    Self::Transpose(<OpTranspose as SpvInstEncoding>::decode(reader)?)
+                }
                 86u16 => {
-                    Self::SampledImage(<OpSampledImage as InstEncoding>::decode(reader)?)
+                    Self::SampledImage(
+                        <OpSampledImage as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 87u16 => {
                     Self::ImageSampleImplicitLod(
-                        <OpImageSampleImplicitLod as InstEncoding>::decode(reader)?,
+                        <OpImageSampleImplicitLod as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 88u16 => {
                     Self::ImageSampleExplicitLod(
-                        <OpImageSampleExplicitLod as InstEncoding>::decode(reader)?,
+                        <OpImageSampleExplicitLod as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 89u16 => {
                     Self::ImageSampleDrefImplicitLod(
-                        <OpImageSampleDrefImplicitLod as InstEncoding>::decode(reader)?,
+                        <OpImageSampleDrefImplicitLod as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 90u16 => {
                     Self::ImageSampleDrefExplicitLod(
-                        <OpImageSampleDrefExplicitLod as InstEncoding>::decode(reader)?,
+                        <OpImageSampleDrefExplicitLod as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 91u16 => {
                     Self::ImageSampleProjImplicitLod(
-                        <OpImageSampleProjImplicitLod as InstEncoding>::decode(reader)?,
+                        <OpImageSampleProjImplicitLod as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 92u16 => {
                     Self::ImageSampleProjExplicitLod(
-                        <OpImageSampleProjExplicitLod as InstEncoding>::decode(reader)?,
+                        <OpImageSampleProjExplicitLod as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 93u16 => {
                     Self::ImageSampleProjDrefImplicitLod(
-                        <OpImageSampleProjDrefImplicitLod as InstEncoding>::decode(
+                        <OpImageSampleProjDrefImplicitLod as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 94u16 => {
                     Self::ImageSampleProjDrefExplicitLod(
-                        <OpImageSampleProjDrefExplicitLod as InstEncoding>::decode(
+                        <OpImageSampleProjDrefExplicitLod as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 95u16 => {
-                    Self::ImageFetch(<OpImageFetch as InstEncoding>::decode(reader)?)
+                    Self::ImageFetch(<OpImageFetch as SpvInstEncoding>::decode(reader)?)
                 }
                 96u16 => {
-                    Self::ImageGather(<OpImageGather as InstEncoding>::decode(reader)?)
+                    Self::ImageGather(
+                        <OpImageGather as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 97u16 => {
                     Self::ImageDrefGather(
-                        <OpImageDrefGather as InstEncoding>::decode(reader)?,
+                        <OpImageDrefGather as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                98u16 => Self::ImageRead(<OpImageRead as InstEncoding>::decode(reader)?),
-                99u16 => {
-                    Self::ImageWrite(<OpImageWrite as InstEncoding>::decode(reader)?)
+                98u16 => {
+                    Self::ImageRead(<OpImageRead as SpvInstEncoding>::decode(reader)?)
                 }
-                100u16 => Self::Image(<OpImage as InstEncoding>::decode(reader)?),
+                99u16 => {
+                    Self::ImageWrite(<OpImageWrite as SpvInstEncoding>::decode(reader)?)
+                }
+                100u16 => Self::Image(<OpImage as SpvInstEncoding>::decode(reader)?),
                 101u16 => {
                     Self::ImageQueryFormat(
-                        <OpImageQueryFormat as InstEncoding>::decode(reader)?,
+                        <OpImageQueryFormat as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 102u16 => {
                     Self::ImageQueryOrder(
-                        <OpImageQueryOrder as InstEncoding>::decode(reader)?,
+                        <OpImageQueryOrder as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 103u16 => {
                     Self::ImageQuerySizeLod(
-                        <OpImageQuerySizeLod as InstEncoding>::decode(reader)?,
+                        <OpImageQuerySizeLod as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 104u16 => {
                     Self::ImageQuerySize(
-                        <OpImageQuerySize as InstEncoding>::decode(reader)?,
+                        <OpImageQuerySize as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 105u16 => {
                     Self::ImageQueryLod(
-                        <OpImageQueryLod as InstEncoding>::decode(reader)?,
+                        <OpImageQueryLod as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 106u16 => {
                     Self::ImageQueryLevels(
-                        <OpImageQueryLevels as InstEncoding>::decode(reader)?,
+                        <OpImageQueryLevels as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 107u16 => {
                     Self::ImageQuerySamples(
-                        <OpImageQuerySamples as InstEncoding>::decode(reader)?,
+                        <OpImageQuerySamples as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 109u16 => {
-                    Self::ConvertFToU(<OpConvertFToU as InstEncoding>::decode(reader)?)
+                    Self::ConvertFToU(
+                        <OpConvertFToU as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 110u16 => {
-                    Self::ConvertFToS(<OpConvertFToS as InstEncoding>::decode(reader)?)
+                    Self::ConvertFToS(
+                        <OpConvertFToS as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 111u16 => {
-                    Self::ConvertSToF(<OpConvertSToF as InstEncoding>::decode(reader)?)
+                    Self::ConvertSToF(
+                        <OpConvertSToF as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 112u16 => {
-                    Self::ConvertUToF(<OpConvertUToF as InstEncoding>::decode(reader)?)
+                    Self::ConvertUToF(
+                        <OpConvertUToF as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
-                113u16 => Self::UConvert(<OpUConvert as InstEncoding>::decode(reader)?),
-                114u16 => Self::SConvert(<OpSConvert as InstEncoding>::decode(reader)?),
-                115u16 => Self::FConvert(<OpFConvert as InstEncoding>::decode(reader)?),
+                113u16 => {
+                    Self::UConvert(<OpUConvert as SpvInstEncoding>::decode(reader)?)
+                }
+                114u16 => {
+                    Self::SConvert(<OpSConvert as SpvInstEncoding>::decode(reader)?)
+                }
+                115u16 => {
+                    Self::FConvert(<OpFConvert as SpvInstEncoding>::decode(reader)?)
+                }
                 116u16 => {
                     Self::QuantizeToF16(
-                        <OpQuantizeToF16 as InstEncoding>::decode(reader)?,
+                        <OpQuantizeToF16 as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 117u16 => {
                     Self::ConvertPtrToU(
-                        <OpConvertPtrToU as InstEncoding>::decode(reader)?,
+                        <OpConvertPtrToU as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 118u16 => {
                     Self::SatConvertSToU(
-                        <OpSatConvertSToU as InstEncoding>::decode(reader)?,
+                        <OpSatConvertSToU as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 119u16 => {
                     Self::SatConvertUToS(
-                        <OpSatConvertUToS as InstEncoding>::decode(reader)?,
+                        <OpSatConvertUToS as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 120u16 => {
                     Self::ConvertUToPtr(
-                        <OpConvertUToPtr as InstEncoding>::decode(reader)?,
+                        <OpConvertUToPtr as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 121u16 => {
                     Self::PtrCastToGeneric(
-                        <OpPtrCastToGeneric as InstEncoding>::decode(reader)?,
+                        <OpPtrCastToGeneric as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 122u16 => {
                     Self::GenericCastToPtr(
-                        <OpGenericCastToPtr as InstEncoding>::decode(reader)?,
+                        <OpGenericCastToPtr as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 123u16 => {
                     Self::GenericCastToPtrExplicit(
-                        <OpGenericCastToPtrExplicit as InstEncoding>::decode(reader)?,
+                        <OpGenericCastToPtrExplicit as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                124u16 => Self::Bitcast(<OpBitcast as InstEncoding>::decode(reader)?),
-                126u16 => Self::SNegate(<OpSNegate as InstEncoding>::decode(reader)?),
-                127u16 => Self::FNegate(<OpFNegate as InstEncoding>::decode(reader)?),
-                128u16 => Self::IAdd(<OpIAdd as InstEncoding>::decode(reader)?),
-                129u16 => Self::FAdd(<OpFAdd as InstEncoding>::decode(reader)?),
-                130u16 => Self::ISub(<OpISub as InstEncoding>::decode(reader)?),
-                131u16 => Self::FSub(<OpFSub as InstEncoding>::decode(reader)?),
-                132u16 => Self::IMul(<OpIMul as InstEncoding>::decode(reader)?),
-                133u16 => Self::FMul(<OpFMul as InstEncoding>::decode(reader)?),
-                134u16 => Self::UDiv(<OpUDiv as InstEncoding>::decode(reader)?),
-                135u16 => Self::SDiv(<OpSDiv as InstEncoding>::decode(reader)?),
-                136u16 => Self::FDiv(<OpFDiv as InstEncoding>::decode(reader)?),
-                137u16 => Self::UMod(<OpUMod as InstEncoding>::decode(reader)?),
-                138u16 => Self::SRem(<OpSRem as InstEncoding>::decode(reader)?),
-                139u16 => Self::SMod(<OpSMod as InstEncoding>::decode(reader)?),
-                140u16 => Self::FRem(<OpFRem as InstEncoding>::decode(reader)?),
-                141u16 => Self::FMod(<OpFMod as InstEncoding>::decode(reader)?),
+                124u16 => Self::Bitcast(<OpBitcast as SpvInstEncoding>::decode(reader)?),
+                126u16 => Self::SNegate(<OpSNegate as SpvInstEncoding>::decode(reader)?),
+                127u16 => Self::FNegate(<OpFNegate as SpvInstEncoding>::decode(reader)?),
+                128u16 => Self::IAdd(<OpIAdd as SpvInstEncoding>::decode(reader)?),
+                129u16 => Self::FAdd(<OpFAdd as SpvInstEncoding>::decode(reader)?),
+                130u16 => Self::ISub(<OpISub as SpvInstEncoding>::decode(reader)?),
+                131u16 => Self::FSub(<OpFSub as SpvInstEncoding>::decode(reader)?),
+                132u16 => Self::IMul(<OpIMul as SpvInstEncoding>::decode(reader)?),
+                133u16 => Self::FMul(<OpFMul as SpvInstEncoding>::decode(reader)?),
+                134u16 => Self::UDiv(<OpUDiv as SpvInstEncoding>::decode(reader)?),
+                135u16 => Self::SDiv(<OpSDiv as SpvInstEncoding>::decode(reader)?),
+                136u16 => Self::FDiv(<OpFDiv as SpvInstEncoding>::decode(reader)?),
+                137u16 => Self::UMod(<OpUMod as SpvInstEncoding>::decode(reader)?),
+                138u16 => Self::SRem(<OpSRem as SpvInstEncoding>::decode(reader)?),
+                139u16 => Self::SMod(<OpSMod as SpvInstEncoding>::decode(reader)?),
+                140u16 => Self::FRem(<OpFRem as SpvInstEncoding>::decode(reader)?),
+                141u16 => Self::FMod(<OpFMod as SpvInstEncoding>::decode(reader)?),
                 142u16 => {
                     Self::VectorTimesScalar(
-                        <OpVectorTimesScalar as InstEncoding>::decode(reader)?,
+                        <OpVectorTimesScalar as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 143u16 => {
                     Self::MatrixTimesScalar(
-                        <OpMatrixTimesScalar as InstEncoding>::decode(reader)?,
+                        <OpMatrixTimesScalar as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 144u16 => {
                     Self::VectorTimesMatrix(
-                        <OpVectorTimesMatrix as InstEncoding>::decode(reader)?,
+                        <OpVectorTimesMatrix as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 145u16 => {
                     Self::MatrixTimesVector(
-                        <OpMatrixTimesVector as InstEncoding>::decode(reader)?,
+                        <OpMatrixTimesVector as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 146u16 => {
                     Self::MatrixTimesMatrix(
-                        <OpMatrixTimesMatrix as InstEncoding>::decode(reader)?,
+                        <OpMatrixTimesMatrix as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 147u16 => {
-                    Self::OuterProduct(<OpOuterProduct as InstEncoding>::decode(reader)?)
+                    Self::OuterProduct(
+                        <OpOuterProduct as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
-                148u16 => Self::Dot(<OpDot as InstEncoding>::decode(reader)?),
-                149u16 => Self::IAddCarry(<OpIAddCarry as InstEncoding>::decode(reader)?),
+                148u16 => Self::Dot(<OpDot as SpvInstEncoding>::decode(reader)?),
+                149u16 => {
+                    Self::IAddCarry(<OpIAddCarry as SpvInstEncoding>::decode(reader)?)
+                }
                 150u16 => {
-                    Self::ISubBorrow(<OpISubBorrow as InstEncoding>::decode(reader)?)
+                    Self::ISubBorrow(<OpISubBorrow as SpvInstEncoding>::decode(reader)?)
                 }
                 151u16 => {
-                    Self::UMulExtended(<OpUMulExtended as InstEncoding>::decode(reader)?)
+                    Self::UMulExtended(
+                        <OpUMulExtended as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 152u16 => {
-                    Self::SMulExtended(<OpSMulExtended as InstEncoding>::decode(reader)?)
+                    Self::SMulExtended(
+                        <OpSMulExtended as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
-                154u16 => Self::Any(<OpAny as InstEncoding>::decode(reader)?),
-                155u16 => Self::All(<OpAll as InstEncoding>::decode(reader)?),
-                156u16 => Self::IsNan(<OpIsNan as InstEncoding>::decode(reader)?),
-                157u16 => Self::IsInf(<OpIsInf as InstEncoding>::decode(reader)?),
-                158u16 => Self::IsFinite(<OpIsFinite as InstEncoding>::decode(reader)?),
-                159u16 => Self::IsNormal(<OpIsNormal as InstEncoding>::decode(reader)?),
+                154u16 => Self::Any(<OpAny as SpvInstEncoding>::decode(reader)?),
+                155u16 => Self::All(<OpAll as SpvInstEncoding>::decode(reader)?),
+                156u16 => Self::IsNan(<OpIsNan as SpvInstEncoding>::decode(reader)?),
+                157u16 => Self::IsInf(<OpIsInf as SpvInstEncoding>::decode(reader)?),
+                158u16 => {
+                    Self::IsFinite(<OpIsFinite as SpvInstEncoding>::decode(reader)?)
+                }
+                159u16 => {
+                    Self::IsNormal(<OpIsNormal as SpvInstEncoding>::decode(reader)?)
+                }
                 160u16 => {
-                    Self::SignBitSet(<OpSignBitSet as InstEncoding>::decode(reader)?)
+                    Self::SignBitSet(<OpSignBitSet as SpvInstEncoding>::decode(reader)?)
                 }
                 161u16 => {
                     Self::LessOrGreater(
-                        <OpLessOrGreater as InstEncoding>::decode(reader)?,
+                        <OpLessOrGreater as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                162u16 => Self::Ordered(<OpOrdered as InstEncoding>::decode(reader)?),
-                163u16 => Self::Unordered(<OpUnordered as InstEncoding>::decode(reader)?),
+                162u16 => Self::Ordered(<OpOrdered as SpvInstEncoding>::decode(reader)?),
+                163u16 => {
+                    Self::Unordered(<OpUnordered as SpvInstEncoding>::decode(reader)?)
+                }
                 164u16 => {
-                    Self::LogicalEqual(<OpLogicalEqual as InstEncoding>::decode(reader)?)
+                    Self::LogicalEqual(
+                        <OpLogicalEqual as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 165u16 => {
                     Self::LogicalNotEqual(
-                        <OpLogicalNotEqual as InstEncoding>::decode(reader)?,
+                        <OpLogicalNotEqual as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                166u16 => Self::LogicalOr(<OpLogicalOr as InstEncoding>::decode(reader)?),
+                166u16 => {
+                    Self::LogicalOr(<OpLogicalOr as SpvInstEncoding>::decode(reader)?)
+                }
                 167u16 => {
-                    Self::LogicalAnd(<OpLogicalAnd as InstEncoding>::decode(reader)?)
+                    Self::LogicalAnd(<OpLogicalAnd as SpvInstEncoding>::decode(reader)?)
                 }
                 168u16 => {
-                    Self::LogicalNot(<OpLogicalNot as InstEncoding>::decode(reader)?)
+                    Self::LogicalNot(<OpLogicalNot as SpvInstEncoding>::decode(reader)?)
                 }
-                169u16 => Self::Select(<OpSelect as InstEncoding>::decode(reader)?),
-                170u16 => Self::IEqual(<OpIEqual as InstEncoding>::decode(reader)?),
-                171u16 => Self::INotEqual(<OpINotEqual as InstEncoding>::decode(reader)?),
+                169u16 => Self::Select(<OpSelect as SpvInstEncoding>::decode(reader)?),
+                170u16 => Self::IEqual(<OpIEqual as SpvInstEncoding>::decode(reader)?),
+                171u16 => {
+                    Self::INotEqual(<OpINotEqual as SpvInstEncoding>::decode(reader)?)
+                }
                 172u16 => {
-                    Self::UGreaterThan(<OpUGreaterThan as InstEncoding>::decode(reader)?)
+                    Self::UGreaterThan(
+                        <OpUGreaterThan as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 173u16 => {
-                    Self::SGreaterThan(<OpSGreaterThan as InstEncoding>::decode(reader)?)
+                    Self::SGreaterThan(
+                        <OpSGreaterThan as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 174u16 => {
                     Self::UGreaterThanEqual(
-                        <OpUGreaterThanEqual as InstEncoding>::decode(reader)?,
+                        <OpUGreaterThanEqual as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 175u16 => {
                     Self::SGreaterThanEqual(
-                        <OpSGreaterThanEqual as InstEncoding>::decode(reader)?,
+                        <OpSGreaterThanEqual as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                176u16 => Self::ULessThan(<OpULessThan as InstEncoding>::decode(reader)?),
-                177u16 => Self::SLessThan(<OpSLessThan as InstEncoding>::decode(reader)?),
+                176u16 => {
+                    Self::ULessThan(<OpULessThan as SpvInstEncoding>::decode(reader)?)
+                }
+                177u16 => {
+                    Self::SLessThan(<OpSLessThan as SpvInstEncoding>::decode(reader)?)
+                }
                 178u16 => {
                     Self::ULessThanEqual(
-                        <OpULessThanEqual as InstEncoding>::decode(reader)?,
+                        <OpULessThanEqual as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 179u16 => {
                     Self::SLessThanEqual(
-                        <OpSLessThanEqual as InstEncoding>::decode(reader)?,
+                        <OpSLessThanEqual as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                180u16 => Self::FOrdEqual(<OpFOrdEqual as InstEncoding>::decode(reader)?),
+                180u16 => {
+                    Self::FOrdEqual(<OpFOrdEqual as SpvInstEncoding>::decode(reader)?)
+                }
                 181u16 => {
-                    Self::FUnordEqual(<OpFUnordEqual as InstEncoding>::decode(reader)?)
+                    Self::FUnordEqual(
+                        <OpFUnordEqual as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 182u16 => {
-                    Self::FOrdNotEqual(<OpFOrdNotEqual as InstEncoding>::decode(reader)?)
+                    Self::FOrdNotEqual(
+                        <OpFOrdNotEqual as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 183u16 => {
                     Self::FUnordNotEqual(
-                        <OpFUnordNotEqual as InstEncoding>::decode(reader)?,
+                        <OpFUnordNotEqual as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 184u16 => {
-                    Self::FOrdLessThan(<OpFOrdLessThan as InstEncoding>::decode(reader)?)
+                    Self::FOrdLessThan(
+                        <OpFOrdLessThan as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 185u16 => {
                     Self::FUnordLessThan(
-                        <OpFUnordLessThan as InstEncoding>::decode(reader)?,
+                        <OpFUnordLessThan as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 186u16 => {
                     Self::FOrdGreaterThan(
-                        <OpFOrdGreaterThan as InstEncoding>::decode(reader)?,
+                        <OpFOrdGreaterThan as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 187u16 => {
                     Self::FUnordGreaterThan(
-                        <OpFUnordGreaterThan as InstEncoding>::decode(reader)?,
+                        <OpFUnordGreaterThan as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 188u16 => {
                     Self::FOrdLessThanEqual(
-                        <OpFOrdLessThanEqual as InstEncoding>::decode(reader)?,
+                        <OpFOrdLessThanEqual as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 189u16 => {
                     Self::FUnordLessThanEqual(
-                        <OpFUnordLessThanEqual as InstEncoding>::decode(reader)?,
+                        <OpFUnordLessThanEqual as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 190u16 => {
                     Self::FOrdGreaterThanEqual(
-                        <OpFOrdGreaterThanEqual as InstEncoding>::decode(reader)?,
+                        <OpFOrdGreaterThanEqual as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 191u16 => {
                     Self::FUnordGreaterThanEqual(
-                        <OpFUnordGreaterThanEqual as InstEncoding>::decode(reader)?,
+                        <OpFUnordGreaterThanEqual as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 194u16 => {
                     Self::ShiftRightLogical(
-                        <OpShiftRightLogical as InstEncoding>::decode(reader)?,
+                        <OpShiftRightLogical as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 195u16 => {
                     Self::ShiftRightArithmetic(
-                        <OpShiftRightArithmetic as InstEncoding>::decode(reader)?,
+                        <OpShiftRightArithmetic as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 196u16 => {
                     Self::ShiftLeftLogical(
-                        <OpShiftLeftLogical as InstEncoding>::decode(reader)?,
+                        <OpShiftLeftLogical as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                197u16 => Self::BitwiseOr(<OpBitwiseOr as InstEncoding>::decode(reader)?),
+                197u16 => {
+                    Self::BitwiseOr(<OpBitwiseOr as SpvInstEncoding>::decode(reader)?)
+                }
                 198u16 => {
-                    Self::BitwiseXor(<OpBitwiseXor as InstEncoding>::decode(reader)?)
+                    Self::BitwiseXor(<OpBitwiseXor as SpvInstEncoding>::decode(reader)?)
                 }
                 199u16 => {
-                    Self::BitwiseAnd(<OpBitwiseAnd as InstEncoding>::decode(reader)?)
+                    Self::BitwiseAnd(<OpBitwiseAnd as SpvInstEncoding>::decode(reader)?)
                 }
-                200u16 => Self::Not(<OpNot as InstEncoding>::decode(reader)?),
+                200u16 => Self::Not(<OpNot as SpvInstEncoding>::decode(reader)?),
                 201u16 => {
                     Self::BitFieldInsert(
-                        <OpBitFieldInsert as InstEncoding>::decode(reader)?,
+                        <OpBitFieldInsert as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 202u16 => {
                     Self::BitFieldSExtract(
-                        <OpBitFieldSExtract as InstEncoding>::decode(reader)?,
+                        <OpBitFieldSExtract as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 203u16 => {
                     Self::BitFieldUExtract(
-                        <OpBitFieldUExtract as InstEncoding>::decode(reader)?,
+                        <OpBitFieldUExtract as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 204u16 => {
-                    Self::BitReverse(<OpBitReverse as InstEncoding>::decode(reader)?)
+                    Self::BitReverse(<OpBitReverse as SpvInstEncoding>::decode(reader)?)
                 }
-                205u16 => Self::BitCount(<OpBitCount as InstEncoding>::decode(reader)?),
-                207u16 => Self::DPdx(<OpDPdx as InstEncoding>::decode(reader)?),
-                208u16 => Self::DPdy(<OpDPdy as InstEncoding>::decode(reader)?),
-                209u16 => Self::Fwidth(<OpFwidth as InstEncoding>::decode(reader)?),
-                210u16 => Self::DPdxFine(<OpDPdxFine as InstEncoding>::decode(reader)?),
-                211u16 => Self::DPdyFine(<OpDPdyFine as InstEncoding>::decode(reader)?),
+                205u16 => {
+                    Self::BitCount(<OpBitCount as SpvInstEncoding>::decode(reader)?)
+                }
+                207u16 => Self::DPdx(<OpDPdx as SpvInstEncoding>::decode(reader)?),
+                208u16 => Self::DPdy(<OpDPdy as SpvInstEncoding>::decode(reader)?),
+                209u16 => Self::Fwidth(<OpFwidth as SpvInstEncoding>::decode(reader)?),
+                210u16 => {
+                    Self::DPdxFine(<OpDPdxFine as SpvInstEncoding>::decode(reader)?)
+                }
+                211u16 => {
+                    Self::DPdyFine(<OpDPdyFine as SpvInstEncoding>::decode(reader)?)
+                }
                 212u16 => {
-                    Self::FwidthFine(<OpFwidthFine as InstEncoding>::decode(reader)?)
+                    Self::FwidthFine(<OpFwidthFine as SpvInstEncoding>::decode(reader)?)
                 }
                 213u16 => {
-                    Self::DPdxCoarse(<OpDPdxCoarse as InstEncoding>::decode(reader)?)
+                    Self::DPdxCoarse(<OpDPdxCoarse as SpvInstEncoding>::decode(reader)?)
                 }
                 214u16 => {
-                    Self::DPdyCoarse(<OpDPdyCoarse as InstEncoding>::decode(reader)?)
+                    Self::DPdyCoarse(<OpDPdyCoarse as SpvInstEncoding>::decode(reader)?)
                 }
                 215u16 => {
-                    Self::FwidthCoarse(<OpFwidthCoarse as InstEncoding>::decode(reader)?)
+                    Self::FwidthCoarse(
+                        <OpFwidthCoarse as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 218u16 => {
-                    Self::EmitVertex(<OpEmitVertex as InstEncoding>::decode(reader)?)
+                    Self::EmitVertex(<OpEmitVertex as SpvInstEncoding>::decode(reader)?)
                 }
                 219u16 => {
-                    Self::EndPrimitive(<OpEndPrimitive as InstEncoding>::decode(reader)?)
+                    Self::EndPrimitive(
+                        <OpEndPrimitive as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 220u16 => {
                     Self::EmitStreamVertex(
-                        <OpEmitStreamVertex as InstEncoding>::decode(reader)?,
+                        <OpEmitStreamVertex as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 221u16 => {
                     Self::EndStreamPrimitive(
-                        <OpEndStreamPrimitive as InstEncoding>::decode(reader)?,
+                        <OpEndStreamPrimitive as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 224u16 => {
                     Self::ControlBarrier(
-                        <OpControlBarrier as InstEncoding>::decode(reader)?,
+                        <OpControlBarrier as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 225u16 => {
                     Self::MemoryBarrier(
-                        <OpMemoryBarrier as InstEncoding>::decode(reader)?,
+                        <OpMemoryBarrier as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 227u16 => {
-                    Self::AtomicLoad(<OpAtomicLoad as InstEncoding>::decode(reader)?)
+                    Self::AtomicLoad(<OpAtomicLoad as SpvInstEncoding>::decode(reader)?)
                 }
                 228u16 => {
-                    Self::AtomicStore(<OpAtomicStore as InstEncoding>::decode(reader)?)
+                    Self::AtomicStore(
+                        <OpAtomicStore as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 229u16 => {
                     Self::AtomicExchange(
-                        <OpAtomicExchange as InstEncoding>::decode(reader)?,
+                        <OpAtomicExchange as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 230u16 => {
                     Self::AtomicCompareExchange(
-                        <OpAtomicCompareExchange as InstEncoding>::decode(reader)?,
+                        <OpAtomicCompareExchange as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 231u16 => {
                     Self::AtomicCompareExchangeWeak(
-                        <OpAtomicCompareExchangeWeak as InstEncoding>::decode(reader)?,
+                        <OpAtomicCompareExchangeWeak as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 232u16 => {
                     Self::AtomicIIncrement(
-                        <OpAtomicIIncrement as InstEncoding>::decode(reader)?,
+                        <OpAtomicIIncrement as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 233u16 => {
                     Self::AtomicIDecrement(
-                        <OpAtomicIDecrement as InstEncoding>::decode(reader)?,
+                        <OpAtomicIDecrement as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 234u16 => {
-                    Self::AtomicIAdd(<OpAtomicIAdd as InstEncoding>::decode(reader)?)
+                    Self::AtomicIAdd(<OpAtomicIAdd as SpvInstEncoding>::decode(reader)?)
                 }
                 235u16 => {
-                    Self::AtomicISub(<OpAtomicISub as InstEncoding>::decode(reader)?)
+                    Self::AtomicISub(<OpAtomicISub as SpvInstEncoding>::decode(reader)?)
                 }
                 236u16 => {
-                    Self::AtomicSMin(<OpAtomicSMin as InstEncoding>::decode(reader)?)
+                    Self::AtomicSMin(<OpAtomicSMin as SpvInstEncoding>::decode(reader)?)
                 }
                 237u16 => {
-                    Self::AtomicUMin(<OpAtomicUMin as InstEncoding>::decode(reader)?)
+                    Self::AtomicUMin(<OpAtomicUMin as SpvInstEncoding>::decode(reader)?)
                 }
                 238u16 => {
-                    Self::AtomicSMax(<OpAtomicSMax as InstEncoding>::decode(reader)?)
+                    Self::AtomicSMax(<OpAtomicSMax as SpvInstEncoding>::decode(reader)?)
                 }
                 239u16 => {
-                    Self::AtomicUMax(<OpAtomicUMax as InstEncoding>::decode(reader)?)
+                    Self::AtomicUMax(<OpAtomicUMax as SpvInstEncoding>::decode(reader)?)
                 }
-                240u16 => Self::AtomicAnd(<OpAtomicAnd as InstEncoding>::decode(reader)?),
-                241u16 => Self::AtomicOr(<OpAtomicOr as InstEncoding>::decode(reader)?),
-                242u16 => Self::AtomicXor(<OpAtomicXor as InstEncoding>::decode(reader)?),
-                245u16 => Self::Phi(<OpPhi as InstEncoding>::decode(reader)?),
-                246u16 => Self::LoopMerge(<OpLoopMerge as InstEncoding>::decode(reader)?),
+                240u16 => {
+                    Self::AtomicAnd(<OpAtomicAnd as SpvInstEncoding>::decode(reader)?)
+                }
+                241u16 => {
+                    Self::AtomicOr(<OpAtomicOr as SpvInstEncoding>::decode(reader)?)
+                }
+                242u16 => {
+                    Self::AtomicXor(<OpAtomicXor as SpvInstEncoding>::decode(reader)?)
+                }
+                245u16 => Self::Phi(<OpPhi as SpvInstEncoding>::decode(reader)?),
+                246u16 => {
+                    Self::LoopMerge(<OpLoopMerge as SpvInstEncoding>::decode(reader)?)
+                }
                 247u16 => {
                     Self::SelectionMerge(
-                        <OpSelectionMerge as InstEncoding>::decode(reader)?,
+                        <OpSelectionMerge as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                248u16 => Self::Label(<OpLabel as InstEncoding>::decode(reader)?),
-                249u16 => Self::Branch(<OpBranch as InstEncoding>::decode(reader)?),
+                248u16 => Self::Label(<OpLabel as SpvInstEncoding>::decode(reader)?),
+                249u16 => Self::Branch(<OpBranch as SpvInstEncoding>::decode(reader)?),
                 250u16 => {
                     Self::BranchConditional(
-                        <OpBranchConditional as InstEncoding>::decode(reader)?,
+                        <OpBranchConditional as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                251u16 => Self::Switch(<OpSwitch as InstEncoding>::decode(reader)?),
-                252u16 => Self::Kill(<OpKill as InstEncoding>::decode(reader)?),
-                253u16 => Self::Return(<OpReturn as InstEncoding>::decode(reader)?),
+                251u16 => Self::Switch(<OpSwitch as SpvInstEncoding>::decode(reader)?),
+                252u16 => Self::Kill(<OpKill as SpvInstEncoding>::decode(reader)?),
+                253u16 => Self::Return(<OpReturn as SpvInstEncoding>::decode(reader)?),
                 254u16 => {
-                    Self::ReturnValue(<OpReturnValue as InstEncoding>::decode(reader)?)
+                    Self::ReturnValue(
+                        <OpReturnValue as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 255u16 => {
-                    Self::Unreachable(<OpUnreachable as InstEncoding>::decode(reader)?)
+                    Self::Unreachable(
+                        <OpUnreachable as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 256u16 => {
                     Self::LifetimeStart(
-                        <OpLifetimeStart as InstEncoding>::decode(reader)?,
+                        <OpLifetimeStart as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 257u16 => {
-                    Self::LifetimeStop(<OpLifetimeStop as InstEncoding>::decode(reader)?)
+                    Self::LifetimeStop(
+                        <OpLifetimeStop as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 259u16 => {
                     Self::GroupAsyncCopy(
-                        <OpGroupAsyncCopy as InstEncoding>::decode(reader)?,
+                        <OpGroupAsyncCopy as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 260u16 => {
                     Self::GroupWaitEvents(
-                        <OpGroupWaitEvents as InstEncoding>::decode(reader)?,
+                        <OpGroupWaitEvents as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                261u16 => Self::GroupAll(<OpGroupAll as InstEncoding>::decode(reader)?),
-                262u16 => Self::GroupAny(<OpGroupAny as InstEncoding>::decode(reader)?),
+                261u16 => {
+                    Self::GroupAll(<OpGroupAll as SpvInstEncoding>::decode(reader)?)
+                }
+                262u16 => {
+                    Self::GroupAny(<OpGroupAny as SpvInstEncoding>::decode(reader)?)
+                }
                 263u16 => {
                     Self::GroupBroadcast(
-                        <OpGroupBroadcast as InstEncoding>::decode(reader)?,
+                        <OpGroupBroadcast as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                264u16 => Self::GroupIAdd(<OpGroupIAdd as InstEncoding>::decode(reader)?),
-                265u16 => Self::GroupFAdd(<OpGroupFAdd as InstEncoding>::decode(reader)?),
-                266u16 => Self::GroupFMin(<OpGroupFMin as InstEncoding>::decode(reader)?),
-                267u16 => Self::GroupUMin(<OpGroupUMin as InstEncoding>::decode(reader)?),
-                268u16 => Self::GroupSMin(<OpGroupSMin as InstEncoding>::decode(reader)?),
-                269u16 => Self::GroupFMax(<OpGroupFMax as InstEncoding>::decode(reader)?),
-                270u16 => Self::GroupUMax(<OpGroupUMax as InstEncoding>::decode(reader)?),
-                271u16 => Self::GroupSMax(<OpGroupSMax as InstEncoding>::decode(reader)?),
-                274u16 => Self::ReadPipe(<OpReadPipe as InstEncoding>::decode(reader)?),
-                275u16 => Self::WritePipe(<OpWritePipe as InstEncoding>::decode(reader)?),
+                264u16 => {
+                    Self::GroupIAdd(<OpGroupIAdd as SpvInstEncoding>::decode(reader)?)
+                }
+                265u16 => {
+                    Self::GroupFAdd(<OpGroupFAdd as SpvInstEncoding>::decode(reader)?)
+                }
+                266u16 => {
+                    Self::GroupFMin(<OpGroupFMin as SpvInstEncoding>::decode(reader)?)
+                }
+                267u16 => {
+                    Self::GroupUMin(<OpGroupUMin as SpvInstEncoding>::decode(reader)?)
+                }
+                268u16 => {
+                    Self::GroupSMin(<OpGroupSMin as SpvInstEncoding>::decode(reader)?)
+                }
+                269u16 => {
+                    Self::GroupFMax(<OpGroupFMax as SpvInstEncoding>::decode(reader)?)
+                }
+                270u16 => {
+                    Self::GroupUMax(<OpGroupUMax as SpvInstEncoding>::decode(reader)?)
+                }
+                271u16 => {
+                    Self::GroupSMax(<OpGroupSMax as SpvInstEncoding>::decode(reader)?)
+                }
+                274u16 => {
+                    Self::ReadPipe(<OpReadPipe as SpvInstEncoding>::decode(reader)?)
+                }
+                275u16 => {
+                    Self::WritePipe(<OpWritePipe as SpvInstEncoding>::decode(reader)?)
+                }
                 276u16 => {
                     Self::ReservedReadPipe(
-                        <OpReservedReadPipe as InstEncoding>::decode(reader)?,
+                        <OpReservedReadPipe as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 277u16 => {
                     Self::ReservedWritePipe(
-                        <OpReservedWritePipe as InstEncoding>::decode(reader)?,
+                        <OpReservedWritePipe as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 278u16 => {
                     Self::ReserveReadPipePackets(
-                        <OpReserveReadPipePackets as InstEncoding>::decode(reader)?,
+                        <OpReserveReadPipePackets as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 279u16 => {
                     Self::ReserveWritePipePackets(
-                        <OpReserveWritePipePackets as InstEncoding>::decode(reader)?,
+                        <OpReserveWritePipePackets as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 280u16 => {
                     Self::CommitReadPipe(
-                        <OpCommitReadPipe as InstEncoding>::decode(reader)?,
+                        <OpCommitReadPipe as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 281u16 => {
                     Self::CommitWritePipe(
-                        <OpCommitWritePipe as InstEncoding>::decode(reader)?,
+                        <OpCommitWritePipe as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 282u16 => {
                     Self::IsValidReserveId(
-                        <OpIsValidReserveId as InstEncoding>::decode(reader)?,
+                        <OpIsValidReserveId as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 283u16 => {
                     Self::GetNumPipePackets(
-                        <OpGetNumPipePackets as InstEncoding>::decode(reader)?,
+                        <OpGetNumPipePackets as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 284u16 => {
                     Self::GetMaxPipePackets(
-                        <OpGetMaxPipePackets as InstEncoding>::decode(reader)?,
+                        <OpGetMaxPipePackets as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 285u16 => {
                     Self::GroupReserveReadPipePackets(
-                        <OpGroupReserveReadPipePackets as InstEncoding>::decode(reader)?,
+                        <OpGroupReserveReadPipePackets as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 286u16 => {
                     Self::GroupReserveWritePipePackets(
-                        <OpGroupReserveWritePipePackets as InstEncoding>::decode(reader)?,
+                        <OpGroupReserveWritePipePackets as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 287u16 => {
                     Self::GroupCommitReadPipe(
-                        <OpGroupCommitReadPipe as InstEncoding>::decode(reader)?,
+                        <OpGroupCommitReadPipe as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 288u16 => {
                     Self::GroupCommitWritePipe(
-                        <OpGroupCommitWritePipe as InstEncoding>::decode(reader)?,
+                        <OpGroupCommitWritePipe as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 291u16 => {
                     Self::EnqueueMarker(
-                        <OpEnqueueMarker as InstEncoding>::decode(reader)?,
+                        <OpEnqueueMarker as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 292u16 => {
                     Self::EnqueueKernel(
-                        <OpEnqueueKernel as InstEncoding>::decode(reader)?,
+                        <OpEnqueueKernel as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 293u16 => {
                     Self::GetKernelNDrangeSubGroupCount(
-                        <OpGetKernelNDrangeSubGroupCount as InstEncoding>::decode(
+                        <OpGetKernelNDrangeSubGroupCount as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 294u16 => {
                     Self::GetKernelNDrangeMaxSubGroupSize(
-                        <OpGetKernelNDrangeMaxSubGroupSize as InstEncoding>::decode(
+                        <OpGetKernelNDrangeMaxSubGroupSize as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 295u16 => {
                     Self::GetKernelWorkGroupSize(
-                        <OpGetKernelWorkGroupSize as InstEncoding>::decode(reader)?,
+                        <OpGetKernelWorkGroupSize as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 296u16 => {
                     Self::GetKernelPreferredWorkGroupSizeMultiple(
-                        <OpGetKernelPreferredWorkGroupSizeMultiple as InstEncoding>::decode(
+                        <OpGetKernelPreferredWorkGroupSizeMultiple as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 297u16 => {
-                    Self::RetainEvent(<OpRetainEvent as InstEncoding>::decode(reader)?)
+                    Self::RetainEvent(
+                        <OpRetainEvent as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 298u16 => {
-                    Self::ReleaseEvent(<OpReleaseEvent as InstEncoding>::decode(reader)?)
+                    Self::ReleaseEvent(
+                        <OpReleaseEvent as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 299u16 => {
                     Self::CreateUserEvent(
-                        <OpCreateUserEvent as InstEncoding>::decode(reader)?,
+                        <OpCreateUserEvent as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 300u16 => {
-                    Self::IsValidEvent(<OpIsValidEvent as InstEncoding>::decode(reader)?)
+                    Self::IsValidEvent(
+                        <OpIsValidEvent as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 301u16 => {
                     Self::SetUserEventStatus(
-                        <OpSetUserEventStatus as InstEncoding>::decode(reader)?,
+                        <OpSetUserEventStatus as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 302u16 => {
                     Self::CaptureEventProfilingInfo(
-                        <OpCaptureEventProfilingInfo as InstEncoding>::decode(reader)?,
+                        <OpCaptureEventProfilingInfo as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 303u16 => {
                     Self::GetDefaultQueue(
-                        <OpGetDefaultQueue as InstEncoding>::decode(reader)?,
+                        <OpGetDefaultQueue as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 304u16 => {
-                    Self::BuildNDRange(<OpBuildNDRange as InstEncoding>::decode(reader)?)
+                    Self::BuildNDRange(
+                        <OpBuildNDRange as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 305u16 => {
                     Self::ImageSparseSampleImplicitLod(
-                        <OpImageSparseSampleImplicitLod as InstEncoding>::decode(reader)?,
+                        <OpImageSparseSampleImplicitLod as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 306u16 => {
                     Self::ImageSparseSampleExplicitLod(
-                        <OpImageSparseSampleExplicitLod as InstEncoding>::decode(reader)?,
+                        <OpImageSparseSampleExplicitLod as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 307u16 => {
                     Self::ImageSparseSampleDrefImplicitLod(
-                        <OpImageSparseSampleDrefImplicitLod as InstEncoding>::decode(
+                        <OpImageSparseSampleDrefImplicitLod as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 308u16 => {
                     Self::ImageSparseSampleDrefExplicitLod(
-                        <OpImageSparseSampleDrefExplicitLod as InstEncoding>::decode(
+                        <OpImageSparseSampleDrefExplicitLod as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 309u16 => {
                     Self::ImageSparseSampleProjImplicitLod(
-                        <OpImageSparseSampleProjImplicitLod as InstEncoding>::decode(
+                        <OpImageSparseSampleProjImplicitLod as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 310u16 => {
                     Self::ImageSparseSampleProjExplicitLod(
-                        <OpImageSparseSampleProjExplicitLod as InstEncoding>::decode(
+                        <OpImageSparseSampleProjExplicitLod as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 311u16 => {
                     Self::ImageSparseSampleProjDrefImplicitLod(
-                        <OpImageSparseSampleProjDrefImplicitLod as InstEncoding>::decode(
+                        <OpImageSparseSampleProjDrefImplicitLod as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 312u16 => {
                     Self::ImageSparseSampleProjDrefExplicitLod(
-                        <OpImageSparseSampleProjDrefExplicitLod as InstEncoding>::decode(
+                        <OpImageSparseSampleProjDrefExplicitLod as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 313u16 => {
                     Self::ImageSparseFetch(
-                        <OpImageSparseFetch as InstEncoding>::decode(reader)?,
+                        <OpImageSparseFetch as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 314u16 => {
                     Self::ImageSparseGather(
-                        <OpImageSparseGather as InstEncoding>::decode(reader)?,
+                        <OpImageSparseGather as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 315u16 => {
                     Self::ImageSparseDrefGather(
-                        <OpImageSparseDrefGather as InstEncoding>::decode(reader)?,
+                        <OpImageSparseDrefGather as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 316u16 => {
                     Self::ImageSparseTexelsResident(
-                        <OpImageSparseTexelsResident as InstEncoding>::decode(reader)?,
+                        <OpImageSparseTexelsResident as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                317u16 => Self::NoLine(<OpNoLine as InstEncoding>::decode(reader)?),
+                317u16 => Self::NoLine(<OpNoLine as SpvInstEncoding>::decode(reader)?),
                 318u16 => {
                     Self::AtomicFlagTestAndSet(
-                        <OpAtomicFlagTestAndSet as InstEncoding>::decode(reader)?,
+                        <OpAtomicFlagTestAndSet as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 319u16 => {
                     Self::AtomicFlagClear(
-                        <OpAtomicFlagClear as InstEncoding>::decode(reader)?,
+                        <OpAtomicFlagClear as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 320u16 => {
                     Self::ImageSparseRead(
-                        <OpImageSparseRead as InstEncoding>::decode(reader)?,
+                        <OpImageSparseRead as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                321u16 => Self::SizeOf(<OpSizeOf as InstEncoding>::decode(reader)?),
+                321u16 => Self::SizeOf(<OpSizeOf as SpvInstEncoding>::decode(reader)?),
                 322u16 => {
                     Self::TypePipeStorage(
-                        <OpTypePipeStorage as InstEncoding>::decode(reader)?,
+                        <OpTypePipeStorage as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 323u16 => {
                     Self::ConstantPipeStorage(
-                        <OpConstantPipeStorage as InstEncoding>::decode(reader)?,
+                        <OpConstantPipeStorage as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 324u16 => {
                     Self::CreatePipeFromPipeStorage(
-                        <OpCreatePipeFromPipeStorage as InstEncoding>::decode(reader)?,
+                        <OpCreatePipeFromPipeStorage as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 325u16 => {
                     Self::GetKernelLocalSizeForSubgroupCount(
-                        <OpGetKernelLocalSizeForSubgroupCount as InstEncoding>::decode(
+                        <OpGetKernelLocalSizeForSubgroupCount as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 326u16 => {
                     Self::GetKernelMaxNumSubgroups(
-                        <OpGetKernelMaxNumSubgroups as InstEncoding>::decode(reader)?,
+                        <OpGetKernelMaxNumSubgroups as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 327u16 => {
                     Self::TypeNamedBarrier(
-                        <OpTypeNamedBarrier as InstEncoding>::decode(reader)?,
+                        <OpTypeNamedBarrier as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 328u16 => {
                     Self::NamedBarrierInitialize(
-                        <OpNamedBarrierInitialize as InstEncoding>::decode(reader)?,
+                        <OpNamedBarrierInitialize as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 329u16 => {
                     Self::MemoryNamedBarrier(
-                        <OpMemoryNamedBarrier as InstEncoding>::decode(reader)?,
+                        <OpMemoryNamedBarrier as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 330u16 => {
                     Self::ModuleProcessed(
-                        <OpModuleProcessed as InstEncoding>::decode(reader)?,
+                        <OpModuleProcessed as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 331u16 => {
                     Self::ExecutionModeId(
-                        <OpExecutionModeId as InstEncoding>::decode(reader)?,
+                        <OpExecutionModeId as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 332u16 => {
-                    Self::DecorateId(<OpDecorateId as InstEncoding>::decode(reader)?)
+                    Self::DecorateId(<OpDecorateId as SpvInstEncoding>::decode(reader)?)
                 }
                 333u16 => {
                     Self::GroupNonUniformElect(
-                        <OpGroupNonUniformElect as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformElect as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 334u16 => {
                     Self::GroupNonUniformAll(
-                        <OpGroupNonUniformAll as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformAll as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 335u16 => {
                     Self::GroupNonUniformAny(
-                        <OpGroupNonUniformAny as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformAny as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 336u16 => {
                     Self::GroupNonUniformAllEqual(
-                        <OpGroupNonUniformAllEqual as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformAllEqual as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 337u16 => {
                     Self::GroupNonUniformBroadcast(
-                        <OpGroupNonUniformBroadcast as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformBroadcast as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 338u16 => {
                     Self::GroupNonUniformBroadcastFirst(
-                        <OpGroupNonUniformBroadcastFirst as InstEncoding>::decode(
+                        <OpGroupNonUniformBroadcastFirst as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 339u16 => {
                     Self::GroupNonUniformBallot(
-                        <OpGroupNonUniformBallot as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformBallot as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 340u16 => {
                     Self::GroupNonUniformInverseBallot(
-                        <OpGroupNonUniformInverseBallot as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformInverseBallot as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 341u16 => {
                     Self::GroupNonUniformBallotBitExtract(
-                        <OpGroupNonUniformBallotBitExtract as InstEncoding>::decode(
+                        <OpGroupNonUniformBallotBitExtract as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 342u16 => {
                     Self::GroupNonUniformBallotBitCount(
-                        <OpGroupNonUniformBallotBitCount as InstEncoding>::decode(
+                        <OpGroupNonUniformBallotBitCount as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 343u16 => {
                     Self::GroupNonUniformBallotFindLSB(
-                        <OpGroupNonUniformBallotFindLSB as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformBallotFindLSB as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 344u16 => {
                     Self::GroupNonUniformBallotFindMSB(
-                        <OpGroupNonUniformBallotFindMSB as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformBallotFindMSB as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 345u16 => {
                     Self::GroupNonUniformShuffle(
-                        <OpGroupNonUniformShuffle as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformShuffle as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 346u16 => {
                     Self::GroupNonUniformShuffleXor(
-                        <OpGroupNonUniformShuffleXor as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformShuffleXor as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 347u16 => {
                     Self::GroupNonUniformShuffleUp(
-                        <OpGroupNonUniformShuffleUp as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformShuffleUp as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 348u16 => {
                     Self::GroupNonUniformShuffleDown(
-                        <OpGroupNonUniformShuffleDown as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformShuffleDown as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 349u16 => {
                     Self::GroupNonUniformIAdd(
-                        <OpGroupNonUniformIAdd as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformIAdd as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 350u16 => {
                     Self::GroupNonUniformFAdd(
-                        <OpGroupNonUniformFAdd as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformFAdd as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 351u16 => {
                     Self::GroupNonUniformIMul(
-                        <OpGroupNonUniformIMul as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformIMul as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 352u16 => {
                     Self::GroupNonUniformFMul(
-                        <OpGroupNonUniformFMul as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformFMul as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 353u16 => {
                     Self::GroupNonUniformSMin(
-                        <OpGroupNonUniformSMin as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformSMin as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 354u16 => {
                     Self::GroupNonUniformUMin(
-                        <OpGroupNonUniformUMin as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformUMin as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 355u16 => {
                     Self::GroupNonUniformFMin(
-                        <OpGroupNonUniformFMin as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformFMin as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 356u16 => {
                     Self::GroupNonUniformSMax(
-                        <OpGroupNonUniformSMax as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformSMax as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 357u16 => {
                     Self::GroupNonUniformUMax(
-                        <OpGroupNonUniformUMax as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformUMax as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 358u16 => {
                     Self::GroupNonUniformFMax(
-                        <OpGroupNonUniformFMax as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformFMax as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 359u16 => {
                     Self::GroupNonUniformBitwiseAnd(
-                        <OpGroupNonUniformBitwiseAnd as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformBitwiseAnd as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 360u16 => {
                     Self::GroupNonUniformBitwiseOr(
-                        <OpGroupNonUniformBitwiseOr as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformBitwiseOr as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 361u16 => {
                     Self::GroupNonUniformBitwiseXor(
-                        <OpGroupNonUniformBitwiseXor as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformBitwiseXor as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 362u16 => {
                     Self::GroupNonUniformLogicalAnd(
-                        <OpGroupNonUniformLogicalAnd as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformLogicalAnd as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 363u16 => {
                     Self::GroupNonUniformLogicalOr(
-                        <OpGroupNonUniformLogicalOr as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformLogicalOr as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 364u16 => {
                     Self::GroupNonUniformLogicalXor(
-                        <OpGroupNonUniformLogicalXor as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformLogicalXor as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 365u16 => {
                     Self::GroupNonUniformQuadBroadcast(
-                        <OpGroupNonUniformQuadBroadcast as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformQuadBroadcast as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 366u16 => {
                     Self::GroupNonUniformQuadSwap(
-                        <OpGroupNonUniformQuadSwap as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformQuadSwap as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 400u16 => {
-                    Self::CopyLogical(<OpCopyLogical as InstEncoding>::decode(reader)?)
+                    Self::CopyLogical(
+                        <OpCopyLogical as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
-                401u16 => Self::PtrEqual(<OpPtrEqual as InstEncoding>::decode(reader)?),
+                401u16 => {
+                    Self::PtrEqual(<OpPtrEqual as SpvInstEncoding>::decode(reader)?)
+                }
                 402u16 => {
-                    Self::PtrNotEqual(<OpPtrNotEqual as InstEncoding>::decode(reader)?)
+                    Self::PtrNotEqual(
+                        <OpPtrNotEqual as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
-                403u16 => Self::PtrDiff(<OpPtrDiff as InstEncoding>::decode(reader)?),
+                403u16 => Self::PtrDiff(<OpPtrDiff as SpvInstEncoding>::decode(reader)?),
                 4160u16 => {
                     Self::ColorAttachmentReadEXT(
-                        <OpColorAttachmentReadEXT as InstEncoding>::decode(reader)?,
+                        <OpColorAttachmentReadEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4161u16 => {
                     Self::DepthAttachmentReadEXT(
-                        <OpDepthAttachmentReadEXT as InstEncoding>::decode(reader)?,
+                        <OpDepthAttachmentReadEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4162u16 => {
                     Self::StencilAttachmentReadEXT(
-                        <OpStencilAttachmentReadEXT as InstEncoding>::decode(reader)?,
+                        <OpStencilAttachmentReadEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4163u16 => {
                     Self::TypeTensorARM(
-                        <OpTypeTensorARM as InstEncoding>::decode(reader)?,
+                        <OpTypeTensorARM as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4164u16 => {
                     Self::TensorReadARM(
-                        <OpTensorReadARM as InstEncoding>::decode(reader)?,
+                        <OpTensorReadARM as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4165u16 => {
                     Self::TensorWriteARM(
-                        <OpTensorWriteARM as InstEncoding>::decode(reader)?,
+                        <OpTensorWriteARM as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4166u16 => {
                     Self::TensorQuerySizeARM(
-                        <OpTensorQuerySizeARM as InstEncoding>::decode(reader)?,
+                        <OpTensorQuerySizeARM as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4181u16 => {
                     Self::GraphConstantARM(
-                        <OpGraphConstantARM as InstEncoding>::decode(reader)?,
+                        <OpGraphConstantARM as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4182u16 => {
                     Self::GraphEntryPointARM(
-                        <OpGraphEntryPointARM as InstEncoding>::decode(reader)?,
+                        <OpGraphEntryPointARM as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                4183u16 => Self::GraphARM(<OpGraphARM as InstEncoding>::decode(reader)?),
+                4183u16 => {
+                    Self::GraphARM(<OpGraphARM as SpvInstEncoding>::decode(reader)?)
+                }
                 4184u16 => {
                     Self::GraphInputARM(
-                        <OpGraphInputARM as InstEncoding>::decode(reader)?,
+                        <OpGraphInputARM as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4185u16 => {
                     Self::GraphSetOutputARM(
-                        <OpGraphSetOutputARM as InstEncoding>::decode(reader)?,
+                        <OpGraphSetOutputARM as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4186u16 => {
-                    Self::GraphEndARM(<OpGraphEndARM as InstEncoding>::decode(reader)?)
+                    Self::GraphEndARM(
+                        <OpGraphEndARM as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 4190u16 => {
-                    Self::TypeGraphARM(<OpTypeGraphARM as InstEncoding>::decode(reader)?)
+                    Self::TypeGraphARM(
+                        <OpTypeGraphARM as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 4416u16 => {
                     Self::TerminateInvocation(
-                        <OpTerminateInvocation as InstEncoding>::decode(reader)?,
+                        <OpTerminateInvocation as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4417u16 => {
                     Self::TypeUntypedPointerKHR(
-                        <OpTypeUntypedPointerKHR as InstEncoding>::decode(reader)?,
+                        <OpTypeUntypedPointerKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4418u16 => {
                     Self::UntypedVariableKHR(
-                        <OpUntypedVariableKHR as InstEncoding>::decode(reader)?,
+                        <OpUntypedVariableKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4419u16 => {
                     Self::UntypedAccessChainKHR(
-                        <OpUntypedAccessChainKHR as InstEncoding>::decode(reader)?,
+                        <OpUntypedAccessChainKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4420u16 => {
                     Self::UntypedInBoundsAccessChainKHR(
-                        <OpUntypedInBoundsAccessChainKHR as InstEncoding>::decode(
+                        <OpUntypedInBoundsAccessChainKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 4421u16 => {
                     Self::SubgroupBallotKHR(
-                        <OpSubgroupBallotKHR as InstEncoding>::decode(reader)?,
+                        <OpSubgroupBallotKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4422u16 => {
                     Self::SubgroupFirstInvocationKHR(
-                        <OpSubgroupFirstInvocationKHR as InstEncoding>::decode(reader)?,
+                        <OpSubgroupFirstInvocationKHR as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 4423u16 => {
                     Self::UntypedPtrAccessChainKHR(
-                        <OpUntypedPtrAccessChainKHR as InstEncoding>::decode(reader)?,
+                        <OpUntypedPtrAccessChainKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4424u16 => {
                     Self::UntypedInBoundsPtrAccessChainKHR(
-                        <OpUntypedInBoundsPtrAccessChainKHR as InstEncoding>::decode(
+                        <OpUntypedInBoundsPtrAccessChainKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 4425u16 => {
                     Self::UntypedArrayLengthKHR(
-                        <OpUntypedArrayLengthKHR as InstEncoding>::decode(reader)?,
+                        <OpUntypedArrayLengthKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4426u16 => {
                     Self::UntypedPrefetchKHR(
-                        <OpUntypedPrefetchKHR as InstEncoding>::decode(reader)?,
+                        <OpUntypedPrefetchKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                4427u16 => Self::FmaKHR(<OpFmaKHR as InstEncoding>::decode(reader)?),
+                4427u16 => Self::FmaKHR(<OpFmaKHR as SpvInstEncoding>::decode(reader)?),
                 4428u16 => {
                     Self::SubgroupAllKHR(
-                        <OpSubgroupAllKHR as InstEncoding>::decode(reader)?,
+                        <OpSubgroupAllKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4429u16 => {
                     Self::SubgroupAnyKHR(
-                        <OpSubgroupAnyKHR as InstEncoding>::decode(reader)?,
+                        <OpSubgroupAnyKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4430u16 => {
                     Self::SubgroupAllEqualKHR(
-                        <OpSubgroupAllEqualKHR as InstEncoding>::decode(reader)?,
+                        <OpSubgroupAllEqualKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4431u16 => {
                     Self::GroupNonUniformRotateKHR(
-                        <OpGroupNonUniformRotateKHR as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformRotateKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4432u16 => {
                     Self::SubgroupReadInvocationKHR(
-                        <OpSubgroupReadInvocationKHR as InstEncoding>::decode(reader)?,
+                        <OpSubgroupReadInvocationKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4433u16 => {
                     Self::ExtInstWithForwardRefsKHR(
-                        <OpExtInstWithForwardRefsKHR as InstEncoding>::decode(reader)?,
+                        <OpExtInstWithForwardRefsKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4434u16 => {
                     Self::UntypedGroupAsyncCopyKHR(
-                        <OpUntypedGroupAsyncCopyKHR as InstEncoding>::decode(reader)?,
+                        <OpUntypedGroupAsyncCopyKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4445u16 => {
-                    Self::TraceRayKHR(<OpTraceRayKHR as InstEncoding>::decode(reader)?)
+                    Self::TraceRayKHR(
+                        <OpTraceRayKHR as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 4446u16 => {
                     Self::ExecuteCallableKHR(
-                        <OpExecuteCallableKHR as InstEncoding>::decode(reader)?,
+                        <OpExecuteCallableKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4447u16 => {
                     Self::ConvertUToAccelerationStructureKHR(
-                        <OpConvertUToAccelerationStructureKHR as InstEncoding>::decode(
+                        <OpConvertUToAccelerationStructureKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 4448u16 => {
                     Self::IgnoreIntersectionKHR(
-                        <OpIgnoreIntersectionKHR as InstEncoding>::decode(reader)?,
+                        <OpIgnoreIntersectionKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4449u16 => {
                     Self::TerminateRayKHR(
-                        <OpTerminateRayKHR as InstEncoding>::decode(reader)?,
+                        <OpTerminateRayKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                4450u16 => Self::SDot(<OpSDot as InstEncoding>::decode(reader)?),
-                4451u16 => Self::UDot(<OpUDot as InstEncoding>::decode(reader)?),
-                4452u16 => Self::SUDot(<OpSUDot as InstEncoding>::decode(reader)?),
+                4450u16 => Self::SDot(<OpSDot as SpvInstEncoding>::decode(reader)?),
+                4451u16 => Self::UDot(<OpUDot as SpvInstEncoding>::decode(reader)?),
+                4452u16 => Self::SUDot(<OpSUDot as SpvInstEncoding>::decode(reader)?),
                 4453u16 => {
-                    Self::SDotAccSat(<OpSDotAccSat as InstEncoding>::decode(reader)?)
+                    Self::SDotAccSat(<OpSDotAccSat as SpvInstEncoding>::decode(reader)?)
                 }
                 4454u16 => {
-                    Self::UDotAccSat(<OpUDotAccSat as InstEncoding>::decode(reader)?)
+                    Self::UDotAccSat(<OpUDotAccSat as SpvInstEncoding>::decode(reader)?)
                 }
                 4455u16 => {
-                    Self::SUDotAccSat(<OpSUDotAccSat as InstEncoding>::decode(reader)?)
+                    Self::SUDotAccSat(
+                        <OpSUDotAccSat as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 4456u16 => {
                     Self::TypeCooperativeMatrixKHR(
-                        <OpTypeCooperativeMatrixKHR as InstEncoding>::decode(reader)?,
+                        <OpTypeCooperativeMatrixKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4457u16 => {
                     Self::CooperativeMatrixLoadKHR(
-                        <OpCooperativeMatrixLoadKHR as InstEncoding>::decode(reader)?,
+                        <OpCooperativeMatrixLoadKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4458u16 => {
                     Self::CooperativeMatrixStoreKHR(
-                        <OpCooperativeMatrixStoreKHR as InstEncoding>::decode(reader)?,
+                        <OpCooperativeMatrixStoreKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4459u16 => {
                     Self::CooperativeMatrixMulAddKHR(
-                        <OpCooperativeMatrixMulAddKHR as InstEncoding>::decode(reader)?,
+                        <OpCooperativeMatrixMulAddKHR as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 4460u16 => {
                     Self::CooperativeMatrixLengthKHR(
-                        <OpCooperativeMatrixLengthKHR as InstEncoding>::decode(reader)?,
+                        <OpCooperativeMatrixLengthKHR as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 4461u16 => {
                     Self::ConstantCompositeReplicateEXT(
-                        <OpConstantCompositeReplicateEXT as InstEncoding>::decode(
+                        <OpConstantCompositeReplicateEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 4462u16 => {
                     Self::SpecConstantCompositeReplicateEXT(
-                        <OpSpecConstantCompositeReplicateEXT as InstEncoding>::decode(
+                        <OpSpecConstantCompositeReplicateEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 4463u16 => {
                     Self::CompositeConstructReplicateEXT(
-                        <OpCompositeConstructReplicateEXT as InstEncoding>::decode(
+                        <OpCompositeConstructReplicateEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 4472u16 => {
                     Self::TypeRayQueryKHR(
-                        <OpTypeRayQueryKHR as InstEncoding>::decode(reader)?,
+                        <OpTypeRayQueryKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4473u16 => {
                     Self::RayQueryInitializeKHR(
-                        <OpRayQueryInitializeKHR as InstEncoding>::decode(reader)?,
+                        <OpRayQueryInitializeKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4474u16 => {
                     Self::RayQueryTerminateKHR(
-                        <OpRayQueryTerminateKHR as InstEncoding>::decode(reader)?,
+                        <OpRayQueryTerminateKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4475u16 => {
                     Self::RayQueryGenerateIntersectionKHR(
-                        <OpRayQueryGenerateIntersectionKHR as InstEncoding>::decode(
+                        <OpRayQueryGenerateIntersectionKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 4476u16 => {
                     Self::RayQueryConfirmIntersectionKHR(
-                        <OpRayQueryConfirmIntersectionKHR as InstEncoding>::decode(
+                        <OpRayQueryConfirmIntersectionKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 4477u16 => {
                     Self::RayQueryProceedKHR(
-                        <OpRayQueryProceedKHR as InstEncoding>::decode(reader)?,
+                        <OpRayQueryProceedKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4479u16 => {
                     Self::RayQueryGetIntersectionTypeKHR(
-                        <OpRayQueryGetIntersectionTypeKHR as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionTypeKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 4480u16 => {
                     Self::ImageSampleWeightedQCOM(
-                        <OpImageSampleWeightedQCOM as InstEncoding>::decode(reader)?,
+                        <OpImageSampleWeightedQCOM as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4481u16 => {
                     Self::ImageBoxFilterQCOM(
-                        <OpImageBoxFilterQCOM as InstEncoding>::decode(reader)?,
+                        <OpImageBoxFilterQCOM as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4482u16 => {
                     Self::ImageBlockMatchSSDQCOM(
-                        <OpImageBlockMatchSSDQCOM as InstEncoding>::decode(reader)?,
+                        <OpImageBlockMatchSSDQCOM as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4483u16 => {
                     Self::ImageBlockMatchSADQCOM(
-                        <OpImageBlockMatchSADQCOM as InstEncoding>::decode(reader)?,
+                        <OpImageBlockMatchSADQCOM as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4497u16 => {
                     Self::BitCastArrayQCOM(
-                        <OpBitCastArrayQCOM as InstEncoding>::decode(reader)?,
+                        <OpBitCastArrayQCOM as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 4500u16 => {
                     Self::ImageBlockMatchWindowSSDQCOM(
-                        <OpImageBlockMatchWindowSSDQCOM as InstEncoding>::decode(reader)?,
+                        <OpImageBlockMatchWindowSSDQCOM as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 4501u16 => {
                     Self::ImageBlockMatchWindowSADQCOM(
-                        <OpImageBlockMatchWindowSADQCOM as InstEncoding>::decode(reader)?,
+                        <OpImageBlockMatchWindowSADQCOM as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 4502u16 => {
                     Self::ImageBlockMatchGatherSSDQCOM(
-                        <OpImageBlockMatchGatherSSDQCOM as InstEncoding>::decode(reader)?,
+                        <OpImageBlockMatchGatherSSDQCOM as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 4503u16 => {
                     Self::ImageBlockMatchGatherSADQCOM(
-                        <OpImageBlockMatchGatherSADQCOM as InstEncoding>::decode(reader)?,
+                        <OpImageBlockMatchGatherSADQCOM as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 4540u16 => {
                     Self::CompositeConstructCoopMatQCOM(
-                        <OpCompositeConstructCoopMatQCOM as InstEncoding>::decode(
+                        <OpCompositeConstructCoopMatQCOM as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 4541u16 => {
                     Self::CompositeExtractCoopMatQCOM(
-                        <OpCompositeExtractCoopMatQCOM as InstEncoding>::decode(reader)?,
+                        <OpCompositeExtractCoopMatQCOM as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 4542u16 => {
                     Self::ExtractSubArrayQCOM(
-                        <OpExtractSubArrayQCOM as InstEncoding>::decode(reader)?,
+                        <OpExtractSubArrayQCOM as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5000u16 => {
                     Self::GroupIAddNonUniformAMD(
-                        <OpGroupIAddNonUniformAMD as InstEncoding>::decode(reader)?,
+                        <OpGroupIAddNonUniformAMD as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5001u16 => {
                     Self::GroupFAddNonUniformAMD(
-                        <OpGroupFAddNonUniformAMD as InstEncoding>::decode(reader)?,
+                        <OpGroupFAddNonUniformAMD as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5002u16 => {
                     Self::GroupFMinNonUniformAMD(
-                        <OpGroupFMinNonUniformAMD as InstEncoding>::decode(reader)?,
+                        <OpGroupFMinNonUniformAMD as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5003u16 => {
                     Self::GroupUMinNonUniformAMD(
-                        <OpGroupUMinNonUniformAMD as InstEncoding>::decode(reader)?,
+                        <OpGroupUMinNonUniformAMD as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5004u16 => {
                     Self::GroupSMinNonUniformAMD(
-                        <OpGroupSMinNonUniformAMD as InstEncoding>::decode(reader)?,
+                        <OpGroupSMinNonUniformAMD as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5005u16 => {
                     Self::GroupFMaxNonUniformAMD(
-                        <OpGroupFMaxNonUniformAMD as InstEncoding>::decode(reader)?,
+                        <OpGroupFMaxNonUniformAMD as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5006u16 => {
                     Self::GroupUMaxNonUniformAMD(
-                        <OpGroupUMaxNonUniformAMD as InstEncoding>::decode(reader)?,
+                        <OpGroupUMaxNonUniformAMD as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5007u16 => {
                     Self::GroupSMaxNonUniformAMD(
-                        <OpGroupSMaxNonUniformAMD as InstEncoding>::decode(reader)?,
+                        <OpGroupSMaxNonUniformAMD as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5011u16 => {
                     Self::FragmentMaskFetchAMD(
-                        <OpFragmentMaskFetchAMD as InstEncoding>::decode(reader)?,
+                        <OpFragmentMaskFetchAMD as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5012u16 => {
                     Self::FragmentFetchAMD(
-                        <OpFragmentFetchAMD as InstEncoding>::decode(reader)?,
+                        <OpFragmentFetchAMD as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5056u16 => {
-                    Self::ReadClockKHR(<OpReadClockKHR as InstEncoding>::decode(reader)?)
+                    Self::ReadClockKHR(
+                        <OpReadClockKHR as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 5074u16 => {
                     Self::AllocateNodePayloadsAMDX(
-                        <OpAllocateNodePayloadsAMDX as InstEncoding>::decode(reader)?,
+                        <OpAllocateNodePayloadsAMDX as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5075u16 => {
                     Self::EnqueueNodePayloadsAMDX(
-                        <OpEnqueueNodePayloadsAMDX as InstEncoding>::decode(reader)?,
+                        <OpEnqueueNodePayloadsAMDX as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5076u16 => {
                     Self::TypeNodePayloadArrayAMDX(
-                        <OpTypeNodePayloadArrayAMDX as InstEncoding>::decode(reader)?,
+                        <OpTypeNodePayloadArrayAMDX as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5078u16 => {
                     Self::FinishWritingNodePayloadAMDX(
-                        <OpFinishWritingNodePayloadAMDX as InstEncoding>::decode(reader)?,
+                        <OpFinishWritingNodePayloadAMDX as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5090u16 => {
                     Self::NodePayloadArrayLengthAMDX(
-                        <OpNodePayloadArrayLengthAMDX as InstEncoding>::decode(reader)?,
+                        <OpNodePayloadArrayLengthAMDX as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5101u16 => {
                     Self::IsNodePayloadValidAMDX(
-                        <OpIsNodePayloadValidAMDX as InstEncoding>::decode(reader)?,
+                        <OpIsNodePayloadValidAMDX as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5103u16 => {
                     Self::ConstantStringAMDX(
-                        <OpConstantStringAMDX as InstEncoding>::decode(reader)?,
+                        <OpConstantStringAMDX as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5104u16 => {
                     Self::SpecConstantStringAMDX(
-                        <OpSpecConstantStringAMDX as InstEncoding>::decode(reader)?,
+                        <OpSpecConstantStringAMDX as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5110u16 => {
                     Self::GroupNonUniformQuadAllKHR(
-                        <OpGroupNonUniformQuadAllKHR as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformQuadAllKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5111u16 => {
                     Self::GroupNonUniformQuadAnyKHR(
-                        <OpGroupNonUniformQuadAnyKHR as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformQuadAnyKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5115u16 => {
                     Self::TypeBufferEXT(
-                        <OpTypeBufferEXT as InstEncoding>::decode(reader)?,
+                        <OpTypeBufferEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5119u16 => {
                     Self::BufferPointerEXT(
-                        <OpBufferPointerEXT as InstEncoding>::decode(reader)?,
+                        <OpBufferPointerEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5126u16 => {
                     Self::UntypedImageTexelPointerEXT(
-                        <OpUntypedImageTexelPointerEXT as InstEncoding>::decode(reader)?,
+                        <OpUntypedImageTexelPointerEXT as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5127u16 => {
                     Self::MemberDecorateIdEXT(
-                        <OpMemberDecorateIdEXT as InstEncoding>::decode(reader)?,
+                        <OpMemberDecorateIdEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5129u16 => {
                     Self::ConstantSizeOfEXT(
-                        <OpConstantSizeOfEXT as InstEncoding>::decode(reader)?,
+                        <OpConstantSizeOfEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5249u16 => {
                     Self::HitObjectRecordHitMotionNV(
-                        <OpHitObjectRecordHitMotionNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectRecordHitMotionNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5250u16 => {
                     Self::HitObjectRecordHitWithIndexMotionNV(
-                        <OpHitObjectRecordHitWithIndexMotionNV as InstEncoding>::decode(
+                        <OpHitObjectRecordHitWithIndexMotionNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5251u16 => {
                     Self::HitObjectRecordMissMotionNV(
-                        <OpHitObjectRecordMissMotionNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectRecordMissMotionNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5252u16 => {
                     Self::HitObjectGetWorldToObjectNV(
-                        <OpHitObjectGetWorldToObjectNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetWorldToObjectNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5253u16 => {
                     Self::HitObjectGetObjectToWorldNV(
-                        <OpHitObjectGetObjectToWorldNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetObjectToWorldNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5254u16 => {
                     Self::HitObjectGetObjectRayDirectionNV(
-                        <OpHitObjectGetObjectRayDirectionNV as InstEncoding>::decode(
+                        <OpHitObjectGetObjectRayDirectionNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5255u16 => {
                     Self::HitObjectGetObjectRayOriginNV(
-                        <OpHitObjectGetObjectRayOriginNV as InstEncoding>::decode(
+                        <OpHitObjectGetObjectRayOriginNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5256u16 => {
                     Self::HitObjectTraceRayMotionNV(
-                        <OpHitObjectTraceRayMotionNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectTraceRayMotionNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5257u16 => {
                     Self::HitObjectGetShaderRecordBufferHandleNV(
-                        <OpHitObjectGetShaderRecordBufferHandleNV as InstEncoding>::decode(
+                        <OpHitObjectGetShaderRecordBufferHandleNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5258u16 => {
                     Self::HitObjectGetShaderBindingTableRecordIndexNV(
-                        <OpHitObjectGetShaderBindingTableRecordIndexNV as InstEncoding>::decode(
+                        <OpHitObjectGetShaderBindingTableRecordIndexNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5259u16 => {
                     Self::HitObjectRecordEmptyNV(
-                        <OpHitObjectRecordEmptyNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectRecordEmptyNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5260u16 => {
                     Self::HitObjectTraceRayNV(
-                        <OpHitObjectTraceRayNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectTraceRayNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5261u16 => {
                     Self::HitObjectRecordHitNV(
-                        <OpHitObjectRecordHitNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectRecordHitNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5262u16 => {
                     Self::HitObjectRecordHitWithIndexNV(
-                        <OpHitObjectRecordHitWithIndexNV as InstEncoding>::decode(
+                        <OpHitObjectRecordHitWithIndexNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5263u16 => {
                     Self::HitObjectRecordMissNV(
-                        <OpHitObjectRecordMissNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectRecordMissNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5264u16 => {
                     Self::HitObjectExecuteShaderNV(
-                        <OpHitObjectExecuteShaderNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectExecuteShaderNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5265u16 => {
                     Self::HitObjectGetCurrentTimeNV(
-                        <OpHitObjectGetCurrentTimeNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetCurrentTimeNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5266u16 => {
                     Self::HitObjectGetAttributesNV(
-                        <OpHitObjectGetAttributesNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetAttributesNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5267u16 => {
                     Self::HitObjectGetHitKindNV(
-                        <OpHitObjectGetHitKindNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetHitKindNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5268u16 => {
                     Self::HitObjectGetPrimitiveIndexNV(
-                        <OpHitObjectGetPrimitiveIndexNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetPrimitiveIndexNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5269u16 => {
                     Self::HitObjectGetGeometryIndexNV(
-                        <OpHitObjectGetGeometryIndexNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetGeometryIndexNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5270u16 => {
                     Self::HitObjectGetInstanceIdNV(
-                        <OpHitObjectGetInstanceIdNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetInstanceIdNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5271u16 => {
                     Self::HitObjectGetInstanceCustomIndexNV(
-                        <OpHitObjectGetInstanceCustomIndexNV as InstEncoding>::decode(
+                        <OpHitObjectGetInstanceCustomIndexNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5272u16 => {
                     Self::HitObjectGetWorldRayDirectionNV(
-                        <OpHitObjectGetWorldRayDirectionNV as InstEncoding>::decode(
+                        <OpHitObjectGetWorldRayDirectionNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5273u16 => {
                     Self::HitObjectGetWorldRayOriginNV(
-                        <OpHitObjectGetWorldRayOriginNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetWorldRayOriginNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5274u16 => {
                     Self::HitObjectGetRayTMaxNV(
-                        <OpHitObjectGetRayTMaxNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetRayTMaxNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5275u16 => {
                     Self::HitObjectGetRayTMinNV(
-                        <OpHitObjectGetRayTMinNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetRayTMinNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5276u16 => {
                     Self::HitObjectIsEmptyNV(
-                        <OpHitObjectIsEmptyNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectIsEmptyNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5277u16 => {
                     Self::HitObjectIsHitNV(
-                        <OpHitObjectIsHitNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectIsHitNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5278u16 => {
                     Self::HitObjectIsMissNV(
-                        <OpHitObjectIsMissNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectIsMissNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5279u16 => {
                     Self::ReorderThreadWithHitObjectNV(
-                        <OpReorderThreadWithHitObjectNV as InstEncoding>::decode(reader)?,
+                        <OpReorderThreadWithHitObjectNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5280u16 => {
                     Self::ReorderThreadWithHintNV(
-                        <OpReorderThreadWithHintNV as InstEncoding>::decode(reader)?,
+                        <OpReorderThreadWithHintNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5281u16 => {
                     Self::TypeHitObjectNV(
-                        <OpTypeHitObjectNV as InstEncoding>::decode(reader)?,
+                        <OpTypeHitObjectNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5283u16 => {
                     Self::ImageSampleFootprintNV(
-                        <OpImageSampleFootprintNV as InstEncoding>::decode(reader)?,
+                        <OpImageSampleFootprintNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5288u16 => {
                     Self::TypeVectorIdEXT(
-                        <OpTypeVectorIdEXT as InstEncoding>::decode(reader)?,
+                        <OpTypeVectorIdEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5289u16 => {
                     Self::CooperativeVectorMatrixMulNV(
-                        <OpCooperativeVectorMatrixMulNV as InstEncoding>::decode(reader)?,
+                        <OpCooperativeVectorMatrixMulNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5290u16 => {
                     Self::CooperativeVectorOuterProductAccumulateNV(
-                        <OpCooperativeVectorOuterProductAccumulateNV as InstEncoding>::decode(
+                        <OpCooperativeVectorOuterProductAccumulateNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5291u16 => {
                     Self::CooperativeVectorReduceSumAccumulateNV(
-                        <OpCooperativeVectorReduceSumAccumulateNV as InstEncoding>::decode(
+                        <OpCooperativeVectorReduceSumAccumulateNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5292u16 => {
                     Self::CooperativeVectorMatrixMulAddNV(
-                        <OpCooperativeVectorMatrixMulAddNV as InstEncoding>::decode(
+                        <OpCooperativeVectorMatrixMulAddNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5293u16 => {
                     Self::CooperativeMatrixConvertNV(
-                        <OpCooperativeMatrixConvertNV as InstEncoding>::decode(reader)?,
+                        <OpCooperativeMatrixConvertNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5294u16 => {
                     Self::EmitMeshTasksEXT(
-                        <OpEmitMeshTasksEXT as InstEncoding>::decode(reader)?,
+                        <OpEmitMeshTasksEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5295u16 => {
                     Self::SetMeshOutputsEXT(
-                        <OpSetMeshOutputsEXT as InstEncoding>::decode(reader)?,
+                        <OpSetMeshOutputsEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5296u16 => {
                     Self::GroupNonUniformPartitionEXT(
-                        <OpGroupNonUniformPartitionEXT as InstEncoding>::decode(reader)?,
+                        <OpGroupNonUniformPartitionEXT as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5299u16 => {
                     Self::WritePackedPrimitiveIndices4x8NV(
-                        <OpWritePackedPrimitiveIndices4x8NV as InstEncoding>::decode(
+                        <OpWritePackedPrimitiveIndices4x8NV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5300u16 => {
                     Self::FetchMicroTriangleVertexPositionNV(
-                        <OpFetchMicroTriangleVertexPositionNV as InstEncoding>::decode(
+                        <OpFetchMicroTriangleVertexPositionNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5301u16 => {
                     Self::FetchMicroTriangleVertexBarycentricNV(
-                        <OpFetchMicroTriangleVertexBarycentricNV as InstEncoding>::decode(
+                        <OpFetchMicroTriangleVertexBarycentricNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5302u16 => {
                     Self::CooperativeVectorLoadNV(
-                        <OpCooperativeVectorLoadNV as InstEncoding>::decode(reader)?,
+                        <OpCooperativeVectorLoadNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5303u16 => {
                     Self::CooperativeVectorStoreNV(
-                        <OpCooperativeVectorStoreNV as InstEncoding>::decode(reader)?,
+                        <OpCooperativeVectorStoreNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5304u16 => {
                     Self::HitObjectRecordFromQueryEXT(
-                        <OpHitObjectRecordFromQueryEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectRecordFromQueryEXT as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5305u16 => {
                     Self::HitObjectRecordMissEXT(
-                        <OpHitObjectRecordMissEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectRecordMissEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5306u16 => {
                     Self::HitObjectRecordMissMotionEXT(
-                        <OpHitObjectRecordMissMotionEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectRecordMissMotionEXT as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5307u16 => {
                     Self::HitObjectGetIntersectionTriangleVertexPositionsEXT(
-                        <OpHitObjectGetIntersectionTriangleVertexPositionsEXT as InstEncoding>::decode(
+                        <OpHitObjectGetIntersectionTriangleVertexPositionsEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5308u16 => {
                     Self::HitObjectGetRayFlagsEXT(
-                        <OpHitObjectGetRayFlagsEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetRayFlagsEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5309u16 => {
                     Self::HitObjectSetShaderBindingTableRecordIndexEXT(
-                        <OpHitObjectSetShaderBindingTableRecordIndexEXT as InstEncoding>::decode(
+                        <OpHitObjectSetShaderBindingTableRecordIndexEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5310u16 => {
                     Self::HitObjectReorderExecuteShaderEXT(
-                        <OpHitObjectReorderExecuteShaderEXT as InstEncoding>::decode(
+                        <OpHitObjectReorderExecuteShaderEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5311u16 => {
                     Self::HitObjectTraceReorderExecuteEXT(
-                        <OpHitObjectTraceReorderExecuteEXT as InstEncoding>::decode(
+                        <OpHitObjectTraceReorderExecuteEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5312u16 => {
                     Self::HitObjectTraceMotionReorderExecuteEXT(
-                        <OpHitObjectTraceMotionReorderExecuteEXT as InstEncoding>::decode(
+                        <OpHitObjectTraceMotionReorderExecuteEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5313u16 => {
                     Self::TypeHitObjectEXT(
-                        <OpTypeHitObjectEXT as InstEncoding>::decode(reader)?,
+                        <OpTypeHitObjectEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5314u16 => {
                     Self::ReorderThreadWithHintEXT(
-                        <OpReorderThreadWithHintEXT as InstEncoding>::decode(reader)?,
+                        <OpReorderThreadWithHintEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5315u16 => {
                     Self::ReorderThreadWithHitObjectEXT(
-                        <OpReorderThreadWithHitObjectEXT as InstEncoding>::decode(
+                        <OpReorderThreadWithHitObjectEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5316u16 => {
                     Self::HitObjectTraceRayEXT(
-                        <OpHitObjectTraceRayEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectTraceRayEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5317u16 => {
                     Self::HitObjectTraceRayMotionEXT(
-                        <OpHitObjectTraceRayMotionEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectTraceRayMotionEXT as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5318u16 => {
                     Self::HitObjectRecordEmptyEXT(
-                        <OpHitObjectRecordEmptyEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectRecordEmptyEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5319u16 => {
                     Self::HitObjectExecuteShaderEXT(
-                        <OpHitObjectExecuteShaderEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectExecuteShaderEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5320u16 => {
                     Self::HitObjectGetCurrentTimeEXT(
-                        <OpHitObjectGetCurrentTimeEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetCurrentTimeEXT as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5321u16 => {
                     Self::HitObjectGetAttributesEXT(
-                        <OpHitObjectGetAttributesEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetAttributesEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5322u16 => {
                     Self::HitObjectGetHitKindEXT(
-                        <OpHitObjectGetHitKindEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetHitKindEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5323u16 => {
                     Self::HitObjectGetPrimitiveIndexEXT(
-                        <OpHitObjectGetPrimitiveIndexEXT as InstEncoding>::decode(
+                        <OpHitObjectGetPrimitiveIndexEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5324u16 => {
                     Self::HitObjectGetGeometryIndexEXT(
-                        <OpHitObjectGetGeometryIndexEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetGeometryIndexEXT as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5325u16 => {
                     Self::HitObjectGetInstanceIdEXT(
-                        <OpHitObjectGetInstanceIdEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetInstanceIdEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5326u16 => {
                     Self::HitObjectGetInstanceCustomIndexEXT(
-                        <OpHitObjectGetInstanceCustomIndexEXT as InstEncoding>::decode(
+                        <OpHitObjectGetInstanceCustomIndexEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5327u16 => {
                     Self::HitObjectGetObjectRayOriginEXT(
-                        <OpHitObjectGetObjectRayOriginEXT as InstEncoding>::decode(
+                        <OpHitObjectGetObjectRayOriginEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5328u16 => {
                     Self::HitObjectGetObjectRayDirectionEXT(
-                        <OpHitObjectGetObjectRayDirectionEXT as InstEncoding>::decode(
+                        <OpHitObjectGetObjectRayDirectionEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5329u16 => {
                     Self::HitObjectGetWorldRayDirectionEXT(
-                        <OpHitObjectGetWorldRayDirectionEXT as InstEncoding>::decode(
+                        <OpHitObjectGetWorldRayDirectionEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5330u16 => {
                     Self::HitObjectGetWorldRayOriginEXT(
-                        <OpHitObjectGetWorldRayOriginEXT as InstEncoding>::decode(
+                        <OpHitObjectGetWorldRayOriginEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5331u16 => {
                     Self::HitObjectGetObjectToWorldEXT(
-                        <OpHitObjectGetObjectToWorldEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetObjectToWorldEXT as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5332u16 => {
                     Self::HitObjectGetWorldToObjectEXT(
-                        <OpHitObjectGetWorldToObjectEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetWorldToObjectEXT as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5333u16 => {
                     Self::HitObjectGetRayTMaxEXT(
-                        <OpHitObjectGetRayTMaxEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetRayTMaxEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5334u16 => {
                     Self::ReportIntersectionKHR(
-                        <OpReportIntersectionKHR as InstEncoding>::decode(reader)?,
+                        <OpReportIntersectionKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5335u16 => {
                     Self::IgnoreIntersectionNV(
-                        <OpIgnoreIntersectionNV as InstEncoding>::decode(reader)?,
+                        <OpIgnoreIntersectionNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5336u16 => {
                     Self::TerminateRayNV(
-                        <OpTerminateRayNV as InstEncoding>::decode(reader)?,
+                        <OpTerminateRayNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                5337u16 => Self::TraceNV(<OpTraceNV as InstEncoding>::decode(reader)?),
+                5337u16 => Self::TraceNV(<OpTraceNV as SpvInstEncoding>::decode(reader)?),
                 5338u16 => {
                     Self::TraceMotionNV(
-                        <OpTraceMotionNV as InstEncoding>::decode(reader)?,
+                        <OpTraceMotionNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5339u16 => {
                     Self::TraceRayMotionNV(
-                        <OpTraceRayMotionNV as InstEncoding>::decode(reader)?,
+                        <OpTraceRayMotionNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5340u16 => {
                     Self::RayQueryGetIntersectionTriangleVertexPositionsKHR(
-                        <OpRayQueryGetIntersectionTriangleVertexPositionsKHR as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionTriangleVertexPositionsKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5341u16 => {
                     Self::TypeAccelerationStructureKHR(
-                        <OpTypeAccelerationStructureKHR as InstEncoding>::decode(reader)?,
+                        <OpTypeAccelerationStructureKHR as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5344u16 => {
                     Self::ExecuteCallableNV(
-                        <OpExecuteCallableNV as InstEncoding>::decode(reader)?,
+                        <OpExecuteCallableNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5345u16 => {
                     Self::RayQueryGetIntersectionClusterIdNV(
-                        <OpRayQueryGetIntersectionClusterIdNV as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionClusterIdNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5346u16 => {
                     Self::HitObjectGetClusterIdNV(
-                        <OpHitObjectGetClusterIdNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetClusterIdNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5347u16 => {
                     Self::HitObjectGetRayTMinEXT(
-                        <OpHitObjectGetRayTMinEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetRayTMinEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5348u16 => {
                     Self::HitObjectGetShaderBindingTableRecordIndexEXT(
-                        <OpHitObjectGetShaderBindingTableRecordIndexEXT as InstEncoding>::decode(
+                        <OpHitObjectGetShaderBindingTableRecordIndexEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5349u16 => {
                     Self::HitObjectGetShaderRecordBufferHandleEXT(
-                        <OpHitObjectGetShaderRecordBufferHandleEXT as InstEncoding>::decode(
+                        <OpHitObjectGetShaderRecordBufferHandleEXT as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5350u16 => {
                     Self::HitObjectIsEmptyEXT(
-                        <OpHitObjectIsEmptyEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectIsEmptyEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5351u16 => {
                     Self::HitObjectIsHitEXT(
-                        <OpHitObjectIsHitEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectIsHitEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5352u16 => {
                     Self::HitObjectIsMissEXT(
-                        <OpHitObjectIsMissEXT as InstEncoding>::decode(reader)?,
+                        <OpHitObjectIsMissEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5358u16 => {
                     Self::TypeCooperativeMatrixNV(
-                        <OpTypeCooperativeMatrixNV as InstEncoding>::decode(reader)?,
+                        <OpTypeCooperativeMatrixNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5359u16 => {
                     Self::CooperativeMatrixLoadNV(
-                        <OpCooperativeMatrixLoadNV as InstEncoding>::decode(reader)?,
+                        <OpCooperativeMatrixLoadNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5360u16 => {
                     Self::CooperativeMatrixStoreNV(
-                        <OpCooperativeMatrixStoreNV as InstEncoding>::decode(reader)?,
+                        <OpCooperativeMatrixStoreNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5361u16 => {
                     Self::CooperativeMatrixMulAddNV(
-                        <OpCooperativeMatrixMulAddNV as InstEncoding>::decode(reader)?,
+                        <OpCooperativeMatrixMulAddNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5362u16 => {
                     Self::CooperativeMatrixLengthNV(
-                        <OpCooperativeMatrixLengthNV as InstEncoding>::decode(reader)?,
+                        <OpCooperativeMatrixLengthNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5364u16 => {
                     Self::BeginInvocationInterlockEXT(
-                        <OpBeginInvocationInterlockEXT as InstEncoding>::decode(reader)?,
+                        <OpBeginInvocationInterlockEXT as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5365u16 => {
                     Self::EndInvocationInterlockEXT(
-                        <OpEndInvocationInterlockEXT as InstEncoding>::decode(reader)?,
+                        <OpEndInvocationInterlockEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5366u16 => {
                     Self::CooperativeMatrixReduceNV(
-                        <OpCooperativeMatrixReduceNV as InstEncoding>::decode(reader)?,
+                        <OpCooperativeMatrixReduceNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5367u16 => {
                     Self::CooperativeMatrixLoadTensorNV(
-                        <OpCooperativeMatrixLoadTensorNV as InstEncoding>::decode(
+                        <OpCooperativeMatrixLoadTensorNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5368u16 => {
                     Self::CooperativeMatrixStoreTensorNV(
-                        <OpCooperativeMatrixStoreTensorNV as InstEncoding>::decode(
+                        <OpCooperativeMatrixStoreTensorNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5369u16 => {
                     Self::CooperativeMatrixPerElementOpNV(
-                        <OpCooperativeMatrixPerElementOpNV as InstEncoding>::decode(
+                        <OpCooperativeMatrixPerElementOpNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5370u16 => {
                     Self::TypeTensorLayoutNV(
-                        <OpTypeTensorLayoutNV as InstEncoding>::decode(reader)?,
+                        <OpTypeTensorLayoutNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5371u16 => {
                     Self::TypeTensorViewNV(
-                        <OpTypeTensorViewNV as InstEncoding>::decode(reader)?,
+                        <OpTypeTensorViewNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5372u16 => {
                     Self::CreateTensorLayoutNV(
-                        <OpCreateTensorLayoutNV as InstEncoding>::decode(reader)?,
+                        <OpCreateTensorLayoutNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5373u16 => {
                     Self::TensorLayoutSetDimensionNV(
-                        <OpTensorLayoutSetDimensionNV as InstEncoding>::decode(reader)?,
+                        <OpTensorLayoutSetDimensionNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5374u16 => {
                     Self::TensorLayoutSetStrideNV(
-                        <OpTensorLayoutSetStrideNV as InstEncoding>::decode(reader)?,
+                        <OpTensorLayoutSetStrideNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5375u16 => {
                     Self::TensorLayoutSliceNV(
-                        <OpTensorLayoutSliceNV as InstEncoding>::decode(reader)?,
+                        <OpTensorLayoutSliceNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5376u16 => {
                     Self::TensorLayoutSetClampValueNV(
-                        <OpTensorLayoutSetClampValueNV as InstEncoding>::decode(reader)?,
+                        <OpTensorLayoutSetClampValueNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5377u16 => {
                     Self::CreateTensorViewNV(
-                        <OpCreateTensorViewNV as InstEncoding>::decode(reader)?,
+                        <OpCreateTensorViewNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5378u16 => {
                     Self::TensorViewSetDimensionNV(
-                        <OpTensorViewSetDimensionNV as InstEncoding>::decode(reader)?,
+                        <OpTensorViewSetDimensionNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5379u16 => {
                     Self::TensorViewSetStrideNV(
-                        <OpTensorViewSetStrideNV as InstEncoding>::decode(reader)?,
+                        <OpTensorViewSetStrideNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5380u16 => {
                     Self::DemoteToHelperInvocation(
-                        <OpDemoteToHelperInvocation as InstEncoding>::decode(reader)?,
+                        <OpDemoteToHelperInvocation as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5381u16 => {
                     Self::IsHelperInvocationEXT(
-                        <OpIsHelperInvocationEXT as InstEncoding>::decode(reader)?,
+                        <OpIsHelperInvocationEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5382u16 => {
                     Self::TensorViewSetClipNV(
-                        <OpTensorViewSetClipNV as InstEncoding>::decode(reader)?,
+                        <OpTensorViewSetClipNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5384u16 => {
                     Self::TensorLayoutSetBlockSizeNV(
-                        <OpTensorLayoutSetBlockSizeNV as InstEncoding>::decode(reader)?,
+                        <OpTensorLayoutSetBlockSizeNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5390u16 => {
                     Self::CooperativeMatrixTransposeNV(
-                        <OpCooperativeMatrixTransposeNV as InstEncoding>::decode(reader)?,
+                        <OpCooperativeMatrixTransposeNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5391u16 => {
                     Self::ConvertUToImageNV(
-                        <OpConvertUToImageNV as InstEncoding>::decode(reader)?,
+                        <OpConvertUToImageNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5392u16 => {
                     Self::ConvertUToSamplerNV(
-                        <OpConvertUToSamplerNV as InstEncoding>::decode(reader)?,
+                        <OpConvertUToSamplerNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5393u16 => {
                     Self::ConvertImageToUNV(
-                        <OpConvertImageToUNV as InstEncoding>::decode(reader)?,
+                        <OpConvertImageToUNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5394u16 => {
                     Self::ConvertSamplerToUNV(
-                        <OpConvertSamplerToUNV as InstEncoding>::decode(reader)?,
+                        <OpConvertSamplerToUNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5395u16 => {
                     Self::ConvertUToSampledImageNV(
-                        <OpConvertUToSampledImageNV as InstEncoding>::decode(reader)?,
+                        <OpConvertUToSampledImageNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5396u16 => {
                     Self::ConvertSampledImageToUNV(
-                        <OpConvertSampledImageToUNV as InstEncoding>::decode(reader)?,
+                        <OpConvertSampledImageToUNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5397u16 => {
                     Self::SamplerImageAddressingModeNV(
-                        <OpSamplerImageAddressingModeNV as InstEncoding>::decode(reader)?,
+                        <OpSamplerImageAddressingModeNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5398u16 => {
                     Self::RawAccessChainNV(
-                        <OpRawAccessChainNV as InstEncoding>::decode(reader)?,
+                        <OpRawAccessChainNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5427u16 => {
                     Self::RayQueryGetIntersectionSpherePositionNV(
-                        <OpRayQueryGetIntersectionSpherePositionNV as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionSpherePositionNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5428u16 => {
                     Self::RayQueryGetIntersectionSphereRadiusNV(
-                        <OpRayQueryGetIntersectionSphereRadiusNV as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionSphereRadiusNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5429u16 => {
                     Self::RayQueryGetIntersectionLSSPositionsNV(
-                        <OpRayQueryGetIntersectionLSSPositionsNV as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionLSSPositionsNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5430u16 => {
                     Self::RayQueryGetIntersectionLSSRadiiNV(
-                        <OpRayQueryGetIntersectionLSSRadiiNV as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionLSSRadiiNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5431u16 => {
                     Self::RayQueryGetIntersectionLSSHitValueNV(
-                        <OpRayQueryGetIntersectionLSSHitValueNV as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionLSSHitValueNV as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5432u16 => {
                     Self::HitObjectGetSpherePositionNV(
-                        <OpHitObjectGetSpherePositionNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetSpherePositionNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5433u16 => {
                     Self::HitObjectGetSphereRadiusNV(
-                        <OpHitObjectGetSphereRadiusNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetSphereRadiusNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5434u16 => {
                     Self::HitObjectGetLSSPositionsNV(
-                        <OpHitObjectGetLSSPositionsNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetLSSPositionsNV as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5435u16 => {
                     Self::HitObjectGetLSSRadiiNV(
-                        <OpHitObjectGetLSSRadiiNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectGetLSSRadiiNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5436u16 => {
                     Self::HitObjectIsSphereHitNV(
-                        <OpHitObjectIsSphereHitNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectIsSphereHitNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5437u16 => {
                     Self::HitObjectIsLSSHitNV(
-                        <OpHitObjectIsLSSHitNV as InstEncoding>::decode(reader)?,
+                        <OpHitObjectIsLSSHitNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5438u16 => {
                     Self::RayQueryIsSphereHitNV(
-                        <OpRayQueryIsSphereHitNV as InstEncoding>::decode(reader)?,
+                        <OpRayQueryIsSphereHitNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5439u16 => {
                     Self::RayQueryIsLSSHitNV(
-                        <OpRayQueryIsLSSHitNV as InstEncoding>::decode(reader)?,
+                        <OpRayQueryIsLSSHitNV as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5571u16 => {
                     Self::SubgroupShuffleINTEL(
-                        <OpSubgroupShuffleINTEL as InstEncoding>::decode(reader)?,
+                        <OpSubgroupShuffleINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5572u16 => {
                     Self::SubgroupShuffleDownINTEL(
-                        <OpSubgroupShuffleDownINTEL as InstEncoding>::decode(reader)?,
+                        <OpSubgroupShuffleDownINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5573u16 => {
                     Self::SubgroupShuffleUpINTEL(
-                        <OpSubgroupShuffleUpINTEL as InstEncoding>::decode(reader)?,
+                        <OpSubgroupShuffleUpINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5574u16 => {
                     Self::SubgroupShuffleXorINTEL(
-                        <OpSubgroupShuffleXorINTEL as InstEncoding>::decode(reader)?,
+                        <OpSubgroupShuffleXorINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5575u16 => {
                     Self::SubgroupBlockReadINTEL(
-                        <OpSubgroupBlockReadINTEL as InstEncoding>::decode(reader)?,
+                        <OpSubgroupBlockReadINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5576u16 => {
                     Self::SubgroupBlockWriteINTEL(
-                        <OpSubgroupBlockWriteINTEL as InstEncoding>::decode(reader)?,
+                        <OpSubgroupBlockWriteINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5577u16 => {
                     Self::SubgroupImageBlockReadINTEL(
-                        <OpSubgroupImageBlockReadINTEL as InstEncoding>::decode(reader)?,
+                        <OpSubgroupImageBlockReadINTEL as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5578u16 => {
                     Self::SubgroupImageBlockWriteINTEL(
-                        <OpSubgroupImageBlockWriteINTEL as InstEncoding>::decode(reader)?,
+                        <OpSubgroupImageBlockWriteINTEL as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5580u16 => {
                     Self::SubgroupImageMediaBlockReadINTEL(
-                        <OpSubgroupImageMediaBlockReadINTEL as InstEncoding>::decode(
+                        <OpSubgroupImageMediaBlockReadINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5581u16 => {
                     Self::SubgroupImageMediaBlockWriteINTEL(
-                        <OpSubgroupImageMediaBlockWriteINTEL as InstEncoding>::decode(
+                        <OpSubgroupImageMediaBlockWriteINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5585u16 => {
                     Self::UCountLeadingZerosINTEL(
-                        <OpUCountLeadingZerosINTEL as InstEncoding>::decode(reader)?,
+                        <OpUCountLeadingZerosINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5586u16 => {
                     Self::UCountTrailingZerosINTEL(
-                        <OpUCountTrailingZerosINTEL as InstEncoding>::decode(reader)?,
+                        <OpUCountTrailingZerosINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5587u16 => {
-                    Self::AbsISubINTEL(<OpAbsISubINTEL as InstEncoding>::decode(reader)?)
+                    Self::AbsISubINTEL(
+                        <OpAbsISubINTEL as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 5588u16 => {
-                    Self::AbsUSubINTEL(<OpAbsUSubINTEL as InstEncoding>::decode(reader)?)
+                    Self::AbsUSubINTEL(
+                        <OpAbsUSubINTEL as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 5589u16 => {
-                    Self::IAddSatINTEL(<OpIAddSatINTEL as InstEncoding>::decode(reader)?)
+                    Self::IAddSatINTEL(
+                        <OpIAddSatINTEL as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 5590u16 => {
-                    Self::UAddSatINTEL(<OpUAddSatINTEL as InstEncoding>::decode(reader)?)
+                    Self::UAddSatINTEL(
+                        <OpUAddSatINTEL as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 5591u16 => {
                     Self::IAverageINTEL(
-                        <OpIAverageINTEL as InstEncoding>::decode(reader)?,
+                        <OpIAverageINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5592u16 => {
                     Self::UAverageINTEL(
-                        <OpUAverageINTEL as InstEncoding>::decode(reader)?,
+                        <OpUAverageINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5593u16 => {
                     Self::IAverageRoundedINTEL(
-                        <OpIAverageRoundedINTEL as InstEncoding>::decode(reader)?,
+                        <OpIAverageRoundedINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5594u16 => {
                     Self::UAverageRoundedINTEL(
-                        <OpUAverageRoundedINTEL as InstEncoding>::decode(reader)?,
+                        <OpUAverageRoundedINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5595u16 => {
-                    Self::ISubSatINTEL(<OpISubSatINTEL as InstEncoding>::decode(reader)?)
+                    Self::ISubSatINTEL(
+                        <OpISubSatINTEL as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 5596u16 => {
-                    Self::USubSatINTEL(<OpUSubSatINTEL as InstEncoding>::decode(reader)?)
+                    Self::USubSatINTEL(
+                        <OpUSubSatINTEL as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 5597u16 => {
                     Self::IMul32x16INTEL(
-                        <OpIMul32x16INTEL as InstEncoding>::decode(reader)?,
+                        <OpIMul32x16INTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5598u16 => {
                     Self::UMul32x16INTEL(
-                        <OpUMul32x16INTEL as InstEncoding>::decode(reader)?,
+                        <OpUMul32x16INTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5600u16 => {
                     Self::ConstantFunctionPointerINTEL(
-                        <OpConstantFunctionPointerINTEL as InstEncoding>::decode(reader)?,
+                        <OpConstantFunctionPointerINTEL as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5601u16 => {
                     Self::FunctionPointerCallINTEL(
-                        <OpFunctionPointerCallINTEL as InstEncoding>::decode(reader)?,
+                        <OpFunctionPointerCallINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5609u16 => {
                     Self::AsmTargetINTEL(
-                        <OpAsmTargetINTEL as InstEncoding>::decode(reader)?,
+                        <OpAsmTargetINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
-                5610u16 => Self::AsmINTEL(<OpAsmINTEL as InstEncoding>::decode(reader)?),
+                5610u16 => {
+                    Self::AsmINTEL(<OpAsmINTEL as SpvInstEncoding>::decode(reader)?)
+                }
                 5611u16 => {
-                    Self::AsmCallINTEL(<OpAsmCallINTEL as InstEncoding>::decode(reader)?)
+                    Self::AsmCallINTEL(
+                        <OpAsmCallINTEL as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 5614u16 => {
                     Self::AtomicFMinEXT(
-                        <OpAtomicFMinEXT as InstEncoding>::decode(reader)?,
+                        <OpAtomicFMinEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5615u16 => {
                     Self::AtomicFMaxEXT(
-                        <OpAtomicFMaxEXT as InstEncoding>::decode(reader)?,
+                        <OpAtomicFMaxEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5630u16 => {
                     Self::AssumeTrueKHR(
-                        <OpAssumeTrueKHR as InstEncoding>::decode(reader)?,
+                        <OpAssumeTrueKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5631u16 => {
-                    Self::ExpectKHR(<OpExpectKHR as InstEncoding>::decode(reader)?)
+                    Self::ExpectKHR(<OpExpectKHR as SpvInstEncoding>::decode(reader)?)
                 }
                 5632u16 => {
                     Self::DecorateString(
-                        <OpDecorateString as InstEncoding>::decode(reader)?,
+                        <OpDecorateString as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5633u16 => {
                     Self::MemberDecorateString(
-                        <OpMemberDecorateString as InstEncoding>::decode(reader)?,
+                        <OpMemberDecorateString as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5699u16 => {
                     Self::VmeImageINTEL(
-                        <OpVmeImageINTEL as InstEncoding>::decode(reader)?,
+                        <OpVmeImageINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5700u16 => {
                     Self::TypeVmeImageINTEL(
-                        <OpTypeVmeImageINTEL as InstEncoding>::decode(reader)?,
+                        <OpTypeVmeImageINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5701u16 => {
                     Self::TypeAvcImePayloadINTEL(
-                        <OpTypeAvcImePayloadINTEL as InstEncoding>::decode(reader)?,
+                        <OpTypeAvcImePayloadINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5702u16 => {
                     Self::TypeAvcRefPayloadINTEL(
-                        <OpTypeAvcRefPayloadINTEL as InstEncoding>::decode(reader)?,
+                        <OpTypeAvcRefPayloadINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5703u16 => {
                     Self::TypeAvcSicPayloadINTEL(
-                        <OpTypeAvcSicPayloadINTEL as InstEncoding>::decode(reader)?,
+                        <OpTypeAvcSicPayloadINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5704u16 => {
                     Self::TypeAvcMcePayloadINTEL(
-                        <OpTypeAvcMcePayloadINTEL as InstEncoding>::decode(reader)?,
+                        <OpTypeAvcMcePayloadINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5705u16 => {
                     Self::TypeAvcMceResultINTEL(
-                        <OpTypeAvcMceResultINTEL as InstEncoding>::decode(reader)?,
+                        <OpTypeAvcMceResultINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5706u16 => {
                     Self::TypeAvcImeResultINTEL(
-                        <OpTypeAvcImeResultINTEL as InstEncoding>::decode(reader)?,
+                        <OpTypeAvcImeResultINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5707u16 => {
                     Self::TypeAvcImeResultSingleReferenceStreamoutINTEL(
-                        <OpTypeAvcImeResultSingleReferenceStreamoutINTEL as InstEncoding>::decode(
+                        <OpTypeAvcImeResultSingleReferenceStreamoutINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5708u16 => {
                     Self::TypeAvcImeResultDualReferenceStreamoutINTEL(
-                        <OpTypeAvcImeResultDualReferenceStreamoutINTEL as InstEncoding>::decode(
+                        <OpTypeAvcImeResultDualReferenceStreamoutINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5709u16 => {
                     Self::TypeAvcImeSingleReferenceStreaminINTEL(
-                        <OpTypeAvcImeSingleReferenceStreaminINTEL as InstEncoding>::decode(
+                        <OpTypeAvcImeSingleReferenceStreaminINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5710u16 => {
                     Self::TypeAvcImeDualReferenceStreaminINTEL(
-                        <OpTypeAvcImeDualReferenceStreaminINTEL as InstEncoding>::decode(
+                        <OpTypeAvcImeDualReferenceStreaminINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5711u16 => {
                     Self::TypeAvcRefResultINTEL(
-                        <OpTypeAvcRefResultINTEL as InstEncoding>::decode(reader)?,
+                        <OpTypeAvcRefResultINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5712u16 => {
                     Self::TypeAvcSicResultINTEL(
-                        <OpTypeAvcSicResultINTEL as InstEncoding>::decode(reader)?,
+                        <OpTypeAvcSicResultINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5713u16 => {
                     Self::SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(
-                        <OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5714u16 => {
                     Self::SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(
-                        <OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5715u16 => {
                     Self::SubgroupAvcMceGetDefaultInterShapePenaltyINTEL(
-                        <OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5716u16 => {
                     Self::SubgroupAvcMceSetInterShapePenaltyINTEL(
-                        <OpSubgroupAvcMceSetInterShapePenaltyINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceSetInterShapePenaltyINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5717u16 => {
                     Self::SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(
-                        <OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5718u16 => {
                     Self::SubgroupAvcMceSetInterDirectionPenaltyINTEL(
-                        <OpSubgroupAvcMceSetInterDirectionPenaltyINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceSetInterDirectionPenaltyINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5719u16 => {
                     Self::SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(
-                        <OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5720u16 => {
                     Self::SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(
-                        <OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5721u16 => {
                     Self::SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(
-                        <OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5722u16 => {
                     Self::SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(
-                        <OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5723u16 => {
                     Self::SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(
-                        <OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5724u16 => {
                     Self::SubgroupAvcMceSetMotionVectorCostFunctionINTEL(
-                        <OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5725u16 => {
                     Self::SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(
-                        <OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5726u16 => {
                     Self::SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(
-                        <OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5727u16 => {
                     Self::SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(
-                        <OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5728u16 => {
                     Self::SubgroupAvcMceSetAcOnlyHaarINTEL(
-                        <OpSubgroupAvcMceSetAcOnlyHaarINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceSetAcOnlyHaarINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5729u16 => {
                     Self::SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL(
-                        <OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5730u16 => {
                     Self::SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(
-                        <OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5731u16 => {
                     Self::SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(
-                        <OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5732u16 => {
                     Self::SubgroupAvcMceConvertToImePayloadINTEL(
-                        <OpSubgroupAvcMceConvertToImePayloadINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceConvertToImePayloadINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5733u16 => {
                     Self::SubgroupAvcMceConvertToImeResultINTEL(
-                        <OpSubgroupAvcMceConvertToImeResultINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceConvertToImeResultINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5734u16 => {
                     Self::SubgroupAvcMceConvertToRefPayloadINTEL(
-                        <OpSubgroupAvcMceConvertToRefPayloadINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceConvertToRefPayloadINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5735u16 => {
                     Self::SubgroupAvcMceConvertToRefResultINTEL(
-                        <OpSubgroupAvcMceConvertToRefResultINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceConvertToRefResultINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5736u16 => {
                     Self::SubgroupAvcMceConvertToSicPayloadINTEL(
-                        <OpSubgroupAvcMceConvertToSicPayloadINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceConvertToSicPayloadINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5737u16 => {
                     Self::SubgroupAvcMceConvertToSicResultINTEL(
-                        <OpSubgroupAvcMceConvertToSicResultINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceConvertToSicResultINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5738u16 => {
                     Self::SubgroupAvcMceGetMotionVectorsINTEL(
-                        <OpSubgroupAvcMceGetMotionVectorsINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetMotionVectorsINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5739u16 => {
                     Self::SubgroupAvcMceGetInterDistortionsINTEL(
-                        <OpSubgroupAvcMceGetInterDistortionsINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetInterDistortionsINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5740u16 => {
                     Self::SubgroupAvcMceGetBestInterDistortionsINTEL(
-                        <OpSubgroupAvcMceGetBestInterDistortionsINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetBestInterDistortionsINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5741u16 => {
                     Self::SubgroupAvcMceGetInterMajorShapeINTEL(
-                        <OpSubgroupAvcMceGetInterMajorShapeINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetInterMajorShapeINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5742u16 => {
                     Self::SubgroupAvcMceGetInterMinorShapeINTEL(
-                        <OpSubgroupAvcMceGetInterMinorShapeINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetInterMinorShapeINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5743u16 => {
                     Self::SubgroupAvcMceGetInterDirectionsINTEL(
-                        <OpSubgroupAvcMceGetInterDirectionsINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetInterDirectionsINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5744u16 => {
                     Self::SubgroupAvcMceGetInterMotionVectorCountINTEL(
-                        <OpSubgroupAvcMceGetInterMotionVectorCountINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetInterMotionVectorCountINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5745u16 => {
                     Self::SubgroupAvcMceGetInterReferenceIdsINTEL(
-                        <OpSubgroupAvcMceGetInterReferenceIdsINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetInterReferenceIdsINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5746u16 => {
                     Self::SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL(
-                        <OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5747u16 => {
                     Self::SubgroupAvcImeInitializeINTEL(
-                        <OpSubgroupAvcImeInitializeINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeInitializeINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5748u16 => {
                     Self::SubgroupAvcImeSetSingleReferenceINTEL(
-                        <OpSubgroupAvcImeSetSingleReferenceINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeSetSingleReferenceINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5749u16 => {
                     Self::SubgroupAvcImeSetDualReferenceINTEL(
-                        <OpSubgroupAvcImeSetDualReferenceINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeSetDualReferenceINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5750u16 => {
                     Self::SubgroupAvcImeRefWindowSizeINTEL(
-                        <OpSubgroupAvcImeRefWindowSizeINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeRefWindowSizeINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5751u16 => {
                     Self::SubgroupAvcImeAdjustRefOffsetINTEL(
-                        <OpSubgroupAvcImeAdjustRefOffsetINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeAdjustRefOffsetINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5752u16 => {
                     Self::SubgroupAvcImeConvertToMcePayloadINTEL(
-                        <OpSubgroupAvcImeConvertToMcePayloadINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeConvertToMcePayloadINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5753u16 => {
                     Self::SubgroupAvcImeSetMaxMotionVectorCountINTEL(
-                        <OpSubgroupAvcImeSetMaxMotionVectorCountINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeSetMaxMotionVectorCountINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5754u16 => {
                     Self::SubgroupAvcImeSetUnidirectionalMixDisableINTEL(
-                        <OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5755u16 => {
                     Self::SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(
-                        <OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5756u16 => {
                     Self::SubgroupAvcImeSetWeightedSadINTEL(
-                        <OpSubgroupAvcImeSetWeightedSadINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeSetWeightedSadINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5757u16 => {
                     Self::SubgroupAvcImeEvaluateWithSingleReferenceINTEL(
-                        <OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5758u16 => {
                     Self::SubgroupAvcImeEvaluateWithDualReferenceINTEL(
-                        <OpSubgroupAvcImeEvaluateWithDualReferenceINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeEvaluateWithDualReferenceINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5759u16 => {
                     Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(
-                        <OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5760u16 => {
                     Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(
-                        <OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5761u16 => {
                     Self::SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(
-                        <OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5762u16 => {
                     Self::SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(
-                        <OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5763u16 => {
                     Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(
-                        <OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5764u16 => {
                     Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(
-                        <OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5765u16 => {
                     Self::SubgroupAvcImeConvertToMceResultINTEL(
-                        <OpSubgroupAvcImeConvertToMceResultINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeConvertToMceResultINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5766u16 => {
                     Self::SubgroupAvcImeGetSingleReferenceStreaminINTEL(
-                        <OpSubgroupAvcImeGetSingleReferenceStreaminINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeGetSingleReferenceStreaminINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5767u16 => {
                     Self::SubgroupAvcImeGetDualReferenceStreaminINTEL(
-                        <OpSubgroupAvcImeGetDualReferenceStreaminINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeGetDualReferenceStreaminINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5768u16 => {
                     Self::SubgroupAvcImeStripSingleReferenceStreamoutINTEL(
-                        <OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5769u16 => {
                     Self::SubgroupAvcImeStripDualReferenceStreamoutINTEL(
-                        <OpSubgroupAvcImeStripDualReferenceStreamoutINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeStripDualReferenceStreamoutINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5770u16 => {
                     Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL(
-                        <OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5771u16 => {
                     Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL(
-                        <OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5772u16 => {
                     Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL(
-                        <OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5773u16 => {
                     Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL(
-                        <OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5774u16 => {
                     Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(
-                        <OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5775u16 => {
                     Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(
-                        <OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5776u16 => {
                     Self::SubgroupAvcImeGetBorderReachedINTEL(
-                        <OpSubgroupAvcImeGetBorderReachedINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeGetBorderReachedINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5777u16 => {
                     Self::SubgroupAvcImeGetTruncatedSearchIndicationINTEL(
-                        <OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5778u16 => {
                     Self::SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(
-                        <OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5779u16 => {
                     Self::SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(
-                        <OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5780u16 => {
                     Self::SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(
-                        <OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5781u16 => {
                     Self::SubgroupAvcFmeInitializeINTEL(
-                        <OpSubgroupAvcFmeInitializeINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcFmeInitializeINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5782u16 => {
                     Self::SubgroupAvcBmeInitializeINTEL(
-                        <OpSubgroupAvcBmeInitializeINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcBmeInitializeINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5783u16 => {
                     Self::SubgroupAvcRefConvertToMcePayloadINTEL(
-                        <OpSubgroupAvcRefConvertToMcePayloadINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcRefConvertToMcePayloadINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5784u16 => {
                     Self::SubgroupAvcRefSetBidirectionalMixDisableINTEL(
-                        <OpSubgroupAvcRefSetBidirectionalMixDisableINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcRefSetBidirectionalMixDisableINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5785u16 => {
                     Self::SubgroupAvcRefSetBilinearFilterEnableINTEL(
-                        <OpSubgroupAvcRefSetBilinearFilterEnableINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcRefSetBilinearFilterEnableINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5786u16 => {
                     Self::SubgroupAvcRefEvaluateWithSingleReferenceINTEL(
-                        <OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5787u16 => {
                     Self::SubgroupAvcRefEvaluateWithDualReferenceINTEL(
-                        <OpSubgroupAvcRefEvaluateWithDualReferenceINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcRefEvaluateWithDualReferenceINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5788u16 => {
                     Self::SubgroupAvcRefEvaluateWithMultiReferenceINTEL(
-                        <OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5789u16 => {
                     Self::SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(
-                        <OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5790u16 => {
                     Self::SubgroupAvcRefConvertToMceResultINTEL(
-                        <OpSubgroupAvcRefConvertToMceResultINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcRefConvertToMceResultINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5791u16 => {
                     Self::SubgroupAvcSicInitializeINTEL(
-                        <OpSubgroupAvcSicInitializeINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicInitializeINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5792u16 => {
                     Self::SubgroupAvcSicConfigureSkcINTEL(
-                        <OpSubgroupAvcSicConfigureSkcINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicConfigureSkcINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5793u16 => {
                     Self::SubgroupAvcSicConfigureIpeLumaINTEL(
-                        <OpSubgroupAvcSicConfigureIpeLumaINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicConfigureIpeLumaINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5794u16 => {
                     Self::SubgroupAvcSicConfigureIpeLumaChromaINTEL(
-                        <OpSubgroupAvcSicConfigureIpeLumaChromaINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicConfigureIpeLumaChromaINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5795u16 => {
                     Self::SubgroupAvcSicGetMotionVectorMaskINTEL(
-                        <OpSubgroupAvcSicGetMotionVectorMaskINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicGetMotionVectorMaskINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5796u16 => {
                     Self::SubgroupAvcSicConvertToMcePayloadINTEL(
-                        <OpSubgroupAvcSicConvertToMcePayloadINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicConvertToMcePayloadINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5797u16 => {
                     Self::SubgroupAvcSicSetIntraLumaShapePenaltyINTEL(
-                        <OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5798u16 => {
                     Self::SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(
-                        <OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5799u16 => {
                     Self::SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(
-                        <OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5800u16 => {
                     Self::SubgroupAvcSicSetBilinearFilterEnableINTEL(
-                        <OpSubgroupAvcSicSetBilinearFilterEnableINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicSetBilinearFilterEnableINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5801u16 => {
                     Self::SubgroupAvcSicSetSkcForwardTransformEnableINTEL(
-                        <OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5802u16 => {
                     Self::SubgroupAvcSicSetBlockBasedRawSkipSadINTEL(
-                        <OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5803u16 => {
                     Self::SubgroupAvcSicEvaluateIpeINTEL(
-                        <OpSubgroupAvcSicEvaluateIpeINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicEvaluateIpeINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5804u16 => {
                     Self::SubgroupAvcSicEvaluateWithSingleReferenceINTEL(
-                        <OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5805u16 => {
                     Self::SubgroupAvcSicEvaluateWithDualReferenceINTEL(
-                        <OpSubgroupAvcSicEvaluateWithDualReferenceINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicEvaluateWithDualReferenceINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5806u16 => {
                     Self::SubgroupAvcSicEvaluateWithMultiReferenceINTEL(
-                        <OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5807u16 => {
                     Self::SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(
-                        <OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5808u16 => {
                     Self::SubgroupAvcSicConvertToMceResultINTEL(
-                        <OpSubgroupAvcSicConvertToMceResultINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicConvertToMceResultINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5809u16 => {
                     Self::SubgroupAvcSicGetIpeLumaShapeINTEL(
-                        <OpSubgroupAvcSicGetIpeLumaShapeINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicGetIpeLumaShapeINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5810u16 => {
                     Self::SubgroupAvcSicGetBestIpeLumaDistortionINTEL(
-                        <OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5811u16 => {
                     Self::SubgroupAvcSicGetBestIpeChromaDistortionINTEL(
-                        <OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5812u16 => {
                     Self::SubgroupAvcSicGetPackedIpeLumaModesINTEL(
-                        <OpSubgroupAvcSicGetPackedIpeLumaModesINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicGetPackedIpeLumaModesINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5813u16 => {
                     Self::SubgroupAvcSicGetIpeChromaModeINTEL(
-                        <OpSubgroupAvcSicGetIpeChromaModeINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicGetIpeChromaModeINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5814u16 => {
                     Self::SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(
-                        <OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5815u16 => {
                     Self::SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(
-                        <OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5816u16 => {
                     Self::SubgroupAvcSicGetInterRawSadsINTEL(
-                        <OpSubgroupAvcSicGetInterRawSadsINTEL as InstEncoding>::decode(
+                        <OpSubgroupAvcSicGetInterRawSadsINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5818u16 => {
                     Self::VariableLengthArrayINTEL(
-                        <OpVariableLengthArrayINTEL as InstEncoding>::decode(reader)?,
+                        <OpVariableLengthArrayINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5819u16 => {
                     Self::SaveMemoryINTEL(
-                        <OpSaveMemoryINTEL as InstEncoding>::decode(reader)?,
+                        <OpSaveMemoryINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5820u16 => {
                     Self::RestoreMemoryINTEL(
-                        <OpRestoreMemoryINTEL as InstEncoding>::decode(reader)?,
+                        <OpRestoreMemoryINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5840u16 => {
                     Self::ArbitraryFloatSinCosPiALTERA(
-                        <OpArbitraryFloatSinCosPiALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatSinCosPiALTERA as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5841u16 => {
                     Self::ArbitraryFloatCastALTERA(
-                        <OpArbitraryFloatCastALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatCastALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5842u16 => {
                     Self::ArbitraryFloatCastFromIntALTERA(
-                        <OpArbitraryFloatCastFromIntALTERA as InstEncoding>::decode(
+                        <OpArbitraryFloatCastFromIntALTERA as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5843u16 => {
                     Self::ArbitraryFloatCastToIntALTERA(
-                        <OpArbitraryFloatCastToIntALTERA as InstEncoding>::decode(
+                        <OpArbitraryFloatCastToIntALTERA as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5846u16 => {
                     Self::ArbitraryFloatAddALTERA(
-                        <OpArbitraryFloatAddALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatAddALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5847u16 => {
                     Self::ArbitraryFloatSubALTERA(
-                        <OpArbitraryFloatSubALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatSubALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5848u16 => {
                     Self::ArbitraryFloatMulALTERA(
-                        <OpArbitraryFloatMulALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatMulALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5849u16 => {
                     Self::ArbitraryFloatDivALTERA(
-                        <OpArbitraryFloatDivALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatDivALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5850u16 => {
                     Self::ArbitraryFloatGTALTERA(
-                        <OpArbitraryFloatGTALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatGTALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5851u16 => {
                     Self::ArbitraryFloatGEALTERA(
-                        <OpArbitraryFloatGEALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatGEALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5852u16 => {
                     Self::ArbitraryFloatLTALTERA(
-                        <OpArbitraryFloatLTALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatLTALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5853u16 => {
                     Self::ArbitraryFloatLEALTERA(
-                        <OpArbitraryFloatLEALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatLEALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5854u16 => {
                     Self::ArbitraryFloatEQALTERA(
-                        <OpArbitraryFloatEQALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatEQALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5855u16 => {
                     Self::ArbitraryFloatRecipALTERA(
-                        <OpArbitraryFloatRecipALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatRecipALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5856u16 => {
                     Self::ArbitraryFloatRSqrtALTERA(
-                        <OpArbitraryFloatRSqrtALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatRSqrtALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5857u16 => {
                     Self::ArbitraryFloatCbrtALTERA(
-                        <OpArbitraryFloatCbrtALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatCbrtALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5858u16 => {
                     Self::ArbitraryFloatHypotALTERA(
-                        <OpArbitraryFloatHypotALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatHypotALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5859u16 => {
                     Self::ArbitraryFloatSqrtALTERA(
-                        <OpArbitraryFloatSqrtALTERA as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatSqrtALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5860u16 => {
                     Self::ArbitraryFloatLogINTEL(
-                        <OpArbitraryFloatLogINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatLogINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5861u16 => {
                     Self::ArbitraryFloatLog2INTEL(
-                        <OpArbitraryFloatLog2INTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatLog2INTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5862u16 => {
                     Self::ArbitraryFloatLog10INTEL(
-                        <OpArbitraryFloatLog10INTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatLog10INTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5863u16 => {
                     Self::ArbitraryFloatLog1pINTEL(
-                        <OpArbitraryFloatLog1pINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatLog1pINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5864u16 => {
                     Self::ArbitraryFloatExpINTEL(
-                        <OpArbitraryFloatExpINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatExpINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5865u16 => {
                     Self::ArbitraryFloatExp2INTEL(
-                        <OpArbitraryFloatExp2INTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatExp2INTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5866u16 => {
                     Self::ArbitraryFloatExp10INTEL(
-                        <OpArbitraryFloatExp10INTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatExp10INTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5867u16 => {
                     Self::ArbitraryFloatExpm1INTEL(
-                        <OpArbitraryFloatExpm1INTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatExpm1INTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5868u16 => {
                     Self::ArbitraryFloatSinINTEL(
-                        <OpArbitraryFloatSinINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatSinINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5869u16 => {
                     Self::ArbitraryFloatCosINTEL(
-                        <OpArbitraryFloatCosINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatCosINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5870u16 => {
                     Self::ArbitraryFloatSinCosINTEL(
-                        <OpArbitraryFloatSinCosINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatSinCosINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5871u16 => {
                     Self::ArbitraryFloatSinPiINTEL(
-                        <OpArbitraryFloatSinPiINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatSinPiINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5872u16 => {
                     Self::ArbitraryFloatCosPiINTEL(
-                        <OpArbitraryFloatCosPiINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatCosPiINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5873u16 => {
                     Self::ArbitraryFloatASinINTEL(
-                        <OpArbitraryFloatASinINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatASinINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5874u16 => {
                     Self::ArbitraryFloatASinPiINTEL(
-                        <OpArbitraryFloatASinPiINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatASinPiINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5875u16 => {
                     Self::ArbitraryFloatACosINTEL(
-                        <OpArbitraryFloatACosINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatACosINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5876u16 => {
                     Self::ArbitraryFloatACosPiINTEL(
-                        <OpArbitraryFloatACosPiINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatACosPiINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5877u16 => {
                     Self::ArbitraryFloatATanINTEL(
-                        <OpArbitraryFloatATanINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatATanINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5878u16 => {
                     Self::ArbitraryFloatATanPiINTEL(
-                        <OpArbitraryFloatATanPiINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatATanPiINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5879u16 => {
                     Self::ArbitraryFloatATan2INTEL(
-                        <OpArbitraryFloatATan2INTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatATan2INTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5880u16 => {
                     Self::ArbitraryFloatPowINTEL(
-                        <OpArbitraryFloatPowINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatPowINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5881u16 => {
                     Self::ArbitraryFloatPowRINTEL(
-                        <OpArbitraryFloatPowRINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatPowRINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5882u16 => {
                     Self::ArbitraryFloatPowNINTEL(
-                        <OpArbitraryFloatPowNINTEL as InstEncoding>::decode(reader)?,
+                        <OpArbitraryFloatPowNINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5887u16 => {
                     Self::LoopControlINTEL(
-                        <OpLoopControlINTEL as InstEncoding>::decode(reader)?,
+                        <OpLoopControlINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5911u16 => {
                     Self::AliasDomainDeclINTEL(
-                        <OpAliasDomainDeclINTEL as InstEncoding>::decode(reader)?,
+                        <OpAliasDomainDeclINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5912u16 => {
                     Self::AliasScopeDeclINTEL(
-                        <OpAliasScopeDeclINTEL as InstEncoding>::decode(reader)?,
+                        <OpAliasScopeDeclINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5913u16 => {
                     Self::AliasScopeListDeclINTEL(
-                        <OpAliasScopeListDeclINTEL as InstEncoding>::decode(reader)?,
+                        <OpAliasScopeListDeclINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5923u16 => {
                     Self::FixedSqrtALTERA(
-                        <OpFixedSqrtALTERA as InstEncoding>::decode(reader)?,
+                        <OpFixedSqrtALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5924u16 => {
                     Self::FixedRecipALTERA(
-                        <OpFixedRecipALTERA as InstEncoding>::decode(reader)?,
+                        <OpFixedRecipALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5925u16 => {
                     Self::FixedRsqrtALTERA(
-                        <OpFixedRsqrtALTERA as InstEncoding>::decode(reader)?,
+                        <OpFixedRsqrtALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5926u16 => {
                     Self::FixedSinALTERA(
-                        <OpFixedSinALTERA as InstEncoding>::decode(reader)?,
+                        <OpFixedSinALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5927u16 => {
                     Self::FixedCosALTERA(
-                        <OpFixedCosALTERA as InstEncoding>::decode(reader)?,
+                        <OpFixedCosALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5928u16 => {
                     Self::FixedSinCosALTERA(
-                        <OpFixedSinCosALTERA as InstEncoding>::decode(reader)?,
+                        <OpFixedSinCosALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5929u16 => {
                     Self::FixedSinPiALTERA(
-                        <OpFixedSinPiALTERA as InstEncoding>::decode(reader)?,
+                        <OpFixedSinPiALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5930u16 => {
                     Self::FixedCosPiALTERA(
-                        <OpFixedCosPiALTERA as InstEncoding>::decode(reader)?,
+                        <OpFixedCosPiALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5931u16 => {
                     Self::FixedSinCosPiALTERA(
-                        <OpFixedSinCosPiALTERA as InstEncoding>::decode(reader)?,
+                        <OpFixedSinCosPiALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5932u16 => {
                     Self::FixedLogALTERA(
-                        <OpFixedLogALTERA as InstEncoding>::decode(reader)?,
+                        <OpFixedLogALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5933u16 => {
                     Self::FixedExpALTERA(
-                        <OpFixedExpALTERA as InstEncoding>::decode(reader)?,
+                        <OpFixedExpALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5934u16 => {
                     Self::PtrCastToCrossWorkgroupALTERA(
-                        <OpPtrCastToCrossWorkgroupALTERA as InstEncoding>::decode(
+                        <OpPtrCastToCrossWorkgroupALTERA as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5938u16 => {
                     Self::CrossWorkgroupCastToPtrALTERA(
-                        <OpCrossWorkgroupCastToPtrALTERA as InstEncoding>::decode(
+                        <OpCrossWorkgroupCastToPtrALTERA as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 5946u16 => {
                     Self::ReadPipeBlockingALTERA(
-                        <OpReadPipeBlockingALTERA as InstEncoding>::decode(reader)?,
+                        <OpReadPipeBlockingALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5947u16 => {
                     Self::WritePipeBlockingALTERA(
-                        <OpWritePipeBlockingALTERA as InstEncoding>::decode(reader)?,
+                        <OpWritePipeBlockingALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 5949u16 => {
                     Self::FPGARegALTERA(
-                        <OpFPGARegALTERA as InstEncoding>::decode(reader)?,
+                        <OpFPGARegALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6016u16 => {
                     Self::RayQueryGetRayTMinKHR(
-                        <OpRayQueryGetRayTMinKHR as InstEncoding>::decode(reader)?,
+                        <OpRayQueryGetRayTMinKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6017u16 => {
                     Self::RayQueryGetRayFlagsKHR(
-                        <OpRayQueryGetRayFlagsKHR as InstEncoding>::decode(reader)?,
+                        <OpRayQueryGetRayFlagsKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6018u16 => {
                     Self::RayQueryGetIntersectionTKHR(
-                        <OpRayQueryGetIntersectionTKHR as InstEncoding>::decode(reader)?,
+                        <OpRayQueryGetIntersectionTKHR as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 6019u16 => {
                     Self::RayQueryGetIntersectionInstanceCustomIndexKHR(
-                        <OpRayQueryGetIntersectionInstanceCustomIndexKHR as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionInstanceCustomIndexKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6020u16 => {
                     Self::RayQueryGetIntersectionInstanceIdKHR(
-                        <OpRayQueryGetIntersectionInstanceIdKHR as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionInstanceIdKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6021u16 => {
                     Self::RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR(
-                        <OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6022u16 => {
                     Self::RayQueryGetIntersectionGeometryIndexKHR(
-                        <OpRayQueryGetIntersectionGeometryIndexKHR as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionGeometryIndexKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6023u16 => {
                     Self::RayQueryGetIntersectionPrimitiveIndexKHR(
-                        <OpRayQueryGetIntersectionPrimitiveIndexKHR as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionPrimitiveIndexKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6024u16 => {
                     Self::RayQueryGetIntersectionBarycentricsKHR(
-                        <OpRayQueryGetIntersectionBarycentricsKHR as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionBarycentricsKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6025u16 => {
                     Self::RayQueryGetIntersectionFrontFaceKHR(
-                        <OpRayQueryGetIntersectionFrontFaceKHR as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionFrontFaceKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6026u16 => {
                     Self::RayQueryGetIntersectionCandidateAABBOpaqueKHR(
-                        <OpRayQueryGetIntersectionCandidateAABBOpaqueKHR as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionCandidateAABBOpaqueKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6027u16 => {
                     Self::RayQueryGetIntersectionObjectRayDirectionKHR(
-                        <OpRayQueryGetIntersectionObjectRayDirectionKHR as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionObjectRayDirectionKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6028u16 => {
                     Self::RayQueryGetIntersectionObjectRayOriginKHR(
-                        <OpRayQueryGetIntersectionObjectRayOriginKHR as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionObjectRayOriginKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6029u16 => {
                     Self::RayQueryGetWorldRayDirectionKHR(
-                        <OpRayQueryGetWorldRayDirectionKHR as InstEncoding>::decode(
+                        <OpRayQueryGetWorldRayDirectionKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6030u16 => {
                     Self::RayQueryGetWorldRayOriginKHR(
-                        <OpRayQueryGetWorldRayOriginKHR as InstEncoding>::decode(reader)?,
+                        <OpRayQueryGetWorldRayOriginKHR as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 6031u16 => {
                     Self::RayQueryGetIntersectionObjectToWorldKHR(
-                        <OpRayQueryGetIntersectionObjectToWorldKHR as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionObjectToWorldKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6032u16 => {
                     Self::RayQueryGetIntersectionWorldToObjectKHR(
-                        <OpRayQueryGetIntersectionWorldToObjectKHR as InstEncoding>::decode(
+                        <OpRayQueryGetIntersectionWorldToObjectKHR as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6035u16 => {
                     Self::AtomicFAddEXT(
-                        <OpAtomicFAddEXT as InstEncoding>::decode(reader)?,
+                        <OpAtomicFAddEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6086u16 => {
                     Self::TypeBufferSurfaceINTEL(
-                        <OpTypeBufferSurfaceINTEL as InstEncoding>::decode(reader)?,
+                        <OpTypeBufferSurfaceINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6090u16 => {
                     Self::TypeStructContinuedINTEL(
-                        <OpTypeStructContinuedINTEL as InstEncoding>::decode(reader)?,
+                        <OpTypeStructContinuedINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6091u16 => {
                     Self::ConstantCompositeContinuedINTEL(
-                        <OpConstantCompositeContinuedINTEL as InstEncoding>::decode(
+                        <OpConstantCompositeContinuedINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6092u16 => {
                     Self::SpecConstantCompositeContinuedINTEL(
-                        <OpSpecConstantCompositeContinuedINTEL as InstEncoding>::decode(
+                        <OpSpecConstantCompositeContinuedINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6096u16 => {
                     Self::CompositeConstructContinuedINTEL(
-                        <OpCompositeConstructContinuedINTEL as InstEncoding>::decode(
+                        <OpCompositeConstructContinuedINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6116u16 => {
                     Self::ConvertFToBF16INTEL(
-                        <OpConvertFToBF16INTEL as InstEncoding>::decode(reader)?,
+                        <OpConvertFToBF16INTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6117u16 => {
                     Self::ConvertBF16ToFINTEL(
-                        <OpConvertBF16ToFINTEL as InstEncoding>::decode(reader)?,
+                        <OpConvertBF16ToFINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6142u16 => {
                     Self::ControlBarrierArriveINTEL(
-                        <OpControlBarrierArriveINTEL as InstEncoding>::decode(reader)?,
+                        <OpControlBarrierArriveINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6143u16 => {
                     Self::ControlBarrierWaitINTEL(
-                        <OpControlBarrierWaitINTEL as InstEncoding>::decode(reader)?,
+                        <OpControlBarrierWaitINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6145u16 => {
                     Self::ArithmeticFenceEXT(
-                        <OpArithmeticFenceEXT as InstEncoding>::decode(reader)?,
+                        <OpArithmeticFenceEXT as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6163u16 => {
                     Self::TaskSequenceCreateALTERA(
-                        <OpTaskSequenceCreateALTERA as InstEncoding>::decode(reader)?,
+                        <OpTaskSequenceCreateALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6164u16 => {
                     Self::TaskSequenceAsyncALTERA(
-                        <OpTaskSequenceAsyncALTERA as InstEncoding>::decode(reader)?,
+                        <OpTaskSequenceAsyncALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6165u16 => {
                     Self::TaskSequenceGetALTERA(
-                        <OpTaskSequenceGetALTERA as InstEncoding>::decode(reader)?,
+                        <OpTaskSequenceGetALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6166u16 => {
                     Self::TaskSequenceReleaseALTERA(
-                        <OpTaskSequenceReleaseALTERA as InstEncoding>::decode(reader)?,
+                        <OpTaskSequenceReleaseALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6199u16 => {
                     Self::TypeTaskSequenceALTERA(
-                        <OpTypeTaskSequenceALTERA as InstEncoding>::decode(reader)?,
+                        <OpTypeTaskSequenceALTERA as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6221u16 => {
                     Self::SubgroupBlockPrefetchINTEL(
-                        <OpSubgroupBlockPrefetchINTEL as InstEncoding>::decode(reader)?,
+                        <OpSubgroupBlockPrefetchINTEL as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 6231u16 => {
                     Self::Subgroup2DBlockLoadINTEL(
-                        <OpSubgroup2DBlockLoadINTEL as InstEncoding>::decode(reader)?,
+                        <OpSubgroup2DBlockLoadINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6232u16 => {
                     Self::Subgroup2DBlockLoadTransformINTEL(
-                        <OpSubgroup2DBlockLoadTransformINTEL as InstEncoding>::decode(
+                        <OpSubgroup2DBlockLoadTransformINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6233u16 => {
                     Self::Subgroup2DBlockLoadTransposeINTEL(
-                        <OpSubgroup2DBlockLoadTransposeINTEL as InstEncoding>::decode(
+                        <OpSubgroup2DBlockLoadTransposeINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6234u16 => {
                     Self::Subgroup2DBlockPrefetchINTEL(
-                        <OpSubgroup2DBlockPrefetchINTEL as InstEncoding>::decode(reader)?,
+                        <OpSubgroup2DBlockPrefetchINTEL as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 6235u16 => {
                     Self::Subgroup2DBlockStoreINTEL(
-                        <OpSubgroup2DBlockStoreINTEL as InstEncoding>::decode(reader)?,
+                        <OpSubgroup2DBlockStoreINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6237u16 => {
                     Self::SubgroupMatrixMultiplyAccumulateINTEL(
-                        <OpSubgroupMatrixMultiplyAccumulateINTEL as InstEncoding>::decode(
+                        <OpSubgroupMatrixMultiplyAccumulateINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6242u16 => {
                     Self::BitwiseFunctionINTEL(
-                        <OpBitwiseFunctionINTEL as InstEncoding>::decode(reader)?,
+                        <OpBitwiseFunctionINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6244u16 => {
                     Self::UntypedVariableLengthArrayINTEL(
-                        <OpUntypedVariableLengthArrayINTEL as InstEncoding>::decode(
+                        <OpUntypedVariableLengthArrayINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6248u16 => {
                     Self::ConditionalExtensionINTEL(
-                        <OpConditionalExtensionINTEL as InstEncoding>::decode(reader)?,
+                        <OpConditionalExtensionINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6249u16 => {
                     Self::ConditionalEntryPointINTEL(
-                        <OpConditionalEntryPointINTEL as InstEncoding>::decode(reader)?,
+                        <OpConditionalEntryPointINTEL as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 6250u16 => {
                     Self::ConditionalCapabilityINTEL(
-                        <OpConditionalCapabilityINTEL as InstEncoding>::decode(reader)?,
+                        <OpConditionalCapabilityINTEL as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 6251u16 => {
                     Self::SpecConstantTargetINTEL(
-                        <OpSpecConstantTargetINTEL as InstEncoding>::decode(reader)?,
+                        <OpSpecConstantTargetINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6252u16 => {
                     Self::SpecConstantArchitectureINTEL(
-                        <OpSpecConstantArchitectureINTEL as InstEncoding>::decode(
+                        <OpSpecConstantArchitectureINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6253u16 => {
                     Self::SpecConstantCapabilitiesINTEL(
-                        <OpSpecConstantCapabilitiesINTEL as InstEncoding>::decode(
+                        <OpSpecConstantCapabilitiesINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
                 }
                 6254u16 => {
                     Self::ConditionalCopyObjectINTEL(
-                        <OpConditionalCopyObjectINTEL as InstEncoding>::decode(reader)?,
+                        <OpConditionalCopyObjectINTEL as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 6401u16 => {
-                    Self::GroupIMulKHR(<OpGroupIMulKHR as InstEncoding>::decode(reader)?)
+                    Self::GroupIMulKHR(
+                        <OpGroupIMulKHR as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 6402u16 => {
-                    Self::GroupFMulKHR(<OpGroupFMulKHR as InstEncoding>::decode(reader)?)
+                    Self::GroupFMulKHR(
+                        <OpGroupFMulKHR as SpvInstEncoding>::decode(reader)?,
+                    )
                 }
                 6403u16 => {
                     Self::GroupBitwiseAndKHR(
-                        <OpGroupBitwiseAndKHR as InstEncoding>::decode(reader)?,
+                        <OpGroupBitwiseAndKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6404u16 => {
                     Self::GroupBitwiseOrKHR(
-                        <OpGroupBitwiseOrKHR as InstEncoding>::decode(reader)?,
+                        <OpGroupBitwiseOrKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6405u16 => {
                     Self::GroupBitwiseXorKHR(
-                        <OpGroupBitwiseXorKHR as InstEncoding>::decode(reader)?,
+                        <OpGroupBitwiseXorKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6406u16 => {
                     Self::GroupLogicalAndKHR(
-                        <OpGroupLogicalAndKHR as InstEncoding>::decode(reader)?,
+                        <OpGroupLogicalAndKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6407u16 => {
                     Self::GroupLogicalOrKHR(
-                        <OpGroupLogicalOrKHR as InstEncoding>::decode(reader)?,
+                        <OpGroupLogicalOrKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6408u16 => {
                     Self::GroupLogicalXorKHR(
-                        <OpGroupLogicalXorKHR as InstEncoding>::decode(reader)?,
+                        <OpGroupLogicalXorKHR as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6426u16 => {
                     Self::RoundFToTF32INTEL(
-                        <OpRoundFToTF32INTEL as InstEncoding>::decode(reader)?,
+                        <OpRoundFToTF32INTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6428u16 => {
                     Self::MaskedGatherINTEL(
-                        <OpMaskedGatherINTEL as InstEncoding>::decode(reader)?,
+                        <OpMaskedGatherINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6429u16 => {
                     Self::MaskedScatterINTEL(
-                        <OpMaskedScatterINTEL as InstEncoding>::decode(reader)?,
+                        <OpMaskedScatterINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6529u16 => {
                     Self::ConvertHandleToImageINTEL(
-                        <OpConvertHandleToImageINTEL as InstEncoding>::decode(reader)?,
+                        <OpConvertHandleToImageINTEL as SpvInstEncoding>::decode(reader)?,
                     )
                 }
                 6530u16 => {
                     Self::ConvertHandleToSamplerINTEL(
-                        <OpConvertHandleToSamplerINTEL as InstEncoding>::decode(reader)?,
+                        <OpConvertHandleToSamplerINTEL as SpvInstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 6531u16 => {
                     Self::ConvertHandleToSampledImageINTEL(
-                        <OpConvertHandleToSampledImageINTEL as InstEncoding>::decode(
+                        <OpConvertHandleToSampledImageINTEL as SpvInstEncoding>::decode(
                             reader,
                         )?,
                     )
@@ -9000,1104 +9500,1052 @@ impl InstEncoding for CoreInstSet {
             },
         )
     }
+}
+impl SpvInstDis for CoreInstSet {
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
-            Self::Nop(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Undef(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SourceContinued(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Source(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SourceExtension(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Name(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::MemberName(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::String(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Line(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Extension(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ExtInstImport(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ExtInst(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::MemoryModel(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::EntryPoint(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ExecutionMode(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Capability(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeVoid(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeBool(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeInt(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeFloat(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeVector(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeMatrix(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeImage(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeSampler(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeSampledImage(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeArray(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeRuntimeArray(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeStruct(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeOpaque(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypePointer(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeFunction(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeEvent(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeDeviceEvent(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeReserveId(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeQueue(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypePipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeForwardPointer(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConstantTrue(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConstantFalse(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Constant(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConstantComposite(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConstantSampler(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConstantNull(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SpecConstantTrue(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SpecConstantFalse(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SpecConstant(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SpecConstantComposite(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SpecConstantOp(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Function(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FunctionParameter(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FunctionEnd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FunctionCall(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Variable(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageTexelPointer(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Load(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Store(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CopyMemory(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CopyMemorySized(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AccessChain(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::InBoundsAccessChain(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::PtrAccessChain(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArrayLength(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GenericPtrMemSemantics(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::InBoundsPtrAccessChain(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Decorate(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::MemberDecorate(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::DecorationGroup(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupDecorate(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupMemberDecorate(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::VectorExtractDynamic(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::VectorInsertDynamic(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::VectorShuffle(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CompositeConstruct(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CompositeExtract(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CompositeInsert(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CopyObject(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Transpose(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SampledImage(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSampleImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSampleExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSampleDrefImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSampleDrefExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSampleProjImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSampleProjExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSampleProjDrefImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSampleProjDrefExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageFetch(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageGather(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageDrefGather(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageRead(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageWrite(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Image(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageQueryFormat(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageQueryOrder(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageQuerySizeLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageQuerySize(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageQueryLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageQueryLevels(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageQuerySamples(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertFToU(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertFToS(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertSToF(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertUToF(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UConvert(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SConvert(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FConvert(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::QuantizeToF16(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertPtrToU(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SatConvertSToU(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SatConvertUToS(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertUToPtr(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::PtrCastToGeneric(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GenericCastToPtr(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GenericCastToPtrExplicit(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Bitcast(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SNegate(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FNegate(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IAdd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FAdd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ISub(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FSub(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IMul(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FMul(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UDiv(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SDiv(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FDiv(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UMod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SRem(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SMod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FRem(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FMod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::VectorTimesScalar(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::MatrixTimesScalar(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::VectorTimesMatrix(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::MatrixTimesVector(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::MatrixTimesMatrix(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::OuterProduct(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Dot(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IAddCarry(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ISubBorrow(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UMulExtended(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SMulExtended(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Any(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::All(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IsNan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IsInf(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IsFinite(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IsNormal(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SignBitSet(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::LessOrGreater(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Ordered(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Unordered(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::LogicalEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::LogicalNotEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::LogicalOr(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::LogicalAnd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::LogicalNot(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Select(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::INotEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UGreaterThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SGreaterThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UGreaterThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SGreaterThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ULessThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SLessThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ULessThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SLessThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FOrdEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FUnordEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FOrdNotEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FUnordNotEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FOrdLessThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FUnordLessThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FOrdGreaterThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FUnordGreaterThan(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FOrdLessThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FUnordLessThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FOrdGreaterThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FUnordGreaterThanEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ShiftRightLogical(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ShiftRightArithmetic(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ShiftLeftLogical(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::BitwiseOr(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::BitwiseXor(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::BitwiseAnd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Not(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::BitFieldInsert(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::BitFieldSExtract(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::BitFieldUExtract(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::BitReverse(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::BitCount(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::DPdx(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::DPdy(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Fwidth(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::DPdxFine(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::DPdyFine(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FwidthFine(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::DPdxCoarse(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::DPdyCoarse(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FwidthCoarse(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::EmitVertex(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::EndPrimitive(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::EmitStreamVertex(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::EndStreamPrimitive(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ControlBarrier(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::MemoryBarrier(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicLoad(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicStore(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicExchange(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicCompareExchange(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicCompareExchangeWeak(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicIIncrement(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicIDecrement(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicIAdd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicISub(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicSMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicUMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicSMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicUMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicAnd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicOr(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicXor(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Phi(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::LoopMerge(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SelectionMerge(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Label(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Branch(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::BranchConditional(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Switch(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Kill(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Return(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ReturnValue(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Unreachable(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::LifetimeStart(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::LifetimeStop(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupAsyncCopy(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupWaitEvents(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupAll(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupAny(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupBroadcast(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupIAdd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupFAdd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupFMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupUMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupSMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupFMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupUMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupSMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ReadPipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::WritePipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ReservedReadPipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ReservedWritePipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ReserveReadPipePackets(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ReserveWritePipePackets(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CommitReadPipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CommitWritePipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IsValidReserveId(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GetNumPipePackets(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GetMaxPipePackets(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupReserveReadPipePackets(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupReserveWritePipePackets(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupCommitReadPipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupCommitWritePipe(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::EnqueueMarker(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::EnqueueKernel(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GetKernelNDrangeSubGroupCount(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GetKernelNDrangeMaxSubGroupSize(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GetKernelWorkGroupSize(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::Nop(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Undef(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SourceContinued(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Source(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SourceExtension(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Name(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::MemberName(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::String(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Line(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Extension(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ExtInstImport(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ExtInst(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::MemoryModel(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::EntryPoint(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ExecutionMode(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Capability(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeVoid(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeBool(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeInt(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeFloat(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeVector(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeMatrix(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeImage(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeSampler(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeSampledImage(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeArray(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeRuntimeArray(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeStruct(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeOpaque(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypePointer(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeFunction(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeEvent(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeDeviceEvent(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeReserveId(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeQueue(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypePipe(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeForwardPointer(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConstantTrue(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConstantFalse(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Constant(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConstantComposite(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConstantSampler(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConstantNull(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SpecConstantTrue(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SpecConstantFalse(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SpecConstant(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SpecConstantComposite(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SpecConstantOp(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Function(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FunctionParameter(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FunctionEnd(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FunctionCall(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Variable(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageTexelPointer(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Load(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Store(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CopyMemory(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CopyMemorySized(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AccessChain(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::InBoundsAccessChain(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::PtrAccessChain(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArrayLength(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GenericPtrMemSemantics(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::InBoundsPtrAccessChain(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Decorate(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::MemberDecorate(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::DecorationGroup(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupDecorate(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupMemberDecorate(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::VectorExtractDynamic(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::VectorInsertDynamic(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::VectorShuffle(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CompositeConstruct(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CompositeExtract(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CompositeInsert(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CopyObject(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Transpose(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SampledImage(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSampleImplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSampleExplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSampleDrefImplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSampleDrefExplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSampleProjImplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSampleProjExplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSampleProjDrefImplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSampleProjDrefExplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageFetch(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageGather(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageDrefGather(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageRead(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageWrite(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Image(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageQueryFormat(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageQueryOrder(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageQuerySizeLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageQuerySize(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageQueryLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageQueryLevels(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageQuerySamples(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertFToU(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertFToS(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertSToF(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertUToF(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UConvert(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SConvert(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FConvert(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::QuantizeToF16(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertPtrToU(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SatConvertSToU(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SatConvertUToS(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertUToPtr(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::PtrCastToGeneric(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GenericCastToPtr(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GenericCastToPtrExplicit(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Bitcast(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SNegate(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FNegate(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IAdd(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FAdd(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ISub(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FSub(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IMul(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FMul(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UDiv(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SDiv(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FDiv(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UMod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SRem(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SMod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FRem(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FMod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::VectorTimesScalar(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::MatrixTimesScalar(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::VectorTimesMatrix(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::MatrixTimesVector(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::MatrixTimesMatrix(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::OuterProduct(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Dot(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IAddCarry(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ISubBorrow(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UMulExtended(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SMulExtended(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Any(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::All(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IsNan(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IsInf(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IsFinite(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IsNormal(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SignBitSet(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::LessOrGreater(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Ordered(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Unordered(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::LogicalEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::LogicalNotEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::LogicalOr(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::LogicalAnd(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::LogicalNot(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Select(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::INotEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UGreaterThan(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SGreaterThan(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UGreaterThanEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SGreaterThanEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ULessThan(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SLessThan(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ULessThanEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SLessThanEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FOrdEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FUnordEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FOrdNotEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FUnordNotEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FOrdLessThan(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FUnordLessThan(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FOrdGreaterThan(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FUnordGreaterThan(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FOrdLessThanEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FUnordLessThanEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FOrdGreaterThanEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FUnordGreaterThanEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ShiftRightLogical(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ShiftRightArithmetic(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ShiftLeftLogical(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::BitwiseOr(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::BitwiseXor(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::BitwiseAnd(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Not(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::BitFieldInsert(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::BitFieldSExtract(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::BitFieldUExtract(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::BitReverse(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::BitCount(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::DPdx(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::DPdy(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Fwidth(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::DPdxFine(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::DPdyFine(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FwidthFine(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::DPdxCoarse(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::DPdyCoarse(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FwidthCoarse(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::EmitVertex(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::EndPrimitive(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::EmitStreamVertex(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::EndStreamPrimitive(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ControlBarrier(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::MemoryBarrier(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicLoad(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicStore(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicExchange(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicCompareExchange(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicCompareExchangeWeak(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicIIncrement(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicIDecrement(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicIAdd(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicISub(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicSMin(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicUMin(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicSMax(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicUMax(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicAnd(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicOr(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicXor(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Phi(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::LoopMerge(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SelectionMerge(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Label(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Branch(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::BranchConditional(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Switch(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Kill(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Return(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ReturnValue(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Unreachable(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::LifetimeStart(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::LifetimeStop(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupAsyncCopy(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupWaitEvents(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupAll(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupAny(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupBroadcast(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupIAdd(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupFAdd(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupFMin(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupUMin(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupSMin(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupFMax(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupUMax(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupSMax(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ReadPipe(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::WritePipe(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ReservedReadPipe(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ReservedWritePipe(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ReserveReadPipePackets(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ReserveWritePipePackets(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CommitReadPipe(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CommitWritePipe(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IsValidReserveId(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GetNumPipePackets(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GetMaxPipePackets(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupReserveReadPipePackets(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupReserveWritePipePackets(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupCommitReadPipe(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupCommitWritePipe(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::EnqueueMarker(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::EnqueueKernel(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GetKernelNDrangeSubGroupCount(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GetKernelNDrangeMaxSubGroupSize(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GetKernelWorkGroupSize(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::GetKernelPreferredWorkGroupSizeMultiple(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::RetainEvent(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ReleaseEvent(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CreateUserEvent(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IsValidEvent(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SetUserEventStatus(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CaptureEventProfilingInfo(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GetDefaultQueue(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::BuildNDRange(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSparseSampleImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSparseSampleExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSparseSampleDrefImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSparseSampleDrefExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSparseSampleProjImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSparseSampleProjExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSparseSampleProjDrefImplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSparseSampleProjDrefExplicitLod(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSparseFetch(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSparseGather(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSparseDrefGather(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSparseTexelsResident(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::NoLine(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicFlagTestAndSet(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicFlagClear(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSparseRead(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SizeOf(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypePipeStorage(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConstantPipeStorage(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CreatePipeFromPipeStorage(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GetKernelLocalSizeForSubgroupCount(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GetKernelMaxNumSubgroups(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeNamedBarrier(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::NamedBarrierInitialize(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::MemoryNamedBarrier(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ModuleProcessed(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ExecutionModeId(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::DecorateId(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformElect(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformAll(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformAny(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformAllEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformBroadcast(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformBroadcastFirst(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformBallot(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformInverseBallot(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformBallotBitExtract(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformBallotBitCount(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformBallotFindLSB(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformBallotFindMSB(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformShuffle(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformShuffleXor(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformShuffleUp(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformShuffleDown(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformIAdd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformFAdd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformIMul(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformFMul(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformSMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformUMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformFMin(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformSMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformUMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformFMax(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformBitwiseAnd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformBitwiseOr(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformBitwiseXor(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformLogicalAnd(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformLogicalOr(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformLogicalXor(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformQuadBroadcast(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformQuadSwap(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CopyLogical(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::PtrEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::PtrNotEqual(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::PtrDiff(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ColorAttachmentReadEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::DepthAttachmentReadEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::StencilAttachmentReadEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeTensorARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TensorReadARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TensorWriteARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TensorQuerySizeARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GraphConstantARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GraphEntryPointARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GraphARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GraphInputARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GraphSetOutputARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GraphEndARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeGraphARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TerminateInvocation(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeUntypedPointerKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UntypedVariableKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UntypedAccessChainKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UntypedInBoundsAccessChainKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupBallotKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupFirstInvocationKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UntypedPtrAccessChainKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UntypedInBoundsPtrAccessChainKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UntypedArrayLengthKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UntypedPrefetchKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FmaKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupAllKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupAnyKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupAllEqualKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformRotateKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupReadInvocationKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ExtInstWithForwardRefsKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UntypedGroupAsyncCopyKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TraceRayKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ExecuteCallableKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertUToAccelerationStructureKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IgnoreIntersectionKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TerminateRayKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SDot(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UDot(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SUDot(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SDotAccSat(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UDotAccSat(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SUDotAccSat(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeCooperativeMatrixKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixLoadKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixStoreKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixMulAddKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixLengthKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConstantCompositeReplicateEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SpecConstantCompositeReplicateEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CompositeConstructReplicateEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeRayQueryKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RayQueryInitializeKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RayQueryTerminateKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RayQueryGenerateIntersectionKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RayQueryConfirmIntersectionKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RayQueryProceedKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RayQueryGetIntersectionTypeKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSampleWeightedQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageBoxFilterQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageBlockMatchSSDQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageBlockMatchSADQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::BitCastArrayQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageBlockMatchWindowSSDQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageBlockMatchWindowSADQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageBlockMatchGatherSSDQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageBlockMatchGatherSADQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CompositeConstructCoopMatQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CompositeExtractCoopMatQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ExtractSubArrayQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupIAddNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupFAddNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupFMinNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupUMinNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupSMinNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupFMaxNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupUMaxNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupSMaxNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FragmentMaskFetchAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FragmentFetchAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ReadClockKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AllocateNodePayloadsAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::EnqueueNodePayloadsAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeNodePayloadArrayAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FinishWritingNodePayloadAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::NodePayloadArrayLengthAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IsNodePayloadValidAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConstantStringAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SpecConstantStringAMDX(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformQuadAllKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformQuadAnyKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeBufferEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::BufferPointerEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UntypedImageTexelPointerEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::MemberDecorateIdEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConstantSizeOfEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectRecordHitMotionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectRecordHitWithIndexMotionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectRecordMissMotionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetWorldToObjectNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetObjectToWorldNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetObjectRayDirectionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetObjectRayOriginNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectTraceRayMotionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetShaderRecordBufferHandleNV(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
+            Self::RetainEvent(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ReleaseEvent(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CreateUserEvent(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IsValidEvent(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SetUserEventStatus(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CaptureEventProfilingInfo(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GetDefaultQueue(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::BuildNDRange(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleImplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleExplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleDrefImplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleDrefExplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleProjImplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleProjExplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleProjDrefImplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSparseSampleProjDrefExplicitLod(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSparseFetch(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSparseGather(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSparseDrefGather(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSparseTexelsResident(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::NoLine(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicFlagTestAndSet(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicFlagClear(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSparseRead(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SizeOf(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypePipeStorage(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConstantPipeStorage(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CreatePipeFromPipeStorage(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GetKernelLocalSizeForSubgroupCount(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GetKernelMaxNumSubgroups(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeNamedBarrier(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::NamedBarrierInitialize(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::MemoryNamedBarrier(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ModuleProcessed(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ExecutionModeId(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::DecorateId(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformElect(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformAll(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformAny(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformAllEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBroadcast(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBroadcastFirst(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBallot(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformInverseBallot(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBallotBitExtract(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBallotBitCount(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBallotFindLSB(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBallotFindMSB(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformShuffle(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformShuffleXor(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformShuffleUp(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformShuffleDown(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformIAdd(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformFAdd(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformIMul(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformFMul(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformSMin(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformUMin(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformFMin(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformSMax(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformUMax(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformFMax(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBitwiseAnd(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBitwiseOr(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformBitwiseXor(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformLogicalAnd(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformLogicalOr(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformLogicalXor(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformQuadBroadcast(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformQuadSwap(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CopyLogical(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::PtrEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::PtrNotEqual(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::PtrDiff(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ColorAttachmentReadEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::DepthAttachmentReadEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::StencilAttachmentReadEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeTensorARM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TensorReadARM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TensorWriteARM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TensorQuerySizeARM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GraphConstantARM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GraphEntryPointARM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GraphARM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GraphInputARM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GraphSetOutputARM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GraphEndARM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeGraphARM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TerminateInvocation(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeUntypedPointerKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UntypedVariableKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UntypedAccessChainKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UntypedInBoundsAccessChainKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupBallotKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupFirstInvocationKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UntypedPtrAccessChainKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UntypedInBoundsPtrAccessChainKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UntypedArrayLengthKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UntypedPrefetchKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FmaKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAllKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAnyKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAllEqualKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformRotateKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupReadInvocationKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ExtInstWithForwardRefsKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UntypedGroupAsyncCopyKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TraceRayKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ExecuteCallableKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertUToAccelerationStructureKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IgnoreIntersectionKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TerminateRayKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SDot(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UDot(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SUDot(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SDotAccSat(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UDotAccSat(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SUDotAccSat(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeCooperativeMatrixKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixLoadKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixStoreKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixMulAddKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixLengthKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConstantCompositeReplicateEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SpecConstantCompositeReplicateEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CompositeConstructReplicateEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeRayQueryKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryInitializeKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryTerminateKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryGenerateIntersectionKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryConfirmIntersectionKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryProceedKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionTypeKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSampleWeightedQCOM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageBoxFilterQCOM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageBlockMatchSSDQCOM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageBlockMatchSADQCOM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::BitCastArrayQCOM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageBlockMatchWindowSSDQCOM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageBlockMatchWindowSADQCOM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageBlockMatchGatherSSDQCOM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageBlockMatchGatherSADQCOM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CompositeConstructCoopMatQCOM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CompositeExtractCoopMatQCOM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ExtractSubArrayQCOM(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupIAddNonUniformAMD(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupFAddNonUniformAMD(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupFMinNonUniformAMD(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupUMinNonUniformAMD(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupSMinNonUniformAMD(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupFMaxNonUniformAMD(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupUMaxNonUniformAMD(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupSMaxNonUniformAMD(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FragmentMaskFetchAMD(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FragmentFetchAMD(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ReadClockKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AllocateNodePayloadsAMDX(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::EnqueueNodePayloadsAMDX(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeNodePayloadArrayAMDX(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FinishWritingNodePayloadAMDX(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::NodePayloadArrayLengthAMDX(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IsNodePayloadValidAMDX(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConstantStringAMDX(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SpecConstantStringAMDX(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformQuadAllKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformQuadAnyKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeBufferEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::BufferPointerEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UntypedImageTexelPointerEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::MemberDecorateIdEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConstantSizeOfEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordHitMotionNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordHitWithIndexMotionNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordMissMotionNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetWorldToObjectNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetObjectToWorldNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetObjectRayDirectionNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetObjectRayOriginNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectTraceRayMotionNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetShaderRecordBufferHandleNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::HitObjectGetShaderBindingTableRecordIndexNV(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::HitObjectRecordEmptyNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectTraceRayNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectRecordHitNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectRecordHitWithIndexNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectRecordMissNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectExecuteShaderNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetCurrentTimeNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetAttributesNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetHitKindNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetPrimitiveIndexNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetGeometryIndexNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetInstanceIdNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetInstanceCustomIndexNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetWorldRayDirectionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetWorldRayOriginNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetRayTMaxNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetRayTMinNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectIsEmptyNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectIsHitNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectIsMissNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ReorderThreadWithHitObjectNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ReorderThreadWithHintNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeHitObjectNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ImageSampleFootprintNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeVectorIdEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeVectorMatrixMulNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordEmptyNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectTraceRayNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordHitNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordHitWithIndexNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordMissNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectExecuteShaderNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetCurrentTimeNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetAttributesNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetHitKindNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetPrimitiveIndexNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetGeometryIndexNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetInstanceIdNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetInstanceCustomIndexNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetWorldRayDirectionNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetWorldRayOriginNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetRayTMaxNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetRayTMinNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectIsEmptyNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectIsHitNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectIsMissNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ReorderThreadWithHitObjectNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ReorderThreadWithHintNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeHitObjectNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ImageSampleFootprintNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeVectorIdEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeVectorMatrixMulNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::CooperativeVectorOuterProductAccumulateNV(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::CooperativeVectorReduceSumAccumulateNV(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::CooperativeVectorMatrixMulAddNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixConvertNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::EmitMeshTasksEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SetMeshOutputsEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupNonUniformPartitionEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::WritePackedPrimitiveIndices4x8NV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FetchMicroTriangleVertexPositionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FetchMicroTriangleVertexBarycentricNV(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::CooperativeVectorLoadNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeVectorStoreNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectRecordFromQueryEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectRecordMissEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectRecordMissMotionEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeVectorReduceSumAccumulateNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeVectorMatrixMulAddNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixConvertNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::EmitMeshTasksEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SetMeshOutputsEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupNonUniformPartitionEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::WritePackedPrimitiveIndices4x8NV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FetchMicroTriangleVertexPositionNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FetchMicroTriangleVertexBarycentricNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeVectorLoadNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeVectorStoreNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordFromQueryEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordMissEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordMissMotionEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::HitObjectGetIntersectionTriangleVertexPositionsEXT(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::HitObjectGetRayFlagsEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetRayFlagsEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::HitObjectSetShaderBindingTableRecordIndexEXT(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::HitObjectReorderExecuteShaderEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectTraceReorderExecuteEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectTraceMotionReorderExecuteEXT(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::TypeHitObjectEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ReorderThreadWithHintEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ReorderThreadWithHitObjectEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectTraceRayEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectTraceRayMotionEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectRecordEmptyEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectExecuteShaderEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetCurrentTimeEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetAttributesEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetHitKindEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetPrimitiveIndexEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetGeometryIndexEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetInstanceIdEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetInstanceCustomIndexEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetObjectRayOriginEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetObjectRayDirectionEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetWorldRayDirectionEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetWorldRayOriginEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetObjectToWorldEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetWorldToObjectEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetRayTMaxEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ReportIntersectionKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IgnoreIntersectionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TerminateRayNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TraceNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TraceMotionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TraceRayMotionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectReorderExecuteShaderEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectTraceReorderExecuteEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectTraceMotionReorderExecuteEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeHitObjectEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ReorderThreadWithHintEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ReorderThreadWithHitObjectEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectTraceRayEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectTraceRayMotionEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectRecordEmptyEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectExecuteShaderEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetCurrentTimeEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetAttributesEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetHitKindEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetPrimitiveIndexEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetGeometryIndexEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetInstanceIdEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetInstanceCustomIndexEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetObjectRayOriginEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetObjectRayDirectionEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetWorldRayDirectionEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetWorldRayOriginEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetObjectToWorldEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetWorldToObjectEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetRayTMaxEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ReportIntersectionKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IgnoreIntersectionNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TerminateRayNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TraceNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TraceMotionNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TraceRayMotionNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::RayQueryGetIntersectionTriangleVertexPositionsKHR(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::TypeAccelerationStructureKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ExecuteCallableNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RayQueryGetIntersectionClusterIdNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetClusterIdNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetRayTMinEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeAccelerationStructureKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ExecuteCallableNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionClusterIdNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetClusterIdNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetRayTMinEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::HitObjectGetShaderBindingTableRecordIndexEXT(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::HitObjectGetShaderRecordBufferHandleEXT(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::HitObjectIsEmptyEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectIsHitEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectIsMissEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeCooperativeMatrixNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixLoadNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixStoreNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixMulAddNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixLengthNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::BeginInvocationInterlockEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::EndInvocationInterlockEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixReduceNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixLoadTensorNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixStoreTensorNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixPerElementOpNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeTensorLayoutNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeTensorViewNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CreateTensorLayoutNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TensorLayoutSetDimensionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TensorLayoutSetStrideNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TensorLayoutSliceNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TensorLayoutSetClampValueNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CreateTensorViewNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TensorViewSetDimensionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TensorViewSetStrideNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::DemoteToHelperInvocation(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IsHelperInvocationEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TensorViewSetClipNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TensorLayoutSetBlockSizeNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixTransposeNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertUToImageNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertUToSamplerNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertImageToUNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertSamplerToUNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertUToSampledImageNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertSampledImageToUNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SamplerImageAddressingModeNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RawAccessChainNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::HitObjectIsEmptyEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectIsHitEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectIsMissEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeCooperativeMatrixNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixLoadNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixStoreNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixMulAddNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixLengthNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::BeginInvocationInterlockEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::EndInvocationInterlockEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixReduceNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixLoadTensorNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixStoreTensorNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixPerElementOpNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeTensorLayoutNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeTensorViewNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CreateTensorLayoutNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TensorLayoutSetDimensionNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TensorLayoutSetStrideNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TensorLayoutSliceNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TensorLayoutSetClampValueNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CreateTensorViewNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TensorViewSetDimensionNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TensorViewSetStrideNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::DemoteToHelperInvocation(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IsHelperInvocationEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TensorViewSetClipNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TensorLayoutSetBlockSizeNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixTransposeNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertUToImageNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertUToSamplerNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertImageToUNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertSamplerToUNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertUToSampledImageNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertSampledImageToUNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SamplerImageAddressingModeNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RawAccessChainNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::RayQueryGetIntersectionSpherePositionNV(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::RayQueryGetIntersectionSphereRadiusNV(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::RayQueryGetIntersectionLSSPositionsNV(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::RayQueryGetIntersectionLSSRadiiNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RayQueryGetIntersectionLSSHitValueNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetSpherePositionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetSphereRadiusNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetLSSPositionsNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectGetLSSRadiiNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectIsSphereHitNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::HitObjectIsLSSHitNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RayQueryIsSphereHitNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RayQueryIsLSSHitNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupShuffleINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupShuffleDownINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupShuffleUpINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupShuffleXorINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupBlockReadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupBlockWriteINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupImageBlockReadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupImageBlockWriteINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupImageMediaBlockReadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupImageMediaBlockWriteINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UCountLeadingZerosINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UCountTrailingZerosINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AbsISubINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AbsUSubINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IAddSatINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UAddSatINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IAverageINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UAverageINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IAverageRoundedINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UAverageRoundedINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ISubSatINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::USubSatINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::IMul32x16INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UMul32x16INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConstantFunctionPointerINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FunctionPointerCallINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AsmTargetINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AsmINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AsmCallINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicFMinEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AtomicFMaxEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AssumeTrueKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ExpectKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::DecorateString(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::MemberDecorateString(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::VmeImageINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeVmeImageINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeAvcImePayloadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeAvcRefPayloadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeAvcSicPayloadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeAvcMcePayloadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeAvcMceResultINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeAvcImeResultINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionSphereRadiusNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionLSSPositionsNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionLSSRadiiNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionLSSHitValueNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetSpherePositionNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetSphereRadiusNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetLSSPositionsNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectGetLSSRadiiNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectIsSphereHitNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::HitObjectIsLSSHitNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryIsSphereHitNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryIsLSSHitNV(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupShuffleINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupShuffleDownINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupShuffleUpINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupShuffleXorINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupBlockReadINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupBlockWriteINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupImageBlockReadINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupImageBlockWriteINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupImageMediaBlockReadINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupImageMediaBlockWriteINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UCountLeadingZerosINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UCountTrailingZerosINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AbsISubINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AbsUSubINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IAddSatINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UAddSatINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IAverageINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UAverageINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IAverageRoundedINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UAverageRoundedINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ISubSatINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::USubSatINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::IMul32x16INTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UMul32x16INTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConstantFunctionPointerINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FunctionPointerCallINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AsmTargetINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AsmINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AsmCallINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicFMinEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AtomicFMaxEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AssumeTrueKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ExpectKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::DecorateString(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::MemberDecorateString(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::VmeImageINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeVmeImageINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeAvcImePayloadINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeAvcRefPayloadINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeAvcSicPayloadINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeAvcMcePayloadINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeAvcMceResultINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeAvcImeResultINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::TypeAvcImeResultSingleReferenceStreamoutINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::TypeAvcImeResultDualReferenceStreamoutINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::TypeAvcImeSingleReferenceStreaminINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::TypeAvcImeDualReferenceStreaminINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeAvcRefResultINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeAvcSicResultINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::TypeAvcImeSingleReferenceStreaminINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeAvcImeDualReferenceStreaminINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeAvcRefResultINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeAvcSicResultINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::SubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceGetDefaultInterShapePenaltyINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceSetInterShapePenaltyINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceSetInterDirectionPenaltyINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceSetMotionVectorCostFunctionINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::SubgroupAvcMceSetAcOnlyHaarINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcMceSetAcOnlyHaarINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::SubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::SubgroupAvcMceConvertToImePayloadINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::SubgroupAvcMceConvertToImeResultINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::SubgroupAvcMceConvertToRefPayloadINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::SubgroupAvcMceConvertToRefResultINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::SubgroupAvcMceConvertToSicPayloadINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::SubgroupAvcMceConvertToSicResultINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::SubgroupAvcMceGetMotionVectorsINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupAvcMceGetInterDistortionsINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
+            Self::SubgroupAvcMceConvertToImePayloadINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcMceConvertToImeResultINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcMceConvertToRefPayloadINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcMceConvertToRefResultINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcMceConvertToSicPayloadINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcMceConvertToSicResultINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcMceGetMotionVectorsINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcMceGetInterDistortionsINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::SubgroupAvcMceGetBestInterDistortionsINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::SubgroupAvcMceGetInterMajorShapeINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::SubgroupAvcMceGetInterMinorShapeINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::SubgroupAvcMceGetInterDirectionsINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
+            Self::SubgroupAvcMceGetInterMajorShapeINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcMceGetInterMinorShapeINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcMceGetInterDirectionsINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::SubgroupAvcMceGetInterMotionVectorCountINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceGetInterReferenceIdsINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcMceGetInterReferenceInterlacedFieldPolaritiesINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::SubgroupAvcImeInitializeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupAvcImeSetSingleReferenceINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::SubgroupAvcImeSetDualReferenceINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupAvcImeRefWindowSizeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupAvcImeAdjustRefOffsetINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupAvcImeConvertToMcePayloadINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
+            Self::SubgroupAvcImeInitializeINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcImeSetSingleReferenceINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcImeSetDualReferenceINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcImeRefWindowSizeINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcImeAdjustRefOffsetINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcImeConvertToMcePayloadINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::SubgroupAvcImeSetMaxMotionVectorCountINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeSetUnidirectionalMixDisableINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeSetEarlySearchTerminationThresholdINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::SubgroupAvcImeSetWeightedSadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcImeSetWeightedSadINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::SubgroupAvcImeEvaluateWithSingleReferenceINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::SubgroupAvcImeConvertToMceResultINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
+            Self::SubgroupAvcImeConvertToMceResultINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::SubgroupAvcImeGetSingleReferenceStreaminINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeGetDualReferenceStreaminINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeStripSingleReferenceStreamoutINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeStripDualReferenceStreamoutINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotionVectorsINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDistortionsINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeGetStreamoutSingleReferenceMajorShapeReferenceIdsINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionVectorsINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistortionsINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferenceIdsINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::SubgroupAvcImeGetBorderReachedINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcImeGetBorderReachedINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::SubgroupAvcImeGetTruncatedSearchIndicationINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeGetUnidirectionalEarlySearchTerminationINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::SubgroupAvcFmeInitializeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupAvcBmeInitializeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupAvcRefConvertToMcePayloadINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
+            Self::SubgroupAvcFmeInitializeINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcBmeInitializeINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcRefConvertToMcePayloadINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::SubgroupAvcRefSetBidirectionalMixDisableINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcRefSetBilinearFilterEnableINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcRefEvaluateWithSingleReferenceINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcRefEvaluateWithDualReferenceINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcRefEvaluateWithMultiReferenceINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::SubgroupAvcRefConvertToMceResultINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::SubgroupAvcSicInitializeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupAvcSicConfigureSkcINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupAvcSicConfigureIpeLumaINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcRefConvertToMceResultINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcSicInitializeINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcSicConfigureSkcINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcSicConfigureIpeLumaINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::SubgroupAvcSicConfigureIpeLumaChromaINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::SubgroupAvcSicGetMotionVectorMaskINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::SubgroupAvcSicConvertToMcePayloadINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
+            Self::SubgroupAvcSicGetMotionVectorMaskINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcSicConvertToMcePayloadINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::SubgroupAvcSicSetIntraLumaShapePenaltyINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcSicSetIntraLumaModeCostFunctionINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcSicSetIntraChromaModeCostFunctionINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcSicSetBilinearFilterEnableINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcSicSetSkcForwardTransformEnableINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcSicSetBlockBasedRawSkipSadINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::SubgroupAvcSicEvaluateIpeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcSicEvaluateIpeINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::SubgroupAvcSicEvaluateWithSingleReferenceINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcSicEvaluateWithDualReferenceINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcSicEvaluateWithMultiReferenceINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::SubgroupAvcSicConvertToMceResultINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::SubgroupAvcSicGetIpeLumaShapeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcSicConvertToMceResultINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcSicGetIpeLumaShapeINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::SubgroupAvcSicGetBestIpeLumaDistortionINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcSicGetBestIpeChromaDistortionINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcSicGetPackedIpeLumaModesINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::SubgroupAvcSicGetIpeChromaModeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcSicGetIpeChromaModeINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::SubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::SubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::SubgroupAvcSicGetInterRawSadsINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::VariableLengthArrayINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SaveMemoryINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RestoreMemoryINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatSinCosPiALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatCastALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatCastFromIntALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatCastToIntALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatAddALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatSubALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatMulALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatDivALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatGTALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatGEALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatLTALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatLEALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatEQALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatRecipALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatRSqrtALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatCbrtALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatHypotALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatSqrtALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatLogINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatLog2INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatLog10INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatLog1pINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatExpINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatExp2INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatExp10INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatExpm1INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatSinINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatCosINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatSinCosINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatSinPiINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatCosPiINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatASinINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatASinPiINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatACosINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatACosPiINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatATanINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatATanPiINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatATan2INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatPowINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatPowRINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArbitraryFloatPowNINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::LoopControlINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AliasDomainDeclINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AliasScopeDeclINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::AliasScopeListDeclINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FixedSqrtALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FixedRecipALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FixedRsqrtALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FixedSinALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FixedCosALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FixedSinCosALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FixedSinPiALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FixedCosPiALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FixedSinCosPiALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FixedLogALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FixedExpALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::PtrCastToCrossWorkgroupALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CrossWorkgroupCastToPtrALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ReadPipeBlockingALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::WritePipeBlockingALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::FPGARegALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RayQueryGetRayTMinKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RayQueryGetRayFlagsKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RayQueryGetIntersectionTKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SubgroupAvcSicGetInterRawSadsINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::VariableLengthArrayINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SaveMemoryINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RestoreMemoryINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatSinCosPiALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatCastALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatCastFromIntALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatCastToIntALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatAddALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatSubALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatMulALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatDivALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatGTALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatGEALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatLTALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatLEALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatEQALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatRecipALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatRSqrtALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatCbrtALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatHypotALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatSqrtALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatLogINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatLog2INTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatLog10INTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatLog1pINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatExpINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatExp2INTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatExp10INTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatExpm1INTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatSinINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatCosINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatSinCosINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatSinPiINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatCosPiINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatASinINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatASinPiINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatACosINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatACosPiINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatATanINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatATanPiINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatATan2INTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatPowINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatPowRINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArbitraryFloatPowNINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::LoopControlINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AliasDomainDeclINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AliasScopeDeclINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::AliasScopeListDeclINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FixedSqrtALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FixedRecipALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FixedRsqrtALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FixedSinALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FixedCosALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FixedSinCosALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FixedSinPiALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FixedCosPiALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FixedSinCosPiALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FixedLogALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FixedExpALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::PtrCastToCrossWorkgroupALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CrossWorkgroupCastToPtrALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ReadPipeBlockingALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::WritePipeBlockingALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::FPGARegALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetRayTMinKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetRayFlagsKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionTKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::RayQueryGetIntersectionInstanceCustomIndexKHR(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::RayQueryGetIntersectionInstanceIdKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionInstanceIdKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::RayQueryGetIntersectionInstanceShaderBindingTableRecordOffsetKHR(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::RayQueryGetIntersectionGeometryIndexKHR(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::RayQueryGetIntersectionPrimitiveIndexKHR(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::RayQueryGetIntersectionBarycentricsKHR(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::RayQueryGetIntersectionFrontFaceKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionBarycentricsKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetIntersectionFrontFaceKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::RayQueryGetIntersectionCandidateAABBOpaqueKHR(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::RayQueryGetIntersectionObjectRayDirectionKHR(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::RayQueryGetIntersectionObjectRayOriginKHR(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::RayQueryGetWorldRayDirectionKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RayQueryGetWorldRayOriginKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetWorldRayDirectionKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RayQueryGetWorldRayOriginKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
             Self::RayQueryGetIntersectionObjectToWorldKHR(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
             Self::RayQueryGetIntersectionWorldToObjectKHR(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
+                SpvInstDis::dis_fmt(inst, f, ctx)
             }
-            Self::AtomicFAddEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeBufferSurfaceINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeStructContinuedINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConstantCompositeContinuedINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SpecConstantCompositeContinuedINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CompositeConstructContinuedINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertFToBF16INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertBF16ToFINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ControlBarrierArriveINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ControlBarrierWaitINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ArithmeticFenceEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TaskSequenceCreateALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TaskSequenceAsyncALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TaskSequenceGetALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TaskSequenceReleaseALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::TypeTaskSequenceALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupBlockPrefetchINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Subgroup2DBlockLoadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Subgroup2DBlockLoadTransformINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Subgroup2DBlockLoadTransposeINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Subgroup2DBlockPrefetchINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::Subgroup2DBlockStoreINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SubgroupMatrixMultiplyAccumulateINTEL(inst) => {
-                InstEncoding::dis_fmt(inst, f, ctx)
-            }
-            Self::BitwiseFunctionINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::UntypedVariableLengthArrayINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConditionalExtensionINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConditionalEntryPointINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConditionalCapabilityINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SpecConstantTargetINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SpecConstantArchitectureINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::SpecConstantCapabilitiesINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConditionalCopyObjectINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupIMulKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupFMulKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupBitwiseAndKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupBitwiseOrKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupBitwiseXorKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupLogicalAndKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupLogicalOrKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::GroupLogicalXorKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::RoundFToTF32INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::MaskedGatherINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::MaskedScatterINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertHandleToImageINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertHandleToSamplerINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ConvertHandleToSampledImageINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AtomicFAddEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeBufferSurfaceINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeStructContinuedINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConstantCompositeContinuedINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SpecConstantCompositeContinuedINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::CompositeConstructContinuedINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertFToBF16INTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertBF16ToFINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ControlBarrierArriveINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ControlBarrierWaitINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ArithmeticFenceEXT(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TaskSequenceCreateALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TaskSequenceAsyncALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TaskSequenceGetALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TaskSequenceReleaseALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::TypeTaskSequenceALTERA(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupBlockPrefetchINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Subgroup2DBlockLoadINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Subgroup2DBlockLoadTransformINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Subgroup2DBlockLoadTransposeINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Subgroup2DBlockPrefetchINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::Subgroup2DBlockStoreINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SubgroupMatrixMultiplyAccumulateINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::BitwiseFunctionINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::UntypedVariableLengthArrayINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConditionalExtensionINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConditionalEntryPointINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConditionalCapabilityINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SpecConstantTargetINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SpecConstantArchitectureINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::SpecConstantCapabilitiesINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConditionalCopyObjectINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupIMulKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupFMulKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupBitwiseAndKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupBitwiseOrKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupBitwiseXorKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupLogicalAndKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupLogicalOrKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::GroupLogicalXorKHR(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::RoundFToTF32INTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::MaskedGatherINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::MaskedScatterINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertHandleToImageINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertHandleToSamplerINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
+            Self::ConvertHandleToSampledImageINTEL(inst) => SpvInstDis::dis_fmt(inst, f, ctx),
         }
     }
 }
