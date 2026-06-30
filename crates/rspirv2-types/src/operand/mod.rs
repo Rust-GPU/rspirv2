@@ -10,7 +10,7 @@ use crate::binary::{
     DecodeError, DecodeErrorKind, EncodeError, OperandReader, WordCounter, WordWriter,
 };
 use crate::dis::DisContext;
-use crate::meta::{OperandKind, Quantifier};
+use crate::meta::OperandKind;
 pub use id::*;
 pub use literal_const::*;
 pub use literal_float::*;
@@ -32,25 +32,6 @@ pub unsafe trait Operand: OperandEncoding {
     const KIND: &OperandKind;
 }
 
-/// A `OperandSpec` is an [`Operand`] with a [`Quantifier`] to describe the repetition of the [`Operand`].
-///
-/// Any [`Operand`] implicitly implements this with [`Quantifier::One`], wrapping an Operand in [`Option`] will get a
-/// [`Quantifier::ZeroOrOne`] and wrapping it in a [`Vec`] or [`SmallVec`] will have a [`Quantifier::ZeroOrMore`].
-///
-/// # Safety
-/// * should not be implemented outside of this file
-pub unsafe trait OperandSpec: OperandEncoding {
-    /// The [`Operand`]
-    type Operand: Operand;
-    /// The [`Quantifier`] or repetition factor of the [`Self::Operand`]
-    const QUANTIFIER: Quantifier;
-}
-
-unsafe impl<T: Operand> OperandSpec for T {
-    type Operand = Self;
-    const QUANTIFIER: Quantifier = Quantifier::One;
-}
-
 /// Something that can be decoded from or encoded to SPIR-V, not necessarily a full [`Operand`].
 ///
 /// Both [`Option`] and [`Vec`] implement `OperandEncoding` but not [`Operand`]. This allows for an easier
@@ -66,7 +47,10 @@ unsafe impl<T: Operand> OperandSpec for T {
 /// These constraints should only be validated with `cfg!(debug_assertions)`, which are enabled by default in debug
 /// builds.
 ///
-/// [`OperandSpecMeta`]: `crate::meta::OperandSpecMeta`
+/// [`OperandSpecMeta`]: crate::meta::OperandSpecMeta
+/// [`Quantifier`]: crate::meta::Quantifier
+/// [`Quantifier::ZeroOrOne`]: crate::meta::Quantifier::ZeroOrOne
+/// [`Quantifier::ZeroOrMore`]: crate::meta::Quantifier::ZeroOrMore
 pub unsafe trait OperandEncoding: Sized + Debug {
     /// The fixed length of the Operand, or `None` if it's variable length. Specifying this is an optimization for
     /// operand length calculation. See the safety contract in [`OperandEncoding`].
@@ -224,11 +208,6 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
     }
 }
 
-unsafe impl<T: Operand> OperandSpec for Option<T> {
-    type Operand = T;
-    const QUANTIFIER: Quantifier = Quantifier::ZeroOrOne;
-}
-
 pub type ZeroOrMore<T> = SmallVec<[T; 6]>;
 
 unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
@@ -261,6 +240,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     /// * `ZeroOrMore` `ZeroOrMore` T: fails, but unrepresentable in the spec, only by using it manually.
     ///
     /// [`Quantifier`]: `crate::meta::Quantifier`
+    /// [`Quantifier::ZeroOrMore`]: crate::meta::Quantifier::ZeroOrMore
     #[inline]
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
@@ -291,11 +271,6 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
         }
         Ok(())
     }
-}
-
-unsafe impl<T: Operand> OperandSpec for Vec<T> {
-    type Operand = T;
-    const QUANTIFIER: Quantifier = Quantifier::ZeroOrMore;
 }
 
 /// copy of Vec impl above
@@ -347,9 +322,4 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
         }
         Ok(())
     }
-}
-
-unsafe impl<T: Operand, const N: usize> OperandSpec for SmallVec<[T; N]> {
-    type Operand = T;
-    const QUANTIFIER: Quantifier = Quantifier::ZeroOrMore;
 }
