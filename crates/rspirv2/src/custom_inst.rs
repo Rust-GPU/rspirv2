@@ -5,12 +5,12 @@ use crate::core::inst_meta::OP_SWITCH;
 use crate::dis::DisContext;
 use crate::inst::SpvInstEncoding;
 use crate::meta::InstMeta;
-use crate::operand::{IdRef, OperandDisContext, OperandEncoding};
+use crate::operand::{IdRef, OperandDisContext, SpvOperandEncoding};
 use OpSwitchTargetLen::{One, Two};
 use rspirv2_types::Word;
 use rspirv2_types::binary::{DecodeErrorKind, FnWriter, OperandReader};
 use rspirv2_types::inst::{SpvInstDefUse, SpvInstDis, SpvInstMeta};
-use rspirv2_types::operand::LiteralConst;
+use rspirv2_types::operand::{LiteralConst, SpvOperandDis};
 use smallvec::SmallVec;
 use std::borrow::Cow;
 use std::error::Error;
@@ -218,7 +218,7 @@ impl OpSwitchTarget {
             OpSwitchTarget::Unresolved(words) => Cow::Borrowed(words),
             OpSwitchTarget::Resolved(resolved) => {
                 let mut writer = Vec::new();
-                OperandEncoding::encode(resolved, &mut writer).unwrap();
+                SpvOperandEncoding::encode(resolved, &mut writer).unwrap();
                 Cow::Owned(writer)
             }
         }
@@ -251,14 +251,14 @@ impl OpSwitchTarget {
     }
 }
 
-unsafe impl OperandEncoding for OpSwitchTarget {
+unsafe impl SpvOperandEncoding for OpSwitchTarget {
     const FIXED_LEN: Option<usize> = None;
 
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         match self {
             Self::Unresolved(words) => writer.write_iter(words.iter().copied()),
-            Self::Resolved(resolved) => OperandEncoding::encode(resolved, writer)?,
+            Self::Resolved(resolved) => SpvOperandEncoding::encode(resolved, writer)?,
         }
         Ok(())
     }
@@ -271,13 +271,15 @@ unsafe impl OperandEncoding for OpSwitchTarget {
         profiling::function_scope!();
         Ok(Self::Unresolved(reader.collect()))
     }
+}
 
+impl SpvOperandDis for OpSwitchTarget {
     fn dis_fmt(&self, _f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         panic!("OpSwitchTarget can't be trivially disassembled")
     }
 }
 
-unsafe impl OperandEncoding for OpSwitchResolvedTarget {
+unsafe impl SpvOperandEncoding for OpSwitchResolvedTarget {
     const FIXED_LEN: Option<usize> = None;
 
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -288,7 +290,9 @@ unsafe impl OperandEncoding for OpSwitchResolvedTarget {
     fn decode(_: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Err(DecodeErrorKind::LiteralConstNotLastOperand.into())
     }
+}
 
+impl SpvOperandDis for OpSwitchResolvedTarget {
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         self.target.dis_fmt(f, ctx)
@@ -328,22 +332,22 @@ impl SpvInstEncoding for OpSwitch {
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
-            + OperandEncoding::word_len(&self.selector)
-            + OperandEncoding::word_len(&self.default)
-            + OperandEncoding::word_len(&self.target);
+            + SpvOperandEncoding::word_len(&self.selector)
+            + SpvOperandEncoding::word_len(&self.default)
+            + SpvOperandEncoding::word_len(&self.target);
         writer.write_op(Self::META.opcode, len)?;
-        OperandEncoding::encode(&self.selector, &mut *writer)?;
-        OperandEncoding::encode(&self.default, &mut *writer)?;
-        OperandEncoding::encode(&self.target, &mut *writer)?;
+        SpvOperandEncoding::encode(&self.selector, &mut *writer)?;
+        SpvOperandEncoding::encode(&self.default, &mut *writer)?;
+        SpvOperandEncoding::encode(&self.target, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
-            selector: OperandEncoding::decode(&mut op_reader)?,
-            default: OperandEncoding::decode(&mut op_reader)?,
-            target: OperandEncoding::decode_last(&mut op_reader)?,
+            selector: SpvOperandEncoding::decode(&mut op_reader)?,
+            default: SpvOperandEncoding::decode(&mut op_reader)?,
+            target: SpvOperandEncoding::decode_last(&mut op_reader)?,
         })
     }
 }

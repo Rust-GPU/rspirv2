@@ -91,7 +91,7 @@ fn emit_rust_like_enum(
             quote! {
                 Self::#symbol (#(#param_symbols),*) => {
                     writer.write(Word(#value));
-                    #(OperandEncoding::encode(#param_symbols, &mut *writer)?);*
+                    #(SpvOperandEncoding::encode(#param_symbols, &mut *writer)?);*
                 }
             }
         } else {
@@ -103,7 +103,7 @@ fn emit_rust_like_enum(
         let value = e.value;
         if !e.parameters.is_empty() {
             let members =
-                (0..e.parameters.len()).map(|_| quote!(OperandEncoding::decode(&mut *reader)?));
+                (0..e.parameters.len()).map(|_| quote!(SpvOperandEncoding::decode(&mut *reader)?));
             quote!(#value => Self::#symbol (#(#members),*))
         } else {
             quote!(#value => Self::#symbol)
@@ -131,11 +131,11 @@ fn emit_rust_like_enum(
             #(#variants),*
         }
 
-        unsafe impl Operand for #name {
+        unsafe impl SpvOperandMeta for #name {
             const KIND: &OperandKind = &#kind;
         }
 
-        unsafe impl OperandEncoding for #name {
+        unsafe impl SpvOperandEncoding for #name {
             const FIXED_LEN: Option<usize> = None;
 
             fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -157,7 +157,9 @@ fn emit_rust_like_enum(
                     }.into())
                 })
             }
+        }
 
+        impl SpvOperandDis for #name {
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
                 profiling::function_scope!();
@@ -208,11 +210,11 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
         #[cfg(feature = "bytemuck")]
         unsafe impl bytemuck::Pod for #name {}
 
-        unsafe impl Operand for #name {
+        unsafe impl SpvOperandMeta for #name {
             const KIND: &OperandKind = &#kind;
         }
 
-        unsafe impl OperandEncoding for #name {
+        unsafe impl SpvOperandEncoding for #name {
             const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl WordWriter)  -> Result<(), EncodeError>{
@@ -232,7 +234,9 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
                     }.into())
                 })
             }
+        }
 
+        impl SpvOperandDis for #name {
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
                 profiling::function_scope!();
@@ -268,7 +272,7 @@ fn emit_bitflags_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_
     let (decl, encoding) = emit_bitflags_enum_common(operand_kind, &name, enumerants);
     quote! {
         #decl
-        unsafe impl Operand for #name {
+        unsafe impl SpvOperandMeta for #name {
             const KIND: &OperandKind = &#kind;
         }
         #encoding
@@ -313,7 +317,7 @@ fn emit_bitflags_enum_common(
     };
 
     let encoding = quote! {
-        unsafe impl OperandEncoding for #name {
+        unsafe impl SpvOperandEncoding for #name {
             const FIXED_LEN: Option<usize> = Some(1);
 
             fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -327,7 +331,9 @@ fn emit_bitflags_enum_common(
                 let bits = reader.pull()?.0;
                 Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<#name>(stringify!(#name), bits))
             }
+        }
 
+        impl SpvOperandDis for #name {
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
                 profiling::function_scope!();
@@ -468,11 +474,11 @@ fn emit_parameterised_bitmask(
             #(#getter_setter)*
         }
 
-        unsafe impl Operand for #name {
+        unsafe impl SpvOperandMeta for #name {
             const KIND: &OperandKind = &#kind;
         }
 
-        unsafe impl OperandEncoding for #name {
+        unsafe impl SpvOperandEncoding for #name {
             const FIXED_LEN: Option<usize> = None;
 
             fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -482,7 +488,9 @@ fn emit_parameterised_bitmask(
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 Ok(Self(ParameterizedBitmask::<#name_bits>::decode(reader)?))
             }
+        }
 
+        impl SpvOperandDis for #name {
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
                 self.0.dis_fmt(f, ctx)?;

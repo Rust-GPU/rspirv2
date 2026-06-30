@@ -24,17 +24,17 @@ pub use tuple::*;
 
 /// A SPIR-V operand. The associated const [`Self::KIND`] links to it's [`OperandKind`].
 ///
-/// Requires [`OperandEncoding`], see that for encoding and decoding SPIR-V.
+/// Requires [`SpvOperandEncoding`], see that for encoding and decoding SPIR-V.
 ///
 /// # Safety
 /// * [`Self::KIND`] must match this implementation
-pub unsafe trait Operand: OperandEncoding {
+pub unsafe trait SpvOperandMeta: SpvOperandEncoding {
     const KIND: &OperandKind;
 }
 
-/// Something that can be decoded from or encoded to SPIR-V, not necessarily a full [`Operand`].
+/// Something that can be decoded from or encoded to SPIR-V, not necessarily a full [`SpvOperandMeta`].
 ///
-/// Both [`Option`] and [`Vec`] implement `OperandEncoding` but not [`Operand`]. This allows for an easier
+/// Both [`Option`] and [`Vec`] implement `OperandEncoding` but not [`SpvOperandMeta`]. This allows for an easier
 /// representation of [`OperandSpecMeta`]s with [`Quantifier`] of [`Quantifier::ZeroOrOne`] (`Option`) and
 /// [`Quantifier::ZeroOrMore`] (`Vec`).
 ///
@@ -51,9 +51,9 @@ pub unsafe trait Operand: OperandEncoding {
 /// [`Quantifier`]: crate::meta::Quantifier
 /// [`Quantifier::ZeroOrOne`]: crate::meta::Quantifier::ZeroOrOne
 /// [`Quantifier::ZeroOrMore`]: crate::meta::Quantifier::ZeroOrMore
-pub unsafe trait OperandEncoding: Sized + Debug {
+pub unsafe trait SpvOperandEncoding: Sized {
     /// The fixed length of the Operand, or `None` if it's variable length. Specifying this is an optimization for
-    /// operand length calculation. See the safety contract in [`OperandEncoding`].
+    /// operand length calculation. See the safety contract in [`SpvOperandEncoding`].
     const FIXED_LEN: Option<usize>;
 
     /// The length of the operand in words.
@@ -65,7 +65,7 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     /// Several debug assertions to check whether the length is correct are masked behind `cfg!(debug_assertions)`.
     fn word_len(&self) -> usize {
         profiling::function_scope!();
-        fn computed_word_len(op: &impl OperandEncoding) -> usize {
+        fn computed_word_len(op: &impl SpvOperandEncoding) -> usize {
             let mut counter = WordCounter::default();
             // `WordCounter` never fails
             let _ = op.encode(&mut counter);
@@ -103,7 +103,10 @@ pub unsafe trait OperandEncoding: Sized + Debug {
         reader.finalize()?;
         Ok(result)
     }
+}
 
+/// Operands that can be disassembled into a SPIR-V like disassembly.
+pub trait SpvOperandDis: Sized {
     /// Disassemble this operand to the supplied [`Formatter`]. Prefer [`Self::dis`] over calling this.
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result;
 
@@ -122,9 +125,9 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     }
 }
 
-pub struct OperandDis<'a, T: OperandEncoding>(&'a T, &'a OperandDisContext<'a>);
+pub struct OperandDis<'a, T: SpvOperandDis>(&'a T, &'a OperandDisContext<'a>);
 
-impl<'a, T: OperandEncoding> Display for OperandDis<'a, T> {
+impl<'a, T: SpvOperandDis> Display for OperandDis<'a, T> {
     #[inline]
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, self.1)
@@ -162,7 +165,7 @@ impl<'a> Deref for OperandDisContext<'a> {
 
 pub type ZeroOrOne<T> = Option<T>;
 
-unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
+unsafe impl<T: SpvOperandEncoding> SpvOperandEncoding for Option<T> {
     const FIXED_LEN: Option<usize> = None;
 
     #[inline]
@@ -198,7 +201,9 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
             Ok(None)
         }
     }
+}
 
+impl<T: SpvOperandDis> SpvOperandDis for Option<T> {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         match self {
@@ -210,7 +215,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
 
 pub type ZeroOrMore<T> = SmallVec<[T; 6]>;
 
-unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
+unsafe impl<T: SpvOperandEncoding> SpvOperandEncoding for Vec<T> {
     const FIXED_LEN: Option<usize> = None;
 
     #[inline]
@@ -262,7 +267,9 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
         }
         Ok(vec)
     }
+}
 
+impl<T: SpvOperandDis> SpvOperandDis for Vec<T> {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -274,7 +281,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
 }
 
 /// copy of Vec impl above
-unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T; N]> {
+unsafe impl<T: SpvOperandEncoding, const N: usize> SpvOperandEncoding for SmallVec<[T; N]> {
     const FIXED_LEN: Option<usize> = None;
 
     #[inline]
@@ -313,7 +320,9 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
         }
         Ok(vec)
     }
+}
 
+impl<T: SpvOperandDis, const N: usize> SpvOperandDis for SmallVec<[T; N]> {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();

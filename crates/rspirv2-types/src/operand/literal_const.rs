@@ -1,7 +1,7 @@
 use crate::Word;
 use crate::binary::{DecodeError, DecodeErrorKind, EncodeError, OperandReader, WordWriter};
 use crate::meta::{Category, OperandKind};
-use crate::operand::{Operand, OperandDisContext, OperandEncoding};
+use crate::operand::{OperandDisContext, SpvOperandDis, SpvOperandEncoding, SpvOperandMeta};
 use anstyle::AnsiColor;
 use smallvec::SmallVec;
 use std::fmt::{Display, Formatter};
@@ -19,7 +19,7 @@ pub const OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER: OperandKind = OperandKi
 /// the type of the constant.
 ///
 /// # Parsing Assumption
-/// > We assume that [`LiteralConst`] is always the last [`Operand`] in an [`Instruction`] and never has a quantity of
+/// > We assume that [`LiteralConst`] is always the last [`SpvOperandMeta`] in an [`Instruction`] and never has a quantity of
 /// > [`Quantifier::ZeroOrMore`].
 ///
 /// The current spec satisfies this requirement. `OpConstant` / `OpSpecConstant` are the only instructions to consume
@@ -31,8 +31,8 @@ pub const OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER: OperandKind = OperandKi
 /// implementation vastly more complex and likely have a negative impact on decoding performance, which is why we
 /// decided to make this assumption about SPIR-V grammars.
 ///
-/// A [`LiteralConst`] can only be decoded with [`OperandEncoding::decode_last`]. Decoding an `LiteralInteger` not as
-/// the last operand, aka. calling [`OperandEncoding::decode`], will always return an Error.
+/// A [`LiteralConst`] can only be decoded with [`SpvOperandEncoding::decode_last`]. Decoding an `LiteralInteger` not as
+/// the last operand, aka. calling [`SpvOperandEncoding::decode`], will always return an Error.
 ///
 /// [`Instruction`]: crate::meta::InstMeta
 /// [`Quantifier::ZeroOrMore`]: `crate::meta::Quantifier`
@@ -164,11 +164,11 @@ impl LiteralConst {
     as_float!(as_u64 => as_f64: f64);
 }
 
-unsafe impl Operand for LiteralConst {
+unsafe impl SpvOperandMeta for LiteralConst {
     const KIND: &OperandKind = &OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER;
 }
 
-unsafe impl OperandEncoding for LiteralConst {
+unsafe impl SpvOperandEncoding for LiteralConst {
     const FIXED_LEN: Option<usize> = None;
 
     #[inline]
@@ -192,7 +192,9 @@ unsafe impl OperandEncoding for LiteralConst {
         profiling::function_scope!();
         Ok(Self(reader.collect()))
     }
+}
 
+impl SpvOperandDis for LiteralConst {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();

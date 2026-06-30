@@ -139,9 +139,9 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             impl SpvInstEncoding for #struct_ident {
                 fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
                     profiling::function_scope!();
-                    let len = 1 #(+OperandEncoding::word_len(&self.#members))*;
+                    let len = 1 #(+SpvOperandEncoding::word_len(&self.#members))*;
                     writer.write_op(Self::META.opcode, len)?;
-                    #(OperandEncoding::encode(&self.#members, &mut *writer)?;)*
+                    #(SpvOperandEncoding::encode(&self.#members, &mut *writer)?;)*
                     Ok(())
                 }
 
@@ -149,8 +149,8 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                     profiling::function_scope!();
                     #reader reader.check_opcode(Self::META)?;
                     Ok(Self {
-                        #(#members_non_last: OperandEncoding::decode(&mut op_reader)?,)*
-                        #(#members_last: OperandEncoding::decode_last(&mut op_reader)?,)*
+                        #(#members_non_last: SpvOperandEncoding::decode(&mut op_reader)?,)*
+                        #(#members_last: SpvOperandEncoding::decode_last(&mut op_reader)?,)*
                     })
                 }
             }

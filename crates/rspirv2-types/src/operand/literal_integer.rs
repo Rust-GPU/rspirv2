@@ -1,7 +1,7 @@
 use crate::Word;
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
 use crate::meta::{Category, OperandKind};
-use crate::operand::{Operand, OperandDisContext, OperandEncoding};
+use crate::operand::{OperandDisContext, SpvOperandDis, SpvOperandEncoding, SpvOperandMeta};
 use anstyle::AnsiColor;
 use std::fmt::Formatter;
 
@@ -65,11 +65,11 @@ macro_rules! def_literal_integer {
             }
         }
 
-        unsafe impl Operand for $name {
+        unsafe impl SpvOperandMeta for $name {
             const KIND: &OperandKind = &$kind;
         }
 
-        unsafe impl OperandEncoding for $name {
+        unsafe impl SpvOperandEncoding for $name {
             const FIXED_LEN: Option<usize> = Some(1);
 
             #[inline]
@@ -82,7 +82,9 @@ macro_rules! def_literal_integer {
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 Ok(Self(reader.pull()?))
             }
+        }
 
+        impl SpvOperandDis for $name {
             #[inline]
             fn dis_fmt(
                 &self,

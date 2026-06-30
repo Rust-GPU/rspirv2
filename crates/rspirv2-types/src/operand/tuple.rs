@@ -1,26 +1,28 @@
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
-use crate::operand::{OperandDisContext, OperandEncoding};
+use crate::operand::{OperandDisContext, SpvOperandDis, SpvOperandEncoding};
 use std::fmt::Formatter;
 
 macro_rules! impl_tuple {
     ($($A:ident $I:tt),*) => {
-        unsafe impl<$($A: OperandEncoding),*> OperandEncoding for ($($A),*) {
+        unsafe impl<$($A: SpvOperandEncoding),*> SpvOperandEncoding for ($($A),*) {
             const FIXED_LEN: Option<usize> = FixedLenComposer::new()
                 $(.append($A::FIXED_LEN))*
                 .finish();
 
             fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
-                $(<$A as OperandEncoding>::encode(&self.$I, &mut *writer)?;)*
+                $(<$A as SpvOperandEncoding>::encode(&self.$I, &mut *writer)?;)*
                 Ok(())
             }
 
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
-                Ok(($(<$A as OperandEncoding>::decode(&mut *reader)?),*))
+                Ok(($(<$A as SpvOperandEncoding>::decode(&mut *reader)?),*))
             }
+        }
 
+        impl<$($A: SpvOperandDis),*> SpvOperandDis for ($($A),*) {
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
-                $(<$A as OperandEncoding>::dis_fmt(&self.$I, f, ctx)?;)*
+                $(<$A as SpvOperandDis>::dis_fmt(&self.$I, f, ctx)?;)*
                 Ok(())
             }
         }
@@ -35,7 +37,7 @@ impl_tuple!(A 0, B 1, C 2, D 3, E 4, F 5);
 impl_tuple!(A 0, B 1, C 2, D 3, E 4, F 5, G 6);
 impl_tuple!(A 0, B 1, C 2, D 3, E 4, F 5, G 6, H 7);
 
-/// Compose the [`OperandEncoding::FIXED_LEN`] from multiple maybe fixed len Operands
+/// Compose the [`SpvOperandEncoding::FIXED_LEN`] from multiple maybe fixed len Operands
 pub struct FixedLenComposer(Option<usize>);
 
 impl FixedLenComposer {

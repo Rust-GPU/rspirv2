@@ -1,7 +1,7 @@
 use crate::Word;
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
 use crate::meta::{Category, OperandKind};
-use crate::operand::{Operand, OperandDisContext, OperandEncoding};
+use crate::operand::{OperandDisContext, SpvOperandDis, SpvOperandEncoding, SpvOperandMeta};
 use anstyle::AnsiColor;
 use std::fmt::Formatter;
 
@@ -49,11 +49,11 @@ impl LiteralFloat {
     }
 }
 
-unsafe impl Operand for LiteralFloat {
+unsafe impl SpvOperandMeta for LiteralFloat {
     const KIND: &OperandKind = &OPERAND_KIND_LITERAL_FLOAT;
 }
 
-unsafe impl OperandEncoding for LiteralFloat {
+unsafe impl SpvOperandEncoding for LiteralFloat {
     const FIXED_LEN: Option<usize> = Some(1);
 
     #[inline]
@@ -66,7 +66,9 @@ unsafe impl OperandEncoding for LiteralFloat {
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(reader.pull()?))
     }
+}
 
+impl SpvOperandDis for LiteralFloat {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         let color = ctx.color(AnsiColor::Red.on_default());

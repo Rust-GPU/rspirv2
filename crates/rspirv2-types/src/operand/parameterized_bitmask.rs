@@ -1,6 +1,6 @@
 use crate::Word;
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordSliceWriter, WordWriter};
-use crate::operand::{OperandDisContext, OperandEncoding};
+use crate::operand::{OperandDisContext, SpvOperandDis, SpvOperandEncoding};
 use smallvec::SmallVec;
 use std::fmt::{Debug, Formatter};
 use std::ops::Index;
@@ -8,7 +8,7 @@ use std::ops::Index;
 pub const PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN: &str =
     "Parameterized bitmask requires operands to have a fixed size";
 
-pub trait ParameterizedBitmaskBits: Copy + OperandEncoding + bitflags::Flags<Bits = u32> {
+pub trait ParameterizedBitmaskBits: Copy + bitflags::Flags<Bits = u32> {
     const BIT_TO_EXTRA_LEN: &[usize];
 
     /// How many bits this bitmask has
@@ -63,7 +63,7 @@ impl<T: ParameterizedBitmaskBits> ParameterizedBitmask<T> {
         self.bits.contains(T::from_bits_retain(1 << bit))
     }
 
-    pub fn get<P: OperandEncoding>(&self, bit: u32) -> Option<P> {
+    pub fn get<P: SpvOperandEncoding>(&self, bit: u32) -> Option<P> {
         let (offset, len) = self.bits.extra_offset_len(bit);
         assert_eq!(len, P::FIXED_LEN.unwrap());
         if self.bits.contains(T::from_bits_retain(1 << bit)) {
@@ -79,7 +79,7 @@ impl<T: ParameterizedBitmaskBits> ParameterizedBitmask<T> {
         self.bits.set(T::from_bits_retain(1 << bit), enabled);
     }
 
-    pub fn set<P: OperandEncoding>(&mut self, bit: u32, param: Option<P>) {
+    pub fn set<P: SpvOperandEncoding>(&mut self, bit: u32, param: Option<P>) {
         self.verify_consistency();
         let (offset, len) = self.bits.extra_offset_len(bit);
         assert_eq!(len, P::FIXED_LEN.unwrap());
@@ -118,7 +118,9 @@ impl<T: ParameterizedBitmaskBits> ParameterizedBitmask<T> {
     }
 }
 
-unsafe impl<T: ParameterizedBitmaskBits> OperandEncoding for ParameterizedBitmask<T> {
+unsafe impl<T: ParameterizedBitmaskBits + SpvOperandEncoding> SpvOperandEncoding
+    for ParameterizedBitmask<T>
+{
     const FIXED_LEN: Option<usize> = None;
 
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -134,7 +136,9 @@ unsafe impl<T: ParameterizedBitmaskBits> OperandEncoding for ParameterizedBitmas
         ret.verify_consistency();
         Ok(ret)
     }
+}
 
+impl<T: ParameterizedBitmaskBits + SpvOperandDis> SpvOperandDis for ParameterizedBitmask<T> {
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         self.bits.dis_fmt(f, ctx)
     }

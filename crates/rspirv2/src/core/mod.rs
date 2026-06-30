@@ -19,7 +19,7 @@ impl preamble::AnyCapability for preamble::Capability {
     fn name(&self) -> String {
         let name = format!(
             "{}",
-            preamble::OperandEncoding::dis(
+            preamble::SpvOperandDis::dis(
                 self,
                 &preamble::OperandDisContext {
                     ctx: &Default::default(),

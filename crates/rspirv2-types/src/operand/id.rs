@@ -4,7 +4,7 @@ use crate::Word;
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
 use crate::dis::ResolvedIdName;
 use crate::meta::{Category, OperandKind};
-use crate::operand::{Operand, OperandDisContext, OperandEncoding};
+use crate::operand::{OperandDisContext, SpvOperandDis, SpvOperandEncoding, SpvOperandMeta};
 use anstyle::AnsiColor;
 use std::fmt::{Display, Formatter};
 
@@ -47,11 +47,11 @@ unsafe impl bytemuck::Zeroable for IdResult {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for IdResult {}
 
-unsafe impl Operand for IdResult {
+unsafe impl SpvOperandMeta for IdResult {
     const KIND: &OperandKind = &OPERAND_KIND_ID_RESULT;
 }
 
-unsafe impl OperandEncoding for IdResult {
+unsafe impl SpvOperandEncoding for IdResult {
     const FIXED_LEN: Option<usize> = Some(1);
 
     #[inline]
@@ -64,7 +64,9 @@ unsafe impl OperandEncoding for IdResult {
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(reader.pull()?))
     }
+}
 
+impl SpvOperandDis for IdResult {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         self.dis_fmt_color(f, ctx, ID_RESULT_COLOR, false)
@@ -135,11 +137,11 @@ macro_rules! id_ref {
             }
         }
 
-        unsafe impl Operand for $name {
+        unsafe impl SpvOperandMeta for $name {
             const KIND: &OperandKind = &$kind;
         }
 
-        unsafe impl OperandEncoding for $name {
+        unsafe impl SpvOperandEncoding for $name {
             const FIXED_LEN: Option<usize> = Some(1);
 
             #[inline]
@@ -152,7 +154,9 @@ macro_rules! id_ref {
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 Ok(Self(IdResult(reader.pull()?)))
             }
+        }
 
+        impl SpvOperandDis for $name {
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
                 self.0.dis_fmt_color(f, ctx, AnsiColor::Yellow.on_default(), true)

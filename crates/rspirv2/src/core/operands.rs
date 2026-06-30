@@ -10,7 +10,7 @@ bitflags! {
     SignExtend = 4096u32; #[doc = "Since SPIR-V 1.4"] const ZeroExtend = 8192u32; #[doc =
     "Since SPIR-V 1.6"] const Nontemporal = 16384u32; const Offsets = 65536u32; }
 }
-unsafe impl OperandEncoding for ImageOperandsBits {
+unsafe impl SpvOperandEncoding for ImageOperandsBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -25,6 +25,8 @@ unsafe impl OperandEncoding for ImageOperandsBits {
             bits,
         ))
     }
+}
+impl SpvOperandDis for ImageOperandsBits {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -258,10 +260,10 @@ impl ImageOperands {
         self.0.set(16u32, opt);
     }
 }
-unsafe impl Operand for ImageOperands {
+unsafe impl SpvOperandMeta for ImageOperands {
     const KIND: &OperandKind = &OPERAND_KIND_IMAGE_OPERANDS;
 }
-unsafe impl OperandEncoding for ImageOperands {
+unsafe impl SpvOperandEncoding for ImageOperands {
     const FIXED_LEN: Option<usize> = None;
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         self.0.encode(writer)
@@ -271,6 +273,8 @@ unsafe impl OperandEncoding for ImageOperands {
             reader,
         )?))
     }
+}
+impl SpvOperandDis for ImageOperands {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, ctx)?;
@@ -316,10 +320,10 @@ bitflags! {
     4u32; const AllowRecip = 8u32; const Fast = 16u32; const AllowContract = 65536u32;
     const AllowReassoc = 131072u32; const AllowTransform = 262144u32; }
 }
-unsafe impl Operand for FPFastMathMode {
+unsafe impl SpvOperandMeta for FPFastMathMode {
     const KIND: &OperandKind = &OPERAND_KIND_FP_FAST_MATH_MODE;
 }
-unsafe impl OperandEncoding for FPFastMathMode {
+unsafe impl SpvOperandEncoding for FPFastMathMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -334,6 +338,8 @@ unsafe impl OperandEncoding for FPFastMathMode {
             bits,
         ))
     }
+}
+impl SpvOperandDis for FPFastMathMode {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -375,10 +381,10 @@ bitflags! {
     SelectionControl : u32 { const None = 0u32; const Flatten = 1u32; const DontFlatten =
     2u32; }
 }
-unsafe impl Operand for SelectionControl {
+unsafe impl SpvOperandMeta for SelectionControl {
     const KIND: &OperandKind = &OPERAND_KIND_SELECTION_CONTROL;
 }
-unsafe impl OperandEncoding for SelectionControl {
+unsafe impl SpvOperandEncoding for SelectionControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -393,6 +399,8 @@ unsafe impl OperandEncoding for SelectionControl {
             bits,
         ))
     }
+}
+impl SpvOperandDis for SelectionControl {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -426,7 +434,7 @@ bitflags! {
     const LoopCountALTERA = 16777216u32; const MaxReinvocationDelayALTERA = 33554432u32;
     }
 }
-unsafe impl OperandEncoding for LoopControlBits {
+unsafe impl SpvOperandEncoding for LoopControlBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -441,6 +449,8 @@ unsafe impl OperandEncoding for LoopControlBits {
             bits,
         ))
     }
+}
+impl SpvOperandDis for LoopControlBits {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -712,10 +722,10 @@ impl LoopControl {
         self.0.set(25u32, opt);
     }
 }
-unsafe impl Operand for LoopControl {
+unsafe impl SpvOperandMeta for LoopControl {
     const KIND: &OperandKind = &OPERAND_KIND_LOOP_CONTROL;
 }
-unsafe impl OperandEncoding for LoopControl {
+unsafe impl SpvOperandEncoding for LoopControl {
     const FIXED_LEN: Option<usize> = None;
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         self.0.encode(writer)
@@ -725,6 +735,8 @@ unsafe impl OperandEncoding for LoopControl {
             reader,
         )?))
     }
+}
+impl SpvOperandDis for LoopControl {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, ctx)?;
@@ -781,10 +793,10 @@ bitflags! {
     FunctionControl : u32 { const None = 0u32; const Inline = 1u32; const DontInline =
     2u32; const Pure = 4u32; const Const = 8u32; const OptNoneEXT = 65536u32; }
 }
-unsafe impl Operand for FunctionControl {
+unsafe impl SpvOperandMeta for FunctionControl {
     const KIND: &OperandKind = &OPERAND_KIND_FUNCTION_CONTROL;
 }
-unsafe impl OperandEncoding for FunctionControl {
+unsafe impl SpvOperandEncoding for FunctionControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -799,6 +811,8 @@ unsafe impl OperandEncoding for FunctionControl {
             bits,
         ))
     }
+}
+impl SpvOperandDis for FunctionControl {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -837,10 +851,10 @@ bitflags! {
     "Since SPIR-V 1.5"] const MakeVisible = 16384u32; #[doc = "Since SPIR-V 1.5"] const
     Volatile = 32768u32; }
 }
-unsafe impl Operand for MemorySemantics {
+unsafe impl SpvOperandMeta for MemorySemantics {
     const KIND: &OperandKind = &OPERAND_KIND_MEMORY_SEMANTICS;
 }
-unsafe impl OperandEncoding for MemorySemantics {
+unsafe impl SpvOperandEncoding for MemorySemantics {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -855,6 +869,8 @@ unsafe impl OperandEncoding for MemorySemantics {
             bits,
         ))
     }
+}
+impl SpvOperandDis for MemorySemantics {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -917,7 +933,7 @@ bitflags! {
     16u32; #[doc = "Since SPIR-V 1.5"] const NonPrivatePointer = 32u32; const
     AliasScopeINTELMask = 65536u32; const NoAliasINTELMask = 131072u32; }
 }
-unsafe impl OperandEncoding for MemoryAccessBits {
+unsafe impl SpvOperandEncoding for MemoryAccessBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -932,6 +948,8 @@ unsafe impl OperandEncoding for MemoryAccessBits {
             bits,
         ))
     }
+}
+impl SpvOperandDis for MemoryAccessBits {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -1074,10 +1092,10 @@ impl MemoryAccess {
         self.0.set(17u32, opt);
     }
 }
-unsafe impl Operand for MemoryAccess {
+unsafe impl SpvOperandMeta for MemoryAccess {
     const KIND: &OperandKind = &OPERAND_KIND_MEMORY_ACCESS;
 }
-unsafe impl OperandEncoding for MemoryAccess {
+unsafe impl SpvOperandEncoding for MemoryAccess {
     const FIXED_LEN: Option<usize> = None;
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         self.0.encode(writer)
@@ -1087,6 +1105,8 @@ unsafe impl OperandEncoding for MemoryAccess {
             reader,
         )?))
     }
+}
+impl SpvOperandDis for MemoryAccess {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, ctx)?;
@@ -1112,10 +1132,10 @@ bitflags! {
     #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
     KernelProfilingInfo : u32 { const None = 0u32; const CmdExecTime = 1u32; }
 }
-unsafe impl Operand for KernelProfilingInfo {
+unsafe impl SpvOperandMeta for KernelProfilingInfo {
     const KIND: &OperandKind = &OPERAND_KIND_KERNEL_PROFILING_INFO;
 }
-unsafe impl OperandEncoding for KernelProfilingInfo {
+unsafe impl SpvOperandEncoding for KernelProfilingInfo {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -1130,6 +1150,8 @@ unsafe impl OperandEncoding for KernelProfilingInfo {
             bits,
         ))
     }
+}
+impl SpvOperandDis for KernelProfilingInfo {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -1153,10 +1175,10 @@ bitflags! {
     CullOpaqueKHR = 64u32; const CullNoOpaqueKHR = 128u32; const SkipTrianglesKHR =
     256u32; const SkipAABBsKHR = 512u32; const ForceOpacityMicromap2StateEXT = 1024u32; }
 }
-unsafe impl Operand for RayFlags {
+unsafe impl SpvOperandMeta for RayFlags {
     const KIND: &OperandKind = &OPERAND_KIND_RAY_FLAGS;
 }
-unsafe impl OperandEncoding for RayFlags {
+unsafe impl SpvOperandEncoding for RayFlags {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -1171,6 +1193,8 @@ unsafe impl OperandEncoding for RayFlags {
             bits,
         ))
     }
+}
+impl SpvOperandDis for RayFlags {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -1221,10 +1245,10 @@ bitflags! {
     FragmentShadingRate : u32 { const Vertical2Pixels = 1u32; const Vertical4Pixels =
     2u32; const Horizontal2Pixels = 4u32; const Horizontal4Pixels = 8u32; }
 }
-unsafe impl Operand for FragmentShadingRate {
+unsafe impl SpvOperandMeta for FragmentShadingRate {
     const KIND: &OperandKind = &OPERAND_KIND_FRAGMENT_SHADING_RATE;
 }
-unsafe impl OperandEncoding for FragmentShadingRate {
+unsafe impl SpvOperandEncoding for FragmentShadingRate {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -1239,6 +1263,8 @@ unsafe impl OperandEncoding for FragmentShadingRate {
             bits,
         ))
     }
+}
+impl SpvOperandDis for FragmentShadingRate {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -1268,10 +1294,10 @@ bitflags! {
     RawAccessChainOperands : u32 { const None = 0u32; const RobustnessPerComponentNV =
     1u32; const RobustnessPerElementNV = 2u32; }
 }
-unsafe impl Operand for RawAccessChainOperands {
+unsafe impl SpvOperandMeta for RawAccessChainOperands {
     const KIND: &OperandKind = &OPERAND_KIND_RAW_ACCESS_CHAIN_OPERANDS;
 }
-unsafe impl OperandEncoding for RawAccessChainOperands {
+unsafe impl SpvOperandEncoding for RawAccessChainOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -1286,6 +1312,8 @@ unsafe impl OperandEncoding for RawAccessChainOperands {
             bits,
         ))
     }
+}
+impl SpvOperandDis for RawAccessChainOperands {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -1326,10 +1354,10 @@ pub enum SourceLanguage {
 unsafe impl bytemuck::Zeroable for SourceLanguage {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for SourceLanguage {}
-unsafe impl Operand for SourceLanguage {
+unsafe impl SpvOperandMeta for SourceLanguage {
     const KIND: &OperandKind = &OPERAND_KIND_SOURCE_LANGUAGE;
 }
-unsafe impl OperandEncoding for SourceLanguage {
+unsafe impl SpvOperandEncoding for SourceLanguage {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -1363,6 +1391,8 @@ unsafe impl OperandEncoding for SourceLanguage {
             }
         })
     }
+}
+impl SpvOperandDis for SourceLanguage {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -1409,10 +1439,10 @@ pub enum ExecutionModel {
 unsafe impl bytemuck::Zeroable for ExecutionModel {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for ExecutionModel {}
-unsafe impl Operand for ExecutionModel {
+unsafe impl SpvOperandMeta for ExecutionModel {
     const KIND: &OperandKind = &OPERAND_KIND_EXECUTION_MODEL;
 }
-unsafe impl OperandEncoding for ExecutionModel {
+unsafe impl SpvOperandEncoding for ExecutionModel {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -1449,6 +1479,8 @@ unsafe impl OperandEncoding for ExecutionModel {
             }
         })
     }
+}
+impl SpvOperandDis for ExecutionModel {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -1486,10 +1518,10 @@ pub enum AddressingModel {
 unsafe impl bytemuck::Zeroable for AddressingModel {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for AddressingModel {}
-unsafe impl Operand for AddressingModel {
+unsafe impl SpvOperandMeta for AddressingModel {
     const KIND: &OperandKind = &OPERAND_KIND_ADDRESSING_MODEL;
 }
-unsafe impl OperandEncoding for AddressingModel {
+unsafe impl SpvOperandEncoding for AddressingModel {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -1513,6 +1545,8 @@ unsafe impl OperandEncoding for AddressingModel {
             }
         })
     }
+}
+impl SpvOperandDis for AddressingModel {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -1537,10 +1571,10 @@ pub enum MemoryModel {
 unsafe impl bytemuck::Zeroable for MemoryModel {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for MemoryModel {}
-unsafe impl Operand for MemoryModel {
+unsafe impl SpvOperandMeta for MemoryModel {
     const KIND: &OperandKind = &OPERAND_KIND_MEMORY_MODEL;
 }
-unsafe impl OperandEncoding for MemoryModel {
+unsafe impl SpvOperandEncoding for MemoryModel {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -1564,6 +1598,8 @@ unsafe impl OperandEncoding for MemoryModel {
             }
         })
     }
+}
+impl SpvOperandDis for MemoryModel {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -1840,17 +1876,17 @@ pub enum ExecutionMode {
         NamedMaximumNumberOfRegisters,
     ),
 }
-unsafe impl Operand for ExecutionMode {
+unsafe impl SpvOperandMeta for ExecutionMode {
     const KIND: &OperandKind = &OPERAND_KIND_EXECUTION_MODE;
 }
-unsafe impl OperandEncoding for ExecutionMode {
+unsafe impl SpvOperandEncoding for ExecutionMode {
     const FIXED_LEN: Option<usize> = None;
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         match self {
             Self::Invocations(p0) => {
                 writer.write(Word(0u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::SpacingEqual => writer.write(Word(1u32)),
             Self::SpacingFractionalEven => writer.write(Word(2u32)),
@@ -1869,15 +1905,15 @@ unsafe impl OperandEncoding for ExecutionMode {
             Self::DepthUnchanged => writer.write(Word(16u32)),
             Self::LocalSize(p0, p1, p2) => {
                 writer.write(Word(17u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?;
-                OperandEncoding::encode(p2, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?;
+                SpvOperandEncoding::encode(p2, &mut *writer)?
             }
             Self::LocalSizeHint(p0, p1, p2) => {
                 writer.write(Word(18u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?;
-                OperandEncoding::encode(p2, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?;
+                SpvOperandEncoding::encode(p2, &mut *writer)?
             }
             Self::InputPoints => writer.write(Word(19u32)),
             Self::InputLines => writer.write(Word(20u32)),
@@ -1888,41 +1924,41 @@ unsafe impl OperandEncoding for ExecutionMode {
             Self::Isolines => writer.write(Word(25u32)),
             Self::OutputVertices(p0) => {
                 writer.write(Word(26u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::OutputPoints => writer.write(Word(27u32)),
             Self::OutputLineStrip => writer.write(Word(28u32)),
             Self::OutputTriangleStrip => writer.write(Word(29u32)),
             Self::VecTypeHint(p0) => {
                 writer.write(Word(30u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::ContractionOff => writer.write(Word(31u32)),
             Self::Initializer => writer.write(Word(33u32)),
             Self::Finalizer => writer.write(Word(34u32)),
             Self::SubgroupSize(p0) => {
                 writer.write(Word(35u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::SubgroupsPerWorkgroup(p0) => {
                 writer.write(Word(36u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::SubgroupsPerWorkgroupId(p0) => {
                 writer.write(Word(37u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::LocalSizeId(p0, p1, p2) => {
                 writer.write(Word(38u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?;
-                OperandEncoding::encode(p2, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?;
+                SpvOperandEncoding::encode(p2, &mut *writer)?
             }
             Self::LocalSizeHintId(p0, p1, p2) => {
                 writer.write(Word(39u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?;
-                OperandEncoding::encode(p2, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?;
+                SpvOperandEncoding::encode(p2, &mut *writer)?
             }
             Self::NonCoherentColorAttachmentReadEXT => writer.write(Word(4169u32)),
             Self::NonCoherentDepthAttachmentReadEXT => writer.write(Word(4170u32)),
@@ -1931,57 +1967,57 @@ unsafe impl OperandEncoding for ExecutionMode {
             Self::PostDepthCoverage => writer.write(Word(4446u32)),
             Self::DenormPreserve(p0) => {
                 writer.write(Word(4459u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::DenormFlushToZero(p0) => {
                 writer.write(Word(4460u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::SignedZeroInfNanPreserve(p0) => {
                 writer.write(Word(4461u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::RoundingModeRTE(p0) => {
                 writer.write(Word(4462u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::RoundingModeRTZ(p0) => {
                 writer.write(Word(4463u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::NonCoherentTileAttachmentReadQCOM => writer.write(Word(4489u32)),
             Self::TileShadingRateQCOM(p0, p1, p2) => {
                 writer.write(Word(4490u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?;
-                OperandEncoding::encode(p2, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?;
+                SpvOperandEncoding::encode(p2, &mut *writer)?
             }
             Self::EarlyAndLateFragmentTestsAMD => writer.write(Word(5017u32)),
             Self::StencilRefReplacingEXT => writer.write(Word(5027u32)),
             Self::CoalescingAMDX => writer.write(Word(5069u32)),
             Self::IsApiEntryAMDX(p0) => {
                 writer.write(Word(5070u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MaxNodeRecursionAMDX(p0) => {
                 writer.write(Word(5071u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::StaticNumWorkgroupsAMDX(p0, p1, p2) => {
                 writer.write(Word(5072u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?;
-                OperandEncoding::encode(p2, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?;
+                SpvOperandEncoding::encode(p2, &mut *writer)?
             }
             Self::ShaderIndexAMDX(p0) => {
                 writer.write(Word(5073u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MaxNumWorkgroupsAMDX(p0, p1, p2) => {
                 writer.write(Word(5077u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?;
-                OperandEncoding::encode(p2, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?;
+                SpvOperandEncoding::encode(p2, &mut *writer)?
             }
             Self::StencilRefUnchangedFrontAMD => writer.write(Word(5079u32)),
             Self::StencilRefGreaterFrontAMD => writer.write(Word(5080u32)),
@@ -1993,13 +2029,13 @@ unsafe impl OperandEncoding for ExecutionMode {
             Self::RequireFullQuadsKHR => writer.write(Word(5089u32)),
             Self::SharesInputWithAMDX(p0, p1) => {
                 writer.write(Word(5102u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?
             }
             Self::OutputLinesEXT => writer.write(Word(5269u32)),
             Self::OutputPrimitivesEXT(p0) => {
                 writer.write(Word(5270u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::DerivativeGroupQuadsKHR => writer.write(Word(5289u32)),
             Self::DerivativeGroupLinearKHR => writer.write(Word(5290u32)),
@@ -2013,72 +2049,72 @@ unsafe impl OperandEncoding for ExecutionMode {
             Self::Shader64BitIndexingEXT => writer.write(Word(5427u32)),
             Self::SharedLocalMemorySizeINTEL(p0) => {
                 writer.write(Word(5618u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::RoundingModeRTPINTEL(p0) => {
                 writer.write(Word(5620u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::RoundingModeRTNINTEL(p0) => {
                 writer.write(Word(5621u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::FloatingPointModeALTINTEL(p0) => {
                 writer.write(Word(5622u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::FloatingPointModeIEEEINTEL(p0) => {
                 writer.write(Word(5623u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MaxWorkgroupSizeINTEL(p0, p1, p2) => {
                 writer.write(Word(5893u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?;
-                OperandEncoding::encode(p2, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?;
+                SpvOperandEncoding::encode(p2, &mut *writer)?
             }
             Self::MaxWorkDimINTEL(p0) => {
                 writer.write(Word(5894u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::NoGlobalOffsetINTEL => writer.write(Word(5895u32)),
             Self::NumSIMDWorkitemsINTEL(p0) => {
                 writer.write(Word(5896u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::SchedulerTargetFmaxMhzINTEL(p0) => {
                 writer.write(Word(5903u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MaximallyReconvergesKHR => writer.write(Word(6023u32)),
             Self::FPFastMathDefault(p0, p1) => {
                 writer.write(Word(6028u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?
             }
             Self::StreamingInterfaceINTEL(p0) => {
                 writer.write(Word(6154u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::RegisterMapInterfaceINTEL(p0) => {
                 writer.write(Word(6160u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::NamedBarrierCountINTEL(p0) => {
                 writer.write(Word(6417u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MaximumRegistersINTEL(p0) => {
                 writer.write(Word(6461u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MaximumRegistersIdINTEL(p0) => {
                 writer.write(Word(6462u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::NamedMaximumRegistersINTEL(p0) => {
                 writer.write(Word(6463u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
         }
         Ok(())
@@ -2087,7 +2123,7 @@ unsafe impl OperandEncoding for ExecutionMode {
         profiling::function_scope!();
         let variant = reader.pull()?.0;
         Ok(match variant {
-            0u32 => Self::Invocations(OperandEncoding::decode(&mut *reader)?),
+            0u32 => Self::Invocations(SpvOperandEncoding::decode(&mut *reader)?),
             1u32 => Self::SpacingEqual,
             2u32 => Self::SpacingFractionalEven,
             3u32 => Self::SpacingFractionalOdd,
@@ -2104,14 +2140,14 @@ unsafe impl OperandEncoding for ExecutionMode {
             15u32 => Self::DepthLess,
             16u32 => Self::DepthUnchanged,
             17u32 => Self::LocalSize(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
             18u32 => Self::LocalSizeHint(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
             19u32 => Self::InputPoints,
             20u32 => Self::InputLines,
@@ -2120,58 +2156,58 @@ unsafe impl OperandEncoding for ExecutionMode {
             23u32 => Self::InputTrianglesAdjacency,
             24u32 => Self::Quads,
             25u32 => Self::Isolines,
-            26u32 => Self::OutputVertices(OperandEncoding::decode(&mut *reader)?),
+            26u32 => Self::OutputVertices(SpvOperandEncoding::decode(&mut *reader)?),
             27u32 => Self::OutputPoints,
             28u32 => Self::OutputLineStrip,
             29u32 => Self::OutputTriangleStrip,
-            30u32 => Self::VecTypeHint(OperandEncoding::decode(&mut *reader)?),
+            30u32 => Self::VecTypeHint(SpvOperandEncoding::decode(&mut *reader)?),
             31u32 => Self::ContractionOff,
             33u32 => Self::Initializer,
             34u32 => Self::Finalizer,
-            35u32 => Self::SubgroupSize(OperandEncoding::decode(&mut *reader)?),
-            36u32 => Self::SubgroupsPerWorkgroup(OperandEncoding::decode(&mut *reader)?),
-            37u32 => Self::SubgroupsPerWorkgroupId(OperandEncoding::decode(&mut *reader)?),
+            35u32 => Self::SubgroupSize(SpvOperandEncoding::decode(&mut *reader)?),
+            36u32 => Self::SubgroupsPerWorkgroup(SpvOperandEncoding::decode(&mut *reader)?),
+            37u32 => Self::SubgroupsPerWorkgroupId(SpvOperandEncoding::decode(&mut *reader)?),
             38u32 => Self::LocalSizeId(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
             39u32 => Self::LocalSizeHintId(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
             4169u32 => Self::NonCoherentColorAttachmentReadEXT,
             4170u32 => Self::NonCoherentDepthAttachmentReadEXT,
             4171u32 => Self::NonCoherentStencilAttachmentReadEXT,
             4421u32 => Self::SubgroupUniformControlFlowKHR,
             4446u32 => Self::PostDepthCoverage,
-            4459u32 => Self::DenormPreserve(OperandEncoding::decode(&mut *reader)?),
-            4460u32 => Self::DenormFlushToZero(OperandEncoding::decode(&mut *reader)?),
-            4461u32 => Self::SignedZeroInfNanPreserve(OperandEncoding::decode(&mut *reader)?),
-            4462u32 => Self::RoundingModeRTE(OperandEncoding::decode(&mut *reader)?),
-            4463u32 => Self::RoundingModeRTZ(OperandEncoding::decode(&mut *reader)?),
+            4459u32 => Self::DenormPreserve(SpvOperandEncoding::decode(&mut *reader)?),
+            4460u32 => Self::DenormFlushToZero(SpvOperandEncoding::decode(&mut *reader)?),
+            4461u32 => Self::SignedZeroInfNanPreserve(SpvOperandEncoding::decode(&mut *reader)?),
+            4462u32 => Self::RoundingModeRTE(SpvOperandEncoding::decode(&mut *reader)?),
+            4463u32 => Self::RoundingModeRTZ(SpvOperandEncoding::decode(&mut *reader)?),
             4489u32 => Self::NonCoherentTileAttachmentReadQCOM,
             4490u32 => Self::TileShadingRateQCOM(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
             5017u32 => Self::EarlyAndLateFragmentTestsAMD,
             5027u32 => Self::StencilRefReplacingEXT,
             5069u32 => Self::CoalescingAMDX,
-            5070u32 => Self::IsApiEntryAMDX(OperandEncoding::decode(&mut *reader)?),
-            5071u32 => Self::MaxNodeRecursionAMDX(OperandEncoding::decode(&mut *reader)?),
+            5070u32 => Self::IsApiEntryAMDX(SpvOperandEncoding::decode(&mut *reader)?),
+            5071u32 => Self::MaxNodeRecursionAMDX(SpvOperandEncoding::decode(&mut *reader)?),
             5072u32 => Self::StaticNumWorkgroupsAMDX(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
-            5073u32 => Self::ShaderIndexAMDX(OperandEncoding::decode(&mut *reader)?),
+            5073u32 => Self::ShaderIndexAMDX(SpvOperandEncoding::decode(&mut *reader)?),
             5077u32 => Self::MaxNumWorkgroupsAMDX(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
             5079u32 => Self::StencilRefUnchangedFrontAMD,
             5080u32 => Self::StencilRefGreaterFrontAMD,
@@ -2182,11 +2218,11 @@ unsafe impl OperandEncoding for ExecutionMode {
             5088u32 => Self::QuadDerivativesKHR,
             5089u32 => Self::RequireFullQuadsKHR,
             5102u32 => Self::SharesInputWithAMDX(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
             5269u32 => Self::OutputLinesEXT,
-            5270u32 => Self::OutputPrimitivesEXT(OperandEncoding::decode(&mut *reader)?),
+            5270u32 => Self::OutputPrimitivesEXT(SpvOperandEncoding::decode(&mut *reader)?),
             5289u32 => Self::DerivativeGroupQuadsKHR,
             5290u32 => Self::DerivativeGroupLinearKHR,
             5298u32 => Self::OutputTrianglesEXT,
@@ -2197,31 +2233,31 @@ unsafe impl OperandEncoding for ExecutionMode {
             5370u32 => Self::ShadingRateInterlockOrderedEXT,
             5371u32 => Self::ShadingRateInterlockUnorderedEXT,
             5427u32 => Self::Shader64BitIndexingEXT,
-            5618u32 => Self::SharedLocalMemorySizeINTEL(OperandEncoding::decode(&mut *reader)?),
-            5620u32 => Self::RoundingModeRTPINTEL(OperandEncoding::decode(&mut *reader)?),
-            5621u32 => Self::RoundingModeRTNINTEL(OperandEncoding::decode(&mut *reader)?),
-            5622u32 => Self::FloatingPointModeALTINTEL(OperandEncoding::decode(&mut *reader)?),
-            5623u32 => Self::FloatingPointModeIEEEINTEL(OperandEncoding::decode(&mut *reader)?),
+            5618u32 => Self::SharedLocalMemorySizeINTEL(SpvOperandEncoding::decode(&mut *reader)?),
+            5620u32 => Self::RoundingModeRTPINTEL(SpvOperandEncoding::decode(&mut *reader)?),
+            5621u32 => Self::RoundingModeRTNINTEL(SpvOperandEncoding::decode(&mut *reader)?),
+            5622u32 => Self::FloatingPointModeALTINTEL(SpvOperandEncoding::decode(&mut *reader)?),
+            5623u32 => Self::FloatingPointModeIEEEINTEL(SpvOperandEncoding::decode(&mut *reader)?),
             5893u32 => Self::MaxWorkgroupSizeINTEL(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
-            5894u32 => Self::MaxWorkDimINTEL(OperandEncoding::decode(&mut *reader)?),
+            5894u32 => Self::MaxWorkDimINTEL(SpvOperandEncoding::decode(&mut *reader)?),
             5895u32 => Self::NoGlobalOffsetINTEL,
-            5896u32 => Self::NumSIMDWorkitemsINTEL(OperandEncoding::decode(&mut *reader)?),
-            5903u32 => Self::SchedulerTargetFmaxMhzINTEL(OperandEncoding::decode(&mut *reader)?),
+            5896u32 => Self::NumSIMDWorkitemsINTEL(SpvOperandEncoding::decode(&mut *reader)?),
+            5903u32 => Self::SchedulerTargetFmaxMhzINTEL(SpvOperandEncoding::decode(&mut *reader)?),
             6023u32 => Self::MaximallyReconvergesKHR,
             6028u32 => Self::FPFastMathDefault(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
-            6154u32 => Self::StreamingInterfaceINTEL(OperandEncoding::decode(&mut *reader)?),
-            6160u32 => Self::RegisterMapInterfaceINTEL(OperandEncoding::decode(&mut *reader)?),
-            6417u32 => Self::NamedBarrierCountINTEL(OperandEncoding::decode(&mut *reader)?),
-            6461u32 => Self::MaximumRegistersINTEL(OperandEncoding::decode(&mut *reader)?),
-            6462u32 => Self::MaximumRegistersIdINTEL(OperandEncoding::decode(&mut *reader)?),
-            6463u32 => Self::NamedMaximumRegistersINTEL(OperandEncoding::decode(&mut *reader)?),
+            6154u32 => Self::StreamingInterfaceINTEL(SpvOperandEncoding::decode(&mut *reader)?),
+            6160u32 => Self::RegisterMapInterfaceINTEL(SpvOperandEncoding::decode(&mut *reader)?),
+            6417u32 => Self::NamedBarrierCountINTEL(SpvOperandEncoding::decode(&mut *reader)?),
+            6461u32 => Self::MaximumRegistersINTEL(SpvOperandEncoding::decode(&mut *reader)?),
+            6462u32 => Self::MaximumRegistersIdINTEL(SpvOperandEncoding::decode(&mut *reader)?),
+            6463u32 => Self::NamedMaximumRegistersINTEL(SpvOperandEncoding::decode(&mut *reader)?),
             _ => {
                 return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(ExecutionMode),
@@ -2231,6 +2267,8 @@ unsafe impl OperandEncoding for ExecutionMode {
             }
         })
     }
+}
+impl SpvOperandDis for ExecutionMode {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -2501,10 +2539,10 @@ pub enum StorageClass {
 unsafe impl bytemuck::Zeroable for StorageClass {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for StorageClass {}
-unsafe impl Operand for StorageClass {
+unsafe impl SpvOperandMeta for StorageClass {
     const KIND: &OperandKind = &OPERAND_KIND_STORAGE_CLASS;
 }
-unsafe impl OperandEncoding for StorageClass {
+unsafe impl SpvOperandEncoding for StorageClass {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2553,6 +2591,8 @@ unsafe impl OperandEncoding for StorageClass {
             }
         })
     }
+}
+impl SpvOperandDis for StorageClass {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -2605,10 +2645,10 @@ pub enum Dim {
 unsafe impl bytemuck::Zeroable for Dim {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for Dim {}
-unsafe impl Operand for Dim {
+unsafe impl SpvOperandMeta for Dim {
     const KIND: &OperandKind = &OPERAND_KIND_DIM;
 }
-unsafe impl OperandEncoding for Dim {
+unsafe impl SpvOperandEncoding for Dim {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2636,6 +2676,8 @@ unsafe impl OperandEncoding for Dim {
             }
         })
     }
+}
+impl SpvOperandDis for Dim {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -2664,10 +2706,10 @@ pub enum SamplerAddressingMode {
 unsafe impl bytemuck::Zeroable for SamplerAddressingMode {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for SamplerAddressingMode {}
-unsafe impl Operand for SamplerAddressingMode {
+unsafe impl SpvOperandMeta for SamplerAddressingMode {
     const KIND: &OperandKind = &OPERAND_KIND_SAMPLER_ADDRESSING_MODE;
 }
-unsafe impl OperandEncoding for SamplerAddressingMode {
+unsafe impl SpvOperandEncoding for SamplerAddressingMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2692,6 +2734,8 @@ unsafe impl OperandEncoding for SamplerAddressingMode {
             }
         })
     }
+}
+impl SpvOperandDis for SamplerAddressingMode {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -2714,10 +2758,10 @@ pub enum SamplerFilterMode {
 unsafe impl bytemuck::Zeroable for SamplerFilterMode {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for SamplerFilterMode {}
-unsafe impl Operand for SamplerFilterMode {
+unsafe impl SpvOperandMeta for SamplerFilterMode {
     const KIND: &OperandKind = &OPERAND_KIND_SAMPLER_FILTER_MODE;
 }
-unsafe impl OperandEncoding for SamplerFilterMode {
+unsafe impl SpvOperandEncoding for SamplerFilterMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2739,6 +2783,8 @@ unsafe impl OperandEncoding for SamplerFilterMode {
             }
         })
     }
+}
+impl SpvOperandDis for SamplerFilterMode {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -2798,10 +2844,10 @@ pub enum ImageFormat {
 unsafe impl bytemuck::Zeroable for ImageFormat {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for ImageFormat {}
-unsafe impl Operand for ImageFormat {
+unsafe impl SpvOperandMeta for ImageFormat {
     const KIND: &OperandKind = &OPERAND_KIND_IMAGE_FORMAT;
 }
-unsafe impl OperandEncoding for ImageFormat {
+unsafe impl SpvOperandEncoding for ImageFormat {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2863,6 +2909,8 @@ unsafe impl OperandEncoding for ImageFormat {
             }
         })
     }
+}
+impl SpvOperandDis for ImageFormat {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -2940,10 +2988,10 @@ pub enum ImageChannelOrder {
 unsafe impl bytemuck::Zeroable for ImageChannelOrder {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for ImageChannelOrder {}
-unsafe impl Operand for ImageChannelOrder {
+unsafe impl SpvOperandMeta for ImageChannelOrder {
     const KIND: &OperandKind = &OPERAND_KIND_IMAGE_CHANNEL_ORDER;
 }
-unsafe impl OperandEncoding for ImageChannelOrder {
+unsafe impl SpvOperandEncoding for ImageChannelOrder {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -2983,6 +3031,8 @@ unsafe impl OperandEncoding for ImageChannelOrder {
             }
         })
     }
+}
+impl SpvOperandDis for ImageChannelOrder {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3044,10 +3094,10 @@ pub enum ImageChannelDataType {
 unsafe impl bytemuck::Zeroable for ImageChannelDataType {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for ImageChannelDataType {}
-unsafe impl Operand for ImageChannelDataType {
+unsafe impl SpvOperandMeta for ImageChannelDataType {
     const KIND: &OperandKind = &OPERAND_KIND_IMAGE_CHANNEL_DATA_TYPE;
 }
-unsafe impl OperandEncoding for ImageChannelDataType {
+unsafe impl SpvOperandEncoding for ImageChannelDataType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3093,6 +3143,8 @@ unsafe impl OperandEncoding for ImageChannelDataType {
             }
         })
     }
+}
+impl SpvOperandDis for ImageChannelDataType {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3138,10 +3190,10 @@ pub enum FPRoundingMode {
 unsafe impl bytemuck::Zeroable for FPRoundingMode {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for FPRoundingMode {}
-unsafe impl Operand for FPRoundingMode {
+unsafe impl SpvOperandMeta for FPRoundingMode {
     const KIND: &OperandKind = &OPERAND_KIND_FP_ROUNDING_MODE;
 }
-unsafe impl OperandEncoding for FPRoundingMode {
+unsafe impl SpvOperandEncoding for FPRoundingMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3165,6 +3217,8 @@ unsafe impl OperandEncoding for FPRoundingMode {
             }
         })
     }
+}
+impl SpvOperandDis for FPRoundingMode {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3186,10 +3240,10 @@ pub enum FPDenormMode {
 unsafe impl bytemuck::Zeroable for FPDenormMode {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for FPDenormMode {}
-unsafe impl Operand for FPDenormMode {
+unsafe impl SpvOperandMeta for FPDenormMode {
     const KIND: &OperandKind = &OPERAND_KIND_FP_DENORM_MODE;
 }
-unsafe impl OperandEncoding for FPDenormMode {
+unsafe impl SpvOperandEncoding for FPDenormMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3211,6 +3265,8 @@ unsafe impl OperandEncoding for FPDenormMode {
             }
         })
     }
+}
+impl SpvOperandDis for FPDenormMode {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3236,10 +3292,10 @@ pub enum QuantizationModes {
 unsafe impl bytemuck::Zeroable for QuantizationModes {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for QuantizationModes {}
-unsafe impl Operand for QuantizationModes {
+unsafe impl SpvOperandMeta for QuantizationModes {
     const KIND: &OperandKind = &OPERAND_KIND_QUANTIZATION_MODES;
 }
-unsafe impl OperandEncoding for QuantizationModes {
+unsafe impl SpvOperandEncoding for QuantizationModes {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3267,6 +3323,8 @@ unsafe impl OperandEncoding for QuantizationModes {
             }
         })
     }
+}
+impl SpvOperandDis for QuantizationModes {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3292,10 +3350,10 @@ pub enum FPOperationMode {
 unsafe impl bytemuck::Zeroable for FPOperationMode {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for FPOperationMode {}
-unsafe impl Operand for FPOperationMode {
+unsafe impl SpvOperandMeta for FPOperationMode {
     const KIND: &OperandKind = &OPERAND_KIND_FP_OPERATION_MODE;
 }
-unsafe impl OperandEncoding for FPOperationMode {
+unsafe impl SpvOperandEncoding for FPOperationMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3317,6 +3375,8 @@ unsafe impl OperandEncoding for FPOperationMode {
             }
         })
     }
+}
+impl SpvOperandDis for FPOperationMode {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3338,10 +3398,10 @@ pub enum OverflowModes {
 unsafe impl bytemuck::Zeroable for OverflowModes {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for OverflowModes {}
-unsafe impl Operand for OverflowModes {
+unsafe impl SpvOperandMeta for OverflowModes {
     const KIND: &OperandKind = &OPERAND_KIND_OVERFLOW_MODES;
 }
-unsafe impl OperandEncoding for OverflowModes {
+unsafe impl SpvOperandEncoding for OverflowModes {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3365,6 +3425,8 @@ unsafe impl OperandEncoding for OverflowModes {
             }
         })
     }
+}
+impl SpvOperandDis for OverflowModes {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3387,10 +3449,10 @@ pub enum LinkageType {
 unsafe impl bytemuck::Zeroable for LinkageType {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for LinkageType {}
-unsafe impl Operand for LinkageType {
+unsafe impl SpvOperandMeta for LinkageType {
     const KIND: &OperandKind = &OPERAND_KIND_LINKAGE_TYPE;
 }
-unsafe impl OperandEncoding for LinkageType {
+unsafe impl SpvOperandEncoding for LinkageType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3413,6 +3475,8 @@ unsafe impl OperandEncoding for LinkageType {
             }
         })
     }
+}
+impl SpvOperandDis for LinkageType {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3434,10 +3498,10 @@ pub enum AccessQualifier {
 unsafe impl bytemuck::Zeroable for AccessQualifier {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for AccessQualifier {}
-unsafe impl Operand for AccessQualifier {
+unsafe impl SpvOperandMeta for AccessQualifier {
     const KIND: &OperandKind = &OPERAND_KIND_ACCESS_QUALIFIER;
 }
-unsafe impl OperandEncoding for AccessQualifier {
+unsafe impl SpvOperandEncoding for AccessQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3460,6 +3524,8 @@ unsafe impl OperandEncoding for AccessQualifier {
             }
         })
     }
+}
+impl SpvOperandDis for AccessQualifier {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3482,10 +3548,10 @@ pub enum HostAccessQualifier {
 unsafe impl bytemuck::Zeroable for HostAccessQualifier {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for HostAccessQualifier {}
-unsafe impl Operand for HostAccessQualifier {
+unsafe impl SpvOperandMeta for HostAccessQualifier {
     const KIND: &OperandKind = &OPERAND_KIND_HOST_ACCESS_QUALIFIER;
 }
-unsafe impl OperandEncoding for HostAccessQualifier {
+unsafe impl SpvOperandEncoding for HostAccessQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3509,6 +3575,8 @@ unsafe impl OperandEncoding for HostAccessQualifier {
             }
         })
     }
+}
+impl SpvOperandDis for HostAccessQualifier {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3537,10 +3605,10 @@ pub enum FunctionParameterAttribute {
 unsafe impl bytemuck::Zeroable for FunctionParameterAttribute {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for FunctionParameterAttribute {}
-unsafe impl Operand for FunctionParameterAttribute {
+unsafe impl SpvOperandMeta for FunctionParameterAttribute {
     const KIND: &OperandKind = &OPERAND_KIND_FUNCTION_PARAMETER_ATTRIBUTE;
 }
-unsafe impl OperandEncoding for FunctionParameterAttribute {
+unsafe impl SpvOperandEncoding for FunctionParameterAttribute {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -3569,6 +3637,8 @@ unsafe impl OperandEncoding for FunctionParameterAttribute {
             }
         })
     }
+}
+impl SpvOperandDis for FunctionParameterAttribute {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -4003,10 +4073,10 @@ pub enum Decoration {
         StoreCacheControl,
     ),
 }
-unsafe impl Operand for Decoration {
+unsafe impl SpvOperandMeta for Decoration {
     const KIND: &OperandKind = &OPERAND_KIND_DECORATION;
 }
-unsafe impl OperandEncoding for Decoration {
+unsafe impl SpvOperandEncoding for Decoration {
     const FIXED_LEN: Option<usize> = None;
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -4014,7 +4084,7 @@ unsafe impl OperandEncoding for Decoration {
             Self::RelaxedPrecision => writer.write(Word(0u32)),
             Self::SpecId(p0) => {
                 writer.write(Word(1u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::Block => writer.write(Word(2u32)),
             Self::BufferBlock => writer.write(Word(3u32)),
@@ -4022,18 +4092,18 @@ unsafe impl OperandEncoding for Decoration {
             Self::ColMajor => writer.write(Word(5u32)),
             Self::ArrayStride(p0) => {
                 writer.write(Word(6u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MatrixStride(p0) => {
                 writer.write(Word(7u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::GLSLShared => writer.write(Word(8u32)),
             Self::GLSLPacked => writer.write(Word(9u32)),
             Self::CPacked => writer.write(Word(10u32)),
             Self::BuiltIn(p0) => {
                 writer.write(Word(11u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::NoPerspective => writer.write(Word(13u32)),
             Self::Flat => writer.write(Word(14u32)),
@@ -4051,82 +4121,82 @@ unsafe impl OperandEncoding for Decoration {
             Self::Uniform => writer.write(Word(26u32)),
             Self::UniformId(p0) => {
                 writer.write(Word(27u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::SaturatedConversion => writer.write(Word(28u32)),
             Self::Stream(p0) => {
                 writer.write(Word(29u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::Location(p0) => {
                 writer.write(Word(30u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::Component(p0) => {
                 writer.write(Word(31u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::Index(p0) => {
                 writer.write(Word(32u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::Binding(p0) => {
                 writer.write(Word(33u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::DescriptorSet(p0) => {
                 writer.write(Word(34u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::Offset(p0) => {
                 writer.write(Word(35u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::XfbBuffer(p0) => {
                 writer.write(Word(36u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::XfbStride(p0) => {
                 writer.write(Word(37u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::FuncParamAttr(p0) => {
                 writer.write(Word(38u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::FPRoundingMode(p0) => {
                 writer.write(Word(39u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::FPFastMathMode(p0) => {
                 writer.write(Word(40u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::LinkageAttributes(p0, p1) => {
                 writer.write(Word(41u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?
             }
             Self::NoContraction => writer.write(Word(42u32)),
             Self::InputAttachmentIndex(p0) => {
                 writer.write(Word(43u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::Alignment(p0) => {
                 writer.write(Word(44u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MaxByteOffset(p0) => {
                 writer.write(Word(45u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::AlignmentId(p0) => {
                 writer.write(Word(46u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MaxByteOffsetId(p0) => {
                 writer.write(Word(47u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::SaturatedToLargestFloat8NormalConversionEXT => writer.write(Word(4216u32)),
             Self::NoSignedWrap => writer.write(Word(4469u32)),
@@ -4137,41 +4207,41 @@ unsafe impl OperandEncoding for Decoration {
             Self::ExplicitInterpAMD => writer.write(Word(4999u32)),
             Self::NodeSharesPayloadLimitsWithAMDX(p0) => {
                 writer.write(Word(5019u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::NodeMaxPayloadsAMDX(p0) => {
                 writer.write(Word(5020u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::TrackFinishWritingAMDX => writer.write(Word(5078u32)),
             Self::PayloadNodeNameAMDX(p0) => {
                 writer.write(Word(5091u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::PayloadNodeBaseIndexAMDX(p0) => {
                 writer.write(Word(5098u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::PayloadNodeSparseArrayAMDX => writer.write(Word(5099u32)),
             Self::PayloadNodeArraySizeAMDX(p0) => {
                 writer.write(Word(5100u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::PayloadDispatchIndirectAMDX => writer.write(Word(5105u32)),
             Self::ArrayStrideIdEXT(p0) => {
                 writer.write(Word(5124u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::OffsetIdEXT(p0) => {
                 writer.write(Word(5125u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::OverrideCoverageNV => writer.write(Word(5248u32)),
             Self::PassthroughNV => writer.write(Word(5250u32)),
             Self::ViewportRelativeNV => writer.write(Word(5252u32)),
             Self::SecondaryViewportRelativeNV(p0) => {
                 writer.write(Word(5256u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::PerPrimitiveEXT => writer.write(Word(5271u32)),
             Self::PerViewNV => writer.write(Word(5272u32)),
@@ -4182,13 +4252,13 @@ unsafe impl OperandEncoding for Decoration {
             Self::AliasedPointer => writer.write(Word(5356u32)),
             Self::MemberOffsetNV(p0) => {
                 writer.write(Word(5358u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::HitObjectShaderRecordBufferNV => writer.write(Word(5386u32)),
             Self::HitObjectShaderRecordBufferEXT => writer.write(Word(5389u32)),
             Self::BankNV(p0) => {
                 writer.write(Word(5397u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::BindlessSamplerNV => writer.write(Word(5398u32)),
             Self::BindlessImageNV => writer.write(Word(5399u32)),
@@ -4196,142 +4266,142 @@ unsafe impl OperandEncoding for Decoration {
             Self::BoundImageNV => writer.write(Word(5401u32)),
             Self::SIMTCallINTEL(p0) => {
                 writer.write(Word(5599u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::ReferencedIndirectlyINTEL => writer.write(Word(5602u32)),
             Self::ClobberINTEL(p0) => {
                 writer.write(Word(5607u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::SideEffectsINTEL => writer.write(Word(5608u32)),
             Self::VectorComputeVariableINTEL => writer.write(Word(5624u32)),
             Self::FuncParamIOKindINTEL(p0) => {
                 writer.write(Word(5625u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::VectorComputeFunctionINTEL => writer.write(Word(5626u32)),
             Self::StackCallINTEL => writer.write(Word(5627u32)),
             Self::GlobalVariableOffsetINTEL(p0) => {
                 writer.write(Word(5628u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::CounterBuffer(p0) => {
                 writer.write(Word(5634u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::UserSemantic(p0) => {
                 writer.write(Word(5635u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::UserTypeGOOGLE(p0) => {
                 writer.write(Word(5636u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::FunctionRoundingModeINTEL(p0, p1) => {
                 writer.write(Word(5822u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?
             }
             Self::FunctionDenormModeINTEL(p0, p1) => {
                 writer.write(Word(5823u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?
             }
             Self::RegisterALTERA => writer.write(Word(5825u32)),
             Self::MemoryALTERA(p0) => {
                 writer.write(Word(5826u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::NumbanksALTERA(p0) => {
                 writer.write(Word(5827u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::BankwidthALTERA(p0) => {
                 writer.write(Word(5828u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MaxPrivateCopiesALTERA(p0) => {
                 writer.write(Word(5829u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::SinglepumpALTERA => writer.write(Word(5830u32)),
             Self::DoublepumpALTERA => writer.write(Word(5831u32)),
             Self::MaxReplicatesALTERA(p0) => {
                 writer.write(Word(5832u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::SimpleDualPortALTERA => writer.write(Word(5833u32)),
             Self::MergeALTERA(p0, p1) => {
                 writer.write(Word(5834u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?
             }
             Self::BankBitsALTERA(p0) => {
                 writer.write(Word(5835u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::ForcePow2DepthALTERA(p0) => {
                 writer.write(Word(5836u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::StridesizeALTERA(p0) => {
                 writer.write(Word(5883u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::WordsizeALTERA(p0) => {
                 writer.write(Word(5884u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::TrueDualPortALTERA => writer.write(Word(5885u32)),
             Self::BurstCoalesceALTERA => writer.write(Word(5899u32)),
             Self::CacheSizeALTERA(p0) => {
                 writer.write(Word(5900u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::DontStaticallyCoalesceALTERA => writer.write(Word(5901u32)),
             Self::PrefetchALTERA(p0) => {
                 writer.write(Word(5902u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::StallEnableALTERA => writer.write(Word(5905u32)),
             Self::FuseLoopsInFunctionALTERA => writer.write(Word(5907u32)),
             Self::MathOpDSPModeALTERA(p0, p1) => {
                 writer.write(Word(5909u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?
             }
             Self::AliasScopeINTEL(p0) => {
                 writer.write(Word(5914u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::NoAliasINTEL(p0) => {
                 writer.write(Word(5915u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::InitiationIntervalALTERA(p0) => {
                 writer.write(Word(5917u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MaxConcurrencyALTERA(p0) => {
                 writer.write(Word(5918u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::PipelineEnableALTERA(p0) => {
                 writer.write(Word(5919u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::BufferLocationALTERA(p0) => {
                 writer.write(Word(5921u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::IOPipeStorageALTERA(p0) => {
                 writer.write(Word(5944u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::FunctionFloatingPointModeINTEL(p0, p1) => {
                 writer.write(Word(6080u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?
             }
             Self::SingleElementVectorINTEL => writer.write(Word(6085u32)),
             Self::VectorComputeCallableFunctionINTEL => writer.write(Word(6087u32)),
@@ -4339,71 +4409,71 @@ unsafe impl OperandEncoding for Decoration {
             Self::StallFreeALTERA => writer.write(Word(6151u32)),
             Self::FPMaxErrorDecorationINTEL(p0) => {
                 writer.write(Word(6170u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::LatencyControlLabelALTERA(p0) => {
                 writer.write(Word(6172u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::LatencyControlConstraintALTERA(p0, p1, p2) => {
                 writer.write(Word(6173u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?;
-                OperandEncoding::encode(p2, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?;
+                SpvOperandEncoding::encode(p2, &mut *writer)?
             }
             Self::ConduitKernelArgumentALTERA => writer.write(Word(6175u32)),
             Self::RegisterMapKernelArgumentALTERA => writer.write(Word(6176u32)),
             Self::MMHostInterfaceAddressWidthALTERA(p0) => {
                 writer.write(Word(6177u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MMHostInterfaceDataWidthALTERA(p0) => {
                 writer.write(Word(6178u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MMHostInterfaceLatencyALTERA(p0) => {
                 writer.write(Word(6179u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MMHostInterfaceReadWriteModeALTERA(p0) => {
                 writer.write(Word(6180u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MMHostInterfaceMaxBurstALTERA(p0) => {
                 writer.write(Word(6181u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::MMHostInterfaceWaitRequestALTERA(p0) => {
                 writer.write(Word(6182u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::StableKernelArgumentALTERA => writer.write(Word(6183u32)),
             Self::HostAccessINTEL(p0, p1) => {
                 writer.write(Word(6188u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?
             }
             Self::InitModeALTERA(p0) => {
                 writer.write(Word(6190u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::ImplementInRegisterMapALTERA(p0) => {
                 writer.write(Word(6191u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::ConditionalINTEL(p0) => {
                 writer.write(Word(6247u32));
-                OperandEncoding::encode(p0, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?
             }
             Self::CacheControlLoadINTEL(p0, p1) => {
                 writer.write(Word(6442u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?
             }
             Self::CacheControlStoreINTEL(p0, p1) => {
                 writer.write(Word(6443u32));
-                OperandEncoding::encode(p0, &mut *writer)?;
-                OperandEncoding::encode(p1, &mut *writer)?
+                SpvOperandEncoding::encode(p0, &mut *writer)?;
+                SpvOperandEncoding::encode(p1, &mut *writer)?
             }
         }
         Ok(())
@@ -4413,17 +4483,17 @@ unsafe impl OperandEncoding for Decoration {
         let variant = reader.pull()?.0;
         Ok(match variant {
             0u32 => Self::RelaxedPrecision,
-            1u32 => Self::SpecId(OperandEncoding::decode(&mut *reader)?),
+            1u32 => Self::SpecId(SpvOperandEncoding::decode(&mut *reader)?),
             2u32 => Self::Block,
             3u32 => Self::BufferBlock,
             4u32 => Self::RowMajor,
             5u32 => Self::ColMajor,
-            6u32 => Self::ArrayStride(OperandEncoding::decode(&mut *reader)?),
-            7u32 => Self::MatrixStride(OperandEncoding::decode(&mut *reader)?),
+            6u32 => Self::ArrayStride(SpvOperandEncoding::decode(&mut *reader)?),
+            7u32 => Self::MatrixStride(SpvOperandEncoding::decode(&mut *reader)?),
             8u32 => Self::GLSLShared,
             9u32 => Self::GLSLPacked,
             10u32 => Self::CPacked,
-            11u32 => Self::BuiltIn(OperandEncoding::decode(&mut *reader)?),
+            11u32 => Self::BuiltIn(SpvOperandEncoding::decode(&mut *reader)?),
             13u32 => Self::NoPerspective,
             14u32 => Self::Flat,
             15u32 => Self::Patch,
@@ -4438,30 +4508,30 @@ unsafe impl OperandEncoding for Decoration {
             24u32 => Self::NonWritable,
             25u32 => Self::NonReadable,
             26u32 => Self::Uniform,
-            27u32 => Self::UniformId(OperandEncoding::decode(&mut *reader)?),
+            27u32 => Self::UniformId(SpvOperandEncoding::decode(&mut *reader)?),
             28u32 => Self::SaturatedConversion,
-            29u32 => Self::Stream(OperandEncoding::decode(&mut *reader)?),
-            30u32 => Self::Location(OperandEncoding::decode(&mut *reader)?),
-            31u32 => Self::Component(OperandEncoding::decode(&mut *reader)?),
-            32u32 => Self::Index(OperandEncoding::decode(&mut *reader)?),
-            33u32 => Self::Binding(OperandEncoding::decode(&mut *reader)?),
-            34u32 => Self::DescriptorSet(OperandEncoding::decode(&mut *reader)?),
-            35u32 => Self::Offset(OperandEncoding::decode(&mut *reader)?),
-            36u32 => Self::XfbBuffer(OperandEncoding::decode(&mut *reader)?),
-            37u32 => Self::XfbStride(OperandEncoding::decode(&mut *reader)?),
-            38u32 => Self::FuncParamAttr(OperandEncoding::decode(&mut *reader)?),
-            39u32 => Self::FPRoundingMode(OperandEncoding::decode(&mut *reader)?),
-            40u32 => Self::FPFastMathMode(OperandEncoding::decode(&mut *reader)?),
+            29u32 => Self::Stream(SpvOperandEncoding::decode(&mut *reader)?),
+            30u32 => Self::Location(SpvOperandEncoding::decode(&mut *reader)?),
+            31u32 => Self::Component(SpvOperandEncoding::decode(&mut *reader)?),
+            32u32 => Self::Index(SpvOperandEncoding::decode(&mut *reader)?),
+            33u32 => Self::Binding(SpvOperandEncoding::decode(&mut *reader)?),
+            34u32 => Self::DescriptorSet(SpvOperandEncoding::decode(&mut *reader)?),
+            35u32 => Self::Offset(SpvOperandEncoding::decode(&mut *reader)?),
+            36u32 => Self::XfbBuffer(SpvOperandEncoding::decode(&mut *reader)?),
+            37u32 => Self::XfbStride(SpvOperandEncoding::decode(&mut *reader)?),
+            38u32 => Self::FuncParamAttr(SpvOperandEncoding::decode(&mut *reader)?),
+            39u32 => Self::FPRoundingMode(SpvOperandEncoding::decode(&mut *reader)?),
+            40u32 => Self::FPFastMathMode(SpvOperandEncoding::decode(&mut *reader)?),
             41u32 => Self::LinkageAttributes(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
             42u32 => Self::NoContraction,
-            43u32 => Self::InputAttachmentIndex(OperandEncoding::decode(&mut *reader)?),
-            44u32 => Self::Alignment(OperandEncoding::decode(&mut *reader)?),
-            45u32 => Self::MaxByteOffset(OperandEncoding::decode(&mut *reader)?),
-            46u32 => Self::AlignmentId(OperandEncoding::decode(&mut *reader)?),
-            47u32 => Self::MaxByteOffsetId(OperandEncoding::decode(&mut *reader)?),
+            43u32 => Self::InputAttachmentIndex(SpvOperandEncoding::decode(&mut *reader)?),
+            44u32 => Self::Alignment(SpvOperandEncoding::decode(&mut *reader)?),
+            45u32 => Self::MaxByteOffset(SpvOperandEncoding::decode(&mut *reader)?),
+            46u32 => Self::AlignmentId(SpvOperandEncoding::decode(&mut *reader)?),
+            47u32 => Self::MaxByteOffsetId(SpvOperandEncoding::decode(&mut *reader)?),
             4216u32 => Self::SaturatedToLargestFloat8NormalConversionEXT,
             4469u32 => Self::NoSignedWrap,
             4470u32 => Self::NoUnsignedWrap,
@@ -4470,21 +4540,21 @@ unsafe impl OperandEncoding for Decoration {
             4499u32 => Self::BlockMatchSamplerQCOM,
             4999u32 => Self::ExplicitInterpAMD,
             5019u32 => {
-                Self::NodeSharesPayloadLimitsWithAMDX(OperandEncoding::decode(&mut *reader)?)
+                Self::NodeSharesPayloadLimitsWithAMDX(SpvOperandEncoding::decode(&mut *reader)?)
             }
-            5020u32 => Self::NodeMaxPayloadsAMDX(OperandEncoding::decode(&mut *reader)?),
+            5020u32 => Self::NodeMaxPayloadsAMDX(SpvOperandEncoding::decode(&mut *reader)?),
             5078u32 => Self::TrackFinishWritingAMDX,
-            5091u32 => Self::PayloadNodeNameAMDX(OperandEncoding::decode(&mut *reader)?),
-            5098u32 => Self::PayloadNodeBaseIndexAMDX(OperandEncoding::decode(&mut *reader)?),
+            5091u32 => Self::PayloadNodeNameAMDX(SpvOperandEncoding::decode(&mut *reader)?),
+            5098u32 => Self::PayloadNodeBaseIndexAMDX(SpvOperandEncoding::decode(&mut *reader)?),
             5099u32 => Self::PayloadNodeSparseArrayAMDX,
-            5100u32 => Self::PayloadNodeArraySizeAMDX(OperandEncoding::decode(&mut *reader)?),
+            5100u32 => Self::PayloadNodeArraySizeAMDX(SpvOperandEncoding::decode(&mut *reader)?),
             5105u32 => Self::PayloadDispatchIndirectAMDX,
-            5124u32 => Self::ArrayStrideIdEXT(OperandEncoding::decode(&mut *reader)?),
-            5125u32 => Self::OffsetIdEXT(OperandEncoding::decode(&mut *reader)?),
+            5124u32 => Self::ArrayStrideIdEXT(SpvOperandEncoding::decode(&mut *reader)?),
+            5125u32 => Self::OffsetIdEXT(SpvOperandEncoding::decode(&mut *reader)?),
             5248u32 => Self::OverrideCoverageNV,
             5250u32 => Self::PassthroughNV,
             5252u32 => Self::ViewportRelativeNV,
-            5256u32 => Self::SecondaryViewportRelativeNV(OperandEncoding::decode(&mut *reader)?),
+            5256u32 => Self::SecondaryViewportRelativeNV(SpvOperandEncoding::decode(&mut *reader)?),
             5271u32 => Self::PerPrimitiveEXT,
             5272u32 => Self::PerViewNV,
             5273u32 => Self::PerTaskNV,
@@ -4492,113 +4562,121 @@ unsafe impl OperandEncoding for Decoration {
             5300u32 => Self::NonUniform,
             5355u32 => Self::RestrictPointer,
             5356u32 => Self::AliasedPointer,
-            5358u32 => Self::MemberOffsetNV(OperandEncoding::decode(&mut *reader)?),
+            5358u32 => Self::MemberOffsetNV(SpvOperandEncoding::decode(&mut *reader)?),
             5386u32 => Self::HitObjectShaderRecordBufferNV,
             5389u32 => Self::HitObjectShaderRecordBufferEXT,
-            5397u32 => Self::BankNV(OperandEncoding::decode(&mut *reader)?),
+            5397u32 => Self::BankNV(SpvOperandEncoding::decode(&mut *reader)?),
             5398u32 => Self::BindlessSamplerNV,
             5399u32 => Self::BindlessImageNV,
             5400u32 => Self::BoundSamplerNV,
             5401u32 => Self::BoundImageNV,
-            5599u32 => Self::SIMTCallINTEL(OperandEncoding::decode(&mut *reader)?),
+            5599u32 => Self::SIMTCallINTEL(SpvOperandEncoding::decode(&mut *reader)?),
             5602u32 => Self::ReferencedIndirectlyINTEL,
-            5607u32 => Self::ClobberINTEL(OperandEncoding::decode(&mut *reader)?),
+            5607u32 => Self::ClobberINTEL(SpvOperandEncoding::decode(&mut *reader)?),
             5608u32 => Self::SideEffectsINTEL,
             5624u32 => Self::VectorComputeVariableINTEL,
-            5625u32 => Self::FuncParamIOKindINTEL(OperandEncoding::decode(&mut *reader)?),
+            5625u32 => Self::FuncParamIOKindINTEL(SpvOperandEncoding::decode(&mut *reader)?),
             5626u32 => Self::VectorComputeFunctionINTEL,
             5627u32 => Self::StackCallINTEL,
-            5628u32 => Self::GlobalVariableOffsetINTEL(OperandEncoding::decode(&mut *reader)?),
-            5634u32 => Self::CounterBuffer(OperandEncoding::decode(&mut *reader)?),
-            5635u32 => Self::UserSemantic(OperandEncoding::decode(&mut *reader)?),
-            5636u32 => Self::UserTypeGOOGLE(OperandEncoding::decode(&mut *reader)?),
+            5628u32 => Self::GlobalVariableOffsetINTEL(SpvOperandEncoding::decode(&mut *reader)?),
+            5634u32 => Self::CounterBuffer(SpvOperandEncoding::decode(&mut *reader)?),
+            5635u32 => Self::UserSemantic(SpvOperandEncoding::decode(&mut *reader)?),
+            5636u32 => Self::UserTypeGOOGLE(SpvOperandEncoding::decode(&mut *reader)?),
             5822u32 => Self::FunctionRoundingModeINTEL(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
             5823u32 => Self::FunctionDenormModeINTEL(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
             5825u32 => Self::RegisterALTERA,
-            5826u32 => Self::MemoryALTERA(OperandEncoding::decode(&mut *reader)?),
-            5827u32 => Self::NumbanksALTERA(OperandEncoding::decode(&mut *reader)?),
-            5828u32 => Self::BankwidthALTERA(OperandEncoding::decode(&mut *reader)?),
-            5829u32 => Self::MaxPrivateCopiesALTERA(OperandEncoding::decode(&mut *reader)?),
+            5826u32 => Self::MemoryALTERA(SpvOperandEncoding::decode(&mut *reader)?),
+            5827u32 => Self::NumbanksALTERA(SpvOperandEncoding::decode(&mut *reader)?),
+            5828u32 => Self::BankwidthALTERA(SpvOperandEncoding::decode(&mut *reader)?),
+            5829u32 => Self::MaxPrivateCopiesALTERA(SpvOperandEncoding::decode(&mut *reader)?),
             5830u32 => Self::SinglepumpALTERA,
             5831u32 => Self::DoublepumpALTERA,
-            5832u32 => Self::MaxReplicatesALTERA(OperandEncoding::decode(&mut *reader)?),
+            5832u32 => Self::MaxReplicatesALTERA(SpvOperandEncoding::decode(&mut *reader)?),
             5833u32 => Self::SimpleDualPortALTERA,
             5834u32 => Self::MergeALTERA(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
-            5835u32 => Self::BankBitsALTERA(OperandEncoding::decode(&mut *reader)?),
-            5836u32 => Self::ForcePow2DepthALTERA(OperandEncoding::decode(&mut *reader)?),
-            5883u32 => Self::StridesizeALTERA(OperandEncoding::decode(&mut *reader)?),
-            5884u32 => Self::WordsizeALTERA(OperandEncoding::decode(&mut *reader)?),
+            5835u32 => Self::BankBitsALTERA(SpvOperandEncoding::decode(&mut *reader)?),
+            5836u32 => Self::ForcePow2DepthALTERA(SpvOperandEncoding::decode(&mut *reader)?),
+            5883u32 => Self::StridesizeALTERA(SpvOperandEncoding::decode(&mut *reader)?),
+            5884u32 => Self::WordsizeALTERA(SpvOperandEncoding::decode(&mut *reader)?),
             5885u32 => Self::TrueDualPortALTERA,
             5899u32 => Self::BurstCoalesceALTERA,
-            5900u32 => Self::CacheSizeALTERA(OperandEncoding::decode(&mut *reader)?),
+            5900u32 => Self::CacheSizeALTERA(SpvOperandEncoding::decode(&mut *reader)?),
             5901u32 => Self::DontStaticallyCoalesceALTERA,
-            5902u32 => Self::PrefetchALTERA(OperandEncoding::decode(&mut *reader)?),
+            5902u32 => Self::PrefetchALTERA(SpvOperandEncoding::decode(&mut *reader)?),
             5905u32 => Self::StallEnableALTERA,
             5907u32 => Self::FuseLoopsInFunctionALTERA,
             5909u32 => Self::MathOpDSPModeALTERA(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
-            5914u32 => Self::AliasScopeINTEL(OperandEncoding::decode(&mut *reader)?),
-            5915u32 => Self::NoAliasINTEL(OperandEncoding::decode(&mut *reader)?),
-            5917u32 => Self::InitiationIntervalALTERA(OperandEncoding::decode(&mut *reader)?),
-            5918u32 => Self::MaxConcurrencyALTERA(OperandEncoding::decode(&mut *reader)?),
-            5919u32 => Self::PipelineEnableALTERA(OperandEncoding::decode(&mut *reader)?),
-            5921u32 => Self::BufferLocationALTERA(OperandEncoding::decode(&mut *reader)?),
-            5944u32 => Self::IOPipeStorageALTERA(OperandEncoding::decode(&mut *reader)?),
+            5914u32 => Self::AliasScopeINTEL(SpvOperandEncoding::decode(&mut *reader)?),
+            5915u32 => Self::NoAliasINTEL(SpvOperandEncoding::decode(&mut *reader)?),
+            5917u32 => Self::InitiationIntervalALTERA(SpvOperandEncoding::decode(&mut *reader)?),
+            5918u32 => Self::MaxConcurrencyALTERA(SpvOperandEncoding::decode(&mut *reader)?),
+            5919u32 => Self::PipelineEnableALTERA(SpvOperandEncoding::decode(&mut *reader)?),
+            5921u32 => Self::BufferLocationALTERA(SpvOperandEncoding::decode(&mut *reader)?),
+            5944u32 => Self::IOPipeStorageALTERA(SpvOperandEncoding::decode(&mut *reader)?),
             6080u32 => Self::FunctionFloatingPointModeINTEL(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
             6085u32 => Self::SingleElementVectorINTEL,
             6087u32 => Self::VectorComputeCallableFunctionINTEL,
             6140u32 => Self::MediaBlockIOINTEL,
             6151u32 => Self::StallFreeALTERA,
-            6170u32 => Self::FPMaxErrorDecorationINTEL(OperandEncoding::decode(&mut *reader)?),
-            6172u32 => Self::LatencyControlLabelALTERA(OperandEncoding::decode(&mut *reader)?),
+            6170u32 => Self::FPMaxErrorDecorationINTEL(SpvOperandEncoding::decode(&mut *reader)?),
+            6172u32 => Self::LatencyControlLabelALTERA(SpvOperandEncoding::decode(&mut *reader)?),
             6173u32 => Self::LatencyControlConstraintALTERA(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
             6175u32 => Self::ConduitKernelArgumentALTERA,
             6176u32 => Self::RegisterMapKernelArgumentALTERA,
             6177u32 => {
-                Self::MMHostInterfaceAddressWidthALTERA(OperandEncoding::decode(&mut *reader)?)
+                Self::MMHostInterfaceAddressWidthALTERA(SpvOperandEncoding::decode(&mut *reader)?)
             }
-            6178u32 => Self::MMHostInterfaceDataWidthALTERA(OperandEncoding::decode(&mut *reader)?),
-            6179u32 => Self::MMHostInterfaceLatencyALTERA(OperandEncoding::decode(&mut *reader)?),
+            6178u32 => {
+                Self::MMHostInterfaceDataWidthALTERA(SpvOperandEncoding::decode(&mut *reader)?)
+            }
+            6179u32 => {
+                Self::MMHostInterfaceLatencyALTERA(SpvOperandEncoding::decode(&mut *reader)?)
+            }
             6180u32 => {
-                Self::MMHostInterfaceReadWriteModeALTERA(OperandEncoding::decode(&mut *reader)?)
+                Self::MMHostInterfaceReadWriteModeALTERA(SpvOperandEncoding::decode(&mut *reader)?)
             }
-            6181u32 => Self::MMHostInterfaceMaxBurstALTERA(OperandEncoding::decode(&mut *reader)?),
+            6181u32 => {
+                Self::MMHostInterfaceMaxBurstALTERA(SpvOperandEncoding::decode(&mut *reader)?)
+            }
             6182u32 => {
-                Self::MMHostInterfaceWaitRequestALTERA(OperandEncoding::decode(&mut *reader)?)
+                Self::MMHostInterfaceWaitRequestALTERA(SpvOperandEncoding::decode(&mut *reader)?)
             }
             6183u32 => Self::StableKernelArgumentALTERA,
             6188u32 => Self::HostAccessINTEL(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
-            6190u32 => Self::InitModeALTERA(OperandEncoding::decode(&mut *reader)?),
-            6191u32 => Self::ImplementInRegisterMapALTERA(OperandEncoding::decode(&mut *reader)?),
-            6247u32 => Self::ConditionalINTEL(OperandEncoding::decode(&mut *reader)?),
+            6190u32 => Self::InitModeALTERA(SpvOperandEncoding::decode(&mut *reader)?),
+            6191u32 => {
+                Self::ImplementInRegisterMapALTERA(SpvOperandEncoding::decode(&mut *reader)?)
+            }
+            6247u32 => Self::ConditionalINTEL(SpvOperandEncoding::decode(&mut *reader)?),
             6442u32 => Self::CacheControlLoadINTEL(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
             6443u32 => Self::CacheControlStoreINTEL(
-                OperandEncoding::decode(&mut *reader)?,
-                OperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
+                SpvOperandEncoding::decode(&mut *reader)?,
             ),
             _ => {
                 return Err(DecodeErrorKind::UnknownEnumVariant {
@@ -4609,6 +4687,8 @@ unsafe impl OperandEncoding for Decoration {
             }
         })
     }
+}
+impl SpvOperandDis for Decoration {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -5020,10 +5100,10 @@ pub enum BuiltIn {
 unsafe impl bytemuck::Zeroable for BuiltIn {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for BuiltIn {}
-unsafe impl Operand for BuiltIn {
+unsafe impl SpvOperandMeta for BuiltIn {
     const KIND: &OperandKind = &OPERAND_KIND_BUILT_IN;
 }
-unsafe impl OperandEncoding for BuiltIn {
+unsafe impl SpvOperandEncoding for BuiltIn {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5171,6 +5251,8 @@ unsafe impl OperandEncoding for BuiltIn {
             }
         })
     }
+}
+impl SpvOperandDis for BuiltIn {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -5338,10 +5420,10 @@ pub enum Scope {
 unsafe impl bytemuck::Zeroable for Scope {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for Scope {}
-unsafe impl Operand for Scope {
+unsafe impl SpvOperandMeta for Scope {
     const KIND: &OperandKind = &OPERAND_KIND_SCOPE;
 }
-unsafe impl OperandEncoding for Scope {
+unsafe impl SpvOperandEncoding for Scope {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5368,6 +5450,8 @@ unsafe impl OperandEncoding for Scope {
             }
         })
     }
+}
+impl SpvOperandDis for Scope {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -5398,10 +5482,10 @@ pub enum GroupOperation {
 unsafe impl bytemuck::Zeroable for GroupOperation {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for GroupOperation {}
-unsafe impl Operand for GroupOperation {
+unsafe impl SpvOperandMeta for GroupOperation {
     const KIND: &OperandKind = &OPERAND_KIND_GROUP_OPERATION;
 }
-unsafe impl OperandEncoding for GroupOperation {
+unsafe impl SpvOperandEncoding for GroupOperation {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5428,6 +5512,8 @@ unsafe impl OperandEncoding for GroupOperation {
             }
         })
     }
+}
+impl SpvOperandDis for GroupOperation {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -5457,10 +5543,10 @@ pub enum KernelEnqueueFlags {
 unsafe impl bytemuck::Zeroable for KernelEnqueueFlags {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for KernelEnqueueFlags {}
-unsafe impl Operand for KernelEnqueueFlags {
+unsafe impl SpvOperandMeta for KernelEnqueueFlags {
     const KIND: &OperandKind = &OPERAND_KIND_KERNEL_ENQUEUE_FLAGS;
 }
-unsafe impl OperandEncoding for KernelEnqueueFlags {
+unsafe impl SpvOperandEncoding for KernelEnqueueFlags {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -5483,6 +5569,8 @@ unsafe impl OperandEncoding for KernelEnqueueFlags {
             }
         })
     }
+}
+impl SpvOperandDis for KernelEnqueueFlags {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -5832,10 +5920,10 @@ pub enum Capability {
 unsafe impl bytemuck::Zeroable for Capability {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for Capability {}
-unsafe impl Operand for Capability {
+unsafe impl SpvOperandMeta for Capability {
     const KIND: &OperandKind = &OPERAND_KIND_CAPABILITY;
 }
-unsafe impl OperandEncoding for Capability {
+unsafe impl SpvOperandEncoding for Capability {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6135,6 +6223,8 @@ unsafe impl OperandEncoding for Capability {
             }
         })
     }
+}
+impl SpvOperandDis for Capability {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -6590,10 +6680,10 @@ pub enum RayQueryIntersection {
 unsafe impl bytemuck::Zeroable for RayQueryIntersection {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for RayQueryIntersection {}
-unsafe impl Operand for RayQueryIntersection {
+unsafe impl SpvOperandMeta for RayQueryIntersection {
     const KIND: &OperandKind = &OPERAND_KIND_RAY_QUERY_INTERSECTION;
 }
-unsafe impl OperandEncoding for RayQueryIntersection {
+unsafe impl SpvOperandEncoding for RayQueryIntersection {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6615,6 +6705,8 @@ unsafe impl OperandEncoding for RayQueryIntersection {
             }
         })
     }
+}
+impl SpvOperandDis for RayQueryIntersection {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -6639,10 +6731,10 @@ pub enum RayQueryCommittedIntersectionType {
 unsafe impl bytemuck::Zeroable for RayQueryCommittedIntersectionType {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for RayQueryCommittedIntersectionType {}
-unsafe impl Operand for RayQueryCommittedIntersectionType {
+unsafe impl SpvOperandMeta for RayQueryCommittedIntersectionType {
     const KIND: &OperandKind = &OPERAND_KIND_RAY_QUERY_COMMITTED_INTERSECTION_TYPE;
 }
-unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
+unsafe impl SpvOperandEncoding for RayQueryCommittedIntersectionType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6665,6 +6757,8 @@ unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
             }
         })
     }
+}
+impl SpvOperandDis for RayQueryCommittedIntersectionType {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -6691,10 +6785,10 @@ pub enum RayQueryCandidateIntersectionType {
 unsafe impl bytemuck::Zeroable for RayQueryCandidateIntersectionType {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for RayQueryCandidateIntersectionType {}
-unsafe impl Operand for RayQueryCandidateIntersectionType {
+unsafe impl SpvOperandMeta for RayQueryCandidateIntersectionType {
     const KIND: &OperandKind = &OPERAND_KIND_RAY_QUERY_CANDIDATE_INTERSECTION_TYPE;
 }
-unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
+unsafe impl SpvOperandEncoding for RayQueryCandidateIntersectionType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6716,6 +6810,8 @@ unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
             }
         })
     }
+}
+impl SpvOperandDis for RayQueryCandidateIntersectionType {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -6739,10 +6835,10 @@ pub enum PackedVectorFormat {
 unsafe impl bytemuck::Zeroable for PackedVectorFormat {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for PackedVectorFormat {}
-unsafe impl Operand for PackedVectorFormat {
+unsafe impl SpvOperandMeta for PackedVectorFormat {
     const KIND: &OperandKind = &OPERAND_KIND_PACKED_VECTOR_FORMAT;
 }
-unsafe impl OperandEncoding for PackedVectorFormat {
+unsafe impl SpvOperandEncoding for PackedVectorFormat {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6763,6 +6859,8 @@ unsafe impl OperandEncoding for PackedVectorFormat {
             }
         })
     }
+}
+impl SpvOperandDis for PackedVectorFormat {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -6778,10 +6876,10 @@ bitflags! {
     MatrixCSignedComponentsKHR = 4u32; const MatrixResultSignedComponentsKHR = 8u32;
     const SaturatingAccumulationKHR = 16u32; }
 }
-unsafe impl Operand for CooperativeMatrixOperands {
+unsafe impl SpvOperandMeta for CooperativeMatrixOperands {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_OPERANDS;
 }
-unsafe impl OperandEncoding for CooperativeMatrixOperands {
+unsafe impl SpvOperandEncoding for CooperativeMatrixOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6796,6 +6894,8 @@ unsafe impl OperandEncoding for CooperativeMatrixOperands {
             bits,
         ))
     }
+}
+impl SpvOperandDis for CooperativeMatrixOperands {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -6835,10 +6935,10 @@ pub enum CooperativeMatrixLayout {
 unsafe impl bytemuck::Zeroable for CooperativeMatrixLayout {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for CooperativeMatrixLayout {}
-unsafe impl Operand for CooperativeMatrixLayout {
+unsafe impl SpvOperandMeta for CooperativeMatrixLayout {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_LAYOUT;
 }
-unsafe impl OperandEncoding for CooperativeMatrixLayout {
+unsafe impl SpvOperandEncoding for CooperativeMatrixLayout {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6862,6 +6962,8 @@ unsafe impl OperandEncoding for CooperativeMatrixLayout {
             }
         })
     }
+}
+impl SpvOperandDis for CooperativeMatrixLayout {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -6886,10 +6988,10 @@ pub enum CooperativeMatrixUse {
 unsafe impl bytemuck::Zeroable for CooperativeMatrixUse {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for CooperativeMatrixUse {}
-unsafe impl Operand for CooperativeMatrixUse {
+unsafe impl SpvOperandMeta for CooperativeMatrixUse {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_USE;
 }
-unsafe impl OperandEncoding for CooperativeMatrixUse {
+unsafe impl SpvOperandEncoding for CooperativeMatrixUse {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6912,6 +7014,8 @@ unsafe impl OperandEncoding for CooperativeMatrixUse {
             }
         })
     }
+}
+impl SpvOperandDis for CooperativeMatrixUse {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -6927,10 +7031,10 @@ bitflags! {
     CooperativeMatrixReduce : u32 { const Row = 1u32; const Column = 2u32; const TwoByTwo
     = 4u32; }
 }
-unsafe impl Operand for CooperativeMatrixReduce {
+unsafe impl SpvOperandMeta for CooperativeMatrixReduce {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_MATRIX_REDUCE;
 }
-unsafe impl OperandEncoding for CooperativeMatrixReduce {
+unsafe impl SpvOperandEncoding for CooperativeMatrixReduce {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -6945,6 +7049,8 @@ unsafe impl OperandEncoding for CooperativeMatrixReduce {
             bits,
         ))
     }
+}
+impl SpvOperandDis for CooperativeMatrixReduce {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -6979,10 +7085,10 @@ pub enum TensorClampMode {
 unsafe impl bytemuck::Zeroable for TensorClampMode {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for TensorClampMode {}
-unsafe impl Operand for TensorClampMode {
+unsafe impl SpvOperandMeta for TensorClampMode {
     const KIND: &OperandKind = &OPERAND_KIND_TENSOR_CLAMP_MODE;
 }
-unsafe impl OperandEncoding for TensorClampMode {
+unsafe impl SpvOperandEncoding for TensorClampMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7007,6 +7113,8 @@ unsafe impl OperandEncoding for TensorClampMode {
             }
         })
     }
+}
+impl SpvOperandDis for TensorClampMode {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7024,7 +7132,7 @@ bitflags! {
     TensorAddressingOperandsBits : u32 { const None = 0u32; const TensorView = 1u32;
     const DecodeFunc = 2u32; }
 }
-unsafe impl OperandEncoding for TensorAddressingOperandsBits {
+unsafe impl SpvOperandEncoding for TensorAddressingOperandsBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7041,6 +7149,8 @@ unsafe impl OperandEncoding for TensorAddressingOperandsBits {
             ),
         )
     }
+}
+impl SpvOperandDis for TensorAddressingOperandsBits {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7120,10 +7230,10 @@ impl TensorAddressingOperands {
         self.0.set(1u32, opt);
     }
 }
-unsafe impl Operand for TensorAddressingOperands {
+unsafe impl SpvOperandMeta for TensorAddressingOperands {
     const KIND: &OperandKind = &OPERAND_KIND_TENSOR_ADDRESSING_OPERANDS;
 }
-unsafe impl OperandEncoding for TensorAddressingOperands {
+unsafe impl SpvOperandEncoding for TensorAddressingOperands {
     const FIXED_LEN: Option<usize> = None;
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         self.0.encode(writer)
@@ -7133,6 +7243,8 @@ unsafe impl OperandEncoding for TensorAddressingOperands {
             ParameterizedBitmask::<TensorAddressingOperandsBits>::decode(reader)?,
         ))
     }
+}
+impl SpvOperandDis for TensorAddressingOperands {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, ctx)?;
@@ -7155,10 +7267,10 @@ pub enum InitializationModeQualifier {
 unsafe impl bytemuck::Zeroable for InitializationModeQualifier {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for InitializationModeQualifier {}
-unsafe impl Operand for InitializationModeQualifier {
+unsafe impl SpvOperandMeta for InitializationModeQualifier {
     const KIND: &OperandKind = &OPERAND_KIND_INITIALIZATION_MODE_QUALIFIER;
 }
-unsafe impl OperandEncoding for InitializationModeQualifier {
+unsafe impl SpvOperandEncoding for InitializationModeQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7180,6 +7292,8 @@ unsafe impl OperandEncoding for InitializationModeQualifier {
             }
         })
     }
+}
+impl SpvOperandDis for InitializationModeQualifier {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7204,10 +7318,10 @@ pub enum LoadCacheControl {
 unsafe impl bytemuck::Zeroable for LoadCacheControl {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for LoadCacheControl {}
-unsafe impl Operand for LoadCacheControl {
+unsafe impl SpvOperandMeta for LoadCacheControl {
     const KIND: &OperandKind = &OPERAND_KIND_LOAD_CACHE_CONTROL;
 }
-unsafe impl OperandEncoding for LoadCacheControl {
+unsafe impl SpvOperandEncoding for LoadCacheControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7232,6 +7346,8 @@ unsafe impl OperandEncoding for LoadCacheControl {
             }
         })
     }
+}
+impl SpvOperandDis for LoadCacheControl {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7256,10 +7372,10 @@ pub enum StoreCacheControl {
 unsafe impl bytemuck::Zeroable for StoreCacheControl {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for StoreCacheControl {}
-unsafe impl Operand for StoreCacheControl {
+unsafe impl SpvOperandMeta for StoreCacheControl {
     const KIND: &OperandKind = &OPERAND_KIND_STORE_CACHE_CONTROL;
 }
-unsafe impl OperandEncoding for StoreCacheControl {
+unsafe impl SpvOperandEncoding for StoreCacheControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7283,6 +7399,8 @@ unsafe impl OperandEncoding for StoreCacheControl {
             }
         })
     }
+}
+impl SpvOperandDis for StoreCacheControl {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7303,10 +7421,10 @@ pub enum NamedMaximumNumberOfRegisters {
 unsafe impl bytemuck::Zeroable for NamedMaximumNumberOfRegisters {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for NamedMaximumNumberOfRegisters {}
-unsafe impl Operand for NamedMaximumNumberOfRegisters {
+unsafe impl SpvOperandMeta for NamedMaximumNumberOfRegisters {
     const KIND: &OperandKind = &OPERAND_KIND_NAMED_MAXIMUM_NUMBER_OF_REGISTERS;
 }
-unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
+unsafe impl SpvOperandEncoding for NamedMaximumNumberOfRegisters {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7327,6 +7445,8 @@ unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
             }
         })
     }
+}
+impl SpvOperandDis for NamedMaximumNumberOfRegisters {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7346,10 +7466,10 @@ bitflags! {
     MatrixAPackedFloat16INTEL = 1024u32; const MatrixBPackedFloat16INTEL = 2048u32; const
     MatrixAPackedBFloat16INTEL = 4096u32; const MatrixBPackedBFloat16INTEL = 8192u32; }
 }
-unsafe impl Operand for MatrixMultiplyAccumulateOperands {
+unsafe impl SpvOperandMeta for MatrixMultiplyAccumulateOperands {
     const KIND: &OperandKind = &OPERAND_KIND_MATRIX_MULTIPLY_ACCUMULATE_OPERANDS;
 }
-unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
+unsafe impl SpvOperandEncoding for MatrixMultiplyAccumulateOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7363,6 +7483,8 @@ unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
             MatrixMultiplyAccumulateOperands,
         >(stringify!(MatrixMultiplyAccumulateOperands), bits))
     }
+}
+impl SpvOperandDis for MatrixMultiplyAccumulateOperands {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7428,10 +7550,10 @@ pub enum FPEncoding {
 unsafe impl bytemuck::Zeroable for FPEncoding {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for FPEncoding {}
-unsafe impl Operand for FPEncoding {
+unsafe impl SpvOperandMeta for FPEncoding {
     const KIND: &OperandKind = &OPERAND_KIND_FP_ENCODING;
 }
-unsafe impl OperandEncoding for FPEncoding {
+unsafe impl SpvOperandEncoding for FPEncoding {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7454,6 +7576,8 @@ unsafe impl OperandEncoding for FPEncoding {
             }
         })
     }
+}
+impl SpvOperandDis for FPEncoding {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7476,10 +7600,10 @@ pub enum CooperativeVectorMatrixLayout {
 unsafe impl bytemuck::Zeroable for CooperativeVectorMatrixLayout {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for CooperativeVectorMatrixLayout {}
-unsafe impl Operand for CooperativeVectorMatrixLayout {
+unsafe impl SpvOperandMeta for CooperativeVectorMatrixLayout {
     const KIND: &OperandKind = &OPERAND_KIND_COOPERATIVE_VECTOR_MATRIX_LAYOUT;
 }
-unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
+unsafe impl SpvOperandEncoding for CooperativeVectorMatrixLayout {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7503,6 +7627,8 @@ unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
             }
         })
     }
+}
+impl SpvOperandDis for CooperativeVectorMatrixLayout {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7537,10 +7663,10 @@ pub enum ComponentType {
 unsafe impl bytemuck::Zeroable for ComponentType {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for ComponentType {}
-unsafe impl Operand for ComponentType {
+unsafe impl SpvOperandMeta for ComponentType {
     const KIND: &OperandKind = &OPERAND_KIND_COMPONENT_TYPE;
 }
-unsafe impl OperandEncoding for ComponentType {
+unsafe impl SpvOperandEncoding for ComponentType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7575,6 +7701,8 @@ unsafe impl OperandEncoding for ComponentType {
             }
         })
     }
+}
+impl SpvOperandDis for ComponentType {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7606,7 +7734,7 @@ bitflags! {
     OutOfBoundsValueARM = 2u32; const MakeElementAvailableARM = 4u32; const
     MakeElementVisibleARM = 8u32; const NonPrivateElementARM = 16u32; }
 }
-unsafe impl OperandEncoding for TensorOperandsBits {
+unsafe impl SpvOperandEncoding for TensorOperandsBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
@@ -7621,6 +7749,8 @@ unsafe impl OperandEncoding for TensorOperandsBits {
             bits,
         ))
     }
+}
+impl SpvOperandDis for TensorOperandsBits {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7730,10 +7860,10 @@ impl TensorOperands {
         self.0.set_bool(4u32, enabled);
     }
 }
-unsafe impl Operand for TensorOperands {
+unsafe impl SpvOperandMeta for TensorOperands {
     const KIND: &OperandKind = &OPERAND_KIND_TENSOR_OPERANDS;
 }
-unsafe impl OperandEncoding for TensorOperands {
+unsafe impl SpvOperandEncoding for TensorOperands {
     const FIXED_LEN: Option<usize> = None;
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         self.0.encode(writer)
@@ -7743,6 +7873,8 @@ unsafe impl OperandEncoding for TensorOperands {
             reader,
         )?))
     }
+}
+impl SpvOperandDis for TensorOperands {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, ctx)?;

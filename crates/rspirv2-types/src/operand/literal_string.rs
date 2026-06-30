@@ -2,7 +2,7 @@ use crate::Word;
 use crate::binary::{DecodeError, DecodeErrorKind, EncodeError, OperandReader, WordWriter};
 use crate::dis::escape_cow_str;
 use crate::meta::{Category, OperandKind};
-use crate::operand::{Operand, OperandDisContext, OperandEncoding};
+use crate::operand::{OperandDisContext, SpvOperandDis, SpvOperandEncoding, SpvOperandMeta};
 use anstyle::AnsiColor;
 use std::borrow::Cow;
 use std::fmt::{Debug, Formatter};
@@ -34,11 +34,11 @@ impl LiteralString {
     }
 }
 
-unsafe impl Operand for LiteralString {
+unsafe impl SpvOperandMeta for LiteralString {
     const KIND: &OperandKind = &OPERAND_KIND_LITERAL_STRING;
 }
 
-unsafe impl OperandEncoding for LiteralString {
+unsafe impl SpvOperandEncoding for LiteralString {
     const FIXED_LEN: Option<usize> = None;
 
     #[inline]
@@ -74,7 +74,9 @@ unsafe impl OperandEncoding for LiteralString {
             Err(DecodeErrorKind::StringNotNulTerminated.into())
         }
     }
+}
 
+impl SpvOperandDis for LiteralString {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
