@@ -1,7 +1,9 @@
-use crate::codegen::GrammarWriter;
-use crate::parse::{Category, Enumerant, Grammar, OperandKind, OperandSpecMeta, Quantifier};
+use crate::GrammarWriter;
 use proc_macro2::{Ident, TokenStream};
 use quote::{format_ident, quote};
+use rspirv2_grammar_parser::parse::{
+    Category, Enumerant, Grammar, OperandKind, OperandSpecMeta, Quantifier,
+};
 use std::borrow::Cow;
 
 pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {

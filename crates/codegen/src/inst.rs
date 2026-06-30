@@ -1,6 +1,6 @@
-use crate::codegen::{GrammarWriter, OPERAND_ID_RESULT, OPERAND_ID_RESULT_TYPE};
-use crate::parse::{Grammar, InstMeta, Operand, Quantifier};
+use crate::{GrammarWriter, OPERAND_ID_RESULT, OPERAND_ID_RESULT_TYPE};
 use quote::quote;
+use rspirv2_grammar_parser::parse::{Grammar, InstMeta, Operand, Quantifier};
 
 pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     let insts = grammar.insts.iter().map(|inst| {

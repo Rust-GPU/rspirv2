@@ -8,6 +8,7 @@ publish = false
 workspace = true
 
 [dependencies]
-rspirv2-grammar = { workspace = true }
+rspirv2-codegen.workspace = true
+rspirv2-grammar.workspace = true
 rspirv2-grammar-parser = { workspace = true, features = ["codegen", "prettyplease"] }
 anyhow.workspace = true

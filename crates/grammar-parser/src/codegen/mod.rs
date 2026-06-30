@@ -1,18 +1,9 @@
 mod emit;
-mod inst;
-mod inst_set;
-mod modules;
-mod operands;
-mod options;
-mod writer;
+pub mod meta;
+pub mod writer;
 
 pub use emit::*;
-pub use modules::*;
-pub use options::*;
 pub use writer::*;
-
-pub const OPERAND_ID_RESULT: &str = "IdResult";
-pub const OPERAND_ID_RESULT_TYPE: &str = "IdResultType";
 
 /// Copied from `proc_macro2::fallback::validate_ident`
 pub fn ident_ok(string: &str) -> bool {

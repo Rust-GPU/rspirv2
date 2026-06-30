@@ -1,6 +1,6 @@
-use crate::codegen::{CodegenOptions, GrammarWriter};
-use crate::parse::{Grammar, InstMeta};
+use crate::{CodegenOptions, GrammarWriter};
 use quote::{format_ident, quote};
+use rspirv2_grammar_parser::parse::{Grammar, InstMeta};
 
 pub fn write_inst_enum(
     writer: &mut GrammarWriter,

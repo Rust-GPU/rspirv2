@@ -1,0 +1,13 @@
+[package]
+name = "rspirv2-codegen"
+version.workspace = true
+edition.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+rspirv2-grammar-parser.workspace = true
+anyhow.workspace = true
+quote.workspace = true
+proc-macro2.workspace = true

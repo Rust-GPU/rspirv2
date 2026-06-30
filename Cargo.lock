@@ -93,6 +93,7 @@ name = "autogen"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "rspirv2-codegen",
  "rspirv2-grammar",
  "rspirv2-grammar-parser",
 ]
@@ -647,6 +648,16 @@ dependencies = [
  "profiling",
  "rspirv2-types",
  "smallvec",
+]
+
+[[package]]
+name = "rspirv2-codegen"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "proc-macro2",
+ "quote",
+ "rspirv2-grammar-parser",
 ]
 
 [[package]]

@@ -1,7 +1,8 @@
 #![doc = include_str!("../README.md")]
 
+use rspirv2_codegen::{CodegenOptions, write_all};
 use rspirv2_grammar::PATH_GRAMMAR_CORE;
-use rspirv2_grammar_parser::codegen::{CodegenOptions, GrammarWriter, write_grammar};
+use rspirv2_grammar_parser::codegen::GrammarWriter;
 use rspirv2_grammar_parser::parse::Source;
 use rspirv2_grammar_parser::timer::TimerPrintOnDrop;
 use std::path::Path;
@@ -20,12 +21,12 @@ pub fn autogen() -> anyhow::Result<()> {
         .iter_mut()
         .filter(|i| i.opname == "OpSwitch")
         .for_each(|i| i.source = Source::MetaOnly);
-    write_grammar(
-        GrammarWriter::new(Path::new(PATH_GRAMMAR_CRATE_SRC).join("core"))?,
-        &core,
-        &CodegenOptions {
-            name_suffix_type: "Core",
-        },
-    )?;
+
+    let mut writer = GrammarWriter::new(Path::new(PATH_GRAMMAR_CRATE_SRC).join("core"))?;
+    let opt = CodegenOptions {
+        name_suffix_type: "Core",
+    };
+    write_all(&mut writer, &core, &opt)?;
+    writer.finish()?;
     Ok(())
 }
