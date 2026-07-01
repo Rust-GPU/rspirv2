@@ -658,6 +658,7 @@ dependencies = [
  "proc-macro2",
  "quote",
  "rspirv2-grammar-parser",
+ "smallvec",
 ]
 
 [[package]]

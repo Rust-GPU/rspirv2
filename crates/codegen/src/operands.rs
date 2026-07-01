@@ -1,10 +1,33 @@
 use crate::GrammarWriter;
 use proc_macro2::{Ident, TokenStream};
 use quote::{format_ident, quote};
-use rspirv2_grammar_parser::parse::{
-    Category, Enumerant, Grammar, OperandKind, OperandSpecMeta, Quantifier,
-};
+use rspirv2_grammar_parser::parse::{Capability, Category, Extension, Grammar, OperandKind, OperandSpecMeta, Quantifier, Source};
 use std::borrow::Cow;
+use smallvec::SmallVec;
+
+pub struct Operand<'a> {
+    pub name: Cow<'a, str>,
+    pub ty: OperandType<'a>,
+    pub docs: Cow<'a, str>,
+    pub source: Source,
+}
+
+pub enum OperandType<'a> {
+    Extern,
+    Enum,
+    EnumWithData,
+    Bitflags,
+    BitflagsWithData,
+}
+
+#[derive(Clone, Debug, Default)]
+pub struct Enumerant<'a> {
+    pub docs: Cow<'a, str>,
+    pub name: Cow<'a, str>,
+    pub value: u32,
+    pub parameters: SmallVec<[OperandSpecMeta<'a>; 1]>,
+    pub aliases: SmallVec<[Cow<'a, str>; 1]>,
+}
 
 pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     let operands = grammar.operand_kinds.iter().map(|o| {
