@@ -117,6 +117,29 @@ impl<ISA: InstEncoding> Debug for InstSlice<ISA> {
     }
 }
 
+impl<ISA: InstEncoding> InstSlice<ISA> {
+    /// Get instruction at `offset` as an [`InstRef`], return `None` when index is invalid
+    pub fn get_ref(&self, offset: InstOffset) -> Option<InstRef<'_, ISA>> {
+        self.iter_ref().with_offsets().advance_to(offset)
+    }
+
+    /// Get instruction at `offset`, return `None` when index is invalid
+    pub fn get(&self, offset: InstOffset) -> Option<ISA> {
+        Some(self.get_ref(offset)?.get())
+    }
+
+    /// Get instruction at `offset` as an [`InstRef`], panic when index is invalid
+    pub fn index_ref(&self, offset: InstOffset) -> InstRef<'_, ISA> {
+        self.get_ref(offset)
+            .unwrap_or_else(|| panic!("Offset {offset} invalid for this InstSlice"))
+    }
+
+    /// Get instruction at `offset`, panic when index is invalid
+    pub fn index(&self, offset: InstOffset) -> ISA {
+        self.index_ref(offset).get()
+    }
+}
+
 impl<ISA: InstSetDisCtx> InstSlice<ISA> {
     /// disassemble
     #[inline]
@@ -142,6 +165,24 @@ impl<'a, ISA: InstEncoding> InstOffsetRefIter<'a, ISA> {
 
     pub fn peek(&self) -> Option<(InstOffset, InstRef<'a, ISA>)> {
         Some(reader_to_inst_ref_offset(self.inner.peek()?))
+    }
+
+    /// Advance the iterator to this offset and return an [`InstRef`] to the instruction at this offset.
+    ///
+    /// May return `None` if offset is out of bounds, offset is within an instruction and not at the start of one, or
+    /// this Iterator has advanced beyond the requested offset already.
+    pub fn advance_to(&mut self, to: InstOffset) -> Option<InstRef<'a, ISA>> {
+        while let Some((off, inst)) = self.peek() {
+            if off == to {
+                return Some(inst);
+            } else if off > to {
+                // jumped over offset -> offset within an inst or iter has advanced too far before calling this
+                return None;
+            }
+            self.next();
+        }
+        // eof
+        None
     }
 }
 
