@@ -20,19 +20,23 @@ pub fn decode_failed(e: DecodeError) -> ! {
 ///
 /// This `InstVec` stores instructions in their binary SPIR-V form, which is variable sized, allowing us to save a lot
 /// of memory and improving cache locality. To make it as convenient to use as a `Vec<ISA>`, instructions are
-/// automatically encoded and decoded on the fly. But to remain performant, decoding of instructions must be cheap,
-/// so operands should not allocate any memory and instead should borrow slices from the underlying `Vec<Word>` whenever
-/// possible.
+/// automatically encoded and decoded on the fly. To remain performant, decoding of instructions should be as cheap as
+/// possible. Borrowing from the Vec directly hasn't been implemented yet, so some operands like [`LiteralString`]
+/// allocate a string and copy out the bytes. [`LiteralConst`] uses a `SmallVec`, so the allocation shouldn't
+/// happen in pretty much all cases.
 ///
 /// However, storing instructions in a variable-sized way brings the same disadvantages as UTF-8 characters in rust
 /// strings. You can't arbitrarily index into an `InstSlice` like you can with a regular slice, as only indices pointing
 /// to the beginning of an instruction are valid. You also can't easily replace instructions in the middle of the
 /// stream, as changing the size of an instruction requires you to move all following instructions. Although, you can
-/// remove instructions by filling them with `OpNop`.
+/// remove instructions by filling them with `OpNop`, but this hasn't been implemented.
 ///
 /// # Safety
 /// The inner slice of words is assumed to contain valid instructions of the generic `ISA` Instruction Set. May panic if
 /// instructions fail to decode, but will not lead to UB, allowing [`Self::from_words_unchecked`] to be safe.
+///
+/// [`LiteralString`]: crate::operand::LiteralString
+/// [`LiteralConst`]: crate::operand::LiteralConst
 #[repr(transparent)]
 pub struct InstSlice<ISA: InstEncoding> {
     _phantom: PhantomData<ISA>,

@@ -1,6 +1,6 @@
 # rspirv2-tools
 
-Similar to the C++ SPIR-V tools, provides cmdline utilities for working with SPIR-V, but written in rust with `rspirv2`.
+Similar to the C++ SPIR-V tools, provides cmdline utilities for working with SPIR-V, but written in rust with [rspirv2](https://crates.io/crates/rspirv2).
 
 This crate provides the following binaries:
 * `rspirv2-dis`
