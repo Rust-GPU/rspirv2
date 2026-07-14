@@ -4,7 +4,7 @@ use crate::dis::{DisInstSlice, InstSetDisCtx, IntoDisContext};
 use crate::inst::{InstEncoding, InstRef};
 use std::fmt::{Debug, Formatter};
 use std::marker::PhantomData;
-use std::ops::Deref;
+use std::ops::{Bound, Deref, Index, RangeBounds};
 
 pub fn decode_failed(e: DecodeError) -> ! {
     panic!("Decode failed: {e}")
@@ -138,6 +138,32 @@ impl<ISA: InstEncoding> InstSlice<ISA> {
     pub fn index(&self, offset: InstOffset) -> ISA {
         self.index_ref(offset).get()
     }
+
+    /// Slice this [`InstSlice`]
+    pub fn slice<R: RangeBounds<InstOffset>>(&self, index: R) -> Option<&Self> {
+        let mut iter = self.iter_ref().with_offsets();
+        let start = iter.advance_to_bound(index.start_bound(), false)?;
+        // reusing the same iter to not have to advance it twice over `..start` insts
+        // if end < start, the advance may fail due to already having skipped over the end inst, but that's fine since
+        // indexing a slice leads to failure anyway.
+        // Important detail: When you hit the offset, do NOT advance the iterator, otherwise `0..=0` would fail
+        let end = iter.advance_to_bound(index.end_bound(), true)?;
+        let slice = match (start, end) {
+            (Some(start), Some(end)) => &self.0[start..end],
+            (Some(start), None) => &self.0[start..],
+            (None, Some(end)) => &self.0[..end],
+            (None, None) => &self.0[..],
+        };
+        Some(InstSlice::from_words_unchecked(slice))
+    }
+}
+
+impl<ISA: InstEncoding, R: RangeBounds<InstOffset>> Index<R> for InstSlice<ISA> {
+    type Output = InstSlice<ISA>;
+
+    fn index(&self, index: R) -> &Self::Output {
+        self.slice(index).expect("Index out of bounds")
+    }
 }
 
 impl<ISA: InstSetDisCtx> InstSlice<ISA> {
@@ -163,6 +189,10 @@ impl<'a, ISA: InstEncoding> InstOffsetRefIter<'a, ISA> {
         }
     }
 
+    pub fn offset(&self) -> InstOffset {
+        self.inner.offset()
+    }
+
     pub fn peek(&self) -> Option<(InstOffset, InstRef<'a, ISA>)> {
         Some(reader_to_inst_ref_offset(self.inner.peek()?))
     }
@@ -183,6 +213,33 @@ impl<'a, ISA: InstEncoding> InstOffsetRefIter<'a, ISA> {
         }
         // eof
         None
+    }
+
+    /// outer Option: failure due to eof or in the middle of insts
+    /// inner Option: Bound or Unbounded
+    #[expect(clippy::option_option)]
+    fn advance_to_bound(&mut self, bound: Bound<&InstOffset>, end: bool) -> Option<Option<usize>> {
+        let to = match bound.cloned() {
+            Bound::Included(to) | Bound::Excluded(to) => to,
+            Bound::Unbounded => {
+                return Some(None);
+            }
+        };
+        let one_further = matches!(bound, Bound::Included(_)) == end;
+
+        // handle "one past end"
+        let total_len = self.inner.raw.as_words().len();
+        if to.0 == total_len {
+            return if !one_further {
+                Some(Some(total_len))
+            } else {
+                None
+            };
+        }
+
+        let inst = self.advance_to(to)?;
+        let extra = if one_further { inst.len() } else { 0 };
+        Some(Some(to.0 + extra))
     }
 }
 
@@ -414,6 +471,10 @@ impl<'a> RawInstOffsetRefIter<'a> {
             raw,
             offset: InstOffset(0),
         }
+    }
+
+    pub fn offset(&self) -> InstOffset {
+        self.offset
     }
 
     pub fn peek(&self) -> Option<Result<(InstOffset, InstReader<'a>), DecodeError>> {
