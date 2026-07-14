@@ -133,6 +133,10 @@ impl<'a, ISA: InstEncoding> InstOffsetRefIter<'a, ISA> {
             _phantom: PhantomData,
         }
     }
+
+    pub fn peek(&self) -> Option<(InstOffset, InstRef<'a, ISA>)> {
+        Some(reader_to_inst_ref_offset(self.inner.peek()?))
+    }
 }
 
 impl<'a, ISA: InstEncoding> Iterator for InstOffsetRefIter<'a, ISA> {
@@ -140,16 +144,22 @@ impl<'a, ISA: InstEncoding> Iterator for InstOffsetRefIter<'a, ISA> {
 
     #[inline]
     fn next(&mut self) -> Option<Self::Item> {
-        match self.inner.next()? {
-            Ok((offset, reader)) => Some((
-                offset,
-                match InstRef::from_words_unchecked(reader.to_words()) {
-                    Ok(e) => e,
-                    Err(e) => decode_failed(e),
-                },
-            )),
-            Err(e) => decode_failed(e),
+        Some(reader_to_inst_ref_offset(self.inner.next()?))
+    }
+}
+
+fn reader_to_inst_ref_offset<ISA: InstEncoding>(
+    reader: Result<(InstOffset, InstReader<'_>), DecodeError>,
+) -> (InstOffset, InstRef<'_, ISA>) {
+    match reader {
+        Ok((offset, reader)) => {
+            let inst_ref = match InstRef::from_words_unchecked(reader.to_words()) {
+                Ok(e) => e,
+                Err(e) => decode_failed(e),
+            };
+            (offset, inst_ref)
         }
+        Err(e) => decode_failed(e),
     }
 }
 
@@ -178,6 +188,16 @@ impl<'a, ISA: InstEncoding> InstRefIter<'a, ISA> {
     #[inline]
     pub const fn new(slice: &'a InstSlice<ISA>) -> Self {
         Self(InstOffsetRefIter::new(slice))
+    }
+
+    /// Add [`InstOffset`]s to this iterator, akin to `enumerate`
+    #[inline]
+    pub const fn with_offsets(self) -> InstOffsetRefIter<'a, ISA> {
+        self.0
+    }
+
+    pub fn peek(&self) -> Option<InstRef<'a, ISA>> {
+        Some(self.0.peek()?.1)
     }
 }
 
@@ -342,6 +362,21 @@ impl<'a> RawInstOffsetRefIter<'a> {
             offset: InstOffset(0),
         }
     }
+
+    pub fn peek(&self) -> Option<Result<(InstOffset, InstReader<'a>), DecodeError>> {
+        if let Some(words) = self.raw.0.get(*self.offset..) {
+            match InstReader::from_words(words) {
+                Ok(inst_reader) => Some(Ok((self.offset, inst_reader))),
+                Err(DecodeError {
+                    kind: DecodeErrorKind::OutOfInstructions,
+                    ..
+                }) => None,
+                Err(e) => Some(Err(e.with_inst_offset(self.offset))),
+            }
+        } else {
+            None
+        }
+    }
 }
 
 impl<'a> Iterator for RawInstOffsetRefIter<'a> {
@@ -349,25 +384,17 @@ impl<'a> Iterator for RawInstOffsetRefIter<'a> {
 
     #[inline]
     fn next(&mut self) -> Option<Self::Item> {
-        let old_offset = self.offset;
-        if let Some(words) = self.raw.0.get(*old_offset..) {
-            match InstReader::from_words(words) {
-                Ok(inst_reader) => {
-                    *self.offset += inst_reader.len();
-                    Some(Ok((old_offset, inst_reader)))
-                }
-                Err(DecodeError {
-                    kind: DecodeErrorKind::OutOfInstructions,
-                    ..
-                }) => None,
-                Err(e) => {
-                    self.offset = InstOffset(!0);
-                    Some(Err(e.with_inst_offset(old_offset)))
-                }
+        let out = self.peek();
+        match out {
+            Some(Ok((_, inst_reader))) => {
+                *self.offset += inst_reader.len();
             }
-        } else {
-            None
+            Some(Err(_)) => {
+                self.offset = InstOffset(!0);
+            }
+            None => (),
         }
+        out
     }
 }
 
@@ -388,6 +415,10 @@ impl<'a> RawInstRefIter<'a> {
     pub const fn with_offsets(self) -> RawInstOffsetRefIter<'a> {
         self.0
     }
+
+    pub fn peek(&self) -> Option<Result<InstReader<'a>, DecodeError>> {
+        remove_offset_raw(self.0.peek())
+    }
 }
 
 impl<'a> Iterator for RawInstRefIter<'a> {
@@ -395,11 +426,17 @@ impl<'a> Iterator for RawInstRefIter<'a> {
 
     #[inline]
     fn next(&mut self) -> Option<Self::Item> {
-        match self.0.next() {
-            Some(Ok((_, inst))) => Some(Ok(inst)),
-            Some(Err(e)) => Some(Err(e)),
-            None => None,
-        }
+        remove_offset_raw(self.0.next())
+    }
+}
+
+fn remove_offset_raw<T>(
+    value: Option<Result<(InstOffset, T), DecodeError>>,
+) -> Option<Result<T, DecodeError>> {
+    match value {
+        Some(Ok((_, inst))) => Some(Ok(inst)),
+        Some(Err(e)) => Some(Err(e)),
+        None => None,
     }
 }
 
