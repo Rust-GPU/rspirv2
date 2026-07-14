@@ -123,6 +123,8 @@ jobs:
         run: RUSTDOCFLAGS=-Dwarnings cargo doc --no-deps
       - name: cargo clippy
         run: cargo clippy --all-targets -- -D warnings
+      - name: grammar-parser without codegen feature
+        run: cargo check -p rspirv2-grammar-parser
 
 defaults:
   run:
