@@ -75,6 +75,12 @@ impl<ISA: InstEncoding> InstSlice<ISA> {
         unsafe { core::mem::transmute(raw) }
     }
 
+    /// An [`InstSlice`] with 0 instructions
+    #[inline]
+    pub const fn empty() -> &'static Self {
+        Self::from_words_unchecked(&[])
+    }
+
     /// View self as a [`RawInstSlice`]
     #[inline]
     pub const fn as_raw(&self) -> &RawInstSlice {
@@ -311,6 +317,12 @@ impl RawInstSlice {
         // * slices have the same layout
         // * Self is `#[repr(transparent)]` to `[Word]`
         unsafe { core::mem::transmute(words) }
+    }
+
+    /// An [`InstSlice`] with 0 instructions
+    #[inline]
+    pub const fn empty() -> &'static Self {
+        Self::from_words(&[])
     }
 
     /// Returns the underlying slice of words
