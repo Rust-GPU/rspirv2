@@ -90,7 +90,7 @@ checksum = "f2032f911046de80f0a198e0901378627c33f59ea0ac00e363d481118bd70a53"
 
 [[package]]
 name = "autogen"
-version = "0.1.0"
+version = "0.1.0+sdk-1.4.341"
 dependencies = [
  "anyhow",
  "rspirv2-grammar",
@@ -302,7 +302,7 @@ checksum = "91622ff5e7162018101f2fea40d6ebf4a78bbe5a49736a2020649edf9693679e"
 
 [[package]]
 name = "examples"
-version = "0.1.0"
+version = "0.1.0+sdk-1.4.341"
 dependencies = [
  "anyhow",
  "clap",
@@ -639,7 +639,7 @@ checksum = "dc897dd8d9e8bd1ed8cdad82b5966c3e0ecae09fb1907d58efaa013543185d0a"
 
 [[package]]
 name = "rspirv2"
-version = "0.1.0"
+version = "0.1.0+sdk-1.4.341"
 dependencies = [
  "bitflags",
  "bytemuck",
@@ -651,7 +651,7 @@ dependencies = [
 
 [[package]]
 name = "rspirv2-grammar"
-version = "0.1.0"
+version = "0.1.0+sdk-1.4.341"
 dependencies = [
  "anyhow",
  "rspirv2-grammar-parser",
@@ -659,7 +659,7 @@ dependencies = [
 
 [[package]]
 name = "rspirv2-grammar-parser"
-version = "0.1.0"
+version = "0.1.0+sdk-1.4.341"
 dependencies = [
  "anyhow",
  "convert_case",
@@ -676,7 +676,7 @@ dependencies = [
 
 [[package]]
 name = "rspirv2-tools"
-version = "0.1.0"
+version = "0.1.0+sdk-1.4.341"
 dependencies = [
  "anstream",
  "anyhow",
@@ -688,7 +688,7 @@ dependencies = [
 
 [[package]]
 name = "rspirv2-tools-gen"
-version = "0.1.0"
+version = "0.1.0+sdk-1.4.341"
 dependencies = [
  "anstream",
  "anyhow",
@@ -701,7 +701,7 @@ dependencies = [
 
 [[package]]
 name = "rspirv2-types"
-version = "0.1.0"
+version = "0.1.0+sdk-1.4.341"
 dependencies = [
  "anstyle",
  "anyhow",
@@ -814,7 +814,7 @@ dependencies = [
 
 [[package]]
 name = "spv"
-version = "0.1.0"
+version = "0.1.0+sdk-1.4.341"
 dependencies = [
  "anstream",
  "anyhow",

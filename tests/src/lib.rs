@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 use expect_test::ExpectFile;
 use std::path::PathBuf;
 
