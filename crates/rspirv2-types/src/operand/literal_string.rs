@@ -142,21 +142,11 @@ mod tests {
 
     #[test]
     fn test_str() -> anyhow::Result<()> {
-        roundtrip("abc", &[[b'a', b'b', b'c', 0]])?;
-        roundtrip("123", &[[b'1', b'2', b'3', 0]])?;
-        roundtrip("abcd", &[[b'a', b'b', b'c', b'd'], [0, 0, 0, 0]])?;
-        roundtrip(
-            "abcdefg",
-            &[[b'a', b'b', b'c', b'd'], [b'e', b'f', b'g', 0]],
-        )?;
-        roundtrip(
-            "abcdefgh",
-            &[
-                [b'a', b'b', b'c', b'd'],
-                [b'e', b'f', b'g', b'h'],
-                [0, 0, 0, 0],
-            ],
-        )?;
+        roundtrip("abc", &[*b"abc\0"])?;
+        roundtrip("123", &[*b"123\0"])?;
+        roundtrip("abcd", &[*b"abcd", *b"\0\0\0\0"])?;
+        roundtrip("abcdefg", &[*b"abcd", *b"efg\0"])?;
+        roundtrip("abcdefgh", &[*b"abcd", *b"efgh", *b"\0\0\0\0"])?;
         Ok(())
     }
 
@@ -172,25 +162,19 @@ mod tests {
             assert_eq!(read.as_ref().map(|s| s.as_str()), str);
         };
 
-        test(&[[b'a', 0, 0, 0]], Some("a"));
-        test(&[[b'a', b'b', 0, 0]], Some("ab"));
-        test(&[[b'a', b'b', b'c', 0]], Some("abc"));
-        test(&[[b'a', b'b', b'c', b'd'], [0, 0, 0, 0]], Some("abcd"));
-        test(&[[b'a', b'b', b'c', b'd'], [b'e', 0, 0, 0]], Some("abcde"));
-        test(
-            &[[b'a', b'b', b'c', b'd'], [b'e', b'f', b'g', 0]],
-            Some("abcdefg"),
-        );
-        test(
-            &[[b'a', b'b', b'c', b'd'], [b'e', b'f', b'g', b'h'], [0; 4]],
-            Some("abcdefgh"),
-        );
+        test(&[*b"a\0\0\0"], Some("a"));
+        test(&[*b"ab\0\0"], Some("ab"));
+        test(&[*b"abc\0"], Some("abc"));
+        test(&[*b"abcd", *b"\0\0\0\0"], Some("abcd"));
+        test(&[*b"abcd", *b"e\0\0\0"], Some("abcde"));
+        test(&[*b"abcd", *b"efg\0"], Some("abcdefg"));
+        test(&[*b"abcd", *b"efgh", *b"\0\0\0\0"], Some("abcdefgh"));
 
         // missing null terminator
         test(&[], None);
-        test(&[[b'a', b'b', b'c', b'd']], None);
-        test(&[[b'a', b'b', b'c', b'd'], [b'e', b'f', b'g', b'h']], None);
+        test(&[*b"abcd"], None);
+        test(&[*b"abcd", *b"efgh"], None);
 
-        test(&[[0, 0, 0, 0]], Some(""));
+        test(&[*b"\0\0\0\0"], Some(""));
     }
 }

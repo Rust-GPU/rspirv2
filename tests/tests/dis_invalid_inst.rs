@@ -39,7 +39,7 @@ fn op_name_str_offset(words: &[Word]) -> usize {
     words
         .iter()
         .enumerate()
-        .find(|(_, w)| **w == Word::from_le_bytes([b'a', b'b', b'c', b'd']))
+        .find(|(_, w)| **w == Word::from_le_bytes(*b"abcd"))
         .unwrap()
         .0
 }
@@ -61,7 +61,7 @@ fn test_valid_dis() {
 fn test_no_null_term() {
     let mut words = record_inst().into_vec();
     let str_offset = op_name_str_offset(&words);
-    words[str_offset + 1] = Word::from_le_bytes([b'e', b'f', b'g', b'h']);
+    words[str_offset + 1] = Word::from_le_bytes(*b"efgh");
     expect![[r#"
         %42 = OpTypeInt 32 0
         Error: String is not null-terminated.
