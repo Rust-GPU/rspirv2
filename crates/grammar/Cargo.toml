@@ -1,7 +1,18 @@
 [package]
 name = "rspirv2-grammar"
+description = "SPIR-V grammar distribution"
 version.workspace = true
 edition.workspace = true
+repository.workspace = true
+license.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+exclude = [
+	"headers",
+	"!headers/include/spirv/unified1/spirv.core.grammar.json",
+	"!headers/include/spirv/unified1/extinst*.json",
+]
 
 [lints]
 workspace = true

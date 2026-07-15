@@ -1,7 +1,12 @@
 [package]
 name = "rspirv2-tools-gen"
+description = "ISA-agnostic SPIR-V tooling"
 version.workspace = true
 edition.workspace = true
+repository.workspace = true
+license.workspace = true
+keywords.workspace = true
+categories.workspace = true
 
 [lints]
 workspace = true

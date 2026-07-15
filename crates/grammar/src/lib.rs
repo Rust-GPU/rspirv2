@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 use rspirv2_grammar_parser::parse::{CoreGrammar, ExtInstSetGrammar, GrammarFile};
 
 macro_rules! folder_path {

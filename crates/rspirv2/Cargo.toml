@@ -1,7 +1,12 @@
 [package]
 name = "rspirv2"
+description = "SPIR-V encoding, decoding, manipulation and disassembly"
 version.workspace = true
 edition.workspace = true
+repository.workspace = true
+license.workspace = true
+keywords.workspace = true
+categories.workspace = true
 
 [lints]
 workspace = true
