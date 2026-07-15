@@ -103,7 +103,7 @@ impl Display for IdResultWriter<'_> {
             let style = ctx.color(ID_RESULT_COLOR);
             write!(f, "{}{style}%{}{style:#} = ", &ctx.padding[..pad_len], name)
         } else {
-            write!(f, "{}", &ctx.padding)
+            write!(f, "{}", ctx.padding)
         }
     }
 }
