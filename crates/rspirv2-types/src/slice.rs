@@ -237,6 +237,14 @@ impl<'a, ISA: InstEncoding> InstOffsetRefIter<'a, ISA> {
             };
         }
 
+        // handle degenerate RangeInclusive
+        // `6..=5` needs to return an empty slice, but `6..=4` should fail as normal. Just that the offset is one
+        // dynamically sized instruction. The best we can do is reset to offset 0 and start iterating again.
+        // Expensive, but only happens in this degenerate case or when it's oob anyway.
+        if self.inner.offset > to {
+            self.inner.offset = InstOffset(0);
+        }
+
         let inst = self.advance_to(to)?;
         let extra = if one_further { inst.len() } else { 0 };
         Some(Some(to.0 + extra))

@@ -161,7 +161,6 @@ fn test_slicing() {
     // RangeInclusive & RangeToInclusive
     test(..=0, Some(0..4));
     test(0..=0, Some(0..4));
-    test(1..=0, None);
     test(0..=1, None);
     test(..=4, Some(0..7));
     test(0..=4, Some(0..7));
@@ -188,4 +187,11 @@ fn test_slicing() {
     // oob
     assert_matches!(demo_inst().as_words().get(47..47), None);
     test(47..47, None);
+
+    // zero-sized degenerate RangeInclusive
+    assert_matches!(demo_inst().as_words().get(6..=5), Some(_));
+    assert_matches!(demo_inst().as_words().get(6..=4), None);
+    test(1..=0, None);
+    test(7..=4, Some(7..7));
+    test(11..=7, Some(11..11));
 }
