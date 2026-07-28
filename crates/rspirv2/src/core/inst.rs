@@ -21077,6 +21077,67 @@ impl InstEncoding for OpTypeGraphARM {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct OpBitcastExtractEXT {
+    pub id_result_type: IdResultType,
+    pub id_result: IdResult,
+    pub base: IdRef,
+    pub offset: IdRef,
+}
+impl Inst for OpBitcastExtractEXT {
+    const META: &InstMeta = &OP_BITCAST_EXTRACT_EXT;
+}
+impl InstEncoding for OpBitcastExtractEXT {
+    type IdResult = IdResult;
+    type IdResultType = IdResult;
+    fn id_result(&self) -> Self::IdResult {
+        self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
+    }
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        let len = 1
+            + OperandEncoding::word_len(&self.id_result_type)
+            + OperandEncoding::word_len(&self.id_result)
+            + OperandEncoding::word_len(&self.base)
+            + OperandEncoding::word_len(&self.offset);
+        writer.write_op(Self::META.opcode, len)?;
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        OperandEncoding::encode(&self.base, &mut *writer)?;
+        OperandEncoding::encode(&self.offset, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = reader.check_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type: OperandEncoding::decode(&mut op_reader)?,
+            id_result: OperandEncoding::decode(&mut op_reader)?,
+            base: OperandEncoding::decode(&mut op_reader)?,
+            offset: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
+        let ctx = &OperandDisContext {
+            id_result: Some(self.id_result),
+            id_result_type: Some(self.id_result_type),
+            ctx,
+        };
+        let rspirv_space = ctx.rspirv_space();
+        write!(
+            f,
+            "{}OpBitcastExtractEXT{rspirv_space}{}{rspirv_space}{}{}",
+            ctx.id_result_writer(),
+            self.id_result_type.dis(ctx),
+            self.base.dis(ctx),
+            self.offset.dis(ctx)
+        )
+    }
+}
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpTerminateInvocation {}
 impl Inst for OpTerminateInvocation {
     const META: &InstMeta = &OP_TERMINATE_INVOCATION;
@@ -24611,6 +24672,82 @@ impl InstEncoding for OpExtractSubArrayQCOM {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct OpImageGatherQCOM {
+    pub id_result_type: IdResultType,
+    pub id_result: IdResult,
+    pub sampled_image: IdRef,
+    pub coordinate: IdRef,
+    pub component: IdRef,
+    pub mode: IdRef,
+    pub image_operands: ZeroOrOne<ImageOperands>,
+}
+impl Inst for OpImageGatherQCOM {
+    const META: &InstMeta = &OP_IMAGE_GATHER_QCOM;
+}
+impl InstEncoding for OpImageGatherQCOM {
+    type IdResult = IdResult;
+    type IdResultType = IdResult;
+    fn id_result(&self) -> Self::IdResult {
+        self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
+    }
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        let len = 1
+            + OperandEncoding::word_len(&self.id_result_type)
+            + OperandEncoding::word_len(&self.id_result)
+            + OperandEncoding::word_len(&self.sampled_image)
+            + OperandEncoding::word_len(&self.coordinate)
+            + OperandEncoding::word_len(&self.component)
+            + OperandEncoding::word_len(&self.mode)
+            + OperandEncoding::word_len(&self.image_operands);
+        writer.write_op(Self::META.opcode, len)?;
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        OperandEncoding::encode(&self.sampled_image, &mut *writer)?;
+        OperandEncoding::encode(&self.coordinate, &mut *writer)?;
+        OperandEncoding::encode(&self.component, &mut *writer)?;
+        OperandEncoding::encode(&self.mode, &mut *writer)?;
+        OperandEncoding::encode(&self.image_operands, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = reader.check_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type: OperandEncoding::decode(&mut op_reader)?,
+            id_result: OperandEncoding::decode(&mut op_reader)?,
+            sampled_image: OperandEncoding::decode(&mut op_reader)?,
+            coordinate: OperandEncoding::decode(&mut op_reader)?,
+            component: OperandEncoding::decode(&mut op_reader)?,
+            mode: OperandEncoding::decode(&mut op_reader)?,
+            image_operands: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
+        let ctx = &OperandDisContext {
+            id_result: Some(self.id_result),
+            id_result_type: Some(self.id_result_type),
+            ctx,
+        };
+        let rspirv_space = ctx.rspirv_space();
+        write!(
+            f,
+            "{}OpImageGatherQCOM{rspirv_space}{}{rspirv_space}{}{}{}{}{}",
+            ctx.id_result_writer(),
+            self.id_result_type.dis(ctx),
+            self.sampled_image.dis(ctx),
+            self.coordinate.dis(ctx),
+            self.component.dis(ctx),
+            self.mode.dis(ctx),
+            self.image_operands.dis(ctx)
+        )
+    }
+}
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupIAddNonUniformAMD {
     pub id_result_type: IdResultType,
     pub id_result: IdResult,
@@ -25962,6 +26099,53 @@ impl InstEncoding for OpBufferPointerEXT {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct OpAbortKHR {
+    pub message_type: IdRef,
+    pub id_ref: IdRef,
+}
+impl Inst for OpAbortKHR {
+    const META: &InstMeta = &OP_ABORT_KHR;
+}
+impl InstEncoding for OpAbortKHR {
+    type IdResult = ();
+    type IdResultType = ();
+    fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        let len = 1
+            + OperandEncoding::word_len(&self.message_type)
+            + OperandEncoding::word_len(&self.id_ref);
+        writer.write_op(Self::META.opcode, len)?;
+        OperandEncoding::encode(&self.message_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_ref, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = reader.check_opcode(Self::META)?;
+        Ok(Self {
+            message_type: OperandEncoding::decode(&mut op_reader)?,
+            id_ref: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx,
+        };
+        write!(
+            f,
+            "{}OpAbortKHR{}{}",
+            ctx.id_result_writer(),
+            self.message_type.dis(ctx),
+            self.id_ref.dis(ctx)
+        )
+    }
+}
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUntypedImageTexelPointerEXT {
     pub id_result_type: IdResultType,
     pub id_result: IdResult,
@@ -26137,6 +26321,225 @@ impl InstEncoding for OpConstantSizeOfEXT {
             ctx.id_result_writer(),
             self.id_result_type.dis(ctx),
             self.ty.dis(ctx)
+        )
+    }
+}
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct OpConstantDataKHR {
+    pub id_result_type: IdResultType,
+    pub id_result: IdResult,
+    pub data: ZeroOrMore<LiteralInteger>,
+}
+impl Inst for OpConstantDataKHR {
+    const META: &InstMeta = &OP_CONSTANT_DATA_KHR;
+}
+impl InstEncoding for OpConstantDataKHR {
+    type IdResult = IdResult;
+    type IdResultType = IdResult;
+    fn id_result(&self) -> Self::IdResult {
+        self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
+    }
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        let len = 1
+            + OperandEncoding::word_len(&self.id_result_type)
+            + OperandEncoding::word_len(&self.id_result)
+            + OperandEncoding::word_len(&self.data);
+        writer.write_op(Self::META.opcode, len)?;
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        OperandEncoding::encode(&self.data, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = reader.check_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type: OperandEncoding::decode(&mut op_reader)?,
+            id_result: OperandEncoding::decode(&mut op_reader)?,
+            data: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
+        let ctx = &OperandDisContext {
+            id_result: Some(self.id_result),
+            id_result_type: Some(self.id_result_type),
+            ctx,
+        };
+        let rspirv_space = ctx.rspirv_space();
+        write!(
+            f,
+            "{}OpConstantDataKHR{rspirv_space}{}{rspirv_space}{}",
+            ctx.id_result_writer(),
+            self.id_result_type.dis(ctx),
+            self.data.dis(ctx)
+        )
+    }
+}
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct OpSpecConstantDataKHR {
+    pub id_result_type: IdResultType,
+    pub id_result: IdResult,
+    pub data: ZeroOrMore<LiteralInteger>,
+}
+impl Inst for OpSpecConstantDataKHR {
+    const META: &InstMeta = &OP_SPEC_CONSTANT_DATA_KHR;
+}
+impl InstEncoding for OpSpecConstantDataKHR {
+    type IdResult = IdResult;
+    type IdResultType = IdResult;
+    fn id_result(&self) -> Self::IdResult {
+        self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
+    }
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        let len = 1
+            + OperandEncoding::word_len(&self.id_result_type)
+            + OperandEncoding::word_len(&self.id_result)
+            + OperandEncoding::word_len(&self.data);
+        writer.write_op(Self::META.opcode, len)?;
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        OperandEncoding::encode(&self.data, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = reader.check_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type: OperandEncoding::decode(&mut op_reader)?,
+            id_result: OperandEncoding::decode(&mut op_reader)?,
+            data: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
+        let ctx = &OperandDisContext {
+            id_result: Some(self.id_result),
+            id_result_type: Some(self.id_result_type),
+            ctx,
+        };
+        let rspirv_space = ctx.rspirv_space();
+        write!(
+            f,
+            "{}OpSpecConstantDataKHR{rspirv_space}{}{rspirv_space}{}",
+            ctx.id_result_writer(),
+            self.id_result_type.dis(ctx),
+            self.data.dis(ctx)
+        )
+    }
+}
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct OpPoisonKHR {
+    pub id_result_type: IdResultType,
+    pub id_result: IdResult,
+}
+impl Inst for OpPoisonKHR {
+    const META: &InstMeta = &OP_POISON_KHR;
+}
+impl InstEncoding for OpPoisonKHR {
+    type IdResult = IdResult;
+    type IdResultType = IdResult;
+    fn id_result(&self) -> Self::IdResult {
+        self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
+    }
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        let len = 1
+            + OperandEncoding::word_len(&self.id_result_type)
+            + OperandEncoding::word_len(&self.id_result);
+        writer.write_op(Self::META.opcode, len)?;
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = reader.check_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type: OperandEncoding::decode(&mut op_reader)?,
+            id_result: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
+        let ctx = &OperandDisContext {
+            id_result: Some(self.id_result),
+            id_result_type: Some(self.id_result_type),
+            ctx,
+        };
+        let rspirv_space = ctx.rspirv_space();
+        write!(
+            f,
+            "{}OpPoisonKHR{rspirv_space}{}",
+            ctx.id_result_writer(),
+            self.id_result_type.dis(ctx)
+        )
+    }
+}
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct OpFreezeKHR {
+    pub id_result_type: IdResultType,
+    pub id_result: IdResult,
+    pub value: IdRef,
+}
+impl Inst for OpFreezeKHR {
+    const META: &InstMeta = &OP_FREEZE_KHR;
+}
+impl InstEncoding for OpFreezeKHR {
+    type IdResult = IdResult;
+    type IdResultType = IdResult;
+    fn id_result(&self) -> Self::IdResult {
+        self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
+    }
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        let len = 1
+            + OperandEncoding::word_len(&self.id_result_type)
+            + OperandEncoding::word_len(&self.id_result)
+            + OperandEncoding::word_len(&self.value);
+        writer.write_op(Self::META.opcode, len)?;
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        OperandEncoding::encode(&self.value, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = reader.check_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type: OperandEncoding::decode(&mut op_reader)?,
+            id_result: OperandEncoding::decode(&mut op_reader)?,
+            value: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
+        let ctx = &OperandDisContext {
+            id_result: Some(self.id_result),
+            id_result_type: Some(self.id_result_type),
+            ctx,
+        };
+        let rspirv_space = ctx.rspirv_space();
+        write!(
+            f,
+            "{}OpFreezeKHR{rspirv_space}{}{rspirv_space}{}",
+            ctx.id_result_writer(),
+            self.id_result_type.dis(ctx),
+            self.value.dis(ctx)
         )
     }
 }
@@ -29246,6 +29649,7 @@ pub struct OpHitObjectRecordFromQueryEXT {
     pub ray_query: IdRef,
     pub sbt_record_index: IdRef,
     pub hit_object_attributes: IdRef,
+    pub hit_kind: ZeroOrOne<IdRef>,
 }
 impl Inst for OpHitObjectRecordFromQueryEXT {
     const META: &InstMeta = &OP_HIT_OBJECT_RECORD_FROM_QUERY_EXT;
@@ -29261,12 +29665,14 @@ impl InstEncoding for OpHitObjectRecordFromQueryEXT {
             + OperandEncoding::word_len(&self.hit_object)
             + OperandEncoding::word_len(&self.ray_query)
             + OperandEncoding::word_len(&self.sbt_record_index)
-            + OperandEncoding::word_len(&self.hit_object_attributes);
+            + OperandEncoding::word_len(&self.hit_object_attributes)
+            + OperandEncoding::word_len(&self.hit_kind);
         writer.write_op(Self::META.opcode, len)?;
         OperandEncoding::encode(&self.hit_object, &mut *writer)?;
         OperandEncoding::encode(&self.ray_query, &mut *writer)?;
         OperandEncoding::encode(&self.sbt_record_index, &mut *writer)?;
         OperandEncoding::encode(&self.hit_object_attributes, &mut *writer)?;
+        OperandEncoding::encode(&self.hit_kind, &mut *writer)?;
         Ok(())
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
@@ -29276,7 +29682,8 @@ impl InstEncoding for OpHitObjectRecordFromQueryEXT {
             hit_object: OperandEncoding::decode(&mut op_reader)?,
             ray_query: OperandEncoding::decode(&mut op_reader)?,
             sbt_record_index: OperandEncoding::decode(&mut op_reader)?,
-            hit_object_attributes: OperandEncoding::decode_last(&mut op_reader)?,
+            hit_object_attributes: OperandEncoding::decode(&mut op_reader)?,
+            hit_kind: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
@@ -29288,12 +29695,13 @@ impl InstEncoding for OpHitObjectRecordFromQueryEXT {
         };
         write!(
             f,
-            "{}OpHitObjectRecordFromQueryEXT{}{}{}{}",
+            "{}OpHitObjectRecordFromQueryEXT{}{}{}{}{}",
             ctx.id_result_writer(),
             self.hit_object.dis(ctx),
             self.ray_query.dis(ctx),
             self.sbt_record_index.dis(ctx),
-            self.hit_object_attributes.dis(ctx)
+            self.hit_object_attributes.dis(ctx),
+            self.hit_kind.dis(ctx)
         )
     }
 }
@@ -48673,8 +49081,8 @@ impl InstEncoding for OpCrossWorkgroupCastToPtrALTERA {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpReadPipeBlockingALTERA {
-    pub id_result_type: IdResultType,
-    pub id_result: IdResult,
+    pub pipe: IdRef,
+    pub pointer: IdRef,
     pub packet_size: IdRef,
     pub packet_alignment: IdRef,
 }
@@ -48683,24 +49091,20 @@ impl Inst for OpReadPipeBlockingALTERA {
     const META: &InstMeta = &OP_READ_PIPE_BLOCKING_ALTERA;
 }
 impl InstEncoding for OpReadPipeBlockingALTERA {
-    type IdResult = IdResult;
-    type IdResultType = IdResult;
-    fn id_result(&self) -> Self::IdResult {
-        self.id_result
-    }
-    fn id_result_type(&self) -> Self::IdResultType {
-        self.id_result_type.0
-    }
+    type IdResult = ();
+    type IdResultType = ();
+    fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
-            + OperandEncoding::word_len(&self.id_result_type)
-            + OperandEncoding::word_len(&self.id_result)
+            + OperandEncoding::word_len(&self.pipe)
+            + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
         writer.write_op(Self::META.opcode, len)?;
-        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
-        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        OperandEncoding::encode(&self.pipe, &mut *writer)?;
+        OperandEncoding::encode(&self.pointer, &mut *writer)?;
         OperandEncoding::encode(&self.packet_size, &mut *writer)?;
         OperandEncoding::encode(&self.packet_alignment, &mut *writer)?;
         Ok(())
@@ -48709,8 +49113,8 @@ impl InstEncoding for OpReadPipeBlockingALTERA {
         profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
-            id_result_type: OperandEncoding::decode(&mut op_reader)?,
-            id_result: OperandEncoding::decode(&mut op_reader)?,
+            pipe: OperandEncoding::decode(&mut op_reader)?,
+            pointer: OperandEncoding::decode(&mut op_reader)?,
             packet_size: OperandEncoding::decode(&mut op_reader)?,
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
@@ -48718,16 +49122,16 @@ impl InstEncoding for OpReadPipeBlockingALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
         let ctx = &OperandDisContext {
-            id_result: Some(self.id_result),
-            id_result_type: Some(self.id_result_type),
+            id_result: None,
+            id_result_type: None,
             ctx,
         };
-        let rspirv_space = ctx.rspirv_space();
         write!(
             f,
-            "{}OpReadPipeBlockingALTERA{rspirv_space}{}{rspirv_space}{}{}",
+            "{}OpReadPipeBlockingALTERA{}{}{}{}",
             ctx.id_result_writer(),
-            self.id_result_type.dis(ctx),
+            self.pipe.dis(ctx),
+            self.pointer.dis(ctx),
             self.packet_size.dis(ctx),
             self.packet_alignment.dis(ctx)
         )
@@ -48735,8 +49139,8 @@ impl InstEncoding for OpReadPipeBlockingALTERA {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpWritePipeBlockingALTERA {
-    pub id_result_type: IdResultType,
-    pub id_result: IdResult,
+    pub pipe: IdRef,
+    pub pointer: IdRef,
     pub packet_size: IdRef,
     pub packet_alignment: IdRef,
 }
@@ -48745,24 +49149,20 @@ impl Inst for OpWritePipeBlockingALTERA {
     const META: &InstMeta = &OP_WRITE_PIPE_BLOCKING_ALTERA;
 }
 impl InstEncoding for OpWritePipeBlockingALTERA {
-    type IdResult = IdResult;
-    type IdResultType = IdResult;
-    fn id_result(&self) -> Self::IdResult {
-        self.id_result
-    }
-    fn id_result_type(&self) -> Self::IdResultType {
-        self.id_result_type.0
-    }
+    type IdResult = ();
+    type IdResultType = ();
+    fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
         let len = 1
-            + OperandEncoding::word_len(&self.id_result_type)
-            + OperandEncoding::word_len(&self.id_result)
+            + OperandEncoding::word_len(&self.pipe)
+            + OperandEncoding::word_len(&self.pointer)
             + OperandEncoding::word_len(&self.packet_size)
             + OperandEncoding::word_len(&self.packet_alignment);
         writer.write_op(Self::META.opcode, len)?;
-        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
-        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        OperandEncoding::encode(&self.pipe, &mut *writer)?;
+        OperandEncoding::encode(&self.pointer, &mut *writer)?;
         OperandEncoding::encode(&self.packet_size, &mut *writer)?;
         OperandEncoding::encode(&self.packet_alignment, &mut *writer)?;
         Ok(())
@@ -48771,8 +49171,8 @@ impl InstEncoding for OpWritePipeBlockingALTERA {
         profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
-            id_result_type: OperandEncoding::decode(&mut op_reader)?,
-            id_result: OperandEncoding::decode(&mut op_reader)?,
+            pipe: OperandEncoding::decode(&mut op_reader)?,
+            pointer: OperandEncoding::decode(&mut op_reader)?,
             packet_size: OperandEncoding::decode(&mut op_reader)?,
             packet_alignment: OperandEncoding::decode_last(&mut op_reader)?,
         })
@@ -48780,16 +49180,16 @@ impl InstEncoding for OpWritePipeBlockingALTERA {
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
         let ctx = &OperandDisContext {
-            id_result: Some(self.id_result),
-            id_result_type: Some(self.id_result_type),
+            id_result: None,
+            id_result_type: None,
             ctx,
         };
-        let rspirv_space = ctx.rspirv_space();
         write!(
             f,
-            "{}OpWritePipeBlockingALTERA{rspirv_space}{}{rspirv_space}{}{}",
+            "{}OpWritePipeBlockingALTERA{}{}{}{}",
             ctx.id_result_writer(),
-            self.id_result_type.dis(ctx),
+            self.pipe.dis(ctx),
+            self.pointer.dis(ctx),
             self.packet_size.dis(ctx),
             self.packet_alignment.dis(ctx)
         )
@@ -50109,31 +50509,20 @@ impl InstEncoding for OpSpecConstantCompositeContinuedINTEL {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCompositeConstructContinuedINTEL {
-    pub id_result_type: IdResultType,
-    pub id_result: IdResult,
     pub constituents: ZeroOrMore<IdRef>,
 }
 impl Inst for OpCompositeConstructContinuedINTEL {
     const META: &InstMeta = &OP_COMPOSITE_CONSTRUCT_CONTINUED_INTEL;
 }
 impl InstEncoding for OpCompositeConstructContinuedINTEL {
-    type IdResult = IdResult;
-    type IdResultType = IdResult;
-    fn id_result(&self) -> Self::IdResult {
-        self.id_result
-    }
-    fn id_result_type(&self) -> Self::IdResultType {
-        self.id_result_type.0
-    }
+    type IdResult = ();
+    type IdResultType = ();
+    fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
-        let len = 1
-            + OperandEncoding::word_len(&self.id_result_type)
-            + OperandEncoding::word_len(&self.id_result)
-            + OperandEncoding::word_len(&self.constituents);
+        let len = 1 + OperandEncoding::word_len(&self.constituents);
         writer.write_op(Self::META.opcode, len)?;
-        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
-        OperandEncoding::encode(&self.id_result, &mut *writer)?;
         OperandEncoding::encode(&self.constituents, &mut *writer)?;
         Ok(())
     }
@@ -50141,24 +50530,20 @@ impl InstEncoding for OpCompositeConstructContinuedINTEL {
         profiling::function_scope!();
         let mut op_reader = reader.check_opcode(Self::META)?;
         Ok(Self {
-            id_result_type: OperandEncoding::decode(&mut op_reader)?,
-            id_result: OperandEncoding::decode(&mut op_reader)?,
             constituents: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
         let ctx = &OperandDisContext {
-            id_result: Some(self.id_result),
-            id_result_type: Some(self.id_result_type),
+            id_result: None,
+            id_result_type: None,
             ctx,
         };
-        let rspirv_space = ctx.rspirv_space();
         write!(
             f,
-            "{}OpCompositeConstructContinuedINTEL{rspirv_space}{}{rspirv_space}{}",
+            "{}OpCompositeConstructContinuedINTEL{}",
             ctx.id_result_writer(),
-            self.id_result_type.dis(ctx),
             self.constituents.dis(ctx)
         )
     }
@@ -50276,15 +50661,16 @@ impl InstEncoding for OpConvertBF16ToFINTEL {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpControlBarrierArriveINTEL {
+pub struct OpControlBarrierArriveEXT {
     pub execution: IdScope,
     pub memory: IdScope,
     pub semantics: IdMemorySemantics,
 }
-impl Inst for OpControlBarrierArriveINTEL {
-    const META: &InstMeta = &OP_CONTROL_BARRIER_ARRIVE_INTEL;
+pub type OpControlBarrierArriveINTEL = OpControlBarrierArriveEXT;
+impl Inst for OpControlBarrierArriveEXT {
+    const META: &InstMeta = &OP_CONTROL_BARRIER_ARRIVE_EXT;
 }
-impl InstEncoding for OpControlBarrierArriveINTEL {
+impl InstEncoding for OpControlBarrierArriveEXT {
     type IdResult = ();
     type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
@@ -50319,7 +50705,7 @@ impl InstEncoding for OpControlBarrierArriveINTEL {
         };
         write!(
             f,
-            "{}OpControlBarrierArriveINTEL{}{}{}",
+            "{}OpControlBarrierArriveEXT{}{}{}",
             ctx.id_result_writer(),
             self.execution.dis(ctx),
             self.memory.dis(ctx),
@@ -50328,15 +50714,16 @@ impl InstEncoding for OpControlBarrierArriveINTEL {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpControlBarrierWaitINTEL {
+pub struct OpControlBarrierWaitEXT {
     pub execution: IdScope,
     pub memory: IdScope,
     pub semantics: IdMemorySemantics,
 }
-impl Inst for OpControlBarrierWaitINTEL {
-    const META: &InstMeta = &OP_CONTROL_BARRIER_WAIT_INTEL;
+pub type OpControlBarrierWaitINTEL = OpControlBarrierWaitEXT;
+impl Inst for OpControlBarrierWaitEXT {
+    const META: &InstMeta = &OP_CONTROL_BARRIER_WAIT_EXT;
 }
-impl InstEncoding for OpControlBarrierWaitINTEL {
+impl InstEncoding for OpControlBarrierWaitEXT {
     type IdResult = ();
     type IdResultType = ();
     fn id_result(&self) -> Self::IdResult {}
@@ -50371,7 +50758,7 @@ impl InstEncoding for OpControlBarrierWaitINTEL {
         };
         write!(
             f,
-            "{}OpControlBarrierWaitINTEL{}{}{}",
+            "{}OpControlBarrierWaitEXT{}{}{}",
             ctx.id_result_writer(),
             self.execution.dis(ctx),
             self.memory.dis(ctx),
@@ -51788,6 +52175,134 @@ impl InstEncoding for OpConditionalCopyObjectINTEL {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct OpPredicatedLoadINTEL {
+    pub id_result_type: IdResultType,
+    pub id_result: IdResult,
+    pub pointer: IdRef,
+    pub predicate: IdRef,
+    pub default_value: IdRef,
+    pub memory_access: ZeroOrOne<MemoryAccess>,
+}
+impl Inst for OpPredicatedLoadINTEL {
+    const META: &InstMeta = &OP_PREDICATED_LOAD_INTEL;
+}
+impl InstEncoding for OpPredicatedLoadINTEL {
+    type IdResult = IdResult;
+    type IdResultType = IdResult;
+    fn id_result(&self) -> Self::IdResult {
+        self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
+    }
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        let len = 1
+            + OperandEncoding::word_len(&self.id_result_type)
+            + OperandEncoding::word_len(&self.id_result)
+            + OperandEncoding::word_len(&self.pointer)
+            + OperandEncoding::word_len(&self.predicate)
+            + OperandEncoding::word_len(&self.default_value)
+            + OperandEncoding::word_len(&self.memory_access);
+        writer.write_op(Self::META.opcode, len)?;
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        OperandEncoding::encode(&self.pointer, &mut *writer)?;
+        OperandEncoding::encode(&self.predicate, &mut *writer)?;
+        OperandEncoding::encode(&self.default_value, &mut *writer)?;
+        OperandEncoding::encode(&self.memory_access, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = reader.check_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type: OperandEncoding::decode(&mut op_reader)?,
+            id_result: OperandEncoding::decode(&mut op_reader)?,
+            pointer: OperandEncoding::decode(&mut op_reader)?,
+            predicate: OperandEncoding::decode(&mut op_reader)?,
+            default_value: OperandEncoding::decode(&mut op_reader)?,
+            memory_access: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
+        let ctx = &OperandDisContext {
+            id_result: Some(self.id_result),
+            id_result_type: Some(self.id_result_type),
+            ctx,
+        };
+        let rspirv_space = ctx.rspirv_space();
+        write!(
+            f,
+            "{}OpPredicatedLoadINTEL{rspirv_space}{}{rspirv_space}{}{}{}{}",
+            ctx.id_result_writer(),
+            self.id_result_type.dis(ctx),
+            self.pointer.dis(ctx),
+            self.predicate.dis(ctx),
+            self.default_value.dis(ctx),
+            self.memory_access.dis(ctx)
+        )
+    }
+}
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct OpPredicatedStoreINTEL {
+    pub pointer: IdRef,
+    pub object: IdRef,
+    pub predicate: IdRef,
+    pub memory_access: ZeroOrOne<MemoryAccess>,
+}
+impl Inst for OpPredicatedStoreINTEL {
+    const META: &InstMeta = &OP_PREDICATED_STORE_INTEL;
+}
+impl InstEncoding for OpPredicatedStoreINTEL {
+    type IdResult = ();
+    type IdResultType = ();
+    fn id_result(&self) -> Self::IdResult {}
+    fn id_result_type(&self) -> Self::IdResultType {}
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        let len = 1
+            + OperandEncoding::word_len(&self.pointer)
+            + OperandEncoding::word_len(&self.object)
+            + OperandEncoding::word_len(&self.predicate)
+            + OperandEncoding::word_len(&self.memory_access);
+        writer.write_op(Self::META.opcode, len)?;
+        OperandEncoding::encode(&self.pointer, &mut *writer)?;
+        OperandEncoding::encode(&self.object, &mut *writer)?;
+        OperandEncoding::encode(&self.predicate, &mut *writer)?;
+        OperandEncoding::encode(&self.memory_access, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = reader.check_opcode(Self::META)?;
+        Ok(Self {
+            pointer: OperandEncoding::decode(&mut op_reader)?,
+            object: OperandEncoding::decode(&mut op_reader)?,
+            predicate: OperandEncoding::decode(&mut op_reader)?,
+            memory_access: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
+        let ctx = &OperandDisContext {
+            id_result: None,
+            id_result_type: None,
+            ctx,
+        };
+        write!(
+            f,
+            "{}OpPredicatedStoreINTEL{}{}{}{}",
+            ctx.id_result_writer(),
+            self.pointer.dis(ctx),
+            self.object.dis(ctx),
+            self.predicate.dis(ctx),
+            self.memory_access.dis(ctx)
+        )
+    }
+}
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGroupIMulKHR {
     pub id_result_type: IdResultType,
     pub id_result: IdResult,
@@ -52664,6 +53179,204 @@ impl InstEncoding for OpConvertHandleToSampledImageINTEL {
             ctx.id_result_writer(),
             self.id_result_type.dis(ctx),
             self.operand.dis(ctx)
+        )
+    }
+}
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct OpFDot2MixAcc32VALVE {
+    pub id_result_type: IdResultType,
+    pub id_result: IdResult,
+    pub vector_1: IdRef,
+    pub vector_2: IdRef,
+    pub accumulator: IdRef,
+}
+impl Inst for OpFDot2MixAcc32VALVE {
+    const META: &InstMeta = &OP_F_DOT_2_MIX_ACC_32_VALVE;
+}
+impl InstEncoding for OpFDot2MixAcc32VALVE {
+    type IdResult = IdResult;
+    type IdResultType = IdResult;
+    fn id_result(&self) -> Self::IdResult {
+        self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
+    }
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        let len = 1
+            + OperandEncoding::word_len(&self.id_result_type)
+            + OperandEncoding::word_len(&self.id_result)
+            + OperandEncoding::word_len(&self.vector_1)
+            + OperandEncoding::word_len(&self.vector_2)
+            + OperandEncoding::word_len(&self.accumulator);
+        writer.write_op(Self::META.opcode, len)?;
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        OperandEncoding::encode(&self.vector_1, &mut *writer)?;
+        OperandEncoding::encode(&self.vector_2, &mut *writer)?;
+        OperandEncoding::encode(&self.accumulator, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = reader.check_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type: OperandEncoding::decode(&mut op_reader)?,
+            id_result: OperandEncoding::decode(&mut op_reader)?,
+            vector_1: OperandEncoding::decode(&mut op_reader)?,
+            vector_2: OperandEncoding::decode(&mut op_reader)?,
+            accumulator: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
+        let ctx = &OperandDisContext {
+            id_result: Some(self.id_result),
+            id_result_type: Some(self.id_result_type),
+            ctx,
+        };
+        let rspirv_space = ctx.rspirv_space();
+        write!(
+            f,
+            "{}OpFDot2MixAcc32VALVE{rspirv_space}{}{rspirv_space}{}{}{}",
+            ctx.id_result_writer(),
+            self.id_result_type.dis(ctx),
+            self.vector_1.dis(ctx),
+            self.vector_2.dis(ctx),
+            self.accumulator.dis(ctx)
+        )
+    }
+}
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct OpFDot2MixAcc16VALVE {
+    pub id_result_type: IdResultType,
+    pub id_result: IdResult,
+    pub vector_1: IdRef,
+    pub vector_2: IdRef,
+    pub accumulator: IdRef,
+}
+impl Inst for OpFDot2MixAcc16VALVE {
+    const META: &InstMeta = &OP_F_DOT_2_MIX_ACC_16_VALVE;
+}
+impl InstEncoding for OpFDot2MixAcc16VALVE {
+    type IdResult = IdResult;
+    type IdResultType = IdResult;
+    fn id_result(&self) -> Self::IdResult {
+        self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
+    }
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        let len = 1
+            + OperandEncoding::word_len(&self.id_result_type)
+            + OperandEncoding::word_len(&self.id_result)
+            + OperandEncoding::word_len(&self.vector_1)
+            + OperandEncoding::word_len(&self.vector_2)
+            + OperandEncoding::word_len(&self.accumulator);
+        writer.write_op(Self::META.opcode, len)?;
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        OperandEncoding::encode(&self.vector_1, &mut *writer)?;
+        OperandEncoding::encode(&self.vector_2, &mut *writer)?;
+        OperandEncoding::encode(&self.accumulator, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = reader.check_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type: OperandEncoding::decode(&mut op_reader)?,
+            id_result: OperandEncoding::decode(&mut op_reader)?,
+            vector_1: OperandEncoding::decode(&mut op_reader)?,
+            vector_2: OperandEncoding::decode(&mut op_reader)?,
+            accumulator: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
+        let ctx = &OperandDisContext {
+            id_result: Some(self.id_result),
+            id_result_type: Some(self.id_result_type),
+            ctx,
+        };
+        let rspirv_space = ctx.rspirv_space();
+        write!(
+            f,
+            "{}OpFDot2MixAcc16VALVE{rspirv_space}{}{rspirv_space}{}{}{}",
+            ctx.id_result_writer(),
+            self.id_result_type.dis(ctx),
+            self.vector_1.dis(ctx),
+            self.vector_2.dis(ctx),
+            self.accumulator.dis(ctx)
+        )
+    }
+}
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct OpFDot4MixAcc32VALVE {
+    pub id_result_type: IdResultType,
+    pub id_result: IdResult,
+    pub vector_1: IdRef,
+    pub vector_2: IdRef,
+    pub accumulator: IdRef,
+}
+impl Inst for OpFDot4MixAcc32VALVE {
+    const META: &InstMeta = &OP_F_DOT_4_MIX_ACC_32_VALVE;
+}
+impl InstEncoding for OpFDot4MixAcc32VALVE {
+    type IdResult = IdResult;
+    type IdResultType = IdResult;
+    fn id_result(&self) -> Self::IdResult {
+        self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
+    }
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        let len = 1
+            + OperandEncoding::word_len(&self.id_result_type)
+            + OperandEncoding::word_len(&self.id_result)
+            + OperandEncoding::word_len(&self.vector_1)
+            + OperandEncoding::word_len(&self.vector_2)
+            + OperandEncoding::word_len(&self.accumulator);
+        writer.write_op(Self::META.opcode, len)?;
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        OperandEncoding::encode(&self.vector_1, &mut *writer)?;
+        OperandEncoding::encode(&self.vector_2, &mut *writer)?;
+        OperandEncoding::encode(&self.accumulator, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = reader.check_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type: OperandEncoding::decode(&mut op_reader)?,
+            id_result: OperandEncoding::decode(&mut op_reader)?,
+            vector_1: OperandEncoding::decode(&mut op_reader)?,
+            vector_2: OperandEncoding::decode(&mut op_reader)?,
+            accumulator: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
+        let ctx = &OperandDisContext {
+            id_result: Some(self.id_result),
+            id_result_type: Some(self.id_result_type),
+            ctx,
+        };
+        let rspirv_space = ctx.rspirv_space();
+        write!(
+            f,
+            "{}OpFDot4MixAcc32VALVE{rspirv_space}{}{rspirv_space}{}{}{}",
+            ctx.id_result_writer(),
+            self.id_result_type.dis(ctx),
+            self.vector_1.dis(ctx),
+            self.vector_2.dis(ctx),
+            self.accumulator.dis(ctx)
         )
     }
 }

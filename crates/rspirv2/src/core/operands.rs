@@ -460,7 +460,7 @@ bitflags! {
     const LoopCoalesceALTERA = 1048576u32; const MaxInterleavingALTERA = 2097152u32;
     const SpeculatedIterationsALTERA = 4194304u32; const NoFusionALTERA = 8388608u32;
     const LoopCountALTERA = 16777216u32; const MaxReinvocationDelayALTERA = 33554432u32;
-    }
+    const MultipleWaitQueuesQCOM = 268435456u32; }
 }
 #[allow(non_upper_case_globals)]
 impl LoopControlBits {
@@ -555,6 +555,9 @@ unsafe impl OperandEncoding for LoopControlBits {
             if self.contains(Self::MaxReinvocationDelayALTERA) {
                 write!(f, "{sep}MaxReinvocationDelayALTERA")?;
             }
+            if self.contains(Self::MultipleWaitQueuesQCOM) {
+                write!(f, "{sep}MultipleWaitQueuesQCOM")?;
+            }
             Ok(())
         }
     }
@@ -634,7 +637,10 @@ impl ParameterizedBitmaskBits for LoopControlBits {
             .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
         0,
         0,
-        0,
+        FixedLenComposer::new()
+            .append(LiteralInteger::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
         0,
         0,
         0,
@@ -820,6 +826,12 @@ impl LoopControl {
     pub fn set_max_reinvocation_delay_intel(&mut self, opt: Option<LiteralInteger>) {
         self.0.set(25u32, opt);
     }
+    pub fn get_multiple_wait_queues_qcom(&self) -> Option<LiteralInteger> {
+        self.0.get(28u32)
+    }
+    pub fn set_multiple_wait_queues_qcom(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(28u32, opt);
+    }
 }
 unsafe impl Operand for LoopControl {
     const KIND: &OperandKind = &OPERAND_KIND_LOOP_CONTROL;
@@ -880,6 +892,9 @@ unsafe impl OperandEncoding for LoopControl {
             extra.dis_fmt(f, ctx)?;
         }
         if let Some(extra) = self.get_max_reinvocation_delay_altera() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_multiple_wait_queues_qcom() {
             extra.dis_fmt(f, ctx)?;
         }
         Ok(())
@@ -1295,11 +1310,12 @@ bitflags! {
     TerminateOnFirstHitKHR = 4u32; const SkipClosestHitShaderKHR = 8u32; const
     CullBackFacingTrianglesKHR = 16u32; const CullFrontFacingTrianglesKHR = 32u32; const
     CullOpaqueKHR = 64u32; const CullNoOpaqueKHR = 128u32; const SkipTrianglesKHR =
-    256u32; const SkipAABBsKHR = 512u32; const ForceOpacityMicromap2StateEXT = 1024u32; }
+    256u32; const SkipAABBsKHR = 512u32; const ForceOpacityMicromap2StateKHR = 1024u32; }
 }
 #[allow(non_upper_case_globals)]
 impl RayFlags {
     pub const SkipBuiltinPrimitivesNV: Self = Self::SkipTrianglesKHR;
+    pub const ForceOpacityMicromap2StateEXT: Self = Self::ForceOpacityMicromap2StateKHR;
 }
 unsafe impl Operand for RayFlags {
     const KIND: &OperandKind = &OPERAND_KIND_RAY_FLAGS;
@@ -1357,8 +1373,8 @@ unsafe impl OperandEncoding for RayFlags {
             if self.contains(Self::SkipAABBsKHR) {
                 write!(f, "{sep}SkipAABBsKHR")?;
             }
-            if self.contains(Self::ForceOpacityMicromap2StateEXT) {
-                write!(f, "{sep}ForceOpacityMicromap2StateEXT")?;
+            if self.contains(Self::ForceOpacityMicromap2StateKHR) {
+                write!(f, "{sep}ForceOpacityMicromap2StateKHR")?;
             }
             Ok(())
         }
@@ -1469,6 +1485,8 @@ pub enum SourceLanguage {
     Slang = 11u32,
     Zig = 12u32,
     Rust = 13u32,
+    Pred = 14u32,
+    ApilaJai = 15u32,
 }
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Zeroable for SourceLanguage {}
@@ -1502,6 +1520,8 @@ unsafe impl OperandEncoding for SourceLanguage {
             11u32 => Self::Slang,
             12u32 => Self::Zig,
             13u32 => Self::Rust,
+            14u32 => Self::Pred,
+            15u32 => Self::ApilaJai,
             _ => {
                 return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(SourceLanguage),
@@ -1529,6 +1549,8 @@ unsafe impl OperandEncoding for SourceLanguage {
             Self::Slang => write!(f, " Slang"),
             Self::Zig => write!(f, " Zig"),
             Self::Rust => write!(f, " Rust"),
+            Self::Pred => write!(f, " Pred"),
+            Self::ApilaJai => write!(f, " ApilaJai"),
         }
     }
 }
@@ -1917,6 +1939,7 @@ pub enum ExecutionMode {
         ///Shader Index
         IdRef,
     ),
+    ArithmeticPoisonKHR,
     OutputLinesEXT,
     OutputPrimitivesEXT(
         ///Primitive count
@@ -1978,6 +2001,10 @@ pub enum ExecutionMode {
         ///Target Type
         IdRef,
         ///Fast-Math Mode
+        IdRef,
+    ),
+    OpacityMicromapIdKHR(
+        ///Enable
         IdRef,
     ),
     StreamingInterfaceINTEL(
@@ -2161,6 +2188,7 @@ unsafe impl OperandEncoding for ExecutionMode {
                 OperandEncoding::encode(p0, &mut *writer)?;
                 OperandEncoding::encode(p1, &mut *writer)?
             }
+            Self::ArithmeticPoisonKHR => writer.write(Word(5157u32)),
             Self::OutputLinesEXT => writer.write(Word(5269u32)),
             Self::OutputPrimitivesEXT(p0) => {
                 writer.write(Word(5270u32));
@@ -2220,6 +2248,10 @@ unsafe impl OperandEncoding for ExecutionMode {
                 writer.write(Word(6028u32));
                 OperandEncoding::encode(p0, &mut *writer)?;
                 OperandEncoding::encode(p1, &mut *writer)?
+            }
+            Self::OpacityMicromapIdKHR(p0) => {
+                writer.write(Word(6031u32));
+                OperandEncoding::encode(p0, &mut *writer)?
             }
             Self::StreamingInterfaceINTEL(p0) => {
                 writer.write(Word(6154u32));
@@ -2350,6 +2382,7 @@ unsafe impl OperandEncoding for ExecutionMode {
                 OperandEncoding::decode(&mut *reader)?,
                 OperandEncoding::decode(&mut *reader)?,
             ),
+            5157u32 => Self::ArithmeticPoisonKHR,
             5269u32 => Self::OutputLinesEXT,
             5270u32 => Self::OutputPrimitivesEXT(OperandEncoding::decode(&mut *reader)?),
             5289u32 => Self::DerivativeGroupQuadsKHR,
@@ -2381,6 +2414,7 @@ unsafe impl OperandEncoding for ExecutionMode {
                 OperandEncoding::decode(&mut *reader)?,
                 OperandEncoding::decode(&mut *reader)?,
             ),
+            6031u32 => Self::OpacityMicromapIdKHR(OperandEncoding::decode(&mut *reader)?),
             6154u32 => Self::StreamingInterfaceINTEL(OperandEncoding::decode(&mut *reader)?),
             6160u32 => Self::RegisterMapInterfaceINTEL(OperandEncoding::decode(&mut *reader)?),
             6417u32 => Self::NamedBarrierCountINTEL(OperandEncoding::decode(&mut *reader)?),
@@ -2549,6 +2583,7 @@ unsafe impl OperandEncoding for ExecutionMode {
             Self::SharesInputWithAMDX(p0, p1) => {
                 write!(f, " SharesInputWithAMDX{}{}", p0.dis(_ctx), p1.dis(_ctx))
             }
+            Self::ArithmeticPoisonKHR => write!(f, " ArithmeticPoisonKHR"),
             Self::OutputLinesEXT => write!(f, " OutputLinesEXT"),
             Self::OutputPrimitivesEXT(p0) => {
                 write!(f, " OutputPrimitivesEXT{}", p0.dis(_ctx))
@@ -2604,6 +2639,9 @@ unsafe impl OperandEncoding for ExecutionMode {
             Self::MaximallyReconvergesKHR => write!(f, " MaximallyReconvergesKHR"),
             Self::FPFastMathDefault(p0, p1) => {
                 write!(f, " FPFastMathDefault{}{}", p0.dis(_ctx), p1.dis(_ctx))
+            }
+            Self::OpacityMicromapIdKHR(p0) => {
+                write!(f, " OpacityMicromapIdKHR{}", p0.dis(_ctx))
             }
             Self::StreamingInterfaceINTEL(p0) => {
                 write!(f, " StreamingInterfaceINTEL{}", p0.dis(_ctx))
@@ -3559,6 +3597,7 @@ pub enum LinkageType {
     Export = 0u32,
     Import = 1u32,
     LinkOnceODR = 2u32,
+    WeakAMD = 3u32,
 }
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Zeroable for LinkageType {}
@@ -3581,6 +3620,7 @@ unsafe impl OperandEncoding for LinkageType {
             0u32 => Self::Export,
             1u32 => Self::Import,
             2u32 => Self::LinkOnceODR,
+            3u32 => Self::WeakAMD,
             _ => {
                 return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(LinkageType),
@@ -3597,6 +3637,7 @@ unsafe impl OperandEncoding for LinkageType {
             Self::Export => write!(f, " Export"),
             Self::Import => write!(f, " Import"),
             Self::LinkOnceODR => write!(f, " LinkOnceODR"),
+            Self::WeakAMD => write!(f, " WeakAMD"),
         }
     }
 }
@@ -3929,6 +3970,7 @@ pub enum Decoration {
         ///Byte Offset
         IdRef,
     ),
+    UTFEncodedKHR,
     OverrideCoverageNV,
     PassthroughNV,
     ViewportRelativeNV,
@@ -4183,6 +4225,10 @@ pub enum Decoration {
         ///Cache Control
         StoreCacheControl,
     ),
+    IntrinsicSAMSUNG(
+        ///Intrinsic ID
+        LiteralInteger,
+    ),
 }
 unsafe impl Operand for Decoration {
     const KIND: &OperandKind = &OPERAND_KIND_DECORATION;
@@ -4347,6 +4393,7 @@ unsafe impl OperandEncoding for Decoration {
                 writer.write(Word(5125u32));
                 OperandEncoding::encode(p0, &mut *writer)?
             }
+            Self::UTFEncodedKHR => writer.write(Word(5145u32)),
             Self::OverrideCoverageNV => writer.write(Word(5248u32)),
             Self::PassthroughNV => writer.write(Word(5250u32)),
             Self::ViewportRelativeNV => writer.write(Word(5252u32)),
@@ -4586,6 +4633,10 @@ unsafe impl OperandEncoding for Decoration {
                 OperandEncoding::encode(p0, &mut *writer)?;
                 OperandEncoding::encode(p1, &mut *writer)?
             }
+            Self::IntrinsicSAMSUNG(p0) => {
+                writer.write(Word(7040u32));
+                OperandEncoding::encode(p0, &mut *writer)?
+            }
         }
         Ok(())
     }
@@ -4662,6 +4713,7 @@ unsafe impl OperandEncoding for Decoration {
             5105u32 => Self::PayloadDispatchIndirectAMDX,
             5124u32 => Self::ArrayStrideIdEXT(OperandEncoding::decode(&mut *reader)?),
             5125u32 => Self::OffsetIdEXT(OperandEncoding::decode(&mut *reader)?),
+            5145u32 => Self::UTFEncodedKHR,
             5248u32 => Self::OverrideCoverageNV,
             5250u32 => Self::PassthroughNV,
             5252u32 => Self::ViewportRelativeNV,
@@ -4781,6 +4833,7 @@ unsafe impl OperandEncoding for Decoration {
                 OperandEncoding::decode(&mut *reader)?,
                 OperandEncoding::decode(&mut *reader)?,
             ),
+            7040u32 => Self::IntrinsicSAMSUNG(OperandEncoding::decode(&mut *reader)?),
             _ => {
                 return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(Decoration),
@@ -4876,6 +4929,7 @@ unsafe impl OperandEncoding for Decoration {
             }
             Self::ArrayStrideIdEXT(p0) => write!(f, " ArrayStrideIdEXT{}", p0.dis(_ctx)),
             Self::OffsetIdEXT(p0) => write!(f, " OffsetIdEXT{}", p0.dis(_ctx)),
+            Self::UTFEncodedKHR => write!(f, " UTFEncodedKHR"),
             Self::OverrideCoverageNV => write!(f, " OverrideCoverageNV"),
             Self::PassthroughNV => write!(f, " PassthroughNV"),
             Self::ViewportRelativeNV => write!(f, " ViewportRelativeNV"),
@@ -5052,6 +5106,7 @@ unsafe impl OperandEncoding for Decoration {
             Self::CacheControlStoreINTEL(p0, p1) => {
                 write!(f, " CacheControlStoreINTEL{}{}", p0.dis(_ctx), p1.dis(_ctx))
             }
+            Self::IntrinsicSAMSUNG(p0) => write!(f, " IntrinsicSAMSUNG{}", p0.dis(_ctx)),
         }
     }
 }
@@ -5807,6 +5862,11 @@ pub enum Capability {
     CooperativeMatrixLayoutsARM = 4201u32,
     Float8EXT = 4212u32,
     Float8CooperativeMatrixEXT = 4213u32,
+    Float6EXT = 4228u32,
+    Float4EXT = 4229u32,
+    Float8UnsignedE8M0EXT = 4230u32,
+    MXInt8EXT = 4231u32,
+    BitcastExtractEXT = 4232u32,
     FragmentShadingRateKHR = 4422u32,
     SubgroupBallotKHR = 4423u32,
     ///Since SPIR-V 1.3
@@ -5860,6 +5920,9 @@ pub enum Capability {
     TileShadingQCOM = 4495u32,
     CooperativeMatrixConversionQCOM = 4496u32,
     TextureBlockMatch2QCOM = 4498u32,
+    MultipleWaitQueuesQCOM = 4539u32,
+    ImageGatherLinearQCOM = 4543u32,
+    ImageGatherExtendedModesQCOM = 4544u32,
     Float16ImageAMD = 5008u32,
     ImageGatherBiasLodAMD = 5009u32,
     FragmentMaskAMD = 5010u32,
@@ -5874,7 +5937,11 @@ pub enum Capability {
     BFloat16TypeKHR = 5116u32,
     BFloat16DotProductKHR = 5117u32,
     BFloat16CooperativeMatrixKHR = 5118u32,
+    AbortKHR = 5120u32,
     DescriptorHeapEXT = 5128u32,
+    ConstantDataKHR = 5146u32,
+    PoisonFreezeKHR = 5156u32,
+    WeakLinkageAMD = 5181u32,
     SampleMaskOverrideCoverageNV = 5249u32,
     GeometryShaderPassthroughNV = 5251u32,
     ShaderViewportIndexLayerEXT = 5254u32,
@@ -5932,7 +5999,7 @@ pub enum Capability {
     ///Since SPIR-V 1.6
     DemoteToHelperInvocation = 5379u32,
     DisplacementMicromapNV = 5380u32,
-    RayTracingOpacityMicromapEXT = 5381u32,
+    RayTracingOpacityMicromapKHR = 5381u32,
     ShaderInvocationReorderNV = 5383u32,
     ShaderInvocationReorderEXT = 5388u32,
     BindlessTextureNV = 5390u32,
@@ -5954,6 +6021,7 @@ pub enum Capability {
     CooperativeVectorTrainingNV = 5435u32,
     RayTracingClusterAccelerationStructureNV = 5437u32,
     TensorAddressingNV = 5439u32,
+    CooperativeMatrixDecodeVectorNV = 5447u32,
     SubgroupShuffleINTEL = 5568u32,
     SubgroupBufferBlockIOINTEL = 5569u32,
     SubgroupImageBlockIOINTEL = 5570u32,
@@ -6011,6 +6079,7 @@ pub enum Capability {
     GroupNonUniformRotateKHR = 6026u32,
     FloatControls2 = 6029u32,
     FMAKHR = 6030u32,
+    RayTracingOpacityMicromapExecutionModeKHR = 6032u32,
     AtomicFloat32AddEXT = 6033u32,
     AtomicFloat64AddEXT = 6034u32,
     LongCompositesINTEL = 6089u32,
@@ -6018,7 +6087,7 @@ pub enum Capability {
     AtomicFloat16AddEXT = 6095u32,
     DebugInfoModuleINTEL = 6114u32,
     BFloat16ConversionINTEL = 6115u32,
-    SplitBarrierINTEL = 6141u32,
+    SplitBarrierEXT = 6141u32,
     ArithmeticFenceEXT = 6144u32,
     FPGAClusterAttributesV2ALTERA = 6150u32,
     FPGAKernelAttributesv2INTEL = 6161u32,
@@ -6037,12 +6106,19 @@ pub enum Capability {
     UntypedVariableLengthArrayINTEL = 6243u32,
     SpecConditionalINTEL = 6245u32,
     FunctionVariantsINTEL = 6246u32,
+    PredicatedIOINTEL = 6257u32,
+    RoundedDivideSqrtINTEL = 6265u32,
     GroupUniformArithmeticKHR = 6400u32,
     TensorFloat32RoundingINTEL = 6425u32,
     MaskedGatherScatterINTEL = 6427u32,
     CacheControlsINTEL = 6441u32,
     RegisterLimitsINTEL = 6460u32,
     BindlessImagesINTEL = 6528u32,
+    DotProductFloat16AccFloat32VALVE = 6912u32,
+    DotProductFloat16AccFloat16VALVE = 6913u32,
+    DotProductBFloat16AccVALVE = 6914u32,
+    DotProductFloat8AccFloat32VALVE = 6915u32,
+    IntrinsicSAMSUNG = 7041u32,
 }
 #[allow(non_upper_case_globals)]
 impl Capability {
@@ -6080,6 +6156,7 @@ impl Capability {
     pub const PhysicalStorageBufferAddressesEXT: Self = Self::PhysicalStorageBufferAddresses;
     pub const ComputeDerivativeGroupLinearNV: Self = Self::ComputeDerivativeGroupLinearKHR;
     pub const DemoteToHelperInvocationEXT: Self = Self::DemoteToHelperInvocation;
+    pub const RayTracingOpacityMicromapEXT: Self = Self::RayTracingOpacityMicromapKHR;
     pub const FPGAMemoryAttributesINTEL: Self = Self::FPGAMemoryAttributesALTERA;
     pub const ArbitraryPrecisionIntegersINTEL: Self = Self::ArbitraryPrecisionIntegersALTERA;
     pub const ArbitraryPrecisionFloatingPointINTEL: Self =
@@ -6103,6 +6180,7 @@ impl Capability {
     pub const DotProductInput4x8BitPackedKHR: Self = Self::DotProductInput4x8BitPacked;
     pub const DotProductKHR: Self = Self::DotProduct;
     pub const OptNoneINTEL: Self = Self::OptNoneEXT;
+    pub const SplitBarrierINTEL: Self = Self::SplitBarrierEXT;
     pub const FPGAClusterAttributesV2INTEL: Self = Self::FPGAClusterAttributesV2ALTERA;
     pub const TaskSequenceINTEL: Self = Self::TaskSequenceALTERA;
     pub const FPGALatencyControlINTEL: Self = Self::FPGALatencyControlALTERA;
@@ -6208,6 +6286,11 @@ unsafe impl OperandEncoding for Capability {
             4201u32 => Self::CooperativeMatrixLayoutsARM,
             4212u32 => Self::Float8EXT,
             4213u32 => Self::Float8CooperativeMatrixEXT,
+            4228u32 => Self::Float6EXT,
+            4229u32 => Self::Float4EXT,
+            4230u32 => Self::Float8UnsignedE8M0EXT,
+            4231u32 => Self::MXInt8EXT,
+            4232u32 => Self::BitcastExtractEXT,
             4422u32 => Self::FragmentShadingRateKHR,
             4423u32 => Self::SubgroupBallotKHR,
             4427u32 => Self::DrawParameters,
@@ -6244,6 +6327,9 @@ unsafe impl OperandEncoding for Capability {
             4495u32 => Self::TileShadingQCOM,
             4496u32 => Self::CooperativeMatrixConversionQCOM,
             4498u32 => Self::TextureBlockMatch2QCOM,
+            4539u32 => Self::MultipleWaitQueuesQCOM,
+            4543u32 => Self::ImageGatherLinearQCOM,
+            4544u32 => Self::ImageGatherExtendedModesQCOM,
             5008u32 => Self::Float16ImageAMD,
             5009u32 => Self::ImageGatherBiasLodAMD,
             5010u32 => Self::FragmentMaskAMD,
@@ -6258,7 +6344,11 @@ unsafe impl OperandEncoding for Capability {
             5116u32 => Self::BFloat16TypeKHR,
             5117u32 => Self::BFloat16DotProductKHR,
             5118u32 => Self::BFloat16CooperativeMatrixKHR,
+            5120u32 => Self::AbortKHR,
             5128u32 => Self::DescriptorHeapEXT,
+            5146u32 => Self::ConstantDataKHR,
+            5156u32 => Self::PoisonFreezeKHR,
+            5181u32 => Self::WeakLinkageAMD,
             5249u32 => Self::SampleMaskOverrideCoverageNV,
             5251u32 => Self::GeometryShaderPassthroughNV,
             5254u32 => Self::ShaderViewportIndexLayerEXT,
@@ -6300,7 +6390,7 @@ unsafe impl OperandEncoding for Capability {
             5378u32 => Self::FragmentShaderPixelInterlockEXT,
             5379u32 => Self::DemoteToHelperInvocation,
             5380u32 => Self::DisplacementMicromapNV,
-            5381u32 => Self::RayTracingOpacityMicromapEXT,
+            5381u32 => Self::RayTracingOpacityMicromapKHR,
             5383u32 => Self::ShaderInvocationReorderNV,
             5388u32 => Self::ShaderInvocationReorderEXT,
             5390u32 => Self::BindlessTextureNV,
@@ -6322,6 +6412,7 @@ unsafe impl OperandEncoding for Capability {
             5435u32 => Self::CooperativeVectorTrainingNV,
             5437u32 => Self::RayTracingClusterAccelerationStructureNV,
             5439u32 => Self::TensorAddressingNV,
+            5447u32 => Self::CooperativeMatrixDecodeVectorNV,
             5568u32 => Self::SubgroupShuffleINTEL,
             5569u32 => Self::SubgroupBufferBlockIOINTEL,
             5570u32 => Self::SubgroupImageBlockIOINTEL,
@@ -6375,6 +6466,7 @@ unsafe impl OperandEncoding for Capability {
             6026u32 => Self::GroupNonUniformRotateKHR,
             6029u32 => Self::FloatControls2,
             6030u32 => Self::FMAKHR,
+            6032u32 => Self::RayTracingOpacityMicromapExecutionModeKHR,
             6033u32 => Self::AtomicFloat32AddEXT,
             6034u32 => Self::AtomicFloat64AddEXT,
             6089u32 => Self::LongCompositesINTEL,
@@ -6382,7 +6474,7 @@ unsafe impl OperandEncoding for Capability {
             6095u32 => Self::AtomicFloat16AddEXT,
             6114u32 => Self::DebugInfoModuleINTEL,
             6115u32 => Self::BFloat16ConversionINTEL,
-            6141u32 => Self::SplitBarrierINTEL,
+            6141u32 => Self::SplitBarrierEXT,
             6144u32 => Self::ArithmeticFenceEXT,
             6150u32 => Self::FPGAClusterAttributesV2ALTERA,
             6161u32 => Self::FPGAKernelAttributesv2INTEL,
@@ -6401,12 +6493,19 @@ unsafe impl OperandEncoding for Capability {
             6243u32 => Self::UntypedVariableLengthArrayINTEL,
             6245u32 => Self::SpecConditionalINTEL,
             6246u32 => Self::FunctionVariantsINTEL,
+            6257u32 => Self::PredicatedIOINTEL,
+            6265u32 => Self::RoundedDivideSqrtINTEL,
             6400u32 => Self::GroupUniformArithmeticKHR,
             6425u32 => Self::TensorFloat32RoundingINTEL,
             6427u32 => Self::MaskedGatherScatterINTEL,
             6441u32 => Self::CacheControlsINTEL,
             6460u32 => Self::RegisterLimitsINTEL,
             6528u32 => Self::BindlessImagesINTEL,
+            6912u32 => Self::DotProductFloat16AccFloat32VALVE,
+            6913u32 => Self::DotProductFloat16AccFloat16VALVE,
+            6914u32 => Self::DotProductBFloat16AccVALVE,
+            6915u32 => Self::DotProductFloat8AccFloat32VALVE,
+            7041u32 => Self::IntrinsicSAMSUNG,
             _ => {
                 return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(Capability),
@@ -6529,6 +6628,11 @@ unsafe impl OperandEncoding for Capability {
             }
             Self::Float8EXT => write!(f, " Float8EXT"),
             Self::Float8CooperativeMatrixEXT => write!(f, " Float8CooperativeMatrixEXT"),
+            Self::Float6EXT => write!(f, " Float6EXT"),
+            Self::Float4EXT => write!(f, " Float4EXT"),
+            Self::Float8UnsignedE8M0EXT => write!(f, " Float8UnsignedE8M0EXT"),
+            Self::MXInt8EXT => write!(f, " MXInt8EXT"),
+            Self::BitcastExtractEXT => write!(f, " BitcastExtractEXT"),
             Self::FragmentShadingRateKHR => write!(f, " FragmentShadingRateKHR"),
             Self::SubgroupBallotKHR => write!(f, " SubgroupBallotKHR"),
             Self::DrawParameters => write!(f, " DrawParameters"),
@@ -6583,6 +6687,11 @@ unsafe impl OperandEncoding for Capability {
                 write!(f, " CooperativeMatrixConversionQCOM")
             }
             Self::TextureBlockMatch2QCOM => write!(f, " TextureBlockMatch2QCOM"),
+            Self::MultipleWaitQueuesQCOM => write!(f, " MultipleWaitQueuesQCOM"),
+            Self::ImageGatherLinearQCOM => write!(f, " ImageGatherLinearQCOM"),
+            Self::ImageGatherExtendedModesQCOM => {
+                write!(f, " ImageGatherExtendedModesQCOM")
+            }
             Self::Float16ImageAMD => write!(f, " Float16ImageAMD"),
             Self::ImageGatherBiasLodAMD => write!(f, " ImageGatherBiasLodAMD"),
             Self::FragmentMaskAMD => write!(f, " FragmentMaskAMD"),
@@ -6599,7 +6708,11 @@ unsafe impl OperandEncoding for Capability {
             Self::BFloat16CooperativeMatrixKHR => {
                 write!(f, " BFloat16CooperativeMatrixKHR")
             }
+            Self::AbortKHR => write!(f, " AbortKHR"),
             Self::DescriptorHeapEXT => write!(f, " DescriptorHeapEXT"),
+            Self::ConstantDataKHR => write!(f, " ConstantDataKHR"),
+            Self::PoisonFreezeKHR => write!(f, " PoisonFreezeKHR"),
+            Self::WeakLinkageAMD => write!(f, " WeakLinkageAMD"),
             Self::SampleMaskOverrideCoverageNV => {
                 write!(f, " SampleMaskOverrideCoverageNV")
             }
@@ -6683,8 +6796,8 @@ unsafe impl OperandEncoding for Capability {
             }
             Self::DemoteToHelperInvocation => write!(f, " DemoteToHelperInvocation"),
             Self::DisplacementMicromapNV => write!(f, " DisplacementMicromapNV"),
-            Self::RayTracingOpacityMicromapEXT => {
-                write!(f, " RayTracingOpacityMicromapEXT")
+            Self::RayTracingOpacityMicromapKHR => {
+                write!(f, " RayTracingOpacityMicromapKHR")
             }
             Self::ShaderInvocationReorderNV => write!(f, " ShaderInvocationReorderNV"),
             Self::ShaderInvocationReorderEXT => write!(f, " ShaderInvocationReorderEXT"),
@@ -6727,6 +6840,9 @@ unsafe impl OperandEncoding for Capability {
                 write!(f, " RayTracingClusterAccelerationStructureNV")
             }
             Self::TensorAddressingNV => write!(f, " TensorAddressingNV"),
+            Self::CooperativeMatrixDecodeVectorNV => {
+                write!(f, " CooperativeMatrixDecodeVectorNV")
+            }
             Self::SubgroupShuffleINTEL => write!(f, " SubgroupShuffleINTEL"),
             Self::SubgroupBufferBlockIOINTEL => write!(f, " SubgroupBufferBlockIOINTEL"),
             Self::SubgroupImageBlockIOINTEL => write!(f, " SubgroupImageBlockIOINTEL"),
@@ -6804,6 +6920,9 @@ unsafe impl OperandEncoding for Capability {
             Self::GroupNonUniformRotateKHR => write!(f, " GroupNonUniformRotateKHR"),
             Self::FloatControls2 => write!(f, " FloatControls2"),
             Self::FMAKHR => write!(f, " FMAKHR"),
+            Self::RayTracingOpacityMicromapExecutionModeKHR => {
+                write!(f, " RayTracingOpacityMicromapExecutionModeKHR")
+            }
             Self::AtomicFloat32AddEXT => write!(f, " AtomicFloat32AddEXT"),
             Self::AtomicFloat64AddEXT => write!(f, " AtomicFloat64AddEXT"),
             Self::LongCompositesINTEL => write!(f, " LongCompositesINTEL"),
@@ -6811,7 +6930,7 @@ unsafe impl OperandEncoding for Capability {
             Self::AtomicFloat16AddEXT => write!(f, " AtomicFloat16AddEXT"),
             Self::DebugInfoModuleINTEL => write!(f, " DebugInfoModuleINTEL"),
             Self::BFloat16ConversionINTEL => write!(f, " BFloat16ConversionINTEL"),
-            Self::SplitBarrierINTEL => write!(f, " SplitBarrierINTEL"),
+            Self::SplitBarrierEXT => write!(f, " SplitBarrierEXT"),
             Self::ArithmeticFenceEXT => write!(f, " ArithmeticFenceEXT"),
             Self::FPGAClusterAttributesV2ALTERA => {
                 write!(f, " FPGAClusterAttributesV2ALTERA")
@@ -6852,12 +6971,25 @@ unsafe impl OperandEncoding for Capability {
             }
             Self::SpecConditionalINTEL => write!(f, " SpecConditionalINTEL"),
             Self::FunctionVariantsINTEL => write!(f, " FunctionVariantsINTEL"),
+            Self::PredicatedIOINTEL => write!(f, " PredicatedIOINTEL"),
+            Self::RoundedDivideSqrtINTEL => write!(f, " RoundedDivideSqrtINTEL"),
             Self::GroupUniformArithmeticKHR => write!(f, " GroupUniformArithmeticKHR"),
             Self::TensorFloat32RoundingINTEL => write!(f, " TensorFloat32RoundingINTEL"),
             Self::MaskedGatherScatterINTEL => write!(f, " MaskedGatherScatterINTEL"),
             Self::CacheControlsINTEL => write!(f, " CacheControlsINTEL"),
             Self::RegisterLimitsINTEL => write!(f, " RegisterLimitsINTEL"),
             Self::BindlessImagesINTEL => write!(f, " BindlessImagesINTEL"),
+            Self::DotProductFloat16AccFloat32VALVE => {
+                write!(f, " DotProductFloat16AccFloat32VALVE")
+            }
+            Self::DotProductFloat16AccFloat16VALVE => {
+                write!(f, " DotProductFloat16AccFloat16VALVE")
+            }
+            Self::DotProductBFloat16AccVALVE => write!(f, " DotProductBFloat16AccVALVE"),
+            Self::DotProductFloat8AccFloat32VALVE => {
+                write!(f, " DotProductFloat8AccFloat32VALVE")
+            }
+            Self::IntrinsicSAMSUNG => write!(f, " IntrinsicSAMSUNG"),
         }
     }
 }
@@ -7307,7 +7439,7 @@ unsafe impl OperandEncoding for TensorClampMode {
 bitflags! {
     #[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Hash)] pub struct
     TensorAddressingOperandsBits : u32 { const None = 0u32; const TensorView = 1u32;
-    const DecodeFunc = 2u32; }
+    const DecodeFunc = 2u32; const DecodeVectorFunc = 4u32; }
 }
 unsafe impl OperandEncoding for TensorAddressingOperandsBits {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -7340,6 +7472,9 @@ unsafe impl OperandEncoding for TensorAddressingOperandsBits {
             if self.contains(Self::DecodeFunc) {
                 write!(f, "{sep}DecodeFunc")?;
             }
+            if self.contains(Self::DecodeVectorFunc) {
+                write!(f, "{sep}DecodeVectorFunc")?;
+            }
             Ok(())
         }
     }
@@ -7354,7 +7489,10 @@ impl ParameterizedBitmaskBits for TensorAddressingOperandsBits {
             .append(IdRef::FIXED_LEN)
             .finish()
             .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
-        0,
+        FixedLenComposer::new()
+            .append(IdRef::FIXED_LEN)
+            .finish()
+            .expect(PARAMETERIZED_BITMASK_REQUIRES_FIXED_LEN),
         0,
         0,
         0,
@@ -7404,6 +7542,12 @@ impl TensorAddressingOperands {
     pub fn set_decode_func(&mut self, opt: Option<IdRef>) {
         self.0.set(1u32, opt);
     }
+    pub fn get_decode_vector_func(&self) -> Option<IdRef> {
+        self.0.get(2u32)
+    }
+    pub fn set_decode_vector_func(&mut self, opt: Option<IdRef>) {
+        self.0.set(2u32, opt);
+    }
 }
 unsafe impl Operand for TensorAddressingOperands {
     const KIND: &OperandKind = &OPERAND_KIND_TENSOR_ADDRESSING_OPERANDS;
@@ -7425,6 +7569,9 @@ unsafe impl OperandEncoding for TensorAddressingOperands {
             extra.dis_fmt(f, ctx)?;
         }
         if let Some(extra) = self.get_decode_func() {
+            extra.dis_fmt(f, ctx)?;
+        }
+        if let Some(extra) = self.get_decode_vector_func() {
             extra.dis_fmt(f, ctx)?;
         }
         Ok(())
@@ -7713,6 +7860,11 @@ pub enum FPEncoding {
     BFloat16KHR = 0u32,
     Float8E4M3EXT = 4214u32,
     Float8E5M2EXT = 4215u32,
+    Float6E2M3EXT = 4223u32,
+    Float6E3M2EXT = 4224u32,
+    Float4E2M1EXT = 4225u32,
+    Float8UnsignedE8M0EXT = 4226u32,
+    MXInt8EXT = 4227u32,
 }
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Zeroable for FPEncoding {}
@@ -7735,6 +7887,11 @@ unsafe impl OperandEncoding for FPEncoding {
             0u32 => Self::BFloat16KHR,
             4214u32 => Self::Float8E4M3EXT,
             4215u32 => Self::Float8E5M2EXT,
+            4223u32 => Self::Float6E2M3EXT,
+            4224u32 => Self::Float6E3M2EXT,
+            4225u32 => Self::Float4E2M1EXT,
+            4226u32 => Self::Float8UnsignedE8M0EXT,
+            4227u32 => Self::MXInt8EXT,
             _ => {
                 return Err(DecodeErrorKind::UnknownEnumVariant {
                     name: stringify!(FPEncoding),
@@ -7751,6 +7908,11 @@ unsafe impl OperandEncoding for FPEncoding {
             Self::BFloat16KHR => write!(f, " BFloat16KHR"),
             Self::Float8E4M3EXT => write!(f, " Float8E4M3EXT"),
             Self::Float8E5M2EXT => write!(f, " Float8E5M2EXT"),
+            Self::Float6E2M3EXT => write!(f, " Float6E2M3EXT"),
+            Self::Float6E3M2EXT => write!(f, " Float6E3M2EXT"),
+            Self::Float4E2M1EXT => write!(f, " Float4E2M1EXT"),
+            Self::Float8UnsignedE8M0EXT => write!(f, " Float8UnsignedE8M0EXT"),
+            Self::MXInt8EXT => write!(f, " MXInt8EXT"),
         }
     }
 }
@@ -7884,6 +8046,56 @@ unsafe impl OperandEncoding for ComponentType {
             Self::UnsignedInt8PackedNV => write!(f, " UnsignedInt8PackedNV"),
             Self::FloatE4M3NV => write!(f, " FloatE4M3NV"),
             Self::FloatE5M2NV => write!(f, " FloatE5M2NV"),
+        }
+    }
+}
+#[repr(u32)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum GatherModes {
+    Gather4x1QCOM = 0u32,
+    GatherDQCOM = 1u32,
+    GatherH2QCOM = 2u32,
+    GatherV2QCOM = 3u32,
+}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Zeroable for GatherModes {}
+#[cfg(feature = "bytemuck")]
+unsafe impl bytemuck::Pod for GatherModes {}
+unsafe impl Operand for GatherModes {
+    const KIND: &OperandKind = &OPERAND_KIND_GATHER_MODES;
+}
+unsafe impl OperandEncoding for GatherModes {
+    const FIXED_LEN: Option<usize> = Some(1);
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        writer.write(Word(*self as u32));
+        Ok(())
+    }
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let variant = reader.pull()?.0;
+        Ok(match variant {
+            0u32 => Self::Gather4x1QCOM,
+            1u32 => Self::GatherDQCOM,
+            2u32 => Self::GatherH2QCOM,
+            3u32 => Self::GatherV2QCOM,
+            _ => {
+                return Err(DecodeErrorKind::UnknownEnumVariant {
+                    name: stringify!(GatherModes),
+                    variant,
+                }
+                .into());
+            }
+        })
+    }
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+        profiling::function_scope!();
+        match self {
+            Self::Gather4x1QCOM => write!(f, " Gather4x1QCOM"),
+            Self::GatherDQCOM => write!(f, " GatherDQCOM"),
+            Self::GatherH2QCOM => write!(f, " GatherH2QCOM"),
+            Self::GatherV2QCOM => write!(f, " GatherV2QCOM"),
         }
     }
 }
