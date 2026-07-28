@@ -1,3 +1,4 @@
 [alias]
 autogen = "run --bin autogen --release --"
 dis = "run -p rspirv2-tools --bin rspirv2-dis --release -q --"
+xtask = "run --package xtask --"
