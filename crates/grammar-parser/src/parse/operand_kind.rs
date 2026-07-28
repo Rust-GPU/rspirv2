@@ -210,10 +210,8 @@ mod codegen {
             }
         }
 
-        pub fn parameterized_bitmask_getter_setter(&self) -> (Ident, Ident) {
-            let name = Self::variant_ident(&self.symbol)
-                .to_string()
-                .to_case(Case::Snake);
+        pub fn parameterized_bitmask_getter_setter(symbol: &str) -> (Ident, Ident) {
+            let name = Self::variant_ident(symbol).to_string().to_case(Case::Snake);
             (format_ident!("get_{}", name), format_ident!("set_{}", name))
         }
     }

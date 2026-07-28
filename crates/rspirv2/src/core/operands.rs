@@ -10,6 +10,13 @@ bitflags! {
     SignExtend = 4096u32; #[doc = "Since SPIR-V 1.4"] const ZeroExtend = 8192u32; #[doc =
     "Since SPIR-V 1.6"] const Nontemporal = 16384u32; const Offsets = 65536u32; }
 }
+#[allow(non_upper_case_globals)]
+impl ImageOperandsBits {
+    pub const MakeTexelAvailableKHR: Self = Self::MakeTexelAvailable;
+    pub const MakeTexelVisibleKHR: Self = Self::MakeTexelVisible;
+    pub const NonPrivateTexelKHR: Self = Self::NonPrivateTexel;
+    pub const VolatileTexelKHR: Self = Self::VolatileTexel;
+}
 unsafe impl OperandEncoding for ImageOperandsBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -215,10 +222,22 @@ impl ImageOperands {
     pub fn set_make_texel_available(&mut self, opt: Option<IdScope>) {
         self.0.set(8u32, opt);
     }
+    pub fn get_make_texel_available_khr(&self) -> Option<IdScope> {
+        self.0.get(8u32)
+    }
+    pub fn set_make_texel_available_khr(&mut self, opt: Option<IdScope>) {
+        self.0.set(8u32, opt);
+    }
     pub fn get_make_texel_visible(&self) -> Option<IdScope> {
         self.0.get(9u32)
     }
     pub fn set_make_texel_visible(&mut self, opt: Option<IdScope>) {
+        self.0.set(9u32, opt);
+    }
+    pub fn get_make_texel_visible_khr(&self) -> Option<IdScope> {
+        self.0.get(9u32)
+    }
+    pub fn set_make_texel_visible_khr(&mut self, opt: Option<IdScope>) {
         self.0.set(9u32, opt);
     }
     pub fn get_non_private_texel(&self) -> bool {
@@ -227,10 +246,22 @@ impl ImageOperands {
     pub fn set_non_private_texel(&mut self, enabled: bool) {
         self.0.set_bool(10u32, enabled);
     }
+    pub fn get_non_private_texel_khr(&self) -> bool {
+        self.0.get_bool(10u32)
+    }
+    pub fn set_non_private_texel_khr(&mut self, enabled: bool) {
+        self.0.set_bool(10u32, enabled);
+    }
     pub fn get_volatile_texel(&self) -> bool {
         self.0.get_bool(11u32)
     }
     pub fn set_volatile_texel(&mut self, enabled: bool) {
+        self.0.set_bool(11u32, enabled);
+    }
+    pub fn get_volatile_texel_khr(&self) -> bool {
+        self.0.get_bool(11u32)
+    }
+    pub fn set_volatile_texel_khr(&mut self, enabled: bool) {
         self.0.set_bool(11u32, enabled);
     }
     pub fn get_sign_extend(&self) -> bool {
@@ -315,6 +346,11 @@ bitflags! {
     : u32 { const None = 0u32; const NotNaN = 1u32; const NotInf = 2u32; const NSZ =
     4u32; const AllowRecip = 8u32; const Fast = 16u32; const AllowContract = 65536u32;
     const AllowReassoc = 131072u32; const AllowTransform = 262144u32; }
+}
+#[allow(non_upper_case_globals)]
+impl FPFastMathMode {
+    pub const AllowContractFastINTEL: Self = Self::AllowContract;
+    pub const AllowReassocINTEL: Self = Self::AllowReassoc;
 }
 unsafe impl Operand for FPFastMathMode {
     const KIND: &OperandKind = &OPERAND_KIND_FP_FAST_MATH_MODE;
@@ -425,6 +461,19 @@ bitflags! {
     const SpeculatedIterationsALTERA = 4194304u32; const NoFusionALTERA = 8388608u32;
     const LoopCountALTERA = 16777216u32; const MaxReinvocationDelayALTERA = 33554432u32;
     }
+}
+#[allow(non_upper_case_globals)]
+impl LoopControlBits {
+    pub const InitiationIntervalINTEL: Self = Self::InitiationIntervalALTERA;
+    pub const MaxConcurrencyINTEL: Self = Self::MaxConcurrencyALTERA;
+    pub const DependencyArrayINTEL: Self = Self::DependencyArrayALTERA;
+    pub const PipelineEnableINTEL: Self = Self::PipelineEnableALTERA;
+    pub const LoopCoalesceINTEL: Self = Self::LoopCoalesceALTERA;
+    pub const MaxInterleavingINTEL: Self = Self::MaxInterleavingALTERA;
+    pub const SpeculatedIterationsINTEL: Self = Self::SpeculatedIterationsALTERA;
+    pub const NoFusionINTEL: Self = Self::NoFusionALTERA;
+    pub const LoopCountINTEL: Self = Self::LoopCountALTERA;
+    pub const MaxReinvocationDelayINTEL: Self = Self::MaxReinvocationDelayALTERA;
 }
 unsafe impl OperandEncoding for LoopControlBits {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -657,10 +706,22 @@ impl LoopControl {
     pub fn set_initiation_interval_altera(&mut self, opt: Option<LiteralInteger>) {
         self.0.set(16u32, opt);
     }
+    pub fn get_initiation_interval_intel(&self) -> Option<LiteralInteger> {
+        self.0.get(16u32)
+    }
+    pub fn set_initiation_interval_intel(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(16u32, opt);
+    }
     pub fn get_max_concurrency_altera(&self) -> Option<LiteralInteger> {
         self.0.get(17u32)
     }
     pub fn set_max_concurrency_altera(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(17u32, opt);
+    }
+    pub fn get_max_concurrency_intel(&self) -> Option<LiteralInteger> {
+        self.0.get(17u32)
+    }
+    pub fn set_max_concurrency_intel(&mut self, opt: Option<LiteralInteger>) {
         self.0.set(17u32, opt);
     }
     pub fn get_dependency_array_altera(&self) -> Option<LiteralInteger> {
@@ -669,10 +730,22 @@ impl LoopControl {
     pub fn set_dependency_array_altera(&mut self, opt: Option<LiteralInteger>) {
         self.0.set(18u32, opt);
     }
+    pub fn get_dependency_array_intel(&self) -> Option<LiteralInteger> {
+        self.0.get(18u32)
+    }
+    pub fn set_dependency_array_intel(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(18u32, opt);
+    }
     pub fn get_pipeline_enable_altera(&self) -> Option<LiteralInteger> {
         self.0.get(19u32)
     }
     pub fn set_pipeline_enable_altera(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(19u32, opt);
+    }
+    pub fn get_pipeline_enable_intel(&self) -> Option<LiteralInteger> {
+        self.0.get(19u32)
+    }
+    pub fn set_pipeline_enable_intel(&mut self, opt: Option<LiteralInteger>) {
         self.0.set(19u32, opt);
     }
     pub fn get_loop_coalesce_altera(&self) -> Option<LiteralInteger> {
@@ -681,10 +754,22 @@ impl LoopControl {
     pub fn set_loop_coalesce_altera(&mut self, opt: Option<LiteralInteger>) {
         self.0.set(20u32, opt);
     }
+    pub fn get_loop_coalesce_intel(&self) -> Option<LiteralInteger> {
+        self.0.get(20u32)
+    }
+    pub fn set_loop_coalesce_intel(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(20u32, opt);
+    }
     pub fn get_max_interleaving_altera(&self) -> Option<LiteralInteger> {
         self.0.get(21u32)
     }
     pub fn set_max_interleaving_altera(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(21u32, opt);
+    }
+    pub fn get_max_interleaving_intel(&self) -> Option<LiteralInteger> {
+        self.0.get(21u32)
+    }
+    pub fn set_max_interleaving_intel(&mut self, opt: Option<LiteralInteger>) {
         self.0.set(21u32, opt);
     }
     pub fn get_speculated_iterations_altera(&self) -> Option<LiteralInteger> {
@@ -693,10 +778,22 @@ impl LoopControl {
     pub fn set_speculated_iterations_altera(&mut self, opt: Option<LiteralInteger>) {
         self.0.set(22u32, opt);
     }
+    pub fn get_speculated_iterations_intel(&self) -> Option<LiteralInteger> {
+        self.0.get(22u32)
+    }
+    pub fn set_speculated_iterations_intel(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(22u32, opt);
+    }
     pub fn get_no_fusion_altera(&self) -> bool {
         self.0.get_bool(23u32)
     }
     pub fn set_no_fusion_altera(&mut self, enabled: bool) {
+        self.0.set_bool(23u32, enabled);
+    }
+    pub fn get_no_fusion_intel(&self) -> bool {
+        self.0.get_bool(23u32)
+    }
+    pub fn set_no_fusion_intel(&mut self, enabled: bool) {
         self.0.set_bool(23u32, enabled);
     }
     pub fn get_loop_count_altera(&self) -> Option<LiteralInteger> {
@@ -705,10 +802,22 @@ impl LoopControl {
     pub fn set_loop_count_altera(&mut self, opt: Option<LiteralInteger>) {
         self.0.set(24u32, opt);
     }
+    pub fn get_loop_count_intel(&self) -> Option<LiteralInteger> {
+        self.0.get(24u32)
+    }
+    pub fn set_loop_count_intel(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(24u32, opt);
+    }
     pub fn get_max_reinvocation_delay_altera(&self) -> Option<LiteralInteger> {
         self.0.get(25u32)
     }
     pub fn set_max_reinvocation_delay_altera(&mut self, opt: Option<LiteralInteger>) {
+        self.0.set(25u32, opt);
+    }
+    pub fn get_max_reinvocation_delay_intel(&self) -> Option<LiteralInteger> {
+        self.0.get(25u32)
+    }
+    pub fn set_max_reinvocation_delay_intel(&mut self, opt: Option<LiteralInteger>) {
         self.0.set(25u32, opt);
     }
 }
@@ -781,6 +890,10 @@ bitflags! {
     FunctionControl : u32 { const None = 0u32; const Inline = 1u32; const DontInline =
     2u32; const Pure = 4u32; const Const = 8u32; const OptNoneEXT = 65536u32; }
 }
+#[allow(non_upper_case_globals)]
+impl FunctionControl {
+    pub const OptNoneINTEL: Self = Self::OptNoneEXT;
+}
 unsafe impl Operand for FunctionControl {
     const KIND: &OperandKind = &OPERAND_KIND_FUNCTION_CONTROL;
 }
@@ -836,6 +949,13 @@ bitflags! {
     #[doc = "Since SPIR-V 1.5"] const MakeAvailable = 8192u32; #[doc =
     "Since SPIR-V 1.5"] const MakeVisible = 16384u32; #[doc = "Since SPIR-V 1.5"] const
     Volatile = 32768u32; }
+}
+#[allow(non_upper_case_globals)]
+impl MemorySemantics {
+    pub const None: Self = Self::Relaxed;
+    pub const OutputMemoryKHR: Self = Self::OutputMemory;
+    pub const MakeAvailableKHR: Self = Self::MakeAvailable;
+    pub const MakeVisibleKHR: Self = Self::MakeVisible;
 }
 unsafe impl Operand for MemorySemantics {
     const KIND: &OperandKind = &OPERAND_KIND_MEMORY_SEMANTICS;
@@ -916,6 +1036,12 @@ bitflags! {
     MakePointerAvailable = 8u32; #[doc = "Since SPIR-V 1.5"] const MakePointerVisible =
     16u32; #[doc = "Since SPIR-V 1.5"] const NonPrivatePointer = 32u32; const
     AliasScopeINTELMask = 65536u32; const NoAliasINTELMask = 131072u32; }
+}
+#[allow(non_upper_case_globals)]
+impl MemoryAccessBits {
+    pub const MakePointerAvailableKHR: Self = Self::MakePointerAvailable;
+    pub const MakePointerVisibleKHR: Self = Self::MakePointerVisible;
+    pub const NonPrivatePointerKHR: Self = Self::NonPrivatePointer;
 }
 unsafe impl OperandEncoding for MemoryAccessBits {
     const FIXED_LEN: Option<usize> = Some(1);
@@ -1049,16 +1175,34 @@ impl MemoryAccess {
     pub fn set_make_pointer_available(&mut self, opt: Option<IdScope>) {
         self.0.set(3u32, opt);
     }
+    pub fn get_make_pointer_available_khr(&self) -> Option<IdScope> {
+        self.0.get(3u32)
+    }
+    pub fn set_make_pointer_available_khr(&mut self, opt: Option<IdScope>) {
+        self.0.set(3u32, opt);
+    }
     pub fn get_make_pointer_visible(&self) -> Option<IdScope> {
         self.0.get(4u32)
     }
     pub fn set_make_pointer_visible(&mut self, opt: Option<IdScope>) {
         self.0.set(4u32, opt);
     }
+    pub fn get_make_pointer_visible_khr(&self) -> Option<IdScope> {
+        self.0.get(4u32)
+    }
+    pub fn set_make_pointer_visible_khr(&mut self, opt: Option<IdScope>) {
+        self.0.set(4u32, opt);
+    }
     pub fn get_non_private_pointer(&self) -> bool {
         self.0.get_bool(5u32)
     }
     pub fn set_non_private_pointer(&mut self, enabled: bool) {
+        self.0.set_bool(5u32, enabled);
+    }
+    pub fn get_non_private_pointer_khr(&self) -> bool {
+        self.0.get_bool(5u32)
+    }
+    pub fn set_non_private_pointer_khr(&mut self, enabled: bool) {
         self.0.set_bool(5u32, enabled);
     }
     pub fn get_alias_scope_intel_mask(&self) -> Option<IdRef> {
@@ -1152,6 +1296,10 @@ bitflags! {
     CullBackFacingTrianglesKHR = 16u32; const CullFrontFacingTrianglesKHR = 32u32; const
     CullOpaqueKHR = 64u32; const CullNoOpaqueKHR = 128u32; const SkipTrianglesKHR =
     256u32; const SkipAABBsKHR = 512u32; const ForceOpacityMicromap2StateEXT = 1024u32; }
+}
+#[allow(non_upper_case_globals)]
+impl RayFlags {
+    pub const SkipBuiltinPrimitivesNV: Self = Self::SkipTrianglesKHR;
 }
 unsafe impl Operand for RayFlags {
     const KIND: &OperandKind = &OPERAND_KIND_RAY_FLAGS;
@@ -1405,6 +1553,15 @@ pub enum ExecutionModel {
     TaskEXT = 5364u32,
     MeshEXT = 5365u32,
 }
+#[allow(non_upper_case_globals)]
+impl ExecutionModel {
+    pub const RayGenerationNV: Self = Self::RayGenerationKHR;
+    pub const IntersectionNV: Self = Self::IntersectionKHR;
+    pub const AnyHitNV: Self = Self::AnyHitKHR;
+    pub const ClosestHitNV: Self = Self::ClosestHitKHR;
+    pub const MissNV: Self = Self::MissKHR;
+    pub const CallableNV: Self = Self::CallableKHR;
+}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Zeroable for ExecutionModel {}
 #[cfg(feature = "bytemuck")]
@@ -1482,6 +1639,10 @@ pub enum AddressingModel {
     ///Since SPIR-V 1.5
     PhysicalStorageBuffer64 = 5348u32,
 }
+#[allow(non_upper_case_globals)]
+impl AddressingModel {
+    pub const PhysicalStorageBuffer64EXT: Self = Self::PhysicalStorageBuffer64;
+}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Zeroable for AddressingModel {}
 #[cfg(feature = "bytemuck")]
@@ -1532,6 +1693,10 @@ pub enum MemoryModel {
     OpenCL = 2u32,
     ///Since SPIR-V 1.5
     Vulkan = 3u32,
+}
+#[allow(non_upper_case_globals)]
+impl MemoryModel {
+    pub const VulkanKHR: Self = Self::Vulkan;
 }
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Zeroable for MemoryModel {}
@@ -2496,6 +2661,18 @@ pub enum StorageClass {
     CodeSectionINTEL = 5605u32,
     DeviceOnlyALTERA = 5936u32,
     HostOnlyALTERA = 5937u32,
+}
+#[allow(non_upper_case_globals)]
+impl StorageClass {
+    pub const CallableDataNV: Self = Self::CallableDataKHR;
+    pub const IncomingCallableDataNV: Self = Self::IncomingCallableDataKHR;
+    pub const RayPayloadNV: Self = Self::RayPayloadKHR;
+    pub const HitAttributeNV: Self = Self::HitAttributeKHR;
+    pub const IncomingRayPayloadNV: Self = Self::IncomingRayPayloadKHR;
+    pub const ShaderRecordBufferNV: Self = Self::ShaderRecordBufferKHR;
+    pub const PhysicalStorageBufferEXT: Self = Self::PhysicalStorageBuffer;
+    pub const DeviceOnlyINTEL: Self = Self::DeviceOnlyALTERA;
+    pub const HostOnlyINTEL: Self = Self::HostOnlyALTERA;
 }
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Zeroable for StorageClass {}
@@ -3532,6 +3709,10 @@ pub enum FunctionParameterAttribute {
     NoWrite = 6u32,
     NoReadWrite = 7u32,
     RuntimeAlignedALTERA = 5940u32,
+}
+#[allow(non_upper_case_globals)]
+impl FunctionParameterAttribute {
+    pub const RuntimeAlignedINTEL: Self = Self::RuntimeAlignedALTERA;
 }
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Zeroable for FunctionParameterAttribute {}
@@ -5016,6 +5197,31 @@ pub enum BuiltIn {
     ClusterIDNV = 5436u32,
     CullMaskKHR = 6021u32,
 }
+#[allow(non_upper_case_globals)]
+impl BuiltIn {
+    pub const SubgroupEqMaskKHR: Self = Self::SubgroupEqMask;
+    pub const SubgroupGeMaskKHR: Self = Self::SubgroupGeMask;
+    pub const SubgroupGtMaskKHR: Self = Self::SubgroupGtMask;
+    pub const SubgroupLeMaskKHR: Self = Self::SubgroupLeMask;
+    pub const SubgroupLtMaskKHR: Self = Self::SubgroupLtMask;
+    pub const BaryCoordNV: Self = Self::BaryCoordKHR;
+    pub const BaryCoordNoPerspNV: Self = Self::BaryCoordNoPerspKHR;
+    pub const FragmentSizeNV: Self = Self::FragSizeEXT;
+    pub const InvocationsPerPixelNV: Self = Self::FragInvocationCountEXT;
+    pub const LaunchIdNV: Self = Self::LaunchIdKHR;
+    pub const LaunchSizeNV: Self = Self::LaunchSizeKHR;
+    pub const WorldRayOriginNV: Self = Self::WorldRayOriginKHR;
+    pub const WorldRayDirectionNV: Self = Self::WorldRayDirectionKHR;
+    pub const ObjectRayOriginNV: Self = Self::ObjectRayOriginKHR;
+    pub const ObjectRayDirectionNV: Self = Self::ObjectRayDirectionKHR;
+    pub const RayTminNV: Self = Self::RayTminKHR;
+    pub const RayTmaxNV: Self = Self::RayTmaxKHR;
+    pub const InstanceCustomIndexNV: Self = Self::InstanceCustomIndexKHR;
+    pub const ObjectToWorldNV: Self = Self::ObjectToWorldKHR;
+    pub const WorldToObjectNV: Self = Self::WorldToObjectKHR;
+    pub const HitKindNV: Self = Self::HitKindKHR;
+    pub const IncomingRayFlagsNV: Self = Self::IncomingRayFlagsKHR;
+}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Zeroable for BuiltIn {}
 #[cfg(feature = "bytemuck")]
@@ -5334,6 +5540,10 @@ pub enum Scope {
     QueueFamily = 5u32,
     ShaderCallKHR = 6u32,
 }
+#[allow(non_upper_case_globals)]
+impl Scope {
+    pub const QueueFamilyKHR: Self = Self::QueueFamily;
+}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Zeroable for Scope {}
 #[cfg(feature = "bytemuck")]
@@ -5393,6 +5603,12 @@ pub enum GroupOperation {
     PartitionedReduceEXT = 6u32,
     PartitionedInclusiveScanEXT = 7u32,
     PartitionedExclusiveScanEXT = 8u32,
+}
+#[allow(non_upper_case_globals)]
+impl GroupOperation {
+    pub const PartitionedReduceNV: Self = Self::PartitionedReduceEXT;
+    pub const PartitionedInclusiveScanNV: Self = Self::PartitionedInclusiveScanEXT;
+    pub const PartitionedExclusiveScanNV: Self = Self::PartitionedExclusiveScanEXT;
 }
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Zeroable for GroupOperation {}
@@ -5827,6 +6043,71 @@ pub enum Capability {
     CacheControlsINTEL = 6441u32,
     RegisterLimitsINTEL = 6460u32,
     BindlessImagesINTEL = 6528u32,
+}
+#[allow(non_upper_case_globals)]
+impl Capability {
+    pub const StorageUniformBufferBlock16: Self = Self::StorageBuffer16BitAccess;
+    pub const StorageUniform16: Self = Self::UniformAndStorageBuffer16BitAccess;
+    pub const ShaderViewportIndexLayerNV: Self = Self::ShaderViewportIndexLayerEXT;
+    pub const FragmentBarycentricNV: Self = Self::FragmentBarycentricKHR;
+    pub const ComputeDerivativeGroupQuadsNV: Self = Self::ComputeDerivativeGroupQuadsKHR;
+    pub const ShadingRateNV: Self = Self::FragmentDensityEXT;
+    pub const GroupNonUniformPartitionedNV: Self = Self::GroupNonUniformPartitionedEXT;
+    pub const ShaderNonUniformEXT: Self = Self::ShaderNonUniform;
+    pub const RuntimeDescriptorArrayEXT: Self = Self::RuntimeDescriptorArray;
+    pub const InputAttachmentArrayDynamicIndexingEXT: Self =
+        Self::InputAttachmentArrayDynamicIndexing;
+    pub const UniformTexelBufferArrayDynamicIndexingEXT: Self =
+        Self::UniformTexelBufferArrayDynamicIndexing;
+    pub const StorageTexelBufferArrayDynamicIndexingEXT: Self =
+        Self::StorageTexelBufferArrayDynamicIndexing;
+    pub const UniformBufferArrayNonUniformIndexingEXT: Self =
+        Self::UniformBufferArrayNonUniformIndexing;
+    pub const SampledImageArrayNonUniformIndexingEXT: Self =
+        Self::SampledImageArrayNonUniformIndexing;
+    pub const StorageBufferArrayNonUniformIndexingEXT: Self =
+        Self::StorageBufferArrayNonUniformIndexing;
+    pub const StorageImageArrayNonUniformIndexingEXT: Self =
+        Self::StorageImageArrayNonUniformIndexing;
+    pub const InputAttachmentArrayNonUniformIndexingEXT: Self =
+        Self::InputAttachmentArrayNonUniformIndexing;
+    pub const UniformTexelBufferArrayNonUniformIndexingEXT: Self =
+        Self::UniformTexelBufferArrayNonUniformIndexing;
+    pub const StorageTexelBufferArrayNonUniformIndexingEXT: Self =
+        Self::StorageTexelBufferArrayNonUniformIndexing;
+    pub const VulkanMemoryModelKHR: Self = Self::VulkanMemoryModel;
+    pub const VulkanMemoryModelDeviceScopeKHR: Self = Self::VulkanMemoryModelDeviceScope;
+    pub const PhysicalStorageBufferAddressesEXT: Self = Self::PhysicalStorageBufferAddresses;
+    pub const ComputeDerivativeGroupLinearNV: Self = Self::ComputeDerivativeGroupLinearKHR;
+    pub const DemoteToHelperInvocationEXT: Self = Self::DemoteToHelperInvocation;
+    pub const FPGAMemoryAttributesINTEL: Self = Self::FPGAMemoryAttributesALTERA;
+    pub const ArbitraryPrecisionIntegersINTEL: Self = Self::ArbitraryPrecisionIntegersALTERA;
+    pub const ArbitraryPrecisionFloatingPointINTEL: Self =
+        Self::ArbitraryPrecisionFloatingPointALTERA;
+    pub const FPGALoopControlsINTEL: Self = Self::FPGALoopControlsALTERA;
+    pub const FPGAMemoryAccessesINTEL: Self = Self::FPGAMemoryAccessesALTERA;
+    pub const FPGAClusterAttributesINTEL: Self = Self::FPGAClusterAttributesALTERA;
+    pub const LoopFuseINTEL: Self = Self::LoopFuseALTERA;
+    pub const FPGADSPControlINTEL: Self = Self::FPGADSPControlALTERA;
+    pub const FPGAInvocationPipeliningAttributesINTEL: Self =
+        Self::FPGAInvocationPipeliningAttributesALTERA;
+    pub const FPGABufferLocationINTEL: Self = Self::FPGABufferLocationALTERA;
+    pub const ArbitraryPrecisionFixedPointINTEL: Self = Self::ArbitraryPrecisionFixedPointALTERA;
+    pub const USMStorageClassesINTEL: Self = Self::USMStorageClassesALTERA;
+    pub const RuntimeAlignedAttributeINTEL: Self = Self::RuntimeAlignedAttributeALTERA;
+    pub const IOPipesINTEL: Self = Self::IOPipesALTERA;
+    pub const BlockingPipesINTEL: Self = Self::BlockingPipesALTERA;
+    pub const FPGARegINTEL: Self = Self::FPGARegALTERA;
+    pub const DotProductInputAllKHR: Self = Self::DotProductInputAll;
+    pub const DotProductInput4x8BitKHR: Self = Self::DotProductInput4x8Bit;
+    pub const DotProductInput4x8BitPackedKHR: Self = Self::DotProductInput4x8BitPacked;
+    pub const DotProductKHR: Self = Self::DotProduct;
+    pub const OptNoneINTEL: Self = Self::OptNoneEXT;
+    pub const FPGAClusterAttributesV2INTEL: Self = Self::FPGAClusterAttributesV2ALTERA;
+    pub const TaskSequenceINTEL: Self = Self::TaskSequenceALTERA;
+    pub const FPGALatencyControlINTEL: Self = Self::FPGALatencyControlALTERA;
+    pub const FPGAArgumentInterfacesINTEL: Self = Self::FPGAArgumentInterfacesALTERA;
+    pub const GlobalVariableFPGADecorationsINTEL: Self = Self::GlobalVariableFPGADecorationsALTERA;
 }
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Zeroable for Capability {}
@@ -6735,6 +7016,10 @@ pub enum PackedVectorFormat {
     ///Since SPIR-V 1.6
     PackedVectorFormat4x8Bit = 0u32,
 }
+#[allow(non_upper_case_globals)]
+impl PackedVectorFormat {
+    pub const PackedVectorFormat4x8BitKHR: Self = Self::PackedVectorFormat4x8Bit;
+}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Zeroable for PackedVectorFormat {}
 #[cfg(feature = "bytemuck")]
@@ -7150,6 +7435,11 @@ unsafe impl OperandEncoding for TensorAddressingOperands {
 pub enum InitializationModeQualifier {
     InitOnDeviceReprogramALTERA = 0u32,
     InitOnDeviceResetALTERA = 1u32,
+}
+#[allow(non_upper_case_globals)]
+impl InitializationModeQualifier {
+    pub const InitOnDeviceReprogramINTEL: Self = Self::InitOnDeviceReprogramALTERA;
+    pub const InitOnDeviceResetINTEL: Self = Self::InitOnDeviceResetALTERA;
 }
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Zeroable for InitializationModeQualifier {}
