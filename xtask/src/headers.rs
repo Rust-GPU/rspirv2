@@ -1,5 +1,7 @@
 use crate::git::{GitRepo, SubmoduleBranches};
+use anyhow::{Context, bail};
 use clap::{Parser, Subcommand};
+use std::process::Command;
 
 const SUBMODULE_PATH: &str = "crates/grammar/headers";
 const BRANCH_PREFIX: &str = "vulkan-sdk-";
@@ -27,6 +29,9 @@ pub struct HeadersUpdate {
     /// Branch or revision to point the submodule at. Defaults to the branch
     /// with the highest semver matching `vulkan-sdk-*.*.*`.
     rev: Option<String>,
+    /// Skip running autogen to update generated files
+    #[clap(long)]
+    skip_autogen: bool,
 }
 
 impl HeadersUpdate {
@@ -47,6 +52,18 @@ impl HeadersUpdate {
             SUBMODULE_PATH,
         ])?;
         repo.git(&["submodule", "update", "--remote", SUBMODULE_PATH])?;
+
+        if !self.skip_autogen {
+            println!("Running `cargo autogen`");
+            let status = Command::new("cargo")
+                .current_dir(&repo.root)
+                .arg("autogen")
+                .status()
+                .context("failed to spawn `cargo autogen`")?;
+            if !status.success() {
+                bail!("`cargo autogen` failed with {}", status);
+            }
+        }
         Ok(())
     }
 }
