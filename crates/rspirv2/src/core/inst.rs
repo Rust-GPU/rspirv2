@@ -22528,6 +22528,7 @@ pub struct OpSDot {
     pub vector_2: IdRef,
     pub packed_vector_format: ZeroOrOne<PackedVectorFormat>,
 }
+pub type OpSDotKHR = OpSDot;
 impl Inst for OpSDot {
     const META: &InstMeta = &OP_S_DOT;
 }
@@ -22594,6 +22595,7 @@ pub struct OpUDot {
     pub vector_2: IdRef,
     pub packed_vector_format: ZeroOrOne<PackedVectorFormat>,
 }
+pub type OpUDotKHR = OpUDot;
 impl Inst for OpUDot {
     const META: &InstMeta = &OP_U_DOT;
 }
@@ -22660,6 +22662,7 @@ pub struct OpSUDot {
     pub vector_2: IdRef,
     pub packed_vector_format: ZeroOrOne<PackedVectorFormat>,
 }
+pub type OpSUDotKHR = OpSUDot;
 impl Inst for OpSUDot {
     const META: &InstMeta = &OP_SU_DOT;
 }
@@ -22727,6 +22730,7 @@ pub struct OpSDotAccSat {
     pub accumulator: IdRef,
     pub packed_vector_format: ZeroOrOne<PackedVectorFormat>,
 }
+pub type OpSDotAccSatKHR = OpSDotAccSat;
 impl Inst for OpSDotAccSat {
     const META: &InstMeta = &OP_S_DOT_ACC_SAT;
 }
@@ -22798,6 +22802,7 @@ pub struct OpUDotAccSat {
     pub accumulator: IdRef,
     pub packed_vector_format: ZeroOrOne<PackedVectorFormat>,
 }
+pub type OpUDotAccSatKHR = OpUDotAccSat;
 impl Inst for OpUDotAccSat {
     const META: &InstMeta = &OP_U_DOT_ACC_SAT;
 }
@@ -22869,6 +22874,7 @@ pub struct OpSUDotAccSat {
     pub accumulator: IdRef,
     pub packed_vector_format: ZeroOrOne<PackedVectorFormat>,
 }
+pub type OpSUDotAccSatKHR = OpSUDotAccSat;
 impl Inst for OpSUDotAccSat {
     const META: &InstMeta = &OP_SU_DOT_ACC_SAT;
 }
@@ -28296,6 +28302,7 @@ pub struct OpTypeVectorIdEXT {
     pub component_type: IdRef,
     pub component_count: IdRef,
 }
+pub type OpTypeCooperativeVectorNV = OpTypeVectorIdEXT;
 impl Inst for OpTypeVectorIdEXT {
     const META: &InstMeta = &OP_TYPE_VECTOR_ID_EXT;
 }
@@ -28860,6 +28867,7 @@ pub struct OpGroupNonUniformPartitionEXT {
     pub id_result: IdResult,
     pub value: IdRef,
 }
+pub type OpGroupNonUniformPartitionNV = OpGroupNonUniformPartitionEXT;
 impl Inst for OpGroupNonUniformPartitionEXT {
     const META: &InstMeta = &OP_GROUP_NON_UNIFORM_PARTITION_EXT;
 }
@@ -31077,6 +31085,7 @@ pub struct OpReportIntersectionKHR {
     pub hit: IdRef,
     pub hit_kind: IdRef,
 }
+pub type OpReportIntersectionNV = OpReportIntersectionKHR;
 impl Inst for OpReportIntersectionKHR {
     const META: &InstMeta = &OP_REPORT_INTERSECTION_KHR;
 }
@@ -31544,6 +31553,7 @@ impl InstEncoding for OpRayQueryGetIntersectionTriangleVertexPositionsKHR {
 pub struct OpTypeAccelerationStructureKHR {
     pub id_result: IdResult,
 }
+pub type OpTypeAccelerationStructureNV = OpTypeAccelerationStructureKHR;
 impl Inst for OpTypeAccelerationStructureKHR {
     const META: &InstMeta = &OP_TYPE_ACCELERATION_STRUCTURE_KHR;
 }
@@ -31636,6 +31646,7 @@ pub struct OpRayQueryGetIntersectionClusterIdNV {
     pub ray_query: IdRef,
     pub intersection: IdRef,
 }
+pub type OpRayQueryGetClusterIdNV = OpRayQueryGetIntersectionClusterIdNV;
 impl Inst for OpRayQueryGetIntersectionClusterIdNV {
     const META: &InstMeta = &OP_RAY_QUERY_GET_INTERSECTION_CLUSTER_ID_NV;
 }
@@ -33313,6 +33324,7 @@ impl InstEncoding for OpTensorViewSetStrideNV {
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpDemoteToHelperInvocation {}
+pub type OpDemoteToHelperInvocationEXT = OpDemoteToHelperInvocation;
 impl Inst for OpDemoteToHelperInvocation {
     const META: &InstMeta = &OP_DEMOTE_TO_HELPER_INVOCATION;
 }
@@ -36788,6 +36800,7 @@ pub struct OpDecorateString {
     pub target: IdRef,
     pub decoration: Decoration,
 }
+pub type OpDecorateStringGOOGLE = OpDecorateString;
 impl Inst for OpDecorateString {
     const META: &InstMeta = &OP_DECORATE_STRING;
 }
@@ -36836,6 +36849,7 @@ pub struct OpMemberDecorateString {
     pub member: LiteralInteger,
     pub decoration: Decoration,
 }
+pub type OpMemberDecorateStringGOOGLE = OpMemberDecorateString;
 impl Inst for OpMemberDecorateString {
     const META: &InstMeta = &OP_MEMBER_DECORATE_STRING;
 }
@@ -44084,6 +44098,7 @@ pub struct OpArbitraryFloatSinCosPiALTERA {
     pub rounding: LiteralInteger,
     pub rounding_accuracy: LiteralInteger,
 }
+pub type OpArbitraryFloatSinCosPiINTEL = OpArbitraryFloatSinCosPiALTERA;
 impl Inst for OpArbitraryFloatSinCosPiALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_SIN_COS_PI_ALTERA;
 }
@@ -44165,6 +44180,7 @@ pub struct OpArbitraryFloatCastALTERA {
     pub rounding: LiteralInteger,
     pub accuracy: LiteralInteger,
 }
+pub type OpArbitraryFloatCastINTEL = OpArbitraryFloatCastALTERA;
 impl Inst for OpArbitraryFloatCastALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_CAST_ALTERA;
 }
@@ -44246,6 +44262,7 @@ pub struct OpArbitraryFloatCastFromIntALTERA {
     pub rounding: LiteralInteger,
     pub accuracy: LiteralInteger,
 }
+pub type OpArbitraryFloatCastFromIntINTEL = OpArbitraryFloatCastFromIntALTERA;
 impl Inst for OpArbitraryFloatCastFromIntALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_CAST_FROM_INT_ALTERA;
 }
@@ -44327,6 +44344,7 @@ pub struct OpArbitraryFloatCastToIntALTERA {
     pub rounding: LiteralInteger,
     pub accuracy: LiteralInteger,
 }
+pub type OpArbitraryFloatCastToIntINTEL = OpArbitraryFloatCastToIntALTERA;
 impl Inst for OpArbitraryFloatCastToIntALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_CAST_TO_INT_ALTERA;
 }
@@ -44410,6 +44428,7 @@ pub struct OpArbitraryFloatAddALTERA {
     pub rounding: LiteralInteger,
     pub accuracy: LiteralInteger,
 }
+pub type OpArbitraryFloatAddINTEL = OpArbitraryFloatAddALTERA;
 impl Inst for OpArbitraryFloatAddALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_ADD_ALTERA;
 }
@@ -44501,6 +44520,7 @@ pub struct OpArbitraryFloatSubALTERA {
     pub rounding: LiteralInteger,
     pub accuracy: LiteralInteger,
 }
+pub type OpArbitraryFloatSubINTEL = OpArbitraryFloatSubALTERA;
 impl Inst for OpArbitraryFloatSubALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_SUB_ALTERA;
 }
@@ -44592,6 +44612,7 @@ pub struct OpArbitraryFloatMulALTERA {
     pub rounding: LiteralInteger,
     pub accuracy: LiteralInteger,
 }
+pub type OpArbitraryFloatMulINTEL = OpArbitraryFloatMulALTERA;
 impl Inst for OpArbitraryFloatMulALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_MUL_ALTERA;
 }
@@ -44683,6 +44704,7 @@ pub struct OpArbitraryFloatDivALTERA {
     pub rounding: LiteralInteger,
     pub accuracy: LiteralInteger,
 }
+pub type OpArbitraryFloatDivINTEL = OpArbitraryFloatDivALTERA;
 impl Inst for OpArbitraryFloatDivALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_DIV_ALTERA;
 }
@@ -44770,6 +44792,7 @@ pub struct OpArbitraryFloatGTALTERA {
     pub b: IdRef,
     pub mb: LiteralInteger,
 }
+pub type OpArbitraryFloatGTINTEL = OpArbitraryFloatGTALTERA;
 impl Inst for OpArbitraryFloatGTALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_GTALTERA;
 }
@@ -44841,6 +44864,7 @@ pub struct OpArbitraryFloatGEALTERA {
     pub b: IdRef,
     pub mb: LiteralInteger,
 }
+pub type OpArbitraryFloatGEINTEL = OpArbitraryFloatGEALTERA;
 impl Inst for OpArbitraryFloatGEALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_GEALTERA;
 }
@@ -44912,6 +44936,7 @@ pub struct OpArbitraryFloatLTALTERA {
     pub b: IdRef,
     pub mb: LiteralInteger,
 }
+pub type OpArbitraryFloatLTINTEL = OpArbitraryFloatLTALTERA;
 impl Inst for OpArbitraryFloatLTALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_LTALTERA;
 }
@@ -44983,6 +45008,7 @@ pub struct OpArbitraryFloatLEALTERA {
     pub b: IdRef,
     pub mb: LiteralInteger,
 }
+pub type OpArbitraryFloatLEINTEL = OpArbitraryFloatLEALTERA;
 impl Inst for OpArbitraryFloatLEALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_LEALTERA;
 }
@@ -45054,6 +45080,7 @@ pub struct OpArbitraryFloatEQALTERA {
     pub b: IdRef,
     pub mb: LiteralInteger,
 }
+pub type OpArbitraryFloatEQINTEL = OpArbitraryFloatEQALTERA;
 impl Inst for OpArbitraryFloatEQALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_EQALTERA;
 }
@@ -45127,6 +45154,7 @@ pub struct OpArbitraryFloatRecipALTERA {
     pub rounding: LiteralInteger,
     pub accuracy: LiteralInteger,
 }
+pub type OpArbitraryFloatRecipINTEL = OpArbitraryFloatRecipALTERA;
 impl Inst for OpArbitraryFloatRecipALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_RECIP_ALTERA;
 }
@@ -45208,6 +45236,7 @@ pub struct OpArbitraryFloatRSqrtALTERA {
     pub rounding: LiteralInteger,
     pub accuracy: LiteralInteger,
 }
+pub type OpArbitraryFloatRSqrtINTEL = OpArbitraryFloatRSqrtALTERA;
 impl Inst for OpArbitraryFloatRSqrtALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_R_SQRT_ALTERA;
 }
@@ -45289,6 +45318,7 @@ pub struct OpArbitraryFloatCbrtALTERA {
     pub rounding: LiteralInteger,
     pub accuracy: LiteralInteger,
 }
+pub type OpArbitraryFloatCbrtINTEL = OpArbitraryFloatCbrtALTERA;
 impl Inst for OpArbitraryFloatCbrtALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_CBRT_ALTERA;
 }
@@ -45372,6 +45402,7 @@ pub struct OpArbitraryFloatHypotALTERA {
     pub rounding: LiteralInteger,
     pub accuracy: LiteralInteger,
 }
+pub type OpArbitraryFloatHypotINTEL = OpArbitraryFloatHypotALTERA;
 impl Inst for OpArbitraryFloatHypotALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_HYPOT_ALTERA;
 }
@@ -45461,6 +45492,7 @@ pub struct OpArbitraryFloatSqrtALTERA {
     pub rounding: LiteralInteger,
     pub accuracy: LiteralInteger,
 }
+pub type OpArbitraryFloatSqrtINTEL = OpArbitraryFloatSqrtALTERA;
 impl Inst for OpArbitraryFloatSqrtALTERA {
     const META: &InstMeta = &OP_ARBITRARY_FLOAT_SQRT_ALTERA;
 }
@@ -47634,6 +47666,7 @@ pub struct OpFixedSqrtALTERA {
     pub q: LiteralInteger,
     pub o: LiteralInteger,
 }
+pub type OpFixedSqrtINTEL = OpFixedSqrtALTERA;
 impl Inst for OpFixedSqrtALTERA {
     const META: &InstMeta = &OP_FIXED_SQRT_ALTERA;
 }
@@ -47715,6 +47748,7 @@ pub struct OpFixedRecipALTERA {
     pub q: LiteralInteger,
     pub o: LiteralInteger,
 }
+pub type OpFixedRecipINTEL = OpFixedRecipALTERA;
 impl Inst for OpFixedRecipALTERA {
     const META: &InstMeta = &OP_FIXED_RECIP_ALTERA;
 }
@@ -47796,6 +47830,7 @@ pub struct OpFixedRsqrtALTERA {
     pub q: LiteralInteger,
     pub o: LiteralInteger,
 }
+pub type OpFixedRsqrtINTEL = OpFixedRsqrtALTERA;
 impl Inst for OpFixedRsqrtALTERA {
     const META: &InstMeta = &OP_FIXED_RSQRT_ALTERA;
 }
@@ -47877,6 +47912,7 @@ pub struct OpFixedSinALTERA {
     pub q: LiteralInteger,
     pub o: LiteralInteger,
 }
+pub type OpFixedSinINTEL = OpFixedSinALTERA;
 impl Inst for OpFixedSinALTERA {
     const META: &InstMeta = &OP_FIXED_SIN_ALTERA;
 }
@@ -47958,6 +47994,7 @@ pub struct OpFixedCosALTERA {
     pub q: LiteralInteger,
     pub o: LiteralInteger,
 }
+pub type OpFixedCosINTEL = OpFixedCosALTERA;
 impl Inst for OpFixedCosALTERA {
     const META: &InstMeta = &OP_FIXED_COS_ALTERA;
 }
@@ -48039,6 +48076,7 @@ pub struct OpFixedSinCosALTERA {
     pub q: LiteralInteger,
     pub o: LiteralInteger,
 }
+pub type OpFixedSinCosINTEL = OpFixedSinCosALTERA;
 impl Inst for OpFixedSinCosALTERA {
     const META: &InstMeta = &OP_FIXED_SIN_COS_ALTERA;
 }
@@ -48120,6 +48158,7 @@ pub struct OpFixedSinPiALTERA {
     pub q: LiteralInteger,
     pub o: LiteralInteger,
 }
+pub type OpFixedSinPiINTEL = OpFixedSinPiALTERA;
 impl Inst for OpFixedSinPiALTERA {
     const META: &InstMeta = &OP_FIXED_SIN_PI_ALTERA;
 }
@@ -48201,6 +48240,7 @@ pub struct OpFixedCosPiALTERA {
     pub q: LiteralInteger,
     pub o: LiteralInteger,
 }
+pub type OpFixedCosPiINTEL = OpFixedCosPiALTERA;
 impl Inst for OpFixedCosPiALTERA {
     const META: &InstMeta = &OP_FIXED_COS_PI_ALTERA;
 }
@@ -48282,6 +48322,7 @@ pub struct OpFixedSinCosPiALTERA {
     pub q: LiteralInteger,
     pub o: LiteralInteger,
 }
+pub type OpFixedSinCosPiINTEL = OpFixedSinCosPiALTERA;
 impl Inst for OpFixedSinCosPiALTERA {
     const META: &InstMeta = &OP_FIXED_SIN_COS_PI_ALTERA;
 }
@@ -48363,6 +48404,7 @@ pub struct OpFixedLogALTERA {
     pub q: LiteralInteger,
     pub o: LiteralInteger,
 }
+pub type OpFixedLogINTEL = OpFixedLogALTERA;
 impl Inst for OpFixedLogALTERA {
     const META: &InstMeta = &OP_FIXED_LOG_ALTERA;
 }
@@ -48444,6 +48486,7 @@ pub struct OpFixedExpALTERA {
     pub q: LiteralInteger,
     pub o: LiteralInteger,
 }
+pub type OpFixedExpINTEL = OpFixedExpALTERA;
 impl Inst for OpFixedExpALTERA {
     const META: &InstMeta = &OP_FIXED_EXP_ALTERA;
 }
@@ -48520,6 +48563,7 @@ pub struct OpPtrCastToCrossWorkgroupALTERA {
     pub id_result: IdResult,
     pub pointer: IdRef,
 }
+pub type OpPtrCastToCrossWorkgroupINTEL = OpPtrCastToCrossWorkgroupALTERA;
 impl Inst for OpPtrCastToCrossWorkgroupALTERA {
     const META: &InstMeta = &OP_PTR_CAST_TO_CROSS_WORKGROUP_ALTERA;
 }
@@ -48576,6 +48620,7 @@ pub struct OpCrossWorkgroupCastToPtrALTERA {
     pub id_result: IdResult,
     pub pointer: IdRef,
 }
+pub type OpCrossWorkgroupCastToPtrINTEL = OpCrossWorkgroupCastToPtrALTERA;
 impl Inst for OpCrossWorkgroupCastToPtrALTERA {
     const META: &InstMeta = &OP_CROSS_WORKGROUP_CAST_TO_PTR_ALTERA;
 }
@@ -48633,6 +48678,7 @@ pub struct OpReadPipeBlockingALTERA {
     pub packet_size: IdRef,
     pub packet_alignment: IdRef,
 }
+pub type OpReadPipeBlockingINTEL = OpReadPipeBlockingALTERA;
 impl Inst for OpReadPipeBlockingALTERA {
     const META: &InstMeta = &OP_READ_PIPE_BLOCKING_ALTERA;
 }
@@ -48694,6 +48740,7 @@ pub struct OpWritePipeBlockingALTERA {
     pub packet_size: IdRef,
     pub packet_alignment: IdRef,
 }
+pub type OpWritePipeBlockingINTEL = OpWritePipeBlockingALTERA;
 impl Inst for OpWritePipeBlockingALTERA {
     const META: &InstMeta = &OP_WRITE_PIPE_BLOCKING_ALTERA;
 }
@@ -48754,6 +48801,7 @@ pub struct OpFPGARegALTERA {
     pub id_result: IdResult,
     pub input: IdRef,
 }
+pub type OpFPGARegINTEL = OpFPGARegALTERA;
 impl Inst for OpFPGARegALTERA {
     const META: &InstMeta = &OP_FPGA_REG_ALTERA;
 }
@@ -50397,6 +50445,7 @@ pub struct OpTaskSequenceCreateALTERA {
     pub get_capacity: LiteralInteger,
     pub async_capacity: LiteralInteger,
 }
+pub type OpTaskSequenceCreateINTEL = OpTaskSequenceCreateALTERA;
 impl Inst for OpTaskSequenceCreateALTERA {
     const META: &InstMeta = &OP_TASK_SEQUENCE_CREATE_ALTERA;
 }
@@ -50468,6 +50517,7 @@ pub struct OpTaskSequenceAsyncALTERA {
     pub sequence: IdRef,
     pub arguments: ZeroOrMore<IdRef>,
 }
+pub type OpTaskSequenceAsyncINTEL = OpTaskSequenceAsyncALTERA;
 impl Inst for OpTaskSequenceAsyncALTERA {
     const META: &InstMeta = &OP_TASK_SEQUENCE_ASYNC_ALTERA;
 }
@@ -50516,6 +50566,7 @@ pub struct OpTaskSequenceGetALTERA {
     pub id_result: IdResult,
     pub sequence: IdRef,
 }
+pub type OpTaskSequenceGetINTEL = OpTaskSequenceGetALTERA;
 impl Inst for OpTaskSequenceGetALTERA {
     const META: &InstMeta = &OP_TASK_SEQUENCE_GET_ALTERA;
 }
@@ -50570,6 +50621,7 @@ impl InstEncoding for OpTaskSequenceGetALTERA {
 pub struct OpTaskSequenceReleaseALTERA {
     pub sequence: IdRef,
 }
+pub type OpTaskSequenceReleaseINTEL = OpTaskSequenceReleaseALTERA;
 impl Inst for OpTaskSequenceReleaseALTERA {
     const META: &InstMeta = &OP_TASK_SEQUENCE_RELEASE_ALTERA;
 }
@@ -50611,6 +50663,7 @@ impl InstEncoding for OpTaskSequenceReleaseALTERA {
 pub struct OpTypeTaskSequenceALTERA {
     pub id_result: IdResult,
 }
+pub type OpTypeTaskSequenceINTEL = OpTypeTaskSequenceALTERA;
 impl Inst for OpTypeTaskSequenceALTERA {
     const META: &InstMeta = &OP_TYPE_TASK_SEQUENCE_ALTERA;
 }

@@ -1,6 +1,6 @@
 use crate::codegen::{GrammarWriter, OPERAND_ID_RESULT, OPERAND_ID_RESULT_TYPE};
 use crate::parse::{Grammar, InstMeta, Operand, Quantifier};
-use quote::quote;
+use quote::{format_ident, quote};
 
 pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     let insts = grammar.insts.iter().map(|inst| {
@@ -30,6 +30,12 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                 Quantifier::ZeroOrMore => quote!(pub #name: ZeroOrMore<#ty>),
             },
         );
+
+        // aliases
+        let aliases = inst.aliases.iter().map(|alias| {
+            let alias = format_ident!("{}", alias);
+            quote!(pub type #alias = #struct_ident;)
+        });
 
         // id_result
         let (id_result_ty, id_result_get) = if let Some(id_result) = id_result {
@@ -118,6 +124,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             pub struct #struct_ident {
                 #(#member_decls),*
             }
+            #(#aliases)*
 
             impl Inst for #struct_ident {
                 const META: &InstMeta = &#meta;
