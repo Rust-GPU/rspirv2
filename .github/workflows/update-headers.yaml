@@ -1,0 +1,50 @@
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    # Daily at 04:17 UTC
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+
+name: Update Vulkan SDK Headers
+
+concurrency:
+  group: update-headers
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-headers:
+    name: Update headers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - run: cargo xtask headers update
+
+      - name: Detect SDK version
+        id: detect
+        run: |
+          version="$(git config --file .gitmodules submodule.crates/grammar/headers.branch)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: headers-update/${{ steps.detect.outputs.version }}
+          delete-branch: true
+          commit-message: "Update SPIR-V headers to ${{ steps.detect.outputs.version }}"
+          title: "Update SPIR-V headers to ${{ steps.detect.outputs.version }}"
+          base: main
+          body: |
+            Automated update of the SPIR-V headers submodule and generated files 
+            to the latest Vulkan SDK release: `${{ steps.detect.outputs.version }}`.
+
+            Produced by `cargo xtask headers update` github action.
