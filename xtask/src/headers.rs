@@ -40,13 +40,29 @@ pub struct HeadersUpdate {
 
 impl HeadersUpdate {
     pub fn run(self, repo: &GitRepo) -> anyhow::Result<()> {
-        let branch = match self.rev {
-            Some(rev) => rev,
-            None => SubmoduleBranches::fetch(repo, SUBMODULE_PATH, BRANCH_PREFIX)?
-                .highest_semver_branch(BRANCH_PREFIX)?,
+        let branch = if let Some(rev) = self.rev {
+            rev
+        } else {
+            let branch = SubmoduleBranches::fetch(repo, SUBMODULE_PATH, BRANCH_PREFIX)?
+                .highest_semver_branch(BRANCH_PREFIX)?;
+            println!("Newest SPIR-V header version is `{branch}`");
+            branch
         };
-        println!("Setting submodule `{SUBMODULE_PATH}` to `{branch}`");
 
+        let old_branch = repo
+            .git(&[
+                "config",
+                "--file",
+                ".gitmodules",
+                &format!("submodule.{SUBMODULE_PATH}.branch"),
+            ])
+            .context("reading submodule branch from .gitmodules")?;
+        if old_branch.trim() == branch {
+            println!("SPIR-V headers is already set to `{branch}`, skipping");
+            return Ok(());
+        }
+
+        println!("Setting SPIR-V headers to `{branch}`");
         repo.git(&[
             "submodule",
             "set-branch",
