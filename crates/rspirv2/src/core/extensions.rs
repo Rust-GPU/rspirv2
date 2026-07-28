@@ -50,6 +50,7 @@ pub const EXTENSION_SPV_AMD_SHADER_IMAGE_LOAD_STORE_LOD: Extension =
     Extension::new("SPV_AMD_shader_image_load_store_lod");
 pub const EXTENSION_SPV_AMD_TEXTURE_GATHER_BIAS_LOD: Extension =
     Extension::new("SPV_AMD_texture_gather_bias_lod");
+pub const EXTENSION_SPV_AMD_WEAK_LINKAGE: Extension = Extension::new("SPV_AMD_weak_linkage");
 pub const EXTENSION_SPV_ARM_COOPERATIVE_MATRIX_LAYOUTS: Extension =
     Extension::new("SPV_ARM_cooperative_matrix_layouts");
 pub const EXTENSION_SPV_ARM_CORE_BUILTINS: Extension = Extension::new("SPV_ARM_core_builtins");
@@ -71,6 +72,8 @@ pub const EXTENSION_SPV_EXT_FRAGMENT_SHADER_INTERLOCK: Extension =
     Extension::new("SPV_EXT_fragment_shader_interlock");
 pub const EXTENSION_SPV_EXT_LONG_VECTOR: Extension = Extension::new("SPV_EXT_long_vector");
 pub const EXTENSION_SPV_EXT_MESH_SHADER: Extension = Extension::new("SPV_EXT_mesh_shader");
+pub const EXTENSION_SPV_EXT_OCP_MICROSCALING_TYPES: Extension =
+    Extension::new("SPV_EXT_ocp_microscaling_types");
 pub const EXTENSION_SPV_EXT_OPACITY_MICROMAP: Extension =
     Extension::new("SPV_EXT_opacity_micromap");
 pub const EXTENSION_SPV_EXT_OPTNONE: Extension = Extension::new("SPV_EXT_optnone");
@@ -98,6 +101,7 @@ pub const EXTENSION_SPV_EXT_SHADER_TILE_IMAGE: Extension =
     Extension::new("SPV_EXT_shader_tile_image");
 pub const EXTENSION_SPV_EXT_SHADER_VIEWPORT_INDEX_LAYER: Extension =
     Extension::new("SPV_EXT_shader_viewport_index_layer");
+pub const EXTENSION_SPV_EXT_SPLIT_BARRIER: Extension = Extension::new("SPV_EXT_split_barrier");
 pub const EXTENSION_SPV_GOOGLE_DECORATE_STRING: Extension =
     Extension::new("SPV_GOOGLE_decorate_string");
 pub const EXTENSION_SPV_GOOGLE_HLSL_FUNCTIONALITY_1: Extension =
@@ -171,6 +175,9 @@ pub const EXTENSION_SPV_INTEL_MEDIA_BLOCK_IO: Extension =
 pub const EXTENSION_SPV_INTEL_MEMORY_ACCESS_ALIASING: Extension =
     Extension::new("SPV_INTEL_memory_access_aliasing");
 pub const EXTENSION_SPV_INTEL_OPTNONE: Extension = Extension::new("SPV_INTEL_optnone");
+pub const EXTENSION_SPV_INTEL_PREDICATED_IO: Extension = Extension::new("SPV_INTEL_predicated_io");
+pub const EXTENSION_SPV_INTEL_ROUNDED_DIVIDE_SQRT: Extension =
+    Extension::new("SPV_INTEL_rounded_divide_sqrt");
 pub const EXTENSION_SPV_INTEL_RUNTIME_ALIGNED: Extension =
     Extension::new("SPV_INTEL_runtime_aligned");
 pub const EXTENSION_SPV_INTEL_SHADER_INTEGER_FUNCTIONS_2: Extension =
@@ -196,11 +203,13 @@ pub const EXTENSION_SPV_INTEL_VECTOR_COMPUTE: Extension =
     Extension::new("SPV_INTEL_vector_compute");
 pub const EXTENSION_SPV_KHR_16_BIT_STORAGE: Extension = Extension::new("SPV_KHR_16bit_storage");
 pub const EXTENSION_SPV_KHR_8_BIT_STORAGE: Extension = Extension::new("SPV_KHR_8bit_storage");
+pub const EXTENSION_SPV_KHR_ABORT: Extension = Extension::new("SPV_KHR_abort");
 pub const EXTENSION_SPV_KHR_BFLOAT_16: Extension = Extension::new("SPV_KHR_bfloat16");
 pub const EXTENSION_SPV_KHR_BIT_INSTRUCTIONS: Extension =
     Extension::new("SPV_KHR_bit_instructions");
 pub const EXTENSION_SPV_KHR_COMPUTE_SHADER_DERIVATIVES: Extension =
     Extension::new("SPV_KHR_compute_shader_derivatives");
+pub const EXTENSION_SPV_KHR_CONSTANT_DATA: Extension = Extension::new("SPV_KHR_constant_data");
 pub const EXTENSION_SPV_KHR_COOPERATIVE_MATRIX: Extension =
     Extension::new("SPV_KHR_cooperative_matrix");
 pub const EXTENSION_SPV_KHR_DEVICE_GROUP: Extension = Extension::new("SPV_KHR_device_group");
@@ -220,8 +229,11 @@ pub const EXTENSION_SPV_KHR_MAXIMAL_RECONVERGENCE: Extension =
 pub const EXTENSION_SPV_KHR_MULTIVIEW: Extension = Extension::new("SPV_KHR_multiview");
 pub const EXTENSION_SPV_KHR_NO_INTEGER_WRAP_DECORATION: Extension =
     Extension::new("SPV_KHR_no_integer_wrap_decoration");
+pub const EXTENSION_SPV_KHR_OPACITY_MICROMAP: Extension =
+    Extension::new("SPV_KHR_opacity_micromap");
 pub const EXTENSION_SPV_KHR_PHYSICAL_STORAGE_BUFFER: Extension =
     Extension::new("SPV_KHR_physical_storage_buffer");
+pub const EXTENSION_SPV_KHR_POISON_FREEZE: Extension = Extension::new("SPV_KHR_poison_freeze");
 pub const EXTENSION_SPV_KHR_POST_DEPTH_COVERAGE: Extension =
     Extension::new("SPV_KHR_post_depth_coverage");
 pub const EXTENSION_SPV_KHR_QUAD_CONTROL: Extension = Extension::new("SPV_KHR_quad_control");
@@ -267,6 +279,8 @@ pub const EXTENSION_SPV_NV_COOPERATIVE_MATRIX: Extension =
     Extension::new("SPV_NV_cooperative_matrix");
 pub const EXTENSION_SPV_NV_COOPERATIVE_MATRIX_2: Extension =
     Extension::new("SPV_NV_cooperative_matrix2");
+pub const EXTENSION_SPV_NV_COOPERATIVE_MATRIX_DECODE_VECTOR: Extension =
+    Extension::new("SPV_NV_cooperative_matrix_decode_vector");
 pub const EXTENSION_SPV_NV_COOPERATIVE_VECTOR: Extension =
     Extension::new("SPV_NV_cooperative_vector");
 pub const EXTENSION_SPV_NV_DISPLACEMENT_MICROMAP: Extension =
@@ -309,4 +323,11 @@ pub const EXTENSION_SPV_QCOM_IMAGE_PROCESSING: Extension =
     Extension::new("SPV_QCOM_image_processing");
 pub const EXTENSION_SPV_QCOM_IMAGE_PROCESSING_2: Extension =
     Extension::new("SPV_QCOM_image_processing2");
+pub const EXTENSION_SPV_QCOM_IMAGE_PROCESSING_3: Extension =
+    Extension::new("SPV_QCOM_image_processing3");
+pub const EXTENSION_SPV_QCOM_MULTIPLE_WAIT_QUEUES: Extension =
+    Extension::new("SPV_QCOM_multiple_wait_queues");
 pub const EXTENSION_SPV_QCOM_TILE_SHADING: Extension = Extension::new("SPV_QCOM_tile_shading");
+pub const EXTENSION_SPV_SAMSUNG_INTRINSIC: Extension = Extension::new("SPV_SAMSUNG_intrinsic");
+pub const EXTENSION_SPV_VALVE_MIXED_FLOAT_DOT_PRODUCT: Extension =
+    Extension::new("SPV_VALVE_mixed_float_dot_product");

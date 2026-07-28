@@ -11577,6 +11577,39 @@ pub const OP_TYPE_GRAPH_ARM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+pub const OP_BITCAST_EXTRACT_EXT: InstMeta = InstMeta {
+    opname: "OpBitcastExtractEXT",
+    class: Some(&PRINTING_CLASS_CONVERSION),
+    opcode: 4195u16,
+    operands: &[
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Base"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Offset"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[&Capability::BitcastExtractEXT],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
 pub const OP_TERMINATE_INVOCATION: InstMeta = InstMeta {
     opname: "OpTerminateInvocation",
     class: Some(&PRINTING_CLASS_CONTROL_FLOW),
@@ -13579,6 +13612,57 @@ pub const OP_EXTRACT_SUB_ARRAY_QCOM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+pub const OP_IMAGE_GATHER_QCOM: InstMeta = InstMeta {
+    opname: "OpImageGatherQCOM",
+    class: Some(&PRINTING_CLASS_IMAGE),
+    opcode: 4545u16,
+    operands: &[
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Sampled Image"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Coordinate"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Component"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Mode"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_IMAGE_OPERANDS,
+            name: None,
+            quantifier: Quantifier::ZeroOrOne,
+        },
+    ],
+    capabilities: &[
+        &Capability::ImageGatherLinearQCOM,
+        &Capability::ImageGatherExtendedModesQCOM,
+    ],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
 pub const OP_GROUP_I_ADD_NON_UNIFORM_AMD: InstMeta = InstMeta {
     opname: "OpGroupIAddNonUniformAMD",
     class: Some(&PRINTING_CLASS_GROUP),
@@ -14301,6 +14385,29 @@ pub const OP_BUFFER_POINTER_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+pub const OP_ABORT_KHR: InstMeta = InstMeta {
+    opname: "OpAbortKHR",
+    class: Some(&PRINTING_CLASS_CONTROL_FLOW),
+    opcode: 5121u16,
+    operands: &[
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Message Type"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Message'"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[&Capability::AbortKHR],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
 pub const OP_UNTYPED_IMAGE_TEXEL_POINTER_EXT: InstMeta = InstMeta {
     opname: "OpUntypedImageTexelPointerEXT",
     class: Some(&PRINTING_CLASS_MEMORY),
@@ -14399,6 +14506,113 @@ pub const OP_CONSTANT_SIZE_OF_EXT: InstMeta = InstMeta {
     last_version: None,
     aliases: &[],
     provisional: false,
+};
+pub const OP_CONSTANT_DATA_KHR: InstMeta = InstMeta {
+    opname: "OpConstantDataKHR",
+    class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
+    opcode: 5147u16,
+    operands: &[
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_LITERAL_INTEGER,
+            name: Some("Data"),
+            quantifier: Quantifier::ZeroOrMore,
+        },
+    ],
+    capabilities: &[&Capability::ConstantDataKHR],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_SPEC_CONSTANT_DATA_KHR: InstMeta = InstMeta {
+    opname: "OpSpecConstantDataKHR",
+    class: Some(&PRINTING_CLASS_CONSTANT_CREATION),
+    opcode: 5148u16,
+    operands: &[
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_LITERAL_INTEGER,
+            name: Some("Data"),
+            quantifier: Quantifier::ZeroOrMore,
+        },
+    ],
+    capabilities: &[&Capability::ConstantDataKHR],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_POISON_KHR: InstMeta = InstMeta {
+    opname: "OpPoisonKHR",
+    class: Some(&PRINTING_CLASS_MISCELLANEOUS),
+    opcode: 5158u16,
+    operands: &[
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[&Capability::PoisonFreezeKHR],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: true,
+};
+pub const OP_FREEZE_KHR: InstMeta = InstMeta {
+    opname: "OpFreezeKHR",
+    class: Some(&PRINTING_CLASS_MISCELLANEOUS),
+    opcode: 5159u16,
+    operands: &[
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Value"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[&Capability::PoisonFreezeKHR],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: true,
 };
 pub const OP_HIT_OBJECT_RECORD_HIT_MOTION_NV: InstMeta = InstMeta {
     opname: "OpHitObjectRecordHitMotionNV",
@@ -16276,6 +16490,11 @@ pub const OP_HIT_OBJECT_RECORD_FROM_QUERY_EXT: InstMeta = InstMeta {
             kind: &OPERAND_KIND_ID_REF,
             name: Some("Hit Object Attributes"),
             quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Hit Kind"),
+            quantifier: Quantifier::ZeroOrOne,
         },
     ],
     capabilities: &[&Capability::ShaderInvocationReorderEXT],
@@ -27370,13 +27589,13 @@ pub const OP_READ_PIPE_BLOCKING_ALTERA: InstMeta = InstMeta {
     opcode: 5946u16,
     operands: &[
         OperandSpecMeta {
-            kind: &OPERAND_KIND_ID_RESULT_TYPE,
-            name: None,
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Pipe"),
             quantifier: Quantifier::One,
         },
         OperandSpecMeta {
-            kind: &OPERAND_KIND_ID_RESULT,
-            name: None,
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Pointer"),
             quantifier: Quantifier::One,
         },
         OperandSpecMeta {
@@ -27403,13 +27622,13 @@ pub const OP_WRITE_PIPE_BLOCKING_ALTERA: InstMeta = InstMeta {
     opcode: 5947u16,
     operands: &[
         OperandSpecMeta {
-            kind: &OPERAND_KIND_ID_RESULT_TYPE,
-            name: None,
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Pipe"),
             quantifier: Quantifier::One,
         },
         OperandSpecMeta {
-            kind: &OPERAND_KIND_ID_RESULT,
-            name: None,
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Pointer"),
             quantifier: Quantifier::One,
         },
         OperandSpecMeta {
@@ -28118,23 +28337,11 @@ pub const OP_COMPOSITE_CONSTRUCT_CONTINUED_INTEL: InstMeta = InstMeta {
     opname: "OpCompositeConstructContinuedINTEL",
     class: Some(&PRINTING_CLASS_COMPOSITE),
     opcode: 6096u16,
-    operands: &[
-        OperandSpecMeta {
-            kind: &OPERAND_KIND_ID_RESULT_TYPE,
-            name: None,
-            quantifier: Quantifier::One,
-        },
-        OperandSpecMeta {
-            kind: &OPERAND_KIND_ID_RESULT,
-            name: None,
-            quantifier: Quantifier::One,
-        },
-        OperandSpecMeta {
-            kind: &OPERAND_KIND_ID_REF,
-            name: Some("Constituents"),
-            quantifier: Quantifier::ZeroOrMore,
-        },
-    ],
+    operands: &[OperandSpecMeta {
+        kind: &OPERAND_KIND_ID_REF,
+        name: Some("Constituents"),
+        quantifier: Quantifier::ZeroOrMore,
+    }],
     capabilities: &[&Capability::LongCompositesINTEL],
     extensions: &[],
     version: Some("None"),
@@ -28198,8 +28405,8 @@ pub const OP_CONVERT_BF_16_TO_FINTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const OP_CONTROL_BARRIER_ARRIVE_INTEL: InstMeta = InstMeta {
-    opname: "OpControlBarrierArriveINTEL",
+pub const OP_CONTROL_BARRIER_ARRIVE_EXT: InstMeta = InstMeta {
+    opname: "OpControlBarrierArriveEXT",
     class: Some(&PRINTING_CLASS_BARRIER),
     opcode: 6142u16,
     operands: &[
@@ -28219,15 +28426,15 @@ pub const OP_CONTROL_BARRIER_ARRIVE_INTEL: InstMeta = InstMeta {
             quantifier: Quantifier::One,
         },
     ],
-    capabilities: &[&Capability::SplitBarrierINTEL],
+    capabilities: &[&Capability::SplitBarrierEXT],
     extensions: &[],
     version: Some("None"),
     last_version: None,
-    aliases: &[],
+    aliases: &["OpControlBarrierArriveINTEL"],
     provisional: false,
 };
-pub const OP_CONTROL_BARRIER_WAIT_INTEL: InstMeta = InstMeta {
-    opname: "OpControlBarrierWaitINTEL",
+pub const OP_CONTROL_BARRIER_WAIT_EXT: InstMeta = InstMeta {
+    opname: "OpControlBarrierWaitEXT",
     class: Some(&PRINTING_CLASS_BARRIER),
     opcode: 6143u16,
     operands: &[
@@ -28247,11 +28454,11 @@ pub const OP_CONTROL_BARRIER_WAIT_INTEL: InstMeta = InstMeta {
             quantifier: Quantifier::One,
         },
     ],
-    capabilities: &[&Capability::SplitBarrierINTEL],
+    capabilities: &[&Capability::SplitBarrierEXT],
     extensions: &[],
     version: Some("None"),
     last_version: None,
-    aliases: &[],
+    aliases: &["OpControlBarrierWaitINTEL"],
     provisional: false,
 };
 pub const OP_ARITHMETIC_FENCE_EXT: InstMeta = InstMeta {
@@ -29091,6 +29298,82 @@ pub const OP_CONDITIONAL_COPY_OBJECT_INTEL: InstMeta = InstMeta {
     aliases: &[],
     provisional: true,
 };
+pub const OP_PREDICATED_LOAD_INTEL: InstMeta = InstMeta {
+    opname: "OpPredicatedLoadINTEL",
+    class: Some(&PRINTING_CLASS_MEMORY),
+    opcode: 6258u16,
+    operands: &[
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Pointer"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Predicate"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Default Value"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_MEMORY_ACCESS,
+            name: None,
+            quantifier: Quantifier::ZeroOrOne,
+        },
+    ],
+    capabilities: &[&Capability::PredicatedIOINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_PREDICATED_STORE_INTEL: InstMeta = InstMeta {
+    opname: "OpPredicatedStoreINTEL",
+    class: Some(&PRINTING_CLASS_MEMORY),
+    opcode: 6259u16,
+    operands: &[
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Pointer"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Object"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Predicate"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_MEMORY_ACCESS,
+            name: None,
+            quantifier: Quantifier::ZeroOrOne,
+        },
+    ],
+    capabilities: &[&Capability::PredicatedIOINTEL],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
 pub const OP_GROUP_I_MUL_KHR: InstMeta = InstMeta {
     opname: "OpGroupIMulKHR",
     class: Some(&PRINTING_CLASS_GROUP),
@@ -29582,4 +29865,124 @@ pub const OP_CONVERT_HANDLE_TO_SAMPLED_IMAGE_INTEL: InstMeta = InstMeta {
     last_version: None,
     aliases: &[],
     provisional: true,
+};
+pub const OP_F_DOT_2_MIX_ACC_32_VALVE: InstMeta = InstMeta {
+    opname: "OpFDot2MixAcc32VALVE",
+    class: Some(&PRINTING_CLASS_RESERVED),
+    opcode: 6916u16,
+    operands: &[
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Vector 1"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Vector 2"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Accumulator"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[
+        &Capability::DotProductFloat16AccFloat32VALVE,
+        &Capability::DotProductBFloat16AccVALVE,
+    ],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_F_DOT_2_MIX_ACC_16_VALVE: InstMeta = InstMeta {
+    opname: "OpFDot2MixAcc16VALVE",
+    class: Some(&PRINTING_CLASS_RESERVED),
+    opcode: 6917u16,
+    operands: &[
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Vector 1"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Vector 2"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Accumulator"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[
+        &Capability::DotProductFloat16AccFloat16VALVE,
+        &Capability::DotProductBFloat16AccVALVE,
+    ],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
+pub const OP_F_DOT_4_MIX_ACC_32_VALVE: InstMeta = InstMeta {
+    opname: "OpFDot4MixAcc32VALVE",
+    class: Some(&PRINTING_CLASS_RESERVED),
+    opcode: 6918u16,
+    operands: &[
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Vector 1"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Vector 2"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Accumulator"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[&Capability::DotProductFloat8AccFloat32VALVE],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
 };

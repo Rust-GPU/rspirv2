@@ -359,6 +359,7 @@ pub enum CoreInstSet {
     GraphSetOutputARM(OpGraphSetOutputARM),
     GraphEndARM(OpGraphEndARM),
     TypeGraphARM(OpTypeGraphARM),
+    BitcastExtractEXT(OpBitcastExtractEXT),
     TerminateInvocation(OpTerminateInvocation),
     TypeUntypedPointerKHR(OpTypeUntypedPointerKHR),
     UntypedVariableKHR(OpUntypedVariableKHR),
@@ -416,6 +417,7 @@ pub enum CoreInstSet {
     CompositeConstructCoopMatQCOM(OpCompositeConstructCoopMatQCOM),
     CompositeExtractCoopMatQCOM(OpCompositeExtractCoopMatQCOM),
     ExtractSubArrayQCOM(OpExtractSubArrayQCOM),
+    ImageGatherQCOM(OpImageGatherQCOM),
     GroupIAddNonUniformAMD(OpGroupIAddNonUniformAMD),
     GroupFAddNonUniformAMD(OpGroupFAddNonUniformAMD),
     GroupFMinNonUniformAMD(OpGroupFMinNonUniformAMD),
@@ -439,9 +441,14 @@ pub enum CoreInstSet {
     GroupNonUniformQuadAnyKHR(OpGroupNonUniformQuadAnyKHR),
     TypeBufferEXT(OpTypeBufferEXT),
     BufferPointerEXT(OpBufferPointerEXT),
+    AbortKHR(OpAbortKHR),
     UntypedImageTexelPointerEXT(OpUntypedImageTexelPointerEXT),
     MemberDecorateIdEXT(OpMemberDecorateIdEXT),
     ConstantSizeOfEXT(OpConstantSizeOfEXT),
+    ConstantDataKHR(OpConstantDataKHR),
+    SpecConstantDataKHR(OpSpecConstantDataKHR),
+    PoisonKHR(OpPoisonKHR),
+    FreezeKHR(OpFreezeKHR),
     HitObjectRecordHitMotionNV(OpHitObjectRecordHitMotionNV),
     HitObjectRecordHitWithIndexMotionNV(OpHitObjectRecordHitWithIndexMotionNV),
     HitObjectRecordMissMotionNV(OpHitObjectRecordMissMotionNV),
@@ -926,8 +933,8 @@ pub enum CoreInstSet {
     CompositeConstructContinuedINTEL(OpCompositeConstructContinuedINTEL),
     ConvertFToBF16INTEL(OpConvertFToBF16INTEL),
     ConvertBF16ToFINTEL(OpConvertBF16ToFINTEL),
-    ControlBarrierArriveINTEL(OpControlBarrierArriveINTEL),
-    ControlBarrierWaitINTEL(OpControlBarrierWaitINTEL),
+    ControlBarrierArriveEXT(OpControlBarrierArriveEXT),
+    ControlBarrierWaitEXT(OpControlBarrierWaitEXT),
     ArithmeticFenceEXT(OpArithmeticFenceEXT),
     TaskSequenceCreateALTERA(OpTaskSequenceCreateALTERA),
     TaskSequenceAsyncALTERA(OpTaskSequenceAsyncALTERA),
@@ -950,6 +957,8 @@ pub enum CoreInstSet {
     SpecConstantArchitectureINTEL(OpSpecConstantArchitectureINTEL),
     SpecConstantCapabilitiesINTEL(OpSpecConstantCapabilitiesINTEL),
     ConditionalCopyObjectINTEL(OpConditionalCopyObjectINTEL),
+    PredicatedLoadINTEL(OpPredicatedLoadINTEL),
+    PredicatedStoreINTEL(OpPredicatedStoreINTEL),
     GroupIMulKHR(OpGroupIMulKHR),
     GroupFMulKHR(OpGroupFMulKHR),
     GroupBitwiseAndKHR(OpGroupBitwiseAndKHR),
@@ -964,6 +973,9 @@ pub enum CoreInstSet {
     ConvertHandleToImageINTEL(OpConvertHandleToImageINTEL),
     ConvertHandleToSamplerINTEL(OpConvertHandleToSamplerINTEL),
     ConvertHandleToSampledImageINTEL(OpConvertHandleToSampledImageINTEL),
+    FDot2MixAcc32VALVE(OpFDot2MixAcc32VALVE),
+    FDot2MixAcc16VALVE(OpFDot2MixAcc16VALVE),
+    FDot4MixAcc32VALVE(OpFDot4MixAcc32VALVE),
 }
 impl InstEncoding for CoreInstSet {
     type IdResult = Option<IdResult>;
@@ -1359,6 +1371,7 @@ impl InstEncoding for CoreInstSet {
             Self::GraphSetOutputARM(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::GraphEndARM(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::TypeGraphARM(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::BitcastExtractEXT(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::TerminateInvocation(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::TypeUntypedPointerKHR(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::UntypedVariableKHR(inst) => InstEncoding::id_result(inst).to_optional(),
@@ -1436,6 +1449,7 @@ impl InstEncoding for CoreInstSet {
             }
             Self::CompositeExtractCoopMatQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::ExtractSubArrayQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::ImageGatherQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::GroupIAddNonUniformAMD(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::GroupFAddNonUniformAMD(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::GroupFMinNonUniformAMD(inst) => InstEncoding::id_result(inst).to_optional(),
@@ -1459,9 +1473,14 @@ impl InstEncoding for CoreInstSet {
             Self::GroupNonUniformQuadAnyKHR(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::TypeBufferEXT(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::BufferPointerEXT(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::AbortKHR(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::UntypedImageTexelPointerEXT(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::MemberDecorateIdEXT(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::ConstantSizeOfEXT(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::ConstantDataKHR(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::SpecConstantDataKHR(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::PoisonKHR(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::FreezeKHR(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::HitObjectRecordHitMotionNV(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::HitObjectRecordHitWithIndexMotionNV(inst) => {
                 InstEncoding::id_result(inst).to_optional()
@@ -2182,8 +2201,8 @@ impl InstEncoding for CoreInstSet {
             }
             Self::ConvertFToBF16INTEL(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::ConvertBF16ToFINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ControlBarrierArriveINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::ControlBarrierWaitINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::ControlBarrierArriveEXT(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::ControlBarrierWaitEXT(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::ArithmeticFenceEXT(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::TaskSequenceCreateALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::TaskSequenceAsyncALTERA(inst) => InstEncoding::id_result(inst).to_optional(),
@@ -2218,6 +2237,8 @@ impl InstEncoding for CoreInstSet {
                 InstEncoding::id_result(inst).to_optional()
             }
             Self::ConditionalCopyObjectINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::PredicatedLoadINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::PredicatedStoreINTEL(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::GroupIMulKHR(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::GroupFMulKHR(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::GroupBitwiseAndKHR(inst) => InstEncoding::id_result(inst).to_optional(),
@@ -2234,6 +2255,9 @@ impl InstEncoding for CoreInstSet {
             Self::ConvertHandleToSampledImageINTEL(inst) => {
                 InstEncoding::id_result(inst).to_optional()
             }
+            Self::FDot2MixAcc32VALVE(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::FDot2MixAcc16VALVE(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::FDot4MixAcc32VALVE(inst) => InstEncoding::id_result(inst).to_optional(),
         }
     }
     fn id_result_type(&self) -> Self::IdResult {
@@ -2685,6 +2709,7 @@ impl InstEncoding for CoreInstSet {
             Self::GraphSetOutputARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::GraphEndARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::TypeGraphARM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::BitcastExtractEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::TerminateInvocation(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::TypeUntypedPointerKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::UntypedVariableKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
@@ -2794,6 +2819,7 @@ impl InstEncoding for CoreInstSet {
                 InstEncoding::id_result_type(inst).to_optional()
             }
             Self::ExtractSubArrayQCOM(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ImageGatherQCOM(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::GroupIAddNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::GroupFAddNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::GroupFMinNonUniformAMD(inst) => InstEncoding::id_result_type(inst).to_optional(),
@@ -2829,11 +2855,16 @@ impl InstEncoding for CoreInstSet {
             }
             Self::TypeBufferEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::BufferPointerEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::AbortKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::UntypedImageTexelPointerEXT(inst) => {
                 InstEncoding::id_result_type(inst).to_optional()
             }
             Self::MemberDecorateIdEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::ConstantSizeOfEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ConstantDataKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::SpecConstantDataKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::PoisonKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FreezeKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::HitObjectRecordHitMotionNV(inst) => {
                 InstEncoding::id_result_type(inst).to_optional()
             }
@@ -3704,10 +3735,8 @@ impl InstEncoding for CoreInstSet {
             }
             Self::ConvertFToBF16INTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::ConvertBF16ToFINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
-            Self::ControlBarrierArriveINTEL(inst) => {
-                InstEncoding::id_result_type(inst).to_optional()
-            }
-            Self::ControlBarrierWaitINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ControlBarrierArriveEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::ControlBarrierWaitEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::ArithmeticFenceEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::TaskSequenceCreateALTERA(inst) => {
                 InstEncoding::id_result_type(inst).to_optional()
@@ -3762,6 +3791,8 @@ impl InstEncoding for CoreInstSet {
             Self::ConditionalCopyObjectINTEL(inst) => {
                 InstEncoding::id_result_type(inst).to_optional()
             }
+            Self::PredicatedLoadINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::PredicatedStoreINTEL(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::GroupIMulKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::GroupFMulKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::GroupBitwiseAndKHR(inst) => InstEncoding::id_result_type(inst).to_optional(),
@@ -3782,6 +3813,9 @@ impl InstEncoding for CoreInstSet {
             Self::ConvertHandleToSampledImageINTEL(inst) => {
                 InstEncoding::id_result_type(inst).to_optional()
             }
+            Self::FDot2MixAcc32VALVE(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FDot2MixAcc16VALVE(inst) => InstEncoding::id_result_type(inst).to_optional(),
+            Self::FDot4MixAcc32VALVE(inst) => InstEncoding::id_result_type(inst).to_optional(),
         }
     }
     fn name() -> &'static str {
@@ -4150,6 +4184,7 @@ impl InstEncoding for CoreInstSet {
             Self::GraphSetOutputARM(inst) => InstEncoding::encode(inst, writer),
             Self::GraphEndARM(inst) => InstEncoding::encode(inst, writer),
             Self::TypeGraphARM(inst) => InstEncoding::encode(inst, writer),
+            Self::BitcastExtractEXT(inst) => InstEncoding::encode(inst, writer),
             Self::TerminateInvocation(inst) => InstEncoding::encode(inst, writer),
             Self::TypeUntypedPointerKHR(inst) => InstEncoding::encode(inst, writer),
             Self::UntypedVariableKHR(inst) => InstEncoding::encode(inst, writer),
@@ -4207,6 +4242,7 @@ impl InstEncoding for CoreInstSet {
             Self::CompositeConstructCoopMatQCOM(inst) => InstEncoding::encode(inst, writer),
             Self::CompositeExtractCoopMatQCOM(inst) => InstEncoding::encode(inst, writer),
             Self::ExtractSubArrayQCOM(inst) => InstEncoding::encode(inst, writer),
+            Self::ImageGatherQCOM(inst) => InstEncoding::encode(inst, writer),
             Self::GroupIAddNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
             Self::GroupFAddNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
             Self::GroupFMinNonUniformAMD(inst) => InstEncoding::encode(inst, writer),
@@ -4230,9 +4266,14 @@ impl InstEncoding for CoreInstSet {
             Self::GroupNonUniformQuadAnyKHR(inst) => InstEncoding::encode(inst, writer),
             Self::TypeBufferEXT(inst) => InstEncoding::encode(inst, writer),
             Self::BufferPointerEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::AbortKHR(inst) => InstEncoding::encode(inst, writer),
             Self::UntypedImageTexelPointerEXT(inst) => InstEncoding::encode(inst, writer),
             Self::MemberDecorateIdEXT(inst) => InstEncoding::encode(inst, writer),
             Self::ConstantSizeOfEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::ConstantDataKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::SpecConstantDataKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::PoisonKHR(inst) => InstEncoding::encode(inst, writer),
+            Self::FreezeKHR(inst) => InstEncoding::encode(inst, writer),
             Self::HitObjectRecordHitMotionNV(inst) => InstEncoding::encode(inst, writer),
             Self::HitObjectRecordHitWithIndexMotionNV(inst) => InstEncoding::encode(inst, writer),
             Self::HitObjectRecordMissMotionNV(inst) => InstEncoding::encode(inst, writer),
@@ -4817,8 +4858,8 @@ impl InstEncoding for CoreInstSet {
             Self::CompositeConstructContinuedINTEL(inst) => InstEncoding::encode(inst, writer),
             Self::ConvertFToBF16INTEL(inst) => InstEncoding::encode(inst, writer),
             Self::ConvertBF16ToFINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ControlBarrierArriveINTEL(inst) => InstEncoding::encode(inst, writer),
-            Self::ControlBarrierWaitINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::ControlBarrierArriveEXT(inst) => InstEncoding::encode(inst, writer),
+            Self::ControlBarrierWaitEXT(inst) => InstEncoding::encode(inst, writer),
             Self::ArithmeticFenceEXT(inst) => InstEncoding::encode(inst, writer),
             Self::TaskSequenceCreateALTERA(inst) => InstEncoding::encode(inst, writer),
             Self::TaskSequenceAsyncALTERA(inst) => InstEncoding::encode(inst, writer),
@@ -4841,6 +4882,8 @@ impl InstEncoding for CoreInstSet {
             Self::SpecConstantArchitectureINTEL(inst) => InstEncoding::encode(inst, writer),
             Self::SpecConstantCapabilitiesINTEL(inst) => InstEncoding::encode(inst, writer),
             Self::ConditionalCopyObjectINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::PredicatedLoadINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::PredicatedStoreINTEL(inst) => InstEncoding::encode(inst, writer),
             Self::GroupIMulKHR(inst) => InstEncoding::encode(inst, writer),
             Self::GroupFMulKHR(inst) => InstEncoding::encode(inst, writer),
             Self::GroupBitwiseAndKHR(inst) => InstEncoding::encode(inst, writer),
@@ -4855,6 +4898,9 @@ impl InstEncoding for CoreInstSet {
             Self::ConvertHandleToImageINTEL(inst) => InstEncoding::encode(inst, writer),
             Self::ConvertHandleToSamplerINTEL(inst) => InstEncoding::encode(inst, writer),
             Self::ConvertHandleToSampledImageINTEL(inst) => InstEncoding::encode(inst, writer),
+            Self::FDot2MixAcc32VALVE(inst) => InstEncoding::encode(inst, writer),
+            Self::FDot2MixAcc16VALVE(inst) => InstEncoding::encode(inst, writer),
+            Self::FDot4MixAcc32VALVE(inst) => InstEncoding::encode(inst, writer),
         }
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
@@ -6148,6 +6194,11 @@ impl InstEncoding for CoreInstSet {
                 4190u16 => {
                     Self::TypeGraphARM(<OpTypeGraphARM as InstEncoding>::decode(reader)?)
                 }
+                4195u16 => {
+                    Self::BitcastExtractEXT(
+                        <OpBitcastExtractEXT as InstEncoding>::decode(reader)?,
+                    )
+                }
                 4416u16 => {
                     Self::TerminateInvocation(
                         <OpTerminateInvocation as InstEncoding>::decode(reader)?,
@@ -6429,6 +6480,11 @@ impl InstEncoding for CoreInstSet {
                         <OpExtractSubArrayQCOM as InstEncoding>::decode(reader)?,
                     )
                 }
+                4545u16 => {
+                    Self::ImageGatherQCOM(
+                        <OpImageGatherQCOM as InstEncoding>::decode(reader)?,
+                    )
+                }
                 5000u16 => {
                     Self::GroupIAddNonUniformAMD(
                         <OpGroupIAddNonUniformAMD as InstEncoding>::decode(reader)?,
@@ -6542,6 +6598,7 @@ impl InstEncoding for CoreInstSet {
                         <OpBufferPointerEXT as InstEncoding>::decode(reader)?,
                     )
                 }
+                5121u16 => Self::AbortKHR(<OpAbortKHR as InstEncoding>::decode(reader)?),
                 5126u16 => {
                     Self::UntypedImageTexelPointerEXT(
                         <OpUntypedImageTexelPointerEXT as InstEncoding>::decode(reader)?,
@@ -6556,6 +6613,22 @@ impl InstEncoding for CoreInstSet {
                     Self::ConstantSizeOfEXT(
                         <OpConstantSizeOfEXT as InstEncoding>::decode(reader)?,
                     )
+                }
+                5147u16 => {
+                    Self::ConstantDataKHR(
+                        <OpConstantDataKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5148u16 => {
+                    Self::SpecConstantDataKHR(
+                        <OpSpecConstantDataKHR as InstEncoding>::decode(reader)?,
+                    )
+                }
+                5158u16 => {
+                    Self::PoisonKHR(<OpPoisonKHR as InstEncoding>::decode(reader)?)
+                }
+                5159u16 => {
+                    Self::FreezeKHR(<OpFreezeKHR as InstEncoding>::decode(reader)?)
                 }
                 5249u16 => {
                     Self::HitObjectRecordHitMotionNV(
@@ -8790,13 +8863,13 @@ impl InstEncoding for CoreInstSet {
                     )
                 }
                 6142u16 => {
-                    Self::ControlBarrierArriveINTEL(
-                        <OpControlBarrierArriveINTEL as InstEncoding>::decode(reader)?,
+                    Self::ControlBarrierArriveEXT(
+                        <OpControlBarrierArriveEXT as InstEncoding>::decode(reader)?,
                     )
                 }
                 6143u16 => {
-                    Self::ControlBarrierWaitINTEL(
-                        <OpControlBarrierWaitINTEL as InstEncoding>::decode(reader)?,
+                    Self::ControlBarrierWaitEXT(
+                        <OpControlBarrierWaitEXT as InstEncoding>::decode(reader)?,
                     )
                 }
                 6145u16 => {
@@ -8921,6 +8994,16 @@ impl InstEncoding for CoreInstSet {
                         <OpConditionalCopyObjectINTEL as InstEncoding>::decode(reader)?,
                     )
                 }
+                6258u16 => {
+                    Self::PredicatedLoadINTEL(
+                        <OpPredicatedLoadINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6259u16 => {
+                    Self::PredicatedStoreINTEL(
+                        <OpPredicatedStoreINTEL as InstEncoding>::decode(reader)?,
+                    )
+                }
                 6401u16 => {
                     Self::GroupIMulKHR(<OpGroupIMulKHR as InstEncoding>::decode(reader)?)
                 }
@@ -8987,6 +9070,21 @@ impl InstEncoding for CoreInstSet {
                         <OpConvertHandleToSampledImageINTEL as InstEncoding>::decode(
                             reader,
                         )?,
+                    )
+                }
+                6916u16 => {
+                    Self::FDot2MixAcc32VALVE(
+                        <OpFDot2MixAcc32VALVE as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6917u16 => {
+                    Self::FDot2MixAcc16VALVE(
+                        <OpFDot2MixAcc16VALVE as InstEncoding>::decode(reader)?,
+                    )
+                }
+                6918u16 => {
+                    Self::FDot4MixAcc32VALVE(
+                        <OpFDot4MixAcc32VALVE as InstEncoding>::decode(reader)?,
                     )
                 }
                 _ => {
@@ -9363,6 +9461,7 @@ impl InstEncoding for CoreInstSet {
             Self::GraphSetOutputARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::GraphEndARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::TypeGraphARM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::BitcastExtractEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::TerminateInvocation(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::TypeUntypedPointerKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::UntypedVariableKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
@@ -9420,6 +9519,7 @@ impl InstEncoding for CoreInstSet {
             Self::CompositeConstructCoopMatQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::CompositeExtractCoopMatQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::ExtractSubArrayQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ImageGatherQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::GroupIAddNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::GroupFAddNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::GroupFMinNonUniformAMD(inst) => InstEncoding::dis_fmt(inst, f, ctx),
@@ -9443,9 +9543,14 @@ impl InstEncoding for CoreInstSet {
             Self::GroupNonUniformQuadAnyKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::TypeBufferEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::BufferPointerEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::AbortKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::UntypedImageTexelPointerEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::MemberDecorateIdEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::ConstantSizeOfEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ConstantDataKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::SpecConstantDataKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::PoisonKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FreezeKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::HitObjectRecordHitMotionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::HitObjectRecordHitWithIndexMotionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::HitObjectRecordMissMotionNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
@@ -10058,8 +10163,8 @@ impl InstEncoding for CoreInstSet {
             Self::CompositeConstructContinuedINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::ConvertFToBF16INTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::ConvertBF16ToFINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ControlBarrierArriveINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::ControlBarrierWaitINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ControlBarrierArriveEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::ControlBarrierWaitEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::ArithmeticFenceEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::TaskSequenceCreateALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::TaskSequenceAsyncALTERA(inst) => InstEncoding::dis_fmt(inst, f, ctx),
@@ -10084,6 +10189,8 @@ impl InstEncoding for CoreInstSet {
             Self::SpecConstantArchitectureINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::SpecConstantCapabilitiesINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::ConditionalCopyObjectINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::PredicatedLoadINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::PredicatedStoreINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::GroupIMulKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::GroupFMulKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::GroupBitwiseAndKHR(inst) => InstEncoding::dis_fmt(inst, f, ctx),
@@ -10098,6 +10205,9 @@ impl InstEncoding for CoreInstSet {
             Self::ConvertHandleToImageINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::ConvertHandleToSamplerINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::ConvertHandleToSampledImageINTEL(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FDot2MixAcc32VALVE(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FDot2MixAcc16VALVE(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::FDot4MixAcc32VALVE(inst) => InstEncoding::dis_fmt(inst, f, ctx),
         }
     }
 }
@@ -11891,6 +12001,11 @@ impl From<OpTypeGraphARM> for CoreInstSet {
         Self::TypeGraphARM(inst)
     }
 }
+impl From<OpBitcastExtractEXT> for CoreInstSet {
+    fn from(inst: OpBitcastExtractEXT) -> Self {
+        Self::BitcastExtractEXT(inst)
+    }
+}
 impl From<OpTerminateInvocation> for CoreInstSet {
     fn from(inst: OpTerminateInvocation) -> Self {
         Self::TerminateInvocation(inst)
@@ -12176,6 +12291,11 @@ impl From<OpExtractSubArrayQCOM> for CoreInstSet {
         Self::ExtractSubArrayQCOM(inst)
     }
 }
+impl From<OpImageGatherQCOM> for CoreInstSet {
+    fn from(inst: OpImageGatherQCOM) -> Self {
+        Self::ImageGatherQCOM(inst)
+    }
+}
 impl From<OpGroupIAddNonUniformAMD> for CoreInstSet {
     fn from(inst: OpGroupIAddNonUniformAMD) -> Self {
         Self::GroupIAddNonUniformAMD(inst)
@@ -12291,6 +12411,11 @@ impl From<OpBufferPointerEXT> for CoreInstSet {
         Self::BufferPointerEXT(inst)
     }
 }
+impl From<OpAbortKHR> for CoreInstSet {
+    fn from(inst: OpAbortKHR) -> Self {
+        Self::AbortKHR(inst)
+    }
+}
 impl From<OpUntypedImageTexelPointerEXT> for CoreInstSet {
     fn from(inst: OpUntypedImageTexelPointerEXT) -> Self {
         Self::UntypedImageTexelPointerEXT(inst)
@@ -12304,6 +12429,26 @@ impl From<OpMemberDecorateIdEXT> for CoreInstSet {
 impl From<OpConstantSizeOfEXT> for CoreInstSet {
     fn from(inst: OpConstantSizeOfEXT) -> Self {
         Self::ConstantSizeOfEXT(inst)
+    }
+}
+impl From<OpConstantDataKHR> for CoreInstSet {
+    fn from(inst: OpConstantDataKHR) -> Self {
+        Self::ConstantDataKHR(inst)
+    }
+}
+impl From<OpSpecConstantDataKHR> for CoreInstSet {
+    fn from(inst: OpSpecConstantDataKHR) -> Self {
+        Self::SpecConstantDataKHR(inst)
+    }
+}
+impl From<OpPoisonKHR> for CoreInstSet {
+    fn from(inst: OpPoisonKHR) -> Self {
+        Self::PoisonKHR(inst)
+    }
+}
+impl From<OpFreezeKHR> for CoreInstSet {
+    fn from(inst: OpFreezeKHR) -> Self {
+        Self::FreezeKHR(inst)
     }
 }
 impl From<OpHitObjectRecordHitMotionNV> for CoreInstSet {
@@ -14226,14 +14371,14 @@ impl From<OpConvertBF16ToFINTEL> for CoreInstSet {
         Self::ConvertBF16ToFINTEL(inst)
     }
 }
-impl From<OpControlBarrierArriveINTEL> for CoreInstSet {
-    fn from(inst: OpControlBarrierArriveINTEL) -> Self {
-        Self::ControlBarrierArriveINTEL(inst)
+impl From<OpControlBarrierArriveEXT> for CoreInstSet {
+    fn from(inst: OpControlBarrierArriveEXT) -> Self {
+        Self::ControlBarrierArriveEXT(inst)
     }
 }
-impl From<OpControlBarrierWaitINTEL> for CoreInstSet {
-    fn from(inst: OpControlBarrierWaitINTEL) -> Self {
-        Self::ControlBarrierWaitINTEL(inst)
+impl From<OpControlBarrierWaitEXT> for CoreInstSet {
+    fn from(inst: OpControlBarrierWaitEXT) -> Self {
+        Self::ControlBarrierWaitEXT(inst)
     }
 }
 impl From<OpArithmeticFenceEXT> for CoreInstSet {
@@ -14346,6 +14491,16 @@ impl From<OpConditionalCopyObjectINTEL> for CoreInstSet {
         Self::ConditionalCopyObjectINTEL(inst)
     }
 }
+impl From<OpPredicatedLoadINTEL> for CoreInstSet {
+    fn from(inst: OpPredicatedLoadINTEL) -> Self {
+        Self::PredicatedLoadINTEL(inst)
+    }
+}
+impl From<OpPredicatedStoreINTEL> for CoreInstSet {
+    fn from(inst: OpPredicatedStoreINTEL) -> Self {
+        Self::PredicatedStoreINTEL(inst)
+    }
+}
 impl From<OpGroupIMulKHR> for CoreInstSet {
     fn from(inst: OpGroupIMulKHR) -> Self {
         Self::GroupIMulKHR(inst)
@@ -14414,5 +14569,20 @@ impl From<OpConvertHandleToSamplerINTEL> for CoreInstSet {
 impl From<OpConvertHandleToSampledImageINTEL> for CoreInstSet {
     fn from(inst: OpConvertHandleToSampledImageINTEL) -> Self {
         Self::ConvertHandleToSampledImageINTEL(inst)
+    }
+}
+impl From<OpFDot2MixAcc32VALVE> for CoreInstSet {
+    fn from(inst: OpFDot2MixAcc32VALVE) -> Self {
+        Self::FDot2MixAcc32VALVE(inst)
+    }
+}
+impl From<OpFDot2MixAcc16VALVE> for CoreInstSet {
+    fn from(inst: OpFDot2MixAcc16VALVE) -> Self {
+        Self::FDot2MixAcc16VALVE(inst)
+    }
+}
+impl From<OpFDot4MixAcc32VALVE> for CoreInstSet {
+    fn from(inst: OpFDot4MixAcc32VALVE) -> Self {
+        Self::FDot4MixAcc32VALVE(inst)
     }
 }
