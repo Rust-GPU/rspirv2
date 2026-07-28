@@ -9,6 +9,7 @@ members = [
 	"crates/tools",
 	"crates/tools-gen",
 	"tests",
+	"xtask",
 ]
 resolver = "3"
 
