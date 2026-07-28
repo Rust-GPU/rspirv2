@@ -195,6 +195,27 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
         quote!(Self::#symbol => write!(f, #fmt))
     });
 
+    let mut aliases = enumerants
+        .iter()
+        .flat_map(|e| {
+            let symbol = Enumerant::variant_ident(&e.symbol);
+            e.aliases.iter().map(move |alias| {
+                let alias = format_ident!("{}", alias);
+                quote!(pub const #alias: Self = Self::#symbol;)
+            })
+        })
+        .peekable();
+    let aliases = if aliases.peek().is_some() {
+        quote! {
+            #[allow(non_upper_case_globals)]
+            impl #name {
+                #(#aliases)*
+            }
+        }
+    } else {
+        Default::default()
+    };
+
     quote! {
         #doc
         #[repr(u32)]
@@ -202,6 +223,8 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
         pub enum #name {
             #(#variants),*
         }
+
+        #aliases
 
         #[cfg(feature = "bytemuck")]
         unsafe impl bytemuck::Zeroable for #name {}
@@ -292,15 +315,26 @@ fn emit_bitflags_enum_common(
         }
     });
 
-    let dis = enumerants.iter().filter(|e| e.value != 0).map(|e| {
-        let symbol = Enumerant::variant_ident(&e.symbol);
-        let fmt = format!("{{sep}}{}", e.symbol);
+    let mut aliases = enumerants
+        .iter()
+        .flat_map(|e| {
+            let symbol = Enumerant::variant_ident(&e.symbol);
+            e.aliases.iter().map(move |alias| {
+                let alias = format_ident!("{}", alias);
+                quote!(pub const #alias: Self = Self::#symbol;)
+            })
+        })
+        .peekable();
+    let aliases = if aliases.peek().is_some() {
         quote! {
-            if self.contains(Self::#symbol) {
-                write!(f, #fmt)?;
+            #[allow(non_upper_case_globals)]
+            impl #name {
+                #(#aliases)*
             }
         }
-    });
+    } else {
+        Default::default()
+    };
 
     let decl = quote! {
         bitflags! {
@@ -310,7 +344,19 @@ fn emit_bitflags_enum_common(
                 #(#variants)*
             }
         }
+
+        #aliases
     };
+
+    let dis = enumerants.iter().filter(|e| e.value != 0).map(|e| {
+        let symbol = Enumerant::variant_ident(&e.symbol);
+        let fmt = format!("{{sep}}{}", e.symbol);
+        quote! {
+            if self.contains(Self::#symbol) {
+                write!(f, #fmt)?;
+            }
+        }
+    });
 
     let encoding = quote! {
         unsafe impl OperandEncoding for #name {
@@ -395,49 +441,61 @@ fn emit_parameterised_bitmask(
             quote!(0)
         }
     });
-    let getter_setter = bit_to_enumerants.iter().enumerate().map(|(bit, e)| {
-        let bit = bit as u32;
-        if let Some(e) = e {
-            let (getter, setter) = e.parameterized_bitmask_getter_setter();
-            if e.parameters.is_empty() {
-                quote! {
-                    pub fn #getter(&self) -> bool {
-                        self.0.get_bool(#bit)
-                    }
+    let getter_setter = bit_to_enumerants
+        .iter()
+        .enumerate()
+        .filter_map(|(bit, e)| {
+            if let Some(e) = e {
+                let bit = bit as u32;
+                Some(
+                    [&e.symbol]
+                        .into_iter()
+                        .chain(e.aliases.iter())
+                        .map(move |sym| {
+                            let (getter, setter) =
+                                Enumerant::parameterized_bitmask_getter_setter(sym);
+                            if e.parameters.is_empty() {
+                                quote! {
+                                    pub fn #getter(&self) -> bool {
+                                        self.0.get_bool(#bit)
+                                    }
 
-                    pub fn #setter(&mut self, enabled: bool) {
-                        self.0.set_bool(#bit, enabled);
-                    }
-                }
+                                    pub fn #setter(&mut self, enabled: bool) {
+                                        self.0.set_bool(#bit, enabled);
+                                    }
+                                }
+                            } else {
+                                let param_ty = {
+                                    let members = e.parameters.iter().map(param_to_member_decl);
+                                    if e.parameters.len() == 1 {
+                                        quote!(#(#members)*)
+                                    } else {
+                                        quote!((#(#members),*))
+                                    }
+                                };
+                                quote! {
+                                    pub fn #getter(&self) -> Option<#param_ty> {
+                                        self.0.get(#bit)
+                                    }
+
+                                    pub fn #setter(&mut self, opt: Option<#param_ty>) {
+                                        self.0.set(#bit, opt);
+                                    }
+                                }
+                            }
+                        }),
+                )
             } else {
-                let param_ty = {
-                    let members = e.parameters.iter().map(param_to_member_decl);
-                    if e.parameters.len() == 1 {
-                        quote!(#(#members)*)
-                    } else {
-                        quote!((#(#members),*))
-                    }
-                };
-                quote! {
-                    pub fn #getter(&self) -> Option<#param_ty> {
-                        self.0.get(#bit)
-                    }
-
-                    pub fn #setter(&mut self, opt: Option<#param_ty>) {
-                        self.0.set(#bit, opt);
-                    }
-                }
+                None
             }
-        } else {
-            quote!()
-        }
-    });
+        })
+        .flatten();
 
     let dis_extra = bit_to_enumerants.iter().map(|e| {
         if let Some(e) = e
             && !e.parameters.is_empty()
         {
-            let (getter, _) = e.parameterized_bitmask_getter_setter();
+            let (getter, _) = Enumerant::parameterized_bitmask_getter_setter(&e.symbol);
             quote! {
                 if let Some(extra) = self.#getter() {
                     extra.dis_fmt(f, ctx)?;
