@@ -1,20 +1,32 @@
-use clap::Parser;
+use clap::{Parser, Subcommand};
 
+mod git;
 mod headers;
 
-fn main() -> anyhow::Result<()> {
-    Command::parse().run()
+#[derive(Parser)]
+#[command(version, about, long_about = None)]
+#[command(propagate_version = true)]
+struct Cli {
+    #[command(subcommand)]
+    command: Commands,
 }
 
-#[derive(Clone, Debug, Parser)]
-pub enum Command {
-    UpdateHeaders(headers::Headers),
+#[derive(Clone, Debug, Subcommand)]
+enum Commands {
+    Headers {
+        #[command(subcommand)]
+        command: headers::Headers,
+    },
 }
 
-impl Command {
-    pub fn run(self) -> anyhow::Result<()> {
+impl Commands {
+    fn run(self) -> anyhow::Result<()> {
         match self {
-            Command::UpdateHeaders(cmd) => cmd.run(),
+            Commands::Headers { command } => command.run(),
         }
     }
+}
+
+fn main() -> anyhow::Result<()> {
+    Cli::parse().command.run()
 }
