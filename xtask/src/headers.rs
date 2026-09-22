@@ -36,6 +36,9 @@ pub struct HeadersUpdate {
     /// Skip updating the workspace version `+sdk-<version>` suffix
     #[clap(long)]
     skip_version: bool,
+    /// Skip updating the changelog
+    #[clap(long)]
+    skip_changelog: bool,
 }
 
 impl HeadersUpdate {
@@ -77,6 +80,10 @@ impl HeadersUpdate {
         if !self.skip_version {
             set_workspace_sdk_version(repo, &branch)
                 .context("updating workspace sdk version suffix")?;
+        }
+
+        if !self.skip_changelog {
+            update_changelog(repo, &branch).context("updating changelog")?;
         }
 
         if !self.skip_autogen {
@@ -122,6 +129,19 @@ fn set_workspace_sdk_version(repo: &GitRepo, branch: &str) -> anyhow::Result<()>
     println!("Updating workspace version from `{old_version}` to `{new_version}`");
     let content = content.replacen(old_version, &new_version, 1);
     fs::write(&path, content).context("writing Cargo.toml")?;
+    Ok(())
+}
+
+/// Update the changelog to include a sdk update message
+fn update_changelog(repo: &GitRepo, branch: &str) -> anyhow::Result<()> {
+    const UNRELEASED_TAG: &str = "## [Unreleased]\n";
+    let path = repo.root.join("CHANGELOG.md");
+    let replacement = format!(
+        "{UNRELEASED_TAG}- Update Vulkan sdk to [{branch}](https://github.com/KhronosGroup/Vulkan-Headers/tree/{branch})\n"
+    );
+    let content = fs::read_to_string(&path).context("reading CHANGELOG.md")?;
+    let content = content.replacen(UNRELEASED_TAG, &replacement, 1);
+    fs::write(&path, content).context("writing CHANGELOG.md")?;
     Ok(())
 }
 
