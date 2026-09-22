@@ -13523,6 +13523,44 @@ pub const OP_IMAGE_BLOCK_MATCH_GATHER_SADQCOM: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+pub const OP_B_FLOAT_16_MUL_ADD_QCOM: InstMeta = InstMeta {
+    opname: "OpBFloat16MulAddQCOM",
+    class: Some(&PRINTING_CLASS_ARITHMETIC),
+    opcode: 4505u16,
+    operands: &[
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Operand 1"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Operand 2"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Operand 3"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[&Capability::BFloat16MulAddQCOM],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
 pub const OP_COMPOSITE_CONSTRUCT_COOP_MAT_QCOM: InstMeta = InstMeta {
     opname: "OpCompositeConstructCoopMatQCOM",
     class: Some(&PRINTING_CLASS_COMPOSITE),
@@ -16164,8 +16202,8 @@ pub const OP_COOPERATIVE_VECTOR_MATRIX_MUL_ADD_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const OP_COOPERATIVE_MATRIX_CONVERT_NV: InstMeta = InstMeta {
-    opname: "OpCooperativeMatrixConvertNV",
+pub const OP_COOPERATIVE_MATRIX_CONVERT_USE_EXT: InstMeta = InstMeta {
+    opname: "OpCooperativeMatrixConvertUseEXT",
     class: Some(&PRINTING_CLASS_CONVERSION),
     opcode: 5293u16,
     operands: &[
@@ -16185,11 +16223,14 @@ pub const OP_COOPERATIVE_MATRIX_CONVERT_NV: InstMeta = InstMeta {
             quantifier: Quantifier::One,
         },
     ],
-    capabilities: &[&Capability::CooperativeMatrixConversionsNV],
+    capabilities: &[
+        &Capability::CooperativeMatrixConversionsEXT,
+        &Capability::CooperativeMatrixConversionsNV,
+    ],
     extensions: &[],
     version: Some("None"),
     last_version: None,
-    aliases: &[],
+    aliases: &["OpCooperativeMatrixConvertNV"],
     provisional: false,
 };
 pub const OP_EMIT_MESH_TASKS_EXT: InstMeta = InstMeta {
@@ -18311,6 +18352,39 @@ pub const OP_COOPERATIVE_MATRIX_LENGTH_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
+pub const OP_COOPERATIVE_MATRIX_GET_COORDINATE_EXT: InstMeta = InstMeta {
+    opname: "OpCooperativeMatrixGetCoordinateEXT",
+    class: Some(&PRINTING_CLASS_MISCELLANEOUS),
+    opcode: 5363u16,
+    operands: &[
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT_TYPE,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_RESULT,
+            name: None,
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Matrix"),
+            quantifier: Quantifier::One,
+        },
+        OperandSpecMeta {
+            kind: &OPERAND_KIND_ID_REF,
+            name: Some("Index"),
+            quantifier: Quantifier::One,
+        },
+    ],
+    capabilities: &[&Capability::CooperativeMatrixGetCoordinateEXT],
+    extensions: &[],
+    version: Some("None"),
+    last_version: None,
+    aliases: &[],
+    provisional: false,
+};
 pub const OP_BEGIN_INVOCATION_INTERLOCK_EXT: InstMeta = InstMeta {
     opname: "OpBeginInvocationInterlockEXT",
     class: Some(&PRINTING_CLASS_RESERVED),
@@ -18343,9 +18417,9 @@ pub const OP_END_INVOCATION_INTERLOCK_EXT: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const OP_COOPERATIVE_MATRIX_REDUCE_NV: InstMeta = InstMeta {
-    opname: "OpCooperativeMatrixReduceNV",
-    class: Some(&PRINTING_CLASS_ARITHMETIC),
+pub const OP_COOPERATIVE_MATRIX_REDUCE_EXT: InstMeta = InstMeta {
+    opname: "OpCooperativeMatrixReduceEXT",
+    class: Some(&PRINTING_CLASS_FUNCTION),
     opcode: 5366u16,
     operands: &[
         OperandSpecMeta {
@@ -18374,11 +18448,11 @@ pub const OP_COOPERATIVE_MATRIX_REDUCE_NV: InstMeta = InstMeta {
             quantifier: Quantifier::One,
         },
     ],
-    capabilities: &[&Capability::CooperativeMatrixReductionsNV],
+    capabilities: &[&Capability::CooperativeMatrixReductionsEXT],
     extensions: &[],
     version: Some("None"),
     last_version: None,
-    aliases: &[],
+    aliases: &["OpCooperativeMatrixReduceNV"],
     provisional: false,
 };
 pub const OP_COOPERATIVE_MATRIX_LOAD_TENSOR_NV: InstMeta = InstMeta {
@@ -18467,8 +18541,8 @@ pub const OP_COOPERATIVE_MATRIX_STORE_TENSOR_NV: InstMeta = InstMeta {
     aliases: &[],
     provisional: false,
 };
-pub const OP_COOPERATIVE_MATRIX_PER_ELEMENT_OP_NV: InstMeta = InstMeta {
-    opname: "OpCooperativeMatrixPerElementOpNV",
+pub const OP_COOPERATIVE_MATRIX_PER_ELEMENT_OP_EXT: InstMeta = InstMeta {
+    opname: "OpCooperativeMatrixPerElementOpEXT",
     class: Some(&PRINTING_CLASS_FUNCTION),
     opcode: 5369u16,
     operands: &[
@@ -18498,11 +18572,11 @@ pub const OP_COOPERATIVE_MATRIX_PER_ELEMENT_OP_NV: InstMeta = InstMeta {
             quantifier: Quantifier::ZeroOrMore,
         },
     ],
-    capabilities: &[&Capability::CooperativeMatrixPerElementOperationsNV],
+    capabilities: &[&Capability::CooperativeMatrixPerElementOperationsEXT],
     extensions: &[],
     version: Some("None"),
     last_version: None,
-    aliases: &[],
+    aliases: &["OpCooperativeMatrixPerElementOpNV"],
     provisional: false,
 };
 pub const OP_TYPE_TENSOR_LAYOUT_NV: InstMeta = InstMeta {

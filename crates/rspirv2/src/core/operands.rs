@@ -1894,6 +1894,8 @@ pub enum ExecutionMode {
         ///z rate
         LiteralInteger,
     ),
+    SubgroupSizeHalfQCOM,
+    SubgroupSizeFullQCOM,
     EarlyAndLateFragmentTestsAMD,
     StencilRefReplacingEXT,
     CoalescingAMDX,
@@ -2148,6 +2150,8 @@ unsafe impl OperandEncoding for ExecutionMode {
                 OperandEncoding::encode(p1, &mut *writer)?;
                 OperandEncoding::encode(p2, &mut *writer)?
             }
+            Self::SubgroupSizeHalfQCOM => writer.write(Word(4507u32)),
+            Self::SubgroupSizeFullQCOM => writer.write(Word(4508u32)),
             Self::EarlyAndLateFragmentTestsAMD => writer.write(Word(5017u32)),
             Self::StencilRefReplacingEXT => writer.write(Word(5027u32)),
             Self::CoalescingAMDX => writer.write(Word(5069u32)),
@@ -2354,6 +2358,8 @@ unsafe impl OperandEncoding for ExecutionMode {
                 OperandEncoding::decode(&mut *reader)?,
                 OperandEncoding::decode(&mut *reader)?,
             ),
+            4507u32 => Self::SubgroupSizeHalfQCOM,
+            4508u32 => Self::SubgroupSizeFullQCOM,
             5017u32 => Self::EarlyAndLateFragmentTestsAMD,
             5027u32 => Self::StencilRefReplacingEXT,
             5069u32 => Self::CoalescingAMDX,
@@ -2542,6 +2548,8 @@ unsafe impl OperandEncoding for ExecutionMode {
                     p2.dis(_ctx)
                 )
             }
+            Self::SubgroupSizeHalfQCOM => write!(f, " SubgroupSizeHalfQCOM"),
+            Self::SubgroupSizeFullQCOM => write!(f, " SubgroupSizeFullQCOM"),
             Self::EarlyAndLateFragmentTestsAMD => {
                 write!(f, " EarlyAndLateFragmentTestsAMD")
             }
@@ -4002,6 +4010,7 @@ pub enum Decoration {
     BindlessImageNV,
     BoundSamplerNV,
     BoundImageNV,
+    CooperativeMatrixTransposeEXT,
     SIMTCallINTEL(
         ///N
         LiteralInteger,
@@ -4422,6 +4431,7 @@ unsafe impl OperandEncoding for Decoration {
             Self::BindlessImageNV => writer.write(Word(5399u32)),
             Self::BoundSamplerNV => writer.write(Word(5400u32)),
             Self::BoundImageNV => writer.write(Word(5401u32)),
+            Self::CooperativeMatrixTransposeEXT => writer.write(Word(5440u32)),
             Self::SIMTCallINTEL(p0) => {
                 writer.write(Word(5599u32));
                 OperandEncoding::encode(p0, &mut *writer)?
@@ -4733,6 +4743,7 @@ unsafe impl OperandEncoding for Decoration {
             5399u32 => Self::BindlessImageNV,
             5400u32 => Self::BoundSamplerNV,
             5401u32 => Self::BoundImageNV,
+            5440u32 => Self::CooperativeMatrixTransposeEXT,
             5599u32 => Self::SIMTCallINTEL(OperandEncoding::decode(&mut *reader)?),
             5602u32 => Self::ReferencedIndirectlyINTEL,
             5607u32 => Self::ClobberINTEL(OperandEncoding::decode(&mut *reader)?),
@@ -4955,6 +4966,9 @@ unsafe impl OperandEncoding for Decoration {
             Self::BindlessImageNV => write!(f, " BindlessImageNV"),
             Self::BoundSamplerNV => write!(f, " BoundSamplerNV"),
             Self::BoundImageNV => write!(f, " BoundImageNV"),
+            Self::CooperativeMatrixTransposeEXT => {
+                write!(f, " CooperativeMatrixTransposeEXT")
+            }
             Self::SIMTCallINTEL(p0) => write!(f, " SIMTCallINTEL{}", p0.dis(_ctx)),
             Self::ReferencedIndirectlyINTEL => write!(f, " ReferencedIndirectlyINTEL"),
             Self::ClobberINTEL(p0) => write!(f, " ClobberINTEL{}", p0.dis(_ctx)),
@@ -5920,6 +5934,8 @@ pub enum Capability {
     TileShadingQCOM = 4495u32,
     CooperativeMatrixConversionQCOM = 4496u32,
     TextureBlockMatch2QCOM = 4498u32,
+    BFloat16MulAddQCOM = 4504u32,
+    SubgroupSizeQCOM = 4506u32,
     MultipleWaitQueuesQCOM = 4539u32,
     ImageGatherLinearQCOM = 4543u32,
     ImageGatherExtendedModesQCOM = 4544u32,
@@ -6013,13 +6029,15 @@ pub enum Capability {
     PushConstantBanksNV = 5423u32,
     LongVectorEXT = 5425u32,
     Shader64BitIndexingEXT = 5426u32,
-    CooperativeMatrixReductionsNV = 5430u32,
+    CooperativeMatrixConversionsEXT = 5429u32,
+    CooperativeMatrixReductionsEXT = 5430u32,
     CooperativeMatrixConversionsNV = 5431u32,
-    CooperativeMatrixPerElementOperationsNV = 5432u32,
+    CooperativeMatrixPerElementOperationsEXT = 5432u32,
     CooperativeMatrixTensorAddressingNV = 5433u32,
     CooperativeMatrixBlockLoadsNV = 5434u32,
     CooperativeVectorTrainingNV = 5435u32,
     RayTracingClusterAccelerationStructureNV = 5437u32,
+    CooperativeMatrixGetCoordinateEXT = 5438u32,
     TensorAddressingNV = 5439u32,
     CooperativeMatrixDecodeVectorNV = 5447u32,
     SubgroupShuffleINTEL = 5568u32,
@@ -6157,6 +6175,9 @@ impl Capability {
     pub const ComputeDerivativeGroupLinearNV: Self = Self::ComputeDerivativeGroupLinearKHR;
     pub const DemoteToHelperInvocationEXT: Self = Self::DemoteToHelperInvocation;
     pub const RayTracingOpacityMicromapEXT: Self = Self::RayTracingOpacityMicromapKHR;
+    pub const CooperativeMatrixReductionsNV: Self = Self::CooperativeMatrixReductionsEXT;
+    pub const CooperativeMatrixPerElementOperationsNV: Self =
+        Self::CooperativeMatrixPerElementOperationsEXT;
     pub const FPGAMemoryAttributesINTEL: Self = Self::FPGAMemoryAttributesALTERA;
     pub const ArbitraryPrecisionIntegersINTEL: Self = Self::ArbitraryPrecisionIntegersALTERA;
     pub const ArbitraryPrecisionFloatingPointINTEL: Self =
@@ -6327,6 +6348,8 @@ unsafe impl OperandEncoding for Capability {
             4495u32 => Self::TileShadingQCOM,
             4496u32 => Self::CooperativeMatrixConversionQCOM,
             4498u32 => Self::TextureBlockMatch2QCOM,
+            4504u32 => Self::BFloat16MulAddQCOM,
+            4506u32 => Self::SubgroupSizeQCOM,
             4539u32 => Self::MultipleWaitQueuesQCOM,
             4543u32 => Self::ImageGatherLinearQCOM,
             4544u32 => Self::ImageGatherExtendedModesQCOM,
@@ -6404,13 +6427,15 @@ unsafe impl OperandEncoding for Capability {
             5423u32 => Self::PushConstantBanksNV,
             5425u32 => Self::LongVectorEXT,
             5426u32 => Self::Shader64BitIndexingEXT,
-            5430u32 => Self::CooperativeMatrixReductionsNV,
+            5429u32 => Self::CooperativeMatrixConversionsEXT,
+            5430u32 => Self::CooperativeMatrixReductionsEXT,
             5431u32 => Self::CooperativeMatrixConversionsNV,
-            5432u32 => Self::CooperativeMatrixPerElementOperationsNV,
+            5432u32 => Self::CooperativeMatrixPerElementOperationsEXT,
             5433u32 => Self::CooperativeMatrixTensorAddressingNV,
             5434u32 => Self::CooperativeMatrixBlockLoadsNV,
             5435u32 => Self::CooperativeVectorTrainingNV,
             5437u32 => Self::RayTracingClusterAccelerationStructureNV,
+            5438u32 => Self::CooperativeMatrixGetCoordinateEXT,
             5439u32 => Self::TensorAddressingNV,
             5447u32 => Self::CooperativeMatrixDecodeVectorNV,
             5568u32 => Self::SubgroupShuffleINTEL,
@@ -6687,6 +6712,8 @@ unsafe impl OperandEncoding for Capability {
                 write!(f, " CooperativeMatrixConversionQCOM")
             }
             Self::TextureBlockMatch2QCOM => write!(f, " TextureBlockMatch2QCOM"),
+            Self::BFloat16MulAddQCOM => write!(f, " BFloat16MulAddQCOM"),
+            Self::SubgroupSizeQCOM => write!(f, " SubgroupSizeQCOM"),
             Self::MultipleWaitQueuesQCOM => write!(f, " MultipleWaitQueuesQCOM"),
             Self::ImageGatherLinearQCOM => write!(f, " ImageGatherLinearQCOM"),
             Self::ImageGatherExtendedModesQCOM => {
@@ -6818,14 +6845,17 @@ unsafe impl OperandEncoding for Capability {
             Self::PushConstantBanksNV => write!(f, " PushConstantBanksNV"),
             Self::LongVectorEXT => write!(f, " LongVectorEXT"),
             Self::Shader64BitIndexingEXT => write!(f, " Shader64BitIndexingEXT"),
-            Self::CooperativeMatrixReductionsNV => {
-                write!(f, " CooperativeMatrixReductionsNV")
+            Self::CooperativeMatrixConversionsEXT => {
+                write!(f, " CooperativeMatrixConversionsEXT")
+            }
+            Self::CooperativeMatrixReductionsEXT => {
+                write!(f, " CooperativeMatrixReductionsEXT")
             }
             Self::CooperativeMatrixConversionsNV => {
                 write!(f, " CooperativeMatrixConversionsNV")
             }
-            Self::CooperativeMatrixPerElementOperationsNV => {
-                write!(f, " CooperativeMatrixPerElementOperationsNV")
+            Self::CooperativeMatrixPerElementOperationsEXT => {
+                write!(f, " CooperativeMatrixPerElementOperationsEXT")
             }
             Self::CooperativeMatrixTensorAddressingNV => {
                 write!(f, " CooperativeMatrixTensorAddressingNV")
@@ -6838,6 +6868,9 @@ unsafe impl OperandEncoding for Capability {
             }
             Self::RayTracingClusterAccelerationStructureNV => {
                 write!(f, " RayTracingClusterAccelerationStructureNV")
+            }
+            Self::CooperativeMatrixGetCoordinateEXT => {
+                write!(f, " CooperativeMatrixGetCoordinateEXT")
             }
             Self::TensorAddressingNV => write!(f, " TensorAddressingNV"),
             Self::CooperativeMatrixDecodeVectorNV => {

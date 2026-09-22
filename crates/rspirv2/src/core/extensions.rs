@@ -58,6 +58,8 @@ pub const EXTENSION_SPV_ARM_GRAPH: Extension = Extension::new("SPV_ARM_graph");
 pub const EXTENSION_SPV_ARM_TENSORS: Extension = Extension::new("SPV_ARM_tensors");
 pub const EXTENSION_SPV_EXT_ARITHMETIC_FENCE: Extension =
     Extension::new("SPV_EXT_arithmetic_fence");
+pub const EXTENSION_SPV_EXT_COOPERATIVE_MATRIX_MAINTENANCE_1: Extension =
+    Extension::new("SPV_EXT_cooperative_matrix_maintenance1");
 pub const EXTENSION_SPV_EXT_DEMOTE_TO_HELPER_INVOCATION: Extension =
     Extension::new("SPV_EXT_demote_to_helper_invocation");
 pub const EXTENSION_SPV_EXT_DESCRIPTOR_HEAP: Extension = Extension::new("SPV_EXT_descriptor_heap");
@@ -317,6 +319,8 @@ pub const EXTENSION_SPV_NV_STEREO_VIEW_RENDERING: Extension =
 pub const EXTENSION_SPV_NV_TENSOR_ADDRESSING: Extension =
     Extension::new("SPV_NV_tensor_addressing");
 pub const EXTENSION_SPV_NV_VIEWPORT_ARRAY_2: Extension = Extension::new("SPV_NV_viewport_array2");
+pub const EXTENSION_SPV_QCOM_BFLOAT_16_MULADD: Extension =
+    Extension::new("SPV_QCOM_bfloat16_muladd");
 pub const EXTENSION_SPV_QCOM_COOPERATIVE_MATRIX_CONVERSION: Extension =
     Extension::new("SPV_QCOM_cooperative_matrix_conversion");
 pub const EXTENSION_SPV_QCOM_IMAGE_PROCESSING: Extension =
@@ -327,6 +331,7 @@ pub const EXTENSION_SPV_QCOM_IMAGE_PROCESSING_3: Extension =
     Extension::new("SPV_QCOM_image_processing3");
 pub const EXTENSION_SPV_QCOM_MULTIPLE_WAIT_QUEUES: Extension =
     Extension::new("SPV_QCOM_multiple_wait_queues");
+pub const EXTENSION_SPV_QCOM_SUBGROUP_SIZE: Extension = Extension::new("SPV_QCOM_subgroup_size");
 pub const EXTENSION_SPV_QCOM_TILE_SHADING: Extension = Extension::new("SPV_QCOM_tile_shading");
 pub const EXTENSION_SPV_SAMSUNG_INTRINSIC: Extension = Extension::new("SPV_SAMSUNG_intrinsic");
 pub const EXTENSION_SPV_VALVE_MIXED_FLOAT_DOT_PRODUCT: Extension =

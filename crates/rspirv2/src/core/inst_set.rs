@@ -414,6 +414,7 @@ pub enum CoreInstSet {
     ImageBlockMatchWindowSADQCOM(OpImageBlockMatchWindowSADQCOM),
     ImageBlockMatchGatherSSDQCOM(OpImageBlockMatchGatherSSDQCOM),
     ImageBlockMatchGatherSADQCOM(OpImageBlockMatchGatherSADQCOM),
+    BFloat16MulAddQCOM(OpBFloat16MulAddQCOM),
     CompositeConstructCoopMatQCOM(OpCompositeConstructCoopMatQCOM),
     CompositeExtractCoopMatQCOM(OpCompositeExtractCoopMatQCOM),
     ExtractSubArrayQCOM(OpExtractSubArrayQCOM),
@@ -488,7 +489,7 @@ pub enum CoreInstSet {
     CooperativeVectorOuterProductAccumulateNV(OpCooperativeVectorOuterProductAccumulateNV),
     CooperativeVectorReduceSumAccumulateNV(OpCooperativeVectorReduceSumAccumulateNV),
     CooperativeVectorMatrixMulAddNV(OpCooperativeVectorMatrixMulAddNV),
-    CooperativeMatrixConvertNV(OpCooperativeMatrixConvertNV),
+    CooperativeMatrixConvertUseEXT(OpCooperativeMatrixConvertUseEXT),
     EmitMeshTasksEXT(OpEmitMeshTasksEXT),
     SetMeshOutputsEXT(OpSetMeshOutputsEXT),
     GroupNonUniformPartitionEXT(OpGroupNonUniformPartitionEXT),
@@ -553,12 +554,13 @@ pub enum CoreInstSet {
     CooperativeMatrixStoreNV(OpCooperativeMatrixStoreNV),
     CooperativeMatrixMulAddNV(OpCooperativeMatrixMulAddNV),
     CooperativeMatrixLengthNV(OpCooperativeMatrixLengthNV),
+    CooperativeMatrixGetCoordinateEXT(OpCooperativeMatrixGetCoordinateEXT),
     BeginInvocationInterlockEXT(OpBeginInvocationInterlockEXT),
     EndInvocationInterlockEXT(OpEndInvocationInterlockEXT),
-    CooperativeMatrixReduceNV(OpCooperativeMatrixReduceNV),
+    CooperativeMatrixReduceEXT(OpCooperativeMatrixReduceEXT),
     CooperativeMatrixLoadTensorNV(OpCooperativeMatrixLoadTensorNV),
     CooperativeMatrixStoreTensorNV(OpCooperativeMatrixStoreTensorNV),
-    CooperativeMatrixPerElementOpNV(OpCooperativeMatrixPerElementOpNV),
+    CooperativeMatrixPerElementOpEXT(OpCooperativeMatrixPerElementOpEXT),
     TypeTensorLayoutNV(OpTypeTensorLayoutNV),
     TypeTensorViewNV(OpTypeTensorViewNV),
     CreateTensorLayoutNV(OpCreateTensorLayoutNV),
@@ -1444,6 +1446,7 @@ impl InstEncoding for CoreInstSet {
             Self::ImageBlockMatchWindowSADQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::ImageBlockMatchGatherSSDQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::ImageBlockMatchGatherSADQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::BFloat16MulAddQCOM(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::CompositeConstructCoopMatQCOM(inst) => {
                 InstEncoding::id_result(inst).to_optional()
             }
@@ -1542,7 +1545,9 @@ impl InstEncoding for CoreInstSet {
             Self::CooperativeVectorMatrixMulAddNV(inst) => {
                 InstEncoding::id_result(inst).to_optional()
             }
-            Self::CooperativeMatrixConvertNV(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::CooperativeMatrixConvertUseEXT(inst) => {
+                InstEncoding::id_result(inst).to_optional()
+            }
             Self::EmitMeshTasksEXT(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::SetMeshOutputsEXT(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::GroupNonUniformPartitionEXT(inst) => InstEncoding::id_result(inst).to_optional(),
@@ -1641,16 +1646,19 @@ impl InstEncoding for CoreInstSet {
             Self::CooperativeMatrixStoreNV(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::CooperativeMatrixMulAddNV(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::CooperativeMatrixLengthNV(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::CooperativeMatrixGetCoordinateEXT(inst) => {
+                InstEncoding::id_result(inst).to_optional()
+            }
             Self::BeginInvocationInterlockEXT(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::EndInvocationInterlockEXT(inst) => InstEncoding::id_result(inst).to_optional(),
-            Self::CooperativeMatrixReduceNV(inst) => InstEncoding::id_result(inst).to_optional(),
+            Self::CooperativeMatrixReduceEXT(inst) => InstEncoding::id_result(inst).to_optional(),
             Self::CooperativeMatrixLoadTensorNV(inst) => {
                 InstEncoding::id_result(inst).to_optional()
             }
             Self::CooperativeMatrixStoreTensorNV(inst) => {
                 InstEncoding::id_result(inst).to_optional()
             }
-            Self::CooperativeMatrixPerElementOpNV(inst) => {
+            Self::CooperativeMatrixPerElementOpEXT(inst) => {
                 InstEncoding::id_result(inst).to_optional()
             }
             Self::TypeTensorLayoutNV(inst) => InstEncoding::id_result(inst).to_optional(),
@@ -2812,6 +2820,7 @@ impl InstEncoding for CoreInstSet {
             Self::ImageBlockMatchGatherSADQCOM(inst) => {
                 InstEncoding::id_result_type(inst).to_optional()
             }
+            Self::BFloat16MulAddQCOM(inst) => InstEncoding::id_result_type(inst).to_optional(),
             Self::CompositeConstructCoopMatQCOM(inst) => {
                 InstEncoding::id_result_type(inst).to_optional()
             }
@@ -2954,7 +2963,7 @@ impl InstEncoding for CoreInstSet {
             Self::CooperativeVectorMatrixMulAddNV(inst) => {
                 InstEncoding::id_result_type(inst).to_optional()
             }
-            Self::CooperativeMatrixConvertNV(inst) => {
+            Self::CooperativeMatrixConvertUseEXT(inst) => {
                 InstEncoding::id_result_type(inst).to_optional()
             }
             Self::EmitMeshTasksEXT(inst) => InstEncoding::id_result_type(inst).to_optional(),
@@ -3089,13 +3098,16 @@ impl InstEncoding for CoreInstSet {
             Self::CooperativeMatrixLengthNV(inst) => {
                 InstEncoding::id_result_type(inst).to_optional()
             }
+            Self::CooperativeMatrixGetCoordinateEXT(inst) => {
+                InstEncoding::id_result_type(inst).to_optional()
+            }
             Self::BeginInvocationInterlockEXT(inst) => {
                 InstEncoding::id_result_type(inst).to_optional()
             }
             Self::EndInvocationInterlockEXT(inst) => {
                 InstEncoding::id_result_type(inst).to_optional()
             }
-            Self::CooperativeMatrixReduceNV(inst) => {
+            Self::CooperativeMatrixReduceEXT(inst) => {
                 InstEncoding::id_result_type(inst).to_optional()
             }
             Self::CooperativeMatrixLoadTensorNV(inst) => {
@@ -3104,7 +3116,7 @@ impl InstEncoding for CoreInstSet {
             Self::CooperativeMatrixStoreTensorNV(inst) => {
                 InstEncoding::id_result_type(inst).to_optional()
             }
-            Self::CooperativeMatrixPerElementOpNV(inst) => {
+            Self::CooperativeMatrixPerElementOpEXT(inst) => {
                 InstEncoding::id_result_type(inst).to_optional()
             }
             Self::TypeTensorLayoutNV(inst) => InstEncoding::id_result_type(inst).to_optional(),
@@ -4239,6 +4251,7 @@ impl InstEncoding for CoreInstSet {
             Self::ImageBlockMatchWindowSADQCOM(inst) => InstEncoding::encode(inst, writer),
             Self::ImageBlockMatchGatherSSDQCOM(inst) => InstEncoding::encode(inst, writer),
             Self::ImageBlockMatchGatherSADQCOM(inst) => InstEncoding::encode(inst, writer),
+            Self::BFloat16MulAddQCOM(inst) => InstEncoding::encode(inst, writer),
             Self::CompositeConstructCoopMatQCOM(inst) => InstEncoding::encode(inst, writer),
             Self::CompositeExtractCoopMatQCOM(inst) => InstEncoding::encode(inst, writer),
             Self::ExtractSubArrayQCOM(inst) => InstEncoding::encode(inst, writer),
@@ -4321,7 +4334,7 @@ impl InstEncoding for CoreInstSet {
                 InstEncoding::encode(inst, writer)
             }
             Self::CooperativeVectorMatrixMulAddNV(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixConvertNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixConvertUseEXT(inst) => InstEncoding::encode(inst, writer),
             Self::EmitMeshTasksEXT(inst) => InstEncoding::encode(inst, writer),
             Self::SetMeshOutputsEXT(inst) => InstEncoding::encode(inst, writer),
             Self::GroupNonUniformPartitionEXT(inst) => InstEncoding::encode(inst, writer),
@@ -4392,12 +4405,13 @@ impl InstEncoding for CoreInstSet {
             Self::CooperativeMatrixStoreNV(inst) => InstEncoding::encode(inst, writer),
             Self::CooperativeMatrixMulAddNV(inst) => InstEncoding::encode(inst, writer),
             Self::CooperativeMatrixLengthNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixGetCoordinateEXT(inst) => InstEncoding::encode(inst, writer),
             Self::BeginInvocationInterlockEXT(inst) => InstEncoding::encode(inst, writer),
             Self::EndInvocationInterlockEXT(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixReduceNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixReduceEXT(inst) => InstEncoding::encode(inst, writer),
             Self::CooperativeMatrixLoadTensorNV(inst) => InstEncoding::encode(inst, writer),
             Self::CooperativeMatrixStoreTensorNV(inst) => InstEncoding::encode(inst, writer),
-            Self::CooperativeMatrixPerElementOpNV(inst) => InstEncoding::encode(inst, writer),
+            Self::CooperativeMatrixPerElementOpEXT(inst) => InstEncoding::encode(inst, writer),
             Self::TypeTensorLayoutNV(inst) => InstEncoding::encode(inst, writer),
             Self::TypeTensorViewNV(inst) => InstEncoding::encode(inst, writer),
             Self::CreateTensorLayoutNV(inst) => InstEncoding::encode(inst, writer),
@@ -6463,6 +6477,11 @@ impl InstEncoding for CoreInstSet {
                         <OpImageBlockMatchGatherSADQCOM as InstEncoding>::decode(reader)?,
                     )
                 }
+                4505u16 => {
+                    Self::BFloat16MulAddQCOM(
+                        <OpBFloat16MulAddQCOM as InstEncoding>::decode(reader)?,
+                    )
+                }
                 4540u16 => {
                     Self::CompositeConstructCoopMatQCOM(
                         <OpCompositeConstructCoopMatQCOM as InstEncoding>::decode(
@@ -6848,8 +6867,10 @@ impl InstEncoding for CoreInstSet {
                     )
                 }
                 5293u16 => {
-                    Self::CooperativeMatrixConvertNV(
-                        <OpCooperativeMatrixConvertNV as InstEncoding>::decode(reader)?,
+                    Self::CooperativeMatrixConvertUseEXT(
+                        <OpCooperativeMatrixConvertUseEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
                     )
                 }
                 5294u16 => {
@@ -7186,6 +7207,13 @@ impl InstEncoding for CoreInstSet {
                         <OpCooperativeMatrixLengthNV as InstEncoding>::decode(reader)?,
                     )
                 }
+                5363u16 => {
+                    Self::CooperativeMatrixGetCoordinateEXT(
+                        <OpCooperativeMatrixGetCoordinateEXT as InstEncoding>::decode(
+                            reader,
+                        )?,
+                    )
+                }
                 5364u16 => {
                     Self::BeginInvocationInterlockEXT(
                         <OpBeginInvocationInterlockEXT as InstEncoding>::decode(reader)?,
@@ -7197,8 +7225,8 @@ impl InstEncoding for CoreInstSet {
                     )
                 }
                 5366u16 => {
-                    Self::CooperativeMatrixReduceNV(
-                        <OpCooperativeMatrixReduceNV as InstEncoding>::decode(reader)?,
+                    Self::CooperativeMatrixReduceEXT(
+                        <OpCooperativeMatrixReduceEXT as InstEncoding>::decode(reader)?,
                     )
                 }
                 5367u16 => {
@@ -7216,8 +7244,8 @@ impl InstEncoding for CoreInstSet {
                     )
                 }
                 5369u16 => {
-                    Self::CooperativeMatrixPerElementOpNV(
-                        <OpCooperativeMatrixPerElementOpNV as InstEncoding>::decode(
+                    Self::CooperativeMatrixPerElementOpEXT(
+                        <OpCooperativeMatrixPerElementOpEXT as InstEncoding>::decode(
                             reader,
                         )?,
                     )
@@ -9516,6 +9544,7 @@ impl InstEncoding for CoreInstSet {
             Self::ImageBlockMatchWindowSADQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::ImageBlockMatchGatherSSDQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::ImageBlockMatchGatherSADQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::BFloat16MulAddQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::CompositeConstructCoopMatQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::CompositeExtractCoopMatQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::ExtractSubArrayQCOM(inst) => InstEncoding::dis_fmt(inst, f, ctx),
@@ -9598,7 +9627,7 @@ impl InstEncoding for CoreInstSet {
                 InstEncoding::dis_fmt(inst, f, ctx)
             }
             Self::CooperativeVectorMatrixMulAddNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixConvertNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixConvertUseEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::EmitMeshTasksEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::SetMeshOutputsEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::GroupNonUniformPartitionEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
@@ -9673,12 +9702,13 @@ impl InstEncoding for CoreInstSet {
             Self::CooperativeMatrixStoreNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::CooperativeMatrixMulAddNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::CooperativeMatrixLengthNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixGetCoordinateEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::BeginInvocationInterlockEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::EndInvocationInterlockEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixReduceNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixReduceEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::CooperativeMatrixLoadTensorNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::CooperativeMatrixStoreTensorNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
-            Self::CooperativeMatrixPerElementOpNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
+            Self::CooperativeMatrixPerElementOpEXT(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::TypeTensorLayoutNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::TypeTensorViewNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
             Self::CreateTensorLayoutNV(inst) => InstEncoding::dis_fmt(inst, f, ctx),
@@ -12276,6 +12306,11 @@ impl From<OpImageBlockMatchGatherSADQCOM> for CoreInstSet {
         Self::ImageBlockMatchGatherSADQCOM(inst)
     }
 }
+impl From<OpBFloat16MulAddQCOM> for CoreInstSet {
+    fn from(inst: OpBFloat16MulAddQCOM) -> Self {
+        Self::BFloat16MulAddQCOM(inst)
+    }
+}
 impl From<OpCompositeConstructCoopMatQCOM> for CoreInstSet {
     fn from(inst: OpCompositeConstructCoopMatQCOM) -> Self {
         Self::CompositeConstructCoopMatQCOM(inst)
@@ -12646,9 +12681,9 @@ impl From<OpCooperativeVectorMatrixMulAddNV> for CoreInstSet {
         Self::CooperativeVectorMatrixMulAddNV(inst)
     }
 }
-impl From<OpCooperativeMatrixConvertNV> for CoreInstSet {
-    fn from(inst: OpCooperativeMatrixConvertNV) -> Self {
-        Self::CooperativeMatrixConvertNV(inst)
+impl From<OpCooperativeMatrixConvertUseEXT> for CoreInstSet {
+    fn from(inst: OpCooperativeMatrixConvertUseEXT) -> Self {
+        Self::CooperativeMatrixConvertUseEXT(inst)
     }
 }
 impl From<OpEmitMeshTasksEXT> for CoreInstSet {
@@ -12951,6 +12986,11 @@ impl From<OpCooperativeMatrixLengthNV> for CoreInstSet {
         Self::CooperativeMatrixLengthNV(inst)
     }
 }
+impl From<OpCooperativeMatrixGetCoordinateEXT> for CoreInstSet {
+    fn from(inst: OpCooperativeMatrixGetCoordinateEXT) -> Self {
+        Self::CooperativeMatrixGetCoordinateEXT(inst)
+    }
+}
 impl From<OpBeginInvocationInterlockEXT> for CoreInstSet {
     fn from(inst: OpBeginInvocationInterlockEXT) -> Self {
         Self::BeginInvocationInterlockEXT(inst)
@@ -12961,9 +13001,9 @@ impl From<OpEndInvocationInterlockEXT> for CoreInstSet {
         Self::EndInvocationInterlockEXT(inst)
     }
 }
-impl From<OpCooperativeMatrixReduceNV> for CoreInstSet {
-    fn from(inst: OpCooperativeMatrixReduceNV) -> Self {
-        Self::CooperativeMatrixReduceNV(inst)
+impl From<OpCooperativeMatrixReduceEXT> for CoreInstSet {
+    fn from(inst: OpCooperativeMatrixReduceEXT) -> Self {
+        Self::CooperativeMatrixReduceEXT(inst)
     }
 }
 impl From<OpCooperativeMatrixLoadTensorNV> for CoreInstSet {
@@ -12976,9 +13016,9 @@ impl From<OpCooperativeMatrixStoreTensorNV> for CoreInstSet {
         Self::CooperativeMatrixStoreTensorNV(inst)
     }
 }
-impl From<OpCooperativeMatrixPerElementOpNV> for CoreInstSet {
-    fn from(inst: OpCooperativeMatrixPerElementOpNV) -> Self {
-        Self::CooperativeMatrixPerElementOpNV(inst)
+impl From<OpCooperativeMatrixPerElementOpEXT> for CoreInstSet {
+    fn from(inst: OpCooperativeMatrixPerElementOpEXT) -> Self {
+        Self::CooperativeMatrixPerElementOpEXT(inst)
     }
 }
 impl From<OpTypeTensorLayoutNV> for CoreInstSet {

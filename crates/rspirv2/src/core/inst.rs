@@ -24499,6 +24499,72 @@ impl InstEncoding for OpImageBlockMatchGatherSADQCOM {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct OpBFloat16MulAddQCOM {
+    pub id_result_type: IdResultType,
+    pub id_result: IdResult,
+    pub operand_1: IdRef,
+    pub operand_2: IdRef,
+    pub operand_3: IdRef,
+}
+impl Inst for OpBFloat16MulAddQCOM {
+    const META: &InstMeta = &OP_B_FLOAT_16_MUL_ADD_QCOM;
+}
+impl InstEncoding for OpBFloat16MulAddQCOM {
+    type IdResult = IdResult;
+    type IdResultType = IdResult;
+    fn id_result(&self) -> Self::IdResult {
+        self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
+    }
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        let len = 1
+            + OperandEncoding::word_len(&self.id_result_type)
+            + OperandEncoding::word_len(&self.id_result)
+            + OperandEncoding::word_len(&self.operand_1)
+            + OperandEncoding::word_len(&self.operand_2)
+            + OperandEncoding::word_len(&self.operand_3);
+        writer.write_op(Self::META.opcode, len)?;
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_3, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = reader.check_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type: OperandEncoding::decode(&mut op_reader)?,
+            id_result: OperandEncoding::decode(&mut op_reader)?,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode(&mut op_reader)?,
+            operand_3: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
+        let ctx = &OperandDisContext {
+            id_result: Some(self.id_result),
+            id_result_type: Some(self.id_result_type),
+            ctx,
+        };
+        let rspirv_space = ctx.rspirv_space();
+        write!(
+            f,
+            "{}OpBFloat16MulAddQCOM{rspirv_space}{}{rspirv_space}{}{}{}",
+            ctx.id_result_writer(),
+            self.id_result_type.dis(ctx),
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx),
+            self.operand_3.dis(ctx)
+        )
+    }
+}
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCompositeConstructCoopMatQCOM {
     pub id_result_type: IdResultType,
     pub id_result: IdResult,
@@ -29105,15 +29171,16 @@ impl InstEncoding for OpCooperativeVectorMatrixMulAddNV {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpCooperativeMatrixConvertNV {
+pub struct OpCooperativeMatrixConvertUseEXT {
     pub id_result_type: IdResultType,
     pub id_result: IdResult,
     pub matrix: IdRef,
 }
-impl Inst for OpCooperativeMatrixConvertNV {
-    const META: &InstMeta = &OP_COOPERATIVE_MATRIX_CONVERT_NV;
+pub type OpCooperativeMatrixConvertNV = OpCooperativeMatrixConvertUseEXT;
+impl Inst for OpCooperativeMatrixConvertUseEXT {
+    const META: &InstMeta = &OP_COOPERATIVE_MATRIX_CONVERT_USE_EXT;
 }
-impl InstEncoding for OpCooperativeMatrixConvertNV {
+impl InstEncoding for OpCooperativeMatrixConvertUseEXT {
     type IdResult = IdResult;
     type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
@@ -29153,7 +29220,7 @@ impl InstEncoding for OpCooperativeMatrixConvertNV {
         let rspirv_space = ctx.rspirv_space();
         write!(
             f,
-            "{}OpCooperativeMatrixConvertNV{rspirv_space}{}{rspirv_space}{}",
+            "{}OpCooperativeMatrixConvertUseEXT{rspirv_space}{}{rspirv_space}{}",
             ctx.id_result_writer(),
             self.id_result_type.dis(ctx),
             self.matrix.dis(ctx)
@@ -32820,6 +32887,67 @@ impl InstEncoding for OpCooperativeMatrixLengthNV {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
+pub struct OpCooperativeMatrixGetCoordinateEXT {
+    pub id_result_type: IdResultType,
+    pub id_result: IdResult,
+    pub matrix: IdRef,
+    pub index: IdRef,
+}
+impl Inst for OpCooperativeMatrixGetCoordinateEXT {
+    const META: &InstMeta = &OP_COOPERATIVE_MATRIX_GET_COORDINATE_EXT;
+}
+impl InstEncoding for OpCooperativeMatrixGetCoordinateEXT {
+    type IdResult = IdResult;
+    type IdResultType = IdResult;
+    fn id_result(&self) -> Self::IdResult {
+        self.id_result
+    }
+    fn id_result_type(&self) -> Self::IdResultType {
+        self.id_result_type.0
+    }
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        let len = 1
+            + OperandEncoding::word_len(&self.id_result_type)
+            + OperandEncoding::word_len(&self.id_result)
+            + OperandEncoding::word_len(&self.matrix)
+            + OperandEncoding::word_len(&self.index);
+        writer.write_op(Self::META.opcode, len)?;
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        OperandEncoding::encode(&self.matrix, &mut *writer)?;
+        OperandEncoding::encode(&self.index, &mut *writer)?;
+        Ok(())
+    }
+    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = reader.check_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type: OperandEncoding::decode(&mut op_reader)?,
+            id_result: OperandEncoding::decode(&mut op_reader)?,
+            matrix: OperandEncoding::decode(&mut op_reader)?,
+            index: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
+        profiling::function_scope!();
+        let ctx = &OperandDisContext {
+            id_result: Some(self.id_result),
+            id_result_type: Some(self.id_result_type),
+            ctx,
+        };
+        let rspirv_space = ctx.rspirv_space();
+        write!(
+            f,
+            "{}OpCooperativeMatrixGetCoordinateEXT{rspirv_space}{}{rspirv_space}{}{}",
+            ctx.id_result_writer(),
+            self.id_result_type.dis(ctx),
+            self.matrix.dis(ctx),
+            self.index.dis(ctx)
+        )
+    }
+}
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpBeginInvocationInterlockEXT {}
 impl Inst for OpBeginInvocationInterlockEXT {
     const META: &InstMeta = &OP_BEGIN_INVOCATION_INTERLOCK_EXT;
@@ -32882,17 +33010,18 @@ impl InstEncoding for OpEndInvocationInterlockEXT {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpCooperativeMatrixReduceNV {
+pub struct OpCooperativeMatrixReduceEXT {
     pub id_result_type: IdResultType,
     pub id_result: IdResult,
     pub matrix: IdRef,
     pub reduce: CooperativeMatrixReduce,
     pub combine_func: IdRef,
 }
-impl Inst for OpCooperativeMatrixReduceNV {
-    const META: &InstMeta = &OP_COOPERATIVE_MATRIX_REDUCE_NV;
+pub type OpCooperativeMatrixReduceNV = OpCooperativeMatrixReduceEXT;
+impl Inst for OpCooperativeMatrixReduceEXT {
+    const META: &InstMeta = &OP_COOPERATIVE_MATRIX_REDUCE_EXT;
 }
-impl InstEncoding for OpCooperativeMatrixReduceNV {
+impl InstEncoding for OpCooperativeMatrixReduceEXT {
     type IdResult = IdResult;
     type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
@@ -32938,7 +33067,7 @@ impl InstEncoding for OpCooperativeMatrixReduceNV {
         let rspirv_space = ctx.rspirv_space();
         write!(
             f,
-            "{}OpCooperativeMatrixReduceNV{rspirv_space}{}{rspirv_space}{}{}{}",
+            "{}OpCooperativeMatrixReduceEXT{rspirv_space}{}{rspirv_space}{}{}{}",
             ctx.id_result_writer(),
             self.id_result_type.dis(ctx),
             self.matrix.dis(ctx),
@@ -33086,17 +33215,18 @@ impl InstEncoding for OpCooperativeMatrixStoreTensorNV {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpCooperativeMatrixPerElementOpNV {
+pub struct OpCooperativeMatrixPerElementOpEXT {
     pub id_result_type: IdResultType,
     pub id_result: IdResult,
     pub matrix: IdRef,
     pub func: IdRef,
     pub operands: ZeroOrMore<IdRef>,
 }
-impl Inst for OpCooperativeMatrixPerElementOpNV {
-    const META: &InstMeta = &OP_COOPERATIVE_MATRIX_PER_ELEMENT_OP_NV;
+pub type OpCooperativeMatrixPerElementOpNV = OpCooperativeMatrixPerElementOpEXT;
+impl Inst for OpCooperativeMatrixPerElementOpEXT {
+    const META: &InstMeta = &OP_COOPERATIVE_MATRIX_PER_ELEMENT_OP_EXT;
 }
-impl InstEncoding for OpCooperativeMatrixPerElementOpNV {
+impl InstEncoding for OpCooperativeMatrixPerElementOpEXT {
     type IdResult = IdResult;
     type IdResultType = IdResult;
     fn id_result(&self) -> Self::IdResult {
@@ -33142,7 +33272,7 @@ impl InstEncoding for OpCooperativeMatrixPerElementOpNV {
         let rspirv_space = ctx.rspirv_space();
         write!(
             f,
-            "{}OpCooperativeMatrixPerElementOpNV{rspirv_space}{}{rspirv_space}{}{}{}",
+            "{}OpCooperativeMatrixPerElementOpEXT{rspirv_space}{}{rspirv_space}{}{}{}",
             ctx.id_result_writer(),
             self.id_result_type.dis(ctx),
             self.matrix.dis(ctx),

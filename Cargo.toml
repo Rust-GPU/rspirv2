@@ -14,7 +14,7 @@ members = [
 resolver = "3"
 
 [workspace.package]
-version = "0.1.0+sdk-1.4.357"
+version = "0.1.0+sdk-1.4.363"
 edition = "2024"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/Rust-GPU/rspirv2/"
