@@ -30,6 +30,9 @@ pub struct HeadersUpdate {
     /// Branch or revision to point the submodule at. Defaults to the branch
     /// with the highest semver matching `vulkan-sdk-*.*.*`.
     rev: Option<String>,
+    /// Proceed updating things anyway, even if the version didn't change. Useful if submodules are in a weird state.
+    #[clap(long)]
+    force: bool,
     /// Skip running autogen to update generated files
     #[clap(long)]
     skip_autogen: bool,
@@ -61,7 +64,7 @@ impl HeadersUpdate {
             ])
             .context("reading submodule branch from .gitmodules")?;
         let old_branch = old_branch.trim();
-        if old_branch == branch {
+        if !self.force && old_branch == branch {
             println!("SPIR-V headers is already set to `{branch}`, skipping");
             return Ok(());
         }
@@ -78,7 +81,7 @@ impl HeadersUpdate {
         repo.git(&["submodule", "update", "--remote", SUBMODULE_PATH])?;
 
         if !self.skip_version {
-            set_workspace_sdk_version(repo, &branch)
+            set_workspace_sdk_version(repo, &branch, self.force)
                 .context("updating workspace sdk version suffix")?;
         }
 
@@ -102,7 +105,7 @@ impl HeadersUpdate {
 }
 
 /// Update the workspace version `+sdk-<version>` appendix
-fn set_workspace_sdk_version(repo: &GitRepo, branch: &str) -> anyhow::Result<()> {
+fn set_workspace_sdk_version(repo: &GitRepo, branch: &str, force: bool) -> anyhow::Result<()> {
     let sdk_version = {
         let (major, minor, patch) =
             parse_branch_semver(branch, BRANCH_PREFIX).context("failed to parse branch")?;
@@ -121,7 +124,7 @@ fn set_workspace_sdk_version(repo: &GitRepo, branch: &str) -> anyhow::Result<()>
         .context("no workspace `version` line found")?;
     let base = old_version.split('+').next().unwrap_or(old_version);
     let new_version = format!("{base}+sdk-{sdk_version}");
-    if old_version == new_version {
+    if !force && old_version == new_version {
         println!("Workspace version already set to `{new_version}`");
         return Ok(());
     }
