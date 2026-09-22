@@ -1,4 +1,4 @@
 [submodule "crates/grammar/headers"]
 	path = crates/grammar/headers
 	url = https://github.com/KhronosGroup/SPIRV-Headers.git
-	branch = vulkan-sdk-1.4.357
+	branch = vulkan-sdk-1.4.363
