@@ -45,7 +45,7 @@ impl HeadersUpdate {
         } else {
             let branch = SubmoduleBranches::fetch(repo, SUBMODULE_PATH, BRANCH_PREFIX)?
                 .highest_semver_branch(BRANCH_PREFIX)?;
-            println!("Newest SPIR-V header version is `{branch}`");
+            println!("Resolved newest SPIR-V header version `{branch}`");
             branch
         };
 
@@ -57,12 +57,13 @@ impl HeadersUpdate {
                 &format!("submodule.{SUBMODULE_PATH}.branch"),
             ])
             .context("reading submodule branch from .gitmodules")?;
-        if old_branch.trim() == branch {
+        let old_branch = old_branch.trim();
+        if old_branch == branch {
             println!("SPIR-V headers is already set to `{branch}`, skipping");
             return Ok(());
         }
 
-        println!("Setting SPIR-V headers to `{branch}`");
+        println!("Updating SPIR-V headers from `{old_branch}` to `{branch}`");
         repo.git(&[
             "submodule",
             "set-branch",
@@ -114,11 +115,11 @@ fn set_workspace_sdk_version(repo: &GitRepo, branch: &str) -> anyhow::Result<()>
     let base = old_version.split('+').next().unwrap_or(old_version);
     let new_version = format!("{base}+sdk-{sdk_version}");
     if old_version == new_version {
-        println!("Workspace version already `{new_version}`");
+        println!("Workspace version already set to `{new_version}`");
         return Ok(());
     }
 
-    println!("Setting workspace version to `{new_version}`");
+    println!("Updating workspace version from `{old_version}` to `{new_version}`");
     let content = content.replacen(old_version, &new_version, 1);
     fs::write(&path, content).context("writing Cargo.toml")?;
     Ok(())
