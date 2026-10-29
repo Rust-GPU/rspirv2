@@ -41,6 +41,7 @@ pub const DIS_REFERENCE: SpvFolder<'_> = spv("dis_reference");
 pub const TEXTURE_GRAD_OFFSET: SpvFolder<'_> = spv("textureGradOffset");
 pub const CONST_SPECS: SpvFolder<'_> = spv("const_specs");
 pub const CORE_PRE_LINK: SpvFolder<'_> = spv("core_pre_link");
+pub const SPEC_CONSTANT_OP: SpvFolder<'_> = spv("spec_constant_op");
 
 pub fn test_disassembly(path: PathBuf, expect: ExpectFile, profile: Profile) -> anyhow::Result<()> {
     for module_swap_bytes in [false, true] {
