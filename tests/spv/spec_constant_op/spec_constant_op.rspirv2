@@ -1,0 +1,63 @@
+               OpCapability Shader
+          %1 = OpExtInstImport "GLSL.std.450"
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main" %gl_GlobalInvocationID
+               OpExecutionMode %main LocalSize 64 1 1
+               OpSource GLSL 450
+               OpSourceExtension "GL_GOOGLE_cpp_style_line_directive"
+               OpSourceExtension "GL_GOOGLE_include_directive"
+               OpName %main "main"
+               OpName %idx "idx"
+               OpName %gl_GlobalInvocationID "gl_GlobalInvocationID"
+               OpName %Data "Data"
+               OpMemberName %Data 0 "data"
+               OpName %19 ""
+               OpName %a "a"
+               OpName %b "b"
+               OpName %c "c"
+               OpDecorate %gl_GlobalInvocationID BuiltIn GlobalInvocationId
+               OpDecorate %_runtimearr_u32 ArrayStride 4
+               OpDecorate %Data BufferBlock
+               OpMemberDecorate %Data 0 Offset 0
+               OpDecorate %19 Binding 0
+               OpDecorate %19 DescriptorSet 0
+               OpDecorate %a SpecId 0
+               OpDecorate %b SpecId 1
+               OpDecorate %c SpecId 2
+               OpDecorate %33 BuiltIn WorkgroupSize
+       %void = OpTypeVoid
+          %3 = OpTypeFunction %void
+        %u32 = OpTypeInt 32 0
+%_ptr_Function_u32 = OpTypePointer Function %u32
+      %v3u32 = OpTypeVector %u32 3
+%_ptr_Input_v3u32 = OpTypePointer Input %v3u32
+%gl_GlobalInvocationID = OpVariable %_ptr_Input_v3u32 Input
+      %u32_0 = OpConstant %u32 0
+%_ptr_Input_u32 = OpTypePointer Input %u32
+%_runtimearr_u32 = OpTypeRuntimeArray %u32
+       %Data = OpTypeStruct %_runtimearr_u32
+%_ptr_Uniform_Data = OpTypePointer Uniform %Data
+         %19 = OpVariable %_ptr_Uniform_Data Uniform
+        %i32 = OpTypeInt 32 1
+      %i32_0 = OpConstant %i32 0
+          %a = OpSpecConstant %u32 64
+          %b = OpSpecConstant %u32 64
+Error: The fixed-size Instruction with 5 param words has 2 Words left over after decoding.
+          %c = OpSpecConstant %i32 64
+Error: The fixed-size Instruction with 5 param words has 2 Words left over after decoding.
+Error: The fixed-size Instruction with 5 param words has 2 Words left over after decoding.
+%_ptr_Uniform_u32 = OpTypePointer Uniform %u32
+     %u32_64 = OpConstant %u32 64
+      %u32_1 = OpConstant %u32 1
+         %33 = OpConstantComposite %v3u32 %u32_64 %u32_1 %u32_1
+       %main = OpFunction %void None %3
+          %5 = OpLabel
+        %idx = OpVariable %_ptr_Function_u32 Function
+         %14 = OpAccessChain %_ptr_Input_u32 %gl_GlobalInvocationID %u32_0
+         %15 = OpLoad %u32 %14
+               OpStore %idx %15
+         %22 = OpLoad %u32 %idx
+         %30 = OpAccessChain %_ptr_Uniform_u32 %19 %i32_0 %22
+               OpStore %30 %28
+               OpReturn
+               OpFunctionEnd
