@@ -119,11 +119,22 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             quote!()
         };
 
-        quote! {
-            #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-            pub struct #struct_ident {
-                #(#member_decls),*
+        let struct_def = if member_operands.is_empty() {
+            quote! {
+                #[derive(Clone, Debug, Eq, PartialEq, Hash)]
+                pub struct #struct_ident;
             }
+        } else {
+            quote! {
+                #[derive(Clone, Debug, Eq, PartialEq, Hash)]
+                pub struct #struct_ident {
+                    #(#member_decls),*
+                }
+            }
+        };
+
+        quote! {
+            #struct_def
             #(#aliases)*
 
             impl Inst for #struct_ident {
