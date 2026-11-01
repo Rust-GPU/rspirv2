@@ -1,6 +1,6 @@
 use super::preamble::*;
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpNop {}
+pub struct OpNop;
 impl Inst for OpNop {
     const META: &InstMeta = &OP_NOP;
 }
@@ -2485,7 +2485,7 @@ impl InstEncoding for OpFunctionParameter {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpFunctionEnd {}
+pub struct OpFunctionEnd;
 impl Inst for OpFunctionEnd {
     const META: &InstMeta = &OP_FUNCTION_END;
 }
@@ -11486,7 +11486,7 @@ impl InstEncoding for OpFwidthCoarse {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpEmitVertex {}
+pub struct OpEmitVertex;
 impl Inst for OpEmitVertex {
     const META: &InstMeta = &OP_EMIT_VERTEX;
 }
@@ -11517,7 +11517,7 @@ impl InstEncoding for OpEmitVertex {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpEndPrimitive {}
+pub struct OpEndPrimitive;
 impl Inst for OpEndPrimitive {
     const META: &InstMeta = &OP_END_PRIMITIVE;
 }
@@ -13148,7 +13148,7 @@ impl InstEncoding for OpBranchConditional {
 }
 pub use super::preamble::OpSwitch;
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpKill {}
+pub struct OpKill;
 impl Inst for OpKill {
     const META: &InstMeta = &OP_KILL;
 }
@@ -13179,7 +13179,7 @@ impl InstEncoding for OpKill {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpReturn {}
+pub struct OpReturn;
 impl Inst for OpReturn {
     const META: &InstMeta = &OP_RETURN;
 }
@@ -13251,7 +13251,7 @@ impl InstEncoding for OpReturnValue {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpUnreachable {}
+pub struct OpUnreachable;
 impl Inst for OpUnreachable {
     const META: &InstMeta = &OP_UNREACHABLE;
 }
@@ -16934,7 +16934,7 @@ impl InstEncoding for OpImageSparseTexelsResident {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpNoLine {}
+pub struct OpNoLine;
 impl Inst for OpNoLine {
     const META: &InstMeta = &OP_NO_LINE;
 }
@@ -20993,7 +20993,7 @@ impl InstEncoding for OpGraphSetOutputARM {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpGraphEndARM {}
+pub struct OpGraphEndARM;
 impl Inst for OpGraphEndARM {
     const META: &InstMeta = &OP_GRAPH_END_ARM;
 }
@@ -21138,7 +21138,7 @@ impl InstEncoding for OpBitcastExtractEXT {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpTerminateInvocation {}
+pub struct OpTerminateInvocation;
 impl Inst for OpTerminateInvocation {
     const META: &InstMeta = &OP_TERMINATE_INVOCATION;
 }
@@ -22520,7 +22520,7 @@ impl InstEncoding for OpConvertUToAccelerationStructureKHR {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpIgnoreIntersectionKHR {}
+pub struct OpIgnoreIntersectionKHR;
 impl Inst for OpIgnoreIntersectionKHR {
     const META: &InstMeta = &OP_IGNORE_INTERSECTION_KHR;
 }
@@ -22551,7 +22551,7 @@ impl InstEncoding for OpIgnoreIntersectionKHR {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpTerminateRayKHR {}
+pub struct OpTerminateRayKHR;
 impl Inst for OpTerminateRayKHR {
     const META: &InstMeta = &OP_TERMINATE_RAY_KHR;
 }
@@ -31616,7 +31616,7 @@ impl InstEncoding for OpReportIntersectionKHR {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpIgnoreIntersectionNV {}
+pub struct OpIgnoreIntersectionNV;
 impl Inst for OpIgnoreIntersectionNV {
     const META: &InstMeta = &OP_IGNORE_INTERSECTION_NV;
 }
@@ -31647,7 +31647,7 @@ impl InstEncoding for OpIgnoreIntersectionNV {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpTerminateRayNV {}
+pub struct OpTerminateRayNV;
 impl Inst for OpTerminateRayNV {
     const META: &InstMeta = &OP_TERMINATE_RAY_NV;
 }
@@ -32948,7 +32948,7 @@ impl InstEncoding for OpCooperativeMatrixGetCoordinateEXT {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpBeginInvocationInterlockEXT {}
+pub struct OpBeginInvocationInterlockEXT;
 impl Inst for OpBeginInvocationInterlockEXT {
     const META: &InstMeta = &OP_BEGIN_INVOCATION_INTERLOCK_EXT;
 }
@@ -32979,7 +32979,7 @@ impl InstEncoding for OpBeginInvocationInterlockEXT {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpEndInvocationInterlockEXT {}
+pub struct OpEndInvocationInterlockEXT;
 impl Inst for OpEndInvocationInterlockEXT {
     const META: &InstMeta = &OP_END_INVOCATION_INTERLOCK_EXT;
 }
@@ -33861,7 +33861,7 @@ impl InstEncoding for OpTensorViewSetStrideNV {
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpDemoteToHelperInvocation {}
+pub struct OpDemoteToHelperInvocation;
 pub type OpDemoteToHelperInvocationEXT = OpDemoteToHelperInvocation;
 impl Inst for OpDemoteToHelperInvocation {
     const META: &InstMeta = &OP_DEMOTE_TO_HELPER_INVOCATION;
