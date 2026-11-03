@@ -3,9 +3,9 @@ use rspirv2::Word;
 use rspirv2::binary::IdResultAlloc;
 use rspirv2::core::inst::{OpConstant, OpTypeInt};
 use rspirv2::core::preamble::CoreInstSet;
-use rspirv2::custom_inst::{OpSwitch, OpSwitchResolvedTarget, OpSwitchTarget, OpSwitchTargetLen};
 use rspirv2::dis::{DisContext, DisOptions};
 use rspirv2::inst::InstEncoding;
+use rspirv2::op_switch::{OpSwitch, OpSwitchResolvedTarget, OpSwitchTarget, OpSwitchTargetLen};
 use rspirv2::operand::{IdRef, IdResultType, LiteralConst, LiteralInteger};
 use rspirv2::vec::InstVec;
 

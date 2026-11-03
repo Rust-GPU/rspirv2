@@ -43,10 +43,10 @@ pub mod preamble {
     pub use super::operands::*;
 
     pub use crate::binary::*;
-    pub use crate::custom_inst::*;
     pub use crate::dis::*;
     pub use crate::inst::*;
     pub use crate::meta::*;
+    pub use crate::op_switch::*;
     pub use crate::operand::*;
     pub use crate::*;
 
