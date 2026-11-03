@@ -12,6 +12,7 @@ mod tests {
     use expect_test::expect;
 
     #[test]
+    #[cfg(target_pointer_width = "64")]
     pub fn test_core_size() {
         expect!["120"].assert_eq(&format!("{}", size_of::<CoreInstSet>()));
     }

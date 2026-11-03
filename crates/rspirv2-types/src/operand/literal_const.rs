@@ -39,6 +39,7 @@ pub const OPERAND_KIND_LITERAL_CONTEXT_DEPENDENT_NUMBER: OperandKind = OperandKi
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct LiteralConst(SmallVec<[Word; 4]>);
 
+#[cfg(target_pointer_width = "64")]
 const _: () = {
     // usually 2 Words should be sufficient to represent 64bit values, but 4 words is free:
     assert!(size_of::<LiteralConst>() == size_of::<SmallVec<[Word; 2]>>());

@@ -63,6 +63,8 @@ jobs:
           - x86_64-unknown-linux-gnu
           # big endian
           - s390x-unknown-linux-gnu
+          # 32bit
+          - i686-unknown-linux-gnu
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -79,6 +81,9 @@ jobs:
       - name: apt install s390x compilers
         if: ${{ matrix.target == 's390x-unknown-linux-gnu' }}
         run: sudo apt install gcc-s390x-linux-gnu
+      - name: apt install i686 compilers
+        if: ${{ matrix.target == 'i686-unknown-linux-gnu' }}
+        run: sudo apt install gcc-i686-linux-gnu
 
       # miri tests
       - name: miri test
