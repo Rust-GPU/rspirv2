@@ -1,9 +1,9 @@
+use rspirv2::binary::IdResultAlloc;
 use rspirv2::core::inst::{OpConstant, OpIAdd, OpIMul, OpISub, OpTypeInt};
 use rspirv2::core::inst_set::CoreInstSet;
-use rspirv2_types::binary::IdResultAlloc;
-use rspirv2_types::dis::DisOptions;
-use rspirv2_types::operand::{IdRef, IdResultType, LiteralConst, LiteralInteger};
-use rspirv2_types::vec::InstVec;
+use rspirv2::dis::DisOptions;
+use rspirv2::operand::{IdRef, IdResultType, LiteralConst, LiteralInteger};
+use rspirv2::vec::InstVec;
 
 /// test for readme's contents, keep in sync!
 #[test]

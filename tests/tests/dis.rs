@@ -1,11 +1,11 @@
 use expect_test::expect;
+use rspirv2::binary::IdResultAlloc;
 use rspirv2::core::inst::{OpLoad, OpPhi, OpSwitch, OpTypeFloat};
 use rspirv2::core::operands::{CooperativeMatrixReduce, Dim};
 use rspirv2::custom_inst::{OpSwitchResolvedTarget, OpSwitchTarget, OpSwitchTargetLen};
-use rspirv2_types::binary::IdResultAlloc;
-use rspirv2_types::dis::{DisContext, DisOptions};
-use rspirv2_types::inst::InstEncoding;
-use rspirv2_types::operand::{
+use rspirv2::dis::{DisContext, DisOptions};
+use rspirv2::inst::InstEncoding;
+use rspirv2::operand::{
     IdRef, IdResultType, LiteralConst, LiteralInteger, OperandDisContext, OperandEncoding,
 };
 use smallvec::SmallVec;

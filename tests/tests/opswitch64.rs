@@ -1,13 +1,13 @@
 use expect_test::expect;
+use rspirv2::Word;
+use rspirv2::binary::IdResultAlloc;
 use rspirv2::core::inst::{OpConstant, OpTypeInt};
 use rspirv2::core::preamble::CoreInstSet;
 use rspirv2::custom_inst::{OpSwitch, OpSwitchResolvedTarget, OpSwitchTarget, OpSwitchTargetLen};
-use rspirv2_types::Word;
-use rspirv2_types::binary::IdResultAlloc;
-use rspirv2_types::dis::{DisContext, DisOptions};
-use rspirv2_types::inst::InstEncoding;
-use rspirv2_types::operand::{IdRef, IdResultType, LiteralConst, LiteralInteger};
-use rspirv2_types::vec::InstVec;
+use rspirv2::dis::{DisContext, DisOptions};
+use rspirv2::inst::InstEncoding;
+use rspirv2::operand::{IdRef, IdResultType, LiteralConst, LiteralInteger};
+use rspirv2::vec::InstVec;
 
 #[test]
 pub fn test_switch_32() -> anyhow::Result<()> {

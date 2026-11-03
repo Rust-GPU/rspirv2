@@ -1,3 +1,5 @@
+use rspirv2::Word;
+use rspirv2::binary::IdResultAlloc;
 use rspirv2::core::inst::{
     OpConstant, OpConvertUToF, OpDecorate, OpIAdd, OpNop, OpStore, OpTypeFloat, OpTypeInt,
     OpTypePointer, OpVariable,
@@ -5,12 +7,10 @@ use rspirv2::core::inst::{
 use rspirv2::core::inst_set::CoreInstSet;
 use rspirv2::core::operands::{Decoration, StorageClass};
 use rspirv2::core::preamble::OpAccessChain;
+use rspirv2::inst::{Inst, InstEncoding};
 use rspirv2::operand::{IdRef, IdResult, IdResultType, LiteralConst, LiteralInteger};
-use rspirv2_types::Word;
-use rspirv2_types::binary::IdResultAlloc;
-use rspirv2_types::inst::{Inst, InstEncoding};
-use rspirv2_types::slice::InstSlice;
-use rspirv2_types::vec::InstVec;
+use rspirv2::slice::InstSlice;
+use rspirv2::vec::InstVec;
 
 fn roundtrip<T: Inst>(inst: T)
 where

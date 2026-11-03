@@ -825,7 +825,6 @@ dependencies = [
  "rspirv2-grammar",
  "rspirv2-grammar-parser",
  "rspirv2-tools-gen",
- "rspirv2-types",
  "smallvec",
 ]
 

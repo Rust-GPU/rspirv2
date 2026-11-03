@@ -1,8 +1,8 @@
 use expect_test::expect;
+use rspirv2::Word;
 use rspirv2::core::operands::ImageOperands;
-use rspirv2_types::Word;
-use rspirv2_types::dis::{DisContext, DisOptions};
-use rspirv2_types::operand::{IdRef, IdResult, OperandDisContext, OperandEncoding};
+use rspirv2::dis::{DisContext, DisOptions};
+use rspirv2::operand::{IdRef, IdResult, OperandDisContext, OperandEncoding};
 
 #[test]
 pub fn test_param_bitmask() -> anyhow::Result<()> {
