@@ -1,9 +1,11 @@
 #![doc = include_str!("../README.md")]
 
 pub mod core;
-pub mod custom_inst;
 pub mod dis;
+pub mod op_switch;
 
+#[deprecated(note = "module renamed to `op_switch`")]
+pub use op_switch as custom_inst;
 pub use rspirv2_types::*;
 
 #[cfg(test)]
