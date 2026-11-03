@@ -1,6 +1,8 @@
 #![doc = include_str!("../README.md")]
 
 use expect_test::ExpectFile;
+use rspirv2::core::inst_set::CoreInstSet;
+use rspirv2_tools_gen::dis::{Args, Profile};
 use std::path::PathBuf;
 
 pub const BASE_FOLDER: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/spv");
@@ -24,6 +26,10 @@ impl SpvFolder<'_> {
             position: "",
         }
     }
+
+    pub fn test_disassembly(&self, expect_ext: &str, profile: Profile) -> anyhow::Result<()> {
+        test_disassembly(self.spv(), self.expect(expect_ext), profile)
+    }
 }
 
 pub const fn spv(name: &str) -> SpvFolder<'_> {
@@ -35,3 +41,20 @@ pub const DIS_REFERENCE: SpvFolder<'_> = spv("dis_reference");
 pub const TEXTURE_GRAD_OFFSET: SpvFolder<'_> = spv("textureGradOffset");
 pub const CONST_SPECS: SpvFolder<'_> = spv("const_specs");
 pub const CORE_PRE_LINK: SpvFolder<'_> = spv("core_pre_link");
+
+pub fn test_disassembly(path: PathBuf, expect: ExpectFile, profile: Profile) -> anyhow::Result<()> {
+    for module_swap_bytes in [false, true] {
+        println!("module_swap_bytes: {module_swap_bytes}");
+        let args = Args {
+            path: path.clone(),
+            profile,
+            module_swap_bytes,
+            color: clap::ColorChoice::Never,
+        };
+        let mut stdout = Vec::new();
+        args.run_inner::<CoreInstSet>(&mut stdout)?;
+        let stdout = String::from_utf8(stdout)?;
+        expect.assert_eq(&stdout);
+    }
+    Ok(())
+}

@@ -1,8 +1,8 @@
 use criterion::measurement::Measurement;
 use criterion::{Bencher, Criterion, criterion_group, criterion_main};
 use rspirv2::core::inst_set::CoreInstSet;
-use rspirv2_types::dis::DisOptions;
-use rspirv2_types::module::Module;
+use rspirv2::dis::DisOptions;
+use rspirv2::module::Module;
 use std::fs;
 use std::hint::black_box;
 use std::io::Write;

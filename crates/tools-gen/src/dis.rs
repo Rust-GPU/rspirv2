@@ -19,7 +19,7 @@ pub struct Args {
     pub module_swap_bytes: bool,
 }
 
-#[derive(Clone, Debug, Default, ValueEnum)]
+#[derive(Copy, Clone, Debug, Default, ValueEnum)]
 pub enum Profile {
     #[default]
     Default,

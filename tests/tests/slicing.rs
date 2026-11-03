@@ -1,3 +1,5 @@
+use rspirv2::Word;
+use rspirv2::binary::{IdResultAlloc, InstOffset};
 use rspirv2::core::inst::{
     OpAccessChain, OpConstant, OpConvertUToF, OpFAdd, OpStore, OpTypeFloat, OpTypeInt,
     OpTypePointer, OpVariable,
@@ -5,10 +7,8 @@ use rspirv2::core::inst::{
 use rspirv2::core::inst_set::CoreInstSet;
 use rspirv2::core::operands::StorageClass;
 use rspirv2::core::preamble::MemoryAccess;
-use rspirv2_types::Word;
-use rspirv2_types::binary::{IdResultAlloc, InstOffset};
-use rspirv2_types::operand::{IdRef, IdResultType, LiteralConst, LiteralInteger};
-use rspirv2_types::vec::InstVec;
+use rspirv2::operand::{IdRef, IdResultType, LiteralConst, LiteralInteger};
+use rspirv2::vec::InstVec;
 use smallvec::SmallVec;
 use std::assert_matches;
 use std::fmt::Debug;

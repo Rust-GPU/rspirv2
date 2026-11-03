@@ -1,13 +1,13 @@
 use expect_test::expect;
+use rspirv2::Word;
 use rspirv2::core::inst::{OpName, OpNop, OpTypeInt, OpVariable};
 use rspirv2::core::inst_set::CoreInstSet;
 use rspirv2::core::operands::StorageClass;
-use rspirv2_types::Word;
-use rspirv2_types::dis::{DisInstSlice, DisOptions};
-use rspirv2_types::inst::Inst;
-use rspirv2_types::operand::{IdRef, IdResult, IdResultType, LiteralInteger, LiteralString};
-use rspirv2_types::slice::RawInstSlice;
-use rspirv2_types::vec::InstVec;
+use rspirv2::dis::{DisInstSlice, DisOptions};
+use rspirv2::inst::Inst;
+use rspirv2::operand::{IdRef, IdResult, IdResultType, LiteralInteger, LiteralString};
+use rspirv2::slice::RawInstSlice;
+use rspirv2::vec::InstVec;
 
 fn dis(raw: &RawInstSlice) -> String {
     DisInstSlice::<CoreInstSet>::new_no_context(raw, DisOptions::simple()).to_string()

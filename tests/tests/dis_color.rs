@@ -1,6 +1,6 @@
 use rspirv2::core::inst_set::CoreInstSet;
-use rspirv2_types::dis::DisOptions;
-use rspirv2_types::module::Module;
+use rspirv2::dis::DisOptions;
+use rspirv2::module::Module;
 use spv::DIS_REFERENCE;
 use std::io::Write;
 

@@ -47,7 +47,6 @@ anstyle = "1.0.13"
 expect-test = "1.5.1"
 rustc-hash = "2.1.1"
 profiling = { version = "1.0.17" }
-tracy-client = { version = "0.18.4", features = ["flush-on-exit"] }
 criterion = "0.8.2"
 
 [workspace.lints.rust]
@@ -77,7 +76,6 @@ filter_map_next = "warn"
 flat_map_option = "warn"
 float_cmp_const = "warn"
 fn_params_excessive_bools = "warn"
-from_iter_instead_of_collect = "warn"
 if_let_mutex = "warn"
 implicit_clone = "warn"
 imprecise_flops = "warn"
