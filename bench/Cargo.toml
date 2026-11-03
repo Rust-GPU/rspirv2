@@ -1,0 +1,21 @@
+[package]
+name = "bench"
+version.workspace = true
+edition.workspace = true
+repository.workspace = true
+license.workspace = true
+keywords.workspace = true
+categories.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+criterion.workspace = true
+rspirv2.workspace = true
+spv.workspace = true
+
+[[bench]]
+name = "dis"
+harness = false

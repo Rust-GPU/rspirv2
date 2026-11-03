@@ -98,6 +98,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "bench"
+version = "0.1.1+sdk-1.4.363"
+dependencies = [
+ "criterion",
+ "rspirv2",
+ "spv",
+]
+
+[[package]]
 name = "bitflags"
 version = "2.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -819,7 +828,6 @@ dependencies = [
  "anstream",
  "anyhow",
  "clap",
- "criterion",
  "expect-test",
  "rspirv2",
  "rspirv2-grammar",

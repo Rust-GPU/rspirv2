@@ -23,8 +23,3 @@ rspirv2-grammar.workspace = true
 rspirv2-grammar-parser.workspace = true
 anstream.workspace = true
 smallvec.workspace = true
-criterion.workspace = true
-
-[[bench]]
-name = "dis"
-harness = false
