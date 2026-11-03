@@ -1,5 +1,6 @@
 [workspace]
 members = [
+	"bench",
 	"crates/autogen",
 	"crates/grammar",
 	"crates/grammar-parser",
