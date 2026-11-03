@@ -160,6 +160,22 @@ impl<'a> OperandReader<'a> {
         .into()
     }
 
+    /// Check whether the next Word is equal to this opcode, needed for `OpSpecConstantOp`.
+    #[inline]
+    pub fn pull_expected_opcode(&mut self, meta: &InstMeta) -> Result<(), DecodeError> {
+        let opcode = self.pull()?.to_op().0;
+        if opcode != meta.opcode {
+            Err(DecodeErrorKind::WrongOpCode {
+                name: meta.opname,
+                expected: meta.opcode,
+                actual: opcode,
+            }
+            .into())
+        } else {
+            Ok(())
+        }
+    }
+
     /// View the *remaining* Words as a slice, does not advance the `params_offset`.
     #[inline]
     pub fn as_slice(&self) -> &'a [Word] {

@@ -2316,62 +2316,7 @@ impl InstEncoding for OpSpecConstantComposite {
         )
     }
 }
-#[derive(Clone, Debug, Eq, PartialEq, Hash)]
-pub struct OpSpecConstantOp {
-    pub id_result_type: IdResultType,
-    pub id_result: IdResult,
-    pub opcode: LiteralSpecConstantOpInteger,
-}
-impl Inst for OpSpecConstantOp {
-    const META: &InstMeta = &OP_SPEC_CONSTANT_OP;
-}
-impl InstEncoding for OpSpecConstantOp {
-    type IdResult = IdResult;
-    type IdResultType = IdResultType;
-    fn id_result(&self) -> Self::IdResult {
-        self.id_result
-    }
-    fn id_result_type(&self) -> Self::IdResultType {
-        self.id_result_type
-    }
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
-        profiling::function_scope!();
-        let len = 1
-            + OperandEncoding::word_len(&self.id_result_type)
-            + OperandEncoding::word_len(&self.id_result)
-            + OperandEncoding::word_len(&self.opcode);
-        writer.write_op(Self::META.opcode, len)?;
-        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
-        OperandEncoding::encode(&self.id_result, &mut *writer)?;
-        OperandEncoding::encode(&self.opcode, &mut *writer)?;
-        Ok(())
-    }
-    fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
-        profiling::function_scope!();
-        let mut op_reader = reader.check_opcode(Self::META)?;
-        Ok(Self {
-            id_result_type: OperandEncoding::decode(&mut op_reader)?,
-            id_result: OperandEncoding::decode(&mut op_reader)?,
-            opcode: OperandEncoding::decode_last(&mut op_reader)?,
-        })
-    }
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
-        profiling::function_scope!();
-        let ctx = OperandDisContext {
-            id_result: Some(self.id_result),
-            id_result_type: Some(self.id_result_type),
-            ctx,
-        };
-        let rspirv_space = ctx.rspirv_space();
-        write!(
-            f,
-            "{}OpSpecConstantOp{rspirv_space}{}{rspirv_space}{}",
-            ctx.id_result_writer(),
-            self.id_result_type.dis(ctx),
-            self.opcode.dis(ctx)
-        )
-    }
-}
+pub use super::preamble::OpSpecConstantOp;
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFunction {
     pub id_result_type: IdResultType,
@@ -2996,6 +2941,30 @@ impl InstEncoding for OpAccessChain {
         )
     }
 }
+impl OpSpecOpInst for OpAccessChain {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.base, &mut *writer)?;
+        OperandEncoding::encode(&self.indexes, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            base: OperandEncoding::decode(&mut op_reader)?,
+            indexes: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpInBoundsAccessChain {
     pub id_result_type: IdResultType,
@@ -3055,6 +3024,30 @@ impl InstEncoding for OpInBoundsAccessChain {
             self.base.dis(ctx),
             self.indexes.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpInBoundsAccessChain {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.base, &mut *writer)?;
+        OperandEncoding::encode(&self.indexes, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            base: OperandEncoding::decode(&mut op_reader)?,
+            indexes: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3121,6 +3114,32 @@ impl InstEncoding for OpPtrAccessChain {
             self.element.dis(ctx),
             self.indexes.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpPtrAccessChain {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.base, &mut *writer)?;
+        OperandEncoding::encode(&self.element, &mut *writer)?;
+        OperandEncoding::encode(&self.indexes, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            base: OperandEncoding::decode(&mut op_reader)?,
+            element: OperandEncoding::decode(&mut op_reader)?,
+            indexes: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3304,6 +3323,32 @@ impl InstEncoding for OpInBoundsPtrAccessChain {
             self.element.dis(ctx),
             self.indexes.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpInBoundsPtrAccessChain {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.base, &mut *writer)?;
+        OperandEncoding::encode(&self.element, &mut *writer)?;
+        OperandEncoding::encode(&self.indexes, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            base: OperandEncoding::decode(&mut op_reader)?,
+            element: OperandEncoding::decode(&mut op_reader)?,
+            indexes: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3730,6 +3775,32 @@ impl InstEncoding for OpVectorShuffle {
         )
     }
 }
+impl OpSpecOpInst for OpVectorShuffle {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.vector_1, &mut *writer)?;
+        OperandEncoding::encode(&self.vector_2, &mut *writer)?;
+        OperandEncoding::encode(&self.components, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            vector_1: OperandEncoding::decode(&mut op_reader)?,
+            vector_2: OperandEncoding::decode(&mut op_reader)?,
+            components: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCompositeConstruct {
     pub id_result_type: IdResultType,
@@ -3847,6 +3918,30 @@ impl InstEncoding for OpCompositeExtract {
         )
     }
 }
+impl OpSpecOpInst for OpCompositeExtract {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.composite, &mut *writer)?;
+        OperandEncoding::encode(&self.indexes, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            composite: OperandEncoding::decode(&mut op_reader)?,
+            indexes: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCompositeInsert {
     pub id_result_type: IdResultType,
@@ -3911,6 +4006,32 @@ impl InstEncoding for OpCompositeInsert {
             self.composite.dis(ctx),
             self.indexes.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpCompositeInsert {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.object, &mut *writer)?;
+        OperandEncoding::encode(&self.composite, &mut *writer)?;
+        OperandEncoding::encode(&self.indexes, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            object: OperandEncoding::decode(&mut op_reader)?,
+            composite: OperandEncoding::decode(&mut op_reader)?,
+            indexes: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5479,6 +5600,28 @@ impl InstEncoding for OpConvertFToU {
         )
     }
 }
+impl OpSpecOpInst for OpConvertFToU {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.float_value, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            float_value: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConvertFToS {
     pub id_result_type: IdResultType,
@@ -5533,6 +5676,28 @@ impl InstEncoding for OpConvertFToS {
             self.id_result_type.dis(ctx),
             self.float_value.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpConvertFToS {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.float_value, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            float_value: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5591,6 +5756,28 @@ impl InstEncoding for OpConvertSToF {
         )
     }
 }
+impl OpSpecOpInst for OpConvertSToF {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.signed_value, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            signed_value: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConvertUToF {
     pub id_result_type: IdResultType,
@@ -5645,6 +5832,28 @@ impl InstEncoding for OpConvertUToF {
             self.id_result_type.dis(ctx),
             self.unsigned_value.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpConvertUToF {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.unsigned_value, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            unsigned_value: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5703,6 +5912,28 @@ impl InstEncoding for OpUConvert {
         )
     }
 }
+impl OpSpecOpInst for OpUConvert {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.unsigned_value, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            unsigned_value: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSConvert {
     pub id_result_type: IdResultType,
@@ -5757,6 +5988,28 @@ impl InstEncoding for OpSConvert {
             self.id_result_type.dis(ctx),
             self.signed_value.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpSConvert {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.signed_value, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            signed_value: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5815,6 +6068,28 @@ impl InstEncoding for OpFConvert {
         )
     }
 }
+impl OpSpecOpInst for OpFConvert {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.float_value, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            float_value: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpQuantizeToF16 {
     pub id_result_type: IdResultType,
@@ -5871,6 +6146,28 @@ impl InstEncoding for OpQuantizeToF16 {
         )
     }
 }
+impl OpSpecOpInst for OpQuantizeToF16 {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.value, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            value: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConvertPtrToU {
     pub id_result_type: IdResultType,
@@ -5925,6 +6222,28 @@ impl InstEncoding for OpConvertPtrToU {
             self.id_result_type.dis(ctx),
             self.pointer.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpConvertPtrToU {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.pointer, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            pointer: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6095,6 +6414,28 @@ impl InstEncoding for OpConvertUToPtr {
         )
     }
 }
+impl OpSpecOpInst for OpConvertUToPtr {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.integer_value, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            integer_value: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpPtrCastToGeneric {
     pub id_result_type: IdResultType,
@@ -6151,6 +6492,28 @@ impl InstEncoding for OpPtrCastToGeneric {
         )
     }
 }
+impl OpSpecOpInst for OpPtrCastToGeneric {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.pointer, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            pointer: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGenericCastToPtr {
     pub id_result_type: IdResultType,
@@ -6205,6 +6568,28 @@ impl InstEncoding for OpGenericCastToPtr {
             self.id_result_type.dis(ctx),
             self.pointer.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpGenericCastToPtr {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.pointer, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            pointer: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6324,6 +6709,28 @@ impl InstEncoding for OpBitcast {
         )
     }
 }
+impl OpSpecOpInst for OpBitcast {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSNegate {
     pub id_result_type: IdResultType,
@@ -6380,6 +6787,28 @@ impl InstEncoding for OpSNegate {
         )
     }
 }
+impl OpSpecOpInst for OpSNegate {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFNegate {
     pub id_result_type: IdResultType,
@@ -6434,6 +6863,28 @@ impl InstEncoding for OpFNegate {
             self.id_result_type.dis(ctx),
             self.operand.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpFNegate {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6497,6 +6948,30 @@ impl InstEncoding for OpIAdd {
         )
     }
 }
+impl OpSpecOpInst for OpIAdd {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFAdd {
     pub id_result_type: IdResultType,
@@ -6556,6 +7031,30 @@ impl InstEncoding for OpFAdd {
             self.operand_1.dis(ctx),
             self.operand_2.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpFAdd {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6619,6 +7118,30 @@ impl InstEncoding for OpISub {
         )
     }
 }
+impl OpSpecOpInst for OpISub {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFSub {
     pub id_result_type: IdResultType,
@@ -6678,6 +7201,30 @@ impl InstEncoding for OpFSub {
             self.operand_1.dis(ctx),
             self.operand_2.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpFSub {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6741,6 +7288,30 @@ impl InstEncoding for OpIMul {
         )
     }
 }
+impl OpSpecOpInst for OpIMul {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFMul {
     pub id_result_type: IdResultType,
@@ -6800,6 +7371,30 @@ impl InstEncoding for OpFMul {
             self.operand_1.dis(ctx),
             self.operand_2.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpFMul {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6863,6 +7458,30 @@ impl InstEncoding for OpUDiv {
         )
     }
 }
+impl OpSpecOpInst for OpUDiv {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSDiv {
     pub id_result_type: IdResultType,
@@ -6922,6 +7541,30 @@ impl InstEncoding for OpSDiv {
             self.operand_1.dis(ctx),
             self.operand_2.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpSDiv {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6985,6 +7628,30 @@ impl InstEncoding for OpFDiv {
         )
     }
 }
+impl OpSpecOpInst for OpFDiv {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUMod {
     pub id_result_type: IdResultType,
@@ -7044,6 +7711,30 @@ impl InstEncoding for OpUMod {
             self.operand_1.dis(ctx),
             self.operand_2.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpUMod {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7107,6 +7798,30 @@ impl InstEncoding for OpSRem {
         )
     }
 }
+impl OpSpecOpInst for OpSRem {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSMod {
     pub id_result_type: IdResultType,
@@ -7166,6 +7881,30 @@ impl InstEncoding for OpSMod {
             self.operand_1.dis(ctx),
             self.operand_2.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpSMod {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7229,6 +7968,30 @@ impl InstEncoding for OpFRem {
         )
     }
 }
+impl OpSpecOpInst for OpFRem {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFMod {
     pub id_result_type: IdResultType,
@@ -7288,6 +8051,30 @@ impl InstEncoding for OpFMod {
             self.operand_1.dis(ctx),
             self.operand_2.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpFMod {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -8597,6 +9384,30 @@ impl InstEncoding for OpLogicalEqual {
         )
     }
 }
+impl OpSpecOpInst for OpLogicalEqual {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpLogicalNotEqual {
     pub id_result_type: IdResultType,
@@ -8656,6 +9467,30 @@ impl InstEncoding for OpLogicalNotEqual {
             self.operand_1.dis(ctx),
             self.operand_2.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpLogicalNotEqual {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -8719,6 +9554,30 @@ impl InstEncoding for OpLogicalOr {
         )
     }
 }
+impl OpSpecOpInst for OpLogicalOr {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpLogicalAnd {
     pub id_result_type: IdResultType,
@@ -8780,6 +9639,30 @@ impl InstEncoding for OpLogicalAnd {
         )
     }
 }
+impl OpSpecOpInst for OpLogicalAnd {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpLogicalNot {
     pub id_result_type: IdResultType,
@@ -8834,6 +9717,28 @@ impl InstEncoding for OpLogicalNot {
             self.id_result_type.dis(ctx),
             self.operand.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpLogicalNot {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -8902,6 +9807,32 @@ impl InstEncoding for OpSelect {
         )
     }
 }
+impl OpSpecOpInst for OpSelect {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.condition, &mut *writer)?;
+        OperandEncoding::encode(&self.object_1, &mut *writer)?;
+        OperandEncoding::encode(&self.object_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            condition: OperandEncoding::decode(&mut op_reader)?,
+            object_1: OperandEncoding::decode(&mut op_reader)?,
+            object_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpIEqual {
     pub id_result_type: IdResultType,
@@ -8961,6 +9892,30 @@ impl InstEncoding for OpIEqual {
             self.operand_1.dis(ctx),
             self.operand_2.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpIEqual {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9024,6 +9979,30 @@ impl InstEncoding for OpINotEqual {
         )
     }
 }
+impl OpSpecOpInst for OpINotEqual {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUGreaterThan {
     pub id_result_type: IdResultType,
@@ -9083,6 +10062,30 @@ impl InstEncoding for OpUGreaterThan {
             self.operand_1.dis(ctx),
             self.operand_2.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpUGreaterThan {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9146,6 +10149,30 @@ impl InstEncoding for OpSGreaterThan {
         )
     }
 }
+impl OpSpecOpInst for OpSGreaterThan {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUGreaterThanEqual {
     pub id_result_type: IdResultType,
@@ -9205,6 +10232,30 @@ impl InstEncoding for OpUGreaterThanEqual {
             self.operand_1.dis(ctx),
             self.operand_2.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpUGreaterThanEqual {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9268,6 +10319,30 @@ impl InstEncoding for OpSGreaterThanEqual {
         )
     }
 }
+impl OpSpecOpInst for OpSGreaterThanEqual {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpULessThan {
     pub id_result_type: IdResultType,
@@ -9327,6 +10402,30 @@ impl InstEncoding for OpULessThan {
             self.operand_1.dis(ctx),
             self.operand_2.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpULessThan {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9390,6 +10489,30 @@ impl InstEncoding for OpSLessThan {
         )
     }
 }
+impl OpSpecOpInst for OpSLessThan {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpULessThanEqual {
     pub id_result_type: IdResultType,
@@ -9451,6 +10574,30 @@ impl InstEncoding for OpULessThanEqual {
         )
     }
 }
+impl OpSpecOpInst for OpULessThanEqual {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSLessThanEqual {
     pub id_result_type: IdResultType,
@@ -9510,6 +10657,30 @@ impl InstEncoding for OpSLessThanEqual {
             self.operand_1.dis(ctx),
             self.operand_2.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpSLessThanEqual {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10305,6 +11476,30 @@ impl InstEncoding for OpShiftRightLogical {
         )
     }
 }
+impl OpSpecOpInst for OpShiftRightLogical {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.base, &mut *writer)?;
+        OperandEncoding::encode(&self.shift, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            base: OperandEncoding::decode(&mut op_reader)?,
+            shift: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpShiftRightArithmetic {
     pub id_result_type: IdResultType,
@@ -10364,6 +11559,30 @@ impl InstEncoding for OpShiftRightArithmetic {
             self.base.dis(ctx),
             self.shift.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpShiftRightArithmetic {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.base, &mut *writer)?;
+        OperandEncoding::encode(&self.shift, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            base: OperandEncoding::decode(&mut op_reader)?,
+            shift: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10427,6 +11646,30 @@ impl InstEncoding for OpShiftLeftLogical {
         )
     }
 }
+impl OpSpecOpInst for OpShiftLeftLogical {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.base, &mut *writer)?;
+        OperandEncoding::encode(&self.shift, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            base: OperandEncoding::decode(&mut op_reader)?,
+            shift: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpBitwiseOr {
     pub id_result_type: IdResultType,
@@ -10486,6 +11729,30 @@ impl InstEncoding for OpBitwiseOr {
             self.operand_1.dis(ctx),
             self.operand_2.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpBitwiseOr {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10549,6 +11816,30 @@ impl InstEncoding for OpBitwiseXor {
         )
     }
 }
+impl OpSpecOpInst for OpBitwiseXor {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpBitwiseAnd {
     pub id_result_type: IdResultType,
@@ -10610,6 +11901,30 @@ impl InstEncoding for OpBitwiseAnd {
         )
     }
 }
+impl OpSpecOpInst for OpBitwiseAnd {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand_1, &mut *writer)?;
+        OperandEncoding::encode(&self.operand_2, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand_1: OperandEncoding::decode(&mut op_reader)?,
+            operand_2: OperandEncoding::decode_last(&mut op_reader)?,
+        })
+    }
+}
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpNot {
     pub id_result_type: IdResultType,
@@ -10664,6 +11979,28 @@ impl InstEncoding for OpNot {
             self.id_result_type.dis(ctx),
             self.operand.dis(ctx)
         )
+    }
+}
+impl OpSpecOpInst for OpNot {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        profiling::function_scope!();
+        OperandEncoding::encode(&self.id_result_type, &mut *writer)?;
+        OperandEncoding::encode(&self.id_result, &mut *writer)?;
+        writer.write_op(Self::META.opcode, 0)?;
+        OperandEncoding::encode(&self.operand, &mut *writer)?;
+        Ok(())
+    }
+    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
+        profiling::function_scope!();
+        let mut op_reader = OperandReader::new(reader);
+        let id_result_type = OperandEncoding::decode(&mut op_reader)?;
+        let id_result = OperandEncoding::decode(&mut op_reader)?;
+        op_reader.pull_expected_opcode(Self::META)?;
+        Ok(Self {
+            id_result_type,
+            id_result,
+            operand: OperandEncoding::decode_last(&mut op_reader)?,
+        })
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
