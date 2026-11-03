@@ -1,5 +1,5 @@
 use crate::codegen::inst::write_inst;
-use crate::codegen::inst_set::write_inst_enum;
+use crate::codegen::inst_set::{write_inst_enum, write_op_spec_op_inst_enum};
 use crate::codegen::operands::write_operands;
 use crate::codegen::options::CodegenOptions;
 use crate::codegen::{EmitRef, GrammarWriter};
@@ -40,6 +40,7 @@ pub fn write_grammar<'a>(
     write_inst_meta(&mut writer, grammar)?;
     write_inst(&mut writer, grammar)?;
     write_inst_enum(&mut writer, grammar, opt)?;
+    write_op_spec_op_inst_enum(&mut writer, grammar, opt)?;
     write_grammar_mod(&mut writer, grammar)?;
     writer.finish()?;
     Ok(())

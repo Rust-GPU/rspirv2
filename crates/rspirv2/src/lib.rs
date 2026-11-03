@@ -2,6 +2,7 @@
 
 pub mod core;
 pub mod dis;
+pub mod op_spec_op;
 pub mod op_switch;
 
 #[deprecated(note = "module renamed to `op_switch`")]

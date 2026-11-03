@@ -27,6 +27,11 @@ pub struct InstMeta<'a> {
     pub provisional: bool,
     #[serde(skip)]
     pub source: Source,
+    /// Instruction may be used within an `OpSpecConstantOp` instruction.
+    ///
+    /// The Instruction *must* contain both an `IdResult` and an `IdResultType` operand, or codegen will assert.
+    #[serde(skip)]
+    pub op_spec_op: bool,
 }
 
 /// See `rspirv2_types::meta::OperandSpecMeta`
@@ -84,6 +89,7 @@ impl Import for rspirv2_types::meta::InstMeta {
             last_version: self.last_version.map(Cow::Borrowed),
             aliases: self.aliases.iter().map(|s| Cow::Borrowed(*s)).collect(),
             provisional: self.provisional,
+            op_spec_op: false,
             source: Source::Import,
         }
     }
