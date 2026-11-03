@@ -3,6 +3,7 @@ use crate::binary::{DecodeError, InstOffset, WordWriter};
 use crate::inst::{Inst, InstEncoding};
 use crate::slice::{InstSlice, RawInstSlice};
 use std::fmt::{Debug, Formatter};
+use std::hash::{Hash, Hasher};
 use std::marker::PhantomData;
 use std::ops::Deref;
 
@@ -148,11 +149,25 @@ impl<ISA: InstEncoding> Default for InstVec<ISA> {
     }
 }
 
+impl<ISA: InstEncoding> Eq for InstVec<ISA> {}
+
+impl<ISA: InstEncoding> PartialEq<Self> for InstVec<ISA> {
+    fn eq(&self, other: &Self) -> bool {
+        self.raw.eq(&other.raw)
+    }
+}
+
+impl<ISA: InstEncoding> Hash for InstVec<ISA> {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.raw.hash(state);
+    }
+}
+
 /// A slice of SPIR-V instructions of an arbitrary instruction set.
 ///
 /// Compared to [`InstVec`], does not specify the instruction set nor require the inner words to be valid instructions
 /// in said instruction set.
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug, Default, Eq, PartialEq, Hash)]
 pub struct RawInstVec(pub Vec<Word>);
 
 impl RawInstVec {

@@ -3,6 +3,7 @@ use crate::binary::{DecodeError, DecodeErrorKind, InstOffset, InstReader};
 use crate::dis::{DisInstSlice, InstSetDisCtx, IntoDisContext};
 use crate::inst::{InstEncoding, InstRef};
 use std::fmt::{Debug, Formatter};
+use std::hash::{Hash, Hasher};
 use std::marker::PhantomData;
 use std::ops::{Bound, Deref, Index, RangeBounds};
 
@@ -118,6 +119,20 @@ impl<ISA: InstEncoding> Debug for InstSlice<ISA> {
             .field("ISA", &ISA::name())
             .field("raw", &&self.raw)
             .finish()
+    }
+}
+
+impl<ISA: InstEncoding> Eq for InstSlice<ISA> {}
+
+impl<ISA: InstEncoding> PartialEq<Self> for InstSlice<ISA> {
+    fn eq(&self, other: &Self) -> bool {
+        self.raw.eq(&other.raw)
+    }
+}
+
+impl<ISA: InstEncoding> Hash for InstSlice<ISA> {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.raw.hash(state);
     }
 }
 
@@ -418,7 +433,7 @@ impl<'a, ISA: InstEncoding> Debug for InstIter<'a, ISA> {
 /// Compared to [`InstSlice`], does not specify the instruction set nor require the inner words to be valid instructions
 /// in said instruction set.
 #[repr(transparent)]
-#[derive(Debug)]
+#[derive(Debug, Eq, PartialEq, Hash)]
 pub struct RawInstSlice(pub [Word]);
 
 impl RawInstSlice {
