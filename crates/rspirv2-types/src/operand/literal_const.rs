@@ -215,7 +215,7 @@ impl Display for FormattedValue<'_> {
         let fmt = self
             .1
             .id_result_type
-            .and_then(|ty| self.1.id_to_const_fmt.get(&ty.0))
+            .and_then(|ty| self.1.id_to_const_fmt.get(&ty))
             .copied()
             .unwrap_or_default();
         match (self.0.0.len(), fmt) {

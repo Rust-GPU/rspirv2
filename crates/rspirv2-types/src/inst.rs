@@ -2,7 +2,7 @@ use crate::Word;
 use crate::binary::{DecodeError, DecodeErrorKind, EncodeError, InstReader, WordWriter};
 use crate::dis::DisContext;
 use crate::meta::InstMeta;
-use crate::operand::IdResult;
+use crate::operand::{IdResult, IdResultType};
 use std::fmt::{Debug, Display, Formatter};
 use std::marker::PhantomData;
 use std::ops::Deref;
@@ -13,10 +13,10 @@ pub trait Inst: InstEncoding {
 
 pub trait InstEncoding: Sized + Debug + Eq {
     /// `IdResult` is either an [`IdResult`] or `()`, depending on whether this Instruction has an [`IdResult`].
-    type IdResult: MaybeIdResult;
+    type IdResult: MaybeIdResult<IdResult>;
     /// `IdResult` is either an [`IdResult`] or `()`, depending on whether this Instruction has an
     /// [`crate::operand::IdResultType`].
-    type IdResultType: MaybeIdResult;
+    type IdResultType: MaybeIdResult<IdResultType>;
 
     /// Query the potential [`IdResult`] of this Instruction, or `()` if it has none.
     fn id_result(&self) -> Self::IdResult;
@@ -100,25 +100,33 @@ impl<'a, T: InstEncoding> Display for InstDis<'a, T> {
     }
 }
 
-/// A type that may be an [`IdResult`] or `()`.
-pub trait MaybeIdResult: Copy {
-    fn to_optional(&self) -> Option<IdResult>;
+/// Allow Instructions to statically tell you whether they have an [`IdResult`] or not `()`.
+///
+/// Works with both [`IdResult`] and [`IdResultType`].
+pub trait MaybeIdResult<T: MaybeIdResult<T>>: Copy {
+    fn to_optional(&self) -> Option<T>;
 }
 
-impl MaybeIdResult for () {
-    fn to_optional(&self) -> Option<IdResult> {
-        None
-    }
-}
-
-impl MaybeIdResult for IdResult {
+impl MaybeIdResult<IdResult> for IdResult {
     fn to_optional(&self) -> Option<IdResult> {
         Some(*self)
     }
 }
 
-impl MaybeIdResult for Option<IdResult> {
-    fn to_optional(&self) -> Option<IdResult> {
+impl MaybeIdResult<IdResultType> for IdResultType {
+    fn to_optional(&self) -> Option<IdResultType> {
+        Some(*self)
+    }
+}
+
+impl<T: MaybeIdResult<T>> MaybeIdResult<T> for () {
+    fn to_optional(&self) -> Option<T> {
+        None
+    }
+}
+
+impl<T: MaybeIdResult<T>> MaybeIdResult<T> for Option<T> {
+    fn to_optional(&self) -> Option<T> {
         *self
     }
 }

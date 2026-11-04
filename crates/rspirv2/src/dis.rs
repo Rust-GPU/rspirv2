@@ -6,7 +6,7 @@ use crate::core::inst_set::CoreInstSet;
 use crate::core::preamble::OpTypeRuntimeArray;
 pub use rspirv2_types::dis::*;
 use rspirv2_types::inst::InstEncoding;
-use rspirv2_types::operand::{ConstFmt, OperandDisContext};
+use rspirv2_types::operand::{ConstFmt, IdResultType, OperandDisContext};
 use rspirv2_types::slice::{RawInstSlice, SkipDecodeErrorIteratorExt, TryDecodeIteratorExt};
 use std::borrow::Cow;
 
@@ -59,7 +59,7 @@ impl OpTypeVoid {
     pub fn add_context(&self, ctx: &mut DisContext) {
         profiling::function_scope!();
         ctx.id_type_to_primitive_type
-            .insert(self.id_result, PrimitiveType::Void);
+            .insert(IdResultType(self.id_result), PrimitiveType::Void);
         ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
     }
 
@@ -73,7 +73,7 @@ impl OpTypeBool {
     pub fn add_context(&self, ctx: &mut DisContext) {
         profiling::function_scope!();
         ctx.id_type_to_primitive_type
-            .insert(self.id_result, PrimitiveType::Bool);
+            .insert(IdResultType(self.id_result), PrimitiveType::Bool);
         ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
     }
 
@@ -89,14 +89,14 @@ impl OpTypeInt {
         let signedness = self.signedness.to_bool();
         ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
         ctx.id_type_to_primitive_type.insert(
-            self.id_result,
+            IdResultType(self.id_result),
             PrimitiveType::Int {
                 width: self.width.to_u32(),
                 signedness,
             },
         );
         ctx.id_to_const_fmt.insert(
-            self.id_result,
+            IdResultType(self.id_result),
             if signedness {
                 ConstFmt::Signed
             } else {
@@ -128,12 +128,13 @@ impl OpTypeFloat {
         profiling::function_scope!();
         ctx.add_id_to_name(self.id_result, self.derive_name(ctx));
         ctx.id_type_to_primitive_type.insert(
-            self.id_result,
+            IdResultType(self.id_result),
             PrimitiveType::Float {
                 width: self.width.to_u32(),
             },
         );
-        ctx.id_to_const_fmt.insert(self.id_result, ConstFmt::Float);
+        ctx.id_to_const_fmt
+            .insert(IdResultType(self.id_result), ConstFmt::Float);
     }
 
     pub fn derive_name(&self, ctx: &DisContext) -> IdName {

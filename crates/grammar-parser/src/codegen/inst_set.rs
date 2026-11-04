@@ -55,7 +55,7 @@ pub fn write_inst_enum(
 
             impl InstEncoding for #name {
                 type IdResult = Option<IdResult>;
-                type IdResultType = Option<IdResult>;
+                type IdResultType = Option<IdResultType>;
 
                 fn id_result(&self) -> Self::IdResult {
                     profiling::function_scope!();
@@ -64,7 +64,7 @@ pub fn write_inst_enum(
                     }
                 }
 
-                fn id_result_type(&self) -> Self::IdResult {
+                fn id_result_type(&self) -> Self::IdResultType {
                     profiling::function_scope!();
                     match self {
                         #(#id_result_type_match)*
