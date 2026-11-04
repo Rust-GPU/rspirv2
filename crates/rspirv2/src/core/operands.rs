@@ -33,7 +33,7 @@ unsafe impl OperandEncoding for ImageOperandsBits {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -303,7 +303,7 @@ unsafe impl OperandEncoding for ImageOperands {
         )?))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, ctx)?;
         if let Some(extra) = self.get_bias() {
             extra.dis_fmt(f, ctx)?;
@@ -371,7 +371,7 @@ unsafe impl OperandEncoding for FPFastMathMode {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -430,7 +430,7 @@ unsafe impl OperandEncoding for SelectionControl {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -491,7 +491,7 @@ unsafe impl OperandEncoding for LoopControlBits {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -847,7 +847,7 @@ unsafe impl OperandEncoding for LoopControl {
         )?))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, ctx)?;
         if let Some(extra) = self.get_dependency_length() {
             extra.dis_fmt(f, ctx)?;
@@ -928,7 +928,7 @@ unsafe impl OperandEncoding for FunctionControl {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -991,7 +991,7 @@ unsafe impl OperandEncoding for MemorySemantics {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -1074,7 +1074,7 @@ unsafe impl OperandEncoding for MemoryAccessBits {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -1247,7 +1247,7 @@ unsafe impl OperandEncoding for MemoryAccess {
         )?))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, ctx)?;
         if let Some(extra) = self.get_aligned() {
             extra.dis_fmt(f, ctx)?;
@@ -1290,7 +1290,7 @@ unsafe impl OperandEncoding for KernelProfilingInfo {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -1336,7 +1336,7 @@ unsafe impl OperandEncoding for RayFlags {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -1404,7 +1404,7 @@ unsafe impl OperandEncoding for FragmentShadingRate {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -1451,7 +1451,7 @@ unsafe impl OperandEncoding for RawAccessChainOperands {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -1532,7 +1532,7 @@ unsafe impl OperandEncoding for SourceLanguage {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Unknown => write!(f, " Unknown"),
@@ -1629,7 +1629,7 @@ unsafe impl OperandEncoding for ExecutionModel {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Vertex => write!(f, " Vertex"),
@@ -1697,7 +1697,7 @@ unsafe impl OperandEncoding for AddressingModel {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Logical => write!(f, " Logical"),
@@ -1752,7 +1752,7 @@ unsafe impl OperandEncoding for MemoryModel {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Simple => write!(f, " Simple"),
@@ -2437,7 +2437,7 @@ unsafe impl OperandEncoding for ExecutionMode {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Invocations(p0) => write!(f, " Invocations{}", p0.dis(_ctx)),
@@ -2777,7 +2777,7 @@ unsafe impl OperandEncoding for StorageClass {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::UniformConstant => write!(f, " UniformConstant"),
@@ -2860,7 +2860,7 @@ unsafe impl OperandEncoding for Dim {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Dim1D => write!(f, " 1D"),
@@ -2916,7 +2916,7 @@ unsafe impl OperandEncoding for SamplerAddressingMode {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::None => write!(f, " None"),
@@ -2963,7 +2963,7 @@ unsafe impl OperandEncoding for SamplerFilterMode {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Nearest => write!(f, " Nearest"),
@@ -3087,7 +3087,7 @@ unsafe impl OperandEncoding for ImageFormat {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Unknown => write!(f, " Unknown"),
@@ -3207,7 +3207,7 @@ unsafe impl OperandEncoding for ImageChannelOrder {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::R => write!(f, " R"),
@@ -3317,7 +3317,7 @@ unsafe impl OperandEncoding for ImageChannelDataType {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::SnormInt8 => write!(f, " SnormInt8"),
@@ -3389,7 +3389,7 @@ unsafe impl OperandEncoding for FPRoundingMode {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::RTE => write!(f, " RTE"),
@@ -3435,7 +3435,7 @@ unsafe impl OperandEncoding for FPDenormMode {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Preserve => write!(f, " Preserve"),
@@ -3491,7 +3491,7 @@ unsafe impl OperandEncoding for QuantizationModes {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::TRN => write!(f, " TRN"),
@@ -3541,7 +3541,7 @@ unsafe impl OperandEncoding for FPOperationMode {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::IEEE => write!(f, " IEEE"),
@@ -3589,7 +3589,7 @@ unsafe impl OperandEncoding for OverflowModes {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::WRAP => write!(f, " WRAP"),
@@ -3639,7 +3639,7 @@ unsafe impl OperandEncoding for LinkageType {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Export => write!(f, " Export"),
@@ -3687,7 +3687,7 @@ unsafe impl OperandEncoding for AccessQualifier {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::ReadOnly => write!(f, " ReadOnly"),
@@ -3736,7 +3736,7 @@ unsafe impl OperandEncoding for HostAccessQualifier {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::NoneINTEL => write!(f, " NoneINTEL"),
@@ -3800,7 +3800,7 @@ unsafe impl OperandEncoding for FunctionParameterAttribute {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Zext => write!(f, " Zext"),
@@ -4855,7 +4855,7 @@ unsafe impl OperandEncoding for Decoration {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::RelaxedPrecision => write!(f, " RelaxedPrecision"),
@@ -5447,7 +5447,7 @@ unsafe impl OperandEncoding for BuiltIn {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Position => write!(f, " Position"),
@@ -5648,7 +5648,7 @@ unsafe impl OperandEncoding for Scope {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::CrossDevice => write!(f, " CrossDevice"),
@@ -5714,7 +5714,7 @@ unsafe impl OperandEncoding for GroupOperation {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Reduce => write!(f, " Reduce"),
@@ -5769,7 +5769,7 @@ unsafe impl OperandEncoding for KernelEnqueueFlags {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::NoWait => write!(f, " NoWait"),
@@ -6541,7 +6541,7 @@ unsafe impl OperandEncoding for Capability {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Matrix => write!(f, " Matrix"),
@@ -7062,7 +7062,7 @@ unsafe impl OperandEncoding for RayQueryIntersection {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::RayQueryCandidateIntersectionKHR => {
@@ -7112,7 +7112,7 @@ unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::RayQueryCommittedIntersectionNoneKHR => {
@@ -7163,7 +7163,7 @@ unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::RayQueryCandidateIntersectionTriangleKHR => {
@@ -7214,7 +7214,7 @@ unsafe impl OperandEncoding for PackedVectorFormat {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::PackedVectorFormat4x8Bit => write!(f, " PackedVectorFormat4x8Bit"),
@@ -7247,7 +7247,7 @@ unsafe impl OperandEncoding for CooperativeMatrixOperands {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -7313,7 +7313,7 @@ unsafe impl OperandEncoding for CooperativeMatrixLayout {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::RowMajorKHR => write!(f, " RowMajorKHR"),
@@ -7363,7 +7363,7 @@ unsafe impl OperandEncoding for CooperativeMatrixUse {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::MatrixAKHR => write!(f, " MatrixAKHR"),
@@ -7396,7 +7396,7 @@ unsafe impl OperandEncoding for CooperativeMatrixReduce {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -7458,7 +7458,7 @@ unsafe impl OperandEncoding for TensorClampMode {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Undefined => write!(f, " Undefined"),
@@ -7492,7 +7492,7 @@ unsafe impl OperandEncoding for TensorAddressingOperandsBits {
         )
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -7596,7 +7596,7 @@ unsafe impl OperandEncoding for TensorAddressingOperands {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, ctx)?;
         if let Some(extra) = self.get_tensor_view() {
             extra.dis_fmt(f, ctx)?;
@@ -7651,7 +7651,7 @@ unsafe impl OperandEncoding for InitializationModeQualifier {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::InitOnDeviceReprogramALTERA => {
@@ -7703,7 +7703,7 @@ unsafe impl OperandEncoding for LoadCacheControl {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::UncachedINTEL => write!(f, " UncachedINTEL"),
@@ -7754,7 +7754,7 @@ unsafe impl OperandEncoding for StoreCacheControl {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::UncachedINTEL => write!(f, " UncachedINTEL"),
@@ -7798,7 +7798,7 @@ unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::AutoINTEL => write!(f, " AutoINTEL"),
@@ -7834,7 +7834,7 @@ unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
         >(stringify!(MatrixMultiplyAccumulateOperands), bits))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -7935,7 +7935,7 @@ unsafe impl OperandEncoding for FPEncoding {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::BFloat16KHR => write!(f, " BFloat16KHR"),
@@ -7989,7 +7989,7 @@ unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::RowMajorNV => write!(f, " RowMajorNV"),
@@ -8061,7 +8061,7 @@ unsafe impl OperandEncoding for ComponentType {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Float16NV => write!(f, " Float16NV"),
@@ -8122,7 +8122,7 @@ unsafe impl OperandEncoding for GatherModes {
         })
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         match self {
             Self::Gather4x1QCOM => write!(f, " Gather4x1QCOM"),
@@ -8157,7 +8157,7 @@ unsafe impl OperandEncoding for TensorOperandsBits {
         ))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         if self.is_empty() {
             write!(f, " None")
@@ -8279,7 +8279,7 @@ unsafe impl OperandEncoding for TensorOperands {
         )?))
     }
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, ctx)?;
         if let Some(extra) = self.get_out_of_bounds_value_arm() {
             extra.dis_fmt(f, ctx)?;

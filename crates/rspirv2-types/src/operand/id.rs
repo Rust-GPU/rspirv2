@@ -66,7 +66,7 @@ unsafe impl OperandEncoding for IdResult {
     }
 
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         self.dis_fmt_color(f, ctx, ID_RESULT_COLOR, false)
     }
 }
@@ -77,7 +77,7 @@ impl IdResult {
     pub fn dis_fmt_color(
         &self,
         f: &mut Formatter<'_>,
-        ctx: &OperandDisContext<'_>,
+        ctx: OperandDisContext<'_>,
         style: anstyle::Style,
         prepend_space: bool,
     ) -> std::fmt::Result {
@@ -154,7 +154,7 @@ macro_rules! id_ref {
             }
 
             #[inline]
-            fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+            fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
                 self.0.dis_fmt_color(f, ctx, AnsiColor::Yellow.on_default(), true)
             }
         }

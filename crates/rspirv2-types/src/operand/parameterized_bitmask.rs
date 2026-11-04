@@ -135,7 +135,7 @@ unsafe impl<T: ParameterizedBitmaskBits> OperandEncoding for ParameterizedBitmas
         Ok(ret)
     }
 
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         self.bits.dis_fmt(f, ctx)
     }
 }

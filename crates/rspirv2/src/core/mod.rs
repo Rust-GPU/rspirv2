@@ -21,7 +21,7 @@ impl preamble::AnyCapability for preamble::Capability {
             "{}",
             preamble::OperandEncoding::dis(
                 self,
-                &preamble::OperandDisContext {
+                preamble::OperandDisContext {
                     ctx: &Default::default(),
                     id_result: None,
                     id_result_type: None,

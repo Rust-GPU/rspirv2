@@ -76,7 +76,7 @@ unsafe impl OperandEncoding for LiteralString {
     }
 
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         let color = ctx.color(AnsiColor::Green.on_default());
         let str = ctx.literal_string_escape.escape(Cow::Borrowed(&self.0));

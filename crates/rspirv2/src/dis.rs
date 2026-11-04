@@ -195,7 +195,7 @@ impl OpConstant {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
         };
-        let value = self.value.fmt_value(&operand_ctx).to_string();
+        let value = self.value.fmt_value(operand_ctx).to_string();
         let value = escape_cow(Cow::Owned(value), |c| match c {
             '0'..='9' => c,
             '-' => 'n',

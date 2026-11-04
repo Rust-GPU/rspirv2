@@ -63,9 +63,9 @@ pub fn test_dis_composite_types() -> anyhow::Result<()> {
 pub fn test_dis_renamed_symbols() -> anyhow::Result<()> {
     let ctx = DisContext::no_context(DisOptions::simple());
     let ctx = OperandDisContext::new(&ctx);
-    expect!(" 1D").assert_eq(&Dim::Dim1D.dis(&ctx).to_string());
-    expect!(" 2D").assert_eq(&Dim::Dim2D.dis(&ctx).to_string());
-    expect!(" 3D").assert_eq(&Dim::Dim3D.dis(&ctx).to_string());
-    expect!(" 2x2").assert_eq(&CooperativeMatrixReduce::TwoByTwo.dis(&ctx).to_string());
+    expect!(" 1D").assert_eq(&Dim::Dim1D.dis(ctx).to_string());
+    expect!(" 2D").assert_eq(&Dim::Dim2D.dis(ctx).to_string());
+    expect!(" 3D").assert_eq(&Dim::Dim3D.dis(ctx).to_string());
+    expect!(" 2x2").assert_eq(&CooperativeMatrixReduce::TwoByTwo.dis(ctx).to_string());
     Ok(())
 }

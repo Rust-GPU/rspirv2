@@ -105,7 +105,7 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     }
 
     /// Disassemble this operand to the supplied [`Formatter`]. Prefer [`Self::dis`] over calling this.
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result;
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result;
 
     /// Disassemble this operand
     ///
@@ -117,12 +117,12 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     /// assert_eq!(dis, "OpMyInst %42");
     /// ```
     #[inline]
-    fn dis<'a>(&'a self, ctx: &'a OperandDisContext<'_>) -> OperandDis<'a, Self> {
+    fn dis<'a>(&'a self, ctx: OperandDisContext<'a>) -> OperandDis<'a, Self> {
         OperandDis(self, ctx)
     }
 }
 
-pub struct OperandDis<'a, T: OperandEncoding>(&'a T, &'a OperandDisContext<'a>);
+pub struct OperandDis<'a, T: OperandEncoding>(&'a T, OperandDisContext<'a>);
 
 impl<'a, T: OperandEncoding> Display for OperandDis<'a, T> {
     #[inline]
@@ -200,7 +200,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
     }
 
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         match self {
             None => Ok(()),
             Some(e) => e.dis_fmt(f, ctx),
@@ -264,7 +264,7 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     }
 
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         for v in self {
             T::dis_fmt(v, &mut *f, ctx)?;
@@ -315,7 +315,7 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
     }
 
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         for v in self {
             T::dis_fmt(v, &mut *f, ctx)?;
