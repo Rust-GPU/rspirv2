@@ -159,7 +159,7 @@ fn emit_rust_like_enum(
             }
 
             #[inline]
-            fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+            fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: OperandDisContext<'_>) -> std::fmt::Result {
                 profiling::function_scope!();
                 match self {
                     #(#dis),*
@@ -257,7 +257,7 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
             }
 
             #[inline]
-            fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+            fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
                 profiling::function_scope!();
                 match self {
                     #(#dis),*
@@ -375,7 +375,7 @@ fn emit_bitflags_enum_common(
             }
 
             #[inline]
-            fn dis_fmt(&self, f: &mut Formatter<'_>, _: &OperandDisContext<'_>) -> std::fmt::Result {
+            fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
                 profiling::function_scope!();
                 if self.is_empty() {
                     write!(f, " None")
@@ -542,7 +542,7 @@ fn emit_parameterised_bitmask(
             }
 
             #[inline]
-            fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+            fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
                 self.0.dis_fmt(f, ctx)?;
                 #(#dis_extra)*
                 Ok(())

@@ -271,7 +271,7 @@ unsafe impl OperandEncoding for OpSwitchTarget {
         Ok(Self::Unresolved(reader.collect()))
     }
 
-    fn dis_fmt(&self, _f: &mut Formatter<'_>, _ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, _f: &mut Formatter<'_>, _ctx: OperandDisContext<'_>) -> std::fmt::Result {
         panic!("OpSwitchTarget can't be trivially disassembled")
     }
 }
@@ -288,7 +288,7 @@ unsafe impl OperandEncoding for OpSwitchResolvedTarget {
         Err(DecodeErrorKind::LiteralConstNotLastOperand.into())
     }
 
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         self.target.dis_fmt(f, ctx)
     }
@@ -345,7 +345,7 @@ impl InstEncoding for OpSwitch {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,

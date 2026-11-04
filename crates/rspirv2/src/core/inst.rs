@@ -22,7 +22,7 @@ impl InstEncoding for OpNop {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -67,7 +67,7 @@ impl InstEncoding for OpUndef {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -109,7 +109,7 @@ impl InstEncoding for OpSourceContinued {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -163,7 +163,7 @@ impl InstEncoding for OpSource {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -207,7 +207,7 @@ impl InstEncoding for OpSourceExtension {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -252,7 +252,7 @@ impl InstEncoding for OpName {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -303,7 +303,7 @@ impl InstEncoding for OpMemberName {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -353,7 +353,7 @@ impl InstEncoding for OpString {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -403,7 +403,7 @@ impl InstEncoding for OpLine {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -446,7 +446,7 @@ impl InstEncoding for OpExtension {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -493,7 +493,7 @@ impl InstEncoding for OpExtInstImport {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -555,7 +555,7 @@ impl InstEncoding for OpExtInst {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -605,7 +605,7 @@ impl InstEncoding for OpMemoryModel {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -660,7 +660,7 @@ impl InstEncoding for OpEntryPoint {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -709,7 +709,7 @@ impl InstEncoding for OpExecutionMode {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -751,7 +751,7 @@ impl InstEncoding for OpCapability {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -794,7 +794,7 @@ impl InstEncoding for OpTypeVoid {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -832,7 +832,7 @@ impl InstEncoding for OpTypeBool {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -879,7 +879,7 @@ impl InstEncoding for OpTypeInt {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -932,7 +932,7 @@ impl InstEncoding for OpTypeFloat {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -985,7 +985,7 @@ impl InstEncoding for OpTypeVector {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1038,7 +1038,7 @@ impl InstEncoding for OpTypeMatrix {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1115,7 +1115,7 @@ impl InstEncoding for OpTypeImage {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1165,7 +1165,7 @@ impl InstEncoding for OpTypeSampler {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1208,7 +1208,7 @@ impl InstEncoding for OpTypeSampledImage {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1260,7 +1260,7 @@ impl InstEncoding for OpTypeArray {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1309,7 +1309,7 @@ impl InstEncoding for OpTypeRuntimeArray {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1357,7 +1357,7 @@ impl InstEncoding for OpTypeStruct {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1405,7 +1405,7 @@ impl InstEncoding for OpTypeOpaque {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1457,7 +1457,7 @@ impl InstEncoding for OpTypePointer {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1510,7 +1510,7 @@ impl InstEncoding for OpTypeFunction {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1554,7 +1554,7 @@ impl InstEncoding for OpTypeEvent {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1592,7 +1592,7 @@ impl InstEncoding for OpTypeDeviceEvent {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1630,7 +1630,7 @@ impl InstEncoding for OpTypeReserveId {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1668,7 +1668,7 @@ impl InstEncoding for OpTypeQueue {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1711,7 +1711,7 @@ impl InstEncoding for OpTypePipe {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -1757,7 +1757,7 @@ impl InstEncoding for OpTypeForwardPointer {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -1808,7 +1808,7 @@ impl InstEncoding for OpConstantTrue {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -1859,7 +1859,7 @@ impl InstEncoding for OpConstantFalse {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -1914,7 +1914,7 @@ impl InstEncoding for OpConstant {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -1970,7 +1970,7 @@ impl InstEncoding for OpConstantComposite {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -2034,7 +2034,7 @@ impl InstEncoding for OpConstantSampler {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -2088,7 +2088,7 @@ impl InstEncoding for OpConstantNull {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -2139,7 +2139,7 @@ impl InstEncoding for OpSpecConstantTrue {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -2190,7 +2190,7 @@ impl InstEncoding for OpSpecConstantFalse {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -2245,7 +2245,7 @@ impl InstEncoding for OpSpecConstant {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -2301,7 +2301,7 @@ impl InstEncoding for OpSpecConstantComposite {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -2357,7 +2357,7 @@ impl InstEncoding for OpSpecConstantOp {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -2417,7 +2417,7 @@ impl InstEncoding for OpFunction {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -2470,7 +2470,7 @@ impl InstEncoding for OpFunctionParameter {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -2507,7 +2507,7 @@ impl InstEncoding for OpFunctionEnd {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -2560,7 +2560,7 @@ impl InstEncoding for OpFunctionCall {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -2621,7 +2621,7 @@ impl InstEncoding for OpVariable {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -2686,7 +2686,7 @@ impl InstEncoding for OpImageTexelPointer {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -2748,7 +2748,7 @@ impl InstEncoding for OpLoad {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -2801,7 +2801,7 @@ impl InstEncoding for OpStore {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -2857,7 +2857,7 @@ impl InstEncoding for OpCopyMemory {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -2918,7 +2918,7 @@ impl InstEncoding for OpCopyMemorySized {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -2980,7 +2980,7 @@ impl InstEncoding for OpAccessChain {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -3041,7 +3041,7 @@ impl InstEncoding for OpInBoundsAccessChain {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -3106,7 +3106,7 @@ impl InstEncoding for OpPtrAccessChain {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -3168,7 +3168,7 @@ impl InstEncoding for OpArrayLength {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -3225,7 +3225,7 @@ impl InstEncoding for OpGenericPtrMemSemantics {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -3289,7 +3289,7 @@ impl InstEncoding for OpInBoundsPtrAccessChain {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -3339,7 +3339,7 @@ impl InstEncoding for OpDecorate {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -3390,7 +3390,7 @@ impl InstEncoding for OpMemberDecorate {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -3435,7 +3435,7 @@ impl InstEncoding for OpDecorationGroup {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -3476,7 +3476,7 @@ impl InstEncoding for OpGroupDecorate {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -3523,7 +3523,7 @@ impl InstEncoding for OpGroupMemberDecorate {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -3582,7 +3582,7 @@ impl InstEncoding for OpVectorExtractDynamic {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -3647,7 +3647,7 @@ impl InstEncoding for OpVectorInsertDynamic {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -3713,7 +3713,7 @@ impl InstEncoding for OpVectorShuffle {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -3771,7 +3771,7 @@ impl InstEncoding for OpCompositeConstruct {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -3831,7 +3831,7 @@ impl InstEncoding for OpCompositeExtract {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -3896,7 +3896,7 @@ impl InstEncoding for OpCompositeInsert {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -3954,7 +3954,7 @@ impl InstEncoding for OpCopyObject {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -4010,7 +4010,7 @@ impl InstEncoding for OpTranspose {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -4070,7 +4070,7 @@ impl InstEncoding for OpSampledImage {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -4135,7 +4135,7 @@ impl InstEncoding for OpImageSampleImplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -4201,7 +4201,7 @@ impl InstEncoding for OpImageSampleExplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -4271,7 +4271,7 @@ impl InstEncoding for OpImageSampleDrefImplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -4342,7 +4342,7 @@ impl InstEncoding for OpImageSampleDrefExplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -4409,7 +4409,7 @@ impl InstEncoding for OpImageSampleProjImplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -4475,7 +4475,7 @@ impl InstEncoding for OpImageSampleProjExplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -4545,7 +4545,7 @@ impl InstEncoding for OpImageSampleProjDrefImplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -4616,7 +4616,7 @@ impl InstEncoding for OpImageSampleProjDrefExplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -4683,7 +4683,7 @@ impl InstEncoding for OpImageFetch {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -4753,7 +4753,7 @@ impl InstEncoding for OpImageGather {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -4824,7 +4824,7 @@ impl InstEncoding for OpImageDrefGather {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -4891,7 +4891,7 @@ impl InstEncoding for OpImageRead {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -4949,7 +4949,7 @@ impl InstEncoding for OpImageWrite {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -5006,7 +5006,7 @@ impl InstEncoding for OpImage {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5062,7 +5062,7 @@ impl InstEncoding for OpImageQueryFormat {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5118,7 +5118,7 @@ impl InstEncoding for OpImageQueryOrder {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5178,7 +5178,7 @@ impl InstEncoding for OpImageQuerySizeLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5235,7 +5235,7 @@ impl InstEncoding for OpImageQuerySize {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5295,7 +5295,7 @@ impl InstEncoding for OpImageQueryLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5352,7 +5352,7 @@ impl InstEncoding for OpImageQueryLevels {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5408,7 +5408,7 @@ impl InstEncoding for OpImageQuerySamples {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5464,7 +5464,7 @@ impl InstEncoding for OpConvertFToU {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5520,7 +5520,7 @@ impl InstEncoding for OpConvertFToS {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5576,7 +5576,7 @@ impl InstEncoding for OpConvertSToF {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5632,7 +5632,7 @@ impl InstEncoding for OpConvertUToF {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5688,7 +5688,7 @@ impl InstEncoding for OpUConvert {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5744,7 +5744,7 @@ impl InstEncoding for OpSConvert {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5800,7 +5800,7 @@ impl InstEncoding for OpFConvert {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5856,7 +5856,7 @@ impl InstEncoding for OpQuantizeToF16 {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5912,7 +5912,7 @@ impl InstEncoding for OpConvertPtrToU {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -5968,7 +5968,7 @@ impl InstEncoding for OpSatConvertSToU {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6024,7 +6024,7 @@ impl InstEncoding for OpSatConvertUToS {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6080,7 +6080,7 @@ impl InstEncoding for OpConvertUToPtr {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6136,7 +6136,7 @@ impl InstEncoding for OpPtrCastToGeneric {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6192,7 +6192,7 @@ impl InstEncoding for OpGenericCastToPtr {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6252,7 +6252,7 @@ impl InstEncoding for OpGenericCastToPtrExplicit {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6309,7 +6309,7 @@ impl InstEncoding for OpBitcast {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6365,7 +6365,7 @@ impl InstEncoding for OpSNegate {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6421,7 +6421,7 @@ impl InstEncoding for OpFNegate {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6481,7 +6481,7 @@ impl InstEncoding for OpIAdd {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6542,7 +6542,7 @@ impl InstEncoding for OpFAdd {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6603,7 +6603,7 @@ impl InstEncoding for OpISub {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6664,7 +6664,7 @@ impl InstEncoding for OpFSub {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6725,7 +6725,7 @@ impl InstEncoding for OpIMul {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6786,7 +6786,7 @@ impl InstEncoding for OpFMul {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6847,7 +6847,7 @@ impl InstEncoding for OpUDiv {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6908,7 +6908,7 @@ impl InstEncoding for OpSDiv {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -6969,7 +6969,7 @@ impl InstEncoding for OpFDiv {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7030,7 +7030,7 @@ impl InstEncoding for OpUMod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7091,7 +7091,7 @@ impl InstEncoding for OpSRem {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7152,7 +7152,7 @@ impl InstEncoding for OpSMod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7213,7 +7213,7 @@ impl InstEncoding for OpFRem {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7274,7 +7274,7 @@ impl InstEncoding for OpFMod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7335,7 +7335,7 @@ impl InstEncoding for OpVectorTimesScalar {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7396,7 +7396,7 @@ impl InstEncoding for OpMatrixTimesScalar {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7457,7 +7457,7 @@ impl InstEncoding for OpVectorTimesMatrix {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7518,7 +7518,7 @@ impl InstEncoding for OpMatrixTimesVector {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7579,7 +7579,7 @@ impl InstEncoding for OpMatrixTimesMatrix {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7640,7 +7640,7 @@ impl InstEncoding for OpOuterProduct {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7701,7 +7701,7 @@ impl InstEncoding for OpDot {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7762,7 +7762,7 @@ impl InstEncoding for OpIAddCarry {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7823,7 +7823,7 @@ impl InstEncoding for OpISubBorrow {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7884,7 +7884,7 @@ impl InstEncoding for OpUMulExtended {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -7945,7 +7945,7 @@ impl InstEncoding for OpSMulExtended {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8002,7 +8002,7 @@ impl InstEncoding for OpAny {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8058,7 +8058,7 @@ impl InstEncoding for OpAll {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8114,7 +8114,7 @@ impl InstEncoding for OpIsNan {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8170,7 +8170,7 @@ impl InstEncoding for OpIsInf {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8226,7 +8226,7 @@ impl InstEncoding for OpIsFinite {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8282,7 +8282,7 @@ impl InstEncoding for OpIsNormal {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8338,7 +8338,7 @@ impl InstEncoding for OpSignBitSet {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8398,7 +8398,7 @@ impl InstEncoding for OpLessOrGreater {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8459,7 +8459,7 @@ impl InstEncoding for OpOrdered {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8520,7 +8520,7 @@ impl InstEncoding for OpUnordered {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8581,7 +8581,7 @@ impl InstEncoding for OpLogicalEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8642,7 +8642,7 @@ impl InstEncoding for OpLogicalNotEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8703,7 +8703,7 @@ impl InstEncoding for OpLogicalOr {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8764,7 +8764,7 @@ impl InstEncoding for OpLogicalAnd {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8821,7 +8821,7 @@ impl InstEncoding for OpLogicalNot {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8885,7 +8885,7 @@ impl InstEncoding for OpSelect {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -8947,7 +8947,7 @@ impl InstEncoding for OpIEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9008,7 +9008,7 @@ impl InstEncoding for OpINotEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9069,7 +9069,7 @@ impl InstEncoding for OpUGreaterThan {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9130,7 +9130,7 @@ impl InstEncoding for OpSGreaterThan {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9191,7 +9191,7 @@ impl InstEncoding for OpUGreaterThanEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9252,7 +9252,7 @@ impl InstEncoding for OpSGreaterThanEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9313,7 +9313,7 @@ impl InstEncoding for OpULessThan {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9374,7 +9374,7 @@ impl InstEncoding for OpSLessThan {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9435,7 +9435,7 @@ impl InstEncoding for OpULessThanEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9496,7 +9496,7 @@ impl InstEncoding for OpSLessThanEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9557,7 +9557,7 @@ impl InstEncoding for OpFOrdEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9618,7 +9618,7 @@ impl InstEncoding for OpFUnordEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9679,7 +9679,7 @@ impl InstEncoding for OpFOrdNotEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9740,7 +9740,7 @@ impl InstEncoding for OpFUnordNotEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9801,7 +9801,7 @@ impl InstEncoding for OpFOrdLessThan {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9862,7 +9862,7 @@ impl InstEncoding for OpFUnordLessThan {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9923,7 +9923,7 @@ impl InstEncoding for OpFOrdGreaterThan {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -9984,7 +9984,7 @@ impl InstEncoding for OpFUnordGreaterThan {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10045,7 +10045,7 @@ impl InstEncoding for OpFOrdLessThanEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10106,7 +10106,7 @@ impl InstEncoding for OpFUnordLessThanEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10167,7 +10167,7 @@ impl InstEncoding for OpFOrdGreaterThanEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10228,7 +10228,7 @@ impl InstEncoding for OpFUnordGreaterThanEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10289,7 +10289,7 @@ impl InstEncoding for OpShiftRightLogical {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10350,7 +10350,7 @@ impl InstEncoding for OpShiftRightArithmetic {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10411,7 +10411,7 @@ impl InstEncoding for OpShiftLeftLogical {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10472,7 +10472,7 @@ impl InstEncoding for OpBitwiseOr {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10533,7 +10533,7 @@ impl InstEncoding for OpBitwiseXor {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10594,7 +10594,7 @@ impl InstEncoding for OpBitwiseAnd {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10651,7 +10651,7 @@ impl InstEncoding for OpNot {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10719,7 +10719,7 @@ impl InstEncoding for OpBitFieldInsert {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10786,7 +10786,7 @@ impl InstEncoding for OpBitFieldSExtract {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10852,7 +10852,7 @@ impl InstEncoding for OpBitFieldUExtract {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10910,7 +10910,7 @@ impl InstEncoding for OpBitReverse {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -10966,7 +10966,7 @@ impl InstEncoding for OpBitCount {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -11022,7 +11022,7 @@ impl InstEncoding for OpDPdx {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -11078,7 +11078,7 @@ impl InstEncoding for OpDPdy {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -11134,7 +11134,7 @@ impl InstEncoding for OpFwidth {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -11190,7 +11190,7 @@ impl InstEncoding for OpDPdxFine {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -11246,7 +11246,7 @@ impl InstEncoding for OpDPdyFine {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -11302,7 +11302,7 @@ impl InstEncoding for OpFwidthFine {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -11358,7 +11358,7 @@ impl InstEncoding for OpDPdxCoarse {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -11414,7 +11414,7 @@ impl InstEncoding for OpDPdyCoarse {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -11470,7 +11470,7 @@ impl InstEncoding for OpFwidthCoarse {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -11508,7 +11508,7 @@ impl InstEncoding for OpEmitVertex {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -11539,7 +11539,7 @@ impl InstEncoding for OpEndPrimitive {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -11575,7 +11575,7 @@ impl InstEncoding for OpEmitStreamVertex {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -11616,7 +11616,7 @@ impl InstEncoding for OpEndStreamPrimitive {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -11666,7 +11666,7 @@ impl InstEncoding for OpControlBarrier {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -11714,7 +11714,7 @@ impl InstEncoding for OpMemoryBarrier {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -11777,7 +11777,7 @@ impl InstEncoding for OpAtomicLoad {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -11835,7 +11835,7 @@ impl InstEncoding for OpAtomicStore {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -11904,7 +11904,7 @@ impl InstEncoding for OpAtomicExchange {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -11983,7 +11983,7 @@ impl InstEncoding for OpAtomicCompareExchange {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -12064,7 +12064,7 @@ impl InstEncoding for OpAtomicCompareExchangeWeak {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -12133,7 +12133,7 @@ impl InstEncoding for OpAtomicIIncrement {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -12199,7 +12199,7 @@ impl InstEncoding for OpAtomicIDecrement {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -12269,7 +12269,7 @@ impl InstEncoding for OpAtomicIAdd {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -12340,7 +12340,7 @@ impl InstEncoding for OpAtomicISub {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -12411,7 +12411,7 @@ impl InstEncoding for OpAtomicSMin {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -12482,7 +12482,7 @@ impl InstEncoding for OpAtomicUMin {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -12553,7 +12553,7 @@ impl InstEncoding for OpAtomicSMax {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -12624,7 +12624,7 @@ impl InstEncoding for OpAtomicUMax {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -12695,7 +12695,7 @@ impl InstEncoding for OpAtomicAnd {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -12766,7 +12766,7 @@ impl InstEncoding for OpAtomicOr {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -12837,7 +12837,7 @@ impl InstEncoding for OpAtomicXor {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -12896,7 +12896,7 @@ impl InstEncoding for OpPhi {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -12948,7 +12948,7 @@ impl InstEncoding for OpLoopMerge {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -12996,7 +12996,7 @@ impl InstEncoding for OpSelectionMerge {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -13040,7 +13040,7 @@ impl InstEncoding for OpLabel {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -13076,7 +13076,7 @@ impl InstEncoding for OpBranch {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -13130,7 +13130,7 @@ impl InstEncoding for OpBranchConditional {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -13170,7 +13170,7 @@ impl InstEncoding for OpKill {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -13201,7 +13201,7 @@ impl InstEncoding for OpReturn {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -13237,7 +13237,7 @@ impl InstEncoding for OpReturnValue {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -13273,7 +13273,7 @@ impl InstEncoding for OpUnreachable {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -13313,7 +13313,7 @@ impl InstEncoding for OpLifetimeStart {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -13359,7 +13359,7 @@ impl InstEncoding for OpLifetimeStop {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -13434,7 +13434,7 @@ impl InstEncoding for OpGroupAsyncCopy {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -13491,7 +13491,7 @@ impl InstEncoding for OpGroupWaitEvents {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -13551,7 +13551,7 @@ impl InstEncoding for OpGroupAll {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -13612,7 +13612,7 @@ impl InstEncoding for OpGroupAny {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -13677,7 +13677,7 @@ impl InstEncoding for OpGroupBroadcast {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -13743,7 +13743,7 @@ impl InstEncoding for OpGroupIAdd {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -13809,7 +13809,7 @@ impl InstEncoding for OpGroupFAdd {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -13875,7 +13875,7 @@ impl InstEncoding for OpGroupFMin {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -13941,7 +13941,7 @@ impl InstEncoding for OpGroupUMin {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -14007,7 +14007,7 @@ impl InstEncoding for OpGroupSMin {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -14073,7 +14073,7 @@ impl InstEncoding for OpGroupFMax {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -14139,7 +14139,7 @@ impl InstEncoding for OpGroupUMax {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -14205,7 +14205,7 @@ impl InstEncoding for OpGroupSMax {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -14275,7 +14275,7 @@ impl InstEncoding for OpReadPipe {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -14346,7 +14346,7 @@ impl InstEncoding for OpWritePipe {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -14425,7 +14425,7 @@ impl InstEncoding for OpReservedReadPipe {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -14506,7 +14506,7 @@ impl InstEncoding for OpReservedWritePipe {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -14579,7 +14579,7 @@ impl InstEncoding for OpReserveReadPipePackets {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -14650,7 +14650,7 @@ impl InstEncoding for OpReserveWritePipePackets {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -14709,7 +14709,7 @@ impl InstEncoding for OpCommitReadPipe {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -14766,7 +14766,7 @@ impl InstEncoding for OpCommitWritePipe {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -14823,7 +14823,7 @@ impl InstEncoding for OpIsValidReserveId {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -14887,7 +14887,7 @@ impl InstEncoding for OpGetNumPipePackets {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -14953,7 +14953,7 @@ impl InstEncoding for OpGetMaxPipePackets {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -15027,7 +15027,7 @@ impl InstEncoding for OpGroupReserveReadPipePackets {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -15103,7 +15103,7 @@ impl InstEncoding for OpGroupReserveWritePipePackets {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -15167,7 +15167,7 @@ impl InstEncoding for OpGroupCommitReadPipe {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -15229,7 +15229,7 @@ impl InstEncoding for OpGroupCommitWritePipe {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -15299,7 +15299,7 @@ impl InstEncoding for OpEnqueueMarker {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -15398,7 +15398,7 @@ impl InstEncoding for OpEnqueueKernel {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -15480,7 +15480,7 @@ impl InstEncoding for OpGetKernelNDrangeSubGroupCount {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -15556,7 +15556,7 @@ impl InstEncoding for OpGetKernelNDrangeMaxSubGroupSize {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -15628,7 +15628,7 @@ impl InstEncoding for OpGetKernelWorkGroupSize {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -15699,7 +15699,7 @@ impl InstEncoding for OpGetKernelPreferredWorkGroupSizeMultiple {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -15745,7 +15745,7 @@ impl InstEncoding for OpRetainEvent {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -15786,7 +15786,7 @@ impl InstEncoding for OpReleaseEvent {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -15836,7 +15836,7 @@ impl InstEncoding for OpCreateUserEvent {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -15891,7 +15891,7 @@ impl InstEncoding for OpIsValidEvent {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -15938,7 +15938,7 @@ impl InstEncoding for OpSetUserEventStatus {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -15989,7 +15989,7 @@ impl InstEncoding for OpCaptureEventProfilingInfo {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -16041,7 +16041,7 @@ impl InstEncoding for OpGetDefaultQueue {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -16104,7 +16104,7 @@ impl InstEncoding for OpBuildNDRange {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -16170,7 +16170,7 @@ impl InstEncoding for OpImageSparseSampleImplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -16236,7 +16236,7 @@ impl InstEncoding for OpImageSparseSampleExplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -16306,7 +16306,7 @@ impl InstEncoding for OpImageSparseSampleDrefImplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -16377,7 +16377,7 @@ impl InstEncoding for OpImageSparseSampleDrefExplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -16444,7 +16444,7 @@ impl InstEncoding for OpImageSparseSampleProjImplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -16510,7 +16510,7 @@ impl InstEncoding for OpImageSparseSampleProjExplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -16580,7 +16580,7 @@ impl InstEncoding for OpImageSparseSampleProjDrefImplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -16651,7 +16651,7 @@ impl InstEncoding for OpImageSparseSampleProjDrefExplicitLod {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -16718,7 +16718,7 @@ impl InstEncoding for OpImageSparseFetch {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -16788,7 +16788,7 @@ impl InstEncoding for OpImageSparseGather {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -16859,7 +16859,7 @@ impl InstEncoding for OpImageSparseDrefGather {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -16918,7 +16918,7 @@ impl InstEncoding for OpImageSparseTexelsResident {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -16956,7 +16956,7 @@ impl InstEncoding for OpNoLine {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -17013,7 +17013,7 @@ impl InstEncoding for OpAtomicFlagTestAndSet {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -17067,7 +17067,7 @@ impl InstEncoding for OpAtomicFlagClear {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -17131,7 +17131,7 @@ impl InstEncoding for OpImageSparseRead {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -17189,7 +17189,7 @@ impl InstEncoding for OpSizeOf {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -17234,7 +17234,7 @@ impl InstEncoding for OpTypePipeStorage {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -17291,7 +17291,7 @@ impl InstEncoding for OpConstantPipeStorage {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -17349,7 +17349,7 @@ impl InstEncoding for OpCreatePipeFromPipeStorage {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -17421,7 +17421,7 @@ impl InstEncoding for OpGetKernelLocalSizeForSubgroupCount {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -17493,7 +17493,7 @@ impl InstEncoding for OpGetKernelMaxNumSubgroups {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -17541,7 +17541,7 @@ impl InstEncoding for OpTypeNamedBarrier {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -17590,7 +17590,7 @@ impl InstEncoding for OpNamedBarrierInitialize {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -17642,7 +17642,7 @@ impl InstEncoding for OpMemoryNamedBarrier {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -17685,7 +17685,7 @@ impl InstEncoding for OpModuleProcessed {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -17731,7 +17731,7 @@ impl InstEncoding for OpExecutionModeId {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -17778,7 +17778,7 @@ impl InstEncoding for OpDecorateId {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -17833,7 +17833,7 @@ impl InstEncoding for OpGroupNonUniformElect {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -17893,7 +17893,7 @@ impl InstEncoding for OpGroupNonUniformAll {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -17954,7 +17954,7 @@ impl InstEncoding for OpGroupNonUniformAny {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18015,7 +18015,7 @@ impl InstEncoding for OpGroupNonUniformAllEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18080,7 +18080,7 @@ impl InstEncoding for OpGroupNonUniformBroadcast {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18142,7 +18142,7 @@ impl InstEncoding for OpGroupNonUniformBroadcastFirst {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18203,7 +18203,7 @@ impl InstEncoding for OpGroupNonUniformBallot {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18264,7 +18264,7 @@ impl InstEncoding for OpGroupNonUniformInverseBallot {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18329,7 +18329,7 @@ impl InstEncoding for OpGroupNonUniformBallotBitExtract {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18395,7 +18395,7 @@ impl InstEncoding for OpGroupNonUniformBallotBitCount {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18457,7 +18457,7 @@ impl InstEncoding for OpGroupNonUniformBallotFindLSB {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18518,7 +18518,7 @@ impl InstEncoding for OpGroupNonUniformBallotFindMSB {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18583,7 +18583,7 @@ impl InstEncoding for OpGroupNonUniformShuffle {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18649,7 +18649,7 @@ impl InstEncoding for OpGroupNonUniformShuffleXor {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18715,7 +18715,7 @@ impl InstEncoding for OpGroupNonUniformShuffleUp {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18781,7 +18781,7 @@ impl InstEncoding for OpGroupNonUniformShuffleDown {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18851,7 +18851,7 @@ impl InstEncoding for OpGroupNonUniformIAdd {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18922,7 +18922,7 @@ impl InstEncoding for OpGroupNonUniformFAdd {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -18993,7 +18993,7 @@ impl InstEncoding for OpGroupNonUniformIMul {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -19064,7 +19064,7 @@ impl InstEncoding for OpGroupNonUniformFMul {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -19135,7 +19135,7 @@ impl InstEncoding for OpGroupNonUniformSMin {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -19206,7 +19206,7 @@ impl InstEncoding for OpGroupNonUniformUMin {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -19277,7 +19277,7 @@ impl InstEncoding for OpGroupNonUniformFMin {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -19348,7 +19348,7 @@ impl InstEncoding for OpGroupNonUniformSMax {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -19419,7 +19419,7 @@ impl InstEncoding for OpGroupNonUniformUMax {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -19490,7 +19490,7 @@ impl InstEncoding for OpGroupNonUniformFMax {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -19561,7 +19561,7 @@ impl InstEncoding for OpGroupNonUniformBitwiseAnd {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -19632,7 +19632,7 @@ impl InstEncoding for OpGroupNonUniformBitwiseOr {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -19703,7 +19703,7 @@ impl InstEncoding for OpGroupNonUniformBitwiseXor {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -19774,7 +19774,7 @@ impl InstEncoding for OpGroupNonUniformLogicalAnd {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -19845,7 +19845,7 @@ impl InstEncoding for OpGroupNonUniformLogicalOr {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -19916,7 +19916,7 @@ impl InstEncoding for OpGroupNonUniformLogicalXor {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -19983,7 +19983,7 @@ impl InstEncoding for OpGroupNonUniformQuadBroadcast {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -20049,7 +20049,7 @@ impl InstEncoding for OpGroupNonUniformQuadSwap {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -20107,7 +20107,7 @@ impl InstEncoding for OpCopyLogical {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -20167,7 +20167,7 @@ impl InstEncoding for OpPtrEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -20228,7 +20228,7 @@ impl InstEncoding for OpPtrNotEqual {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -20289,7 +20289,7 @@ impl InstEncoding for OpPtrDiff {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -20350,7 +20350,7 @@ impl InstEncoding for OpColorAttachmentReadEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -20407,7 +20407,7 @@ impl InstEncoding for OpDepthAttachmentReadEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -20463,7 +20463,7 @@ impl InstEncoding for OpStencilAttachmentReadEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -20521,7 +20521,7 @@ impl InstEncoding for OpTypeTensorARM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -20585,7 +20585,7 @@ impl InstEncoding for OpTensorReadARM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -20643,7 +20643,7 @@ impl InstEncoding for OpTensorWriteARM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -20704,7 +20704,7 @@ impl InstEncoding for OpTensorQuerySizeARM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -20761,7 +20761,7 @@ impl InstEncoding for OpGraphConstantARM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -20813,7 +20813,7 @@ impl InstEncoding for OpGraphEntryPointARM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -20865,7 +20865,7 @@ impl InstEncoding for OpGraphARM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -20924,7 +20924,7 @@ impl InstEncoding for OpGraphInputARM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -20977,7 +20977,7 @@ impl InstEncoding for OpGraphSetOutputARM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -21015,7 +21015,7 @@ impl InstEncoding for OpGraphEndARM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -21062,7 +21062,7 @@ impl InstEncoding for OpTypeGraphARM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -21121,7 +21121,7 @@ impl InstEncoding for OpBitcastExtractEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -21160,7 +21160,7 @@ impl InstEncoding for OpTerminateInvocation {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -21203,7 +21203,7 @@ impl InstEncoding for OpTypeUntypedPointerKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -21265,7 +21265,7 @@ impl InstEncoding for OpUntypedVariableKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -21331,7 +21331,7 @@ impl InstEncoding for OpUntypedAccessChainKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -21397,7 +21397,7 @@ impl InstEncoding for OpUntypedInBoundsAccessChainKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -21455,7 +21455,7 @@ impl InstEncoding for OpSubgroupBallotKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -21511,7 +21511,7 @@ impl InstEncoding for OpSubgroupFirstInvocationKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -21579,7 +21579,7 @@ impl InstEncoding for OpUntypedPtrAccessChainKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -21650,7 +21650,7 @@ impl InstEncoding for OpUntypedInBoundsPtrAccessChainKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -21717,7 +21717,7 @@ impl InstEncoding for OpUntypedArrayLengthKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -21779,7 +21779,7 @@ impl InstEncoding for OpUntypedPrefetchKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -21845,7 +21845,7 @@ impl InstEncoding for OpFmaKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -21903,7 +21903,7 @@ impl InstEncoding for OpSubgroupAllKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -21959,7 +21959,7 @@ impl InstEncoding for OpSubgroupAnyKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -22015,7 +22015,7 @@ impl InstEncoding for OpSubgroupAllEqualKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -22083,7 +22083,7 @@ impl InstEncoding for OpGroupNonUniformRotateKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -22146,7 +22146,7 @@ impl InstEncoding for OpSubgroupReadInvocationKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -22211,7 +22211,7 @@ impl InstEncoding for OpExtInstWithForwardRefsKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -22301,7 +22301,7 @@ impl InstEncoding for OpUntypedGroupAsyncCopyKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -22393,7 +22393,7 @@ impl InstEncoding for OpTraceRayKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -22449,7 +22449,7 @@ impl InstEncoding for OpExecuteCallableKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -22504,7 +22504,7 @@ impl InstEncoding for OpConvertUToAccelerationStructureKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -22542,7 +22542,7 @@ impl InstEncoding for OpIgnoreIntersectionKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -22573,7 +22573,7 @@ impl InstEncoding for OpTerminateRayKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -22631,7 +22631,7 @@ impl InstEncoding for OpSDot {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -22698,7 +22698,7 @@ impl InstEncoding for OpUDot {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -22765,7 +22765,7 @@ impl InstEncoding for OpSUDot {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -22836,7 +22836,7 @@ impl InstEncoding for OpSDotAccSat {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -22908,7 +22908,7 @@ impl InstEncoding for OpUDotAccSat {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -22980,7 +22980,7 @@ impl InstEncoding for OpSUDotAccSat {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -23049,7 +23049,7 @@ impl InstEncoding for OpTypeCooperativeMatrixKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -23119,7 +23119,7 @@ impl InstEncoding for OpCooperativeMatrixLoadKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -23182,7 +23182,7 @@ impl InstEncoding for OpCooperativeMatrixStoreKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -23252,7 +23252,7 @@ impl InstEncoding for OpCooperativeMatrixMulAddKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -23311,7 +23311,7 @@ impl InstEncoding for OpCooperativeMatrixLengthKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -23367,7 +23367,7 @@ impl InstEncoding for OpConstantCompositeReplicateEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -23423,7 +23423,7 @@ impl InstEncoding for OpSpecConstantCompositeReplicateEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -23479,7 +23479,7 @@ impl InstEncoding for OpCompositeConstructReplicateEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -23524,7 +23524,7 @@ impl InstEncoding for OpTypeRayQueryKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -23589,7 +23589,7 @@ impl InstEncoding for OpRayQueryInitializeKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -23637,7 +23637,7 @@ impl InstEncoding for OpRayQueryTerminateKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -23682,7 +23682,7 @@ impl InstEncoding for OpRayQueryGenerateIntersectionKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -23724,7 +23724,7 @@ impl InstEncoding for OpRayQueryConfirmIntersectionKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -23778,7 +23778,7 @@ impl InstEncoding for OpRayQueryProceedKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -23838,7 +23838,7 @@ impl InstEncoding for OpRayQueryGetIntersectionTypeKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -23903,7 +23903,7 @@ impl InstEncoding for OpImageSampleWeightedQCOM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -23969,7 +23969,7 @@ impl InstEncoding for OpImageBoxFilterQCOM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -24043,7 +24043,7 @@ impl InstEncoding for OpImageBlockMatchSSDQCOM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -24119,7 +24119,7 @@ impl InstEncoding for OpImageBlockMatchSADQCOM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -24179,7 +24179,7 @@ impl InstEncoding for OpBitCastArrayQCOM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -24251,7 +24251,7 @@ impl InstEncoding for OpImageBlockMatchWindowSSDQCOM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -24327,7 +24327,7 @@ impl InstEncoding for OpImageBlockMatchWindowSADQCOM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -24403,7 +24403,7 @@ impl InstEncoding for OpImageBlockMatchGatherSSDQCOM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -24479,7 +24479,7 @@ impl InstEncoding for OpImageBlockMatchGatherSADQCOM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -24547,7 +24547,7 @@ impl InstEncoding for OpBFloat16MulAddQCOM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -24605,7 +24605,7 @@ impl InstEncoding for OpCompositeConstructCoopMatQCOM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -24661,7 +24661,7 @@ impl InstEncoding for OpCompositeExtractCoopMatQCOM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -24721,7 +24721,7 @@ impl InstEncoding for OpExtractSubArrayQCOM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -24794,7 +24794,7 @@ impl InstEncoding for OpImageGatherQCOM {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -24862,7 +24862,7 @@ impl InstEncoding for OpGroupIAddNonUniformAMD {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -24928,7 +24928,7 @@ impl InstEncoding for OpGroupFAddNonUniformAMD {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -24994,7 +24994,7 @@ impl InstEncoding for OpGroupFMinNonUniformAMD {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -25060,7 +25060,7 @@ impl InstEncoding for OpGroupUMinNonUniformAMD {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -25126,7 +25126,7 @@ impl InstEncoding for OpGroupSMinNonUniformAMD {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -25192,7 +25192,7 @@ impl InstEncoding for OpGroupFMaxNonUniformAMD {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -25258,7 +25258,7 @@ impl InstEncoding for OpGroupUMaxNonUniformAMD {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -25324,7 +25324,7 @@ impl InstEncoding for OpGroupSMaxNonUniformAMD {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -25386,7 +25386,7 @@ impl InstEncoding for OpFragmentMaskFetchAMD {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -25451,7 +25451,7 @@ impl InstEncoding for OpFragmentFetchAMD {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -25509,7 +25509,7 @@ impl InstEncoding for OpReadClockKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -25573,7 +25573,7 @@ impl InstEncoding for OpAllocateNodePayloadsAMDX {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -25618,7 +25618,7 @@ impl InstEncoding for OpEnqueueNodePayloadsAMDX {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -25666,7 +25666,7 @@ impl InstEncoding for OpTypeNodePayloadArrayAMDX {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -25720,7 +25720,7 @@ impl InstEncoding for OpFinishWritingNodePayloadAMDX {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -25776,7 +25776,7 @@ impl InstEncoding for OpNodePayloadArrayLengthAMDX {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -25836,7 +25836,7 @@ impl InstEncoding for OpIsNodePayloadValidAMDX {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -25887,7 +25887,7 @@ impl InstEncoding for OpConstantStringAMDX {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -25935,7 +25935,7 @@ impl InstEncoding for OpSpecConstantStringAMDX {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -25989,7 +25989,7 @@ impl InstEncoding for OpGroupNonUniformQuadAllKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -26045,7 +26045,7 @@ impl InstEncoding for OpGroupNonUniformQuadAnyKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -26095,7 +26095,7 @@ impl InstEncoding for OpTypeBufferEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -26149,7 +26149,7 @@ impl InstEncoding for OpBufferPointerEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -26197,7 +26197,7 @@ impl InstEncoding for OpAbortKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -26264,7 +26264,7 @@ impl InstEncoding for OpUntypedImageTexelPointerEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -26319,7 +26319,7 @@ impl InstEncoding for OpMemberDecorateIdEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -26375,7 +26375,7 @@ impl InstEncoding for OpConstantSizeOfEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -26431,7 +26431,7 @@ impl InstEncoding for OpConstantDataKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -26487,7 +26487,7 @@ impl InstEncoding for OpSpecConstantDataKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -26539,7 +26539,7 @@ impl InstEncoding for OpPoisonKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -26594,7 +26594,7 @@ impl InstEncoding for OpFreezeKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -26690,7 +26690,7 @@ impl InstEncoding for OpHitObjectRecordHitMotionNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -26793,7 +26793,7 @@ impl InstEncoding for OpHitObjectRecordHitWithIndexMotionNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -26871,7 +26871,7 @@ impl InstEncoding for OpHitObjectRecordMissMotionNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -26931,7 +26931,7 @@ impl InstEncoding for OpHitObjectGetWorldToObjectNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -26987,7 +26987,7 @@ impl InstEncoding for OpHitObjectGetObjectToWorldNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -27043,7 +27043,7 @@ impl InstEncoding for OpHitObjectGetObjectRayDirectionNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -27099,7 +27099,7 @@ impl InstEncoding for OpHitObjectGetObjectRayOriginNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -27191,7 +27191,7 @@ impl InstEncoding for OpHitObjectTraceRayMotionNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -27257,7 +27257,7 @@ impl InstEncoding for OpHitObjectGetShaderRecordBufferHandleNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -27313,7 +27313,7 @@ impl InstEncoding for OpHitObjectGetShaderBindingTableRecordIndexNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -27356,7 +27356,7 @@ impl InstEncoding for OpHitObjectRecordEmptyNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -27442,7 +27442,7 @@ impl InstEncoding for OpHitObjectTraceRayNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -27543,7 +27543,7 @@ impl InstEncoding for OpHitObjectRecordHitNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -27641,7 +27641,7 @@ impl InstEncoding for OpHitObjectRecordHitWithIndexNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -27714,7 +27714,7 @@ impl InstEncoding for OpHitObjectRecordMissNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -27765,7 +27765,7 @@ impl InstEncoding for OpHitObjectExecuteShaderNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -27820,7 +27820,7 @@ impl InstEncoding for OpHitObjectGetCurrentTimeNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -27868,7 +27868,7 @@ impl InstEncoding for OpHitObjectGetAttributesNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -27923,7 +27923,7 @@ impl InstEncoding for OpHitObjectGetHitKindNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -27979,7 +27979,7 @@ impl InstEncoding for OpHitObjectGetPrimitiveIndexNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -28035,7 +28035,7 @@ impl InstEncoding for OpHitObjectGetGeometryIndexNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -28091,7 +28091,7 @@ impl InstEncoding for OpHitObjectGetInstanceIdNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -28147,7 +28147,7 @@ impl InstEncoding for OpHitObjectGetInstanceCustomIndexNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -28203,7 +28203,7 @@ impl InstEncoding for OpHitObjectGetWorldRayDirectionNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -28259,7 +28259,7 @@ impl InstEncoding for OpHitObjectGetWorldRayOriginNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -28315,7 +28315,7 @@ impl InstEncoding for OpHitObjectGetRayTMaxNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -28371,7 +28371,7 @@ impl InstEncoding for OpHitObjectGetRayTMinNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -28427,7 +28427,7 @@ impl InstEncoding for OpHitObjectIsEmptyNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -28483,7 +28483,7 @@ impl InstEncoding for OpHitObjectIsHitNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -28539,7 +28539,7 @@ impl InstEncoding for OpHitObjectIsMissNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -28591,7 +28591,7 @@ impl InstEncoding for OpReorderThreadWithHitObjectNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -28637,7 +28637,7 @@ impl InstEncoding for OpReorderThreadWithHintNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -28681,7 +28681,7 @@ impl InstEncoding for OpTypeHitObjectNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -28746,7 +28746,7 @@ impl InstEncoding for OpImageSampleFootprintNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -28805,7 +28805,7 @@ impl InstEncoding for OpTypeVectorIdEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -28900,7 +28900,7 @@ impl InstEncoding for OpCooperativeVectorMatrixMulNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -28978,7 +28978,7 @@ impl InstEncoding for OpCooperativeVectorOuterProductAccumulateNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -29034,7 +29034,7 @@ impl InstEncoding for OpCooperativeVectorReduceSumAccumulateNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -29142,7 +29142,7 @@ impl InstEncoding for OpCooperativeVectorMatrixMulAddNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -29212,7 +29212,7 @@ impl InstEncoding for OpCooperativeMatrixConvertUseEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -29268,7 +29268,7 @@ impl InstEncoding for OpEmitMeshTasksEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -29317,7 +29317,7 @@ impl InstEncoding for OpSetMeshOutputsEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -29373,7 +29373,7 @@ impl InstEncoding for OpGroupNonUniformPartitionEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -29421,7 +29421,7 @@ impl InstEncoding for OpWritePackedPrimitiveIndices4x8NV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -29492,7 +29492,7 @@ impl InstEncoding for OpFetchMicroTriangleVertexPositionNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -29568,7 +29568,7 @@ impl InstEncoding for OpFetchMicroTriangleVertexBarycentricNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -29636,7 +29636,7 @@ impl InstEncoding for OpCooperativeVectorLoadNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -29694,7 +29694,7 @@ impl InstEncoding for OpCooperativeVectorStoreNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -29755,7 +29755,7 @@ impl InstEncoding for OpHitObjectRecordFromQueryEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -29825,7 +29825,7 @@ impl InstEncoding for OpHitObjectRecordMissEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -29901,7 +29901,7 @@ impl InstEncoding for OpHitObjectRecordMissMotionEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -29962,7 +29962,7 @@ impl InstEncoding for OpHitObjectGetIntersectionTriangleVertexPositionsEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -30018,7 +30018,7 @@ impl InstEncoding for OpHitObjectGetRayFlagsEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -30066,7 +30066,7 @@ impl InstEncoding for OpHitObjectSetShaderBindingTableRecordIndexEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -30121,7 +30121,7 @@ impl InstEncoding for OpHitObjectReorderExecuteShaderEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -30218,7 +30218,7 @@ impl InstEncoding for OpHitObjectTraceReorderExecuteEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -30329,7 +30329,7 @@ impl InstEncoding for OpHitObjectTraceMotionReorderExecuteEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -30386,7 +30386,7 @@ impl InstEncoding for OpTypeHitObjectEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -30425,7 +30425,7 @@ impl InstEncoding for OpReorderThreadWithHintEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -30476,7 +30476,7 @@ impl InstEncoding for OpReorderThreadWithHitObjectEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -30564,7 +30564,7 @@ impl InstEncoding for OpHitObjectTraceRayEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -30665,7 +30665,7 @@ impl InstEncoding for OpHitObjectTraceRayMotionEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -30718,7 +30718,7 @@ impl InstEncoding for OpHitObjectRecordEmptyEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -30764,7 +30764,7 @@ impl InstEncoding for OpHitObjectExecuteShaderEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -30819,7 +30819,7 @@ impl InstEncoding for OpHitObjectGetCurrentTimeEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -30867,7 +30867,7 @@ impl InstEncoding for OpHitObjectGetAttributesEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -30922,7 +30922,7 @@ impl InstEncoding for OpHitObjectGetHitKindEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -30978,7 +30978,7 @@ impl InstEncoding for OpHitObjectGetPrimitiveIndexEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -31034,7 +31034,7 @@ impl InstEncoding for OpHitObjectGetGeometryIndexEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -31090,7 +31090,7 @@ impl InstEncoding for OpHitObjectGetInstanceIdEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -31146,7 +31146,7 @@ impl InstEncoding for OpHitObjectGetInstanceCustomIndexEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -31202,7 +31202,7 @@ impl InstEncoding for OpHitObjectGetObjectRayOriginEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -31258,7 +31258,7 @@ impl InstEncoding for OpHitObjectGetObjectRayDirectionEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -31314,7 +31314,7 @@ impl InstEncoding for OpHitObjectGetWorldRayDirectionEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -31370,7 +31370,7 @@ impl InstEncoding for OpHitObjectGetWorldRayOriginEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -31426,7 +31426,7 @@ impl InstEncoding for OpHitObjectGetObjectToWorldEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -31482,7 +31482,7 @@ impl InstEncoding for OpHitObjectGetWorldToObjectEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -31538,7 +31538,7 @@ impl InstEncoding for OpHitObjectGetRayTMaxEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -31599,7 +31599,7 @@ impl InstEncoding for OpReportIntersectionKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -31638,7 +31638,7 @@ impl InstEncoding for OpIgnoreIntersectionNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -31669,7 +31669,7 @@ impl InstEncoding for OpTerminateRayNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -31746,7 +31746,7 @@ impl InstEncoding for OpTraceNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -31842,7 +31842,7 @@ impl InstEncoding for OpTraceMotionNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -31939,7 +31939,7 @@ impl InstEncoding for OpTraceRayMotionNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -32008,7 +32008,7 @@ impl InstEncoding for OpRayQueryGetIntersectionTriangleVertexPositionsKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -32055,7 +32055,7 @@ impl InstEncoding for OpTypeAccelerationStructureKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -32100,7 +32100,7 @@ impl InstEncoding for OpExecuteCallableNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -32160,7 +32160,7 @@ impl InstEncoding for OpRayQueryGetIntersectionClusterIdNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -32217,7 +32217,7 @@ impl InstEncoding for OpHitObjectGetClusterIdNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -32273,7 +32273,7 @@ impl InstEncoding for OpHitObjectGetRayTMinEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -32329,7 +32329,7 @@ impl InstEncoding for OpHitObjectGetShaderBindingTableRecordIndexEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -32385,7 +32385,7 @@ impl InstEncoding for OpHitObjectGetShaderRecordBufferHandleEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -32441,7 +32441,7 @@ impl InstEncoding for OpHitObjectIsEmptyEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -32497,7 +32497,7 @@ impl InstEncoding for OpHitObjectIsHitEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -32553,7 +32553,7 @@ impl InstEncoding for OpHitObjectIsMissEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -32615,7 +32615,7 @@ impl InstEncoding for OpTypeCooperativeMatrixNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -32684,7 +32684,7 @@ impl InstEncoding for OpCooperativeMatrixLoadNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -32747,7 +32747,7 @@ impl InstEncoding for OpCooperativeMatrixStoreNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -32813,7 +32813,7 @@ impl InstEncoding for OpCooperativeMatrixMulAddNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -32871,7 +32871,7 @@ impl InstEncoding for OpCooperativeMatrixLengthNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -32931,7 +32931,7 @@ impl InstEncoding for OpCooperativeMatrixGetCoordinateEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -32970,7 +32970,7 @@ impl InstEncoding for OpBeginInvocationInterlockEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -33001,7 +33001,7 @@ impl InstEncoding for OpEndInvocationInterlockEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -33059,7 +33059,7 @@ impl InstEncoding for OpCooperativeMatrixReduceEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -33133,7 +33133,7 @@ impl InstEncoding for OpCooperativeMatrixLoadTensorNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -33197,7 +33197,7 @@ impl InstEncoding for OpCooperativeMatrixStoreTensorNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -33264,7 +33264,7 @@ impl InstEncoding for OpCooperativeMatrixPerElementOpEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -33320,7 +33320,7 @@ impl InstEncoding for OpTypeTensorLayoutNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -33377,7 +33377,7 @@ impl InstEncoding for OpTypeTensorViewNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -33429,7 +33429,7 @@ impl InstEncoding for OpCreateTensorLayoutNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -33488,7 +33488,7 @@ impl InstEncoding for OpTensorLayoutSetDimensionNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -33549,7 +33549,7 @@ impl InstEncoding for OpTensorLayoutSetStrideNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -33610,7 +33610,7 @@ impl InstEncoding for OpTensorLayoutSliceNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -33671,7 +33671,7 @@ impl InstEncoding for OpTensorLayoutSetClampValueNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -33724,7 +33724,7 @@ impl InstEncoding for OpCreateTensorViewNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -33783,7 +33783,7 @@ impl InstEncoding for OpTensorViewSetDimensionNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -33844,7 +33844,7 @@ impl InstEncoding for OpTensorViewSetStrideNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -33884,7 +33884,7 @@ impl InstEncoding for OpDemoteToHelperInvocation {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -33929,7 +33929,7 @@ impl InstEncoding for OpIsHelperInvocationEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34000,7 +34000,7 @@ impl InstEncoding for OpTensorViewSetClipNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34064,7 +34064,7 @@ impl InstEncoding for OpTensorLayoutSetBlockSizeNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34121,7 +34121,7 @@ impl InstEncoding for OpCooperativeMatrixTransposeNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34177,7 +34177,7 @@ impl InstEncoding for OpConvertUToImageNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34233,7 +34233,7 @@ impl InstEncoding for OpConvertUToSamplerNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34289,7 +34289,7 @@ impl InstEncoding for OpConvertImageToUNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34345,7 +34345,7 @@ impl InstEncoding for OpConvertSamplerToUNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34401,7 +34401,7 @@ impl InstEncoding for OpConvertUToSampledImageNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34457,7 +34457,7 @@ impl InstEncoding for OpConvertSampledImageToUNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34500,7 +34500,7 @@ impl InstEncoding for OpSamplerImageAddressingModeNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -34570,7 +34570,7 @@ impl InstEncoding for OpRawAccessChainNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34634,7 +34634,7 @@ impl InstEncoding for OpRayQueryGetIntersectionSpherePositionNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34695,7 +34695,7 @@ impl InstEncoding for OpRayQueryGetIntersectionSphereRadiusNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34756,7 +34756,7 @@ impl InstEncoding for OpRayQueryGetIntersectionLSSPositionsNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34817,7 +34817,7 @@ impl InstEncoding for OpRayQueryGetIntersectionLSSRadiiNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34878,7 +34878,7 @@ impl InstEncoding for OpRayQueryGetIntersectionLSSHitValueNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34935,7 +34935,7 @@ impl InstEncoding for OpHitObjectGetSpherePositionNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -34991,7 +34991,7 @@ impl InstEncoding for OpHitObjectGetSphereRadiusNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -35047,7 +35047,7 @@ impl InstEncoding for OpHitObjectGetLSSPositionsNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -35103,7 +35103,7 @@ impl InstEncoding for OpHitObjectGetLSSRadiiNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -35159,7 +35159,7 @@ impl InstEncoding for OpHitObjectIsSphereHitNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -35215,7 +35215,7 @@ impl InstEncoding for OpHitObjectIsLSSHitNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -35275,7 +35275,7 @@ impl InstEncoding for OpRayQueryIsSphereHitNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -35336,7 +35336,7 @@ impl InstEncoding for OpRayQueryIsLSSHitNV {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -35397,7 +35397,7 @@ impl InstEncoding for OpSubgroupShuffleINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -35462,7 +35462,7 @@ impl InstEncoding for OpSubgroupShuffleDownINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -35528,7 +35528,7 @@ impl InstEncoding for OpSubgroupShuffleUpINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -35590,7 +35590,7 @@ impl InstEncoding for OpSubgroupShuffleXorINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -35647,7 +35647,7 @@ impl InstEncoding for OpSubgroupBlockReadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -35693,7 +35693,7 @@ impl InstEncoding for OpSubgroupBlockWriteINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -35752,7 +35752,7 @@ impl InstEncoding for OpSubgroupImageBlockReadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -35805,7 +35805,7 @@ impl InstEncoding for OpSubgroupImageBlockWriteINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -35873,7 +35873,7 @@ impl InstEncoding for OpSubgroupImageMediaBlockReadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -35936,7 +35936,7 @@ impl InstEncoding for OpSubgroupImageMediaBlockWriteINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -35994,7 +35994,7 @@ impl InstEncoding for OpUCountLeadingZerosINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36050,7 +36050,7 @@ impl InstEncoding for OpUCountTrailingZerosINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36110,7 +36110,7 @@ impl InstEncoding for OpAbsISubINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36171,7 +36171,7 @@ impl InstEncoding for OpAbsUSubINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36232,7 +36232,7 @@ impl InstEncoding for OpIAddSatINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36293,7 +36293,7 @@ impl InstEncoding for OpUAddSatINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36354,7 +36354,7 @@ impl InstEncoding for OpIAverageINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36415,7 +36415,7 @@ impl InstEncoding for OpUAverageINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36476,7 +36476,7 @@ impl InstEncoding for OpIAverageRoundedINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36537,7 +36537,7 @@ impl InstEncoding for OpUAverageRoundedINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36598,7 +36598,7 @@ impl InstEncoding for OpISubSatINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36659,7 +36659,7 @@ impl InstEncoding for OpUSubSatINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36720,7 +36720,7 @@ impl InstEncoding for OpIMul32x16INTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36781,7 +36781,7 @@ impl InstEncoding for OpUMul32x16INTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36838,7 +36838,7 @@ impl InstEncoding for OpConstantFunctionPointerINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36894,7 +36894,7 @@ impl InstEncoding for OpFunctionPointerCallINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -36944,7 +36944,7 @@ impl InstEncoding for OpAsmTargetINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -37010,7 +37010,7 @@ impl InstEncoding for OpAsmINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -37073,7 +37073,7 @@ impl InstEncoding for OpAsmCallINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -37142,7 +37142,7 @@ impl InstEncoding for OpAtomicFMinEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -37213,7 +37213,7 @@ impl InstEncoding for OpAtomicFMaxEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -37259,7 +37259,7 @@ impl InstEncoding for OpAssumeTrueKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -37317,7 +37317,7 @@ impl InstEncoding for OpExpectKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -37367,7 +37367,7 @@ impl InstEncoding for OpDecorateString {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -37419,7 +37419,7 @@ impl InstEncoding for OpMemberDecorateString {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -37479,7 +37479,7 @@ impl InstEncoding for OpVmeImageINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -37530,7 +37530,7 @@ impl InstEncoding for OpTypeVmeImageINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -37573,7 +37573,7 @@ impl InstEncoding for OpTypeAvcImePayloadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -37611,7 +37611,7 @@ impl InstEncoding for OpTypeAvcRefPayloadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -37649,7 +37649,7 @@ impl InstEncoding for OpTypeAvcSicPayloadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -37687,7 +37687,7 @@ impl InstEncoding for OpTypeAvcMcePayloadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -37725,7 +37725,7 @@ impl InstEncoding for OpTypeAvcMceResultINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -37763,7 +37763,7 @@ impl InstEncoding for OpTypeAvcImeResultINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -37801,7 +37801,7 @@ impl InstEncoding for OpTypeAvcImeResultSingleReferenceStreamoutINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -37843,7 +37843,7 @@ impl InstEncoding for OpTypeAvcImeResultDualReferenceStreamoutINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -37885,7 +37885,7 @@ impl InstEncoding for OpTypeAvcImeSingleReferenceStreaminINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -37927,7 +37927,7 @@ impl InstEncoding for OpTypeAvcImeDualReferenceStreaminINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -37969,7 +37969,7 @@ impl InstEncoding for OpTypeAvcRefResultINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -38007,7 +38007,7 @@ impl InstEncoding for OpTypeAvcSicResultINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -38061,7 +38061,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultInterBaseMultiReferencePenaltyIN
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38122,7 +38122,7 @@ impl InstEncoding for OpSubgroupAvcMceSetInterBaseMultiReferencePenaltyINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38183,7 +38183,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultInterShapePenaltyINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38244,7 +38244,7 @@ impl InstEncoding for OpSubgroupAvcMceSetInterShapePenaltyINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38305,7 +38305,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultInterDirectionPenaltyINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38366,7 +38366,7 @@ impl InstEncoding for OpSubgroupAvcMceSetInterDirectionPenaltyINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38427,7 +38427,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultIntraLumaShapePenaltyINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38488,7 +38488,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultInterMotionVectorCostTableINTEL 
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38541,7 +38541,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultHighPenaltyCostTableINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38592,7 +38592,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultMediumPenaltyCostTableINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38643,7 +38643,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultLowPenaltyCostTableINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38710,7 +38710,7 @@ impl InstEncoding for OpSubgroupAvcMceSetMotionVectorCostFunctionINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38773,7 +38773,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultIntraLumaModePenaltyINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38826,7 +38826,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultNonDcLumaIntraPenaltyINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38877,7 +38877,7 @@ impl InstEncoding for OpSubgroupAvcMceGetDefaultIntraChromaModeBasePenaltyINTEL 
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38932,7 +38932,7 @@ impl InstEncoding for OpSubgroupAvcMceSetAcOnlyHaarINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -38992,7 +38992,7 @@ impl InstEncoding for OpSubgroupAvcMceSetSourceInterlacedFieldPolarityINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39054,7 +39054,7 @@ impl InstEncoding for OpSubgroupAvcMceSetSingleReferenceInterlacedFieldPolarityI
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39120,7 +39120,7 @@ impl InstEncoding for OpSubgroupAvcMceSetDualReferenceInterlacedFieldPolaritiesI
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39178,7 +39178,7 @@ impl InstEncoding for OpSubgroupAvcMceConvertToImePayloadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39234,7 +39234,7 @@ impl InstEncoding for OpSubgroupAvcMceConvertToImeResultINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39290,7 +39290,7 @@ impl InstEncoding for OpSubgroupAvcMceConvertToRefPayloadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39346,7 +39346,7 @@ impl InstEncoding for OpSubgroupAvcMceConvertToRefResultINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39402,7 +39402,7 @@ impl InstEncoding for OpSubgroupAvcMceConvertToSicPayloadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39458,7 +39458,7 @@ impl InstEncoding for OpSubgroupAvcMceConvertToSicResultINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39514,7 +39514,7 @@ impl InstEncoding for OpSubgroupAvcMceGetMotionVectorsINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39570,7 +39570,7 @@ impl InstEncoding for OpSubgroupAvcMceGetInterDistortionsINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39626,7 +39626,7 @@ impl InstEncoding for OpSubgroupAvcMceGetBestInterDistortionsINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39682,7 +39682,7 @@ impl InstEncoding for OpSubgroupAvcMceGetInterMajorShapeINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39738,7 +39738,7 @@ impl InstEncoding for OpSubgroupAvcMceGetInterMinorShapeINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39794,7 +39794,7 @@ impl InstEncoding for OpSubgroupAvcMceGetInterDirectionsINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39850,7 +39850,7 @@ impl InstEncoding for OpSubgroupAvcMceGetInterMotionVectorCountINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39906,7 +39906,7 @@ impl InstEncoding for OpSubgroupAvcMceGetInterReferenceIdsINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -39974,7 +39974,7 @@ impl InstEncoding for OpSubgroupAvcMceGetInterReferenceInterlacedFieldPolarities
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -40040,7 +40040,7 @@ impl InstEncoding for OpSubgroupAvcImeInitializeINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -40106,7 +40106,7 @@ impl InstEncoding for OpSubgroupAvcImeSetSingleReferenceINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -40176,7 +40176,7 @@ impl InstEncoding for OpSubgroupAvcImeSetDualReferenceINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -40239,7 +40239,7 @@ impl InstEncoding for OpSubgroupAvcImeRefWindowSizeINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -40308,7 +40308,7 @@ impl InstEncoding for OpSubgroupAvcImeAdjustRefOffsetINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -40367,7 +40367,7 @@ impl InstEncoding for OpSubgroupAvcImeConvertToMcePayloadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -40427,7 +40427,7 @@ impl InstEncoding for OpSubgroupAvcImeSetMaxMotionVectorCountINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -40484,7 +40484,7 @@ impl InstEncoding for OpSubgroupAvcImeSetUnidirectionalMixDisableINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -40544,7 +40544,7 @@ impl InstEncoding for OpSubgroupAvcImeSetEarlySearchTerminationThresholdINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -40605,7 +40605,7 @@ impl InstEncoding for OpSubgroupAvcImeSetWeightedSadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -40670,7 +40670,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -40740,7 +40740,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -40811,7 +40811,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -40886,7 +40886,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -40954,7 +40954,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceStreamoutINTEL 
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41024,7 +41024,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceStreamoutINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41095,7 +41095,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithSingleReferenceStreaminoutINTE
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41170,7 +41170,7 @@ impl InstEncoding for OpSubgroupAvcImeEvaluateWithDualReferenceStreaminoutINTEL 
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41230,7 +41230,7 @@ impl InstEncoding for OpSubgroupAvcImeConvertToMceResultINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41286,7 +41286,7 @@ impl InstEncoding for OpSubgroupAvcImeGetSingleReferenceStreaminINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41342,7 +41342,7 @@ impl InstEncoding for OpSubgroupAvcImeGetDualReferenceStreaminINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41398,7 +41398,7 @@ impl InstEncoding for OpSubgroupAvcImeStripSingleReferenceStreamoutINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41454,7 +41454,7 @@ impl InstEncoding for OpSubgroupAvcImeStripDualReferenceStreamoutINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41515,7 +41515,7 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeMotio
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41577,7 +41577,7 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeDisto
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41639,7 +41639,7 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutSingleReferenceMajorShapeRefer
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41705,7 +41705,7 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeMotionV
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41772,7 +41772,7 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeDistort
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41839,7 +41839,7 @@ impl InstEncoding for OpSubgroupAvcImeGetStreamoutDualReferenceMajorShapeReferen
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41901,7 +41901,7 @@ impl InstEncoding for OpSubgroupAvcImeGetBorderReachedINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -41958,7 +41958,7 @@ impl InstEncoding for OpSubgroupAvcImeGetTruncatedSearchIndicationINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -42014,7 +42014,7 @@ impl InstEncoding for OpSubgroupAvcImeGetUnidirectionalEarlySearchTerminationINT
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -42070,7 +42070,7 @@ impl InstEncoding for OpSubgroupAvcImeGetWeightingPatternMinimumMotionVectorINTE
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -42126,7 +42126,7 @@ impl InstEncoding for OpSubgroupAvcImeGetWeightingPatternMinimumDistortionINTEL 
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -42206,7 +42206,7 @@ impl InstEncoding for OpSubgroupAvcFmeInitializeINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -42296,7 +42296,7 @@ impl InstEncoding for OpSubgroupAvcBmeInitializeINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -42359,7 +42359,7 @@ impl InstEncoding for OpSubgroupAvcRefConvertToMcePayloadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -42415,7 +42415,7 @@ impl InstEncoding for OpSubgroupAvcRefSetBidirectionalMixDisableINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -42471,7 +42471,7 @@ impl InstEncoding for OpSubgroupAvcRefSetBilinearFilterEnableINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -42535,7 +42535,7 @@ impl InstEncoding for OpSubgroupAvcRefEvaluateWithSingleReferenceINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -42605,7 +42605,7 @@ impl InstEncoding for OpSubgroupAvcRefEvaluateWithDualReferenceINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -42672,7 +42672,7 @@ impl InstEncoding for OpSubgroupAvcRefEvaluateWithMultiReferenceINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -42742,7 +42742,7 @@ impl InstEncoding for OpSubgroupAvcRefEvaluateWithMultiReferenceInterlacedINTEL 
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -42801,7 +42801,7 @@ impl InstEncoding for OpSubgroupAvcRefConvertToMceResultINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -42857,7 +42857,7 @@ impl InstEncoding for OpSubgroupAvcSicInitializeINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -42933,7 +42933,7 @@ impl InstEncoding for OpSubgroupAvcSicConfigureSkcINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -43022,7 +43022,7 @@ impl InstEncoding for OpSubgroupAvcSicConfigureIpeLumaINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -43125,7 +43125,7 @@ impl InstEncoding for OpSubgroupAvcSicConfigureIpeLumaChromaINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -43195,7 +43195,7 @@ impl InstEncoding for OpSubgroupAvcSicGetMotionVectorMaskINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -43252,7 +43252,7 @@ impl InstEncoding for OpSubgroupAvcSicConvertToMcePayloadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -43312,7 +43312,7 @@ impl InstEncoding for OpSubgroupAvcSicSetIntraLumaShapePenaltyINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -43381,7 +43381,7 @@ impl InstEncoding for OpSubgroupAvcSicSetIntraLumaModeCostFunctionINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -43444,7 +43444,7 @@ impl InstEncoding for OpSubgroupAvcSicSetIntraChromaModeCostFunctionINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -43501,7 +43501,7 @@ impl InstEncoding for OpSubgroupAvcSicSetBilinearFilterEnableINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -43561,7 +43561,7 @@ impl InstEncoding for OpSubgroupAvcSicSetSkcForwardTransformEnableINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -43622,7 +43622,7 @@ impl InstEncoding for OpSubgroupAvcSicSetBlockBasedRawSkipSadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -43683,7 +43683,7 @@ impl InstEncoding for OpSubgroupAvcSicEvaluateIpeINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -43748,7 +43748,7 @@ impl InstEncoding for OpSubgroupAvcSicEvaluateWithSingleReferenceINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -43818,7 +43818,7 @@ impl InstEncoding for OpSubgroupAvcSicEvaluateWithDualReferenceINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -43885,7 +43885,7 @@ impl InstEncoding for OpSubgroupAvcSicEvaluateWithMultiReferenceINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -43955,7 +43955,7 @@ impl InstEncoding for OpSubgroupAvcSicEvaluateWithMultiReferenceInterlacedINTEL 
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -44014,7 +44014,7 @@ impl InstEncoding for OpSubgroupAvcSicConvertToMceResultINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -44070,7 +44070,7 @@ impl InstEncoding for OpSubgroupAvcSicGetIpeLumaShapeINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -44126,7 +44126,7 @@ impl InstEncoding for OpSubgroupAvcSicGetBestIpeLumaDistortionINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -44182,7 +44182,7 @@ impl InstEncoding for OpSubgroupAvcSicGetBestIpeChromaDistortionINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -44238,7 +44238,7 @@ impl InstEncoding for OpSubgroupAvcSicGetPackedIpeLumaModesINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -44294,7 +44294,7 @@ impl InstEncoding for OpSubgroupAvcSicGetIpeChromaModeINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -44350,7 +44350,7 @@ impl InstEncoding for OpSubgroupAvcSicGetPackedSkcLumaCountThresholdINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -44406,7 +44406,7 @@ impl InstEncoding for OpSubgroupAvcSicGetPackedSkcLumaSumThresholdINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -44462,7 +44462,7 @@ impl InstEncoding for OpSubgroupAvcSicGetInterRawSadsINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -44518,7 +44518,7 @@ impl InstEncoding for OpVariableLengthArrayINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -44570,7 +44570,7 @@ impl InstEncoding for OpSaveMemoryINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -44612,7 +44612,7 @@ impl InstEncoding for OpRestoreMemoryINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -44687,7 +44687,7 @@ impl InstEncoding for OpArbitraryFloatSinCosPiALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -44769,7 +44769,7 @@ impl InstEncoding for OpArbitraryFloatCastALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -44851,7 +44851,7 @@ impl InstEncoding for OpArbitraryFloatCastFromIntALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -44933,7 +44933,7 @@ impl InstEncoding for OpArbitraryFloatCastToIntALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -45023,7 +45023,7 @@ impl InstEncoding for OpArbitraryFloatAddALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -45115,7 +45115,7 @@ impl InstEncoding for OpArbitraryFloatSubALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -45207,7 +45207,7 @@ impl InstEncoding for OpArbitraryFloatMulALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -45299,7 +45299,7 @@ impl InstEncoding for OpArbitraryFloatDivALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -45375,7 +45375,7 @@ impl InstEncoding for OpArbitraryFloatGTALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -45447,7 +45447,7 @@ impl InstEncoding for OpArbitraryFloatGEALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -45519,7 +45519,7 @@ impl InstEncoding for OpArbitraryFloatLTALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -45591,7 +45591,7 @@ impl InstEncoding for OpArbitraryFloatLEALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -45663,7 +45663,7 @@ impl InstEncoding for OpArbitraryFloatEQALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -45743,7 +45743,7 @@ impl InstEncoding for OpArbitraryFloatRecipALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -45825,7 +45825,7 @@ impl InstEncoding for OpArbitraryFloatRSqrtALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -45907,7 +45907,7 @@ impl InstEncoding for OpArbitraryFloatCbrtALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -45997,7 +45997,7 @@ impl InstEncoding for OpArbitraryFloatHypotALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -46081,7 +46081,7 @@ impl InstEncoding for OpArbitraryFloatSqrtALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -46162,7 +46162,7 @@ impl InstEncoding for OpArbitraryFloatLogINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -46243,7 +46243,7 @@ impl InstEncoding for OpArbitraryFloatLog2INTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -46324,7 +46324,7 @@ impl InstEncoding for OpArbitraryFloatLog10INTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -46405,7 +46405,7 @@ impl InstEncoding for OpArbitraryFloatLog1pINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -46486,7 +46486,7 @@ impl InstEncoding for OpArbitraryFloatExpINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -46567,7 +46567,7 @@ impl InstEncoding for OpArbitraryFloatExp2INTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -46648,7 +46648,7 @@ impl InstEncoding for OpArbitraryFloatExp10INTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -46729,7 +46729,7 @@ impl InstEncoding for OpArbitraryFloatExpm1INTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -46810,7 +46810,7 @@ impl InstEncoding for OpArbitraryFloatSinINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -46891,7 +46891,7 @@ impl InstEncoding for OpArbitraryFloatCosINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -46972,7 +46972,7 @@ impl InstEncoding for OpArbitraryFloatSinCosINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -47053,7 +47053,7 @@ impl InstEncoding for OpArbitraryFloatSinPiINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -47134,7 +47134,7 @@ impl InstEncoding for OpArbitraryFloatCosPiINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -47215,7 +47215,7 @@ impl InstEncoding for OpArbitraryFloatASinINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -47296,7 +47296,7 @@ impl InstEncoding for OpArbitraryFloatASinPiINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -47377,7 +47377,7 @@ impl InstEncoding for OpArbitraryFloatACosINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -47458,7 +47458,7 @@ impl InstEncoding for OpArbitraryFloatACosPiINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -47539,7 +47539,7 @@ impl InstEncoding for OpArbitraryFloatATanINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -47620,7 +47620,7 @@ impl InstEncoding for OpArbitraryFloatATanPiINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -47709,7 +47709,7 @@ impl InstEncoding for OpArbitraryFloatATan2INTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -47800,7 +47800,7 @@ impl InstEncoding for OpArbitraryFloatPowINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -47891,7 +47891,7 @@ impl InstEncoding for OpArbitraryFloatPowRINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -47982,7 +47982,7 @@ impl InstEncoding for OpArbitraryFloatPowNINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -48032,7 +48032,7 @@ impl InstEncoding for OpLoopControlINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -48079,7 +48079,7 @@ impl InstEncoding for OpAliasDomainDeclINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -48131,7 +48131,7 @@ impl InstEncoding for OpAliasScopeDeclINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -48180,7 +48180,7 @@ impl InstEncoding for OpAliasScopeListDeclINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -48255,7 +48255,7 @@ impl InstEncoding for OpFixedSqrtALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -48337,7 +48337,7 @@ impl InstEncoding for OpFixedRecipALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -48419,7 +48419,7 @@ impl InstEncoding for OpFixedRsqrtALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -48501,7 +48501,7 @@ impl InstEncoding for OpFixedSinALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -48583,7 +48583,7 @@ impl InstEncoding for OpFixedCosALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -48665,7 +48665,7 @@ impl InstEncoding for OpFixedSinCosALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -48747,7 +48747,7 @@ impl InstEncoding for OpFixedSinPiALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -48829,7 +48829,7 @@ impl InstEncoding for OpFixedCosPiALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -48911,7 +48911,7 @@ impl InstEncoding for OpFixedSinCosPiALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -48993,7 +48993,7 @@ impl InstEncoding for OpFixedLogALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -49075,7 +49075,7 @@ impl InstEncoding for OpFixedExpALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -49137,7 +49137,7 @@ impl InstEncoding for OpPtrCastToCrossWorkgroupALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -49194,7 +49194,7 @@ impl InstEncoding for OpCrossWorkgroupCastToPtrALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -49251,7 +49251,7 @@ impl InstEncoding for OpReadPipeBlockingALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -49309,7 +49309,7 @@ impl InstEncoding for OpWritePipeBlockingALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -49367,7 +49367,7 @@ impl InstEncoding for OpFPGARegALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -49423,7 +49423,7 @@ impl InstEncoding for OpRayQueryGetRayTMinKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -49479,7 +49479,7 @@ impl InstEncoding for OpRayQueryGetRayFlagsKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -49539,7 +49539,7 @@ impl InstEncoding for OpRayQueryGetIntersectionTKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -49600,7 +49600,7 @@ impl InstEncoding for OpRayQueryGetIntersectionInstanceCustomIndexKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -49661,7 +49661,7 @@ impl InstEncoding for OpRayQueryGetIntersectionInstanceIdKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -49723,7 +49723,7 @@ impl InstEncoding for OpRayQueryGetIntersectionInstanceShaderBindingTableRecordO
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -49784,7 +49784,7 @@ impl InstEncoding for OpRayQueryGetIntersectionGeometryIndexKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -49845,7 +49845,7 @@ impl InstEncoding for OpRayQueryGetIntersectionPrimitiveIndexKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -49906,7 +49906,7 @@ impl InstEncoding for OpRayQueryGetIntersectionBarycentricsKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -49967,7 +49967,7 @@ impl InstEncoding for OpRayQueryGetIntersectionFrontFaceKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -50024,7 +50024,7 @@ impl InstEncoding for OpRayQueryGetIntersectionCandidateAABBOpaqueKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -50084,7 +50084,7 @@ impl InstEncoding for OpRayQueryGetIntersectionObjectRayDirectionKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -50145,7 +50145,7 @@ impl InstEncoding for OpRayQueryGetIntersectionObjectRayOriginKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -50202,7 +50202,7 @@ impl InstEncoding for OpRayQueryGetWorldRayDirectionKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -50258,7 +50258,7 @@ impl InstEncoding for OpRayQueryGetWorldRayOriginKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -50318,7 +50318,7 @@ impl InstEncoding for OpRayQueryGetIntersectionObjectToWorldKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -50379,7 +50379,7 @@ impl InstEncoding for OpRayQueryGetIntersectionWorldToObjectKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -50448,7 +50448,7 @@ impl InstEncoding for OpAtomicFAddEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -50501,7 +50501,7 @@ impl InstEncoding for OpTypeBufferSurfaceINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -50542,7 +50542,7 @@ impl InstEncoding for OpTypeStructContinuedINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -50583,7 +50583,7 @@ impl InstEncoding for OpConstantCompositeContinuedINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -50624,7 +50624,7 @@ impl InstEncoding for OpSpecConstantCompositeContinuedINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -50665,7 +50665,7 @@ impl InstEncoding for OpCompositeConstructContinuedINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -50719,7 +50719,7 @@ impl InstEncoding for OpConvertFToBF16INTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -50775,7 +50775,7 @@ impl InstEncoding for OpConvertBF16ToFINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -50828,7 +50828,7 @@ impl InstEncoding for OpControlBarrierArriveEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -50881,7 +50881,7 @@ impl InstEncoding for OpControlBarrierWaitEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -50937,7 +50937,7 @@ impl InstEncoding for OpArithmeticFenceEXT {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -51010,7 +51010,7 @@ impl InstEncoding for OpTaskSequenceCreateALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -51063,7 +51063,7 @@ impl InstEncoding for OpTaskSequenceAsyncALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -51119,7 +51119,7 @@ impl InstEncoding for OpTaskSequenceGetALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -51163,7 +51163,7 @@ impl InstEncoding for OpTaskSequenceReleaseALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -51207,7 +51207,7 @@ impl InstEncoding for OpTypeTaskSequenceALTERA {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: None,
             ctx,
@@ -51252,7 +51252,7 @@ impl InstEncoding for OpSubgroupBlockPrefetchINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -51332,7 +51332,7 @@ impl InstEncoding for OpSubgroup2DBlockLoadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -51419,7 +51419,7 @@ impl InstEncoding for OpSubgroup2DBlockLoadTransformINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -51506,7 +51506,7 @@ impl InstEncoding for OpSubgroup2DBlockLoadTransposeINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -51589,7 +51589,7 @@ impl InstEncoding for OpSubgroup2DBlockPrefetchINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -51675,7 +51675,7 @@ impl InstEncoding for OpSubgroup2DBlockStoreINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -51754,7 +51754,7 @@ impl InstEncoding for OpSubgroupMatrixMultiplyAccumulateINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -51826,7 +51826,7 @@ impl InstEncoding for OpBitwiseFunctionINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -51889,7 +51889,7 @@ impl InstEncoding for OpUntypedVariableLengthArrayINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -51937,7 +51937,7 @@ impl InstEncoding for OpConditionalExtensionINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -51996,7 +51996,7 @@ impl InstEncoding for OpConditionalEntryPointINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -52046,7 +52046,7 @@ impl InstEncoding for OpConditionalCapabilityINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -52105,7 +52105,7 @@ impl InstEncoding for OpSpecConstantTargetINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -52174,7 +52174,7 @@ impl InstEncoding for OpSpecConstantArchitectureINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -52233,7 +52233,7 @@ impl InstEncoding for OpSpecConstantCapabilitiesINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -52289,7 +52289,7 @@ impl InstEncoding for OpConditionalCopyObjectINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -52357,7 +52357,7 @@ impl InstEncoding for OpPredicatedLoadINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -52416,7 +52416,7 @@ impl InstEncoding for OpPredicatedStoreINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -52481,7 +52481,7 @@ impl InstEncoding for OpGroupIMulKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -52547,7 +52547,7 @@ impl InstEncoding for OpGroupFMulKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -52613,7 +52613,7 @@ impl InstEncoding for OpGroupBitwiseAndKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -52679,7 +52679,7 @@ impl InstEncoding for OpGroupBitwiseOrKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -52745,7 +52745,7 @@ impl InstEncoding for OpGroupBitwiseXorKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -52811,7 +52811,7 @@ impl InstEncoding for OpGroupLogicalAndKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -52877,7 +52877,7 @@ impl InstEncoding for OpGroupLogicalOrKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -52943,7 +52943,7 @@ impl InstEncoding for OpGroupLogicalXorKHR {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -53001,7 +53001,7 @@ impl InstEncoding for OpRoundFToTF32INTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -53069,7 +53069,7 @@ impl InstEncoding for OpMaskedGatherINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -53128,7 +53128,7 @@ impl InstEncoding for OpMaskedScatterINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: None,
             id_result_type: None,
             ctx,
@@ -53185,7 +53185,7 @@ impl InstEncoding for OpConvertHandleToImageINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -53241,7 +53241,7 @@ impl InstEncoding for OpConvertHandleToSamplerINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -53297,7 +53297,7 @@ impl InstEncoding for OpConvertHandleToSampledImageINTEL {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -53361,7 +53361,7 @@ impl InstEncoding for OpFDot2MixAcc32VALVE {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -53427,7 +53427,7 @@ impl InstEncoding for OpFDot2MixAcc16VALVE {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,
@@ -53493,7 +53493,7 @@ impl InstEncoding for OpFDot4MixAcc32VALVE {
     }
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &DisContext) -> std::fmt::Result {
         profiling::function_scope!();
-        let ctx = &OperandDisContext {
+        let ctx = OperandDisContext {
             id_result: Some(self.id_result),
             id_result_type: Some(self.id_result_type),
             ctx,

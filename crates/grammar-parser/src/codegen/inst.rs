@@ -77,7 +77,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                 quote!(None)
             };
             quote! {
-                let ctx = &OperandDisContext {
+                let ctx = OperandDisContext {
                     id_result: #id_result_opt,
                     id_result_type: #id_result_type_opt,
                     ctx,

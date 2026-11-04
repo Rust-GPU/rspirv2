@@ -19,7 +19,7 @@ macro_rules! impl_tuple {
             }
 
             #[inline]
-            fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+            fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
                 $(<$A as OperandEncoding>::dis_fmt(&self.$I, f, ctx)?;)*
                 Ok(())
             }

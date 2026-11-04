@@ -195,7 +195,7 @@ unsafe impl OperandEncoding for LiteralConst {
     }
 
     #[inline]
-    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: &OperandDisContext<'_>) -> std::fmt::Result {
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
         let color = ctx.color(AnsiColor::Red.on_default());
         write!(f, " {color}{}{color:#}", self.fmt_value(ctx))
@@ -203,12 +203,12 @@ unsafe impl OperandEncoding for LiteralConst {
 }
 
 impl LiteralConst {
-    pub fn fmt_value<'a>(&'a self, ctx: &'a OperandDisContext<'a>) -> FormattedValue<'a> {
+    pub fn fmt_value<'a>(&'a self, ctx: OperandDisContext<'a>) -> FormattedValue<'a> {
         FormattedValue(self, ctx)
     }
 }
 
-pub struct FormattedValue<'a>(&'a LiteralConst, &'a OperandDisContext<'a>);
+pub struct FormattedValue<'a>(&'a LiteralConst, OperandDisContext<'a>);
 
 impl Display for FormattedValue<'_> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
