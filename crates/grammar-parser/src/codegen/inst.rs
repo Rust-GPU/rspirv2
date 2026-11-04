@@ -48,7 +48,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
         // id_result_type
         let (id_result_type_ty, id_result_type_get) = if let Some(id_result_type) = id_result_type {
             let name = &id_result_type.name;
-            (quote!(IdResult), quote!(self.#name.0))
+            (quote!(IdResultType), quote!(self.#name))
         } else {
             (quote!(()), quote!())
         };

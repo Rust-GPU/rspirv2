@@ -981,7 +981,7 @@ pub enum CoreInstSet {
 }
 impl InstEncoding for CoreInstSet {
     type IdResult = Option<IdResult>;
-    type IdResultType = Option<IdResult>;
+    type IdResultType = Option<IdResultType>;
     fn id_result(&self) -> Self::IdResult {
         profiling::function_scope!();
         match self {
@@ -2268,7 +2268,7 @@ impl InstEncoding for CoreInstSet {
             Self::FDot4MixAcc32VALVE(inst) => InstEncoding::id_result(inst).to_optional(),
         }
     }
-    fn id_result_type(&self) -> Self::IdResult {
+    fn id_result_type(&self) -> Self::IdResultType {
         profiling::function_scope!();
         match self {
             Self::Nop(inst) => InstEncoding::id_result_type(inst).to_optional(),

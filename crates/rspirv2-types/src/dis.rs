@@ -1,7 +1,7 @@
 //! Module for Disassembly
 
 use crate::inst::InstEncoding;
-use crate::operand::{ConstFmt, IdResult, LiteralStringEscape};
+use crate::operand::{ConstFmt, IdResult, IdResultType, LiteralStringEscape};
 use crate::slice::{InstSlice, RawInstSlice};
 use anstyle::Style;
 use rustc_hash::FxHashMap;
@@ -147,12 +147,12 @@ pub struct DisContext {
     /// To decode an `OpSwitch`, one needs to know from context whether the selector is 32 or 64bit, as it determines
     /// whether the label constants consume one or two words.
     pub id_to_int_width: FxHashMap<IdResult, u32>,
-    /// Maps an [`IdResult`] of a type declaration to a [`PrimitiveType`]. Primarily for `OpSwitch`, but such a lookup
+    /// Maps an [`IdResultType`] from a type declaration to a [`PrimitiveType`]. Primarily for `OpSwitch`, but such a lookup
     /// may be useful for other instructions as well.
-    pub id_type_to_primitive_type: FxHashMap<IdResult, PrimitiveType>,
-    /// Maps an [`IdResult`] of a type declaration to a [`ConstFmt`] to tell `OpConstant` instructions how to format
+    pub id_type_to_primitive_type: FxHashMap<IdResultType, PrimitiveType>,
+    /// Maps an [`IdResultType`] from a type declaration to a [`ConstFmt`] to tell `OpConstant` instructions how to format
     /// the untyped constant value
-    pub id_to_const_fmt: FxHashMap<IdResult, ConstFmt>,
+    pub id_to_const_fmt: FxHashMap<IdResultType, ConstFmt>,
     /// Maps an [`IdResult`] to the "highest priority" [`IdName`]
     pub id_to_name: FxHashMap<IdResult, IdName>,
 }
