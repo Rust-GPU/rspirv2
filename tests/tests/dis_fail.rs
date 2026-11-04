@@ -45,6 +45,8 @@ fn test_dis_fail() -> anyhow::Result<()> {
     expect![[r#"
         Error: The fixed-size Instruction with 4 param words has 2 Words left over after decoding.
         %5 = OpIMul %4 %6 %7
+
+        Disassembly failed with 1 errors!
     "#]]
     .assert_eq(&vec.dis(DisOptions::simple()).to_string());
 
@@ -55,6 +57,8 @@ fn test_dis_fail() -> anyhow::Result<()> {
     expect![[r#"
         Error: The fixed-size Instruction with 5 param words has 3 Words left over after decoding.
         Error: Instruction at offset 6: Instruction has an invalid length of 0, must be least 1 word as it includes the opcode itself.
+
+        Disassembly failed with 2 errors!
     "#]].assert_eq(&vec.dis(DisOptions::simple()).to_string());
 
     // make inst len shorter, unrecoverable
@@ -64,6 +68,8 @@ fn test_dis_fail() -> anyhow::Result<()> {
     expect![[r#"
         Error: The fixed-size Instruction with 3 param words has 1 Words left over after decoding.
         Error: Instruction at offset 4: Instruction has an invalid length of 0, must be least 1 word as it includes the opcode itself.
+
+        Disassembly failed with 2 errors!
     "#]].assert_eq(&vec.dis(DisOptions::simple()).to_string());
 
     Ok(())

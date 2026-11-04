@@ -52,7 +52,8 @@ pub fn test_disassembly(path: PathBuf, expect: ExpectFile, profile: Profile) -> 
             color: clap::ColorChoice::Never,
         };
         let mut stdout = Vec::new();
-        args.run_inner::<CoreInstSet>(&mut stdout)?;
+        let success = args.run::<CoreInstSet>(&mut stdout)?;
+        assert!(success);
         let stdout = String::from_utf8(stdout)?;
         expect.assert_eq(&stdout);
     }

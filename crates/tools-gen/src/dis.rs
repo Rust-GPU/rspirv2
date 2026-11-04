@@ -51,17 +51,23 @@ impl Args {
 }
 
 impl Args {
-    pub fn run<ISA: InstSetDisCtx>(
+    /// Run the disassembler, exit with `-1` if disassembly fails.
+    pub fn run_cmdline<ISA: InstSetDisCtx>(
         &mut self,
         stdout: &mut impl anstream::stream::RawStream,
     ) -> anyhow::Result<()> {
         profiling::function_scope!();
         self.resolve_auto_color(&*stdout);
         let mut writer = BufWriter::new(stdout);
-        self.run_inner::<ISA>(&mut writer)
+        let no_errors = self.run::<ISA>(&mut writer)?;
+        if !no_errors {
+            std::process::exit(-1);
+        }
+        Ok(())
     }
 
-    pub fn run_inner<ISA: InstSetDisCtx>(&self, stdout: &mut impl Write) -> anyhow::Result<()> {
+    /// Run the disassembler. Returns true if there were no disassembly errors.
+    pub fn run<ISA: InstSetDisCtx>(&self, stdout: &mut impl Write) -> anyhow::Result<bool> {
         profiling::function_scope!();
         let mut bytes = {
             profiling::scope!("std::fs::read");
@@ -78,7 +84,8 @@ impl Args {
         drop(bytes);
         let dis = module.inst.as_raw_slice().dis::<ISA>(self.to_dis_opts()?);
         write!(stdout, "{}", dis)?;
-        Ok(())
+        stdout.flush()?;
+        Ok(!dis.last_display_has_error())
     }
 
     pub fn to_dis_opts(&self) -> anyhow::Result<DisOptions> {
