@@ -66,6 +66,8 @@ fn test_no_null_term() {
         %42 = OpTypeInt 32 0
         Error: String is not null-terminated.
         %69 = OpVariable %42 StorageBuffer
+
+        Disassembly failed with 1 errors!
     "#]]
     .assert_eq(&dis(RawInstSlice::from_words(&words)));
 }
@@ -81,6 +83,8 @@ fn test_shorter_str() {
         %42 = OpTypeInt 32 0
         Error: The fixed-size Instruction with 3 param words has 1 Words left over after decoding.
         %69 = OpVariable %42 StorageBuffer
+
+        Disassembly failed with 1 errors!
     "#]]
     .assert_eq(&dis(RawInstSlice::from_words(&words)));
 }
@@ -97,6 +101,8 @@ fn test_zero_len_op() {
         %42 = OpTypeInt 32 0
         OpName %69 "abc"
         Error: Instruction at offset 7: Instruction has an invalid length of 0, must be least 1 word as it includes the opcode itself.
+
+        Disassembly failed with 1 errors!
     "#]]
     .assert_eq(&dis(RawInstSlice::from_words(&words)));
 }
@@ -127,6 +133,8 @@ fn test_too_long_op() {
     expect![[r#"
         %42 = OpTypeInt 32 0
         Error: Instruction at offset 4: Instruction has a supposed length of 57005 but the module only has 8 words remaining.
+
+        Disassembly failed with 1 errors!
     "#]]
     .assert_eq(&dis(RawInstSlice::from_words(&words)));
 }
@@ -147,6 +155,8 @@ fn test_op_shorter_than_string() {
         Error: String is not null-terminated.
         Error: Instruction Set couldn't decode instruction with unknown opcode 26213
         Error: Instruction at offset 9: Instruction has an invalid length of 0, must be least 1 word as it includes the opcode itself.
+
+        Disassembly failed with 3 errors!
     "#]]
     .assert_eq(&dis(RawInstSlice::from_words(&words)));
 }

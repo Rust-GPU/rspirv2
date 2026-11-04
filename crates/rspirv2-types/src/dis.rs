@@ -3,7 +3,7 @@
 use crate::inst::InstEncoding;
 use crate::operand::{ConstFmt, IdResult, IdResultType, LiteralStringEscape};
 use crate::slice::{InstSlice, RawInstSlice};
-use anstyle::Style;
+use anstyle::{AnsiColor, Style};
 use rustc_hash::FxHashMap;
 use std::borrow::Cow;
 use std::cell::Cell;
@@ -311,6 +311,7 @@ pub struct DisInstSlice<'a, ISA: InstSetDisCtx> {
     slice: &'a RawInstSlice,
     ctx: DisContext,
     _phantom: PhantomData<ISA>,
+    error_cnt: Cell<u32>,
 }
 
 impl<'a, ISA: InstSetDisCtx> DisInstSlice<'a, ISA> {
@@ -328,18 +329,42 @@ impl<'a, ISA: InstSetDisCtx> DisInstSlice<'a, ISA> {
             slice: slice.into(),
             ctx: ctx.into_dis_ctx(),
             _phantom: PhantomData,
+            error_cnt: Cell::default(),
         }
+    }
+
+    pub fn last_display_error_cnt(&self) -> u32 {
+        self.error_cnt.get()
+    }
+
+    pub fn last_display_has_error(&self) -> bool {
+        self.error_cnt.get() > 0
     }
 }
 
 impl<'a, ISA: InstSetDisCtx> Display for DisInstSlice<'a, ISA> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         profiling::function_scope!();
+        let mut err_cnt = 0;
         for maybe_reader in self.slice.iter() {
             match maybe_reader.and_then(|reader| ISA::decode(reader)) {
                 Ok(inst) => writeln!(f, "{}", inst.dis(&self.ctx))?,
-                Err(e) => writeln!(f, "Error: {}", e)?,
+                Err(e) => {
+                    err_cnt += 1;
+                    let color = self.ctx.color(AnsiColor::Red.on_default());
+                    writeln!(f, "{color}Error: {}{color:#}", e)?;
+                }
             }
+        }
+
+        self.error_cnt.set(err_cnt);
+        if err_cnt > 0 {
+            let color = self.ctx.color(AnsiColor::Red.on_default());
+            writeln!(
+                f,
+                "\n{color}Disassembly failed with {} errors!{color:#}",
+                err_cnt
+            )?;
         }
         Ok(())
     }
