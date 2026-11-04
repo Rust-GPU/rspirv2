@@ -2964,6 +2964,19 @@ impl OpSpecOpInst for OpAccessChain {
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpAccessChain{}{}",
+            self.base.dis(ctx),
+            self.indexes.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpInBoundsAccessChain {
@@ -3048,6 +3061,19 @@ impl OpSpecOpInst for OpInBoundsAccessChain {
             base: OperandEncoding::decode(&mut op_reader)?,
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpInBoundsAccessChain{}{}",
+            self.base.dis(ctx),
+            self.indexes.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3140,6 +3166,20 @@ impl OpSpecOpInst for OpPtrAccessChain {
             element: OperandEncoding::decode(&mut op_reader)?,
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpPtrAccessChain{}{}{}",
+            self.base.dis(ctx),
+            self.element.dis(ctx),
+            self.indexes.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3349,6 +3389,20 @@ impl OpSpecOpInst for OpInBoundsPtrAccessChain {
             element: OperandEncoding::decode(&mut op_reader)?,
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpInBoundsPtrAccessChain{}{}{}",
+            self.base.dis(ctx),
+            self.element.dis(ctx),
+            self.indexes.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -3800,6 +3854,20 @@ impl OpSpecOpInst for OpVectorShuffle {
             components: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpVectorShuffle{}{}{}",
+            self.vector_1.dis(ctx),
+            self.vector_2.dis(ctx),
+            self.components.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCompositeConstruct {
@@ -3941,6 +4009,19 @@ impl OpSpecOpInst for OpCompositeExtract {
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpCompositeExtract{}{}",
+            self.composite.dis(ctx),
+            self.indexes.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpCompositeInsert {
@@ -4032,6 +4113,20 @@ impl OpSpecOpInst for OpCompositeInsert {
             composite: OperandEncoding::decode(&mut op_reader)?,
             indexes: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpCompositeInsert{}{}{}",
+            self.object.dis(ctx),
+            self.composite.dis(ctx),
+            self.indexes.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5621,6 +5716,14 @@ impl OpSpecOpInst for OpConvertFToU {
             float_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpConvertFToU{}", self.float_value.dis(ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConvertFToS {
@@ -5698,6 +5801,14 @@ impl OpSpecOpInst for OpConvertFToS {
             id_result,
             float_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpConvertFToS{}", self.float_value.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5777,6 +5888,14 @@ impl OpSpecOpInst for OpConvertSToF {
             signed_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpConvertSToF{}", self.signed_value.dis(ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConvertUToF {
@@ -5854,6 +5973,14 @@ impl OpSpecOpInst for OpConvertUToF {
             id_result,
             unsigned_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpConvertUToF{}", self.unsigned_value.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -5933,6 +6060,14 @@ impl OpSpecOpInst for OpUConvert {
             unsigned_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpUConvert{}", self.unsigned_value.dis(ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSConvert {
@@ -6010,6 +6145,14 @@ impl OpSpecOpInst for OpSConvert {
             id_result,
             signed_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpSConvert{}", self.signed_value.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6089,6 +6232,14 @@ impl OpSpecOpInst for OpFConvert {
             float_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpFConvert{}", self.float_value.dis(ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpQuantizeToF16 {
@@ -6167,6 +6318,14 @@ impl OpSpecOpInst for OpQuantizeToF16 {
             value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpQuantizeToF16{}", self.value.dis(ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpConvertPtrToU {
@@ -6244,6 +6403,14 @@ impl OpSpecOpInst for OpConvertPtrToU {
             id_result,
             pointer: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpConvertPtrToU{}", self.pointer.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6435,6 +6602,14 @@ impl OpSpecOpInst for OpConvertUToPtr {
             integer_value: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpConvertUToPtr{}", self.integer_value.dis(ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpPtrCastToGeneric {
@@ -6513,6 +6688,14 @@ impl OpSpecOpInst for OpPtrCastToGeneric {
             pointer: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpPtrCastToGeneric{}", self.pointer.dis(ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpGenericCastToPtr {
@@ -6590,6 +6773,14 @@ impl OpSpecOpInst for OpGenericCastToPtr {
             id_result,
             pointer: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpGenericCastToPtr{}", self.pointer.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6730,6 +6921,14 @@ impl OpSpecOpInst for OpBitcast {
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpBitcast{}", self.operand.dis(ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSNegate {
@@ -6808,6 +7007,14 @@ impl OpSpecOpInst for OpSNegate {
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpSNegate{}", self.operand.dis(ctx))
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFNegate {
@@ -6885,6 +7092,14 @@ impl OpSpecOpInst for OpFNegate {
             id_result,
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpFNegate{}", self.operand.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -6971,6 +7186,19 @@ impl OpSpecOpInst for OpIAdd {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpIAdd{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFAdd {
@@ -7055,6 +7283,19 @@ impl OpSpecOpInst for OpFAdd {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpFAdd{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7141,6 +7382,19 @@ impl OpSpecOpInst for OpISub {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpISub{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFSub {
@@ -7225,6 +7479,19 @@ impl OpSpecOpInst for OpFSub {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpFSub{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7311,6 +7578,19 @@ impl OpSpecOpInst for OpIMul {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpIMul{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFMul {
@@ -7395,6 +7675,19 @@ impl OpSpecOpInst for OpFMul {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpFMul{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7481,6 +7774,19 @@ impl OpSpecOpInst for OpUDiv {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpUDiv{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSDiv {
@@ -7565,6 +7871,19 @@ impl OpSpecOpInst for OpSDiv {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpSDiv{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7651,6 +7970,19 @@ impl OpSpecOpInst for OpFDiv {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpFDiv{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUMod {
@@ -7735,6 +8067,19 @@ impl OpSpecOpInst for OpUMod {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpUMod{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7821,6 +8166,19 @@ impl OpSpecOpInst for OpSRem {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpSRem{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSMod {
@@ -7905,6 +8263,19 @@ impl OpSpecOpInst for OpSMod {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpSMod{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -7991,6 +8362,19 @@ impl OpSpecOpInst for OpFRem {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpFRem{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpFMod {
@@ -8075,6 +8459,19 @@ impl OpSpecOpInst for OpFMod {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpFMod{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9407,6 +9804,19 @@ impl OpSpecOpInst for OpLogicalEqual {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpLogicalEqual{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpLogicalNotEqual {
@@ -9491,6 +9901,19 @@ impl OpSpecOpInst for OpLogicalNotEqual {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpLogicalNotEqual{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9577,6 +10000,19 @@ impl OpSpecOpInst for OpLogicalOr {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpLogicalOr{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpLogicalAnd {
@@ -9662,6 +10098,19 @@ impl OpSpecOpInst for OpLogicalAnd {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpLogicalAnd{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpLogicalNot {
@@ -9739,6 +10188,14 @@ impl OpSpecOpInst for OpLogicalNot {
             id_result,
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpLogicalNot{}", self.operand.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -9832,6 +10289,20 @@ impl OpSpecOpInst for OpSelect {
             object_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpSelect{}{}{}",
+            self.condition.dis(ctx),
+            self.object_1.dis(ctx),
+            self.object_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpIEqual {
@@ -9916,6 +10387,19 @@ impl OpSpecOpInst for OpIEqual {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpIEqual{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10002,6 +10486,19 @@ impl OpSpecOpInst for OpINotEqual {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpINotEqual{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUGreaterThan {
@@ -10086,6 +10583,19 @@ impl OpSpecOpInst for OpUGreaterThan {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpUGreaterThan{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10172,6 +10682,19 @@ impl OpSpecOpInst for OpSGreaterThan {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpSGreaterThan{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpUGreaterThanEqual {
@@ -10256,6 +10779,19 @@ impl OpSpecOpInst for OpUGreaterThanEqual {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpUGreaterThanEqual{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10342,6 +10878,19 @@ impl OpSpecOpInst for OpSGreaterThanEqual {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpSGreaterThanEqual{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpULessThan {
@@ -10426,6 +10975,19 @@ impl OpSpecOpInst for OpULessThan {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpULessThan{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -10512,6 +11074,19 @@ impl OpSpecOpInst for OpSLessThan {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpSLessThan{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpULessThanEqual {
@@ -10597,6 +11172,19 @@ impl OpSpecOpInst for OpULessThanEqual {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpULessThanEqual{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpSLessThanEqual {
@@ -10681,6 +11269,19 @@ impl OpSpecOpInst for OpSLessThanEqual {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpSLessThanEqual{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -11499,6 +12100,19 @@ impl OpSpecOpInst for OpShiftRightLogical {
             shift: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpShiftRightLogical{}{}",
+            self.base.dis(ctx),
+            self.shift.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpShiftRightArithmetic {
@@ -11583,6 +12197,19 @@ impl OpSpecOpInst for OpShiftRightArithmetic {
             base: OperandEncoding::decode(&mut op_reader)?,
             shift: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpShiftRightArithmetic{}{}",
+            self.base.dis(ctx),
+            self.shift.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -11669,6 +12296,19 @@ impl OpSpecOpInst for OpShiftLeftLogical {
             shift: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpShiftLeftLogical{}{}",
+            self.base.dis(ctx),
+            self.shift.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpBitwiseOr {
@@ -11753,6 +12393,19 @@ impl OpSpecOpInst for OpBitwiseOr {
             operand_1: OperandEncoding::decode(&mut op_reader)?,
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpBitwiseOr{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -11839,6 +12492,19 @@ impl OpSpecOpInst for OpBitwiseXor {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpBitwiseXor{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpBitwiseAnd {
@@ -11924,6 +12590,19 @@ impl OpSpecOpInst for OpBitwiseAnd {
             operand_2: OperandEncoding::decode_last(&mut op_reader)?,
         })
     }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(
+            f,
+            "OpBitwiseAnd{}{}",
+            self.operand_1.dis(ctx),
+            self.operand_2.dis(ctx)
+        )
+    }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct OpNot {
@@ -12001,6 +12680,14 @@ impl OpSpecOpInst for OpNot {
             id_result,
             operand: OperandEncoding::decode_last(&mut op_reader)?,
         })
+    }
+    fn op_spec_op_dis_fmt(
+        &self,
+        f: &mut Formatter<'_>,
+        ctx: OperandDisContext<'_>,
+    ) -> std::fmt::Result {
+        profiling::function_scope!();
+        write!(f, "OpNot{}", self.operand.dis(ctx))
     }
 }
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]

@@ -57,11 +57,10 @@ impl InstEncoding for OpSpecConstantOp {
         let rspirv_space = ctx.rspirv_space();
         write!(
             f,
-            "{}OpSpecConstantOp{rspirv_space}{}: {rspirv_space}{}",
+            "{}OpSpecConstantOp{rspirv_space}{}{rspirv_space} {}",
             ctx.id_result_writer(),
             self.id_result_type().dis(ctx),
-            // TODO unfinished
-            self.0.dis(&ctx)
+            self.0.op_spec_op_dis(ctx)
         )
     }
 }

@@ -34,6 +34,9 @@ pub fn write_op_spec_op_inst_enum(
             let opcode = inst.opcode;
             quote!(#opcode => Self::#enum_ident(<#type_ident as OpSpecOpInst>::op_spec_op_decode(reader)?),)
         });
+        let dis_match = insts.iter().map(
+            |(_, _, enum_ident)| quote!(Self::#enum_ident(inst) => OpSpecOpInst::op_spec_op_dis_fmt(inst, f, ctx),),
+        );
         quote! {
             impl OpSpecOpInst for #name {
                 fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
@@ -50,6 +53,13 @@ pub fn write_op_spec_op_inst_enum(
                         #(#decode_match)*
                         _ => return Err(DecodeErrorKind::UnknownOpCode { opcode }.into()),
                     })
+                }
+
+                fn op_spec_op_dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
+                    profiling::function_scope!();
+                    match self {
+                        #(#dis_match)*
+                    }
                 }
             }
         }
