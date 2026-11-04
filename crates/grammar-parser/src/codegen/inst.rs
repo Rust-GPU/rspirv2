@@ -65,18 +65,34 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             let id_result_type = id_result_type.with_context(missing_operands)?;
 
             // members that are not IdResult or IdResultType, since those need special casing.
-            let members = member_operands
+            let member_operands = member_operands
                 .iter()
                 .filter(|&op| {
                     !core::ptr::eq(op, id_result)
                         && !core::ptr::eq(op, id_result_type)
                 })
+                .collect::<Vec<_>>();
+            let members = member_operands
+                .iter()
                 .map(|Operand { name, .. }| name)
                 .collect::<Vec<_>>();
             let members_non_last = &members[..members.len().saturating_sub(1)];
             let members_last = members.last().into_iter();
             let member_id_result = &id_result.name;
             let member_id_result_type = &id_result_type.name;
+
+            // disassembly
+            let dis_operands_value = member_operands
+                .iter()
+                .map(|op| {
+                    let name = &op.name;
+                    quote!(, self.#name.dis(ctx))
+                })
+                .collect::<Vec<_>>();
+            let pat = [inst.opname.as_ref()]
+                .into_iter()
+                .chain(member_operands.iter().map(|_| "{}"))
+                .collect::<String>();
 
             quote! {
                 impl OpSpecOpInst for #struct_ident {
@@ -101,6 +117,11 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                             #(#members_non_last: OperandEncoding::decode(&mut op_reader)?,)*
                             #(#members_last: OperandEncoding::decode_last(&mut op_reader)?,)*
                         })
+                    }
+
+                    fn op_spec_op_dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
+                        profiling::function_scope!();
+                        write!(f, #pat #(#dis_operands_value)*)
                     }
                 }
             }

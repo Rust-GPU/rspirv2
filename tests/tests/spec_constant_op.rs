@@ -51,7 +51,7 @@ fn test_encode_decode() {
 
     // dis
     expect![[r#"
-        %2 = OpSpecConstantOp %0: %2 = OpIAdd %0 %1 %1
+        %2 = OpSpecConstantOp %0 OpIAdd %1 %1
     "#]]
     .assert_eq(&vec2.dis(DisOptions::simple()).to_string());
 }
