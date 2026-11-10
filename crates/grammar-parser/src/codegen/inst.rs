@@ -1,14 +1,12 @@
 use crate::codegen::{GrammarWriter, OPERAND_ID_RESULT, OPERAND_ID_RESULT_TYPE};
 use crate::parse::{Grammar, InstMeta, Operand, Quantifier};
-use anyhow::Context;
-use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 
 pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::Result<()> {
     let insts = grammar.insts.iter().map(|inst| {
         let struct_ident = InstMeta::type_ident(&inst.opname);
         if !inst.source.codegen_impl() {
-            return Ok(quote!(pub use super::preamble::#struct_ident;));
+            return quote!(pub use super::preamble::#struct_ident;);
         }
 
         let meta = InstMeta::const_ident(&inst.opname);
@@ -53,80 +51,6 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             (quote!(IdResultType), quote!(self.#name))
         } else {
             (quote!(()), quote!())
-        };
-
-        // OpSpecOp
-        let op_spec_op_encoding = if inst.op_spec_op {
-            let missing_operands = || {
-                format!("Instruction {} is marked as `op_spec_op` compatible but doesn't have required `IdResult` and \
-                `IdResultType` operands. All operands: {:?}", inst.opname, inst.operands)
-            };
-            let id_result = id_result.with_context(missing_operands)?;
-            let id_result_type = id_result_type.with_context(missing_operands)?;
-
-            // members that are not IdResult or IdResultType, since those need special casing.
-            let member_operands = member_operands
-                .iter()
-                .filter(|&op| {
-                    !core::ptr::eq(op, id_result)
-                        && !core::ptr::eq(op, id_result_type)
-                })
-                .collect::<Vec<_>>();
-            let members = member_operands
-                .iter()
-                .map(|Operand { name, .. }| name)
-                .collect::<Vec<_>>();
-            let members_non_last = &members[..members.len().saturating_sub(1)];
-            let members_last = members.last().into_iter();
-            let member_id_result = &id_result.name;
-            let member_id_result_type = &id_result_type.name;
-
-            // disassembly
-            let dis_operands_value = member_operands
-                .iter()
-                .map(|op| {
-                    let name = &op.name;
-                    quote!(, self.#name.dis(ctx))
-                })
-                .collect::<Vec<_>>();
-            let pat = [inst.opname.as_ref()]
-                .into_iter()
-                .chain(member_operands.iter().map(|_| "{}"))
-                .collect::<String>();
-
-            quote! {
-                impl OpSpecOpInst for #struct_ident {
-                    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
-                        profiling::function_scope!();
-                        OperandEncoding::encode(&self.#member_id_result_type, &mut *writer)?;
-                        OperandEncoding::encode(&self.#member_id_result, &mut *writer)?;
-                        writer.write_op(Self::META.opcode, 0)?;
-                        #(OperandEncoding::encode(&self.#members, &mut *writer)?;)*
-                        Ok(())
-                    }
-
-                    fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
-                        profiling::function_scope!();
-                        let mut op_reader = OperandReader::new(reader);
-                        let #member_id_result_type = OperandEncoding::decode(&mut op_reader)?;
-                        let #member_id_result = OperandEncoding::decode(&mut op_reader)?;
-                        op_reader.pull_expected_opcode(Self::META)?;
-                        Ok(Self {
-                            #member_id_result_type,
-                            #member_id_result,
-                            #(#members_non_last: OperandEncoding::decode(&mut op_reader)?,)*
-                            #(#members_last: OperandEncoding::decode_last(&mut op_reader)?,)*
-                        })
-                    }
-
-                    fn op_spec_op_dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
-                        profiling::function_scope!();
-                        write!(f, #pat #(#dis_operands_value)*)
-                    }
-                }
-            }
-        } else {
-            quote!()
         };
 
         // encode decode
@@ -209,7 +133,7 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
             }
         };
 
-        Ok(quote! {
+        quote! {
             #struct_def
             #(#aliases)*
 
@@ -253,9 +177,12 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                     write!(f, #pat, ctx.id_result_writer() #(#dis_operands_value)*)
                 }
             }
-
-            #op_spec_op_encoding
-        })
-    }).collect::<anyhow::Result<TokenStream>>()?;
-    writer.write_module("inst", insts)
+        }
+    });
+    writer.write_module(
+        "inst",
+        quote! {
+            #(#insts)*
+        },
+    )
 }

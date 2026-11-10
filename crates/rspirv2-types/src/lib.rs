@@ -5,7 +5,6 @@ pub mod dis;
 pub mod inst;
 pub mod meta;
 pub mod module;
-pub mod op_spec_op;
 pub mod operand;
 pub mod slice;
 pub mod vec;

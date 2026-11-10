@@ -12,7 +12,6 @@ pub mod inst;
 pub mod inst_class;
 pub mod inst_meta;
 pub mod inst_set;
-pub mod op_spec_op;
 pub mod operand_kinds;
 pub mod operands;
 
