@@ -1,5 +1,6 @@
 use crate::Word;
 use crate::binary::EncodeError;
+use crate::operand::{IdResult, IdResultType, OperandEncoding};
 use smallvec::SmallVec;
 use std::ops::{Deref, DerefMut};
 
@@ -13,13 +14,28 @@ pub trait WordWriter: Sized {
     /// Write an [`Iterator`] of [`Word`]s
     fn write_iter(&mut self, iter: impl IntoIterator<Item = Word>);
 
-    /// Encode and write the opcode and len of an instruction.
+    /// Write the opcode, optional [`ResultId`], optional [`ResultIdType`] and the len of additional operands of this
+    /// Instruction.
     ///
-    /// Should not be overwritten.
+    /// The len is the length of "additional" operands written **after** this function call, e.g. for `OpIAdd` the len
+    /// would be 2 for the two [`IdRef`]s referencing the SSA values to be added.
     #[inline]
-    fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
+    fn write_op(
+        &mut self,
+        op: u16,
+        id_result: Option<IdResult>,
+        id_result_type: Option<IdResultType>,
+        len: usize,
+    ) -> Result<(), EncodeError> {
+        let len = len + 1 + id_result.is_some() as usize + id_result_type.is_some() as usize;
         self.inst_reserve(len);
         self.write(Word::new_op(op, len)?);
+        if let Some(id_result) = id_result {
+            id_result.encode(&mut *self)?;
+        }
+        if let Some(id_result_type) = id_result_type {
+            id_result_type.encode(&mut *self)?;
+        }
         Ok(())
     }
 

@@ -60,13 +60,17 @@ unsafe impl OperandEncoding for IdResult {
         Ok(())
     }
 
-    #[inline]
-    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
-        Ok(Self(reader.pull()?))
-    }
-
     fn visit(&self, visitor: &mut impl OperandVisitor) {
         visitor.visit_id_result(*self)
+    }
+
+    #[inline]
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        if let Some(id_result) = reader.overwrite_id_result.as_ref() {
+            Ok(*id_result)
+        } else {
+            Ok(Self(reader.pull()?))
+        }
     }
 
     #[inline]
@@ -113,7 +117,7 @@ impl Display for IdResultWriter<'_> {
 }
 
 macro_rules! id_ref {
-    ($name:ident; $kind:expr; $docs:literal; $fn_visit:ident) => {
+    (@common $name:ident; $kind:expr; $docs:literal) => {
         #[doc = concat!("A `", stringify!($name), "` is a reference to a [`IdResult`] of another operation.")]
         #[doc = $docs]
         #[repr(transparent)]
@@ -142,6 +146,9 @@ macro_rules! id_ref {
         unsafe impl Operand for $name {
             const KIND: &OperandKind = &$kind;
         }
+    };
+    ($name:ident; $kind:expr; $docs:literal) => {
+        id_ref!(@common $name; $kind; $docs);
 
         unsafe impl OperandEncoding for $name {
             const FIXED_LEN: Option<usize> = Some(1);
@@ -169,7 +176,36 @@ macro_rules! id_ref {
     };
 }
 
-id_ref!(IdResultType; OPERAND_KIND_ID_RESULT_TYPE; ""; visit_id_result_type);
-id_ref!(IdMemorySemantics; OPERAND_KIND_ID_MEMORY_SEMANTICS; ""; visit_id_memory_semantics);
-id_ref!(IdScope; OPERAND_KIND_ID_SCOPE; ""; visit_id_scope);
-id_ref!(IdRef; OPERAND_KIND_ID_REF; ""; visit_id_ref);
+id_ref!(@common IdResultType; OPERAND_KIND_ID_RESULT_TYPE; "");
+unsafe impl OperandEncoding for IdResultType {
+    const FIXED_LEN: Option<usize> = Some(1);
+
+    #[inline]
+    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+        writer.write(self.0.0);
+        Ok(())
+    }
+
+    #[inline]
+    fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
+        if let Some(overwrite) = reader.overwrite_id_result_type.as_ref() {
+            Ok(*overwrite)
+        } else {
+            Ok(Self(IdResult(reader.pull()?)))
+        }
+    }
+
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_id_result_type(*self)
+    }
+
+    #[inline]
+    fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
+        self.0
+            .dis_fmt_color(f, ctx, AnsiColor::Yellow.on_default(), true)
+    }
+}
+
+id_ref!(IdMemorySemantics; OPERAND_KIND_ID_MEMORY_SEMANTICS; "");
+id_ref!(IdScope; OPERAND_KIND_ID_SCOPE; "");
+id_ref!(IdRef; OPERAND_KIND_ID_REF; "");

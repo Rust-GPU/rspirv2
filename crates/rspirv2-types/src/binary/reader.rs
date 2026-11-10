@@ -1,6 +1,7 @@
 use crate::Word;
 use crate::binary::{DecodeError, DecodeErrorKind};
 use crate::meta::InstMeta;
+use crate::operand::{IdResult, IdResultType};
 use std::cmp::Ordering;
 use std::fmt::{Display, Formatter};
 use std::ops::{Deref, DerefMut};
@@ -106,12 +107,19 @@ pub struct OperandReader<'a> {
     params: &'a [Word],
     /// advancing offset pointing into params
     offset: usize,
+    pub overwrite_id_result: Option<IdResult>,
+    pub overwrite_id_result_type: Option<IdResultType>,
 }
 
 impl<'a> OperandReader<'a> {
     #[inline]
     pub fn new(params: &'a [Word]) -> Self {
-        Self { params, offset: 0 }
+        Self {
+            params,
+            offset: 0,
+            overwrite_id_result: None,
+            overwrite_id_result_type: None,
+        }
     }
 
     /// Peek at the next [`Word`] in the [`InstReader`] without advancing the `params_offset`. Fails if there are no

@@ -342,11 +342,10 @@ impl InstEncoding for OpSwitch {
 
     fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
         profiling::function_scope!();
-        let len = 1
-            + OperandEncoding::word_len(&self.selector)
+        let len = OperandEncoding::word_len(&self.selector)
             + OperandEncoding::word_len(&self.default)
             + OperandEncoding::word_len(&self.target);
-        writer.write_op(Self::META.opcode, len)?;
+        writer.write_op(Self::META.opcode, None, None, len)?;
         OperandEncoding::encode(&self.selector, &mut *writer)?;
         OperandEncoding::encode(&self.default, &mut *writer)?;
         OperandEncoding::encode(&self.target, &mut *writer)?;
