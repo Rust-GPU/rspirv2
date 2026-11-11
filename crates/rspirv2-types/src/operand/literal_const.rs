@@ -1,7 +1,7 @@
 use crate::Word;
 use crate::binary::{DecodeError, DecodeErrorKind, EncodeError, OperandReader, WordWriter};
 use crate::meta::{Category, OperandKind};
-use crate::operand::{Operand, OperandDisContext, OperandEncoding};
+use crate::operand::{Operand, OperandDisContext, OperandEncoding, OperandVisitor};
 use anstyle::AnsiColor;
 use smallvec::SmallVec;
 use std::fmt::{Display, Formatter};
@@ -192,6 +192,10 @@ unsafe impl OperandEncoding for LiteralConst {
     fn decode_last(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
         Ok(Self(reader.collect()))
+    }
+
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_literal_const(self)
     }
 
     #[inline]

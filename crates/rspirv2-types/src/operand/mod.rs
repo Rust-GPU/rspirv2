@@ -104,6 +104,9 @@ pub unsafe trait OperandEncoding: Sized + Debug {
         Ok(result)
     }
 
+    /// Visit the Operand
+    fn visit(&self, visitor: &mut impl OperandVisitor);
+
     /// Disassemble this operand to the supplied [`Formatter`]. Prefer [`Self::dis`] over calling this.
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result;
 
@@ -119,6 +122,70 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     #[inline]
     fn dis<'a>(&'a self, ctx: OperandDisContext<'a>) -> OperandDis<'a, Self> {
         OperandDis(self, ctx)
+    }
+}
+
+/// A Visitor for [`Operand`]s
+pub trait OperandVisitor {
+    /// Visit any operand in declaration order.
+    fn visit_operand<Op: OperandEncoding>(&mut self, operand: &Op) {
+        let _ = operand;
+    }
+
+    /// Visit any operand that SSA-uses an [`IdResult`], like an [`IdRef`], [`IdResultType`], [`IdMemorySemantics`] or
+    /// [`IdScope`].
+    ///
+    /// SSA defs are [`IdResult`]s and visited in [`Self::visit_id_result`].
+    fn visit_id_use(&mut self, id_use: IdResult) {
+        let _ = id_use;
+    }
+
+    /// An SSA def.
+    fn visit_id_result(&mut self, id_result: IdResult) {
+        self.visit_operand(&id_result);
+    }
+
+    fn visit_id_result_type(&mut self, id_result_type: IdResultType) {
+        self.visit_operand(&id_result_type);
+        self.visit_id_use(id_result_type.0);
+    }
+
+    fn visit_id_memory_semantics(&mut self, id_ref: IdMemorySemantics) {
+        self.visit_operand(&id_ref);
+        self.visit_id_use(id_ref.0);
+    }
+
+    fn visit_id_scope(&mut self, id_ref: IdScope) {
+        self.visit_operand(&id_ref);
+        self.visit_id_use(id_ref.0);
+    }
+
+    fn visit_id_ref(&mut self, id_ref: IdRef) {
+        self.visit_operand(&id_ref);
+        self.visit_id_use(id_ref.0);
+    }
+
+    fn visit_literal_integer(&mut self, lit: LiteralInteger) {
+        self.visit_operand(&lit);
+    }
+
+    fn visit_literal_float(&mut self, lit: LiteralFloat) {
+        self.visit_operand(&lit);
+    }
+
+    fn visit_literal_const(&mut self, lit: &LiteralConst) {
+        self.visit_operand(lit);
+    }
+
+    fn visit_literal_string(&mut self, lit: &LiteralString) {
+        self.visit_operand(lit);
+    }
+
+    /// `OpSwitch` can't be decoded without context, so visiting when it's not resolved to 32bit or 64bit labels, we
+    /// panic. Returning `true` switches this behavior from panic-ing to ignoring these operands, which may not be
+    /// desirable in many cases.
+    fn allow_ignoring_operands_if_context_is_required(&mut self) -> bool {
+        false
     }
 }
 
@@ -199,6 +266,13 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
         }
     }
 
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        match self {
+            Some(e) => e.visit(visitor),
+            None => {}
+        }
+    }
+
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         match self {
@@ -263,6 +337,12 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
         Ok(vec)
     }
 
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        for x in self {
+            x.visit(&mut *visitor)
+        }
+    }
+
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -276,7 +356,6 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
 /// copy of Vec impl above
 unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T; N]> {
     const FIXED_LEN: Option<usize> = None;
-
     #[inline]
     fn word_len(&self) -> usize {
         profiling::function_scope!();
@@ -312,6 +391,12 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
             vec.push(T::decode(reader)?);
         }
         Ok(vec)
+    }
+
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        for x in self {
+            x.visit(&mut *visitor)
+        }
     }
 
     #[inline]

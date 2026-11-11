@@ -9,7 +9,7 @@ use crate::operand::{IdRef, OperandDisContext, OperandEncoding};
 use OpSwitchTargetLen::{One, Two};
 use rspirv2_types::Word;
 use rspirv2_types::binary::{DecodeErrorKind, FnWriter, OperandReader};
-use rspirv2_types::operand::LiteralConst;
+use rspirv2_types::operand::{LiteralConst, OperandVisitor};
 use smallvec::SmallVec;
 use std::borrow::Cow;
 use std::error::Error;
@@ -271,6 +271,20 @@ unsafe impl OperandEncoding for OpSwitchTarget {
         Ok(Self::Unresolved(reader.collect()))
     }
 
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        match self {
+            OpSwitchTarget::Unresolved(_) => {
+                if !visitor.allow_ignoring_operands_if_context_is_required() {
+                    panic!(
+                        "Can't visit an `OpSwitch` that is `Unresolved`, as context from arbitrary previous \
+                    instructions is required to decode it's operands."
+                    )
+                }
+            }
+            OpSwitchTarget::Resolved(resolved) => resolved.visit(visitor),
+        }
+    }
+
     fn dis_fmt(&self, _f: &mut Formatter<'_>, _ctx: OperandDisContext<'_>) -> std::fmt::Result {
         panic!("OpSwitchTarget can't be trivially disassembled")
     }
@@ -286,6 +300,10 @@ unsafe impl OperandEncoding for OpSwitchResolvedTarget {
 
     fn decode(_: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Err(DecodeErrorKind::LiteralConstNotLastOperand.into())
+    }
+
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        self.target.visit(visitor)
     }
 
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {

@@ -1,7 +1,7 @@
 use crate::Word;
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
 use crate::meta::{Category, OperandKind};
-use crate::operand::{Operand, OperandDisContext, OperandEncoding};
+use crate::operand::{Operand, OperandDisContext, OperandEncoding, OperandVisitor};
 use anstyle::AnsiColor;
 use std::fmt::Formatter;
 
@@ -65,6 +65,10 @@ unsafe impl OperandEncoding for LiteralFloat {
     #[inline]
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         Ok(Self(reader.pull()?))
+    }
+
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_literal_float(*self)
     }
 
     #[inline]

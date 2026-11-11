@@ -158,6 +158,10 @@ fn emit_rust_like_enum(
                 })
             }
 
+            fn visit(&self, visitor: &mut impl OperandVisitor) {
+                visitor.visit_operand(self)
+            }
+
             #[inline]
             fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: OperandDisContext<'_>) -> std::fmt::Result {
                 profiling::function_scope!();
@@ -254,6 +258,10 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
                         variant,
                     }.into())
                 })
+            }
+
+            fn visit(&self, visitor: &mut impl OperandVisitor) {
+                visitor.visit_operand(self)
             }
 
             #[inline]
@@ -372,6 +380,10 @@ fn emit_bitflags_enum_common(
                 profiling::function_scope!();
                 let bits = reader.pull()?.0;
                 Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<#name>(stringify!(#name), bits))
+            }
+
+            fn visit(&self, visitor: &mut impl OperandVisitor) {
+                visitor.visit_operand(self)
             }
 
             #[inline]
@@ -539,6 +551,10 @@ fn emit_parameterised_bitmask(
 
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 Ok(Self(ParameterizedBitmask::<#name_bits>::decode(reader)?))
+            }
+
+            fn visit(&self, visitor: &mut impl OperandVisitor) {
+                visitor.visit_operand(self)
             }
 
             #[inline]

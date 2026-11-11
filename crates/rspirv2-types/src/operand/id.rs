@@ -4,7 +4,7 @@ use crate::Word;
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
 use crate::dis::ResolvedIdName;
 use crate::meta::{Category, OperandKind};
-use crate::operand::{Operand, OperandDisContext, OperandEncoding};
+use crate::operand::{Operand, OperandDisContext, OperandEncoding, OperandVisitor};
 use anstyle::AnsiColor;
 use std::fmt::{Display, Formatter};
 
@@ -65,6 +65,10 @@ unsafe impl OperandEncoding for IdResult {
         Ok(Self(reader.pull()?))
     }
 
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_id_result(*self)
+    }
+
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         self.dis_fmt_color(f, ctx, ID_RESULT_COLOR, false)
@@ -109,7 +113,7 @@ impl Display for IdResultWriter<'_> {
 }
 
 macro_rules! id_ref {
-    ($name:ident; $kind:expr; $docs:literal) => {
+    ($name:ident; $kind:expr; $docs:literal; $fn_visit:ident) => {
         #[doc = concat!("A `", stringify!($name), "` is a reference to a [`IdResult`] of another operation.")]
         #[doc = $docs]
         #[repr(transparent)]
@@ -148,6 +152,10 @@ macro_rules! id_ref {
                 Ok(())
             }
 
+            fn visit(&self, visitor: &mut impl OperandVisitor) {
+                visitor.$fn_visit(*self)
+            }
+
             #[inline]
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 Ok(Self(IdResult(reader.pull()?)))
@@ -161,7 +169,7 @@ macro_rules! id_ref {
     };
 }
 
-id_ref!(IdResultType; OPERAND_KIND_ID_RESULT_TYPE; "");
-id_ref!(IdMemorySemantics; OPERAND_KIND_ID_MEMORY_SEMANTICS; "");
-id_ref!(IdScope; OPERAND_KIND_ID_SCOPE; "");
-id_ref!(IdRef; OPERAND_KIND_ID_REF; "");
+id_ref!(IdResultType; OPERAND_KIND_ID_RESULT_TYPE; ""; visit_id_result_type);
+id_ref!(IdMemorySemantics; OPERAND_KIND_ID_MEMORY_SEMANTICS; ""; visit_id_memory_semantics);
+id_ref!(IdScope; OPERAND_KIND_ID_SCOPE; ""; visit_id_scope);
+id_ref!(IdRef; OPERAND_KIND_ID_REF; ""; visit_id_ref);

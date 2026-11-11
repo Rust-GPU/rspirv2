@@ -1,6 +1,6 @@
 use crate::Word;
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordSliceWriter, WordWriter};
-use crate::operand::{OperandDisContext, OperandEncoding};
+use crate::operand::{OperandDisContext, OperandEncoding, OperandVisitor};
 use smallvec::SmallVec;
 use std::fmt::{Debug, Formatter};
 use std::ops::Index;
@@ -133,6 +133,10 @@ unsafe impl<T: ParameterizedBitmaskBits> OperandEncoding for ParameterizedBitmas
         let ret = Self { bits, extra };
         ret.verify_consistency();
         Ok(ret)
+    }
+
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
 
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {

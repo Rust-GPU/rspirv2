@@ -2,7 +2,7 @@ use crate::Word;
 use crate::binary::{DecodeError, DecodeErrorKind, EncodeError, OperandReader, WordWriter};
 use crate::dis::escape_cow_str;
 use crate::meta::{Category, OperandKind};
-use crate::operand::{Operand, OperandDisContext, OperandEncoding};
+use crate::operand::{Operand, OperandDisContext, OperandEncoding, OperandVisitor};
 use anstyle::AnsiColor;
 use std::borrow::Cow;
 use std::fmt::{Debug, Formatter};
@@ -73,6 +73,10 @@ unsafe impl OperandEncoding for LiteralString {
         } else {
             Err(DecodeErrorKind::StringNotNulTerminated.into())
         }
+    }
+
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_literal_string(self)
     }
 
     #[inline]

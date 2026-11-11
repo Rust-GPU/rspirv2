@@ -32,6 +32,9 @@ unsafe impl OperandEncoding for ImageOperandsBits {
             bits,
         ))
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -302,6 +305,9 @@ unsafe impl OperandEncoding for ImageOperands {
             reader,
         )?))
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, ctx)?;
@@ -370,6 +376,9 @@ unsafe impl OperandEncoding for FPFastMathMode {
             bits,
         ))
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -428,6 +437,9 @@ unsafe impl OperandEncoding for SelectionControl {
             stringify!(SelectionControl),
             bits,
         ))
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -489,6 +501,9 @@ unsafe impl OperandEncoding for LoopControlBits {
             stringify!(LoopControlBits),
             bits,
         ))
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -846,6 +861,9 @@ unsafe impl OperandEncoding for LoopControl {
             reader,
         )?))
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, ctx)?;
@@ -927,6 +945,9 @@ unsafe impl OperandEncoding for FunctionControl {
             bits,
         ))
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -989,6 +1010,9 @@ unsafe impl OperandEncoding for MemorySemantics {
             stringify!(MemorySemantics),
             bits,
         ))
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -1072,6 +1096,9 @@ unsafe impl OperandEncoding for MemoryAccessBits {
             stringify!(MemoryAccessBits),
             bits,
         ))
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -1246,6 +1273,9 @@ unsafe impl OperandEncoding for MemoryAccess {
             reader,
         )?))
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, ctx)?;
@@ -1288,6 +1318,9 @@ unsafe impl OperandEncoding for KernelProfilingInfo {
             stringify!(KernelProfilingInfo),
             bits,
         ))
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -1334,6 +1367,9 @@ unsafe impl OperandEncoding for RayFlags {
             stringify!(RayFlags),
             bits,
         ))
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -1403,6 +1439,9 @@ unsafe impl OperandEncoding for FragmentShadingRate {
             bits,
         ))
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -1449,6 +1488,9 @@ unsafe impl OperandEncoding for RawAccessChainOperands {
             stringify!(RawAccessChainOperands),
             bits,
         ))
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -1530,6 +1572,9 @@ unsafe impl OperandEncoding for SourceLanguage {
                 .into());
             }
         })
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -1628,6 +1673,9 @@ unsafe impl OperandEncoding for ExecutionModel {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -1696,6 +1744,9 @@ unsafe impl OperandEncoding for AddressingModel {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -1750,6 +1801,9 @@ unsafe impl OperandEncoding for MemoryModel {
                 .into());
             }
         })
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -2436,6 +2490,9 @@ unsafe impl OperandEncoding for ExecutionMode {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -2776,6 +2833,9 @@ unsafe impl OperandEncoding for StorageClass {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -2859,6 +2919,9 @@ unsafe impl OperandEncoding for Dim {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -2915,6 +2978,9 @@ unsafe impl OperandEncoding for SamplerAddressingMode {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -2961,6 +3027,9 @@ unsafe impl OperandEncoding for SamplerFilterMode {
                 .into());
             }
         })
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -3086,6 +3155,9 @@ unsafe impl OperandEncoding for ImageFormat {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3206,6 +3278,9 @@ unsafe impl OperandEncoding for ImageChannelOrder {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3316,6 +3391,9 @@ unsafe impl OperandEncoding for ImageChannelDataType {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3388,6 +3466,9 @@ unsafe impl OperandEncoding for FPRoundingMode {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3433,6 +3514,9 @@ unsafe impl OperandEncoding for FPDenormMode {
                 .into());
             }
         })
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -3490,6 +3574,9 @@ unsafe impl OperandEncoding for QuantizationModes {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3540,6 +3627,9 @@ unsafe impl OperandEncoding for FPOperationMode {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3587,6 +3677,9 @@ unsafe impl OperandEncoding for OverflowModes {
                 .into());
             }
         })
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -3638,6 +3731,9 @@ unsafe impl OperandEncoding for LinkageType {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -3685,6 +3781,9 @@ unsafe impl OperandEncoding for AccessQualifier {
                 .into());
             }
         })
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -3734,6 +3833,9 @@ unsafe impl OperandEncoding for HostAccessQualifier {
                 .into());
             }
         })
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -3798,6 +3900,9 @@ unsafe impl OperandEncoding for FunctionParameterAttribute {
                 .into());
             }
         })
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -4854,6 +4959,9 @@ unsafe impl OperandEncoding for Decoration {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _ctx: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -5446,6 +5554,9 @@ unsafe impl OperandEncoding for BuiltIn {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -5647,6 +5758,9 @@ unsafe impl OperandEncoding for Scope {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -5713,6 +5827,9 @@ unsafe impl OperandEncoding for GroupOperation {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -5767,6 +5884,9 @@ unsafe impl OperandEncoding for KernelEnqueueFlags {
                 .into());
             }
         })
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -6540,6 +6660,9 @@ unsafe impl OperandEncoding for Capability {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7061,6 +7184,9 @@ unsafe impl OperandEncoding for RayQueryIntersection {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7110,6 +7236,9 @@ unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
                 .into());
             }
         })
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -7162,6 +7291,9 @@ unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7213,6 +7345,9 @@ unsafe impl OperandEncoding for PackedVectorFormat {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7245,6 +7380,9 @@ unsafe impl OperandEncoding for CooperativeMatrixOperands {
             stringify!(CooperativeMatrixOperands),
             bits,
         ))
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -7312,6 +7450,9 @@ unsafe impl OperandEncoding for CooperativeMatrixLayout {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7362,6 +7503,9 @@ unsafe impl OperandEncoding for CooperativeMatrixUse {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7394,6 +7538,9 @@ unsafe impl OperandEncoding for CooperativeMatrixReduce {
             stringify!(CooperativeMatrixReduce),
             bits,
         ))
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -7457,6 +7604,9 @@ unsafe impl OperandEncoding for TensorClampMode {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7490,6 +7640,9 @@ unsafe impl OperandEncoding for TensorAddressingOperandsBits {
                 bits,
             ),
         )
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -7595,6 +7748,9 @@ unsafe impl OperandEncoding for TensorAddressingOperands {
             ParameterizedBitmask::<TensorAddressingOperandsBits>::decode(reader)?,
         ))
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         self.0.dis_fmt(f, ctx)?;
@@ -7650,6 +7806,9 @@ unsafe impl OperandEncoding for InitializationModeQualifier {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7702,6 +7861,9 @@ unsafe impl OperandEncoding for LoadCacheControl {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7753,6 +7915,9 @@ unsafe impl OperandEncoding for StoreCacheControl {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7797,6 +7962,9 @@ unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7832,6 +8000,9 @@ unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<
             MatrixMultiplyAccumulateOperands,
         >(stringify!(MatrixMultiplyAccumulateOperands), bits))
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -7934,6 +8105,9 @@ unsafe impl OperandEncoding for FPEncoding {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -7987,6 +8161,9 @@ unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
                 .into());
             }
         })
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -8060,6 +8237,9 @@ unsafe impl OperandEncoding for ComponentType {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -8121,6 +8301,9 @@ unsafe impl OperandEncoding for GatherModes {
             }
         })
     }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
+    }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
         profiling::function_scope!();
@@ -8155,6 +8338,9 @@ unsafe impl OperandEncoding for TensorOperandsBits {
             stringify!(TensorOperandsBits),
             bits,
         ))
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, _: OperandDisContext<'_>) -> std::fmt::Result {
@@ -8277,6 +8463,9 @@ unsafe impl OperandEncoding for TensorOperands {
         Ok(Self(ParameterizedBitmask::<TensorOperandsBits>::decode(
             reader,
         )?))
+    }
+    fn visit(&self, visitor: &mut impl OperandVisitor) {
+        visitor.visit_operand(self)
     }
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {

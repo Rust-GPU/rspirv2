@@ -1,5 +1,5 @@
 use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
-use crate::operand::{OperandDisContext, OperandEncoding};
+use crate::operand::{OperandDisContext, OperandEncoding, OperandVisitor};
 use std::fmt::Formatter;
 
 macro_rules! impl_tuple {
@@ -12,6 +12,10 @@ macro_rules! impl_tuple {
             fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
                 $(<$A as OperandEncoding>::encode(&self.$I, &mut *writer)?;)*
                 Ok(())
+            }
+
+            fn visit(&self, visitor: &mut impl OperandVisitor) {
+                $(<$A as OperandEncoding>::visit(&self.$I, &mut *visitor);)*
             }
 
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
