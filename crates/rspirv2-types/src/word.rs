@@ -1,4 +1,3 @@
-use crate::binary::EncodeError;
 use std::fmt::{Debug, Formatter};
 
 /// A 32bit SPIR-V Word
@@ -35,9 +34,9 @@ impl Word {
     }
 
     #[inline]
-    pub fn new_op(op: u16, len: usize) -> Result<Self, EncodeError> {
-        let len = u16::try_from(len).map_err(|_e| EncodeError::OpTooLong)?;
-        Ok(Self(op as u32 | ((len as u32) << 16)))
+    pub fn new_op(op: u16, len: usize) -> Self {
+        let len = u16::try_from(len).expect("Op too long, u16 overflow");
+        Self(op as u32 | ((len as u32) << 16))
     }
 
     #[inline]

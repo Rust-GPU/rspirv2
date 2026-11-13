@@ -1,5 +1,5 @@
 use crate::Word;
-use crate::binary::{DecodeError, DecodeErrorKind, EncodeError, InstReader, WordWriter};
+use crate::binary::{DecodeError, DecodeErrorKind, InstReader, WordWriter};
 use crate::dis::DisContext;
 use crate::meta::InstMeta;
 use crate::operand::{IdResult, IdResultType};
@@ -30,7 +30,7 @@ pub trait InstEncoding: Sized + Debug + Eq {
     }
 
     /// Encode this instruction to a [`WordWriter`]
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError>;
+    fn encode(&self, writer: &mut impl WordWriter);
 
     /// Decode this instruction from an [`InstReader`], error when opcode is unknown.
     ///
@@ -75,9 +75,7 @@ impl InstEncoding for () {
         "()"
     }
 
-    fn encode(&self, _: &mut impl WordWriter) -> Result<(), EncodeError> {
-        Ok(())
-    }
+    fn encode(&self, _: &mut impl WordWriter) {}
 
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
         Err(DecodeErrorKind::UnknownOpCode {

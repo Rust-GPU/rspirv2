@@ -96,13 +96,12 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
 
             quote! {
                 impl OpSpecOpInst for #struct_ident {
-                    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+                    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) {
                         profiling::function_scope!();
-                        OperandEncoding::encode(&self.#member_id_result_type, &mut *writer)?;
-                        OperandEncoding::encode(&self.#member_id_result, &mut *writer)?;
-                        writer.write_op(Self::META.opcode, 0)?;
-                        #(OperandEncoding::encode(&self.#members, &mut *writer)?;)*
-                        Ok(())
+                        OperandEncoding::encode(&self.#member_id_result_type, &mut *writer);
+                        OperandEncoding::encode(&self.#member_id_result, &mut *writer);
+                        writer.write_op(Self::META.opcode, 0);
+                        #(OperandEncoding::encode(&self.#members, &mut *writer);)*
                     }
 
                     fn op_spec_op_decode(reader: &[Word]) -> Result<Self, DecodeError> {
@@ -229,12 +228,11 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                     #id_result_type_get
                 }
 
-                fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+                fn encode(&self, writer: &mut impl WordWriter) {
                     profiling::function_scope!();
                     let len = 1 #(+OperandEncoding::word_len(&self.#members))*;
-                    writer.write_op(Self::META.opcode, len)?;
-                    #(OperandEncoding::encode(&self.#members, &mut *writer)?;)*
-                    Ok(())
+                    writer.write_op(Self::META.opcode, len);
+                    #(OperandEncoding::encode(&self.#members, &mut *writer);)*
                 }
 
                 fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {

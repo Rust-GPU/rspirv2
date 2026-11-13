@@ -1,7 +1,7 @@
 //! All Operands with `Category::Id`
 
 use crate::Word;
-use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
+use crate::binary::{DecodeError, OperandReader, WordWriter};
 use crate::dis::ResolvedIdName;
 use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandDisContext, OperandEncoding, OperandVisitor};
@@ -55,9 +55,8 @@ unsafe impl OperandEncoding for IdResult {
     const FIXED_LEN: Option<usize> = Some(1);
 
     #[inline]
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) {
         writer.write(self.0);
-        Ok(())
     }
 
     #[inline]
@@ -147,9 +146,8 @@ macro_rules! id_ref {
             const FIXED_LEN: Option<usize> = Some(1);
 
             #[inline]
-            fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+            fn encode(&self, writer: &mut impl WordWriter) {
                 writer.write(self.0.0);
-                Ok(())
             }
 
             fn visit(&self, visitor: &mut impl OperandVisitor) {

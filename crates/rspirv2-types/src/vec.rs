@@ -188,7 +188,7 @@ impl RawInstVec {
     pub fn push(&mut self, inst: impl InstEncoding) -> InstOffset {
         profiling::function_scope!();
         let offset = InstOffset(self.0.len());
-        inst.encode(&mut self.0).expect("error while encoding");
+        inst.encode(&mut self.0);
         offset
     }
 

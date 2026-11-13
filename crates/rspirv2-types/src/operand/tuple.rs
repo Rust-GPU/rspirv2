@@ -1,4 +1,4 @@
-use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
+use crate::binary::{DecodeError, OperandReader, WordWriter};
 use crate::operand::{OperandDisContext, OperandEncoding, OperandVisitor};
 use std::fmt::Formatter;
 
@@ -9,9 +9,8 @@ macro_rules! impl_tuple {
                 $(.append($A::FIXED_LEN))*
                 .finish();
 
-            fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
-                $(<$A as OperandEncoding>::encode(&self.$I, &mut *writer)?;)*
-                Ok(())
+            fn encode(&self, writer: &mut impl WordWriter) {
+                $(<$A as OperandEncoding>::encode(&self.$I, &mut *writer);)*
             }
 
             fn visit(&self, visitor: &mut impl OperandVisitor) {

@@ -1,5 +1,5 @@
 use crate::Word;
-use crate::binary::{DecodeError, EncodeError, OperandReader, WordWriter};
+use crate::binary::{DecodeError, OperandReader, WordWriter};
 use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandDisContext, OperandEncoding, OperandVisitor};
 use anstyle::AnsiColor;
@@ -57,9 +57,8 @@ unsafe impl OperandEncoding for LiteralFloat {
     const FIXED_LEN: Option<usize> = Some(1);
 
     #[inline]
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) {
         writer.write(self.0);
-        Ok(())
     }
 
     #[inline]

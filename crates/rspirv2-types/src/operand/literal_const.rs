@@ -1,5 +1,5 @@
 use crate::Word;
-use crate::binary::{DecodeError, DecodeErrorKind, EncodeError, OperandReader, WordWriter};
+use crate::binary::{DecodeError, DecodeErrorKind, OperandReader, WordWriter};
 use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandDisContext, OperandEncoding, OperandVisitor};
 use anstyle::AnsiColor;
@@ -178,9 +178,8 @@ unsafe impl OperandEncoding for LiteralConst {
     }
 
     #[inline]
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) {
         writer.write_iter(self.0.iter().copied());
-        Ok(())
     }
 
     #[inline]

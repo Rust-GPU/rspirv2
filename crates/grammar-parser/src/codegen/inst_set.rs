@@ -39,7 +39,7 @@ pub fn write_op_spec_op_inst_enum(
         );
         quote! {
             impl OpSpecOpInst for #name {
-                fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+                fn op_spec_op_encode(&self, writer: &mut impl WordWriter) {
                     profiling::function_scope!();
                     match self {
                         #(#encode_match)*
@@ -148,7 +148,7 @@ pub fn quote_inst_set<'a, 'b: 'a>(
                 stringify!(#name)
             }
 
-            fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+            fn encode(&self, writer: &mut impl WordWriter) {
                 profiling::function_scope!();
                 match self {
                     #(#encode_match)*

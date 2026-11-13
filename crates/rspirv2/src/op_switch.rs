@@ -1,6 +1,6 @@
 //! custom instructions
 
-use crate::binary::{DecodeError, EncodeError, InstReader, WordWriter};
+use crate::binary::{DecodeError, InstReader, WordWriter};
 use crate::core::inst_meta::OP_SWITCH;
 use crate::dis::DisContext;
 use crate::inst::{Inst, InstEncoding};
@@ -217,7 +217,7 @@ impl OpSwitchTarget {
             OpSwitchTarget::Unresolved(words) => Cow::Borrowed(words),
             OpSwitchTarget::Resolved(resolved) => {
                 let mut writer = Vec::new();
-                OperandEncoding::encode(resolved, &mut writer).unwrap();
+                OperandEncoding::encode(resolved, &mut writer);
                 Cow::Owned(writer)
             }
         }
@@ -253,13 +253,12 @@ impl OpSwitchTarget {
 unsafe impl OperandEncoding for OpSwitchTarget {
     const FIXED_LEN: Option<usize> = None;
 
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
         match self {
             Self::Unresolved(words) => writer.write_iter(words.iter().copied()),
-            Self::Resolved(resolved) => OperandEncoding::encode(resolved, writer)?,
+            Self::Resolved(resolved) => OperandEncoding::encode(resolved, writer),
         }
-        Ok(())
     }
 
     fn decode(_: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
@@ -293,9 +292,9 @@ unsafe impl OperandEncoding for OpSwitchTarget {
 unsafe impl OperandEncoding for OpSwitchResolvedTarget {
     const FIXED_LEN: Option<usize> = None;
 
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        self.target.encode(writer)
+        self.target.encode(writer);
     }
 
     fn decode(_: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
@@ -314,7 +313,7 @@ unsafe impl OperandEncoding for OpSwitchResolvedTarget {
 
 impl Hash for OpSwitchTarget {
     fn hash<H: Hasher>(&self, state: &mut H) {
-        self.encode(&mut FnWriter(|w| w.hash(state))).unwrap();
+        self.encode(&mut FnWriter(|w| w.hash(state)));
     }
 }
 
@@ -340,17 +339,16 @@ impl InstEncoding for OpSwitch {
 
     fn id_result_type(&self) -> Self::IdResultType {}
 
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
         let len = 1
             + OperandEncoding::word_len(&self.selector)
             + OperandEncoding::word_len(&self.default)
             + OperandEncoding::word_len(&self.target);
-        writer.write_op(Self::META.opcode, len)?;
-        OperandEncoding::encode(&self.selector, &mut *writer)?;
-        OperandEncoding::encode(&self.default, &mut *writer)?;
-        OperandEncoding::encode(&self.target, &mut *writer)?;
-        Ok(())
+        writer.write_op(Self::META.opcode, len);
+        OperandEncoding::encode(&self.selector, &mut *writer);
+        OperandEncoding::encode(&self.default, &mut *writer);
+        OperandEncoding::encode(&self.target, &mut *writer);
     }
     fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();

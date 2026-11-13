@@ -3833,7 +3833,7 @@ impl InstEncoding for CoreInstSet {
     fn name() -> &'static str {
         stringify!(CoreInstSet)
     }
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
         match self {
             Self::Nop(inst) => InstEncoding::encode(inst, writer),

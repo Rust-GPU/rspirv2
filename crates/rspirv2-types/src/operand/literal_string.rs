@@ -1,5 +1,5 @@
 use crate::Word;
-use crate::binary::{DecodeError, DecodeErrorKind, EncodeError, OperandReader, WordWriter};
+use crate::binary::{DecodeError, DecodeErrorKind, OperandReader, WordWriter};
 use crate::dis::escape_cow_str;
 use crate::meta::{Category, OperandKind};
 use crate::operand::{Operand, OperandDisContext, OperandEncoding, OperandVisitor};
@@ -46,14 +46,13 @@ unsafe impl OperandEncoding for LiteralString {
         (self.0.len() + 1).div_ceil(4)
     }
 
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
         let (chunks, remainder) = self.0.as_bytes().as_chunks::<4>();
         let mut last = [0; 4];
         last[..remainder.len()].copy_from_slice(remainder);
         writer.write_iter(chunks.iter().copied().map(Word::from_le_bytes));
         writer.write(Word::from_le_bytes(last));
-        Ok(())
     }
 
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {

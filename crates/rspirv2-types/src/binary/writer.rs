@@ -1,5 +1,4 @@
 use crate::Word;
-use crate::binary::EncodeError;
 use smallvec::SmallVec;
 use std::ops::{Deref, DerefMut};
 
@@ -17,10 +16,9 @@ pub trait WordWriter: Sized {
     ///
     /// Should not be overwritten.
     #[inline]
-    fn write_op(&mut self, op: u16, len: usize) -> Result<(), EncodeError> {
+    fn write_op(&mut self, op: u16, len: usize) {
         self.inst_reserve(len);
-        self.write(Word::new_op(op, len)?);
-        Ok(())
+        self.write(Word::new_op(op, len));
     }
 
     /// Expect this many words to be written by the next instruction.

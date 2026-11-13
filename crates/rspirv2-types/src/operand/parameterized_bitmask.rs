@@ -1,5 +1,5 @@
 use crate::Word;
-use crate::binary::{DecodeError, EncodeError, OperandReader, WordSliceWriter, WordWriter};
+use crate::binary::{DecodeError, OperandReader, WordSliceWriter, WordWriter};
 use crate::operand::{OperandDisContext, OperandEncoding, OperandVisitor};
 use smallvec::SmallVec;
 use std::fmt::{Debug, Formatter};
@@ -105,7 +105,7 @@ impl<T: ParameterizedBitmaskBits> ParameterizedBitmask<T> {
                     self.extra.insert_many(offset, (0..len).map(|_| Word(0)));
                 }
                 let mut writer = WordSliceWriter::new(&mut self.extra[offset..offset + len]);
-                param.encode(&mut writer).unwrap();
+                param.encode(&mut writer);
                 writer.finalize();
             }
         }
@@ -121,10 +121,9 @@ impl<T: ParameterizedBitmaskBits> ParameterizedBitmask<T> {
 unsafe impl<T: ParameterizedBitmaskBits> OperandEncoding for ParameterizedBitmask<T> {
     const FIXED_LEN: Option<usize> = None;
 
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
-        self.bits.encode(&mut *writer)?;
+    fn encode(&self, writer: &mut impl WordWriter) {
+        self.bits.encode(&mut *writer);
         writer.write_iter(self.extra.iter().copied());
-        Ok(())
     }
 
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {

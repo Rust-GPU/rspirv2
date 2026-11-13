@@ -1,6 +1,6 @@
 use crate::core::inst_meta::OP_SPEC_CONSTANT_OP;
 use crate::core::op_spec_op::CoreOpSpecOpInstSet;
-use rspirv2_types::binary::{DecodeError, EncodeError, InstReader, WordCounter, WordWriter};
+use rspirv2_types::binary::{DecodeError, InstReader, WordCounter, WordWriter};
 use rspirv2_types::dis::DisContext;
 use rspirv2_types::inst::{Inst, InstEncoding};
 use rspirv2_types::meta::InstMeta;
@@ -29,13 +29,13 @@ impl InstEncoding for OpSpecConstantOp {
         self.0.id_result_type().unwrap()
     }
 
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
         // we don't have a good way of computing the len ourselves, let's hope this gets inlined and optimized nicely
         let mut len = WordCounter::default();
-        self.0.op_spec_op_encode(&mut len)?;
+        self.0.op_spec_op_encode(&mut len);
         // +1 as len must include the `OpSpecConstantOp` opcode word as well
-        writer.write_op(Self::META.opcode, *len + 1)?;
+        writer.write_op(Self::META.opcode, *len + 1);
         self.0.op_spec_op_encode(writer)
     }
 
