@@ -26,7 +26,7 @@ fn roundtrip_spv(spv: &[u8]) -> anyhow::Result<()> {
     let module = Module::<CoreInstSet>::from_bytes(spv)?;
     let mut writer = Vec::new();
     for inst in module.iter() {
-        inst.encode(&mut writer)?;
+        inst.encode(&mut writer);
     }
     assert_eq!(module.as_words(), writer.as_slice());
     Ok(())

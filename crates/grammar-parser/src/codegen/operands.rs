@@ -42,11 +42,7 @@ pub fn write_operands(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyh
 }
 
 fn param_to_member_decl(p: &OperandSpecMeta<'_>) -> TokenStream {
-    let docs = p
-        .name
-        .as_ref()
-        .map(|name| make_doc(name))
-        .unwrap_or_default();
+    let docs = p.name.as_ref().map_or_default(|name| make_doc(name));
     let ty = OperandKind::type_ident(&p.kind);
     match p.quantifier {
         Quantifier::One => quote!(#docs #ty),
@@ -91,7 +87,7 @@ fn emit_rust_like_enum(
             quote! {
                 Self::#symbol (#(#param_symbols),*) => {
                     writer.write(Word(#value));
-                    #(OperandEncoding::encode(#param_symbols, &mut *writer)?);*
+                    #(OperandEncoding::encode(#param_symbols, &mut *writer));*
                 }
             }
         } else {
@@ -138,12 +134,11 @@ fn emit_rust_like_enum(
         unsafe impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = None;
 
-            fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+            fn encode(&self, writer: &mut impl WordWriter) {
                 profiling::function_scope!();
                 match self {
                     #(#encode),*
                 }
-                Ok(())
             }
 
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
@@ -238,10 +233,9 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
         unsafe impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = Some(1);
 
-            fn encode(&self, writer: &mut impl WordWriter)  -> Result<(), EncodeError>{
+            fn encode(&self, writer: &mut impl WordWriter) {
                 profiling::function_scope!();
                 writer.write(Word(*self as u32));
-                Ok(())
             }
 
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
@@ -362,10 +356,9 @@ fn emit_bitflags_enum_common(
         unsafe impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = Some(1);
 
-            fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+            fn encode(&self, writer: &mut impl WordWriter) {
                 profiling::function_scope!();
                 writer.write(Word(self.bits()));
-                Ok(())
             }
 
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
@@ -533,8 +526,8 @@ fn emit_parameterised_bitmask(
         unsafe impl OperandEncoding for #name {
             const FIXED_LEN: Option<usize> = None;
 
-            fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
-                self.0.encode(writer)
+            fn encode(&self, writer: &mut impl WordWriter) {
+                self.0.encode(writer);
             }
 
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {

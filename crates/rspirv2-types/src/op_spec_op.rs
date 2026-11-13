@@ -1,5 +1,5 @@
 use crate::Word;
-use crate::binary::{DecodeError, EncodeError, WordWriter};
+use crate::binary::{DecodeError, WordWriter};
 use crate::inst::InstEncoding;
 use crate::operand::OperandDisContext;
 use std::fmt::{Display, Formatter};
@@ -21,7 +21,7 @@ use std::fmt::{Display, Formatter};
 /// * <https://github.com/KhronosGroup/SPIRV-Headers/issues/124>
 pub trait OpSpecOpInst: InstEncoding {
     /// Encode this instruction to a [`WordWriter`]
-    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError>;
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter);
 
     /// Decode this instruction from a slice of words.
     ///

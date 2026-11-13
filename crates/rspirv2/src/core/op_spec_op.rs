@@ -195,7 +195,7 @@ impl InstEncoding for CoreOpSpecOpInstSet {
     fn name() -> &'static str {
         stringify!(CoreOpSpecOpInstSet)
     }
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
         match self {
             Self::AccessChain(inst) => InstEncoding::encode(inst, writer),
@@ -700,7 +700,7 @@ impl From<OpNot> for CoreOpSpecOpInstSet {
     }
 }
 impl OpSpecOpInst for CoreOpSpecOpInstSet {
-    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+    fn op_spec_op_encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
         match self {
             Self::AccessChain(inst) => OpSpecOpInst::op_spec_op_encode(inst, writer),

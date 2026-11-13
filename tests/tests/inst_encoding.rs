@@ -17,7 +17,7 @@ where
     CoreInstSet: From<T>,
 {
     let mut spirv = Vec::<Word>::new();
-    inst.encode(&mut spirv).unwrap();
+    inst.encode(&mut spirv);
     let mut iter = InstSlice::from_words_unchecked(&spirv).iter();
     let decoded = iter.next().unwrap();
     assert!(iter.next().is_none());
@@ -77,9 +77,9 @@ fn test_op_constant_sequence() -> anyhow::Result<()> {
     };
 
     let mut spirv = Vec::<Word>::new();
-    c1.encode(&mut spirv)?;
-    c2.encode(&mut spirv)?;
-    c3.encode(&mut spirv)?;
+    c1.encode(&mut spirv);
+    c2.encode(&mut spirv);
+    c3.encode(&mut spirv);
 
     let mut iter = InstSlice::from_words_unchecked(&spirv).iter();
     assert_eq!(c1, iter.next().unwrap());
