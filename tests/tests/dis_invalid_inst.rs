@@ -94,7 +94,7 @@ fn test_shorter_str() {
 fn test_zero_len_op() {
     let mut words = record_inst().into_vec();
     let str_offset = op_name_str_offset(&words);
-    words[str_offset - 2] = Word::new_op(OpName::META.opcode, 3).unwrap();
+    words[str_offset - 2] = Word::new_op(OpName::META.opcode, 3);
     words[str_offset] = Word::from_le_bytes([b'a', b'b', b'c', 0]);
     words[str_offset + 1] = Word(0);
     expect![[r#"
@@ -112,9 +112,9 @@ fn test_zero_len_op() {
 fn test_replace_nop() {
     let mut words = record_inst().into_vec();
     let str_offset = op_name_str_offset(&words);
-    words[str_offset - 2] = Word::new_op(OpName::META.opcode, 3).unwrap();
+    words[str_offset - 2] = Word::new_op(OpName::META.opcode, 3);
     words[str_offset] = Word::from_le_bytes([b'a', b'b', b'c', 0]);
-    words[str_offset + 1] = Word::new_op(OpNop::META.opcode, 1).unwrap();
+    words[str_offset + 1] = Word::new_op(OpNop::META.opcode, 1);
     expect![[r#"
         %42 = OpTypeInt 32 0
         OpName %69 "abc"
@@ -129,7 +129,7 @@ fn test_replace_nop() {
 fn test_too_long_op() {
     let mut words = record_inst().into_vec();
     let str_offset = op_name_str_offset(&words);
-    words[str_offset - 2] = Word::new_op(OpName::META.opcode, 0xDEAD).unwrap();
+    words[str_offset - 2] = Word::new_op(OpName::META.opcode, 0xDEAD);
     expect![[r#"
         %42 = OpTypeInt 32 0
         Error: Instruction at offset 4: Instruction has a supposed length of 57005 but the module only has 8 words remaining.
@@ -148,7 +148,7 @@ fn test_too_long_op() {
 fn test_op_shorter_than_string() {
     let mut words = record_inst().into_vec();
     let str_offset = op_name_str_offset(&words);
-    words[str_offset - 2] = Word::new_op(OpName::META.opcode, 3).unwrap();
+    words[str_offset - 2] = Word::new_op(OpName::META.opcode, 3);
     words[str_offset + 1] = Word::from_le_bytes([b'e', b'f', 2, 0]);
     expect![[r#"
         %42 = OpTypeInt 32 0

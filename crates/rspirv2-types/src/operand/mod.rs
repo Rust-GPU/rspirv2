@@ -6,9 +6,7 @@ mod literal_string;
 mod parameterized_bitmask;
 mod tuple;
 
-use crate::binary::{
-    DecodeError, DecodeErrorKind, EncodeError, OperandReader, WordCounter, WordWriter,
-};
+use crate::binary::{DecodeError, DecodeErrorKind, OperandReader, WordCounter, WordWriter};
 use crate::dis::DisContext;
 use crate::meta::OperandKind;
 pub use id::*;
@@ -67,8 +65,7 @@ pub unsafe trait OperandEncoding: Sized + Debug {
         profiling::function_scope!();
         fn computed_word_len(op: &impl OperandEncoding) -> usize {
             let mut counter = WordCounter::default();
-            // `WordCounter` never fails
-            let _ = op.encode(&mut counter);
+            op.encode(&mut counter);
             counter.0
         }
 
@@ -88,7 +85,7 @@ pub unsafe trait OperandEncoding: Sized + Debug {
     }
 
     /// Encode this `Operand` to a sequence of words.
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError>;
+    fn encode(&self, writer: &mut impl WordWriter);
 
     /// Parse the `Operand` from the supplied [`Iterator`] of words, advancing it in the process.
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError>;
@@ -174,10 +171,9 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Option<T> {
     }
 
     #[inline]
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
-        match self {
-            None => Ok(()),
-            Some(e) => e.encode(writer),
+    fn encode(&self, writer: &mut impl WordWriter) {
+        if let Some(e) = self {
+            e.encode(writer);
         }
     }
 
@@ -220,12 +216,11 @@ unsafe impl<T: OperandEncoding> OperandEncoding for Vec<T> {
     }
 
     #[inline]
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
         for x in self {
-            x.encode(&mut *writer)?;
+            x.encode(&mut *writer);
         }
-        Ok(())
     }
 
     /// The current SPIR-V spec only uses [`Quantifier::ZeroOrMore`] when the "element" Operand has a fixed length
@@ -284,12 +279,11 @@ unsafe impl<T: OperandEncoding, const N: usize> OperandEncoding for SmallVec<[T;
     }
 
     #[inline]
-    fn encode(&self, writer: &mut impl WordWriter) -> Result<(), EncodeError> {
+    fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
         for x in self {
-            x.encode(&mut *writer)?;
+            x.encode(&mut *writer);
         }
-        Ok(())
     }
 
     #[inline]
