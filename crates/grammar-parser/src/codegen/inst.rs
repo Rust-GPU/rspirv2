@@ -228,11 +228,9 @@ pub fn write_inst(writer: &mut GrammarWriter, grammar: &Grammar<'_>) -> anyhow::
                     #id_result_type_get
                 }
 
-                fn encode(&self, writer: &mut impl WordWriter) {
+                fn visit(&self, visitor: &mut impl OperandVisitor) {
                     profiling::function_scope!();
-                    let len = 1 #(+OperandEncoding::word_len(&self.#members))*;
-                    writer.write_op(Self::META.opcode, len);
-                    #(OperandEncoding::encode(&self.#members, &mut *writer);)*
+                    #(OperandEncoding::visitor(&self.#members, &mut *writer);)*
                 }
 
                 fn decode(reader: InstReader<'_>) -> Result<Self, DecodeError> {

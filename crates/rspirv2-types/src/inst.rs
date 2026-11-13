@@ -1,8 +1,8 @@
 use crate::Word;
-use crate::binary::{DecodeError, DecodeErrorKind, InstReader, WordWriter};
+use crate::binary::{DecodeError, DecodeErrorKind, InstReader, WordCounter, WordWriter};
 use crate::dis::DisContext;
 use crate::meta::InstMeta;
-use crate::operand::{IdResult, IdResultType};
+use crate::operand::{IdResult, IdResultType, OperandEncoding, OperandVisitor};
 use std::fmt::{Debug, Display, Formatter};
 use std::marker::PhantomData;
 use std::ops::Deref;
@@ -14,8 +14,7 @@ pub trait Inst: InstEncoding {
 pub trait InstEncoding: Sized + Debug + Eq {
     /// `IdResult` is either an [`IdResult`] or `()`, depending on whether this Instruction has an [`IdResult`].
     type IdResult: MaybeIdResult<IdResult>;
-    /// `IdResult` is either an [`IdResult`] or `()`, depending on whether this Instruction has an
-    /// [`crate::operand::IdResultType`].
+    /// `IdResult` is either an [`IdResult`] or `()`, depending on whether this Instruction has an [`IdResultType`].
     type IdResultType: MaybeIdResult<IdResultType>;
 
     /// Query the potential [`IdResult`] of this Instruction, or `()` if it has none.
@@ -29,8 +28,16 @@ pub trait InstEncoding: Sized + Debug + Eq {
         "unknown"
     }
 
+    /// Visit all Operands of the Instruction in declaration order
+    fn visit(&self, visitor: &mut impl OperandVisitor);
+
     /// Encode this instruction to a [`WordWriter`]
-    fn encode(&self, writer: &mut impl WordWriter);
+    fn encode(&self, writer: &mut impl WordWriter) {
+        let mut len = WordCounter::default();
+        self.visit(&mut InstEncoderVisitor(&mut len));
+        writer.write_op(Self::META.opcode, *len);
+        self.visit(&mut InstEncoderVisitor(writer))
+    }
 
     /// Decode this instruction from an [`InstReader`], error when opcode is unknown.
     ///
@@ -74,6 +81,8 @@ impl InstEncoding for () {
     fn name() -> &'static str {
         "()"
     }
+
+    fn visit(&self, _: &mut impl OperandVisitor) {}
 
     fn encode(&self, _: &mut impl WordWriter) {}
 
@@ -178,5 +187,14 @@ impl<ISA: InstEncoding> Debug for InstRef<'_, ISA> {
         f.debug_struct("InstRef")
             .field("reader", &self.reader)
             .finish()
+    }
+}
+
+/// Encode visited operands to a [`WordWriter`]
+pub struct InstEncoderVisitor<'a, W: WordWriter>(pub &'a mut W);
+
+impl<'a, W: WordWriter> OperandVisitor for InstEncoderVisitor<'a, W> {
+    fn visit_operand<Op: OperandEncoding>(&mut self, operand: &Op) {
+        operand.encode(&mut self.0);
     }
 }
