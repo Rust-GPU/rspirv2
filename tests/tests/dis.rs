@@ -19,14 +19,14 @@ pub fn test_dis_optional_operand() -> anyhow::Result<()> {
         width: LiteralInteger::new(32),
         floating_point_encoding: None,
     };
-    expect!["%0 = OpTypeFloat 32"].assert_eq(&float.dis(&ctx).to_string());
+    expect!["%1 = OpTypeFloat 32"].assert_eq(&float.dis(&ctx).to_string());
     let load = OpLoad {
         id_result_type: IdResultType(float.id_result),
         id_result: alloc.alloc_id(),
         pointer: IdRef(alloc.alloc_id()),
         memory_access: None,
     };
-    expect!["%1 = OpLoad %0 %2"].assert_eq(&load.dis(&ctx).to_string());
+    expect!["%2 = OpLoad %1 %3"].assert_eq(&load.dis(&ctx).to_string());
     Ok(())
 }
 
@@ -45,7 +45,7 @@ pub fn test_dis_composite_types() -> anyhow::Result<()> {
             ],
         )?),
     };
-    expect!["OpSwitch %0 %1 42 %2 69 %3"].assert_eq(&switch.dis(&ctx).to_string());
+    expect!["OpSwitch %1 %2 42 %3 69 %4"].assert_eq(&switch.dis(&ctx).to_string());
     let phi = OpPhi {
         id_result_type: IdResultType(alloc.alloc_id()),
         id_result: alloc.alloc_id(),
@@ -54,7 +54,7 @@ pub fn test_dis_composite_types() -> anyhow::Result<()> {
             (IdRef(alloc.alloc_id()), IdRef(alloc.alloc_id())),
         ]),
     };
-    expect!["%5 = OpPhi %4 %6 %7 %8 %9"].assert_eq(&phi.dis(&ctx).to_string());
+    expect!["%6 = OpPhi %5 %7 %8 %9 %10"].assert_eq(&phi.dis(&ctx).to_string());
     Ok(())
 }
 

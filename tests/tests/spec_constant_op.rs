@@ -40,18 +40,18 @@ fn test_encode_decode() {
     expect![[r#"
         [
             393268,
-            0,
-            2,
+            1,
+            3,
             128,
-            1,
-            1,
+            2,
+            2,
         ]
     "#]]
     .assert_debug_eq(&vec2.as_words().iter().map(|a| a.0).collect::<Vec<_>>());
 
     // dis
     expect![[r#"
-        %2 = OpSpecConstantOp %0 OpIAdd %1 %1
+        %3 = OpSpecConstantOp %1 OpIAdd %2 %2
     "#]]
     .assert_eq(&vec2.dis(DisOptions::simple()).to_string());
 }

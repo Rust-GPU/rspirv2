@@ -23,8 +23,8 @@ fn test_dis_fail() -> anyhow::Result<()> {
         operand_2: IdRef(alloc.alloc_id()),
     });
     expect![[r#"
-        %1 = OpIAdd %0 %2 %3
-        %5 = OpIMul %4 %6 %7
+        %2 = OpIAdd %1 %3 %4
+        %6 = OpIMul %5 %7 %8
     "#]]
     .assert_eq(&vec.dis(DisOptions::simple()).to_string());
 
@@ -33,8 +33,8 @@ fn test_dis_fail() -> anyhow::Result<()> {
     vec[0].0 += 4;
     let vec = InstVec::<CoreInstSet>::from_words_unchecked(vec);
     expect![[r#"
-        %1 = OpIMul %0 %2 %3
-        %5 = OpIMul %4 %6 %7
+        %2 = OpIMul %1 %3 %4
+        %6 = OpIMul %5 %7 %8
     "#]]
     .assert_eq(&vec.dis(DisOptions::simple()).to_string());
 
@@ -44,7 +44,7 @@ fn test_dis_fail() -> anyhow::Result<()> {
     let vec = InstVec::<CoreInstSet>::from_words_unchecked(vec);
     expect![[r#"
         Error: The fixed-size Instruction with 4 param words has 2 Words left over after decoding.
-        %5 = OpIMul %4 %6 %7
+        %6 = OpIMul %5 %7 %8
 
         Disassembly failed with 1 errors!
     "#]]

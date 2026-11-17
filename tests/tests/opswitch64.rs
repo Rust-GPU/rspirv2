@@ -15,7 +15,7 @@ pub fn test_switch_32() -> anyhow::Result<()> {
     expect![[r#"
         %u32 = OpTypeInt 32 0
         %u32_42 = OpConstant %u32 42
-        OpSwitch %u32_42 %2 69 %3 42 %4 123 %5
+        OpSwitch %u32_42 %3 69 %4 42 %5 123 %6
     "#]]
     .assert_eq(&vec.dis(DisOptions::simple()).to_string());
     Ok(())
@@ -28,7 +28,7 @@ pub fn test_switch_64() -> anyhow::Result<()> {
     expect![[r#"
         %u64 = OpTypeInt 64 0
         %u64_42 = OpConstant %u64 42
-        OpSwitch %u64_42 %2 69 %3 42 %4
+        OpSwitch %u64_42 %3 69 %4 42 %5
     "#]]
     .assert_eq(&vec.dis(DisOptions::simple()).to_string());
     Ok(())
@@ -42,7 +42,7 @@ pub fn test_switch_64() -> anyhow::Result<()> {
 pub fn test_switch_no_context_2_words_32() -> anyhow::Result<()> {
     expect![[r#"
         # ERROR: Missing context to resolve whether OpSwitch has 32 or 64bit constants! With 2 words must be 32bit
-        OpSwitch %1 %2 69 %3"#]]
+        OpSwitch %2 %3 69 %4"#]]
         .assert_eq(&test_switch_no_context(SwitchTestCase::Words2_32)?);
     Ok(())
 }
@@ -52,7 +52,7 @@ pub fn test_switch_no_context_2_words_32() -> anyhow::Result<()> {
 pub fn test_switch_no_context_3_words_64() -> anyhow::Result<()> {
     expect![[r#"
         # ERROR: Missing context to resolve whether OpSwitch has 32 or 64bit constants! With 3 words must be 64bit
-        OpSwitch %1 %2 69 %3"#]]
+        OpSwitch %2 %3 69 %4"#]]
         .assert_eq(&test_switch_no_context(SwitchTestCase::Words3_64)?);
     Ok(())
 }
@@ -62,7 +62,7 @@ pub fn test_switch_no_context_3_words_64() -> anyhow::Result<()> {
 pub fn test_switch_no_context_6_words_32() -> anyhow::Result<()> {
     expect![[r#"
         # ERROR: Missing context to resolve whether OpSwitch has 32 or 64bit constants! With 6 words can be 32 or 64bit, *guessing 32bit*
-        OpSwitch %1 %2 69 %3 42 %4 123 %5"#]]
+        OpSwitch %2 %3 69 %4 42 %5 123 %6"#]]
         .assert_eq(&test_switch_no_context(SwitchTestCase::Words6_32)?);
     Ok(())
 }
@@ -72,7 +72,7 @@ pub fn test_switch_no_context_6_words_32() -> anyhow::Result<()> {
 pub fn test_switch_no_context_6_words_64() -> anyhow::Result<()> {
     expect![[r#"
         # ERROR: Missing context to resolve whether OpSwitch has 32 or 64bit constants! With 6 words can be 32 or 64bit, *guessing 32bit*
-        OpSwitch %1 %2 69 %0 3 %42 0 %4"#]]
+        OpSwitch %2 %3 69 %0 4 %42 0 %5"#]]
         .assert_eq(&test_switch_no_context(SwitchTestCase::Words6_64)?);
     Ok(())
 }
@@ -88,7 +88,7 @@ pub fn test_switch_no_context_5_words_degenerate() -> anyhow::Result<()> {
     };
     expect![[r#"
         # ERROR: Missing context to resolve whether OpSwitch has 32 or 64bit constants! With 5 words neither 32bit or 64bit make sense, refusing to decode entry table!
-        OpSwitch %0 %1 ???"#]]
+        OpSwitch %1 %2 ???"#]]
         .assert_eq(&switch.dis(&DisContext::no_context(DisOptions::simple())).to_string());
     Ok(())
 }

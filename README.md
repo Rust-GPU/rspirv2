@@ -71,8 +71,8 @@ let disassembly = format!("{}", modified.dis(DisOptions::simple()));
 expect_test::expect![[r#"
     %u32 = OpTypeInt 32 0
     %u32_42 = OpConstant %u32 42
-    %2 = OpIMul %u32 %u32_42 %u32_42
-    %3 = OpISub %u32 %u32_42 %2
+    %3 = OpIMul %u32 %u32_42 %u32_42
+    %4 = OpISub %u32 %u32_42 %3
 "#]]
 .assert_eq(&disassembly);
 ```

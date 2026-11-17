@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - [PR#57](https://github.com/Rust-GPU/rspirv2/pull/57) fix `SpirvVersion` encoding
+- [PR#58](https://github.com/Rust-GPU/rspirv2/pull/58) IdResult 0 is reserved, start allocation at 1
 
 ## [0.1.1+sdk-1.4.363](https://github.com/Rust-GPU/rspirv2/compare/v0.1.0+sdk-1.4.357...v0.1.1+sdk-1.4.363) - 2026-09-22
 

@@ -7,18 +7,19 @@ use std::sync::atomic::Ordering::Relaxed;
 /// A reasonable upper bounds that ensures subsequent allocations by potentially multiple threads all fail
 pub const ID_RESULT_MAX: u32 = 0x7FFFFFFF;
 
-/// A sharable atomic [`IdResultAlloc`], just [`Clone`] to share it
-#[derive(Clone, Debug, Default)]
+/// A sharable atomic [`IdResult`] allocator, just [`Clone`] to share it
+#[derive(Clone, Debug)]
 pub struct IdResultAlloc(Arc<AtomicU32>);
 
 impl IdResultAlloc {
     #[inline]
     pub fn new() -> Self {
-        Self::default()
+        Self::start_at(1)
     }
 
     #[inline]
     pub fn start_at(start: u32) -> Self {
+        assert_ne!(start, 0, "In SPIR-V the ResultId 0 is reserved");
         Self(Arc::new(AtomicU32::new(start)))
     }
 
@@ -30,5 +31,11 @@ impl IdResultAlloc {
         } else {
             panic!("Out of IdResults")
         }
+    }
+}
+
+impl Default for IdResultAlloc {
+    fn default() -> Self {
+        Self::new()
     }
 }
