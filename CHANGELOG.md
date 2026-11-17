@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR#53](https://github.com/Rust-GPU/rspirv2/pull/53) rename `rspirv2::custom_inst` to `op_switch`
 - [PR#52](https://github.com/Rust-GPU/rspirv2/pull/52) change `InstEncoding::id_result_type()` return type from `IdResult` to `IdResultType`
 
+### Fixed
+
+- [PR#57](https://github.com/Rust-GPU/rspirv2/pull/57) fix `SpirvVersion` encoding
+
 ## [0.1.1+sdk-1.4.363](https://github.com/Rust-GPU/rspirv2/compare/v0.1.0+sdk-1.4.357...v0.1.1+sdk-1.4.363) - 2026-09-22
 
 - Update Vulkan sdk to [vulkan-sdk-1.4.363](https://github.com/KhronosGroup/Vulkan-Headers/tree/vulkan-sdk-1.4.363)

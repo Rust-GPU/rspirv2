@@ -35,20 +35,20 @@ impl SpirvVersion {
     #[inline]
     pub fn from_word(value: Word) -> Self {
         Self {
-            reserved0: value.0 as u8,
-            major: (value.0 >> 8) as u8,
-            minor: (value.0 >> 16) as u8,
-            reserved1: (value.0 >> 24) as u8,
+            reserved0: (value.0 >> 24) as u8,
+            major: (value.0 >> 16) as u8,
+            minor: (value.0 >> 8) as u8,
+            reserved1: value.0 as u8,
         }
     }
 
     #[inline]
     pub fn to_word(self) -> Word {
         Word(
-            (self.reserved0 as u32)
-                | (self.major as u32) << 8
-                | (self.minor as u32) << 16
-                | (self.reserved1 as u32) << 24,
+            (self.reserved0 as u32) << 24
+                | (self.major as u32) << 16
+                | (self.minor as u32) << 8
+                | (self.reserved1 as u32),
         )
     }
 
