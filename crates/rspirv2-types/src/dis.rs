@@ -187,7 +187,7 @@ impl Display for ResolvedIdName<'_> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             ResolvedIdName::Named(name) => write!(f, "{name}"),
-            ResolvedIdName::Raw(id) => write!(f, "{}", id.0.0),
+            ResolvedIdName::Raw(id) => write!(f, "{}", id.0),
         }
     }
 }

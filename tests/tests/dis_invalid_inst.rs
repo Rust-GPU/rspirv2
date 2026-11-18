@@ -1,5 +1,4 @@
 use expect_test::expect;
-use rspirv2::Word;
 use rspirv2::core::inst::{OpName, OpNop, OpTypeInt, OpVariable};
 use rspirv2::core::inst_set::CoreInstSet;
 use rspirv2::core::operands::StorageClass;
@@ -8,6 +7,7 @@ use rspirv2::inst::Inst;
 use rspirv2::operand::{IdRef, IdResult, IdResultType, LiteralInteger, LiteralString};
 use rspirv2::slice::RawInstSlice;
 use rspirv2::vec::InstVec;
+use rspirv2::{Word, WordExt};
 
 fn dis(raw: &RawInstSlice) -> String {
     DisInstSlice::<CoreInstSet>::new_no_context(raw, DisOptions::simple()).to_string()
@@ -15,8 +15,8 @@ fn dis(raw: &RawInstSlice) -> String {
 
 fn record_inst() -> InstVec<CoreInstSet> {
     let mut vec = InstVec::new();
-    let id_u32 = IdResult(Word(42));
-    let id_var = IdResult(Word(69));
+    let id_u32 = IdResult(42);
+    let id_var = IdResult(69);
     vec.push(OpTypeInt {
         id_result: id_u32,
         width: LiteralInteger::new(32),
@@ -78,7 +78,7 @@ fn test_shorter_str() {
     let mut words = record_inst().into_vec();
     let str_offset = op_name_str_offset(&words);
     words[str_offset] = Word::from_le_bytes([b'a', b'b', b'c', 0]);
-    words[str_offset + 1] = Word(0);
+    words[str_offset + 1] = 0;
     expect![[r#"
         %42 = OpTypeInt 32 0
         Error: The fixed-size Instruction with 3 param words has 1 Words left over after decoding.
@@ -96,7 +96,7 @@ fn test_zero_len_op() {
     let str_offset = op_name_str_offset(&words);
     words[str_offset - 2] = Word::new_op(OpName::META.opcode, 3);
     words[str_offset] = Word::from_le_bytes([b'a', b'b', b'c', 0]);
-    words[str_offset + 1] = Word(0);
+    words[str_offset + 1] = 0;
     expect![[r#"
         %42 = OpTypeInt 32 0
         OpName %69 "abc"

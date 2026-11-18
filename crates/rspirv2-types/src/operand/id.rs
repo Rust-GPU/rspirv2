@@ -96,7 +96,7 @@ impl Display for IdResultWriter<'_> {
             let name = ctx.id_to_name(id_result);
             let name_len = match name {
                 ResolvedIdName::Named(name) => name.len(),
-                ResolvedIdName::Raw(id) => id.0.0.checked_ilog10().unwrap_or(1) as usize + 1,
+                ResolvedIdName::Raw(id) => id.0.checked_ilog10().unwrap_or(1) as usize + 1,
             };
             let pad_len = ctx.padding.len().saturating_sub(name_len + 4);
             let style = ctx.color(ID_RESULT_COLOR);

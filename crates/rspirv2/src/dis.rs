@@ -182,7 +182,7 @@ impl OpTypePointer {
 impl OpTypeStruct {
     pub fn derive_name(&self, _ctx: &DisContext) -> IdName {
         profiling::function_scope!();
-        IdName::DerivedName(format!("_struct_{}", self.id_result.0.0))
+        IdName::DerivedName(format!("_struct_{}", self.id_result.0))
     }
 }
 

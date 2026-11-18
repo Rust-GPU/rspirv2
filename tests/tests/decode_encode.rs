@@ -18,7 +18,7 @@ fn test_bla_be() -> anyhow::Result<()> {
         .iter()
         .flat_map(|a| u32::from_ne_bytes(*a).swap_bytes().to_ne_bytes())
         .collect::<Vec<_>>();
-    assert_eq!(&vec[..4], &SPIRV_MAGIC.0.swap_bytes().to_le_bytes());
+    assert_eq!(&vec[..4], &SPIRV_MAGIC.swap_bytes().to_le_bytes());
     roundtrip_spv(&vec)
 }
 

@@ -57,12 +57,12 @@ impl LiteralInteger {
 
     #[inline]
     pub fn new(value: u32) -> Self {
-        Self(Word(value))
+        Self(value)
     }
 
     #[inline]
     pub fn from_bool(value: bool) -> Self {
-        Self(Word(value as u32))
+        Self(value as u32)
     }
 
     #[inline]
@@ -72,12 +72,12 @@ impl LiteralInteger {
 
     #[inline]
     pub fn to_u32(&self) -> u32 {
-        self.0.0
+        self.0
     }
 
     #[inline]
     pub fn to_bool(&self) -> bool {
-        self.0.0 != 0
+        self.0 != 0
     }
 }
 
@@ -101,6 +101,6 @@ unsafe impl OperandEncoding for LiteralInteger {
     #[inline]
     fn dis_fmt(&self, f: &mut Formatter<'_>, ctx: OperandDisContext<'_>) -> std::fmt::Result {
         let color = ctx.color(AnsiColor::Red.on_default());
-        write!(f, " {color}{}{color:#}", self.0.0)
+        write!(f, " {color}{}{color:#}", self.0)
     }
 }

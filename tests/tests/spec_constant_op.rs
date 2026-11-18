@@ -47,7 +47,7 @@ fn test_encode_decode() {
             2,
         ]
     "#]]
-    .assert_debug_eq(&vec2.as_words().iter().map(|a| a.0).collect::<Vec<_>>());
+    .assert_debug_eq(&vec2.as_words());
 
     // dis
     expect![[r#"

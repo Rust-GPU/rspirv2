@@ -56,17 +56,14 @@ impl LiteralConst {
 impl From<u64> for LiteralConst {
     #[inline]
     fn from(value: u64) -> Self {
-        LiteralConst(SmallVec::from_slice(&[
-            Word(value as u32),
-            Word((value >> 32) as u32),
-        ]))
+        LiteralConst(SmallVec::from_slice(&[value as u32, (value >> 32) as u32]))
     }
 }
 
 impl From<u32> for LiteralConst {
     #[inline]
     fn from(value: u32) -> Self {
-        LiteralConst(SmallVec::from_slice(&[Word(value)]))
+        LiteralConst(SmallVec::from_slice(&[value]))
     }
 }
 
@@ -105,7 +102,7 @@ impl_float!(f64);
 impl LiteralConst {
     pub fn as_u64(&self) -> Result<u64, DecodeError> {
         if self.0.len() == 2 {
-            Ok(self.0[0].0 as u64 | (self.0[1].0 as u64) << 32)
+            Ok(self.0[0] as u64 | (self.0[1] as u64) << 32)
         } else {
             Err(DecodeErrorKind::LiteralConstOfWrongWordSize {
                 expected_size: 2,
@@ -117,7 +114,7 @@ impl LiteralConst {
 
     pub fn as_u32(&self) -> Result<u32, DecodeError> {
         if self.0.len() == 1 {
-            Ok(self.0[0].0)
+            Ok(self.0[0])
         } else {
             Err(DecodeErrorKind::LiteralConstOfWrongWordSize {
                 expected_size: 1,

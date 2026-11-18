@@ -1,4 +1,3 @@
-use crate::Word;
 use crate::operand::IdResult;
 use std::sync::Arc;
 use std::sync::atomic::AtomicU32;
@@ -27,7 +26,7 @@ impl IdResultAlloc {
     pub fn alloc_id(&mut self) -> IdResult {
         let id = self.0.fetch_add(1, Relaxed);
         if id <= ID_RESULT_MAX {
-            IdResult(Word(id))
+            IdResult(id)
         } else {
             panic!("Out of IdResults")
         }

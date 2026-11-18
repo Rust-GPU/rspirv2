@@ -1,5 +1,4 @@
 use expect_test::expect;
-use rspirv2::Word;
 use rspirv2::binary::IdResultAlloc;
 use rspirv2::core::inst::{OpConstant, OpTypeInt};
 use rspirv2::core::preamble::CoreInstSet;
@@ -8,6 +7,7 @@ use rspirv2::inst::InstEncoding;
 use rspirv2::op_switch::{OpSwitch, OpSwitchResolvedTarget, OpSwitchTarget, OpSwitchTargetLen};
 use rspirv2::operand::{IdRef, IdResultType, LiteralConst, LiteralInteger};
 use rspirv2::vec::InstVec;
+use smallvec::SmallVec;
 
 #[test]
 pub fn test_switch_32() -> anyhow::Result<()> {
@@ -84,7 +84,7 @@ pub fn test_switch_no_context_5_words_degenerate() -> anyhow::Result<()> {
     let switch = OpSwitch {
         selector: IdRef(alloc.alloc_id()),
         default: IdRef(alloc.alloc_id()),
-        target: OpSwitchTarget::Unresolved([1, 2, 3, 4, 5].into_iter().map(Word).collect()),
+        target: OpSwitchTarget::Unresolved(SmallVec::from_iter([1, 2, 3, 4, 5])),
     };
     expect![[r#"
         # ERROR: Missing context to resolve whether OpSwitch has 32 or 64bit constants! With 5 words neither 32bit or 64bit make sense, refusing to decode entry table!
