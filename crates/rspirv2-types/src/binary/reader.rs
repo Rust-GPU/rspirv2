@@ -1,6 +1,6 @@
-use crate::Word;
 use crate::binary::{DecodeError, DecodeErrorKind};
 use crate::meta::InstMeta;
+use crate::{Word, WordExt};
 use std::cmp::Ordering;
 use std::fmt::{Display, Formatter};
 use std::ops::{Deref, DerefMut};

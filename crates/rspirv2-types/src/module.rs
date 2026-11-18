@@ -6,7 +6,7 @@ use std::error::Error;
 use std::fmt::{Debug, Display, Formatter};
 use std::ops::Deref;
 
-pub const SPIRV_MAGIC: Word = Word(0x07230203);
+pub const SPIRV_MAGIC: Word = 0x07230203;
 
 /// The version of the SPIR-V module
 #[repr(C, align(4))]
@@ -35,21 +35,19 @@ impl SpirvVersion {
     #[inline]
     pub fn from_word(value: Word) -> Self {
         Self {
-            reserved0: (value.0 >> 24) as u8,
-            major: (value.0 >> 16) as u8,
-            minor: (value.0 >> 8) as u8,
-            reserved1: value.0 as u8,
+            reserved0: (value >> 24) as u8,
+            major: (value >> 16) as u8,
+            minor: (value >> 8) as u8,
+            reserved1: value as u8,
         }
     }
 
     #[inline]
     pub fn to_word(self) -> Word {
-        Word(
-            (self.reserved0 as u32) << 24
-                | (self.major as u32) << 16
-                | (self.minor as u32) << 8
-                | (self.reserved1 as u32),
-        )
+        (self.reserved0 as u32) << 24
+            | (self.major as u32) << 16
+            | (self.minor as u32) << 8
+            | (self.reserved1 as u32)
     }
 
     pub fn validate(self) -> Result<(), ParseError> {
@@ -89,7 +87,7 @@ impl SpirvHeader {
             version,
             generator_magic,
             bound,
-            reserved: Word(0),
+            reserved: 0,
         }
     }
 
@@ -122,7 +120,7 @@ impl SpirvHeader {
             return Err(ParseError::MismatchedMagic(self.magic));
         }
         self.version.validate()?;
-        if self.reserved != Word(0) {
+        if self.reserved != 0 {
             return Err(ParseError::HeaderReservedNotZero(self));
         }
         Ok(())
@@ -172,7 +170,7 @@ impl<ISA: InstEncoding> Module<ISA> {
         }
 
         let magic = Word::from_le_bytes(chunks[0]);
-        let requires_swap = magic == Word(SPIRV_MAGIC.0.swap_bytes());
+        let requires_swap = magic == SPIRV_MAGIC.swap_bytes();
         if (magic != SPIRV_MAGIC) && !requires_swap {
             return Err(ParseError::MismatchedMagic(magic));
         }
@@ -322,12 +320,7 @@ mod tests {
     #[test]
     fn test_spirv_header_roundtrip() {
         let test = |array: [u32; 5]| {
-            assert_eq!(
-                SpirvHeader::from_array(array.map(Word))
-                    .to_array()
-                    .map(|v| v.0),
-                array
-            );
+            assert_eq!(SpirvHeader::from_array(array).to_array(), array);
         };
         test([0, 1, 2, 3, 5]);
         test([0x11111111, 0x22222222, 0x33333333, 0x44444444, 0x55555555]);
@@ -337,20 +330,20 @@ mod tests {
 
     #[test]
     fn test_spirv_header_validate() {
-        let valid = SpirvHeader::new(SpirvVersion::new(1, 6), Word(0), Word(0));
+        let valid = SpirvHeader::new(SpirvVersion::new(1, 6), 0, 0);
         assert_eq!(valid.validate(), Ok(()));
 
         let mut wrong_magic = valid;
-        wrong_magic.magic = Word(12345678);
+        wrong_magic.magic = 12345678;
         assert_eq!(
             wrong_magic.validate(),
-            Err(ParseError::MismatchedMagic(Word(12345678)))
+            Err(ParseError::MismatchedMagic(12345678))
         );
     }
 
     #[test]
     fn test_from_bytes() {
-        let valid = SpirvHeader::new(SpirvVersion::new(1, 6), Word(0), Word(0));
+        let valid = SpirvHeader::new(SpirvVersion::new(1, 6), 0, 0);
         assert_eq!(valid.validate(), Ok(()));
 
         let test = |bytes: &[u8]| {
@@ -362,13 +355,13 @@ mod tests {
         let ne_bytes = valid
             .to_array()
             .iter()
-            .flat_map(|v| v.0.to_ne_bytes())
+            .flat_map(|v| v.to_ne_bytes())
             .collect::<Vec<_>>();
         test(&ne_bytes);
         let re_bytes = valid
             .to_array()
             .iter()
-            .flat_map(|v| v.0.swap_bytes().to_ne_bytes())
+            .flat_map(|v| v.swap_bytes().to_ne_bytes())
             .collect::<Vec<_>>();
         test(&re_bytes);
     }

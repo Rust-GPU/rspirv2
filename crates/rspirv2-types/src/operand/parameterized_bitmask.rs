@@ -102,7 +102,7 @@ impl<T: ParameterizedBitmaskBits> ParameterizedBitmask<T> {
                 if !self.bits.contains(mask) {
                     // insert
                     self.bits.insert(mask);
-                    self.extra.insert_many(offset, (0..len).map(|_| Word(0)));
+                    self.extra.insert_many(offset, (0..len).map(|_| 0));
                 }
                 let mut writer = WordSliceWriter::new(&mut self.extra[offset..offset + len]);
                 param.encode(&mut writer);

@@ -30,7 +30,7 @@ unsafe impl bytemuck::Pod for LiteralFloat {}
 impl LiteralFloat {
     #[inline]
     pub fn new(value: f32) -> Self {
-        Self(Word(value.to_bits()))
+        Self(value.to_bits())
     }
 
     #[inline]
@@ -45,7 +45,7 @@ impl LiteralFloat {
 
     #[inline]
     pub fn to_f32(&self) -> f32 {
-        f32::from_bits(self.0.0)
+        f32::from_bits(self.0)
     }
 }
 

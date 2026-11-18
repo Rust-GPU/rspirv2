@@ -32,13 +32,13 @@ fn test_nop() {
 #[test]
 fn test_op_constant() {
     roundtrip(OpConstant {
-        id_result_type: IdResultType(IdResult(Word(42))),
-        id_result: IdResult(Word(69)),
+        id_result_type: IdResultType(IdResult(42)),
+        id_result: IdResult(69),
         value: LiteralConst::from(123u32),
     });
     roundtrip(OpConstant {
-        id_result_type: IdResultType(IdResult(Word(42))),
-        id_result: IdResult(Word(69)),
+        id_result_type: IdResultType(IdResult(42)),
+        id_result: IdResult(69),
         value: LiteralConst::from(123u64),
     });
 }
@@ -47,10 +47,10 @@ fn test_op_constant() {
 fn test_op_with_array() {
     let test = |indexes: &[u32]| {
         roundtrip(OpAccessChain {
-            id_result_type: IdResultType(IdResult(Word(42))),
-            id_result: IdResult(Word(69)),
-            base: IdRef(IdResult(Word(123))),
-            indexes: indexes.iter().map(|i| IdRef(IdResult(Word(*i)))).collect(),
+            id_result_type: IdResultType(IdResult(42)),
+            id_result: IdResult(69),
+            base: IdRef(IdResult(123)),
+            indexes: indexes.iter().map(|i| IdRef(IdResult(*i))).collect(),
         });
     };
     test(&[1, 2, 3, 4, 5]);
@@ -61,18 +61,18 @@ fn test_op_with_array() {
 #[test]
 fn test_op_constant_sequence() -> anyhow::Result<()> {
     let c1 = OpConstant {
-        id_result_type: IdResultType(IdResult(Word(42))),
-        id_result: IdResult(Word(69)),
+        id_result_type: IdResultType(IdResult(42)),
+        id_result: IdResult(69),
         value: LiteralConst::from(123u32),
     };
     let c2 = OpConstant {
-        id_result_type: IdResultType(IdResult(Word(42))),
-        id_result: IdResult(Word(69)),
+        id_result_type: IdResultType(IdResult(42)),
+        id_result: IdResult(69),
         value: LiteralConst::from(123u64),
     };
     let c3 = OpConstant {
-        id_result_type: IdResultType(IdResult(Word(42))),
-        id_result: IdResult(Word(69)),
+        id_result_type: IdResultType(IdResult(42)),
+        id_result: IdResult(69),
         value: LiteralConst::from(123u32),
     };
 
@@ -179,7 +179,7 @@ fn test_result_type_ret() -> anyhow::Result<()> {
     // push an Instruction, get the `IdResult` out
     let f32: IdResult = spirv.push_inst(OpTypeFloat {
         // will alloc an `IdResult` using an atomic counter in `InstWriter`
-        id_result: IdResult(Word(42)),
+        id_result: IdResult(42),
         width: LiteralInteger::new(32),
         floating_point_encoding: None,
     });

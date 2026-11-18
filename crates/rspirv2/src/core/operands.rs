@@ -21,11 +21,11 @@ unsafe impl OperandEncoding for ImageOperandsBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<ImageOperandsBits>(
             stringify!(ImageOperandsBits),
             bits,
@@ -358,11 +358,11 @@ unsafe impl OperandEncoding for FPFastMathMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FPFastMathMode>(
             stringify!(FPFastMathMode),
             bits,
@@ -416,11 +416,11 @@ unsafe impl OperandEncoding for SelectionControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<SelectionControl>(
             stringify!(SelectionControl),
             bits,
@@ -476,11 +476,11 @@ unsafe impl OperandEncoding for LoopControlBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<LoopControlBits>(
             stringify!(LoopControlBits),
             bits,
@@ -912,11 +912,11 @@ unsafe impl OperandEncoding for FunctionControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FunctionControl>(
             stringify!(FunctionControl),
             bits,
@@ -974,11 +974,11 @@ unsafe impl OperandEncoding for MemorySemantics {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<MemorySemantics>(
             stringify!(MemorySemantics),
             bits,
@@ -1056,11 +1056,11 @@ unsafe impl OperandEncoding for MemoryAccessBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<MemoryAccessBits>(
             stringify!(MemoryAccessBits),
             bits,
@@ -1271,11 +1271,11 @@ unsafe impl OperandEncoding for KernelProfilingInfo {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<KernelProfilingInfo>(
             stringify!(KernelProfilingInfo),
             bits,
@@ -1316,11 +1316,11 @@ unsafe impl OperandEncoding for RayFlags {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<RayFlags>(
             stringify!(RayFlags),
             bits,
@@ -1383,11 +1383,11 @@ unsafe impl OperandEncoding for FragmentShadingRate {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<FragmentShadingRate>(
             stringify!(FragmentShadingRate),
             bits,
@@ -1429,11 +1429,11 @@ unsafe impl OperandEncoding for RawAccessChainOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<RawAccessChainOperands>(
             stringify!(RawAccessChainOperands),
             bits,
@@ -1488,11 +1488,11 @@ unsafe impl OperandEncoding for SourceLanguage {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Unknown,
             1u32 => Self::ESSL,
@@ -1583,11 +1583,11 @@ unsafe impl OperandEncoding for ExecutionModel {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Vertex,
             1u32 => Self::TessellationControl,
@@ -1663,11 +1663,11 @@ unsafe impl OperandEncoding for AddressingModel {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Logical,
             1u32 => Self::Physical32,
@@ -1717,11 +1717,11 @@ unsafe impl OperandEncoding for MemoryModel {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Simple,
             1u32 => Self::GLSL450,
@@ -2028,249 +2028,249 @@ unsafe impl OperandEncoding for ExecutionMode {
         profiling::function_scope!();
         match self {
             Self::Invocations(p0) => {
-                writer.write(Word(0u32));
+                writer.write(0u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::SpacingEqual => writer.write(Word(1u32)),
-            Self::SpacingFractionalEven => writer.write(Word(2u32)),
-            Self::SpacingFractionalOdd => writer.write(Word(3u32)),
-            Self::VertexOrderCw => writer.write(Word(4u32)),
-            Self::VertexOrderCcw => writer.write(Word(5u32)),
-            Self::PixelCenterInteger => writer.write(Word(6u32)),
-            Self::OriginUpperLeft => writer.write(Word(7u32)),
-            Self::OriginLowerLeft => writer.write(Word(8u32)),
-            Self::EarlyFragmentTests => writer.write(Word(9u32)),
-            Self::PointMode => writer.write(Word(10u32)),
-            Self::Xfb => writer.write(Word(11u32)),
-            Self::DepthReplacing => writer.write(Word(12u32)),
-            Self::DepthGreater => writer.write(Word(14u32)),
-            Self::DepthLess => writer.write(Word(15u32)),
-            Self::DepthUnchanged => writer.write(Word(16u32)),
+            Self::SpacingEqual => writer.write(1u32),
+            Self::SpacingFractionalEven => writer.write(2u32),
+            Self::SpacingFractionalOdd => writer.write(3u32),
+            Self::VertexOrderCw => writer.write(4u32),
+            Self::VertexOrderCcw => writer.write(5u32),
+            Self::PixelCenterInteger => writer.write(6u32),
+            Self::OriginUpperLeft => writer.write(7u32),
+            Self::OriginLowerLeft => writer.write(8u32),
+            Self::EarlyFragmentTests => writer.write(9u32),
+            Self::PointMode => writer.write(10u32),
+            Self::Xfb => writer.write(11u32),
+            Self::DepthReplacing => writer.write(12u32),
+            Self::DepthGreater => writer.write(14u32),
+            Self::DepthLess => writer.write(15u32),
+            Self::DepthUnchanged => writer.write(16u32),
             Self::LocalSize(p0, p1, p2) => {
-                writer.write(Word(17u32));
+                writer.write(17u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer);
                 OperandEncoding::encode(p2, &mut *writer)
             }
             Self::LocalSizeHint(p0, p1, p2) => {
-                writer.write(Word(18u32));
+                writer.write(18u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer);
                 OperandEncoding::encode(p2, &mut *writer)
             }
-            Self::InputPoints => writer.write(Word(19u32)),
-            Self::InputLines => writer.write(Word(20u32)),
-            Self::InputLinesAdjacency => writer.write(Word(21u32)),
-            Self::Triangles => writer.write(Word(22u32)),
-            Self::InputTrianglesAdjacency => writer.write(Word(23u32)),
-            Self::Quads => writer.write(Word(24u32)),
-            Self::Isolines => writer.write(Word(25u32)),
+            Self::InputPoints => writer.write(19u32),
+            Self::InputLines => writer.write(20u32),
+            Self::InputLinesAdjacency => writer.write(21u32),
+            Self::Triangles => writer.write(22u32),
+            Self::InputTrianglesAdjacency => writer.write(23u32),
+            Self::Quads => writer.write(24u32),
+            Self::Isolines => writer.write(25u32),
             Self::OutputVertices(p0) => {
-                writer.write(Word(26u32));
+                writer.write(26u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::OutputPoints => writer.write(Word(27u32)),
-            Self::OutputLineStrip => writer.write(Word(28u32)),
-            Self::OutputTriangleStrip => writer.write(Word(29u32)),
+            Self::OutputPoints => writer.write(27u32),
+            Self::OutputLineStrip => writer.write(28u32),
+            Self::OutputTriangleStrip => writer.write(29u32),
             Self::VecTypeHint(p0) => {
-                writer.write(Word(30u32));
+                writer.write(30u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::ContractionOff => writer.write(Word(31u32)),
-            Self::Initializer => writer.write(Word(33u32)),
-            Self::Finalizer => writer.write(Word(34u32)),
+            Self::ContractionOff => writer.write(31u32),
+            Self::Initializer => writer.write(33u32),
+            Self::Finalizer => writer.write(34u32),
             Self::SubgroupSize(p0) => {
-                writer.write(Word(35u32));
+                writer.write(35u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::SubgroupsPerWorkgroup(p0) => {
-                writer.write(Word(36u32));
+                writer.write(36u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::SubgroupsPerWorkgroupId(p0) => {
-                writer.write(Word(37u32));
+                writer.write(37u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::LocalSizeId(p0, p1, p2) => {
-                writer.write(Word(38u32));
+                writer.write(38u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer);
                 OperandEncoding::encode(p2, &mut *writer)
             }
             Self::LocalSizeHintId(p0, p1, p2) => {
-                writer.write(Word(39u32));
+                writer.write(39u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer);
                 OperandEncoding::encode(p2, &mut *writer)
             }
-            Self::NonCoherentColorAttachmentReadEXT => writer.write(Word(4169u32)),
-            Self::NonCoherentDepthAttachmentReadEXT => writer.write(Word(4170u32)),
-            Self::NonCoherentStencilAttachmentReadEXT => writer.write(Word(4171u32)),
-            Self::SubgroupUniformControlFlowKHR => writer.write(Word(4421u32)),
-            Self::PostDepthCoverage => writer.write(Word(4446u32)),
+            Self::NonCoherentColorAttachmentReadEXT => writer.write(4169u32),
+            Self::NonCoherentDepthAttachmentReadEXT => writer.write(4170u32),
+            Self::NonCoherentStencilAttachmentReadEXT => writer.write(4171u32),
+            Self::SubgroupUniformControlFlowKHR => writer.write(4421u32),
+            Self::PostDepthCoverage => writer.write(4446u32),
             Self::DenormPreserve(p0) => {
-                writer.write(Word(4459u32));
+                writer.write(4459u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::DenormFlushToZero(p0) => {
-                writer.write(Word(4460u32));
+                writer.write(4460u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::SignedZeroInfNanPreserve(p0) => {
-                writer.write(Word(4461u32));
+                writer.write(4461u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::RoundingModeRTE(p0) => {
-                writer.write(Word(4462u32));
+                writer.write(4462u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::RoundingModeRTZ(p0) => {
-                writer.write(Word(4463u32));
+                writer.write(4463u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::NonCoherentTileAttachmentReadQCOM => writer.write(Word(4489u32)),
+            Self::NonCoherentTileAttachmentReadQCOM => writer.write(4489u32),
             Self::TileShadingRateQCOM(p0, p1, p2) => {
-                writer.write(Word(4490u32));
+                writer.write(4490u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer);
                 OperandEncoding::encode(p2, &mut *writer)
             }
-            Self::SubgroupSizeHalfQCOM => writer.write(Word(4507u32)),
-            Self::SubgroupSizeFullQCOM => writer.write(Word(4508u32)),
-            Self::EarlyAndLateFragmentTestsAMD => writer.write(Word(5017u32)),
-            Self::StencilRefReplacingEXT => writer.write(Word(5027u32)),
-            Self::CoalescingAMDX => writer.write(Word(5069u32)),
+            Self::SubgroupSizeHalfQCOM => writer.write(4507u32),
+            Self::SubgroupSizeFullQCOM => writer.write(4508u32),
+            Self::EarlyAndLateFragmentTestsAMD => writer.write(5017u32),
+            Self::StencilRefReplacingEXT => writer.write(5027u32),
+            Self::CoalescingAMDX => writer.write(5069u32),
             Self::IsApiEntryAMDX(p0) => {
-                writer.write(Word(5070u32));
+                writer.write(5070u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaxNodeRecursionAMDX(p0) => {
-                writer.write(Word(5071u32));
+                writer.write(5071u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::StaticNumWorkgroupsAMDX(p0, p1, p2) => {
-                writer.write(Word(5072u32));
+                writer.write(5072u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer);
                 OperandEncoding::encode(p2, &mut *writer)
             }
             Self::ShaderIndexAMDX(p0) => {
-                writer.write(Word(5073u32));
+                writer.write(5073u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaxNumWorkgroupsAMDX(p0, p1, p2) => {
-                writer.write(Word(5077u32));
+                writer.write(5077u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer);
                 OperandEncoding::encode(p2, &mut *writer)
             }
-            Self::StencilRefUnchangedFrontAMD => writer.write(Word(5079u32)),
-            Self::StencilRefGreaterFrontAMD => writer.write(Word(5080u32)),
-            Self::StencilRefLessFrontAMD => writer.write(Word(5081u32)),
-            Self::StencilRefUnchangedBackAMD => writer.write(Word(5082u32)),
-            Self::StencilRefGreaterBackAMD => writer.write(Word(5083u32)),
-            Self::StencilRefLessBackAMD => writer.write(Word(5084u32)),
-            Self::QuadDerivativesKHR => writer.write(Word(5088u32)),
-            Self::RequireFullQuadsKHR => writer.write(Word(5089u32)),
+            Self::StencilRefUnchangedFrontAMD => writer.write(5079u32),
+            Self::StencilRefGreaterFrontAMD => writer.write(5080u32),
+            Self::StencilRefLessFrontAMD => writer.write(5081u32),
+            Self::StencilRefUnchangedBackAMD => writer.write(5082u32),
+            Self::StencilRefGreaterBackAMD => writer.write(5083u32),
+            Self::StencilRefLessBackAMD => writer.write(5084u32),
+            Self::QuadDerivativesKHR => writer.write(5088u32),
+            Self::RequireFullQuadsKHR => writer.write(5089u32),
             Self::SharesInputWithAMDX(p0, p1) => {
-                writer.write(Word(5102u32));
+                writer.write(5102u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer)
             }
-            Self::ArithmeticPoisonKHR => writer.write(Word(5157u32)),
-            Self::OutputLinesEXT => writer.write(Word(5269u32)),
+            Self::ArithmeticPoisonKHR => writer.write(5157u32),
+            Self::OutputLinesEXT => writer.write(5269u32),
             Self::OutputPrimitivesEXT(p0) => {
-                writer.write(Word(5270u32));
+                writer.write(5270u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::DerivativeGroupQuadsKHR => writer.write(Word(5289u32)),
-            Self::DerivativeGroupLinearKHR => writer.write(Word(5290u32)),
-            Self::OutputTrianglesEXT => writer.write(Word(5298u32)),
-            Self::PixelInterlockOrderedEXT => writer.write(Word(5366u32)),
-            Self::PixelInterlockUnorderedEXT => writer.write(Word(5367u32)),
-            Self::SampleInterlockOrderedEXT => writer.write(Word(5368u32)),
-            Self::SampleInterlockUnorderedEXT => writer.write(Word(5369u32)),
-            Self::ShadingRateInterlockOrderedEXT => writer.write(Word(5370u32)),
-            Self::ShadingRateInterlockUnorderedEXT => writer.write(Word(5371u32)),
-            Self::Shader64BitIndexingEXT => writer.write(Word(5427u32)),
+            Self::DerivativeGroupQuadsKHR => writer.write(5289u32),
+            Self::DerivativeGroupLinearKHR => writer.write(5290u32),
+            Self::OutputTrianglesEXT => writer.write(5298u32),
+            Self::PixelInterlockOrderedEXT => writer.write(5366u32),
+            Self::PixelInterlockUnorderedEXT => writer.write(5367u32),
+            Self::SampleInterlockOrderedEXT => writer.write(5368u32),
+            Self::SampleInterlockUnorderedEXT => writer.write(5369u32),
+            Self::ShadingRateInterlockOrderedEXT => writer.write(5370u32),
+            Self::ShadingRateInterlockUnorderedEXT => writer.write(5371u32),
+            Self::Shader64BitIndexingEXT => writer.write(5427u32),
             Self::SharedLocalMemorySizeINTEL(p0) => {
-                writer.write(Word(5618u32));
+                writer.write(5618u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::RoundingModeRTPINTEL(p0) => {
-                writer.write(Word(5620u32));
+                writer.write(5620u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::RoundingModeRTNINTEL(p0) => {
-                writer.write(Word(5621u32));
+                writer.write(5621u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::FloatingPointModeALTINTEL(p0) => {
-                writer.write(Word(5622u32));
+                writer.write(5622u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::FloatingPointModeIEEEINTEL(p0) => {
-                writer.write(Word(5623u32));
+                writer.write(5623u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaxWorkgroupSizeINTEL(p0, p1, p2) => {
-                writer.write(Word(5893u32));
+                writer.write(5893u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer);
                 OperandEncoding::encode(p2, &mut *writer)
             }
             Self::MaxWorkDimINTEL(p0) => {
-                writer.write(Word(5894u32));
+                writer.write(5894u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::NoGlobalOffsetINTEL => writer.write(Word(5895u32)),
+            Self::NoGlobalOffsetINTEL => writer.write(5895u32),
             Self::NumSIMDWorkitemsINTEL(p0) => {
-                writer.write(Word(5896u32));
+                writer.write(5896u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::SchedulerTargetFmaxMhzINTEL(p0) => {
-                writer.write(Word(5903u32));
+                writer.write(5903u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::MaximallyReconvergesKHR => writer.write(Word(6023u32)),
+            Self::MaximallyReconvergesKHR => writer.write(6023u32),
             Self::FPFastMathDefault(p0, p1) => {
-                writer.write(Word(6028u32));
+                writer.write(6028u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer)
             }
             Self::OpacityMicromapIdKHR(p0) => {
-                writer.write(Word(6031u32));
+                writer.write(6031u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::StreamingInterfaceINTEL(p0) => {
-                writer.write(Word(6154u32));
+                writer.write(6154u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::RegisterMapInterfaceINTEL(p0) => {
-                writer.write(Word(6160u32));
+                writer.write(6160u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::NamedBarrierCountINTEL(p0) => {
-                writer.write(Word(6417u32));
+                writer.write(6417u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaximumRegistersINTEL(p0) => {
-                writer.write(Word(6461u32));
+                writer.write(6461u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaximumRegistersIdINTEL(p0) => {
-                writer.write(Word(6462u32));
+                writer.write(6462u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::NamedMaximumRegistersINTEL(p0) => {
-                writer.write(Word(6463u32));
+                writer.write(6463u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
         }
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Invocations(OperandEncoding::decode(&mut *reader)?),
             1u32 => Self::SpacingEqual,
@@ -2715,11 +2715,11 @@ unsafe impl OperandEncoding for StorageClass {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::UniformConstant,
             1u32 => Self::Input,
@@ -2818,11 +2818,11 @@ unsafe impl OperandEncoding for Dim {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Dim1D,
             1u32 => Self::Dim2D,
@@ -2876,11 +2876,11 @@ unsafe impl OperandEncoding for SamplerAddressingMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::None,
             1u32 => Self::ClampToEdge,
@@ -2925,11 +2925,11 @@ unsafe impl OperandEncoding for SamplerFilterMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Nearest,
             1u32 => Self::Linear,
@@ -3008,11 +3008,11 @@ unsafe impl OperandEncoding for ImageFormat {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Unknown,
             1u32 => Self::Rgba32f,
@@ -3149,11 +3149,11 @@ unsafe impl OperandEncoding for ImageChannelOrder {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::R,
             1u32 => Self::A,
@@ -3252,11 +3252,11 @@ unsafe impl OperandEncoding for ImageChannelDataType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::SnormInt8,
             1u32 => Self::SnormInt16,
@@ -3345,11 +3345,11 @@ unsafe impl OperandEncoding for FPRoundingMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::RTE,
             1u32 => Self::RTZ,
@@ -3392,11 +3392,11 @@ unsafe impl OperandEncoding for FPDenormMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Preserve,
             1u32 => Self::FlushToZero,
@@ -3441,11 +3441,11 @@ unsafe impl OperandEncoding for QuantizationModes {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::TRN,
             1u32 => Self::TRN_ZERO,
@@ -3496,11 +3496,11 @@ unsafe impl OperandEncoding for FPOperationMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::IEEE,
             1u32 => Self::ALT,
@@ -3541,11 +3541,11 @@ unsafe impl OperandEncoding for OverflowModes {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::WRAP,
             1u32 => Self::SAT,
@@ -3590,11 +3590,11 @@ unsafe impl OperandEncoding for LinkageType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Export,
             1u32 => Self::Import,
@@ -3638,11 +3638,11 @@ unsafe impl OperandEncoding for AccessQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::ReadOnly,
             1u32 => Self::WriteOnly,
@@ -3685,11 +3685,11 @@ unsafe impl OperandEncoding for HostAccessQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::NoneINTEL,
             1u32 => Self::ReadINTEL,
@@ -3743,11 +3743,11 @@ unsafe impl OperandEncoding for FunctionParameterAttribute {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Zext,
             1u32 => Self::Sext,
@@ -4215,411 +4215,411 @@ unsafe impl OperandEncoding for Decoration {
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
         match self {
-            Self::RelaxedPrecision => writer.write(Word(0u32)),
+            Self::RelaxedPrecision => writer.write(0u32),
             Self::SpecId(p0) => {
-                writer.write(Word(1u32));
+                writer.write(1u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::Block => writer.write(Word(2u32)),
-            Self::BufferBlock => writer.write(Word(3u32)),
-            Self::RowMajor => writer.write(Word(4u32)),
-            Self::ColMajor => writer.write(Word(5u32)),
+            Self::Block => writer.write(2u32),
+            Self::BufferBlock => writer.write(3u32),
+            Self::RowMajor => writer.write(4u32),
+            Self::ColMajor => writer.write(5u32),
             Self::ArrayStride(p0) => {
-                writer.write(Word(6u32));
+                writer.write(6u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MatrixStride(p0) => {
-                writer.write(Word(7u32));
+                writer.write(7u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::GLSLShared => writer.write(Word(8u32)),
-            Self::GLSLPacked => writer.write(Word(9u32)),
-            Self::CPacked => writer.write(Word(10u32)),
+            Self::GLSLShared => writer.write(8u32),
+            Self::GLSLPacked => writer.write(9u32),
+            Self::CPacked => writer.write(10u32),
             Self::BuiltIn(p0) => {
-                writer.write(Word(11u32));
+                writer.write(11u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::NoPerspective => writer.write(Word(13u32)),
-            Self::Flat => writer.write(Word(14u32)),
-            Self::Patch => writer.write(Word(15u32)),
-            Self::Centroid => writer.write(Word(16u32)),
-            Self::Sample => writer.write(Word(17u32)),
-            Self::Invariant => writer.write(Word(18u32)),
-            Self::Restrict => writer.write(Word(19u32)),
-            Self::Aliased => writer.write(Word(20u32)),
-            Self::Volatile => writer.write(Word(21u32)),
-            Self::Constant => writer.write(Word(22u32)),
-            Self::Coherent => writer.write(Word(23u32)),
-            Self::NonWritable => writer.write(Word(24u32)),
-            Self::NonReadable => writer.write(Word(25u32)),
-            Self::Uniform => writer.write(Word(26u32)),
+            Self::NoPerspective => writer.write(13u32),
+            Self::Flat => writer.write(14u32),
+            Self::Patch => writer.write(15u32),
+            Self::Centroid => writer.write(16u32),
+            Self::Sample => writer.write(17u32),
+            Self::Invariant => writer.write(18u32),
+            Self::Restrict => writer.write(19u32),
+            Self::Aliased => writer.write(20u32),
+            Self::Volatile => writer.write(21u32),
+            Self::Constant => writer.write(22u32),
+            Self::Coherent => writer.write(23u32),
+            Self::NonWritable => writer.write(24u32),
+            Self::NonReadable => writer.write(25u32),
+            Self::Uniform => writer.write(26u32),
             Self::UniformId(p0) => {
-                writer.write(Word(27u32));
+                writer.write(27u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::SaturatedConversion => writer.write(Word(28u32)),
+            Self::SaturatedConversion => writer.write(28u32),
             Self::Stream(p0) => {
-                writer.write(Word(29u32));
+                writer.write(29u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::Location(p0) => {
-                writer.write(Word(30u32));
+                writer.write(30u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::Component(p0) => {
-                writer.write(Word(31u32));
+                writer.write(31u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::Index(p0) => {
-                writer.write(Word(32u32));
+                writer.write(32u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::Binding(p0) => {
-                writer.write(Word(33u32));
+                writer.write(33u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::DescriptorSet(p0) => {
-                writer.write(Word(34u32));
+                writer.write(34u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::Offset(p0) => {
-                writer.write(Word(35u32));
+                writer.write(35u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::XfbBuffer(p0) => {
-                writer.write(Word(36u32));
+                writer.write(36u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::XfbStride(p0) => {
-                writer.write(Word(37u32));
+                writer.write(37u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::FuncParamAttr(p0) => {
-                writer.write(Word(38u32));
+                writer.write(38u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::FPRoundingMode(p0) => {
-                writer.write(Word(39u32));
+                writer.write(39u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::FPFastMathMode(p0) => {
-                writer.write(Word(40u32));
+                writer.write(40u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::LinkageAttributes(p0, p1) => {
-                writer.write(Word(41u32));
+                writer.write(41u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer)
             }
-            Self::NoContraction => writer.write(Word(42u32)),
+            Self::NoContraction => writer.write(42u32),
             Self::InputAttachmentIndex(p0) => {
-                writer.write(Word(43u32));
+                writer.write(43u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::Alignment(p0) => {
-                writer.write(Word(44u32));
+                writer.write(44u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaxByteOffset(p0) => {
-                writer.write(Word(45u32));
+                writer.write(45u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::AlignmentId(p0) => {
-                writer.write(Word(46u32));
+                writer.write(46u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaxByteOffsetId(p0) => {
-                writer.write(Word(47u32));
+                writer.write(47u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::SaturatedToLargestFloat8NormalConversionEXT => writer.write(Word(4216u32)),
-            Self::NoSignedWrap => writer.write(Word(4469u32)),
-            Self::NoUnsignedWrap => writer.write(Word(4470u32)),
-            Self::WeightTextureQCOM => writer.write(Word(4487u32)),
-            Self::BlockMatchTextureQCOM => writer.write(Word(4488u32)),
-            Self::BlockMatchSamplerQCOM => writer.write(Word(4499u32)),
-            Self::ExplicitInterpAMD => writer.write(Word(4999u32)),
+            Self::SaturatedToLargestFloat8NormalConversionEXT => writer.write(4216u32),
+            Self::NoSignedWrap => writer.write(4469u32),
+            Self::NoUnsignedWrap => writer.write(4470u32),
+            Self::WeightTextureQCOM => writer.write(4487u32),
+            Self::BlockMatchTextureQCOM => writer.write(4488u32),
+            Self::BlockMatchSamplerQCOM => writer.write(4499u32),
+            Self::ExplicitInterpAMD => writer.write(4999u32),
             Self::NodeSharesPayloadLimitsWithAMDX(p0) => {
-                writer.write(Word(5019u32));
+                writer.write(5019u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::NodeMaxPayloadsAMDX(p0) => {
-                writer.write(Word(5020u32));
+                writer.write(5020u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::TrackFinishWritingAMDX => writer.write(Word(5078u32)),
+            Self::TrackFinishWritingAMDX => writer.write(5078u32),
             Self::PayloadNodeNameAMDX(p0) => {
-                writer.write(Word(5091u32));
+                writer.write(5091u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::PayloadNodeBaseIndexAMDX(p0) => {
-                writer.write(Word(5098u32));
+                writer.write(5098u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::PayloadNodeSparseArrayAMDX => writer.write(Word(5099u32)),
+            Self::PayloadNodeSparseArrayAMDX => writer.write(5099u32),
             Self::PayloadNodeArraySizeAMDX(p0) => {
-                writer.write(Word(5100u32));
+                writer.write(5100u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::PayloadDispatchIndirectAMDX => writer.write(Word(5105u32)),
+            Self::PayloadDispatchIndirectAMDX => writer.write(5105u32),
             Self::ArrayStrideIdEXT(p0) => {
-                writer.write(Word(5124u32));
+                writer.write(5124u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::OffsetIdEXT(p0) => {
-                writer.write(Word(5125u32));
+                writer.write(5125u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::UTFEncodedKHR => writer.write(Word(5145u32)),
-            Self::OverrideCoverageNV => writer.write(Word(5248u32)),
-            Self::PassthroughNV => writer.write(Word(5250u32)),
-            Self::ViewportRelativeNV => writer.write(Word(5252u32)),
+            Self::UTFEncodedKHR => writer.write(5145u32),
+            Self::OverrideCoverageNV => writer.write(5248u32),
+            Self::PassthroughNV => writer.write(5250u32),
+            Self::ViewportRelativeNV => writer.write(5252u32),
             Self::SecondaryViewportRelativeNV(p0) => {
-                writer.write(Word(5256u32));
+                writer.write(5256u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::PerPrimitiveEXT => writer.write(Word(5271u32)),
-            Self::PerViewNV => writer.write(Word(5272u32)),
-            Self::PerTaskNV => writer.write(Word(5273u32)),
-            Self::PerVertexKHR => writer.write(Word(5285u32)),
-            Self::NonUniform => writer.write(Word(5300u32)),
-            Self::RestrictPointer => writer.write(Word(5355u32)),
-            Self::AliasedPointer => writer.write(Word(5356u32)),
+            Self::PerPrimitiveEXT => writer.write(5271u32),
+            Self::PerViewNV => writer.write(5272u32),
+            Self::PerTaskNV => writer.write(5273u32),
+            Self::PerVertexKHR => writer.write(5285u32),
+            Self::NonUniform => writer.write(5300u32),
+            Self::RestrictPointer => writer.write(5355u32),
+            Self::AliasedPointer => writer.write(5356u32),
             Self::MemberOffsetNV(p0) => {
-                writer.write(Word(5358u32));
+                writer.write(5358u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::HitObjectShaderRecordBufferNV => writer.write(Word(5386u32)),
-            Self::HitObjectShaderRecordBufferEXT => writer.write(Word(5389u32)),
+            Self::HitObjectShaderRecordBufferNV => writer.write(5386u32),
+            Self::HitObjectShaderRecordBufferEXT => writer.write(5389u32),
             Self::BankNV(p0) => {
-                writer.write(Word(5397u32));
+                writer.write(5397u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::BindlessSamplerNV => writer.write(Word(5398u32)),
-            Self::BindlessImageNV => writer.write(Word(5399u32)),
-            Self::BoundSamplerNV => writer.write(Word(5400u32)),
-            Self::BoundImageNV => writer.write(Word(5401u32)),
-            Self::CooperativeMatrixTransposeEXT => writer.write(Word(5440u32)),
+            Self::BindlessSamplerNV => writer.write(5398u32),
+            Self::BindlessImageNV => writer.write(5399u32),
+            Self::BoundSamplerNV => writer.write(5400u32),
+            Self::BoundImageNV => writer.write(5401u32),
+            Self::CooperativeMatrixTransposeEXT => writer.write(5440u32),
             Self::SIMTCallINTEL(p0) => {
-                writer.write(Word(5599u32));
+                writer.write(5599u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::ReferencedIndirectlyINTEL => writer.write(Word(5602u32)),
+            Self::ReferencedIndirectlyINTEL => writer.write(5602u32),
             Self::ClobberINTEL(p0) => {
-                writer.write(Word(5607u32));
+                writer.write(5607u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::SideEffectsINTEL => writer.write(Word(5608u32)),
-            Self::VectorComputeVariableINTEL => writer.write(Word(5624u32)),
+            Self::SideEffectsINTEL => writer.write(5608u32),
+            Self::VectorComputeVariableINTEL => writer.write(5624u32),
             Self::FuncParamIOKindINTEL(p0) => {
-                writer.write(Word(5625u32));
+                writer.write(5625u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::VectorComputeFunctionINTEL => writer.write(Word(5626u32)),
-            Self::StackCallINTEL => writer.write(Word(5627u32)),
+            Self::VectorComputeFunctionINTEL => writer.write(5626u32),
+            Self::StackCallINTEL => writer.write(5627u32),
             Self::GlobalVariableOffsetINTEL(p0) => {
-                writer.write(Word(5628u32));
+                writer.write(5628u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::CounterBuffer(p0) => {
-                writer.write(Word(5634u32));
+                writer.write(5634u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::UserSemantic(p0) => {
-                writer.write(Word(5635u32));
+                writer.write(5635u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::UserTypeGOOGLE(p0) => {
-                writer.write(Word(5636u32));
+                writer.write(5636u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::FunctionRoundingModeINTEL(p0, p1) => {
-                writer.write(Word(5822u32));
+                writer.write(5822u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer)
             }
             Self::FunctionDenormModeINTEL(p0, p1) => {
-                writer.write(Word(5823u32));
+                writer.write(5823u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer)
             }
-            Self::RegisterALTERA => writer.write(Word(5825u32)),
+            Self::RegisterALTERA => writer.write(5825u32),
             Self::MemoryALTERA(p0) => {
-                writer.write(Word(5826u32));
+                writer.write(5826u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::NumbanksALTERA(p0) => {
-                writer.write(Word(5827u32));
+                writer.write(5827u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::BankwidthALTERA(p0) => {
-                writer.write(Word(5828u32));
+                writer.write(5828u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaxPrivateCopiesALTERA(p0) => {
-                writer.write(Word(5829u32));
+                writer.write(5829u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::SinglepumpALTERA => writer.write(Word(5830u32)),
-            Self::DoublepumpALTERA => writer.write(Word(5831u32)),
+            Self::SinglepumpALTERA => writer.write(5830u32),
+            Self::DoublepumpALTERA => writer.write(5831u32),
             Self::MaxReplicatesALTERA(p0) => {
-                writer.write(Word(5832u32));
+                writer.write(5832u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::SimpleDualPortALTERA => writer.write(Word(5833u32)),
+            Self::SimpleDualPortALTERA => writer.write(5833u32),
             Self::MergeALTERA(p0, p1) => {
-                writer.write(Word(5834u32));
+                writer.write(5834u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer)
             }
             Self::BankBitsALTERA(p0) => {
-                writer.write(Word(5835u32));
+                writer.write(5835u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::ForcePow2DepthALTERA(p0) => {
-                writer.write(Word(5836u32));
+                writer.write(5836u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::StridesizeALTERA(p0) => {
-                writer.write(Word(5883u32));
+                writer.write(5883u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::WordsizeALTERA(p0) => {
-                writer.write(Word(5884u32));
+                writer.write(5884u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::TrueDualPortALTERA => writer.write(Word(5885u32)),
-            Self::BurstCoalesceALTERA => writer.write(Word(5899u32)),
+            Self::TrueDualPortALTERA => writer.write(5885u32),
+            Self::BurstCoalesceALTERA => writer.write(5899u32),
             Self::CacheSizeALTERA(p0) => {
-                writer.write(Word(5900u32));
+                writer.write(5900u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::DontStaticallyCoalesceALTERA => writer.write(Word(5901u32)),
+            Self::DontStaticallyCoalesceALTERA => writer.write(5901u32),
             Self::PrefetchALTERA(p0) => {
-                writer.write(Word(5902u32));
+                writer.write(5902u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::StallEnableALTERA => writer.write(Word(5905u32)),
-            Self::FuseLoopsInFunctionALTERA => writer.write(Word(5907u32)),
+            Self::StallEnableALTERA => writer.write(5905u32),
+            Self::FuseLoopsInFunctionALTERA => writer.write(5907u32),
             Self::MathOpDSPModeALTERA(p0, p1) => {
-                writer.write(Word(5909u32));
+                writer.write(5909u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer)
             }
             Self::AliasScopeINTEL(p0) => {
-                writer.write(Word(5914u32));
+                writer.write(5914u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::NoAliasINTEL(p0) => {
-                writer.write(Word(5915u32));
+                writer.write(5915u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::InitiationIntervalALTERA(p0) => {
-                writer.write(Word(5917u32));
+                writer.write(5917u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MaxConcurrencyALTERA(p0) => {
-                writer.write(Word(5918u32));
+                writer.write(5918u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::PipelineEnableALTERA(p0) => {
-                writer.write(Word(5919u32));
+                writer.write(5919u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::BufferLocationALTERA(p0) => {
-                writer.write(Word(5921u32));
+                writer.write(5921u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::IOPipeStorageALTERA(p0) => {
-                writer.write(Word(5944u32));
+                writer.write(5944u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::FunctionFloatingPointModeINTEL(p0, p1) => {
-                writer.write(Word(6080u32));
+                writer.write(6080u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer)
             }
-            Self::SingleElementVectorINTEL => writer.write(Word(6085u32)),
-            Self::VectorComputeCallableFunctionINTEL => writer.write(Word(6087u32)),
-            Self::MediaBlockIOINTEL => writer.write(Word(6140u32)),
-            Self::StallFreeALTERA => writer.write(Word(6151u32)),
+            Self::SingleElementVectorINTEL => writer.write(6085u32),
+            Self::VectorComputeCallableFunctionINTEL => writer.write(6087u32),
+            Self::MediaBlockIOINTEL => writer.write(6140u32),
+            Self::StallFreeALTERA => writer.write(6151u32),
             Self::FPMaxErrorDecorationINTEL(p0) => {
-                writer.write(Word(6170u32));
+                writer.write(6170u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::LatencyControlLabelALTERA(p0) => {
-                writer.write(Word(6172u32));
+                writer.write(6172u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::LatencyControlConstraintALTERA(p0, p1, p2) => {
-                writer.write(Word(6173u32));
+                writer.write(6173u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer);
                 OperandEncoding::encode(p2, &mut *writer)
             }
-            Self::ConduitKernelArgumentALTERA => writer.write(Word(6175u32)),
-            Self::RegisterMapKernelArgumentALTERA => writer.write(Word(6176u32)),
+            Self::ConduitKernelArgumentALTERA => writer.write(6175u32),
+            Self::RegisterMapKernelArgumentALTERA => writer.write(6176u32),
             Self::MMHostInterfaceAddressWidthALTERA(p0) => {
-                writer.write(Word(6177u32));
+                writer.write(6177u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MMHostInterfaceDataWidthALTERA(p0) => {
-                writer.write(Word(6178u32));
+                writer.write(6178u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MMHostInterfaceLatencyALTERA(p0) => {
-                writer.write(Word(6179u32));
+                writer.write(6179u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MMHostInterfaceReadWriteModeALTERA(p0) => {
-                writer.write(Word(6180u32));
+                writer.write(6180u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MMHostInterfaceMaxBurstALTERA(p0) => {
-                writer.write(Word(6181u32));
+                writer.write(6181u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::MMHostInterfaceWaitRequestALTERA(p0) => {
-                writer.write(Word(6182u32));
+                writer.write(6182u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
-            Self::StableKernelArgumentALTERA => writer.write(Word(6183u32)),
+            Self::StableKernelArgumentALTERA => writer.write(6183u32),
             Self::HostAccessINTEL(p0, p1) => {
-                writer.write(Word(6188u32));
+                writer.write(6188u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer)
             }
             Self::InitModeALTERA(p0) => {
-                writer.write(Word(6190u32));
+                writer.write(6190u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::ImplementInRegisterMapALTERA(p0) => {
-                writer.write(Word(6191u32));
+                writer.write(6191u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::ConditionalINTEL(p0) => {
-                writer.write(Word(6247u32));
+                writer.write(6247u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
             Self::CacheControlLoadINTEL(p0, p1) => {
-                writer.write(Word(6442u32));
+                writer.write(6442u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer)
             }
             Self::CacheControlStoreINTEL(p0, p1) => {
-                writer.write(Word(6443u32));
+                writer.write(6443u32);
                 OperandEncoding::encode(p0, &mut *writer);
                 OperandEncoding::encode(p1, &mut *writer)
             }
             Self::IntrinsicSAMSUNG(p0) => {
-                writer.write(Word(7040u32));
+                writer.write(7040u32);
                 OperandEncoding::encode(p0, &mut *writer)
             }
         }
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::RelaxedPrecision,
             1u32 => Self::SpecId(OperandEncoding::decode(&mut *reader)?),
@@ -5269,11 +5269,11 @@ unsafe impl OperandEncoding for BuiltIn {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Position,
             1u32 => Self::PointSize,
@@ -5590,11 +5590,11 @@ unsafe impl OperandEncoding for Scope {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::CrossDevice,
             1u32 => Self::Device,
@@ -5655,11 +5655,11 @@ unsafe impl OperandEncoding for GroupOperation {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Reduce,
             1u32 => Self::InclusiveScan,
@@ -5713,11 +5713,11 @@ unsafe impl OperandEncoding for KernelEnqueueFlags {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::NoWait,
             1u32 => Self::WaitKernel,
@@ -6182,11 +6182,11 @@ unsafe impl OperandEncoding for Capability {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Matrix,
             1u32 => Self::Shader,
@@ -7005,11 +7005,11 @@ unsafe impl OperandEncoding for RayQueryIntersection {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::RayQueryCandidateIntersectionKHR,
             1u32 => Self::RayQueryCommittedIntersectionKHR,
@@ -7053,11 +7053,11 @@ unsafe impl OperandEncoding for RayQueryCommittedIntersectionType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::RayQueryCommittedIntersectionNoneKHR,
             1u32 => Self::RayQueryCommittedIntersectionTriangleKHR,
@@ -7104,11 +7104,11 @@ unsafe impl OperandEncoding for RayQueryCandidateIntersectionType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::RayQueryCandidateIntersectionTriangleKHR,
             1u32 => Self::RayQueryCandidateIntersectionAABBKHR,
@@ -7155,11 +7155,11 @@ unsafe impl OperandEncoding for PackedVectorFormat {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::PackedVectorFormat4x8Bit,
             _ => {
@@ -7193,11 +7193,11 @@ unsafe impl OperandEncoding for CooperativeMatrixOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<CooperativeMatrixOperands>(
             stringify!(CooperativeMatrixOperands),
             bits,
@@ -7249,11 +7249,11 @@ unsafe impl OperandEncoding for CooperativeMatrixLayout {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::RowMajorKHR,
             1u32 => Self::ColumnMajorKHR,
@@ -7299,11 +7299,11 @@ unsafe impl OperandEncoding for CooperativeMatrixUse {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::MatrixAKHR,
             1u32 => Self::MatrixBKHR,
@@ -7339,11 +7339,11 @@ unsafe impl OperandEncoding for CooperativeMatrixReduce {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<CooperativeMatrixReduce>(
             stringify!(CooperativeMatrixReduce),
             bits,
@@ -7390,11 +7390,11 @@ unsafe impl OperandEncoding for TensorClampMode {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Undefined,
             1u32 => Self::Constant,
@@ -7431,11 +7431,11 @@ unsafe impl OperandEncoding for TensorAddressingOperandsBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(
             DecodeError::invalid_bitflags::<TensorAddressingOperandsBits>(
                 stringify!(TensorAddressingOperandsBits),
@@ -7584,11 +7584,11 @@ unsafe impl OperandEncoding for InitializationModeQualifier {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::InitOnDeviceReprogramALTERA,
             1u32 => Self::InitOnDeviceResetALTERA,
@@ -7632,11 +7632,11 @@ unsafe impl OperandEncoding for LoadCacheControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::UncachedINTEL,
             1u32 => Self::CachedINTEL,
@@ -7683,11 +7683,11 @@ unsafe impl OperandEncoding for StoreCacheControl {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::UncachedINTEL,
             1u32 => Self::WriteThroughINTEL,
@@ -7729,11 +7729,11 @@ unsafe impl OperandEncoding for NamedMaximumNumberOfRegisters {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::AutoINTEL,
             _ => {
@@ -7771,11 +7771,11 @@ unsafe impl OperandEncoding for MatrixMultiplyAccumulateOperands {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<
             MatrixMultiplyAccumulateOperands,
         >(stringify!(MatrixMultiplyAccumulateOperands), bits))
@@ -7857,11 +7857,11 @@ unsafe impl OperandEncoding for FPEncoding {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::BFloat16KHR,
             4214u32 => Self::Float8E4M3EXT,
@@ -7914,11 +7914,11 @@ unsafe impl OperandEncoding for CooperativeVectorMatrixLayout {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::RowMajorNV,
             1u32 => Self::ColumnMajorNV,
@@ -7974,11 +7974,11 @@ unsafe impl OperandEncoding for ComponentType {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Float16NV,
             1u32 => Self::Float32NV,
@@ -8045,11 +8045,11 @@ unsafe impl OperandEncoding for GatherModes {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(*self as u32));
+        writer.write(*self as u32);
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let variant = reader.pull()?.0;
+        let variant = reader.pull()?;
         Ok(match variant {
             0u32 => Self::Gather4x1QCOM,
             1u32 => Self::GatherDQCOM,
@@ -8088,11 +8088,11 @@ unsafe impl OperandEncoding for TensorOperandsBits {
     const FIXED_LEN: Option<usize> = Some(1);
     fn encode(&self, writer: &mut impl WordWriter) {
         profiling::function_scope!();
-        writer.write(Word(self.bits()));
+        writer.write(self.bits());
     }
     fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
         profiling::function_scope!();
-        let bits = reader.pull()?.0;
+        let bits = reader.pull()?;
         Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<TensorOperandsBits>(
             stringify!(TensorOperandsBits),
             bits,

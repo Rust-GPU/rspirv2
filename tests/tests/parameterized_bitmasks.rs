@@ -1,5 +1,4 @@
 use expect_test::expect;
-use rspirv2::Word;
 use rspirv2::core::operands::ImageOperands;
 use rspirv2::dis::{DisContext, DisOptions};
 use rspirv2::operand::{IdRef, IdResult, OperandDisContext, OperandEncoding};
@@ -17,15 +16,15 @@ pub fn test_param_bitmask() -> anyhow::Result<()> {
 
     // enable 5 bits in random order
     expect![" None"].assert_eq(&operand.dis(ctx).to_string());
-    operand.set_bias(Some(IdRef(IdResult(Word(1)))));
+    operand.set_bias(Some(IdRef(IdResult(1))));
     expect![" Bias %1"].assert_eq(&operand.dis(ctx).to_string());
-    operand.set_offsets(Some(IdRef(IdResult(Word(5)))));
+    operand.set_offsets(Some(IdRef(IdResult(5))));
     expect![" Bias|Offsets %1 %5"].assert_eq(&operand.dis(ctx).to_string());
-    operand.set_lod(Some(IdRef(IdResult(Word(2)))));
+    operand.set_lod(Some(IdRef(IdResult(2))));
     expect![" Bias|Lod|Offsets %1 %2 %5"].assert_eq(&operand.dis(ctx).to_string());
     operand.set_nontemporal(true);
     expect![" Bias|Lod|Nontemporal|Offsets %1 %2 %5"].assert_eq(&operand.dis(ctx).to_string());
-    operand.set_grad(Some((IdRef(IdResult(Word(3))), IdRef(IdResult(Word(4))))));
+    operand.set_grad(Some((IdRef(IdResult(3)), IdRef(IdResult(4)))));
     expect![" Bias|Lod|Grad|Nontemporal|Offsets %1 %2 %3 %4 %5"]
         .assert_eq(&operand.dis(ctx).to_string());
 
@@ -33,7 +32,7 @@ pub fn test_param_bitmask() -> anyhow::Result<()> {
     operand.set_nontemporal(true);
     expect![" Bias|Lod|Grad|Nontemporal|Offsets %1 %2 %3 %4 %5"]
         .assert_eq(&operand.dis(ctx).to_string());
-    operand.set_grad(Some((IdRef(IdResult(Word(30))), IdRef(IdResult(Word(40))))));
+    operand.set_grad(Some((IdRef(IdResult(30)), IdRef(IdResult(40)))));
     expect![" Bias|Lod|Grad|Nontemporal|Offsets %1 %2 %30 %40 %5"]
         .assert_eq(&operand.dis(ctx).to_string());
 

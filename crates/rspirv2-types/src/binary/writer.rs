@@ -1,4 +1,4 @@
-use crate::Word;
+use crate::{Word, WordExt};
 use smallvec::SmallVec;
 use std::ops::{Deref, DerefMut};
 

@@ -86,12 +86,12 @@ fn emit_rust_like_enum(
         if !param_symbols.is_empty() {
             quote! {
                 Self::#symbol (#(#param_symbols),*) => {
-                    writer.write(Word(#value));
+                    writer.write(#value);
                     #(OperandEncoding::encode(#param_symbols, &mut *writer));*
                 }
             }
         } else {
-            quote!(Self::#symbol => writer.write(Word(#value)))
+            quote!(Self::#symbol => writer.write(#value))
         }
     });
 
@@ -143,7 +143,7 @@ fn emit_rust_like_enum(
 
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 profiling::function_scope!();
-                let variant = reader.pull()?.0;
+                let variant = reader.pull()?;
                 Ok(match variant {
                     #(#decode,)*
                     _ => return Err(DecodeErrorKind::UnknownEnumVariant {
@@ -235,12 +235,12 @@ fn emit_c_like_enum(operand_kind: &OperandKind<'_>, enumerants: &[Enumerant<'_>]
 
             fn encode(&self, writer: &mut impl WordWriter) {
                 profiling::function_scope!();
-                writer.write(Word(*self as u32));
+                writer.write(*self as u32);
             }
 
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 profiling::function_scope!();
-                let variant = reader.pull()?.0;
+                let variant = reader.pull()?;
                 Ok(match variant {
                     #(#decode,)*
                     _ => return Err(DecodeErrorKind::UnknownEnumVariant {
@@ -358,12 +358,12 @@ fn emit_bitflags_enum_common(
 
             fn encode(&self, writer: &mut impl WordWriter) {
                 profiling::function_scope!();
-                writer.write(Word(self.bits()));
+                writer.write(self.bits());
             }
 
             fn decode(reader: &mut OperandReader<'_>) -> Result<Self, DecodeError> {
                 profiling::function_scope!();
-                let bits = reader.pull()?.0;
+                let bits = reader.pull()?;
                 Self::from_bits(bits).ok_or(DecodeError::invalid_bitflags::<#name>(stringify!(#name), bits))
             }
 

@@ -30,7 +30,7 @@ fn test_dis_fail() -> anyhow::Result<()> {
 
     // change opcode to similar inst
     let mut vec = vec.into_vec();
-    vec[0].0 += 4;
+    vec[0] += 4;
     let vec = InstVec::<CoreInstSet>::from_words_unchecked(vec);
     expect![[r#"
         %2 = OpIMul %1 %3 %4
@@ -40,7 +40,7 @@ fn test_dis_fail() -> anyhow::Result<()> {
 
     // change opcode to random inst
     let mut vec = vec.into_vec();
-    vec[0].0 += 199;
+    vec[0] += 199;
     let vec = InstVec::<CoreInstSet>::from_words_unchecked(vec);
     expect![[r#"
         Error: The fixed-size Instruction with 4 param words has 2 Words left over after decoding.
@@ -52,7 +52,7 @@ fn test_dis_fail() -> anyhow::Result<()> {
 
     // make inst len longer, reaching into next inst, unrecoverable
     let mut vec = vec.into_vec();
-    vec[0].0 += 1 << 16;
+    vec[0] += 1 << 16;
     let vec = InstVec::<CoreInstSet>::from_words_unchecked(vec);
     expect![[r#"
         Error: The fixed-size Instruction with 5 param words has 3 Words left over after decoding.
@@ -63,7 +63,7 @@ fn test_dis_fail() -> anyhow::Result<()> {
 
     // make inst len shorter, unrecoverable
     let mut vec = vec.into_vec();
-    vec[0].0 -= 2 << 16;
+    vec[0] -= 2 << 16;
     let vec = InstVec::<CoreInstSet>::from_words_unchecked(vec);
     expect![[r#"
         Error: The fixed-size Instruction with 3 param words has 1 Words left over after decoding.
