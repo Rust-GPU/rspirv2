@@ -47,6 +47,25 @@ unsafe impl bytemuck::Zeroable for IdResult {}
 #[cfg(feature = "bytemuck")]
 unsafe impl bytemuck::Pod for IdResult {}
 
+impl From<u32> for IdResult {
+    #[inline]
+    fn from(value: u32) -> Self {
+        Self(value)
+    }
+}
+
+impl IdResult {
+    #[inline]
+    pub fn as_u32(&self) -> u32 {
+        self.0
+    }
+
+    #[inline]
+    pub fn as_usize(&self) -> usize {
+        self.0 as usize
+    }
+}
+
 unsafe impl Operand for IdResult {
     const KIND: &OperandKind = &OPERAND_KIND_ID_RESULT;
 }
@@ -131,6 +150,25 @@ macro_rules! id_ref {
             #[inline]
             fn from(id: $name) -> Self {
                 id.0
+            }
+        }
+
+        impl From<u32> for $name {
+            #[inline]
+            fn from(value: u32) -> Self {
+                Self(IdResult(value))
+            }
+        }
+
+        impl $name {
+            #[inline]
+            pub fn as_u32(&self) -> u32 {
+                self.0.0
+            }
+
+            #[inline]
+            pub fn as_usize(&self) -> usize {
+                self.0.0 as usize
             }
         }
 

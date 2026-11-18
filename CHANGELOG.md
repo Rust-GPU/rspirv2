@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- [PR#62](https://github.com/Rust-GPU/rspirv2/pull/62) `Word` is now an alias for `u32`, makes many `Word(id)` and `word.0` unnecessary
 - [PR#53](https://github.com/Rust-GPU/rspirv2/pull/53) rename `rspirv2::custom_inst` to `op_switch`
 - [PR#52](https://github.com/Rust-GPU/rspirv2/pull/52) change `InstEncoding::id_result_type()` return type from `IdResult` to `IdResultType`
 - [PR#60](https://github.com/Rust-GPU/rspirv2/pull/60) `LiteralExtInstInteger` and `LiteralSpecConstantOpInteger` are now just aliases of `LiteralInteger`
