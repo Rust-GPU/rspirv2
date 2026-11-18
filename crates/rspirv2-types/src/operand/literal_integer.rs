@@ -51,11 +51,6 @@ unsafe impl bytemuck::Pod for LiteralInteger {}
 
 impl LiteralInteger {
     #[inline]
-    pub fn from_word(value: Word) -> Self {
-        Self(value)
-    }
-
-    #[inline]
     pub fn new(value: u32) -> Self {
         Self(value)
     }
@@ -63,11 +58,6 @@ impl LiteralInteger {
     #[inline]
     pub fn from_bool(value: bool) -> Self {
         Self(value as u32)
-    }
-
-    #[inline]
-    pub fn to_word(&self) -> Word {
-        self.0
     }
 
     #[inline]
